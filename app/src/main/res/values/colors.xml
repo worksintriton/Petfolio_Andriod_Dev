@@ -11,7 +11,7 @@
     <color name="forgot">#d1f4f9</color>
     <color name="red">#BA0D4C</color>
     <color name="red_back">#c40505</color>
-    <color name="green">#075017</color>
+    <color name="green">#4caf50</color>
     <color name="light_red">#ccc5c7</color>
     <color name="hollo">#606060</color>
     <color name="light_gray_green1">#2ab7ca</color>
@@ -38,13 +38,7 @@
     <color name="greyishBrownSeven">#3f3f3f</color>
     <color name="macaroniAndCheeseThree">#e5a939</color>
     <color name="whiteTwo">#ffffff</color>
-
-
-
-
-
-
-
+    <color name="light_green">#f4faf9</color>
 
 
 </resources>

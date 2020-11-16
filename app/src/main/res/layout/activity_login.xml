@@ -34,6 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
+
         <androidx.cardview.widget.CardView
             android:id="@+id/get_started_card"
             android:layout_width="match_parent"
