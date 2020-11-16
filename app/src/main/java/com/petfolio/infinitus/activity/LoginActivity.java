@@ -1,8 +1,10 @@
-package com.petfolio.infinitus;
+package com.petfolio.infinitus.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.petfolio.infinitus.R;
 
 public class LoginActivity extends AppCompatActivity {
 

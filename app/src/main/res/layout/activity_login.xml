@@ -1,18 +1,60 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.LoginActivity">
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/headerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:id="@+id/scrollablContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/footerView"
+        android:layout_below="@+id/headerView" >
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/footerView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/get_started_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="5dp">
+
+            <Button
+                android:id="@+id/get_start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:text="GET STARTED"
+                android:textColor="@color/color"
+                android:textSize="18dp" />
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+</RelativeLayout>
