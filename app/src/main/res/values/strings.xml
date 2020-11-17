@@ -16,4 +16,14 @@
     <string name="to">To</string>
     <string name="specialization">Specialization</string>
     <string name="add_more">Add More</string>
+    <string name="pets_handled">Pets Handled</string>
+    <string name="pet_type">Pet Type</string>
+    <string name="clinic_address">Clinic Address</string>
+    <string name="write_here">Write Here....</string>
+    <string name="clinic_pict">Clinic pictures</string>
+    <string name="certificate">Certificate</string>
+    <string name="govt_proof">Govt ID Proof</string>
+    <string name="photoid_proof">Photo ID Proof</string>
+    <string name="choose">Choose</string>
+    <string name="submit">Submit</string>
 </resources>
