@@ -1,0 +1,159 @@
+package com.petfolio.infinitus.activity;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.google.gson.Gson;
+import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.adapter.UserTypesListAdapter;
+import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.interfaces.UserTypeSelectListener;
+import com.petfolio.infinitus.responsepojo.UserTypeListResponse;
+import com.petfolio.infinitus.utils.ConnectionDetector;
+import com.petfolio.infinitus.utils.RestUtils;
+import com.wang.avi.AVLoadingIndicatorView;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class ChooseUserTypeActivity extends AppCompatActivity implements UserTypeSelectListener, View.OnClickListener {
+
+    private static final String TAG = "ChooseUserTypeActivity";
+
+    @BindView(R.id.avi_indicator)
+    AVLoadingIndicatorView avi_indicator;
+
+    @BindView(R.id.rv_usertype)
+    RecyclerView rv_usertype;
+
+    @BindView(R.id.tv_norecords)
+    TextView tv_norecords;
+
+    @BindView(R.id.img_back)
+    ImageView img_back;
+
+    @BindView(R.id.btn_change)
+    Button btn_change;
+
+    List<UserTypeListResponse.DataBean.UsertypedataBean> usertypedataBeanList;
+    private String UserType;
+    private int UserTypeValue;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_choose_user_type);
+        ButterKnife.bind(this);
+        avi_indicator.setVisibility(View.GONE);
+        img_back.setOnClickListener(this);
+        btn_change.setOnClickListener(this);
+
+        if (new ConnectionDetector(ChooseUserTypeActivity.this).isNetworkAvailable(ChooseUserTypeActivity.this)) {
+            userTypeListResponseCall();
+        }
+
+    }
+
+    public void userTypeListResponseCall(){
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        //Creating an object of our api interface
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<UserTypeListResponse> call = apiInterface.userTypeListResponseCall(RestUtils.getContentType());
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<UserTypeListResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<UserTypeListResponse> call, @NonNull Response<UserTypeListResponse> response) {
+                avi_indicator.smoothToHide();
+
+
+                if (response.body() != null) {
+                    Log.w(TAG,"UserTypeListResponse" + new Gson().toJson(response.body()));
+
+                    usertypedataBeanList = response.body().getData().getUsertypedata();
+                    if(usertypedataBeanList != null && usertypedataBeanList.size()>0){
+                        setView();
+                    }
+
+
+                }
+
+
+
+
+
+
+
+
+            }
+
+
+            @Override
+            public void onFailure(@NonNull Call<UserTypeListResponse> call,@NonNull  Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"UserTypeListResponse flr"+t.getMessage());
+            }
+        });
+
+    }
+
+    private void setView() {
+        rv_usertype.setLayoutManager(new GridLayoutManager(this, 2));
+        rv_usertype.setItemAnimator(new DefaultItemAnimator());
+        UserTypesListAdapter userTypesListAdapter = new UserTypesListAdapter(getApplicationContext(), usertypedataBeanList,this);
+        rv_usertype.setAdapter(userTypesListAdapter);
+    }
+
+
+    @Override
+    public void userTypeSelectListener(String usertype, int usertypevalue) {
+        UserType = usertype;
+        UserTypeValue = usertypevalue;
+        Log.w(TAG,"userTypeSelectListener : "+" usertype : "+usertype+" usertypevalue : "+usertypevalue);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.img_back:
+                onBackPressed();
+                break;
+            case R.id.btn_change:
+                gotoSignup();
+                break;
+        }
+    }
+
+    private void gotoSignup() {
+        Intent intent = new Intent(ChooseUserTypeActivity.this,SignUpActivity.class);
+        intent.putExtra("UserType",UserType);
+        intent.putExtra("UserTypeValue",UserTypeValue);
+        startActivity(intent);
+        finish();
+    }
+}

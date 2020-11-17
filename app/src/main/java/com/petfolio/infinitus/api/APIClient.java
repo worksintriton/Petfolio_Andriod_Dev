@@ -16,7 +16,7 @@ public class APIClient {
     private static OkHttpClient client;
 
 
-    public static String BASE_URL = "https://myvacala.com/api/";
+    public static String BASE_URL = "http://52.25.163.13:3000/api/";
 
     public static Retrofit getClient() {
         client = new OkHttpClient();

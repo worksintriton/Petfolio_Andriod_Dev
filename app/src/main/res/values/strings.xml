@@ -26,4 +26,25 @@
     <string name="photoid_proof">Photo ID Proof</string>
     <string name="choose">Choose</string>
     <string name="submit">Submit</string>
+    <string name="verify_otp">Verify OTP</string>
+    <string name="emailorphonenumber">Email / Phone Number</string>
+    <string name="new_here">New here ?</string>
+    <string name="sign_up">Sign up</string>
+    <string name="change_user_type">Change user type</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="usertypes">usertypes</string>
+    <string name="verification">Verification</string>
+    <string name="dontreceiveotp">Don\'t receive OTP ?</string>
+    <string name="resend">Resend</string>
+    <string name="you_will_get_a_otp_via_sms">You will get a OTP via SMS</string>
+    <string name="enter_your_otp">Enter your OTP</string>
+    <string name="ind">IND</string>
+    <string name="choose_user_type">Choose user type</string>
+    <string name="no_data_found">No data found</string>
+
+    <string name="mobile_number_error">Enter mobile number</string>
+    <string name="mobile_length_error">Enter valid mobile number</string>
 </resources>

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "790404680855",
+    "firebase_url": "https://petfolio-a7c71.firebaseio.com",
+    "project_id": "petfolio-a7c71",
+    "storage_bucket": "petfolio-a7c71.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:790404680855:android:e9ec0ccdd15e6150b3edd2",
+        "android_client_info": {
+          "package_name": "com.petfolio.infinitus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "790404680855-v86dp340g9hdvp5t8ktdiscro8okjjuc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6pBm6Mle56_4BLJM3woAPMVXPq392Gho"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "790404680855-v86dp340g9hdvp5t8ktdiscro8okjjuc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "790404680855-8dnbakcn3m6q56nnkubebtck0seqh109.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "Com.PetFolio.Infinitus"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
