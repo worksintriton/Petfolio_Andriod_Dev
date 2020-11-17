@@ -18,4 +18,7 @@
     <string name="ind">IND</string>
     <string name="choose_user_type">Choose user type</string>
     <string name="no_data_found">No data found</string>
+
+    <string name="mobile_number_error">Enter mobile number</string>
+    <string name="mobile_length_error">Enter valid mobile number</string>
 </resources>
