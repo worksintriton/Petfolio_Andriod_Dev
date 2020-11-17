@@ -64,14 +64,22 @@ public class ChooseUserTypeActivity extends AppCompatActivity implements UserTyp
         avi_indicator.setVisibility(View.GONE);
         img_back.setOnClickListener(this);
         btn_change.setOnClickListener(this);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            UserType = extras.getString("UserType");
+            UserTypeValue = extras.getInt("UserTypeValue");
+            Log.w(TAG,"UserTypeValue : "+UserTypeValue);
+        }
+
 
         if (new ConnectionDetector(ChooseUserTypeActivity.this).isNetworkAvailable(ChooseUserTypeActivity.this)) {
-            userTypeListResponseCall();
+            userTypeListResponseCall(UserTypeValue);
         }
+
 
     }
 
-    public void userTypeListResponseCall(){
+    public void userTypeListResponseCall(int userTypeValue){
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         //Creating an object of our api interface
@@ -90,7 +98,7 @@ public class ChooseUserTypeActivity extends AppCompatActivity implements UserTyp
 
                     usertypedataBeanList = response.body().getData().getUsertypedata();
                     if(usertypedataBeanList != null && usertypedataBeanList.size()>0){
-                        setView();
+                        setView(userTypeValue);
                     }
 
 
@@ -115,10 +123,17 @@ public class ChooseUserTypeActivity extends AppCompatActivity implements UserTyp
 
     }
 
-    private void setView() {
+    private void setView(int userTypeValue) {
+        for(int i=0; i<usertypedataBeanList.size();i++){
+            if(userTypeValue == usertypedataBeanList.get(i).getUser_type_value()){
+                usertypedataBeanList.get(i).setSelected(true);
+                break;
+            }
+        }
+        Log.w(TAG, "setView : "+userTypeValue);
         rv_usertype.setLayoutManager(new GridLayoutManager(this, 2));
         rv_usertype.setItemAnimator(new DefaultItemAnimator());
-        UserTypesListAdapter userTypesListAdapter = new UserTypesListAdapter(getApplicationContext(), usertypedataBeanList,this);
+        UserTypesListAdapter userTypesListAdapter = new UserTypesListAdapter(getApplicationContext(), usertypedataBeanList,this,userTypeValue);
         rv_usertype.setAdapter(userTypesListAdapter);
     }
 

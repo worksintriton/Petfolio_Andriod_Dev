@@ -1,5 +1,7 @@
 package com.petfolio.infinitus.adapter;
 import android.content.Context;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,15 +10,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.interfaces.UserTypeSelectListener;
 import com.petfolio.infinitus.responsepojo.UserTypeListResponse;
 
 import java.util.List;
+
 
 
 public class UserTypesListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -30,13 +35,15 @@ public class UserTypesListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
    private List<UserTypeListResponse.DataBean.UsertypedataBean> usertypedataBeanList;
     UserTypeListResponse.DataBean.UsertypedataBean currentItem;
 
-    int selectedPosition=-1;
+    private int userTypeValue;
 
 
-    public UserTypesListAdapter(Context context, List<UserTypeListResponse.DataBean.UsertypedataBean> usertypedataBeanList,UserTypeSelectListener userTypeSelectListener) {
+
+    public UserTypesListAdapter(Context context, List<UserTypeListResponse.DataBean.UsertypedataBean> usertypedataBeanList, UserTypeSelectListener userTypeSelectListener, int userTypeValue) {
         this.usertypedataBeanList = usertypedataBeanList;
         this.context = context;
         this.userTypeSelectListener = userTypeSelectListener;
+        this.userTypeValue = userTypeValue;
 
     }
 
@@ -56,6 +63,10 @@ public class UserTypesListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
 
     private void initLayoutOne(ViewHolderOne holder, final int position) {
         currentItem = usertypedataBeanList.get(position);
+        Log.w(TAG,"userTypeValue : "+userTypeValue);
+
+
+
         holder.txt_usertypes.setText(currentItem.getUser_type_title());
         if (currentItem.getUser_type_img() != null && !currentItem.getUser_type_img().isEmpty()) {
 
@@ -73,22 +84,39 @@ public class UserTypesListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
         holder.ll_usertypes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedPosition=position;
+
+                for (int i=0;i<usertypedataBeanList.size();i++){
+                    usertypedataBeanList.get(i).setSelected(false);
+
+                }
+
+
+                usertypedataBeanList.get(position).setSelected(true);
+
                 notifyDataSetChanged();
+
                 userTypeSelectListener.userTypeSelectListener(usertypedataBeanList.get(position).getUser_type_title(),usertypedataBeanList.get(position).getUser_type_value());
 
             }
         });
 
 
-        if(selectedPosition==position){
-            holder.ll_usertypes.setBackgroundResource(R.drawable.rectangle_corner_bg_darkgray);
-            holder.chx_usertypes.setChecked(true);}
 
-        else{
+        if (usertypedataBeanList.get(position).isSelected()) {
+            Log.w(TAG, "IF isSelected--->");
+            holder.ll_usertypes.setBackgroundResource(R.drawable.rectangle_corner_bg_darkgray);
+            holder.chx_usertypes.setChecked(true);
+            return;
+
+        }
+        else {
+            Log.w(TAG, "ELSE isSelected--->");
+
             holder.ll_usertypes.setBackgroundResource(R.drawable.rectangle_corner_bg_gray);
             holder.chx_usertypes.setChecked(false);
+
         }
+
 
 
     }

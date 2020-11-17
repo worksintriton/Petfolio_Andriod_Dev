@@ -21,4 +21,11 @@
 
     <string name="mobile_number_error">Enter mobile number</string>
     <string name="mobile_length_error">Enter valid mobile number</string>
+
+    <string name="verify_otp_title">Verify Mobile number</string>
+    <string name="invalid_otp">Invalid OTP.</string>
+    <string name="re_enter_otp">Please re-enter the correct OTP</string>
+
+    <string name="wehavesenta4digitotp">We have sent a "4 digit OTP" on</string>
+    <string name="resendotp">Resend OTP in</string>
 </resources>

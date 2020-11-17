@@ -84,11 +84,28 @@
             android:layout_marginBottom="30dp"
             android:textColor="@color/green"
             android:layout_marginStart="10dp"/>
+        <TextView
+            android:id="@+id/txt_timer_count"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="15dp"
+            android:fontFamily="@font/futuramediumbt"
+            android:text="02:34"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="30dp"
+            />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="30dp">
+            android:layout_marginBottom="30dp"
+            android:id="@+id/llresendotp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
