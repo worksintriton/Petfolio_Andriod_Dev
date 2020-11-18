@@ -1,0 +1,113 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.SignUpActivity">
+
+    <LinearLayout
+        android:id="@+id/headerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/ic_baseline_arrow_back_ios_24"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/futuramediumbt"
+            android:text="Register your Pet"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+        <TextView
+            android:id="@+id/txt_skip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/futuramediumbt"
+            android:text="@string/skip"
+            android:textColor="@color/green"
+            android:textSize="20sp"
+            android:gravity="end"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp" />
+
+
+    </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_above="@+id/footerView"
+            android:layout_below="@+id/headerView"
+            android:fillViewport="true"
+            android:layout_marginBottom="20dp">
+
+            <ImageView
+                android:id="@+id/img_loginheader"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:src="@drawable/services"
+                android:layout_marginTop="50dp"
+                android:layout_gravity="center"
+                tools:ignore="ContentDescription"
+                android:scaleType="centerInside"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/upload_pet_image"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/futuramediumbt"
+                android:gravity="center"/>
+
+
+
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/footerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="10dp">
+        <Button
+            android:id="@+id/btn_choose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner_button"
+            android:text="Choose"
+            android:textColor="@color/whiteFive"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            android:fontFamily="@font/futur"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:indicatorColor="@color/green"
+        app:indicatorName="LineSpinFadeLoaderIndicator" />
+
+
+</RelativeLayout>

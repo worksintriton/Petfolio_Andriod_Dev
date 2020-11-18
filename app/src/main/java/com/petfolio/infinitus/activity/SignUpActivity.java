@@ -159,6 +159,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         intent.putExtra("phonemumber",response.body().getData().getUser_details().getUser_phone());
                         intent.putExtra("otp",response.body().getData().getUser_details().getOtp());
                         intent.putExtra("usertype",response.body().getData().getUser_details().getUser_type());
+                        intent.putExtra("userstatus","Incomplete");
+                        Log.w(TAG,"signupResponseCall "+" userphone : "+response.body().getData().getUser_details().getUser_phone()+" usertype : "+response.body().getData().getUser_details().getUser_type());
                         startActivity(intent);
 
 
@@ -188,7 +190,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
          * user_type : 1
          * date_of_reg : 23/10/2019 12:12:00
          */
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
 
         SignupRequest signupRequest = new SignupRequest();
@@ -240,8 +242,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             edt_firstname.setError("Please enter first name");
             edt_firstname.requestFocus();
             can_proceed = false;
-        }else if (firstnamelength > 15) {
-            edt_firstname.setError("The maximum length for an first name is 15 characters.");
+        }else if (firstnamelength > 25) {
+            edt_firstname.setError("The maximum length for an first name is 25 characters.");
             edt_firstname.requestFocus();
             can_proceed = false;
         }
@@ -250,8 +252,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             edt_lastname.requestFocus();
             can_proceed = false;
         }
-        else if (lastnamelength > 15) {
-            edt_lastname.setError("The maximum length for an last name is 15 characters.");
+        else if (lastnamelength > 25) {
+            edt_lastname.setError("The maximum length for an last name is 25 characters.");
             edt_lastname.requestFocus();
             can_proceed = false;
         }

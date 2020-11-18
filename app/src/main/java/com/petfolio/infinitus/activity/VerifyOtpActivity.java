@@ -73,13 +73,12 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
     private ApplicationData applicationData;
     private String phonenumber;
     private int otp;
-    private AlertDialog.Builder alertDialogBuilder;
     Dialog alertDialog;
     private String autoOTP;
 
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
     private String userstatus;
-    private int usertype;
+    private int usertype = 0;
 
 
     @Override
@@ -100,6 +99,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
             otp = extras.getInt("otp");
             usertype = extras.getInt("usertype");
             userstatus = extras.getString("userstatus");
+            Log.w(TAG,"Bundle "+" phonenumber : "+phonenumber+" otp :"+otp+" usertype : "+usertype+" userstatus : "+userstatus);
         }
 
 
@@ -185,17 +185,20 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
         }
 
          if (can_proceed) {
-             if(usertype == 1 && userstatus.equalsIgnoreCase("Incomplete")){
-                 startActivity(new Intent(VerifyOtpActivity.this, AddYourPetActivity.class));
+             if(usertype != 0){
+                 if(usertype == 1 && userstatus != null && userstatus.equalsIgnoreCase("Incomplete")){
+                     startActivity(new Intent(VerifyOtpActivity.this, AddYourPetActivity.class));
 
-             }else if(usertype == 1 ){
+                 }else if(usertype == 1 ){
 
-             }else if(usertype == 2 && userstatus.equalsIgnoreCase("Incomplete")){
-                 startActivity(new Intent(VerifyOtpActivity.this, AddYourPetActivity.class));
+                 }else if(usertype == 2 && userstatus != null && userstatus.equalsIgnoreCase("Incomplete")){
+                     startActivity(new Intent(VerifyOtpActivity.this, AddYourPetActivity.class));
 
-             }else if(usertype == 2 ){
+                 }else if(usertype == 2 ){
 
+                 }
              }
+
 
 
         }
@@ -251,7 +254,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
         return resendOTPRequest;
     }
     public void showErrorLoading(String errormesage){
-        alertDialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage(errormesage);
         alertDialogBuilder.setPositiveButton("ok",
                 (arg0, arg1) -> hideLoading());

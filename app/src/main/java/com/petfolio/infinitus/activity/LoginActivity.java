@@ -8,6 +8,7 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.session.MediaSessionManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +29,7 @@ import com.petfolio.infinitus.requestpojo.LoginRequest;
 
 import com.petfolio.infinitus.responsepojo.LoginResponse;
 
+import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -128,6 +130,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
                         Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
+                       SessionManager sessionManager = new SessionManager(LoginActivity.this);
+                        sessionManager.logoutUser();
+                        sessionManager.setIsLogin(true);
+                        sessionManager.createLoginSession(
+                               response.body().getData().getUser_details().get_id(),
+                               response.body().getData().getUser_details().getFirst_name(),
+                               response.body().getData().getUser_details().getLast_name(),
+                               response.body().getData().getUser_details().getUser_email(),
+                               response.body().getData().getUser_details().getUser_phone(),
+                               String.valueOf(response.body().getData().getUser_details().getUser_type()),
+                               response.body().getData().getUser_details().getUser_status()
+                       );
+
                         Intent intent = new Intent(LoginActivity.this,VerifyOtpActivity.class);
                         intent.putExtra("phonemumber",response.body().getData().getUser_details().getUser_phone());
                         intent.putExtra("otp",response.body().getData().getUser_details().getOtp());

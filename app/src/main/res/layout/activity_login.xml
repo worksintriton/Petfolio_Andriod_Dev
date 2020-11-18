@@ -59,7 +59,8 @@
             tools:ignore="Autofill,LabelFor,TextFields"
             android:layout_marginBottom="30dp"
             android:textColor="@color/green"
-            android:inputType="textWebEmailAddress" />
+            android:inputType="textWebEmailAddress"
+            android:textColorHint="@color/green"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

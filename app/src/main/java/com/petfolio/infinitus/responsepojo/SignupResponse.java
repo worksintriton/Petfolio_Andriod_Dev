@@ -89,6 +89,15 @@ public class SignupResponse {
             private String device_id;
             private String device_type;
             private int __v;
+            private String user_status;
+
+            public String getUser_status() {
+                return user_status;
+            }
+
+            public void setUser_status(String user_status) {
+                this.user_status = user_status;
+            }
 
             public String get_id() {
                 return _id;

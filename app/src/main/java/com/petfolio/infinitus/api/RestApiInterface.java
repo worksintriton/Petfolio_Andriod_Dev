@@ -1,8 +1,11 @@
 package com.petfolio.infinitus.api;
 
+import com.petfolio.infinitus.requestpojo.AddYourPetRequest;
 import com.petfolio.infinitus.requestpojo.LoginRequest;
 import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
 import com.petfolio.infinitus.requestpojo.SignupRequest;
+import com.petfolio.infinitus.responsepojo.AddYourPetResponse;
+import com.petfolio.infinitus.responsepojo.DropDownListResponse;
 import com.petfolio.infinitus.responsepojo.LoginResponse;
 import com.petfolio.infinitus.responsepojo.ResendOTPResponse;
 import com.petfolio.infinitus.responsepojo.SignupResponse;
@@ -32,6 +35,14 @@ public interface RestApiInterface {
     /*Login*/
     @POST(" userdetails/mobile/login")
     Call<LoginResponse> loginResponseCall(@Header("Content-Type") String type, @Body LoginRequest loginRequest );
+
+    /*dropdown list*/
+    @GET("petdetails/mobile/dropdownslist")
+    Call<DropDownListResponse> dropDownListResponseCall(@Header("Content-Type") String type);
+
+    /*Add your pet*/
+    @POST("petdetails/mobile/create")
+    Call<AddYourPetResponse> addYourPetResponseCall(@Header("Content-Type") String type, @Body AddYourPetRequest addYourPetRequest );
 
 
 }

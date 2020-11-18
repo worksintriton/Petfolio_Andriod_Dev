@@ -67,17 +67,20 @@
                     android:layout_height="wrap_content"
                     android:gravity="end">
                     <Button
+                        android:paddingLeft="18dp"
                         android:id="@+id/btn_changeusertype"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
-                        android:layout_width="140dp"
+                        android:layout_width="180dp"
                         android:layout_height="35dp"
                         android:text="@string/change_user_type"
                         android:background="@drawable/button_capsule"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:fontFamily="@font/futur"
                         android:textSize="14sp"
-                        android:textAllCaps="false"/>
+                        android:textAllCaps="false"
+                        android:drawableLeft="@drawable/drawableleftchangeusertype"
+                        />
                 </RelativeLayout>
 
             </LinearLayout>
@@ -101,7 +104,9 @@
                  android:hint="@string/first_name"
                  tools:ignore="Autofill,LabelFor"
                  android:textColor="@color/green"
-                 android:inputType="text" />
+                 android:inputType="text"
+                 android:maxLength="25"
+                 android:textColorHint="@color/green"/>
              <EditText
                  android:id="@+id/edt_lastname"
                  android:layout_marginTop="15dp"
@@ -115,6 +120,8 @@
                  tools:ignore="Autofill,LabelFor"
                  android:textColor="@color/green"
                  android:inputType="text"
+                 android:maxLength="25"
+                 android:textColorHint="@color/green"
                  />
              <EditText
                  android:id="@+id/edt_email"
@@ -129,6 +136,7 @@
                  tools:ignore="Autofill,LabelFor,TextFields"
                  android:textColor="@color/green"
                  android:inputType="text"
+                 android:textColorHint="@color/green"
                  />
              <LinearLayout
                  android:layout_width="match_parent"
@@ -147,7 +155,9 @@
                      tools:ignore="Autofill,LabelFor"
                      android:textColor="@color/green"
                      android:inputType="phone"
-                     android:background="@null" />
+                     android:background="@null"
+                     android:maxLength="10"
+                     android:textColorHint="@color/green"/>
 
 
 

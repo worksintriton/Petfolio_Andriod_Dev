@@ -94,12 +94,15 @@ public class ChooseUserTypeActivity extends AppCompatActivity implements UserTyp
 
 
                 if (response.body() != null) {
-                    Log.w(TAG,"UserTypeListResponse" + new Gson().toJson(response.body()));
+                    if(200 == response.body().getCode()){
+                        Log.w(TAG,"UserTypeListResponse" + new Gson().toJson(response.body()));
 
-                    usertypedataBeanList = response.body().getData().getUsertypedata();
-                    if(usertypedataBeanList != null && usertypedataBeanList.size()>0){
-                        setView(userTypeValue);
+                        usertypedataBeanList = response.body().getData().getUsertypedata();
+                        if(usertypedataBeanList != null && usertypedataBeanList.size()>0){
+                            setView(userTypeValue);
+                        }
                     }
+
 
 
                 }
