@@ -45,4 +45,11 @@
     <string name="err_msg_type_of_petcolortype">Select the pet color type</string>
     <string name="upload_pet_image">Upload Pet image</string>
     <string name="pet_last_vaccinated_age">Pet Last Vaccinated age</string>
+    <string name="please_wait">Please Wait</string>
+    <string name="log_in">Log in</string>
+    <string name="see_more">See more</string>
+    <string name="doctors">Doctors</string>
+    <string name="services">Services</string>
+    <string name="products">Products</string>
+    <string name="specialization">Specialization</string>
 </resources>

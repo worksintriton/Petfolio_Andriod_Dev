@@ -2,11 +2,13 @@ package com.petfolio.infinitus.api;
 
 import com.petfolio.infinitus.requestpojo.AddYourPetRequest;
 import com.petfolio.infinitus.requestpojo.LoginRequest;
+import com.petfolio.infinitus.requestpojo.PetLoverDashboardRequest;
 import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
 import com.petfolio.infinitus.requestpojo.SignupRequest;
 import com.petfolio.infinitus.responsepojo.AddYourPetResponse;
 import com.petfolio.infinitus.responsepojo.DropDownListResponse;
 import com.petfolio.infinitus.responsepojo.LoginResponse;
+import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 import com.petfolio.infinitus.responsepojo.ResendOTPResponse;
 import com.petfolio.infinitus.responsepojo.SignupResponse;
 import com.petfolio.infinitus.responsepojo.UserTypeListResponse;
@@ -43,6 +45,10 @@ public interface RestApiInterface {
     /*Add your pet*/
     @POST("petdetails/mobile/create")
     Call<AddYourPetResponse> addYourPetResponseCall(@Header("Content-Type") String type, @Body AddYourPetRequest addYourPetRequest );
+
+    /*Pet lover dashboard*/
+    @POST("userdetails/petlove/mobile/dashboard")
+    Call<PetLoverDashboardResponse> petLoverDashboardResponseCall(@Header("Content-Type") String type, @Body PetLoverDashboardRequest petLoverDashboardRequest);
 
 
 }

@@ -103,7 +103,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             UserTypeValue = extras.getInt("UserTypeValue");
             txt_usertypes.setText(UserType);
         }else{
-            UserType = "Pet lovers";
+            UserType = "Pet lover";
             UserTypeValue = 1;
             txt_usertypes.setText(UserType);
         }

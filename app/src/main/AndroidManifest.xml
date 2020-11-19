@@ -44,7 +44,7 @@
         tools:ignore="AllowBackup,UnusedAttribute"
         tools:replace="android:theme">
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".petlover.PetLoverDashboardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan">
@@ -84,10 +84,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".petlover.PetLoverDashboardActivity"
+        <!--<activity android:name=".petlover.PetLoverDashboardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan" />-->
 
 
         <receiver

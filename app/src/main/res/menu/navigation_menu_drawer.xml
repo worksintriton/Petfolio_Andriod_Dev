@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single"
+        android:id="@+id/group1">
+        <item android:id="@+id/nav_item_one"
+            android:icon="@drawable/ic_right"
+            android:title="My Family" />
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/group2">
+        <item android:id="@+id/nav_item_two"
+            android:icon="@drawable/ic_right"
+            android:title="My Appointments" />
+    </group>
+
+
+    <!--
+       <item android:id="@+id/nav_item_genre"
+        android:icon="@drawable/referral"
+        android:title="Genre" />-->
+    <group android:checkableBehavior="single"
+        android:id="@+id/group3">
+        <item android:id="@+id/nav_item_three"
+        android:icon="@drawable/ic_right"
+        android:title="Health Files "
+            android:visible="false"/>
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/group4">
+    <item android:id="@+id/nav_item_four"
+        android:icon="@drawable/ic_right"
+        android:title="Invoices" />
+    </group>
+
+
+        <group android:checkableBehavior="single"
+            android:id="@+id/group5">
+        <item android:id="@+id/nav_item_five"
+            android:icon="@drawable/ic_right"
+            android:title="About Salveo Healthcare" />
+        </group>
+
+        <group android:checkableBehavior="single"
+            android:id="@+id/group6">
+        <item android:id="@+id/nav_item_six"
+            android:icon="@drawable/ic_right"
+            android:title="Terms and Conditions" />
+        </group>
+
+        <group android:checkableBehavior="single"
+            android:id="@+id/group7">
+        <item android:id="@+id/nav_item_seven"
+            android:icon="@drawable/ic_right"
+            android:title="Profile" />
+        </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/group9">
+    <item android:id="@+id/nav_item_nine"
+        android:icon="@drawable/ic_right"
+        android:title="Help and Support" />
+    </group>
+
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/group8">
+    <item android:id="@+id/nav_item_eight"
+        android:icon="@drawable/ic_right"
+        android:title="Logout" />
+    </group>
+
+
+
+</menu>

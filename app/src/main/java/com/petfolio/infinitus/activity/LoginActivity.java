@@ -148,6 +148,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         intent.putExtra("otp",response.body().getData().getUser_details().getOtp());
                         intent.putExtra("userstatus",response.body().getData().getUser_details().getUser_status());
                         intent.putExtra("usertype",response.body().getData().getUser_details().getUser_type());
+                        intent.putExtra("fromactivity",TAG);
                         startActivity(intent);
 
                     } else {

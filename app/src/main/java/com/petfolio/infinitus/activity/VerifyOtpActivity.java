@@ -27,6 +27,7 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.appUtils.ApplicationData;
 import com.petfolio.infinitus.petlover.AddYourPetActivity;
+import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinitus.receiver.OTPSmsListener;
 import com.petfolio.infinitus.receiver.SmsBroadcastListener;
 import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
@@ -78,6 +79,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
 
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
     private String userstatus;
+    private String fromactivity;
     private int usertype = 0;
 
 
@@ -99,6 +101,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
             otp = extras.getInt("otp");
             usertype = extras.getInt("usertype");
             userstatus = extras.getString("userstatus");
+            fromactivity = extras.getString("fromactivity");
             Log.w(TAG,"Bundle "+" phonenumber : "+phonenumber+" otp :"+otp+" usertype : "+usertype+" userstatus : "+userstatus);
         }
 
@@ -124,10 +127,12 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
         });
 
 
+
         timer = new CountDownTimer(applicationData.getTimer_milliseconds(), 1000) {
             @SuppressLint({"DefaultLocale", "SetTextI18n"})
             @Override
             public void onTick(long millisUntilFinished) {
+
                 applicationData.setTimer_milliseconds(millisUntilFinished);
                 txt_timer_count.setText(getResources().getString(R.string.resendotp)+" " + String.format("%02d : %02d ",
                         TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
@@ -185,19 +190,29 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
         }
 
          if (can_proceed) {
-             if(usertype != 0){
-                 if(usertype == 1 && userstatus != null && userstatus.equalsIgnoreCase("Incomplete")){
-                     startActivity(new Intent(VerifyOtpActivity.this, AddYourPetActivity.class));
+             if(fromactivity != null && fromactivity.equalsIgnoreCase("LoginActivity")){
+                 if(usertype != 0){
+                     if(usertype == 1){
+                         startActivity(new Intent(VerifyOtpActivity.this, PetLoverDashboardActivity.class));
 
-                 }else if(usertype == 1 ){
+                     }
+                 }
+             }else{
+                 if(usertype != 0){
+                     if(usertype == 1 && userstatus != null && userstatus.equalsIgnoreCase("Incomplete")){
+                         startActivity(new Intent(VerifyOtpActivity.this, AddYourPetActivity.class));
 
-                 }else if(usertype == 2 && userstatus != null && userstatus.equalsIgnoreCase("Incomplete")){
-                     startActivity(new Intent(VerifyOtpActivity.this, AddYourPetActivity.class));
+                     }else if(usertype == 1 ){
 
-                 }else if(usertype == 2 ){
+                     }else if(usertype == 2 ){
+                         startActivity(new Intent(VerifyOtpActivity.this, AddYourPetActivity.class));
 
+                     }else if(usertype == 2 ){
+
+                     }
                  }
              }
+
 
 
 
@@ -209,6 +224,8 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        timer.onFinish();
+        timer.cancel();
         startActivity(new Intent(VerifyOtpActivity.this,LoginActivity.class));
         finish();
     }
@@ -272,5 +289,10 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
 
         }
     }
-   
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        timer.cancel();
+    }
 }
