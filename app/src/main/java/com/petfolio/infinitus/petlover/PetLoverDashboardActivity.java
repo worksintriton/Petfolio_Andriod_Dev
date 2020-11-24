@@ -731,7 +731,8 @@ public class PetLoverDashboardActivity extends NavigationDrawer implements View.
                     longitude = gps.getLongitude();
 
                     Log.w(TAG,"getLatandLong--->"+"latitude" + " " + latitude+"longitude" + " " + longitude);
-
+                   LatLng latLng = new LatLng(latitude,longitude);
+                    getAddressResultResponse(latLng);
                    /* String country = gps.getCountryName(MapsActivity.this);
                     String city = gps.getLocality(MapsActivity.this);
                     String postalCode = gps.getPostalCode(MapsActivity.this);
