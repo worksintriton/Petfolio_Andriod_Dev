@@ -52,4 +52,11 @@
     <string name="services">Services</string>
     <string name="products">Products</string>
     <string name="specialization">Specialization</string>
+    <string name="edit"> <u>Edit</u></string>
+    <string name="turn_on_your_location_services">Turn on your location services</string>
+    <string name="search_location_address">Search Location Address</string>
+    <string name="noplacesfound">No Places Found</string>
+    <string name="save_this_location_and_procced">Save this location &amp; procced</string>
+
+
 </resources>

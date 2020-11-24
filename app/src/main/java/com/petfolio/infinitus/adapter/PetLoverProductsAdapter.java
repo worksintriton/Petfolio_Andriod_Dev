@@ -55,10 +55,6 @@ public class PetLoverProductsAdapter extends  RecyclerView.Adapter<RecyclerView.
     @SuppressLint("SetTextI18n")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
-
-
-
-
           currentItem = productDetailsResponseList.get(position);
           holder.txt_products_title.setText(currentItem.getProduct_title());
           holder.txt_products_price.setText(currentItem.getProduct_prices()+"");

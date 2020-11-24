@@ -70,6 +70,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
 
     private String TAG = "VerifyOtpActivity";
     private CountDownTimer timer;
+    private CountDownTimer countDownTimer;
 
     private ApplicationData applicationData;
     private String phonenumber;
@@ -82,6 +83,8 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
     private String fromactivity;
     private int usertype = 0;
 
+    private boolean isOTPExpired ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +96,6 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
 
         
         avi_indicator.setVisibility(View.GONE);
-        llresendotp.setVisibility(View.GONE);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -128,10 +130,20 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
 
 
 
-        timer = new CountDownTimer(applicationData.getTimer_milliseconds(), 1000) {
+       startTimer();
+
+
+    }
+
+    private void startTimer() {
+        isOTPExpired = false;
+          long timer_milliseconds = 30000;
+          timer = new CountDownTimer(timer_milliseconds, 1000) {
             @SuppressLint({"DefaultLocale", "SetTextI18n"})
             @Override
             public void onTick(long millisUntilFinished) {
+                llresendotp.setVisibility(View.GONE);
+                txt_timer_count.setVisibility(View.VISIBLE);
 
                 applicationData.setTimer_milliseconds(millisUntilFinished);
                 txt_timer_count.setText(getResources().getString(R.string.resendotp)+" " + String.format("%02d : %02d ",
@@ -143,14 +155,13 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
 
             @Override
             public void onFinish() {
+                isOTPExpired = true;
                 txt_timer_count.setVisibility(View.GONE);
                 llresendotp.setVisibility(View.VISIBLE);
                 timer.cancel();
             }
         };
         timer.start();
-
-
     }
 
     @Override
@@ -187,7 +198,11 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
              edt_otp.setError("Invalid OTP.");
              edt_otp.requestFocus();
             can_proceed = false;
-        }
+        }else if(isOTPExpired){
+             edt_otp.setError("Your otp is expired. please regenerate otp. ");
+             edt_otp.requestFocus();
+             can_proceed = false;
+         }
 
          if (can_proceed) {
              if(fromactivity != null && fromactivity.equalsIgnoreCase("LoginActivity")){
@@ -224,13 +239,17 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        timer.onFinish();
-        timer.cancel();
+        if(timer != null){
+            timer.cancel();
+            timer = null;
+
+        }
         startActivity(new Intent(VerifyOtpActivity.this,LoginActivity.class));
         finish();
     }
 
     private void resendOtpResponseCall() {
+        llresendotp.setVisibility(View.GONE);
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
@@ -244,6 +263,8 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                 Log.w(TAG,"ResendOTPResponse" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
+                        edt_otp.setText("");
+                        startTimer();
                         Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
                         otp = response.body().getData().getUser_Details().getOtp();
 
@@ -264,6 +285,8 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
         });
 
     }
+
+
     private ResendOTPRequest resendOTPRequest() {
         ResendOTPRequest resendOTPRequest = new ResendOTPRequest();
         resendOTPRequest.setUser_phone(phonenumber);
@@ -293,6 +316,6 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onPause() {
         super.onPause();
-        timer.cancel();
+
     }
 }

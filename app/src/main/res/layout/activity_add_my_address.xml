@@ -1,0 +1,288 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/headerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true" >
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/app_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollablContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/footerView"
+        android:layout_below="@+id/headerView"
+        android:layout_marginBottom="20dp">
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rlmap"
+                android:layout_margin="10dp"
+                android:background="@drawable/round_corner">
+                <fragment
+                    android:id="@+id/map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp" />
+
+
+
+
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rladdressdetails"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/map_pin"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
+                    android:layout_alignParentStart="true"
+                    android:id="@+id/button1button"
+                    tools:ignore="ContentDescription"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentLeft="true" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_cityname_title"
+                    android:layout_toEndOf="@id/button1button"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="190dp"
+                    android:ellipsize="end"
+                    android:text="TESSDGDSGADSGD"
+                    android:singleLine="true"
+                    android:fontFamily="@font/futuramediumbt"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText"
+                    android:layout_toRightOf="@id/button1button"
+                    android:layout_marginRight="10dp" />
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_address"
+                    android:layout_toEndOf="@id/button1button"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="wrap_content"
+                    android:ellipsize="end"
+                    android:text="TESSDGD dgsdg dgasdg saddagdasg dsgasdg sadgdsgds SGADSGD"
+                    android:layout_below="@+id/txt_cityname_title"
+                    android:singleLine="true"
+                    android:fontFamily="@font/futuramediumbt"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="10sp"
+                    tools:ignore="HardcodedText"
+                    android:layout_toRightOf="@id/button1button"
+                    android:layout_marginRight="10dp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rlchangebutton"
+                    android:layout_toEndOf="@+id/txt_cityname_title"
+                    android:layout_toRightOf="@+id/txt_cityname_title">
+                    <Button
+                        android:layout_alignParentEnd="true"
+                        android:id="@+id/btn_change"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:textColor="@color/white"
+                        android:text="Change"
+                        android:background="@drawable/rounded_corner_button_deny"
+                        android:textAllCaps="false"
+                        android:layout_alignParentRight="true" />
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="30dp">
+                <TextView
+                    android:id="@+id/txt_pincode"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:background="@drawable/rectangle_corner"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futur"
+                    android:hint="Pincode"
+                    tools:ignore="Autofill,LabelFor,TextFields"
+                    android:textColor="@color/green"
+                    android:inputType="textWebEmailAddress"
+                    android:textColorHint="@color/green"/>
+                <TextView
+                    android:id="@+id/txt_location"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:background="@drawable/rectangle_corner"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futur"
+                    android:hint="Location"
+                    tools:ignore="Autofill,LabelFor,TextFields"
+                    android:textColor="@color/green"
+                    android:inputType="textWebEmailAddress"
+                    android:textColorHint="@color/green"/>
+                <TextView
+                    android:id="@+id/txt_cityname"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:background="@drawable/rectangle_corner"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futur"
+                    android:hint="City Name"
+                    tools:ignore="Autofill,LabelFor,TextFields"
+                    android:textColor="@color/green"
+                    android:inputType="textWebEmailAddress"
+                    android:textColorHint="@color/green"/>
+
+                <EditText
+                    android:id="@+id/edt_pickname"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:background="@drawable/rectangle_corner"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futur"
+                    android:hint="Pick a name for this location"
+                    tools:ignore="Autofill,LabelFor,TextFields"
+                    android:textColor="@color/green"
+                    android:inputType="textWebEmailAddress"
+                    android:textColorHint="@color/green"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Save as"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:gravity="center"/>
+                    <RadioGroup
+                        android:id="@+id/rglocationtype"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radioButton1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:text="Home"
+                            android:fontFamily="@font/futuramediumbt"
+                            android:checked="true"
+                            />
+                        <RadioButton
+                            android:id="@+id/radioButton2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:text="Work"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/futuramediumbt"
+                            android:layout_marginStart="10dp" />
+                        <RadioButton
+                            android:id="@+id/radioButton3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:text="Others"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/futuramediumbt"
+                            android:layout_marginStart="10dp" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+
+
+
+            <Button
+                android:id="@+id/btn_savethislocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner_button"
+                android:text="@string/save_this_location_and_procced"
+                android:textColor="@color/whiteFive"
+                android:textSize="18sp"
+                android:textAllCaps="false"
+                android:fontFamily="@font/futur"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp"/>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:indicatorColor="@color/green"
+        app:indicatorName="LineSpinFadeLoaderIndicator" />
+
+</RelativeLayout>
+
+
+

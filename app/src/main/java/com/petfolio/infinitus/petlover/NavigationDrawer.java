@@ -140,6 +140,8 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         pDialog.setCancelable(true);
         //Initializing NavigationView
         navigationView = view.findViewById(R.id.nav_view);
+        navigationView.setItemIconTintList(null);
+
         frameLayout = view.findViewById(R.id.base_container);
 
         navigationView.setNavigationItemSelectedListener(this);
@@ -152,7 +154,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         drawerLayout = view.findViewById(R.id.drawer_layout);
         header = navigationView.getHeaderView(0);
         nav_header_imageView = header.findViewById(R.id.nav_header_imageView);
-        nav_header_textView = header.findViewById(R.id.nav_header_textView);
+        nav_header_textView = header.findViewById(R.id.nav_header_emailid);
         // Glide.with(this).load(image_url).into(nav_header_imageView);
         nav_header_textView.setText(name);
 
@@ -279,14 +281,9 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
                 gotoTermsandConditions();
                 return true;
             case R.id.nav_item_seven:
-                 gotoProfile();
-                 return true;
-            case R.id.nav_item_eight:
                 confirmLogoutDialog();
-                return true;
-            case R.id.nav_item_nine:
-                gotoHelpandSupport();
-                return  true;
+                 return true;
+
 
 
 
@@ -297,9 +294,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
 
     }
 
-    private void gotoHelpandSupport() {
 
-    }
 
     private void confirmLogoutDialog(){
 

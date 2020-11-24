@@ -20,7 +20,7 @@ public class ApplicationData extends Application {
         this.timer_milliseconds = timer_milliseconds;
     }
 
-    public  long timer_milliseconds = 120000;
+    public  long timer_milliseconds = 30000;
 
     @Override
     public void onCreate() {

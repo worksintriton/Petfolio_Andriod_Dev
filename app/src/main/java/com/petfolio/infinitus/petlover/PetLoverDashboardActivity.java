@@ -3,23 +3,22 @@ package com.petfolio.infinitus.petlover;
 
 
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
-import android.content.SharedPreferences;
 
-
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 
-import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.util.Log;
 
 
@@ -28,60 +27,65 @@ import android.view.View;
 
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 
-import androidx.fragment.app.FragmentTransaction;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.activity.location.PickUpLocationAllowActivity;
+import com.petfolio.infinitus.activity.location.PickUpLocationDenyActivity;
 import com.petfolio.infinitus.adapter.PetLoverDoctorAdapter;
 import com.petfolio.infinitus.adapter.PetLoverProductsAdapter;
 import com.petfolio.infinitus.adapter.PetLoverServicesAdapter;
 import com.petfolio.infinitus.adapter.ViewPagerDashboardAdapter;
+import com.petfolio.infinitus.api.API;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.requestpojo.AddYourPetRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverDashboardRequest;
-import com.petfolio.infinitus.responsepojo.AddYourPetResponse;
+import com.petfolio.infinitus.responsepojo.GetAddressResultResponse;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
+import com.petfolio.infinitus.service.GPSTracker;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
-import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
-
-public class PetLoverDashboardActivity extends NavigationDrawer implements View.OnClickListener {
+public class PetLoverDashboardActivity extends NavigationDrawer implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private String TAG = "PetLoverDashboardActivity";
 
@@ -159,6 +163,11 @@ public class PetLoverDashboardActivity extends NavigationDrawer implements View.
     private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.DoctorDetailsBean> doctorDetailsResponseList;
     private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ServiceDetailsBean> serviceDetailsResponseList;
     private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ProductsDetailsBean> productDetailsResponseList;
+    private Dialog alertDialog;
+
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    GoogleApiClient mGoogleApiClient;
+    private String AddressLine;
 
 
     @Override
@@ -166,15 +175,15 @@ public class PetLoverDashboardActivity extends NavigationDrawer implements View.
         super.onCreate(savedInstanceState);
         Log.w(TAG, "OnCreate-->");
         setContentView(R.layout.activity_pet_lover_dashboard);
-
         ButterKnife.bind(this);
         avi_indicator.setVisibility(View.GONE);
 
+        showLocationAlert();
 
         SessionManager sessionManager = new SessionManager(PetLoverDashboardActivity.this);
         HashMap<String, String> user = sessionManager.getProfileDetails();
-       // userid = user.get(SessionManager.KEY_ID);
-        userid = "5fb63307b223363ad0039b0e";
+        userid = user.get(SessionManager.KEY_ID);
+
 
 
 
@@ -184,6 +193,11 @@ public class PetLoverDashboardActivity extends NavigationDrawer implements View.
         txt_seemore_doctors.setOnClickListener(this);
         txt_seemore_services.setOnClickListener(this);
         txt_seemore_products.setOnClickListener(this);
+
+
+
+        checkLocationPermission();
+        checkLocation();
 
         petLoverDashboardResponseCall();
 
@@ -420,7 +434,7 @@ public class PetLoverDashboardActivity extends NavigationDrawer implements View.
 
 
                     }else {
-                        // showErrorLoading(response.body().getMessage());
+                         showErrorLoading(response.body().getMessage());
                     }
 
                 }
@@ -533,10 +547,10 @@ public class PetLoverDashboardActivity extends NavigationDrawer implements View.
 
         PetLoverDashboardRequest petLoverDashboardRequest = new PetLoverDashboardRequest();
         petLoverDashboardRequest.setUser_id(userid);
-        petLoverDashboardRequest.setLat(12.09090);
-        petLoverDashboardRequest.setLongX(80.09093);
+        petLoverDashboardRequest.setLat(latitude);
+        petLoverDashboardRequest.setLongX(longitude);
         petLoverDashboardRequest.setUser_type(1);
-        petLoverDashboardRequest.setAddress("Muthamil nager, Kodugaiyur, Chennai - 600 118");
+        petLoverDashboardRequest.setAddress(AddressLine);
 
 
         Log.w(TAG,"petLoverDashboardRequest"+ new Gson().toJson(petLoverDashboardRequest));
@@ -544,8 +558,372 @@ public class PetLoverDashboardActivity extends NavigationDrawer implements View.
     }
 
 
+    private void showLocationAlert() {
+
+        try {
+
+            Dialog dialog = new Dialog(PetLoverDashboardActivity.this);
+            dialog.setContentView(R.layout.alert_location_allow_deny_layout);
+            dialog.setCanceledOnTouchOutside(false);
+            Button btn_allow = dialog.findViewById(R.id.btn_allow);
+            Button btn_deny = dialog.findViewById(R.id.btn_deny);
+            btn_deny.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showLocationDenyAlert();
+                    dialog.dismiss();
+
+                }
+            });
+            btn_allow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(PetLoverDashboardActivity.this, PickUpLocationAllowActivity.class));
+                    dialog.dismiss();
+
+                }
+            });
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
 
 
+
+
+    }
+    private void showLocationDenyAlert() {
+
+        try {
+
+           Dialog dialog = new Dialog(PetLoverDashboardActivity.this);
+            dialog.setContentView(R.layout.alert_location_deny_layout);
+            dialog.setCanceledOnTouchOutside(false);
+
+            ImageView img_close = dialog.findViewById(R.id.img_close);
+            img_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(PetLoverDashboardActivity.this, PickUpLocationDenyActivity.class));
+                    dialog.dismiss();
+
+                }
+            });
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
+    public void showErrorLoading(String errormesage){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(errormesage);
+        alertDialogBuilder.setPositiveButton("ok",
+                (arg0, arg1) -> hideLoading());
+
+
+
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+    public void hideLoading(){
+        try {
+            alertDialog.dismiss();
+        }catch (Exception ignored){
+
+        }
+    }
+
+    public boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        } else {
+            return true;
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NotNull String[] permissions, @NotNull int[] grantResults) {
+        if (requestCode == MY_PERMISSIONS_REQUEST_LOCATION) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(this,
+                        Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    if (mGoogleApiClient == null) {
+                        buildGoogleApiClient();
+                    }
+
+                }
+            } else {
+                Toast.makeText(this, "permission denied",
+                        Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+
+    private void checkLocation(){
+        try{
+            LocationManager lm = (LocationManager)getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+            boolean gps_enabled = false;
+            boolean network_enabled = false;
+
+            try {
+                if (lm != null) {
+                    gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+                }
+            } catch(Exception ignored) {}
+
+            try {
+                if (lm != null) {
+                    network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+                }
+            } catch(Exception ignored) {}
+
+            if(!gps_enabled && !network_enabled) {
+
+                if (lm != null && !lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    showSettingsAlert();
+                }
+
+            }else{
+                getLatandLong();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+    private void getLatandLong(){
+        try{
+            if (ContextCompat.checkSelfPermission(PetLoverDashboardActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(PetLoverDashboardActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(PetLoverDashboardActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+            }
+            else {
+                GPSTracker gps = new GPSTracker(PetLoverDashboardActivity.this);
+
+                // Check if GPS enabled
+                if (gps.canGetLocation()) {
+                    latitude = gps.getLatitude();
+                    longitude = gps.getLongitude();
+
+                    Log.w(TAG,"getLatandLong--->"+"latitude" + " " + latitude+"longitude" + " " + longitude);
+
+                   /* String country = gps.getCountryName(MapsActivity.this);
+                    String city = gps.getLocality(MapsActivity.this);
+                    String postalCode = gps.getPostalCode(MapsActivity.this);
+                    String addressLine = gps.getAddressLine(MapsActivity.this);
+                    Log.w(TAG,"country : "+country+" "+"city : "+" "+city+"postalCode : "+" "+postalCode+" "+"addressLine :"+" "+addressLine);*/
+
+                    //  Toasty.warning(getApplicationContext(), "latitude :"+latitude+"longitude :"+longitude+"address :"+addressLine, Toast.LENGTH_SHORT, true).show();
+
+
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+    public void showSettingsAlert() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(PetLoverDashboardActivity.this);
+
+        // Setting DialogHelp Title
+        alertDialog.setTitle("GPS is settings");
+
+        // Setting DialogHelp Message
+        alertDialog
+                .setMessage("GPS is not enabled. Do you want to go to settings menu?");
+
+        // On pressing Settings button
+        alertDialog.setPositiveButton("Settings",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(
+                                Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(intent);
+                    }
+                });
+
+        // on pressing cancel button
+        alertDialog.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        // Showing Alert Message
+        alertDialog.show();
+    }
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        mGoogleApiClient.connect();
+    }
+
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    private void getAddressResultResponse(LatLng latLng) {
+        Log.w(TAG,"GetAddressResultResponse-->"+latLng);
+        //avi_indicator.setVisibility(View.VISIBLE);
+        // avi_indicator.smoothToShow();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(API.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        API service = retrofit.create(API.class);
+        String strlatlng = String.valueOf(latLng);
+        Log.w(TAG,"getAddressResultResponse strlatlng-->"+strlatlng);
+        String newString = strlatlng.replace("lat/lng:", "");
+        Log.w(TAG,"getAddressResultResponse latlng=="+newString);
+
+        String latlngs = newString.trim().replaceAll("\\(", "").replaceAll("\\)","").trim();
+        Log.w(TAG,"getAddressResultResponse latlngs=="+latlngs);
+
+
+
+        String key = API.MAP_KEY;
+        service.getAddressResultResponseCall(latlngs, key).enqueue(new Callback<GetAddressResultResponse>() {
+            @Override
+            public void onResponse(@NotNull Call<GetAddressResultResponse> call, @NotNull Response<GetAddressResultResponse> response) {
+                //avi_indicator.smoothToHide();
+                Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+
+                Log.w(TAG,"GetAddressResultResponse" + new Gson().toJson(response.body()));
+
+
+                if(response.body() != null) {
+                    String currentplacename = null;
+                    String compundcode = null;
+
+                    if(response.body().getPlus_code().getCompound_code() != null){
+                        compundcode = response.body().getPlus_code().getCompound_code();
+                    }
+                    if(compundcode != null) {
+                        String[] separated = compundcode.split(",");
+                        String placesname = separated[0];
+                        String[] splitData = placesname.split("\\s", 2);
+                        String code = splitData[0];
+                        currentplacename = splitData[1];
+                        Log.w(TAG, "code-->" + code + "currentplacename : " + currentplacename);
+                    }
+
+
+                    String localityName = null;
+                    String cityName = null;
+                    String sublocalityName = null;
+                    String postalCode = null;
+
+
+                    List<GetAddressResultResponse.ResultsBean> getAddressResultResponseList;
+                    getAddressResultResponseList = response.body().getResults();
+                    if (getAddressResultResponseList.size() > 0) {
+                        AddressLine = getAddressResultResponseList.get(0).getFormatted_address();
+                        Log.w(TAG, "FormateedAddress-->" + AddressLine);
+
+                    }
+                    List<GetAddressResultResponse.ResultsBean.AddressComponentsBean> addressComponentsBeanList = response.body().getResults().get(0).getAddress_components();
+                    if(addressComponentsBeanList != null) {
+                        if (addressComponentsBeanList.size() > 0) {
+                            for (int i = 0; i < addressComponentsBeanList.size(); i++) {
+                                Log.w(TAG, "addressComponentsBeanList size : " + addressComponentsBeanList.size());
+
+                                for (int j = 0; j < addressComponentsBeanList.get(i).getTypes().size(); j++) {
+                                    Log.w(TAG, "getTypes size : " + addressComponentsBeanList.get(i).getTypes().size());
+
+                                    Log.w(TAG, "TYPES-->" + addressComponentsBeanList.get(i).getTypes());
+                                    List<String> typesList = addressComponentsBeanList.get(i).getTypes();
+
+                                    if (typesList.contains("postal_code")) {
+                                        postalCode = addressComponentsBeanList.get(i).getShort_name();
+                                       String PostalCode = postalCode;
+                                        Log.w(TAG, "Postal Short name ---->" + postalCode);
+
+                                    }
+                                    if (typesList.contains("locality")) {
+                                       String CityName = addressComponentsBeanList.get(i).getLong_name();
+                                        localityName = addressComponentsBeanList.get(i).getShort_name();
+                                        Log.w(TAG, "Locality Short name ---->" + localityName);
+                                        Log.w(TAG, "Locality City  short name ---->" + cityName);
+
+
+                                    }
+
+                                    if (typesList.contains("administrative_area_level_2")) {
+                                        cityName = addressComponentsBeanList.get(i).getShort_name();
+                                        //  CityName = cityName;
+                                        Log.w(TAG, "City  short name ---->" + cityName);
+
+                                    }
+                                    if (typesList.contains("sublocality_level_1")) {
+                                        sublocalityName = addressComponentsBeanList.get(i).getShort_name();
+                                        Log.w(TAG, "sublocality_level_1  short name ---->" + cityName);
+
+                                    }
+
+                                }
+
+                            }
+
+
+
+                        }
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<GetAddressResultResponse> call, @NotNull Throwable t) {
+                //avi_indicator.smoothToHide();
+                t.printStackTrace();
+            }
+        });
+    }
 
 }
 
