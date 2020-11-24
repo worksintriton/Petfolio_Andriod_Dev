@@ -184,6 +184,16 @@ public class DropDownListResponse {
 
             private String specialzation;
 
+            private boolean isSelected;
+
+            public boolean isSelected() {
+                return isSelected;
+            }
+
+            public void setSelected(boolean selected) {
+                isSelected = selected;
+            }
+
             public String getSpecialzation() {
                 return specialzation;
             }
@@ -199,6 +209,16 @@ public class DropDownListResponse {
              */
 
             private String pet_handle;
+
+            private boolean isSelected;
+
+            public boolean isSelected() {
+                return isSelected;
+            }
+
+            public void setSelected(boolean selected) {
+                isSelected = selected;
+            }
 
             public String getPet_handle() {
                 return pet_handle;

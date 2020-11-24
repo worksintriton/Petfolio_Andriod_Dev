@@ -17,6 +17,7 @@ public class APIClient {
 
 
     public static String BASE_URL = "http://52.25.163.13:3000/api/";
+    public static String IMAGE_BASE_URL = "http://52.25.163.13:3000/";
 
     public static Retrofit getClient() {
         client = new OkHttpClient();
@@ -28,6 +29,23 @@ public class APIClient {
                 .build();
                 retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build();
+
+        return retrofit;
+    }
+    public static Retrofit getImageClient() {
+        client = new OkHttpClient();
+        client = new OkHttpClient.Builder()
+                .readTimeout(3, TimeUnit.MINUTES)
+                .connectTimeout(3, TimeUnit.MINUTES)
+                .writeTimeout(3, TimeUnit.MINUTES )
+                .cache(null)
+                .build();
+                retrofit = new Retrofit.Builder()
+                .baseUrl(IMAGE_BASE_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)

@@ -40,6 +40,7 @@ import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinitus.requestpojo.LocationAddRequest;
 import com.petfolio.infinitus.responsepojo.LocationAddResponse;
+import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -112,7 +113,7 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
 
     String TAG = "AddMyAddressActivity";
 
-    String customerid = "",state = "",country = "",postalcode = "",street;
+    String userid = "",state = "",country = "",postalcode = "",street;
 
 
     String name = "", emailID = "",  mobile = "", type = "";
@@ -133,7 +134,11 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
         Log.w(TAG,"onCreate-->");
 
         ButterKnife.bind(this);
-        Log.w(TAG,"customerid--->"+customerid);
+
+        SessionManager sessionManager = new SessionManager(AddMyAddressActivity.this);
+        HashMap<String, String> user = sessionManager.getProfileDetails();
+        userid = user.get(SessionManager.KEY_ID);
+        Log.w(TAG,"userid--->"+userid);
         avi_indicator.setVisibility(View.GONE);
         imgBack.setOnClickListener(this);
         btn_change.setOnClickListener(this);
@@ -345,7 +350,7 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
 
 
         LocationAddRequest locationAddRequest = new LocationAddRequest();
-        locationAddRequest.setUser_id("5fb63307b223363ad0039b0e");
+        locationAddRequest.setUser_id(userid);
         locationAddRequest.setLocation_state(state);
         locationAddRequest.setLocation_country(country);
         locationAddRequest.setLocation_city(CityName);

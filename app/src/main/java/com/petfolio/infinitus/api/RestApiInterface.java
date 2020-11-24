@@ -1,25 +1,33 @@
 package com.petfolio.infinitus.api;
 
 import com.petfolio.infinitus.requestpojo.AddYourPetRequest;
+import com.petfolio.infinitus.requestpojo.DocBusInfoUploadRequest;
 import com.petfolio.infinitus.requestpojo.LocationAddRequest;
 import com.petfolio.infinitus.requestpojo.LoginRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverDashboardRequest;
 import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
 import com.petfolio.infinitus.requestpojo.SignupRequest;
+import com.petfolio.infinitus.requestpojo.UserStatusUpdateRequest;
 import com.petfolio.infinitus.responsepojo.AddYourPetResponse;
+import com.petfolio.infinitus.responsepojo.DocBusInfoUploadResponse;
 import com.petfolio.infinitus.responsepojo.DropDownListResponse;
+import com.petfolio.infinitus.responsepojo.FileUploadResponse;
 import com.petfolio.infinitus.responsepojo.LocationAddResponse;
 import com.petfolio.infinitus.responsepojo.LoginResponse;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 import com.petfolio.infinitus.responsepojo.ResendOTPResponse;
 import com.petfolio.infinitus.responsepojo.SignupResponse;
+import com.petfolio.infinitus.responsepojo.UserStatusUpdateResponse;
 import com.petfolio.infinitus.responsepojo.UserTypeListResponse;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface RestApiInterface {
 
@@ -30,6 +38,10 @@ public interface RestApiInterface {
     /*Signup create*/
     @POST("userdetails/create")
     Call<SignupResponse> signupResponseCall(@Header("Content-Type") String type, @Body SignupRequest signupRequest);
+
+    /*User Staus update*/
+    @POST("userdetails/mobile/edit")
+    Call<UserStatusUpdateResponse> userStatusUpdateResponse(@Header("Content-Type") String type, @Body UserStatusUpdateRequest userStatusUpdateRequest );
 
     /*Resend otp*/
     @POST("userdetails/mobile/resendotp")
@@ -55,6 +67,13 @@ public interface RestApiInterface {
     /*Add location*/
     @POST("locationdetails/create")
     Call<LocationAddResponse> locationAddResponseCall(@Header("Content-Type") String type, @Body LocationAddRequest locationAddRequest);
+
+    @Multipart
+    @POST("upload")
+    Call<FileUploadResponse> getImageStroeResponse(@Part MultipartBody.Part file);
+
+    @POST("doctordetails/create")
+    Call<DocBusInfoUploadResponse> docsBusInfoUpldResponse(@Header("Content-Type") String type, @Body DocBusInfoUploadRequest docBusInfoUploadRequest);
 
 
 }

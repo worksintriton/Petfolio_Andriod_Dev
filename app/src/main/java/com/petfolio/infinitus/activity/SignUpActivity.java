@@ -24,7 +24,9 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.requestpojo.SignupRequest;
+import com.petfolio.infinitus.requestpojo.UserStatusUpdateRequest;
 import com.petfolio.infinitus.responsepojo.SignupResponse;
+import com.petfolio.infinitus.responsepojo.UserStatusUpdateResponse;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -154,14 +156,17 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 if (response.body() != null) {
 
                     if (200 == response.body().getCode()) {
-                        Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
+                        if(response.body().getData().getUser_details().get_id() != null){
+                            userStatusUpdateResponse(response.body().getData().getUser_details().get_id() );
+                        }
+                       /* Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
                         Intent intent = new Intent(SignUpActivity.this,VerifyOtpActivity.class);
                         intent.putExtra("phonemumber",response.body().getData().getUser_details().getUser_phone());
                         intent.putExtra("otp",response.body().getData().getUser_details().getOtp());
                         intent.putExtra("usertype",response.body().getData().getUser_details().getUser_type());
                         intent.putExtra("userstatus","Incomplete");
                         Log.w(TAG,"signupResponseCall "+" userphone : "+response.body().getData().getUser_details().getUser_phone()+" usertype : "+response.body().getData().getUser_details().getUser_type());
-                        startActivity(intent);
+                        startActivity(intent);*/
 
 
                     } else {
@@ -202,6 +207,60 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         signupRequest.setDate_of_reg(currentDateandTime);
         Log.w(TAG,"signupRequest "+ new Gson().toJson(signupRequest));
         return signupRequest;
+    }
+
+
+    private void userStatusUpdateResponse(String id) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<UserStatusUpdateResponse> call = apiInterface.userStatusUpdateResponse(RestUtils.getContentType(), userStatusUpdateRequest(id));
+        Log.w(TAG,"SignupResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<UserStatusUpdateResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<UserStatusUpdateResponse> call, @NonNull Response<UserStatusUpdateResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"UserStatusUpdateResponse" + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+
+                    if (200 == response.body().getCode()) {
+                        Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
+                        Intent intent = new Intent(SignUpActivity.this,VerifyOtpActivity.class);
+                        intent.putExtra("phonemumber",response.body().getData().getUser_phone());
+                        intent.putExtra("otp",response.body().getData().getOtp());
+                        intent.putExtra("usertype",response.body().getData().getUser_type());
+                        intent.putExtra("userstatus","Incomplete");
+                        startActivity(intent);
+
+                    } else {
+                        showErrorLoading(response.body().getMessage());
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<UserStatusUpdateResponse> call,@NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.e("OTP", "--->" + t.getMessage());
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+    private UserStatusUpdateRequest userStatusUpdateRequest(String id) {
+
+        /*
+         * user_id : 5fb6162a211fce241eaf53a9
+         * user_status : complete
+         */
+        UserStatusUpdateRequest userStatusUpdateRequest = new UserStatusUpdateRequest();
+        userStatusUpdateRequest.setUser_id(id);
+        userStatusUpdateRequest.setUser_status("complete");
+        Log.w(TAG,"userStatusUpdateRequest "+ new Gson().toJson(userStatusUpdateRequest));
+        return userStatusUpdateRequest;
     }
 
     public void showErrorLoading(String errormesage){

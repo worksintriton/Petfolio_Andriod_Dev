@@ -26,6 +26,7 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.appUtils.ApplicationData;
+import com.petfolio.infinitus.doctor.DoctorBusinessInfoActivity;
 import com.petfolio.infinitus.petlover.AddYourPetActivity;
 import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinitus.receiver.OTPSmsListener;
@@ -137,7 +138,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
 
     private void startTimer() {
         isOTPExpired = false;
-          long timer_milliseconds = 30000;
+          long timer_milliseconds = 120000;
           timer = new CountDownTimer(timer_milliseconds, 1000) {
             @SuppressLint({"DefaultLocale", "SetTextI18n"})
             @Override
@@ -210,19 +211,18 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                      if(usertype == 1){
                          startActivity(new Intent(VerifyOtpActivity.this, PetLoverDashboardActivity.class));
 
+                     }else if(usertype == 4 ){
+                         startActivity(new Intent(VerifyOtpActivity.this, DoctorBusinessInfoActivity.class));
+
                      }
                  }
              }else{
                  if(usertype != 0){
-                     if(usertype == 1 && userstatus != null && userstatus.equalsIgnoreCase("Incomplete")){
+                     if(usertype == 1 ){
                          startActivity(new Intent(VerifyOtpActivity.this, AddYourPetActivity.class));
 
-                     }else if(usertype == 1 ){
-
-                     }else if(usertype == 2 ){
-                         startActivity(new Intent(VerifyOtpActivity.this, AddYourPetActivity.class));
-
-                     }else if(usertype == 2 ){
+                     }else if(usertype == 4 ){
+                         startActivity(new Intent(VerifyOtpActivity.this, DoctorBusinessInfoActivity.class));
 
                      }
                  }

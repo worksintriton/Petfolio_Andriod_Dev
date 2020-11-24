@@ -37,6 +37,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.activity.LoginActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 
 
@@ -377,6 +378,8 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
 
 
     private void gotoLogout() {
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        finish();
 
 
 

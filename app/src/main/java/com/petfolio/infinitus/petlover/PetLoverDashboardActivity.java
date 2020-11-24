@@ -14,6 +14,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -72,6 +74,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -178,7 +181,7 @@ public class PetLoverDashboardActivity extends NavigationDrawer implements View.
         ButterKnife.bind(this);
         avi_indicator.setVisibility(View.GONE);
 
-        showLocationAlert();
+
 
         SessionManager sessionManager = new SessionManager(PetLoverDashboardActivity.this);
         HashMap<String, String> user = sessionManager.getProfileDetails();
@@ -431,9 +434,15 @@ public class PetLoverDashboardActivity extends NavigationDrawer implements View.
                             }
 
                         }
+                        if(response.body().getData().getLocationDetails() != null){
+                            if(response.body().getData().getLocationDetails().isEmpty()){
+                                showLocationAlert();
+                            }
+                        }
 
 
-                    }else {
+                    }
+                    else {
                          showErrorLoading(response.body().getMessage());
                     }
 
@@ -732,14 +741,7 @@ public class PetLoverDashboardActivity extends NavigationDrawer implements View.
 
                     Log.w(TAG,"getLatandLong--->"+"latitude" + " " + latitude+"longitude" + " " + longitude);
                    LatLng latLng = new LatLng(latitude,longitude);
-                    getAddressResultResponse(latLng);
-                   /* String country = gps.getCountryName(MapsActivity.this);
-                    String city = gps.getLocality(MapsActivity.this);
-                    String postalCode = gps.getPostalCode(MapsActivity.this);
-                    String addressLine = gps.getAddressLine(MapsActivity.this);
-                    Log.w(TAG,"country : "+country+" "+"city : "+" "+city+"postalCode : "+" "+postalCode+" "+"addressLine :"+" "+addressLine);*/
-
-                    //  Toasty.warning(getApplicationContext(), "latitude :"+latitude+"longitude :"+longitude+"address :"+addressLine, Toast.LENGTH_SHORT, true).show();
+                    getCompleteAddressString(latitude,longitude);
 
 
                 }
@@ -805,125 +807,30 @@ public class PetLoverDashboardActivity extends NavigationDrawer implements View.
 
     }
 
-    private void getAddressResultResponse(LatLng latLng) {
-        Log.w(TAG,"GetAddressResultResponse-->"+latLng);
-        //avi_indicator.setVisibility(View.VISIBLE);
-        // avi_indicator.smoothToShow();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        API service = retrofit.create(API.class);
-        String strlatlng = String.valueOf(latLng);
-        Log.w(TAG,"getAddressResultResponse strlatlng-->"+strlatlng);
-        String newString = strlatlng.replace("lat/lng:", "");
-        Log.w(TAG,"getAddressResultResponse latlng=="+newString);
-
-        String latlngs = newString.trim().replaceAll("\\(", "").replaceAll("\\)","").trim();
-        Log.w(TAG,"getAddressResultResponse latlngs=="+latlngs);
 
 
+    @SuppressLint("LongLogTag")
+    private void getCompleteAddressString(double LATITUDE, double LONGITUDE) {
 
-        String key = API.MAP_KEY;
-        service.getAddressResultResponseCall(latlngs, key).enqueue(new Callback<GetAddressResultResponse>() {
-            @Override
-            public void onResponse(@NotNull Call<GetAddressResultResponse> call, @NotNull Response<GetAddressResultResponse> response) {
-                //avi_indicator.smoothToHide();
-                Log.w(TAG,"url  :%s"+ call.request().url().toString());
+        Geocoder geocoder = new Geocoder(PetLoverDashboardActivity.this, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1);
+            if (addresses != null) {
+                Address returnedAddress = addresses.get(0);
+                StringBuilder strReturnedAddress = new StringBuilder("");
 
-
-                Log.w(TAG,"GetAddressResultResponse" + new Gson().toJson(response.body()));
-
-
-                if(response.body() != null) {
-                    String currentplacename = null;
-                    String compundcode = null;
-
-                    if(response.body().getPlus_code().getCompound_code() != null){
-                        compundcode = response.body().getPlus_code().getCompound_code();
-                    }
-                    if(compundcode != null) {
-                        String[] separated = compundcode.split(",");
-                        String placesname = separated[0];
-                        String[] splitData = placesname.split("\\s", 2);
-                        String code = splitData[0];
-                        currentplacename = splitData[1];
-                        Log.w(TAG, "code-->" + code + "currentplacename : " + currentplacename);
-                    }
-
-
-                    String localityName = null;
-                    String cityName = null;
-                    String sublocalityName = null;
-                    String postalCode = null;
-
-
-                    List<GetAddressResultResponse.ResultsBean> getAddressResultResponseList;
-                    getAddressResultResponseList = response.body().getResults();
-                    if (getAddressResultResponseList.size() > 0) {
-                        AddressLine = getAddressResultResponseList.get(0).getFormatted_address();
-                        Log.w(TAG, "FormateedAddress-->" + AddressLine);
-
-                    }
-                    List<GetAddressResultResponse.ResultsBean.AddressComponentsBean> addressComponentsBeanList = response.body().getResults().get(0).getAddress_components();
-                    if(addressComponentsBeanList != null) {
-                        if (addressComponentsBeanList.size() > 0) {
-                            for (int i = 0; i < addressComponentsBeanList.size(); i++) {
-                                Log.w(TAG, "addressComponentsBeanList size : " + addressComponentsBeanList.size());
-
-                                for (int j = 0; j < addressComponentsBeanList.get(i).getTypes().size(); j++) {
-                                    Log.w(TAG, "getTypes size : " + addressComponentsBeanList.get(i).getTypes().size());
-
-                                    Log.w(TAG, "TYPES-->" + addressComponentsBeanList.get(i).getTypes());
-                                    List<String> typesList = addressComponentsBeanList.get(i).getTypes();
-
-                                    if (typesList.contains("postal_code")) {
-                                        postalCode = addressComponentsBeanList.get(i).getShort_name();
-                                       String PostalCode = postalCode;
-                                        Log.w(TAG, "Postal Short name ---->" + postalCode);
-
-                                    }
-                                    if (typesList.contains("locality")) {
-                                       String CityName = addressComponentsBeanList.get(i).getLong_name();
-                                        localityName = addressComponentsBeanList.get(i).getShort_name();
-                                        Log.w(TAG, "Locality Short name ---->" + localityName);
-                                        Log.w(TAG, "Locality City  short name ---->" + cityName);
-
-
-                                    }
-
-                                    if (typesList.contains("administrative_area_level_2")) {
-                                        cityName = addressComponentsBeanList.get(i).getShort_name();
-                                        //  CityName = cityName;
-                                        Log.w(TAG, "City  short name ---->" + cityName);
-
-                                    }
-                                    if (typesList.contains("sublocality_level_1")) {
-                                        sublocalityName = addressComponentsBeanList.get(i).getShort_name();
-                                        Log.w(TAG, "sublocality_level_1  short name ---->" + cityName);
-
-                                    }
-
-                                }
-
-                            }
-
-
-
-                        }
-                    }
+                for (int i = 0; i <= returnedAddress.getMaxAddressLineIndex(); i++) {
+                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
                 }
-
-
+                AddressLine = strReturnedAddress.toString();
+                Log.w("My Current loction address", strReturnedAddress.toString());
+            } else {
+                Log.w("My Current loction address", "No Address returned!");
             }
-
-            @Override
-            public void onFailure(@NotNull Call<GetAddressResultResponse> call, @NotNull Throwable t) {
-                //avi_indicator.smoothToHide();
-                t.printStackTrace();
-            }
-        });
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.w("My Current loction address", "Canont get Address!");
+        }
     }
 
 }
