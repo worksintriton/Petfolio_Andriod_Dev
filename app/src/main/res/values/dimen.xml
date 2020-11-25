@@ -84,4 +84,8 @@
     <dimen name="normal_text_profile">14sp</dimen>
     <dimen name="design_bottom_navigation_text_size" tools:override="true">12sp</dimen>
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">12sp</dimen>
+
+    <!-- Set this to 50% of what you want the actual space between the tabs to be. -->
+    <dimen name="tab_spacing_half">5dp</dimen> <!-- i.e., 10dp spacing between tabs. -->
+
 </resources>

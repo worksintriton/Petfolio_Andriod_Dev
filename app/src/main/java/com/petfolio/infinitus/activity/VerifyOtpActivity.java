@@ -27,6 +27,7 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.appUtils.ApplicationData;
 import com.petfolio.infinitus.doctor.DoctorBusinessInfoActivity;
+import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
 import com.petfolio.infinitus.petlover.AddYourPetActivity;
 import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinitus.receiver.OTPSmsListener;
@@ -212,7 +213,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                          startActivity(new Intent(VerifyOtpActivity.this, PetLoverDashboardActivity.class));
 
                      }else if(usertype == 4 ){
-                         startActivity(new Intent(VerifyOtpActivity.this, DoctorBusinessInfoActivity.class));
+                         startActivity(new Intent(VerifyOtpActivity.this, DoctorDashboardActivity.class));
 
                      }
                  }

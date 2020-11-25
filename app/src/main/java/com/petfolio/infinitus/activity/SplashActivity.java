@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.doctor.DoctorBusinessInfoActivity;
+import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
 import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -56,7 +57,7 @@ public class SplashActivity extends AppCompatActivity {
                             finish();
 
                         }else if(usertype.equalsIgnoreCase("4")){
-                            startActivity(new Intent(SplashActivity.this, DoctorBusinessInfoActivity.class));
+                            startActivity(new Intent(SplashActivity.this, DoctorDashboardActivity.class));
                             finish();
 
                         }

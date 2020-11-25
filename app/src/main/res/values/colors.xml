@@ -38,15 +38,15 @@
     <color name="greyishBrownSeven">#3f3f3f</color>
     <color name="macaroniAndCheeseThree">#e5a939</color>
     <color name="whiteTwo">#ffffff</color>
+    <color name="green_color">#009675</color>
+
 
     <color name="light_green">#f4faf9</color>
+    <color name="light_green_color">#9fd7cb</color>
+    <color name="orange_color">#ffc900</color>
 
-
-
-
-
-
-
+    <color name="orange">#ffc900</color>
+    <color name="missed_red">#ef728a</color>
 
 
 
