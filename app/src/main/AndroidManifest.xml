@@ -112,13 +112,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-
         <activity android:name=".activity.location.PlacesSearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-
-
         <activity android:name=".doctor.DoctorBusinessInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"

@@ -1,844 +1,256 @@
 package com.petfolio.infinitus.petlover;
 
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.content.Context;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.content.DialogInterface;
 import android.content.Intent;
-
-
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Handler;
-
-import android.provider.Settings;
+import android.os.Parcelable;
 import android.util.Log;
 
-
+import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-
-import androidx.annotation.NonNull;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.material.tabs.TabLayout;
-import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.activity.location.PickUpLocationAllowActivity;
-import com.petfolio.infinitus.activity.location.PickUpLocationDenyActivity;
-import com.petfolio.infinitus.adapter.PetLoverDoctorAdapter;
-import com.petfolio.infinitus.adapter.PetLoverProductsAdapter;
-import com.petfolio.infinitus.adapter.PetLoverServicesAdapter;
-import com.petfolio.infinitus.adapter.ViewPagerDashboardAdapter;
-import com.petfolio.infinitus.api.API;
-import com.petfolio.infinitus.api.APIClient;
-import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.requestpojo.PetLoverDashboardRequest;
-import com.petfolio.infinitus.responsepojo.GetAddressResultResponse;
-import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
-import com.petfolio.infinitus.service.GPSTracker;
-import com.petfolio.infinitus.sessionmanager.SessionManager;
-import com.petfolio.infinitus.utils.RestUtils;
+import com.petfolio.infinitus.fragmentpetlover.HomeFragment;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.io.Serializable;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
-
-public class PetLoverDashboardActivity extends NavigationDrawer implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-
-    private String TAG = "PetLoverDashboardActivity";
-
-
-
-    int currentPage = 0;
-    Timer timer;
-    final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
-    final long PERIOD_MS = 3000;
-
-
-
-
-
-    String token = "";
-    String type ="";
-    String name = "",patientid = "";
-
-    static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    double latitude, longitude;
-
-    private Handler handler = new Handler();
-    Runnable runnable;
-    private TextView headertitle;
-
-
-
-
-
-
-
-
-    Dialog dialog;
-    private String userid;
+public class PetLoverDashboardActivity extends AppCompatActivity implements Serializable, BottomNavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
-    @BindView(R.id.pager)
-    ViewPager viewPager;
+    @BindView(R.id.bottom_navigation_view)
+    BottomNavigationView bottom_navigation_view;
 
-    @BindView(R.id.tabDots)
-    TabLayout tabLayout;
+    private String TAG ="DashboardActivity";
 
-    @BindView(R.id.rvdoctors)
-    RecyclerView rvdoctors;
-
-    @BindView(R.id.txt_doctors)
-    TextView txt_doctors;
-
-    @BindView(R.id.txt_seemore_doctors)
-    TextView txt_seemore_doctors;
+    final Fragment homeFragment = new HomeFragment();
+    /*final Fragment searchFragment = new SearchFragment();
+    final Fragment myVehicleFragment = new MyVehicleFragment();
+    final Fragment cartFragment = new CartFragment();
+    final Fragment accountFragment = new AccountFragment();*/
+    private String active_tag = "1";
 
 
-    @BindView(R.id.rvservice)
-    RecyclerView rvservice;
+    Fragment active = homeFragment;
+    String tag;
 
-    @BindView(R.id.txt_services)
-    TextView txt_services;
-    
-    @BindView(R.id.txt_seemore_services)
-    TextView txt_seemore_services;
+    String selectedVehicleId,selectedVehicleType,masterserviceid,fromactivity;
+    String serviceid,servicename,masterservicename;
 
-    @BindView(R.id.rvproducts)
-    RecyclerView rvproducts;
+    private String locationID;
+    private String bookingdateandtime;
+    String BookingDate, BookingTime;
 
-    @BindView(R.id.txt_products)
-    TextView txt_products;
-    
-    @BindView(R.id.txt_seemore_products)
-    TextView txt_seemore_products;
-
-    
-    private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.BannerDetailsBean> listHomeBannerResponse;
-    private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.DoctorDetailsBean> doctorDetailsResponseList;
-    private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ServiceDetailsBean> serviceDetailsResponseList;
-    private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ProductsDetailsBean> productDetailsResponseList;
-    private Dialog alertDialog;
-
-    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    GoogleApiClient mGoogleApiClient;
-    private String AddressLine;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.w(TAG, "OnCreate-->");
         setContentView(R.layout.activity_pet_lover_dashboard);
         ButterKnife.bind(this);
+        Log.w(TAG,"onCreate-->");
+
+
+
         avi_indicator.setVisibility(View.GONE);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
 
+            fromactivity = extras.getString("fromactivity");
 
-        SessionManager sessionManager = new SessionManager(PetLoverDashboardActivity.this);
-        HashMap<String, String> user = sessionManager.getProfileDetails();
-        userid = user.get(SessionManager.KEY_ID);
+        }
 
-
-
-
-
-        toolbar.setVisibility(View.VISIBLE);
-
-        txt_seemore_doctors.setOnClickListener(this);
-        txt_seemore_services.setOnClickListener(this);
-        txt_seemore_products.setOnClickListener(this);
-
-
-
-        checkLocationPermission();
-        checkLocation();
-
-        petLoverDashboardResponseCall();
-
-
-
-
-
-
-
-        tvWelcomeName.setText("Home " );
-
-
-
-
-        if (null == name || name.isEmpty()) {
-
-            if (getIntent().getExtras() != null) {
-
-                try {
-                    name = getIntent().getExtras().getString("Name");
-                    Log.w(TAG, "onCreate name---> " + name);
-                    if (null != name) {
-                        Log.w(TAG, "onCreate name1---> " + name);
-                        tvWelcomeName.setText("Home ");
-                        headertitle.setText("Home " );
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
+        tag = getIntent().getStringExtra("tag");
+        if(tag != null){
+            if(tag.equalsIgnoreCase("1")){
+                active = homeFragment;
+                bottom_navigation_view.setSelectedItemId(R.id.home);
+                loadFragment(new HomeFragment());
+            }else if(tag.equalsIgnoreCase("2")){
+                //active = searchFragment;
+                bottom_navigation_view.setSelectedItemId(R.id.search);
+               // loadFragment(new SearchFragment());
+            }else if(tag.equalsIgnoreCase("3")){
+               // active = myVehicleFragment;
+                bottom_navigation_view.setSelectedItemId(R.id.myvehicle);
+               // loadFragment(new MyVehicleFragment());
+            }else if(tag.equalsIgnoreCase("4")){
+                //active = cartFragment;
+                bottom_navigation_view.setSelectedItemId(R.id.cart);
+                //loadFragment(new CartFragment());
+            } else if(tag.equalsIgnoreCase("5")){
+                //active = accountFragment;
+                bottom_navigation_view.setSelectedItemId(R.id.account);
+                //loadFragment(new AccountFragment());
             }
+        }else{
+            bottom_navigation_view.setSelectedItemId(R.id.home);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.main_container, active, active_tag);
+            transaction.commit();
         }
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
 
-
-
-
-
-
-
-
-
-
-
-
-    }//end of oncreate
-
-
-
-
-
-
-
-
-
-
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.i("BackPressed", "onDestroy");
-        Log.w(TAG, "on destroy working");
-        if (progressDialog != null && progressDialog.isShowing() ){
-            progressDialog.cancel();
-        }
-
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        if (progressDialog != null && progressDialog.isShowing())
-        {
-            progressDialog.dismiss();
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.txt_seemore_doctors:
-                if(doctorDetailsResponseList.size()>0){
-                    rvdoctors.setVisibility(View.VISIBLE);
-                    txt_doctors.setVisibility(View.VISIBLE);
-                    setViewDoctorsSeeMore();
-                }
-                else{
-                    rvdoctors.setVisibility(View.GONE);
-                    txt_doctors.setVisibility(View.GONE);
-
-                }
-                break;
-                case R.id.txt_seemore_services:
-                if(serviceDetailsResponseList.size()>0){
-                    rvservice.setVisibility(View.VISIBLE);
-                    txt_services.setVisibility(View.VISIBLE);
-                    setViewServicesSeeMore();
-                }
-                else{
-                    rvservice.setVisibility(View.GONE);
-                    txt_services.setVisibility(View.GONE);
-
-                }
-                break;
-
-            case R.id.txt_seemore_products:
-                if(serviceDetailsResponseList.size()>0){
-                    rvproducts.setVisibility(View.VISIBLE);
-                    txt_products.setVisibility(View.VISIBLE);
-                    setViewProductsSeeMore();
-                }
-                else{
-                    rvproducts.setVisibility(View.GONE);
-                    txt_products.setVisibility(View.GONE);
-
-                }
-                break;
-
-
-        }
-
-    }
-
-
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
 
 
     }
 
 
 
+    private void loadFragment(Fragment fragment) {
+        Bundle bundle = new Bundle();
+        if(fromactivity != null){
+            Log.w(TAG,"fromactivity loadFragment : "+fromactivity);
+
+            if(fromactivity.equalsIgnoreCase("PopularServiceActivity")) {
+                bundle.putString("fromactivity", fromactivity);
+                bundle.putString("selectedVehicleId", selectedVehicleId);
+                bundle.putString("selectedVehicleType", selectedVehicleType);
+                bundle.putString("masterserviceid", masterserviceid);
+                // set Fragmentclass Arguments
+                fragment.setArguments(bundle);
+                Log.w(TAG,"selectedVehicleId : "+selectedVehicleId+" "+"selectedVehicleType : "+selectedVehicleType+" "+"masterserviceid : "+masterserviceid);
+                Log.w(TAG,"fromactivity : "+fromactivity);
+                // load fragment
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.main_container, fragment);
+                transaction.addToBackStack(null);
+                transaction.commitAllowingStateLoss();
+            }
+            else if(fromactivity.equalsIgnoreCase("SubServicesActivity")) {
+                bundle.putString("fromactivity", fromactivity);
+                bundle.putString("selectedVehicleId", selectedVehicleId);
+                bundle.putString("selectedVehicleType", selectedVehicleType);
+                bundle.putString("masterserviceid", masterserviceid);
+
+                bundle.putString("serviceid", serviceid);
+                bundle.putString("servicename", servicename);
+                bundle.putString("masterservicename", masterservicename);
+
+                // set Fragmentclass Arguments
+                fragment.setArguments(bundle);
+                Log.w(TAG,"selectedVehicleId : "+selectedVehicleId+" "+"selectedVehicleType : "+selectedVehicleType+" "+"masterserviceid : "+masterserviceid);
+                Log.w(TAG,"fromactivity : "+fromactivity);
+
+                // load fragment
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.main_container, fragment);
+                transaction.addToBackStack(null);
+                transaction.commitAllowingStateLoss();
+            }
+        }else {
+
+
+            bundle.putString("locationID", locationID);
+            bundle.putString("bookingdateandtime", bookingdateandtime);
+            bundle.putString("BookingDate", BookingDate);
+            bundle.putString("BookingTime", BookingTime);
+
+            Log.w(TAG,"locationid-->"+locationID+"bookingdateandtime : "+bookingdateandtime);
+
+
+            // set Fragmentclass Arguments
+            fragment.setArguments(bundle);
+
+            // load fragment
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.main_container, fragment);
+            transaction.addToBackStack(null);
+            transaction.commitAllowingStateLoss();
+        }
+    }
 
     @Override
     public void onBackPressed() {
-        new android.app.AlertDialog.Builder(PetLoverDashboardActivity.this)
-                .setMessage("Are you sure you want to exit?")
-                .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        PetLoverDashboardActivity.this.finishAffinity();
-                    }
-                })
-                .setNegativeButton("No", null)
-                .show();
-
-
-    }
-
-    private void petLoverDashboardResponseCall() {
-        avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();
-        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-        Call<PetLoverDashboardResponse> call = apiInterface.petLoverDashboardResponseCall(RestUtils.getContentType(), petLoverDashboardRequest());
-        Log.w(TAG,"PetLoverDashboardResponse url  :%s"+" "+ call.request().url().toString());
-
-        call.enqueue(new Callback<PetLoverDashboardResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<PetLoverDashboardResponse> call, @NonNull Response<PetLoverDashboardResponse> response) {
-                avi_indicator.smoothToHide();
-                Log.w(TAG,"PetLoverDashboardResponse" + new Gson().toJson(response.body()));
-                if (response.body() != null) {
-                    if (200 == response.body().getCode()) {
-                        if (response.body().getData().getDashboarddata() != null) {
-                            listHomeBannerResponse = response.body().getData().getDashboarddata().getBanner_details();
-                            for (int i = 0; i < listHomeBannerResponse.size(); i++) {
-                                listHomeBannerResponse.get(i).getImg_path();
-                                Log.w(TAG, "RES" + " " + listHomeBannerResponse.get(i).getImg_path());
-                            }
-
-                            if (listHomeBannerResponse != null) {
-                                viewpageData(listHomeBannerResponse);
-                            }
+        Log.w(TAG,"tag : "+tag);
+        if (bottom_navigation_view.getSelectedItemId() == R.id.home) {
+            new android.app.AlertDialog.Builder(PetLoverDashboardActivity.this)
+                    .setMessage("Are you sure you want to exit?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            PetLoverDashboardActivity.this.finishAffinity();
                         }
-                        if (response.body().getData().getDashboarddata().getDoctor_details() != null) {
-                            doctorDetailsResponseList = response.body().getData().getDashboarddata().getDoctor_details();
-                            Log.w(TAG, "doctorDetailsResponseList Size" + doctorDetailsResponseList.size());
-                            if (doctorDetailsResponseList != null && doctorDetailsResponseList.size()>0) {
-                                rvdoctors.setVisibility(View.VISIBLE);
-                                txt_doctors.setVisibility(View.VISIBLE);
-                                setViewDoctors(doctorDetailsResponseList);
-                            } else {
-                                rvdoctors.setVisibility(View.GONE);
-                                txt_doctors.setVisibility(View.GONE);
-
-                            }
-
-                        }
-                        if (response.body().getData().getDashboarddata().getService_details() != null) {
-                            serviceDetailsResponseList = response.body().getData().getDashboarddata().getService_details();
-                            Log.w(TAG, "serviceDetailsResponseList Size" + serviceDetailsResponseList.size());
-                            if (serviceDetailsResponseList != null && serviceDetailsResponseList.size()>0) {
-                                rvservice.setVisibility(View.VISIBLE);
-                                txt_services.setVisibility(View.VISIBLE);
-                                setViewServices(serviceDetailsResponseList);
-                            } else {
-                                rvservice.setVisibility(View.GONE);
-                                txt_services.setVisibility(View.GONE);
-
-                            }
-
-                        }
-                        if (response.body().getData().getDashboarddata().getProducts_details() != null) {
-                            productDetailsResponseList = response.body().getData().getDashboarddata().getProducts_details();
-                            Log.w(TAG, "productDetailsResponseList Size" + productDetailsResponseList.size());
-                            if (productDetailsResponseList != null && productDetailsResponseList.size()>0) {
-                                rvproducts.setVisibility(View.VISIBLE);
-                                txt_products.setVisibility(View.VISIBLE);
-                                setViewProducts(productDetailsResponseList);
-                            } else {
-                                rvproducts.setVisibility(View.GONE);
-                                txt_products.setVisibility(View.GONE);
-
-                            }
-
-                        }
-                        if(response.body().getData().getLocationDetails() != null){
-                            if(response.body().getData().getLocationDetails().isEmpty()){
-                                showLocationAlert();
-                            }
-                        }
-
-
-                    }
-                    else {
-                         showErrorLoading(response.body().getMessage());
-                    }
-
-                }
-
-
-            }
-
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onFailure(@NonNull Call<PetLoverDashboardResponse> call,@NonNull Throwable t) {
-                avi_indicator.smoothToHide();
-                Log.e("PetLoverDashboardResponseflr", "--->" + t.getMessage());
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-
-    private void setViewProducts(List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ProductsDetailsBean> productDetailsResponseList) {
-        rvproducts.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rvproducts.setMotionEventSplittingEnabled(false);
-        int size =3;
-        rvproducts.setItemAnimator(new DefaultItemAnimator());
-        PetLoverProductsAdapter petLoverProductsAdapter = new PetLoverProductsAdapter(getApplicationContext(), productDetailsResponseList, rvproducts, size);
-        rvproducts.setAdapter(petLoverProductsAdapter);
-    }
-    private void setViewProductsSeeMore() {
-        rvproducts.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rvproducts.setMotionEventSplittingEnabled(false);
-        int size = productDetailsResponseList.size();
-        rvproducts.setItemAnimator(new DefaultItemAnimator());
-        PetLoverProductsAdapter petLoverProductsAdapter = new PetLoverProductsAdapter(getApplicationContext(), productDetailsResponseList, rvproducts, size);
-        rvproducts.setAdapter(petLoverProductsAdapter);
-    }
-
-    private void setViewServices(List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ServiceDetailsBean> serviceDetailsResponseList) {
-        rvservice.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rvservice.setMotionEventSplittingEnabled(false);
-        int size =3;
-        rvservice.setItemAnimator(new DefaultItemAnimator());
-        PetLoverServicesAdapter petLoverServicesAdapter = new PetLoverServicesAdapter(getApplicationContext(), serviceDetailsResponseList, rvservice, size);
-        rvservice.setAdapter(petLoverServicesAdapter);
-    }
-    private void setViewServicesSeeMore() {
-        rvservice.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rvservice.setMotionEventSplittingEnabled(false);
-        int size = serviceDetailsResponseList.size();
-        rvservice.setItemAnimator(new DefaultItemAnimator());
-        PetLoverServicesAdapter petLoverServicesAdapter = new PetLoverServicesAdapter(getApplicationContext(), serviceDetailsResponseList, rvservice, size);
-        rvservice.setAdapter(petLoverServicesAdapter);
-        petLoverServicesAdapter.notifyDataSetChanged();
-    }
-
-    private void setViewDoctors(List<PetLoverDashboardResponse.DataBean.DashboarddataBean.DoctorDetailsBean> doctorDetailsResponseList) {
-        rvdoctors.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rvdoctors.setMotionEventSplittingEnabled(false);
-        int size =3;
-        rvdoctors.setItemAnimator(new DefaultItemAnimator());
-        PetLoverDoctorAdapter petLoverDoctorAdapter = new PetLoverDoctorAdapter(getApplicationContext(), doctorDetailsResponseList, rvdoctors, size);
-        rvdoctors.setAdapter(petLoverDoctorAdapter);
-    }
-
-    private void setViewDoctorsSeeMore() {
-        rvdoctors.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rvdoctors.setMotionEventSplittingEnabled(false);
-        int size = doctorDetailsResponseList.size();
-        rvdoctors.setItemAnimator(new DefaultItemAnimator());
-        PetLoverDoctorAdapter petLoverDoctorAdapter = new PetLoverDoctorAdapter(getApplicationContext(), doctorDetailsResponseList, rvdoctors, size);
-        rvdoctors.setAdapter(petLoverDoctorAdapter);
-        petLoverDoctorAdapter.notifyDataSetChanged();
-
-    }
-    private void viewpageData(List<PetLoverDashboardResponse.DataBean.DashboarddataBean.BannerDetailsBean> listHomeBannerResponse) {
-            tabLayout.setupWithViewPager(viewPager, true);
-
-        ViewPagerDashboardAdapter viewPagerDashboardAdapter = new ViewPagerDashboardAdapter(this, listHomeBannerResponse);
-            viewPager.setAdapter(viewPagerDashboardAdapter);
-            /*After setting the adapter use the timer */
-            final Handler handler = new Handler();
-            final Runnable Update =  new Runnable() {
-                public void run() {
-                    if (currentPage == listHomeBannerResponse.size()) {
-                        currentPage = 0;
-                    }
-                    viewPager.setCurrentItem(currentPage++, false);
-                }
-            };
-
-            timer = new Timer(); // This will create a new Thread
-            timer.schedule(new TimerTask() { // task to be scheduled
-                @Override
-                public void run() {
-                    handler.post(Update);
-                }
-            }, DELAY_MS, PERIOD_MS);
-
-
-
-    }
-
-    private PetLoverDashboardRequest petLoverDashboardRequest() {
-        /*
-         * user_id : 5fb22773e70b0d3cc5b2c19a
-         * lat : 12.0909
-         * long : 80.09093
-         * user_type : 1
-         * address : Muthamil nager, Kodugaiyur, Chennai - 600 118
-         */
-
-
-        PetLoverDashboardRequest petLoverDashboardRequest = new PetLoverDashboardRequest();
-        petLoverDashboardRequest.setUser_id(userid);
-        petLoverDashboardRequest.setLat(latitude);
-        petLoverDashboardRequest.setLongX(longitude);
-        petLoverDashboardRequest.setUser_type(1);
-        petLoverDashboardRequest.setAddress(AddressLine);
-
-
-        Log.w(TAG,"petLoverDashboardRequest"+ new Gson().toJson(petLoverDashboardRequest));
-        return petLoverDashboardRequest;
-    }
-
-
-    private void showLocationAlert() {
-
-        try {
-
-            Dialog dialog = new Dialog(PetLoverDashboardActivity.this);
-            dialog.setContentView(R.layout.alert_location_allow_deny_layout);
-            dialog.setCanceledOnTouchOutside(false);
-            Button btn_allow = dialog.findViewById(R.id.btn_allow);
-            Button btn_deny = dialog.findViewById(R.id.btn_deny);
-            btn_deny.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showLocationDenyAlert();
-                    dialog.dismiss();
-
-                }
-            });
-            btn_allow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    startActivity(new Intent(PetLoverDashboardActivity.this, PickUpLocationAllowActivity.class));
-                    dialog.dismiss();
-
-                }
-            });
-            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.show();
-
-        } catch (WindowManager.BadTokenException e) {
-            e.printStackTrace();
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
         }
-
-
-
-
-    }
-    private void showLocationDenyAlert() {
-
-        try {
-
-           Dialog dialog = new Dialog(PetLoverDashboardActivity.this);
-            dialog.setContentView(R.layout.alert_location_deny_layout);
-            dialog.setCanceledOnTouchOutside(false);
-
-            ImageView img_close = dialog.findViewById(R.id.img_close);
-            img_close.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    startActivity(new Intent(PetLoverDashboardActivity.this, PickUpLocationDenyActivity.class));
-                    dialog.dismiss();
-
-                }
-            });
-            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.show();
-
-        } catch (WindowManager.BadTokenException e) {
-            e.printStackTrace();
-        }
-
-
-
-
-    }
-
-    public void showErrorLoading(String errormesage){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage(errormesage);
-        alertDialogBuilder.setPositiveButton("ok",
-                (arg0, arg1) -> hideLoading());
-
-
-
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
-    public void hideLoading(){
-        try {
-            alertDialog.dismiss();
-        }catch (Exception ignored){
-
-        }
-    }
-
-    public boolean checkLocationPermission() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_LOCATION);
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_LOCATION);
-            }
-            return false;
-        } else {
-            return true;
-        }
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NotNull String[] permissions, @NotNull int[] grantResults) {
-        if (requestCode == MY_PERMISSIONS_REQUEST_LOCATION) {
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (ContextCompat.checkSelfPermission(this,
-                        Manifest.permission.ACCESS_FINE_LOCATION)
-                        == PackageManager.PERMISSION_GRANTED) {
-                    if (mGoogleApiClient == null) {
-                        buildGoogleApiClient();
-                    }
-
-                }
-            } else {
-                Toast.makeText(this, "permission denied",
-                        Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
-
-    private void checkLocation(){
-        try{
-            LocationManager lm = (LocationManager)getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-            boolean gps_enabled = false;
-            boolean network_enabled = false;
-
-            try {
-                if (lm != null) {
-                    gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-                }
-            } catch(Exception ignored) {}
-
-            try {
-                if (lm != null) {
-                    network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-                }
-            } catch(Exception ignored) {}
-
-            if(!gps_enabled && !network_enabled) {
-
-                if (lm != null && !lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    showSettingsAlert();
+        else if(tag != null ){
+            Log.w(TAG,"Else IF--->"+"fromactivity : "+fromactivity);
+            if(fromactivity != null){
+                if(fromactivity.equalsIgnoreCase("PopularServiceActivity")) {
+                    Intent intent = new Intent(PetLoverDashboardActivity.this, PetLoverDashboardActivity.class);
+                    intent.putExtra("fromactivity", "PopularServiceActivity");
+                    intent.putExtra("selectedVehicleId", selectedVehicleId);
+                    intent.putExtra("selectedVehicleType", selectedVehicleType);
+                    intent.putExtra("masterserviceid", masterserviceid);
+                    startActivity(intent);
                 }
 
             }else{
-                getLatandLong();
+                bottom_navigation_view.setSelectedItemId(R.id.home);
+                // load fragment
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.main_container,new HomeFragment());
+                transaction.commit();
             }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-    }
-    private void getLatandLong(){
-        try{
-            if (ContextCompat.checkSelfPermission(PetLoverDashboardActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(PetLoverDashboardActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(PetLoverDashboardActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-
-            }
-            else {
-                GPSTracker gps = new GPSTracker(PetLoverDashboardActivity.this);
-
-                // Check if GPS enabled
-                if (gps.canGetLocation()) {
-                    latitude = gps.getLatitude();
-                    longitude = gps.getLongitude();
-
-                    Log.w(TAG,"getLatandLong--->"+"latitude" + " " + latitude+"longitude" + " " + longitude);
-                   LatLng latLng = new LatLng(latitude,longitude);
-                    getCompleteAddressString(latitude,longitude);
 
 
-                }
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-    }
-    public void showSettingsAlert() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(PetLoverDashboardActivity.this);
-
-        // Setting DialogHelp Title
-        alertDialog.setTitle("GPS is settings");
-
-        // Setting DialogHelp Message
-        alertDialog
-                .setMessage("GPS is not enabled. Do you want to go to settings menu?");
-
-        // On pressing Settings button
-        alertDialog.setPositiveButton("Settings",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(
-                                Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        startActivity(intent);
-                    }
-                });
-
-        // on pressing cancel button
-        alertDialog.setNegativeButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-        // Showing Alert Message
-        alertDialog.show();
-    }
-    protected synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-        mGoogleApiClient.connect();
-    }
-
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
-
-
-
-    @SuppressLint("LongLogTag")
-    private void getCompleteAddressString(double LATITUDE, double LONGITUDE) {
-
-        Geocoder geocoder = new Geocoder(PetLoverDashboardActivity.this, Locale.getDefault());
-        try {
-            List<Address> addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1);
-            if (addresses != null) {
-                Address returnedAddress = addresses.get(0);
-                StringBuilder strReturnedAddress = new StringBuilder("");
-
-                for (int i = 0; i <= returnedAddress.getMaxAddressLineIndex(); i++) {
-                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
-                }
-                AddressLine = strReturnedAddress.toString();
-                Log.w("My Current loction address", strReturnedAddress.toString());
-            } else {
-                Log.w("My Current loction address", "No Address returned!");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.w("My Current loction address", "Canont get Address!");
+        }else{
+            bottom_navigation_view.setSelectedItemId(R.id.home);
+            // load fragment
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.main_container,new HomeFragment());
+            transaction.commit();
         }
     }
 
+    private void replaceFragment(Fragment fragment){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_container,fragment);
+        transaction.commit();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+                case R.id.home:
+                replaceFragment(new HomeFragment());
+                break;
+                case R.id.search:
+                //replaceFragment(new SearchFragment());
+                break;
+                case R.id.myvehicle:
+                //replaceFragment(new MyVehicleFragment());
+                break;
+                case R.id.cart:
+               // replaceFragment(new CartFragment());
+                break;
+            case R.id.account:
+               // replaceFragment(new AccountFragment());
+                break;
+
+            default:
+                return  false;
+        }
+        return true;
+    }
 }
-
-
-
-
-
-
-
-
