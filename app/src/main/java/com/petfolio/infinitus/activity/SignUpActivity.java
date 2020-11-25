@@ -27,6 +27,7 @@ import com.petfolio.infinitus.requestpojo.SignupRequest;
 import com.petfolio.infinitus.requestpojo.UserStatusUpdateRequest;
 import com.petfolio.infinitus.responsepojo.SignupResponse;
 import com.petfolio.infinitus.responsepojo.UserStatusUpdateResponse;
+import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -225,6 +226,20 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 if (response.body() != null) {
 
                     if (200 == response.body().getCode()) {
+
+                        SessionManager sessionManager = new SessionManager(SignUpActivity.this);
+                        sessionManager.logoutUser();
+                        sessionManager.setIsLogin(true);
+                        sessionManager.createLoginSession(
+                                response.body().getData().get_id(),
+                                response.body().getData().getFirst_name(),
+                                response.body().getData().getLast_name(),
+                                response.body().getData().getUser_email(),
+                                response.body().getData().getUser_phone(),
+                                String.valueOf(response.body().getData().getUser_type()),
+                                response.body().getData().getUser_status()
+                        );
+
                         Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
                         Intent intent = new Intent(SignUpActivity.this,VerifyOtpActivity.class);
                         intent.putExtra("phonemumber",response.body().getData().getUser_phone());
@@ -232,6 +247,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         intent.putExtra("usertype",response.body().getData().getUser_type());
                         intent.putExtra("userstatus","Incomplete");
                         startActivity(intent);
+
 
                     } else {
                         showErrorLoading(response.body().getMessage());

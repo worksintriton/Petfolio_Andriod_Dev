@@ -2,16 +2,16 @@ package com.petfolio.infinitus.petlover;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
+
 import android.util.Log;
 
 import android.view.MenuItem;
@@ -24,12 +24,13 @@ import com.petfolio.infinitus.fragmentpetlover.HomeFragment;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Objects;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PetLoverDashboardActivity extends AppCompatActivity implements Serializable, BottomNavigationView.OnNavigationItemSelectedListener {
+public class PetLoverDashboardActivity  extends NavigationDrawer implements Serializable, BottomNavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
@@ -37,7 +38,7 @@ public class PetLoverDashboardActivity extends AppCompatActivity implements Seri
     @BindView(R.id.bottom_navigation_view)
     BottomNavigationView bottom_navigation_view;
 
-    private String TAG ="DashboardActivity";
+    private String TAG = "PetLoverDashboardActivity";
 
     final Fragment homeFragment = new HomeFragment();
     /*final Fragment searchFragment = new SearchFragment();
@@ -50,12 +51,10 @@ public class PetLoverDashboardActivity extends AppCompatActivity implements Seri
     Fragment active = homeFragment;
     String tag;
 
-    String selectedVehicleId,selectedVehicleType,masterserviceid,fromactivity;
-    String serviceid,servicename,masterservicename;
+    String fromactivity;
 
-    private String locationID;
-    private String bookingdateandtime;
-    String BookingDate, BookingTime;
+
+
 
 
 
@@ -121,12 +120,9 @@ public class PetLoverDashboardActivity extends AppCompatActivity implements Seri
 
             if(fromactivity.equalsIgnoreCase("PopularServiceActivity")) {
                 bundle.putString("fromactivity", fromactivity);
-                bundle.putString("selectedVehicleId", selectedVehicleId);
-                bundle.putString("selectedVehicleType", selectedVehicleType);
-                bundle.putString("masterserviceid", masterserviceid);
+
                 // set Fragmentclass Arguments
                 fragment.setArguments(bundle);
-                Log.w(TAG,"selectedVehicleId : "+selectedVehicleId+" "+"selectedVehicleType : "+selectedVehicleType+" "+"masterserviceid : "+masterserviceid);
                 Log.w(TAG,"fromactivity : "+fromactivity);
                 // load fragment
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -136,17 +132,10 @@ public class PetLoverDashboardActivity extends AppCompatActivity implements Seri
             }
             else if(fromactivity.equalsIgnoreCase("SubServicesActivity")) {
                 bundle.putString("fromactivity", fromactivity);
-                bundle.putString("selectedVehicleId", selectedVehicleId);
-                bundle.putString("selectedVehicleType", selectedVehicleType);
-                bundle.putString("masterserviceid", masterserviceid);
 
-                bundle.putString("serviceid", serviceid);
-                bundle.putString("servicename", servicename);
-                bundle.putString("masterservicename", masterservicename);
 
                 // set Fragmentclass Arguments
                 fragment.setArguments(bundle);
-                Log.w(TAG,"selectedVehicleId : "+selectedVehicleId+" "+"selectedVehicleType : "+selectedVehicleType+" "+"masterserviceid : "+masterserviceid);
                 Log.w(TAG,"fromactivity : "+fromactivity);
 
                 // load fragment
@@ -158,12 +147,7 @@ public class PetLoverDashboardActivity extends AppCompatActivity implements Seri
         }else {
 
 
-            bundle.putString("locationID", locationID);
-            bundle.putString("bookingdateandtime", bookingdateandtime);
-            bundle.putString("BookingDate", BookingDate);
-            bundle.putString("BookingTime", BookingTime);
 
-            Log.w(TAG,"locationid-->"+locationID+"bookingdateandtime : "+bookingdateandtime);
 
 
             // set Fragmentclass Arguments
@@ -184,11 +168,7 @@ public class PetLoverDashboardActivity extends AppCompatActivity implements Seri
             new android.app.AlertDialog.Builder(PetLoverDashboardActivity.this)
                     .setMessage("Are you sure you want to exit?")
                     .setCancelable(false)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            PetLoverDashboardActivity.this.finishAffinity();
-                        }
-                    })
+                    .setPositiveButton("Yes", (dialog, id) -> PetLoverDashboardActivity.this.finishAffinity())
                     .setNegativeButton("No", null)
                     .show();
         }
@@ -198,9 +178,7 @@ public class PetLoverDashboardActivity extends AppCompatActivity implements Seri
                 if(fromactivity.equalsIgnoreCase("PopularServiceActivity")) {
                     Intent intent = new Intent(PetLoverDashboardActivity.this, PetLoverDashboardActivity.class);
                     intent.putExtra("fromactivity", "PopularServiceActivity");
-                    intent.putExtra("selectedVehicleId", selectedVehicleId);
-                    intent.putExtra("selectedVehicleType", selectedVehicleType);
-                    intent.putExtra("masterserviceid", masterserviceid);
+
                     startActivity(intent);
                 }
 
@@ -252,5 +230,15 @@ public class PetLoverDashboardActivity extends AppCompatActivity implements Seri
                 return  false;
         }
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.w(TAG,"onActivityResult--->");
+        Log.w(TAG,"resultCode---->"+resultCode+"requestCode: "+requestCode);
+
+        Fragment fragment = Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.main_container));
+        fragment.onActivityResult(requestCode,resultCode,data);
     }
 }

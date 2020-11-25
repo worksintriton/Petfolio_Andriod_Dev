@@ -1,7 +1,13 @@
 package com.petfolio.infinitus.api;
 
 import com.petfolio.infinitus.requestpojo.AddYourPetRequest;
+import com.petfolio.infinitus.requestpojo.CreateHolidayRequest;
 import com.petfolio.infinitus.requestpojo.DocBusInfoUploadRequest;
+import com.petfolio.infinitus.requestpojo.DoctorMyCalendarAvlDaysRequest;
+import com.petfolio.infinitus.requestpojo.DoctorMyCalendarAvlTimesRequest;
+import com.petfolio.infinitus.requestpojo.DoctorMyCalendarUpdateDocDateRequest;
+import com.petfolio.infinitus.requestpojo.HolidayDeleteRequest;
+import com.petfolio.infinitus.requestpojo.HolidayListRequest;
 import com.petfolio.infinitus.requestpojo.LocationAddRequest;
 import com.petfolio.infinitus.requestpojo.LoginRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverDashboardRequest;
@@ -9,9 +15,15 @@ import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
 import com.petfolio.infinitus.requestpojo.SignupRequest;
 import com.petfolio.infinitus.requestpojo.UserStatusUpdateRequest;
 import com.petfolio.infinitus.responsepojo.AddYourPetResponse;
+import com.petfolio.infinitus.responsepojo.CreateHolidayResponse;
 import com.petfolio.infinitus.responsepojo.DocBusInfoUploadResponse;
+import com.petfolio.infinitus.responsepojo.DoctorMyCalendarAvlDaysResponse;
+import com.petfolio.infinitus.responsepojo.DoctorMyCalendarAvlTimesResponse;
+import com.petfolio.infinitus.responsepojo.DoctorMyCalendarUpdateDocDateResponse;
 import com.petfolio.infinitus.responsepojo.DropDownListResponse;
 import com.petfolio.infinitus.responsepojo.FileUploadResponse;
+import com.petfolio.infinitus.responsepojo.HolidayDeleteResponse;
+import com.petfolio.infinitus.responsepojo.HolidayListResponse;
 import com.petfolio.infinitus.responsepojo.LocationAddResponse;
 import com.petfolio.infinitus.responsepojo.LoginResponse;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
@@ -74,6 +86,34 @@ public interface RestApiInterface {
 
     @POST("doctordetails/create")
     Call<DocBusInfoUploadResponse> docsBusInfoUpldResponse(@Header("Content-Type") String type, @Body DocBusInfoUploadRequest docBusInfoUploadRequest);
+
+
+    /*Doctor Create holiday*/
+    @POST("holiday/create")
+    Call<CreateHolidayResponse>createHolidayResponseCall(@Header("Content-Type") String type, @Body CreateHolidayRequest createHolidayRequest );
+
+
+    /*Doctor Listing added holidays*/
+    @POST("holiday/getlist_id")
+    Call<HolidayListResponse>holidayListResponseCall(@Header("Content-Type") String type, @Body HolidayListRequest holidayListRequest  );
+
+    /*Doctor holiday delete*/
+    @POST("holiday/delete")
+    Call<HolidayDeleteResponse>holidayDeleteResponseCall(@Header("Content-Type") String type, @Body HolidayDeleteRequest holidayDeleteRequest  );
+
+    /*doctor my calendar available days*/
+    @POST("new_doctortime/fetch_dates")
+    Call<DoctorMyCalendarAvlDaysResponse>doctorMyCalendarAvlDaysResponseCall(@Header("Content-Type") String type, @Body DoctorMyCalendarAvlDaysRequest doctorMyCalendarAvlDaysRequest);
+
+    /*doctor my calendar available times*/
+    @POST("new_doctortime/get_time_Details")
+    Call<DoctorMyCalendarAvlTimesResponse>doctorMyCalendarAvlTimesResponseCall(@Header("Content-Type") String type, @Body DoctorMyCalendarAvlTimesRequest doctorMyCalendarAvlTimesRequest);
+
+
+    /*doctor my calendar update*/
+    @POST("new_doctortime/update_doc_date")
+    Call<DoctorMyCalendarUpdateDocDateResponse>doctorMyCalendarUpdateDocDateResponseCall(@Header("Content-Type") String type, @Body DoctorMyCalendarUpdateDocDateRequest doctorMyCalendarUpdateDocDateRequest);
+
 
 
 }

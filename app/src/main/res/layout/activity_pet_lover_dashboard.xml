@@ -6,12 +6,7 @@
     android:background="@color/whiteTwo"
     android:orientation="vertical"
     android:id="@+id/main_container">
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/app_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <include layout="@layout/content_home" />
+
 
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/avi_indicator"

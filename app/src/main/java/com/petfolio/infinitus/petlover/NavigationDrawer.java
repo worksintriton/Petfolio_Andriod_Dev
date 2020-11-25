@@ -147,8 +147,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
 
         navigationView.setNavigationItemSelectedListener(this);
          menu = navigationView.getMenu();
-       // becomeajockey = menu.findItem(R.id.nav_item_seven);
-      //  jockeyoptions = menu.findItem(R.id.nav_item_eight);
+
 
 
         // Initializing Drawer Layout and ActionBarToggle
@@ -174,21 +173,14 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     private void initToolBar(View view) {
         toolbar = view.findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        drawerImg = toolbar.findViewById(R.id.tvHeaderIcon);
-       // header_title = (TextView) toolbar.findViewById(R.id.header_title);
+        drawerImg = toolbar.findViewById(R.id.img_menu);
 
 
-        tvWelcomeName = toolbar.findViewById(R.id.tvWelcome);
+        tvWelcomeName = toolbar.findViewById(R.id.toolbar_title);
 
         tvWelcomeName.setText("Home " );
 
-        btnNotificationPatient = toolbar.findViewById(R.id.btnnotificationspatient);
-        btnNotificationPatient.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
 
         toggleView();
     }
@@ -239,7 +231,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tvHeaderIcon:
+            case R.id.img_menu:
                 drawerMethod();
                 break;
         }
@@ -282,6 +274,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
                 gotoTermsandConditions();
                 return true;
             case R.id.nav_item_seven:
+                Log.w(TAG,"Click logout");
                 confirmLogoutDialog();
                  return true;
 
