@@ -6,6 +6,7 @@ import com.petfolio.infinitus.requestpojo.DocBusInfoUploadRequest;
 import com.petfolio.infinitus.requestpojo.DoctorMyCalendarAvlDaysRequest;
 import com.petfolio.infinitus.requestpojo.DoctorMyCalendarAvlTimesRequest;
 import com.petfolio.infinitus.requestpojo.DoctorMyCalendarUpdateDocDateRequest;
+import com.petfolio.infinitus.requestpojo.DoctorNewAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.HolidayDeleteRequest;
 import com.petfolio.infinitus.requestpojo.HolidayListRequest;
 import com.petfolio.infinitus.requestpojo.LocationAddRequest;
@@ -17,9 +18,12 @@ import com.petfolio.infinitus.requestpojo.UserStatusUpdateRequest;
 import com.petfolio.infinitus.responsepojo.AddYourPetResponse;
 import com.petfolio.infinitus.responsepojo.CreateHolidayResponse;
 import com.petfolio.infinitus.responsepojo.DocBusInfoUploadResponse;
+import com.petfolio.infinitus.responsepojo.DoctorCompletedAppointmentResponse;
+import com.petfolio.infinitus.responsepojo.DoctorMissedAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.DoctorMyCalendarAvlDaysResponse;
 import com.petfolio.infinitus.responsepojo.DoctorMyCalendarAvlTimesResponse;
 import com.petfolio.infinitus.responsepojo.DoctorMyCalendarUpdateDocDateResponse;
+import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.DropDownListResponse;
 import com.petfolio.infinitus.responsepojo.FileUploadResponse;
 import com.petfolio.infinitus.responsepojo.HolidayDeleteResponse;
@@ -114,6 +118,17 @@ public interface RestApiInterface {
     @POST("new_doctortime/update_doc_date")
     Call<DoctorMyCalendarUpdateDocDateResponse>doctorMyCalendarUpdateDocDateResponseCall(@Header("Content-Type") String type, @Body DoctorMyCalendarUpdateDocDateRequest doctorMyCalendarUpdateDocDateRequest);
 
+    /*Doctor New Appointment*/
+    @POST("appointments/mobile/doc_getlist/newapp")
+    Call<DoctorNewAppointmentResponse>doctorNewAppointmentResponseCall(@Header("Content-Type") String type, @Body DoctorNewAppointmentRequest doctorNewAppointmentRequest);
+
+    /*Doctor Completed Appointment*/
+    @POST("appointments/mobile/doc_getlist/comapp")
+    Call<DoctorCompletedAppointmentResponse>doctorCompletedAppointmentResponseCall(@Header("Content-Type") String type, @Body DoctorNewAppointmentRequest doctorNewAppointmentRequest);
+
+    /*Doctor Missed Appointment*/
+    @POST("appointments/mobile/doc_getlist/missapp")
+    Call<DoctorMissedAppointmentResponse>doctorMissedAppointmentResponseCall(@Header("Content-Type") String type, @Body DoctorNewAppointmentRequest doctorNewAppointmentRequest);
 
 
 }

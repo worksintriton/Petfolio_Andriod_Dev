@@ -17,25 +17,29 @@
         app:tabPaddingStart="0dp"
         app:tabPaddingEnd="0dp"
         app:tabMode="fixed"
-        app:tabGravity="fill">
+        app:tabRippleColor="@null"
+        app:tabBackground="@drawable/tab_background"
+        app:tabGravity="fill"
+        >
 
-    <com.google.android.material.tabs.TabItem
-        android:id="@+id/tabChats"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tabnew" />
 
-    <com.google.android.material.tabs.TabItem
-        android:id="@+id/tabStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tabcompleted" />
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabNew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tabnew" />
 
-    <com.google.android.material.tabs.TabItem
-        android:id="@+id/tabCalls"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tabmissed" />
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabCompleted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tabcompleted" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabMissed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tabmissed" />
 
     </com.google.android.material.tabs.TabLayout>
 
@@ -43,5 +47,7 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+
 
 </LinearLayout>

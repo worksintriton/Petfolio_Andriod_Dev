@@ -130,6 +130,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Log.w(TAG,"ResendOTPResponse" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
+
                         Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
                        SessionManager sessionManager = new SessionManager(LoginActivity.this);
                         sessionManager.logoutUser();

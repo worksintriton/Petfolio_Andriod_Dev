@@ -108,6 +108,13 @@
     <string name="load_more">Load More</string>
     <string name="settings">Settings</string>
     <string name="logout">Logout</string>
+    <string name="norecordsfound">No Records Found</string>
+
+    <string name="serv_name">Service name * Service cost ₹ 800</string>
+    <string name="cancel">Cancel</string>
+    <string name="complete">Complete</string>
+    <string name="completed_on_date">Completed on 01-Sep-2020</string>
+    <string name="missed_on_date">Missed on 01-Sep-2020</string>
 
 
 </resources>

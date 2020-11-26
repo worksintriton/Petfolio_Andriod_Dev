@@ -21,6 +21,9 @@ android {
         }
     }
     android {
+        dataBinding {
+            enabled = true
+        }
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
@@ -86,6 +89,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:20.0.1'
     // Add the Firebase SDK for Google Analytics
     implementation 'com.google.firebase:firebase-analytics:18.0.0'
+
+
 
 
 
