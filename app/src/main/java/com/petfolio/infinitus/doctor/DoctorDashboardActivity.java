@@ -2,7 +2,6 @@ package com.petfolio.infinitus.doctor;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 
@@ -21,7 +20,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.fragmentdoctor.FragmentDoctorDashboard;
 import com.petfolio.infinitus.fragmentpetlover.HomeFragment;
-import com.petfolio.infinitus.petlover.NavigationDrawer;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.Serializable;
@@ -39,7 +37,7 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
     @BindView(R.id.bottom_navigation_view)
     BottomNavigationView bottom_navigation_view;
 
-    private String TAG = "PetLoverDashboardActivity";
+    private String TAG = "DoctorDashboardActivity";
 
     final Fragment homeFragment = new FragmentDoctorDashboard();
     /*final Fragment searchFragment = new SearchFragment();

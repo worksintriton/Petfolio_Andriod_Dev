@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.responsepojo.DoctorMissedAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
 
 import java.util.List;
@@ -22,14 +23,14 @@ import java.util.List;
 public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private  String TAG = "DoctorNewAppointmentAdapter";
-    private final List<DoctorNewAppointmentResponse.DataBean> newAppointmentResponseList;
+    private List<DoctorMissedAppointmentResponse.DataBean> missedAppointmentResponseList;
     private Context context;
 
-    DoctorNewAppointmentResponse.DataBean currentItem;
+    DoctorMissedAppointmentResponse.DataBean currentItem;
 
 
-    public DoctorMissedAppointmentAdapter(Context context, List<DoctorNewAppointmentResponse.DataBean> newAppointmentResponseList, RecyclerView inbox_list) {
-        this.newAppointmentResponseList = newAppointmentResponseList;
+    public DoctorMissedAppointmentAdapter(Context context, List<DoctorMissedAppointmentResponse.DataBean> missedAppointmentResponseList, RecyclerView inbox_list) {
+        this.missedAppointmentResponseList = missedAppointmentResponseList;
         this.context = context;
 
 
@@ -38,7 +39,7 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_new_appointment, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_missed_appointment, parent, false);
         return new ViewHolderOne(view);
     }
 
@@ -52,12 +53,13 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
     @SuppressLint("SetTextI18n")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
-        Log.w(TAG,"Pet name-->"+newAppointmentResponseList.get(0).getPet_id().getPet_name());
+        Log.w(TAG,"Pet name-->"+missedAppointmentResponseList.get(0).getPet_id().getPet_name());
 
-        currentItem = newAppointmentResponseList.get(position);
-        holder.txt_petname.setText("Pet name : "+newAppointmentResponseList.get(0).getPet_id().getPet_name());
-        holder.txt_pettype.setText("Pet type : "+ newAppointmentResponseList.get(0).getPet_id().getPet_type());
-        holder.txt_service_info.setText("Service name :"+" "+newAppointmentResponseList.get(0).getAmount());
+        currentItem = missedAppointmentResponseList.get(position);
+        holder.txt_petname.setText("Pet name : "+missedAppointmentResponseList.get(0).getPet_id().getPet_name());
+        holder.txt_pettype.setText("Pet type : "+ missedAppointmentResponseList.get(0).getPet_id().getPet_type());
+        holder.txt_service_info.setText("Service name :"+" "+missedAppointmentResponseList.get(0).getService_name()+" Service Cost : "+missedAppointmentResponseList.get(0).getService_amount());
+        holder.txt_missed_date.setText("Missed on:"+" "+missedAppointmentResponseList.get(0).getMissed_at());
 
 
 
@@ -159,7 +161,7 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
 
     @Override
     public int getItemCount() {
-        return newAppointmentResponseList.size();
+        return missedAppointmentResponseList.size();
     }
 
 
@@ -169,7 +171,7 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
     }
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_petname,txt_pettype,txt_service_info;
+        public TextView txt_petname,txt_pettype,txt_service_info,txt_missed_date;
         public ImageView img_pet_imge;
         public Button btn_cancel,btn_complete;
 
@@ -181,6 +183,7 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
             txt_petname = itemView.findViewById(R.id.txt_petname);
             txt_pettype = itemView.findViewById(R.id.txt_pettype);
             txt_service_info = itemView.findViewById(R.id.txt_service_info);
+            txt_missed_date = itemView.findViewById(R.id.txt_missed_date);
             btn_cancel = itemView.findViewById(R.id.btn_cancel);
             btn_complete = itemView.findViewById(R.id.btn_complete);
 

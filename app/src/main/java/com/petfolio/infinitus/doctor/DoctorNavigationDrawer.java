@@ -1,5 +1,6 @@
 package com.petfolio.infinitus.doctor;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
@@ -34,7 +35,7 @@ import com.petfolio.infinitus.activity.LoginActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class DoctorNavigationDrawer extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class DoctorNavigationDrawer extends AppCompatActivity implements View.OnClickListener {
 
     public NavigationView navigationView;
     private DrawerLayout drawerLayout;
@@ -131,8 +132,56 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
 
         frameLayout = view.findViewById(R.id.base_container);
 
-        navigationView.setNavigationItemSelectedListener(this);
-         menu = navigationView.getMenu();
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                item.setChecked(true);
+                drawerLayout.closeDrawers();
+
+
+
+                //Check to see which item was being clicked and perform appropriate action
+                switch (item.getItemId()) {
+
+                    //Replacing the main content with ContentFragment Which is our Inbox View;
+                    case R.id.nav_item_one:
+                        gotoMyAppointments();
+                        return true;
+
+                    // For rest of the options we just show a toast on click
+                    case R.id.nav_item_two:
+                        gotoMyCalendar();
+                        return true;
+
+                    case R.id.nav_item_three:
+                        gotoHealthFiles();
+                        return true;
+
+                    case R.id.nav_item_five:
+                        gotoMyFamily();
+                        return true;
+
+                    case R.id.nav_item_six:
+                        gotoInvoices();
+                        return true;
+
+                    case R.id.nav_item_seven:
+                        gotoTermsandConditions();
+                        return true;
+                    case R.id.nav_item_eight:
+                        confirmLogoutDialog();
+                        return true;
+
+
+                    default:
+                        return true;
+                }
+            }
+        });
+
+
+
+        menu = navigationView.getMenu();
        // becomeajockey = menu.findItem(R.id.nav_item_seven);
       //  jockeyoptions = menu.findItem(R.id.nav_item_eight);
 
@@ -214,64 +263,21 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
         //drawerMethod();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.img_menu:
-                drawerMethod();
-                break;
+        if (v.getId() == R.id.img_menu) {
+            drawerMethod();
         }
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
 
-        //Closing drawer on item click
-        drawerLayout.closeDrawers();
-
-        //Check to see which item was being clicked and perform appropriate action
-        switch (menuItem.getItemId()) {
-
-            //Replacing the main content with ContentFragment Which is our Inbox View;
-            case R.id.nav_item_one:
-                gotoMyFamily();
-                return true;
-
-            // For rest of the options we just show a toast on click
-            case R.id.nav_item_two:
-                gotoMyAppointments();
-                return true;
-
-                case R.id.nav_item_three:
-                gotoHealthFiles();
-                return true;
-
-            case R.id.nav_item_five:
-                gotoMyFamily();
-                return true;
-
-            case R.id.nav_item_six:
-                gotoInvoices();
-                return true;
-
-            case R.id.nav_item_seven:
-                gotoTermsandConditions();
-                return true;
-            case R.id.nav_item_eight:
-                confirmLogoutDialog();
-                 return true;
-
-
-
-
-            default:
-                return true;
-
-        }
+    private void gotoMyCalendar() {
+        Intent i = new Intent(DoctorNavigationDrawer.this, DoctorMyCalendarActivity.class);
+        startActivity(i);
 
     }
-
 
 
     private void confirmLogoutDialog(){

@@ -117,8 +117,46 @@ public class DoctorCompletedAppointmentResponse {
         private String allergies;
         private String payment_id;
         private String amount;
+        private String service_name;
+        private String service_amount;
+        private String completed_at;
+        private String missed_at;
         private int __v;
         private List<DocAttchedBean> doc_attched;
+
+
+        public String getService_name() {
+            return service_name;
+        }
+
+        public void setService_name(String service_name) {
+            this.service_name = service_name;
+        }
+
+        public String getService_amount() {
+            return service_amount;
+        }
+
+        public void setService_amount(String service_amount) {
+            this.service_amount = service_amount;
+        }
+
+        public String getCompleted_at() {
+            return completed_at;
+        }
+
+        public void setCompleted_at(String completed_at) {
+            this.completed_at = completed_at;
+        }
+
+        public String getMissed_at() {
+            return missed_at;
+        }
+
+        public void setMissed_at(String missed_at) {
+            this.missed_at = missed_at;
+        }
+
 
 
         public String get_id() {

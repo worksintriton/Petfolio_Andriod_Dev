@@ -18,10 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.adapter.DoctorMissedAppointmentAdapter;
 import com.petfolio.infinitus.adapter.DoctorNewAppointmentAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.requestpojo.DoctorNewAppointmentRequest;
+import com.petfolio.infinitus.responsepojo.DoctorMissedAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -64,7 +66,7 @@ public class FragmentMissedAppointment extends Fragment {
     String type = "",name = "",doctorid = "";
     private SharedPreferences preferences;
     private Context mContext;
-    private List<DoctorNewAppointmentResponse.DataBean> newAppointmentResponseList;
+    private List<DoctorMissedAppointmentResponse.DataBean> missedAppointmentResponseList;
 
 
     public FragmentMissedAppointment() {
@@ -96,39 +98,34 @@ public class FragmentMissedAppointment extends Fragment {
       
 
         if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-
-
-            doctorNewAppointmentResponseCall();
+            doctorMissedAppointmentResponseCall();
         }
         return view;
     }
 
 
 
-    private void doctorNewAppointmentResponseCall() {
+    private void doctorMissedAppointmentResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<DoctorNewAppointmentResponse> call = ApiService.doctorNewAppointmentResponseCall(RestUtils.getContentType(),doctorNewAppointmentRequest());
+        Call<DoctorMissedAppointmentResponse> call = ApiService.doctorMissedAppointmentResponseCall(RestUtils.getContentType(),doctorNewAppointmentRequest());
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
-        call.enqueue(new Callback<DoctorNewAppointmentResponse>() {
+        call.enqueue(new Callback<DoctorMissedAppointmentResponse>() {
             @Override
-            public void onResponse(@NonNull Call<DoctorNewAppointmentResponse> call, @NonNull Response<DoctorNewAppointmentResponse> response) {
+            public void onResponse(@NonNull Call<DoctorMissedAppointmentResponse> call, @NonNull Response<DoctorMissedAppointmentResponse> response) {
                avi_indicator.smoothToHide();
-                Log.w(TAG,"doctorPastAppointmentResponseCall"+ "--->" + new Gson().toJson(response.body()));
+                Log.w(TAG,"DoctorMissedAppointmentResponse"+ "--->" + new Gson().toJson(response.body()));
 
 
                if (response.body() != null) {
-
-
-
-                    newAppointmentResponseList = response.body().getData();
-                    Log.w(TAG,"Size"+newAppointmentResponseList.size());
-                    Log.w(TAG,"newAppointmentResponseList : "+new Gson().toJson(newAppointmentResponseList));
+                   missedAppointmentResponseList = response.body().getData();
+                    Log.w(TAG,"Size"+missedAppointmentResponseList.size());
+                    Log.w(TAG,"missedAppointmentResponseList : "+new Gson().toJson(missedAppointmentResponseList));
                     if(response.body().getData().isEmpty()){
                         tvNoRecords.setVisibility(View.VISIBLE);
-                        tvNoRecords.setText("No new appointments");
+                        tvNoRecords.setText("No missed appointments");
                         rv_missedappointment.setVisibility(View.GONE);
                     }else{
                         tvNoRecords.setVisibility(View.GONE);
@@ -140,30 +137,25 @@ public class FragmentMissedAppointment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<DoctorNewAppointmentResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<DoctorMissedAppointmentResponse> call, @NonNull Throwable t) {
                 avi_indicator.smoothToHide();
 
-                Log.w(TAG,"DoctorNewAppointmentResponseflr"+"--->" + t.getMessage());
+                Log.w(TAG,"DoctorMissedAppointmentResponse flr"+"--->" + t.getMessage());
             }
         });
 
     }
     private DoctorNewAppointmentRequest doctorNewAppointmentRequest() {
-
         DoctorNewAppointmentRequest doctorNewAppointmentRequest = new DoctorNewAppointmentRequest();
-
         doctorNewAppointmentRequest.setDoctor_id(doctorid);
-
-
-
         Log.w(TAG,"doctorNewAppointmentRequest"+ "--->" + new Gson().toJson(doctorNewAppointmentRequest));
         return doctorNewAppointmentRequest;
     }
     private void setView() {
         rv_missedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_missedappointment.setItemAnimator(new DefaultItemAnimator());
-        DoctorNewAppointmentAdapter doctorNewAppointmentAdapter = new DoctorNewAppointmentAdapter(getContext(), newAppointmentResponseList, rv_missedappointment);
-        rv_missedappointment.setAdapter(doctorNewAppointmentAdapter);
+        DoctorMissedAppointmentAdapter doctorMissedAppointmentAdapter = new DoctorMissedAppointmentAdapter(getContext(), missedAppointmentResponseList, rv_missedappointment);
+        rv_missedappointment.setAdapter(doctorMissedAppointmentAdapter);
 
     }
 }

@@ -43,8 +43,6 @@ import retrofit2.Response;
 public class FragmentCompletedAppointment extends Fragment {
     private String TAG = "FragmentCompletedAppointment";
 
-
-
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 

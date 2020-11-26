@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tablayout"
         android:layout_width="match_parent"
-        android:layout_margin="@dimen/tab_spacing_half"
         android:layout_height="wrap_content"
-        app:tabSelectedTextColor="@color/light_green_color"
-        app:tabTextColor="@color/green_color"
-        app:tabIndicatorHeight="0dp"
-        app:tabPaddingStart="0dp"
-        app:tabPaddingEnd="0dp"
-        app:tabMode="fixed"
-        app:tabRippleColor="@null"
+        android:layout_margin="@dimen/tab_spacing_half"
         app:tabBackground="@drawable/tab_background"
         app:tabGravity="fill"
-        >
+        app:tabIndicatorHeight="0dp"
+        app:tabMode="fixed"
+        app:tabPaddingEnd="0dp"
+        app:tabPaddingStart="0dp"
+        app:tabRippleColor="@null"
+        app:tabSelectedTextColor="@color/light_green_color"
+        app:tabTextColor="@color/green_color">
 
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabNew"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tabnew" />
+            android:text="@string/tabnew"
+            />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabCompleted"
@@ -47,7 +47,6 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
 
 
 </LinearLayout>

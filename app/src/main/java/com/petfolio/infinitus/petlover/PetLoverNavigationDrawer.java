@@ -1,17 +1,12 @@
 package com.petfolio.infinitus.petlover;
 
-import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,29 +21,21 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 
 
-import java.util.HashMap;
-
 import de.hdodenhof.circleimageview.CircleImageView;
-import es.dmoral.toasty.Toasty;
 
 
-
-public class NavigationDrawer extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class PetLoverNavigationDrawer extends AppCompatActivity implements View.OnClickListener {
 
     public NavigationView navigationView;
     private DrawerLayout drawerLayout;
@@ -135,8 +122,8 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
     }
 
     private void initUI(View view) {
-        pDialog = new ProgressDialog(NavigationDrawer.this);
-        pDialog.setMessage(NavigationDrawer.this.getString(R.string.please_wait));
+        pDialog = new ProgressDialog(PetLoverNavigationDrawer.this);
+        pDialog.setMessage(PetLoverNavigationDrawer.this.getString(R.string.please_wait));
         pDialog.setIndeterminate(true);
         pDialog.setCancelable(true);
         //Initializing NavigationView
@@ -145,7 +132,55 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
 
         frameLayout = view.findViewById(R.id.base_container);
 
-        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                //Closing drawer on item click
+                drawerLayout.closeDrawers();
+                //Check to see which item was being clicked and perform appropriate action
+                switch (menuItem.getItemId()) {
+
+
+                    //Replacing the main content with ContentFragment Which is our Inbox View;
+                    case R.id.nav_item_one:
+                        gotoMyFamily();
+                        return true;
+
+                    // For rest of the options we just show a toast on click
+                    case R.id.nav_item_two:
+                        gotoMyAppointments();
+                        return true;
+
+                    case R.id.nav_item_three:
+                        gotoHealthFiles();
+                        return true;
+
+                    case R.id.nav_item_four:
+                        gotoInvoices();
+                        return true;
+
+                    case R.id.nav_item_five:
+                        gotoAboutSalveoHealthCare();
+                        return true;
+
+                    case R.id.nav_item_six:
+                        gotoTermsandConditions();
+                        return true;
+                    case R.id.nav_item_seven:
+                        Log.w(TAG,"Click logout");
+                        confirmLogoutDialog();
+                        return true;
+
+
+
+
+                    default:
+                        return true;
+
+                }
+            }
+        });
+
          menu = navigationView.getMenu();
 
 
@@ -237,62 +272,12 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-
-        //Closing drawer on item click
-        drawerLayout.closeDrawers();
-
-        //Check to see which item was being clicked and perform appropriate action
-        switch (menuItem.getItemId()) {
-
-
-            //Replacing the main content with ContentFragment Which is our Inbox View;
-            case R.id.nav_item_one:
-                gotoMyFamily();
-                return true;
-
-            // For rest of the options we just show a toast on click
-            case R.id.nav_item_two:
-                gotoMyAppointments();
-                return true;
-
-                case R.id.nav_item_three:
-                gotoHealthFiles();
-                return true;
-
-            case R.id.nav_item_four:
-                gotoInvoices();
-                return true;
-
-            case R.id.nav_item_five:
-                gotoAboutSalveoHealthCare();
-                return true;
-
-            case R.id.nav_item_six:
-                gotoTermsandConditions();
-                return true;
-            case R.id.nav_item_seven:
-                Log.w(TAG,"Click logout");
-                confirmLogoutDialog();
-                 return true;
-
-
-
-
-            default:
-                return true;
-
-        }
-
-    }
 
 
 
     private void confirmLogoutDialog(){
 
-        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(NavigationDrawer.this);
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(PetLoverNavigationDrawer.this);
         alertDialogBuilder.setMessage("Are you sure want to logout?");
         alertDialogBuilder.setPositiveButton("yes",
                 new DialogInterface.OnClickListener() {
@@ -357,7 +342,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
         }
         catch (ActivityNotFoundException e)
         {
-            Toast.makeText(NavigationDrawer.this, "No PDF Viewer Installed", Toast.LENGTH_LONG).show();
+            Toast.makeText(PetLoverNavigationDrawer.this, "No PDF Viewer Installed", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -380,33 +365,7 @@ public class NavigationDrawer extends AppCompatActivity implements View.OnClickL
 
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        try{
-            Log.w(TAG,"onResume--->");
 
-       /* session = new SessionManager(getApplicationContext());
-        HashMap<String, String> user = session.getUserDetails();
-        name = user.get(SessionManager.KEY_USER_NAME);
-        user_mode = user.get(SessionManager.KEY_USER_MODE);
-        phoneNo = user.get(SessionManager.KEY_MOBILE);
-        image_url = session.getImagePath();
-        jockey_id = Integer.valueOf(user.get(SessionManager.JOCKEY_ID));*/
-
-
-            //  checkisAppliedForJockeyandCountAPI();
-
-            Menu menu = navigationView.getMenu();
-            MenuItem target = menu.findItem(R.id.nav_item_seven);
-
-           // checkLocation();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-
-    }
 
 
 

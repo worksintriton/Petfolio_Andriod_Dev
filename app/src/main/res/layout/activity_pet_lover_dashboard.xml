@@ -20,14 +20,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:itemIconTint="@drawable/drawer_item_color"
-        app:itemTextColor="@drawable/drawer_item_color"
-        app:itemIconSize="20dp"
         app:elevation="8dp"
-        app:labelVisibilityMode="labeled"
+        app:itemIconSize="20dp"
         app:menu="@menu/bottom_navigation"
-        app:itemBackground="@color/black"
-
+        android:background="@drawable/rounded_curve"
+        android:layout_margin="20dp"
+        app:itemBackground="@drawable/selected_state"
+        app:itemIconTint="@color/selector"
+        app:itemTextColor="@color/selector"
+        app:labelVisibilityMode="labeled"
         />
 
 

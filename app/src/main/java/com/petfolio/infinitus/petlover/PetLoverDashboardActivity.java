@@ -3,7 +3,6 @@ package com.petfolio.infinitus.petlover;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 
@@ -30,7 +29,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PetLoverDashboardActivity  extends NavigationDrawer implements Serializable, BottomNavigationView.OnNavigationItemSelectedListener {
+public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer implements Serializable, BottomNavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;

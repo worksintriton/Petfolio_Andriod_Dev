@@ -60,7 +60,7 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
         currentItem = newAppointmentResponseList.get(position);
         holder.txt_petname.setText("Pet name : "+newAppointmentResponseList.get(0).getPet_id().getPet_name());
         holder.txt_pettype.setText("Pet type : "+ newAppointmentResponseList.get(0).getPet_id().getPet_type());
-        holder.txt_service_info.setText("Service name :"+" "+newAppointmentResponseList.get(0).getAmount());
+        holder.txt_service_info.setText("Service name :"+" "+newAppointmentResponseList.get(0).getService_name()+" Service Cost : "+newAppointmentResponseList.get(0).getService_amount());
 
 
 

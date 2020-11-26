@@ -26,7 +26,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
-                app:cardCornerRadius="10dp"
+                app:cardCornerRadius="1dp"
                 app:cardPreventCornerOverlap="true"
                 app:cardUseCompatPadding="true">
 
@@ -35,7 +35,7 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/img_pet"
+                        android:id="@+id/img_pet_imge"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_centerInParent="true"
@@ -45,6 +45,7 @@
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
+
 
             <TextView
                 android:id="@+id/txt_petname"
@@ -85,44 +86,20 @@
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/serv_name"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+
+            <TextView
+                android:id="@+id/txt_completed_date"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txt_service_info"
-                android:layout_margin="20dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btn_cancel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/futuramediumbt"
-                    android:text="@string/cancel"
-                    android:textAllCaps="false"
-                    android:textColor="@color/black"
-                    android:background="@drawable/orange_background_button"/>
-
-                <Button
-                    android:id="@+id/btn_complete"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/futuramediumbt"
-                    android:text="@string/complete"
-                    android:textColor="@color/light_green_color"
-                    android:textAllCaps="false"
-                    android:background="@drawable/green_backround" />
-
-
-            </LinearLayout>
-
+                android:layout_alignStart="@id/cv_pet"
+                android:layout_alignLeft="@id/cv_pet"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/futuramediumbt"
+                android:text="@string/completed_on_date"
+                android:textColor="@color/green"
+                android:textSize="14sp" />
 
         </RelativeLayout>
 
