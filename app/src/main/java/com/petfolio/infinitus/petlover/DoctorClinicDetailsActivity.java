@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
@@ -49,14 +52,25 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
     @BindView(R.id.tabDots)
     TabLayout tabLayout;
 
+    @BindView(R.id.txt_dr_specialization)
+    TextView txt_dr_specialization;
+
+    @BindView(R.id.txt_dr_desc)
+    TextView txt_dr_desc;
+
+    @BindView(R.id.btn_book_now)
+    Button btn_book_now;
+
+
+
     int currentPage = 0;
     Timer timer;
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000;
 
     private String doctorid;
-    private DoctorDetailsResponse.DataBean doctorclinicdetailsResponse;
     private List<DoctorDetailsResponse.DataBean.ClinicPicBean> doctorclinicdetailsResponseList;
+    private String concatenatedStarNames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +81,14 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
 
 
         avi_indicator.setVisibility(View.GONE);
+
+        btn_book_now.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DoctorClinicDetailsActivity.this,BookAppointmentActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -81,6 +103,8 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
             }
 
         }
+
+
     }
 
 
@@ -101,7 +125,6 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
 
-                        doctorclinicdetailsResponse = response.body().getData();
                         doctorclinicdetailsResponseList  = response.body().getData().getClinic_pic();
                         Log.w(TAG,"Size"+doctorclinicdetailsResponseList.size());
                         Log.w(TAG,"doctorclinicdetailsResponseList : "+new Gson().toJson(doctorclinicdetailsResponseList));
@@ -118,6 +141,19 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
 
                         }
 
+                        Log.w(TAG," Descri : "+response.body().getData().getDescri());
+                       if(response.body().getData().getDescri() != null){
+                           txt_dr_desc.setText(response.body().getData().getDescri());
+
+                       }
+                       if(response.body().getData().getSpecialization() != null){
+                           for (int i = 0; i < response.body().getData().getSpecialization().size(); i++) {
+                               concatenatedStarNames += response.body().getData().getSpecialization().get(i).getSpecialization();
+                               if (i < response.body().getData().getSpecialization().size() - 1) concatenatedStarNames += ", ";
+                           }
+                           txt_dr_specialization.setText(concatenatedStarNames);
+
+                       }
 
                     }else{
 
