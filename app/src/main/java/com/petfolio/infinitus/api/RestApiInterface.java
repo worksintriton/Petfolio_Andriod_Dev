@@ -1,6 +1,7 @@
 package com.petfolio.infinitus.api;
 
 import com.petfolio.infinitus.requestpojo.AddYourPetRequest;
+import com.petfolio.infinitus.requestpojo.BreedTypeRequest;
 import com.petfolio.infinitus.requestpojo.CreateHolidayRequest;
 import com.petfolio.infinitus.requestpojo.DocBusInfoUploadRequest;
 import com.petfolio.infinitus.requestpojo.DoctorDetailsRequest;
@@ -12,11 +13,13 @@ import com.petfolio.infinitus.requestpojo.HolidayDeleteRequest;
 import com.petfolio.infinitus.requestpojo.HolidayListRequest;
 import com.petfolio.infinitus.requestpojo.LocationAddRequest;
 import com.petfolio.infinitus.requestpojo.LoginRequest;
+import com.petfolio.infinitus.requestpojo.PetDetailsRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverDashboardRequest;
 import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
 import com.petfolio.infinitus.requestpojo.SignupRequest;
 import com.petfolio.infinitus.requestpojo.UserStatusUpdateRequest;
 import com.petfolio.infinitus.responsepojo.AddYourPetResponse;
+import com.petfolio.infinitus.responsepojo.BreedTypeResponse;
 import com.petfolio.infinitus.responsepojo.CreateHolidayResponse;
 import com.petfolio.infinitus.responsepojo.DocBusInfoUploadResponse;
 import com.petfolio.infinitus.responsepojo.DoctorCompletedAppointmentResponse;
@@ -32,7 +35,9 @@ import com.petfolio.infinitus.responsepojo.HolidayDeleteResponse;
 import com.petfolio.infinitus.responsepojo.HolidayListResponse;
 import com.petfolio.infinitus.responsepojo.LocationAddResponse;
 import com.petfolio.infinitus.responsepojo.LoginResponse;
+import com.petfolio.infinitus.responsepojo.PetDetailsResponse;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
+import com.petfolio.infinitus.responsepojo.PetTypeListResponse;
 import com.petfolio.infinitus.responsepojo.ResendOTPResponse;
 import com.petfolio.infinitus.responsepojo.SignupResponse;
 import com.petfolio.infinitus.responsepojo.UserStatusUpdateResponse;
@@ -137,5 +142,17 @@ public interface RestApiInterface {
     @POST("doctordetails/fetch_doctor_id")
     Call<DoctorDetailsResponse>doctorDetailsResponseCall(@Header("Content-Type") String type, @Body DoctorDetailsRequest doctorDetailsRequest );
 
+
+    /*Listing all pets*/
+    @GET("pettype/mobile/getlist")
+    Call<PetTypeListResponse> petTypeListResponseCall(@Header("Content-Type") String type);
+
+    /*Listing all breed by Pet ID*/
+    @POST("breedtype/mobile/getlist_id")
+    Call<BreedTypeResponse>breedTypeResponseByPetIdCall(@Header("Content-Type") String type, @Body BreedTypeRequest breedTypeRequest );
+
+    /*Pet Details List by User ID*/
+    @POST("petdetails/mobile/getlist_id")
+    Call<PetDetailsResponse>petDetailsResponseByUserIdCall(@Header("Content-Type") String type, @Body PetDetailsRequest petDetailsRequest  );
 
 }

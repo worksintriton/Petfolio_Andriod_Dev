@@ -172,6 +172,12 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
         });
 
     }
+    private DoctorDetailsRequest doctorDetailsRequest() {
+        DoctorDetailsRequest doctorDetailsRequest = new DoctorDetailsRequest();
+        doctorDetailsRequest.setUser_id(doctorid);
+        Log.w(TAG,"doctorDetailsRequest"+ "--->" + new Gson().toJson(doctorDetailsRequest));
+        return doctorDetailsRequest;
+    }
 
     private void viewpageData(List<DoctorDetailsResponse.DataBean.ClinicPicBean> doctorclinicdetailsResponseList) {
         tabLayout.setupWithViewPager(viewPager, true);
@@ -199,10 +205,4 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
 
     }
 
-    private DoctorDetailsRequest doctorDetailsRequest() {
-        DoctorDetailsRequest doctorDetailsRequest = new DoctorDetailsRequest();
-        doctorDetailsRequest.setUser_id(doctorid);
-        Log.w(TAG,"doctorDetailsRequest"+ "--->" + new Gson().toJson(doctorDetailsRequest));
-        return doctorDetailsRequest;
-    }
 }

@@ -53,7 +53,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
     private Button proced_appoinment;
     private CheckBox chat, video;
 
-    private ImageView backarrow;
+    private ImageView img_back;
     private ListView radioList;
     private List<String> radioName = new ArrayList<>();
 
@@ -213,7 +213,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         radioButton1 = findViewById(R.id.radioButton1);
         radioButton2 = findViewById(R.id.radioButton2);
 
-        proced_appoinment = findViewById(R.id.proced_appoinment);
+        proced_appoinment = findViewById(R.id.btn_bookappointment);
 
 
         chat = findViewById(R.id.chat);
@@ -224,7 +224,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
 
 
-        backarrow = findViewById(R.id.backarrow);
+        img_back = findViewById(R.id.img_back);
 
 
         sub_layer1 = findViewById(R.id.sub_layer1);
@@ -275,7 +275,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
 
 
-        backarrow.setOnClickListener(new View.OnClickListener() {
+        img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
