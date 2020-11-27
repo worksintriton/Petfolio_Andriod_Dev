@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment implements Serializable, OnMapReadyCa
         LocationListener,View.OnClickListener  {
 
 
-    private String TAG = "PetLoverDashboardActivity";
+    private String TAG = "HomeFragment";
 
 
 
@@ -139,6 +139,7 @@ public class HomeFragment extends Fragment implements Serializable, OnMapReadyCa
     @BindView(R.id.tabDots)
     TabLayout tabLayout;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rvdoctors)
     RecyclerView rvdoctors;
 

@@ -116,5 +116,26 @@
     <string name="completed_on_date">Completed on 01-Sep-2020</string>
     <string name="missed_on_date">Missed on 01-Sep-2020</string>
 
+    <string name="doctor_name">Doctor name</string>
+    <string name="place">place * 2 km away</string>
+    <string name="review_count">322</string>
+    <string name="rating_value">4.5</string>
+    <string name="specialization_dummy">Lorem ipsum ,dolor sit amet, consectetur , adipiscing</string>
+    <string name="desc">Description</string>
+    <string name="desc_dummy">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
+    <string name="appointment">Appointment</string>
+    <string name="or">Or</string>
+    <string name="normal">Normal</string>
+    <string name="emergency">Emergency</string>
+    <string name="allergies">Allergies</string>
+    <string name="upload_pet_current_images">Upload pet current images</string>
+    <string name="continues">Continue</string>
+    <string name="add_comment_here">Add Comment here..</string>
+    <string name="book_now">Book Now</string>
+
+    <string name="filter">Filters</string>
+    <string name="curent_location">Curent Location</string>
+
+
 
 </resources>

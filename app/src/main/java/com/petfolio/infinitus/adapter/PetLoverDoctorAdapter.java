@@ -3,6 +3,8 @@ package com.petfolio.infinitus.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.petlover.DoctorClinicDetailsActivity;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 
 
@@ -90,26 +93,10 @@ public class PetLoverDoctorAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
             @Override
             public void onClick(View v) {
 
-                /*Intent intent = new Intent(context, SubServicesActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("vehicletypeid",popularserviceBeanList.get(position).getVehicle_Type_id());
-                intent.putExtra("serviceid",popularserviceBeanList.get(position).get_id());
-                intent.putExtra("city",city);
-                intent.putExtra("street",street);
-                intent.putExtra("vehicleImage", vehicleImage);
-                intent.putExtra("vehicleName", vehicleName);
-                intent.putExtra("vehicleModelName", vehicleModelName);
-                intent.putExtra("fuelType", fuelType);
-                intent.putExtra("servicename", servicename);
-                intent.putExtra("masterservicename", masterservicename);
-                intent.putExtra("vehicletypename", vehicletypename);
-                intent.putExtra("customervehicledatabeanlist", customerVehicleDataBeanList);
-                intent.putExtra("twowheelervehicleid",twowheelervehicleid);
-                intent.putExtra("fourwheelervehicleid",fourwheelervehicleid);
-                intent.putExtra("masterserviceid",masterserviceid);
-                intent.putExtra("selectedVehicleId",selectedVehicleId);
-                intent.putExtra("selectedVehicleType",selectedVehicleType);
-                Log.w(TAG,"vehicletypeid :"+popularserviceBeanList.get(position).getVehicle_Type_id()+" "+"serviceid : "+popularserviceBeanList.get(position).get_id());
-                context.startActivity(intent);*/
+                Intent intent = new Intent(context, DoctorClinicDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("doctorid",doctorDetailsResponseList.get(position).get_id());
+                Log.w(TAG,"doctorid :"+doctorDetailsResponseList.get(position).get_id());
+                context.startActivity(intent);
                 }
 
 

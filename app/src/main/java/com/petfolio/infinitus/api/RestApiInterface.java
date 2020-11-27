@@ -3,6 +3,7 @@ package com.petfolio.infinitus.api;
 import com.petfolio.infinitus.requestpojo.AddYourPetRequest;
 import com.petfolio.infinitus.requestpojo.CreateHolidayRequest;
 import com.petfolio.infinitus.requestpojo.DocBusInfoUploadRequest;
+import com.petfolio.infinitus.requestpojo.DoctorDetailsRequest;
 import com.petfolio.infinitus.requestpojo.DoctorMyCalendarAvlDaysRequest;
 import com.petfolio.infinitus.requestpojo.DoctorMyCalendarAvlTimesRequest;
 import com.petfolio.infinitus.requestpojo.DoctorMyCalendarUpdateDocDateRequest;
@@ -19,6 +20,7 @@ import com.petfolio.infinitus.responsepojo.AddYourPetResponse;
 import com.petfolio.infinitus.responsepojo.CreateHolidayResponse;
 import com.petfolio.infinitus.responsepojo.DocBusInfoUploadResponse;
 import com.petfolio.infinitus.responsepojo.DoctorCompletedAppointmentResponse;
+import com.petfolio.infinitus.responsepojo.DoctorDetailsResponse;
 import com.petfolio.infinitus.responsepojo.DoctorMissedAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.DoctorMyCalendarAvlDaysResponse;
 import com.petfolio.infinitus.responsepojo.DoctorMyCalendarAvlTimesResponse;
@@ -129,6 +131,11 @@ public interface RestApiInterface {
     /*Doctor Missed Appointment*/
     @POST("appointments/mobile/doc_getlist/missapp")
     Call<DoctorMissedAppointmentResponse>doctorMissedAppointmentResponseCall(@Header("Content-Type") String type, @Body DoctorNewAppointmentRequest doctorNewAppointmentRequest);
+
+
+    /*Doctor Missed Appointment*/
+    @POST("doctordetails/fetch_doctor_id")
+    Call<DoctorDetailsResponse>doctorDetailsResponseCall(@Header("Content-Type") String type, @Body DoctorDetailsRequest doctorDetailsRequest );
 
 
 }

@@ -46,8 +46,8 @@ public class FragmentCompletedAppointment extends Fragment {
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
-    @BindView(R.id.tvNoRecords)
-    TextView tvNoRecords;
+    @BindView(R.id.txt_no_records)
+    TextView txt_no_records;
 
     @BindView(R.id.rv_completedappointment)
     RecyclerView rv_completedappointment;
@@ -121,20 +121,23 @@ public class FragmentCompletedAppointment extends Fragment {
 
                if (response.body() != null) {
 
+                   if(200 == response.body().getCode()){
+                       completedAppointmentResponseList = response.body().getData();
+                       Log.w(TAG,"Size"+completedAppointmentResponseList.size());
+                       Log.w(TAG,"completedAppointmentResponseList : "+new Gson().toJson(completedAppointmentResponseList));
+                       if(response.body().getData().isEmpty()){
+                           txt_no_records.setVisibility(View.VISIBLE);
+                           txt_no_records.setText("No new appointments");
+                           rv_completedappointment.setVisibility(View.GONE);
+                       }else{
+                           txt_no_records.setVisibility(View.GONE);
+                           rv_completedappointment.setVisibility(View.VISIBLE);
+                           setView();
+                       }
+
+                   }
 
 
-                    completedAppointmentResponseList = response.body().getData();
-                    Log.w(TAG,"Size"+completedAppointmentResponseList.size());
-                    Log.w(TAG,"completedAppointmentResponseList : "+new Gson().toJson(completedAppointmentResponseList));
-                    if(response.body().getData().isEmpty()){
-                        tvNoRecords.setVisibility(View.VISIBLE);
-                        tvNoRecords.setText("No new appointments");
-                        rv_completedappointment.setVisibility(View.GONE);
-                    }else{
-                        tvNoRecords.setVisibility(View.GONE);
-                        rv_completedappointment.setVisibility(View.VISIBLE);
-                        setView();
-                    }
 
                 }
             }

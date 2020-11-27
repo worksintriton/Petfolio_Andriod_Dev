@@ -32,6 +32,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,8 +49,8 @@ public class FragmentMissedAppointment extends Fragment {
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
-    @BindView(R.id.tvNoRecords)
-    TextView tvNoRecords;
+    @BindView(R.id.txt_no_records)
+    TextView txt_no_records;
 
     @BindView(R.id.rv_missedappointment)
     RecyclerView rv_missedappointment;
@@ -97,7 +98,7 @@ public class FragmentMissedAppointment extends Fragment {
 
       
 
-        if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
+        if (new ConnectionDetector(getActivity()).isNetworkAvailable(Objects.requireNonNull(getActivity()))) {
             doctorMissedAppointmentResponseCall();
         }
         return view;
@@ -120,18 +121,23 @@ public class FragmentMissedAppointment extends Fragment {
 
 
                if (response.body() != null) {
-                   missedAppointmentResponseList = response.body().getData();
-                    Log.w(TAG,"Size"+missedAppointmentResponseList.size());
-                    Log.w(TAG,"missedAppointmentResponseList : "+new Gson().toJson(missedAppointmentResponseList));
-                    if(response.body().getData().isEmpty()){
-                        tvNoRecords.setVisibility(View.VISIBLE);
-                        tvNoRecords.setText("No missed appointments");
-                        rv_missedappointment.setVisibility(View.GONE);
-                    }else{
-                        tvNoRecords.setVisibility(View.GONE);
-                        rv_missedappointment.setVisibility(View.VISIBLE);
-                        setView();
-                    }
+                   if(200 == response.body().getCode()){
+                       missedAppointmentResponseList = response.body().getData();
+                       Log.w(TAG,"Size"+missedAppointmentResponseList.size());
+                       Log.w(TAG,"missedAppointmentResponseList : "+new Gson().toJson(missedAppointmentResponseList));
+                       if(response.body().getData().isEmpty()){
+                           txt_no_records.setVisibility(View.VISIBLE);
+                           txt_no_records.setText("No missed appointments");
+                           rv_missedappointment.setVisibility(View.GONE);
+                       }else{
+                           txt_no_records.setVisibility(View.GONE);
+                           rv_missedappointment.setVisibility(View.VISIBLE);
+                           setView();
+                       }
+                   }else{
+
+                   }
+
 
                 }
             }

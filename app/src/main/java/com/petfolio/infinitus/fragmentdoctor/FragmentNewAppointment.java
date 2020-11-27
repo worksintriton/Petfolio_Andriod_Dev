@@ -47,8 +47,8 @@ public class FragmentNewAppointment extends Fragment {
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
-    @BindView(R.id.tvNoRecords)
-    TextView tvNoRecords;
+    @BindView(R.id.txt_no_records)
+    TextView txt_no_records;
 
     @BindView(R.id.rv_newappointment)
     RecyclerView rv_newappointment;
@@ -122,20 +122,23 @@ public class FragmentNewAppointment extends Fragment {
 
                if (response.body() != null) {
 
+                   if(200 == response.body().getCode()){
+                       newAppointmentResponseList = response.body().getData();
+                       Log.w(TAG,"Size"+newAppointmentResponseList.size());
+                       Log.w(TAG,"newAppointmentResponseList : "+new Gson().toJson(newAppointmentResponseList));
+                       if(response.body().getData().isEmpty()){
+                           txt_no_records.setVisibility(View.VISIBLE);
+                           txt_no_records.setText("No new appointments");
+                           rv_newappointment.setVisibility(View.GONE);
+                       }else{
+                           txt_no_records.setVisibility(View.GONE);
+                           rv_newappointment.setVisibility(View.VISIBLE);
+                           setView();
+                       }
+
+                   }
 
 
-                    newAppointmentResponseList = response.body().getData();
-                    Log.w(TAG,"Size"+newAppointmentResponseList.size());
-                    Log.w(TAG,"newAppointmentResponseList : "+new Gson().toJson(newAppointmentResponseList));
-                    if(response.body().getData().isEmpty()){
-                        tvNoRecords.setVisibility(View.VISIBLE);
-                        tvNoRecords.setText("No new appointments");
-                        rv_newappointment.setVisibility(View.GONE);
-                    }else{
-                        tvNoRecords.setVisibility(View.GONE);
-                        rv_newappointment.setVisibility(View.VISIBLE);
-                        setView();
-                    }
 
                 }
             }
