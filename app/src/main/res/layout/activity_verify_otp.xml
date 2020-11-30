@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:fontFamily="@font/futur"
+            android:fontFamily="@font/futuramediumbt"
             android:text="@string/verification"
             android:textSize="20sp"
             android:layout_marginBottom="20dp"/>
@@ -66,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/dark_gray"
-            android:fontFamily="@font/futur"
+            android:fontFamily="@font/futuramediumbt"
             android:text="@string/you_will_get_a_otp_via_sms"
             android:textSize="20sp"
             android:layout_marginBottom="20dp"/>
@@ -78,7 +78,7 @@
             android:padding="15dp"
             android:background="@drawable/rectangle_corner"
             android:textSize="14sp"
-            android:fontFamily="@font/futur"
+            android:fontFamily="@font/futuramediumbt"
             android:hint="@string/enter_your_otp"
             tools:ignore="Autofill,LabelFor,RtlCompat,TextFields"
             android:layout_marginBottom="30dp"
@@ -111,7 +111,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/futur"
+                android:fontFamily="@font/futuramediumbt"
                 android:textSize="16sp"
                 android:text="@string/dontreceiveotp"/>
             <TextView
@@ -119,7 +119,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/futur"
+                android:fontFamily="@font/futuramediumbt"
                 android:textSize="16sp"
                 android:text="@string/resend"
                 android:textColor="@color/green"
@@ -135,7 +135,7 @@
             android:textColor="@color/whiteFive"
             android:textSize="18sp"
             android:textAllCaps="false"
-            android:fontFamily="@font/futur"
+            android:fontFamily="@font/futuramediumbt"
             tools:ignore="HardcodedText"
             android:layout_marginBottom="20dp"/>
     </LinearLayout>

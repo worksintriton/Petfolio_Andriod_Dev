@@ -26,7 +26,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/futur"
+            android:fontFamily="@font/futuramediumbt"
             android:text="@string/choose_user_type"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -97,7 +97,7 @@
             android:textColor="@color/whiteFive"
             android:textSize="18sp"
             android:textAllCaps="false"
-            android:fontFamily="@font/futur"
+            android:fontFamily="@font/futuramediumbt"
             tools:ignore="HardcodedText" />
     </LinearLayout>
     <com.wang.avi.AVLoadingIndicatorView

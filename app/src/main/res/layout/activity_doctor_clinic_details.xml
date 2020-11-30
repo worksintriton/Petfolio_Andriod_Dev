@@ -282,7 +282,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_corner_button"
-                android:fontFamily="@font/futur"
+                android:fontFamily="@font/futuramediumbt"
                 android:text="@string/book_now"
                 android:textAllCaps="false"
                 android:textColor="@color/whiteFive"

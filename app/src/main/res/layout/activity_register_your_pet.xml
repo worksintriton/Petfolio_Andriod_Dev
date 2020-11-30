@@ -98,7 +98,7 @@
             android:textColor="@color/whiteFive"
             android:textSize="18sp"
             android:textAllCaps="false"
-            android:fontFamily="@font/futur"
+            android:fontFamily="@font/futuramediumbt"
             tools:ignore="HardcodedText" />
     </LinearLayout>
     <com.wang.avi.AVLoadingIndicatorView

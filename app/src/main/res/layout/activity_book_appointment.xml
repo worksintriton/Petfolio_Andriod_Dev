@@ -354,7 +354,7 @@
             android:textColor="@color/whiteFive"
             android:textSize="18sp"
             android:textAllCaps="false"
-            android:fontFamily="@font/futur"
+            android:fontFamily="@font/futuramediumbt"
             android:layout_margin="20dp"
             android:layout_marginBottom="20dp"/>
 

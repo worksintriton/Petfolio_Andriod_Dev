@@ -12,17 +12,17 @@
         app:indicatorColor="@color/green"
         app:indicatorName="LineSpinFadeLoaderIndicator" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/headerView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        >
+        tools:ignore="UseCompoundDrawables"
+        android:layout_alignParentTop="true">
 
         <ImageView
             android:id="@+id/img_bck"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
@@ -31,22 +31,20 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_toRightOf="@+id/img_bck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/futuramediumbt"
             android:padding="2dp"
             android:text="@string/doctor_business_info_title"
             android:textColor="@color/black"
-            android:textSize="15sp"
-            android:layout_toEndOf="@+id/img_bck"
-            android:layout_marginLeft="10dp" />
+            android:textSize="20sp" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:id="@+id/scrollablContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,6 +60,17 @@
             android:layout_marginEnd="20dp">
 
             <!--Clinic Details -->
+
+            <TextView
+                android:id="@+id/txt_no_records"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/norecordsfound"
+                android:textColor="@color/color"
+                android:textSize="16sp"
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/edtx_clinic_name"
@@ -88,7 +97,7 @@
                 android:padding="2dp"
                 android:text="@string/education"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cdvw_education"
@@ -150,7 +159,8 @@
                         android:padding="5dp"
                         android:text="@string/add"
                         android:textAllCaps="false"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
@@ -168,12 +178,12 @@
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:padding="2dp"
-                android:layout_marginTop="10dp"
                 android:text="@string/experience"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cdvw_experience"
@@ -237,14 +247,15 @@
 
                             <ImageView
                                 android:id="@+id/img_cal_from"
-                                android:layout_width="50dp"
-                                android:layout_marginEnd="5dp"
-                                android:layout_height="50dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
                                 android:layout_alignParentEnd="true"
-                                android:src="@drawable/calender"
-                                android:contentDescription="@string/image"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="5dp"
                                 android:layout_marginRight="5dp"
-                                android:layout_alignParentRight="true" />
+                                android:contentDescription="@string/image"
+                                android:src="@drawable/calender" />
 
                         </RelativeLayout>
 
@@ -276,14 +287,15 @@
 
                             <ImageView
                                 android:id="@+id/img_cal_to"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
                                 android:layout_alignParentEnd="true"
-                                android:layout_width="50dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginTop="10dp"
                                 android:layout_marginEnd="5dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/calender"
-                                android:contentDescription="@string/image"
                                 android:layout_marginRight="5dp"
-                                android:layout_alignParentRight="true" />
+                                android:contentDescription="@string/image"
+                                android:src="@drawable/calender" />
 
                         </RelativeLayout>
 
@@ -296,13 +308,14 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
-                        android:background="@drawable/rounded_corner_green"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/green_backround"
                         android:fontFamily="@font/futuralightbt"
                         android:padding="5dp"
                         android:text="@string/add"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
-                        android:layout_marginBottom="10dp"/>
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
@@ -320,12 +333,12 @@
                 android:id="@+id/textView12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:padding="2dp"
                 android:text="@string/specialization"
                 android:textColor="@color/black"
-                android:textSize="14sp"
-                android:layout_marginTop="10dp"/>
+                android:textSize="16sp" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cdvw_Specialization"
@@ -368,12 +381,12 @@
                 android:id="@+id/textView14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:padding="2dp"
-                android:layout_marginTop="10dp"
                 android:text="@string/pets_handled"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardview_pet_details"
@@ -416,12 +429,12 @@
                 android:id="@+id/textView15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:padding="2dp"
-                android:layout_marginTop="10dp"
                 android:text="@string/clinic_address"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cdvw_clinic_address"
@@ -459,12 +472,12 @@
                 android:id="@+id/textView16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:padding="2dp"
-                android:layout_marginTop="10dp"
                 android:text="@string/clinic_pict"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardview_clinic_pics"
@@ -495,14 +508,19 @@
                         tools:ignore="Autofill,LabelFor" />
 
                     <ImageView
-                        android:layout_margin="5dp"
                         android:id="@+id/img_clinic_pic"
-                        android:layout_width="50dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:layout_alignParentEnd="true"
-                        android:layout_height="50dp"
-                        android:src="@drawable/add"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp"
                         android:contentDescription="@string/image"
-                        android:layout_alignParentRight="true" />
+                        android:src="@drawable/add"  />
 
 
                 </RelativeLayout>
@@ -527,7 +545,7 @@
                 android:padding="2dp"
                 android:text="@string/certificate"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cdvw_certificate"
@@ -559,13 +577,18 @@
 
                     <ImageView
                         android:id="@+id/img_cert"
-                        android:layout_width="50dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:layout_alignParentEnd="true"
-                        android:layout_height="50dp"
-                        android:layout_margin="5dp"
-                        android:src="@drawable/add"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp"
                         android:contentDescription="@string/image"
-                        android:layout_alignParentRight="true"/>
+                        android:src="@drawable/add"  />
 
                 </RelativeLayout>
 
@@ -588,7 +611,7 @@
                 android:padding="2dp"
                 android:text="@string/govt_proof"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cdvw_govt_id"
@@ -620,13 +643,18 @@
 
                     <ImageView
                         android:id="@+id/img_govtid"
-                        android:layout_width="50dp"
-                        android:layout_margin="5dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:layout_alignParentEnd="true"
-                        android:layout_height="50dp"
-                        android:src="@drawable/add"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp"
                         android:contentDescription="@string/image"
-                        android:layout_alignParentRight="true"/>
+                        android:src="@drawable/add" />
 
                 </RelativeLayout>
 
@@ -649,7 +677,7 @@
                 android:padding="2dp"
                 android:text="@string/photoid_proof"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cdvw_photo_id"
@@ -662,8 +690,8 @@
                 app:cardUseCompatPadding="true">
 
                 <RelativeLayout
-                    android:layout_width="match_parent"                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/edtx_clinic_photoid_choose"
@@ -680,14 +708,19 @@
                         tools:ignore="Autofill,LabelFor" />
 
                     <ImageView
-                        android:layout_margin="5dp"
                         android:id="@+id/img_photoid"
-                        android:layout_width="50dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:layout_alignParentEnd="true"
-                        android:layout_height="50dp"
-                        android:src="@drawable/add"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp"
                         android:contentDescription="@string/image"
-                        android:layout_alignParentRight="true" />
+                        android:src="@drawable/add" />
 
 
                 </RelativeLayout>
@@ -702,33 +735,31 @@
                 android:layout_height="wrap_content" />
 
 
-            <Button
-                android:id="@+id/buttonsubmit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_corner_button"
-                android:text="@string/submit"
-                android:textColor="@color/whiteFive"
-                android:textSize="18sp"
-                android:textAllCaps="false"
-                android:fontFamily="@font/futur"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"/>
-
-
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/footerView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
+        <Button
+            android:id="@+id/buttonsubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/green_bgm_border"
+            android:fontFamily="@font/futuramediumbt"
+            android:text="@string/submit"
+            android:textAllCaps="false"
+            android:textColor="@color/whiteFive"
+            android:textSize="18sp" />
     </LinearLayout>
 
 </RelativeLayout>
