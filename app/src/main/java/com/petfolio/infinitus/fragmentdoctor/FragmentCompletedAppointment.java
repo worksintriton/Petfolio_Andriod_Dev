@@ -87,9 +87,9 @@ public class FragmentCompletedAppointment extends Fragment {
         session = new SessionManager(getContext());
         HashMap<String, String> user = session.getProfileDetails();
 
-       // doctorid = user.get(SessionManager.KEY_ID);
-        doctorid ="5fb62a1924583828f10f8731";
-        String patientname = user.get(SessionManager.KEY_NAME);
+        doctorid = user.get(SessionManager.KEY_ID);
+
+        String patientname = user.get(SessionManager.KEY_FIRST_NAME);
 
         Log.w(TAG,"Doctorid"+doctorid +"patientname :"+patientname);
 
@@ -127,7 +127,7 @@ public class FragmentCompletedAppointment extends Fragment {
                        Log.w(TAG,"completedAppointmentResponseList : "+new Gson().toJson(completedAppointmentResponseList));
                        if(response.body().getData().isEmpty()){
                            txt_no_records.setVisibility(View.VISIBLE);
-                           txt_no_records.setText("No new appointments");
+                           txt_no_records.setText("No completed appointments");
                            rv_completedappointment.setVisibility(View.GONE);
                        }else{
                            txt_no_records.setVisibility(View.GONE);

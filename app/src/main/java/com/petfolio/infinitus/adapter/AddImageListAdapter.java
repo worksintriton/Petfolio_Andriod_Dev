@@ -2,6 +2,7 @@ package com.petfolio.infinitus.adapter;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.petfolio.infinitus.requestpojo.DocBusInfoUploadRequest;
 import java.util.List;
 
 public class AddImageListAdapter extends RecyclerView.Adapter<AddImageListAdapter.AddImageListHolder> {
+    private String TAG = "AddImageListAdapter";
     Context context;
     List<DocBusInfoUploadRequest.ClinicPicBean> ClinicPicBeans;
     View view;
@@ -30,13 +32,16 @@ public class AddImageListAdapter extends RecyclerView.Adapter<AddImageListAdapte
     @NonNull
     @Override
     public AddImageListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.images_upload_model, parent, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_images_upload, parent, false);
         return new AddImageListHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull AddImageListHolder holder, final int position) {
         final DocBusInfoUploadRequest.ClinicPicBean ClinicPicBean = ClinicPicBeans.get(position);
+
+        Log.w(TAG,"ImagePic : "+ClinicPicBean.getClinic_pic());
+
         if (ClinicPicBean.getClinic_pic()!= null) {
 
             Glide.with(context)

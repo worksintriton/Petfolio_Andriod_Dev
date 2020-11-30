@@ -154,29 +154,23 @@
                         android:layout_alignParentRight="true"
                         tools:ignore="ContentDescription" />
                 </RelativeLayout>
-                <RelativeLayout
-                    android:layout_width="wrap_content"
+
+                <EditText
+                    android:id="@+id/edt_petcolor"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="15dp"
                     android:background="@drawable/rectangle_corner"
-                    android:layout_marginTop="10dp"
-                    android:padding="10dp">
-
-                    <Spinner
-                        android:id="@+id/sprpetcolor"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent" />
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center"
-                        android:src="@drawable/dropdown"
-                        android:layout_alignParentRight="true"
-                        tools:ignore="ContentDescription" />
-                </RelativeLayout>
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"
+                    android:hint="@string/pet_color"
+                    tools:ignore="Autofill,LabelFor"
+                    android:textColor="@color/green"
+                    android:inputType="text"
+                    android:maxLength="15"
+                    android:maxLines="1"
+                    android:textColorHint="@color/green"/>
 
                 <EditText
                     android:id="@+id/edt_petweight"

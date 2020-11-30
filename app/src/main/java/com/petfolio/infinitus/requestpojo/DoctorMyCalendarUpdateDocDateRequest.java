@@ -5,24 +5,26 @@ import java.util.List;
 public class DoctorMyCalendarUpdateDocDateRequest {
 
     /**
-     * Doctor_email_id : 123123131313123123123123
+     * user_id : 123123131313123123123123
      * days : ["Monday","Tuesday","Wednesday"]
      * timing : [{"Time":"01:00 AM","Status":true},{"Time":"02:00 AM","Status":true},{"Time":"03:00 AM","Status":true},{"Time":"04:00 AM","Status":true}]
      */
 
-    private String Doctor_email_id;
+    private String user_id;
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
+
     private List<String> days;
 
 
     private List<TimingBean> timing;
 
-    public String getDoctor_email_id() {
-        return Doctor_email_id;
-    }
-
-    public void setDoctor_email_id(String doctor_email_id) {
-        Doctor_email_id = doctor_email_id;
-    }
 
     public List<String> getDays() {
         return days;

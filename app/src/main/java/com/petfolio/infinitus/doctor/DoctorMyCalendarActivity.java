@@ -67,10 +67,10 @@ public class DoctorMyCalendarActivity extends AppCompatActivity implements OnIte
 
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
-        doctorname = user.get(SessionManager.KEY_NAME);
+        doctorname = user.get(SessionManager.KEY_FIRST_NAME);
         doctoremailid = user.get(SessionManager.KEY_EMAIL_ID);
-       // userid = user.get(SessionManager.KEY_ID);
-        userid = "1234567890";
+        userid = user.get(SessionManager.KEY_ID);
+
 
         if (new ConnectionDetector(DoctorMyCalendarActivity.this).isNetworkAvailable(DoctorMyCalendarActivity.this)) {
             doctorMyCalendarAvlDaysResponseCall();

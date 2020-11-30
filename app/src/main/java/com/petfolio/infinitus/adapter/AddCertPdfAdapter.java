@@ -29,7 +29,7 @@ public class AddCertPdfAdapter extends RecyclerView.Adapter<AddCertPdfAdapter.Ad
     @NonNull
     @Override
     public AddImageListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.pdf_upload_model, parent, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_pdf_upload, parent, false);
         return new AddImageListHolder(view);
     }
 

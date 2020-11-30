@@ -88,9 +88,9 @@ public class FragmentNewAppointment extends Fragment {
         session = new SessionManager(getContext());
         HashMap<String, String> user = session.getProfileDetails();
 
-       // doctorid = user.get(SessionManager.KEY_ID);
-        doctorid ="5fb62a1924583828f10f8731";
-        String patientname = user.get(SessionManager.KEY_NAME);
+        doctorid = user.get(SessionManager.KEY_ID);
+
+        String patientname = user.get(SessionManager.KEY_FIRST_NAME);
 
         Log.w(TAG,"Doctorid"+doctorid +"patientname :"+patientname);
 

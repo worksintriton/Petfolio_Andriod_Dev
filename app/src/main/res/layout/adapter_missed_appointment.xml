@@ -58,7 +58,9 @@
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:fontFamily="@font/futuramediumbt"
-                android:layout_marginLeft="2dp" />
+                android:layout_marginLeft="2dp"
+                android:ellipsize="end"
+                android:maxLines="1"/>
 
             <TextView
                 android:id="@+id/txt_pettype"
@@ -68,9 +70,11 @@
                 android:layout_alignStart="@id/txt_petname"
                 android:layout_alignLeft="@id/txt_petname"
                 android:layout_marginTop="5dp"
-                android:textSize="12sp"
                 android:fontFamily="@font/futuramediumbt"
-                android:text="@string/pet_type"/>
+                android:text="@string/pet_type"
+                android:textSize="14sp"
+                android:ellipsize="end"
+                android:maxLines="1"/>
 
             <TextView
                 android:id="@+id/txt_service_info"
@@ -83,7 +87,9 @@
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:fontFamily="@font/futuramediumbt"
-                android:text="@string/serv_name"/>
+                android:text="@string/serv_name"
+                android:ellipsize="end"
+                android:maxLines="1"/>
 
 
             <TextView
@@ -98,7 +104,9 @@
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/missed_on_date"
                 android:textColor="@color/missed_red"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:ellipsize="end"
+                android:maxLines="1"/>
 
         </RelativeLayout>
 

@@ -4,13 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/avi_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        app:indicatorColor="@color/green"
-        app:indicatorName="LineSpinFadeLoaderIndicator" />
+
 
     <LinearLayout
         android:id="@+id/headerView"
@@ -30,15 +24,15 @@
 
             <ImageView
                 android:id="@+id/img_back"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
                 android:src="@drawable/back"
-                tools:ignore="ContentDescription"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="15dp" />
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/txt_toolbar_title"
@@ -49,7 +43,7 @@
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/appointment"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -111,6 +105,17 @@
             android:layout_marginEnd="20dp"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/txt_no_records"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/norecordsfound"
+                android:textColor="@color/color"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -144,7 +149,7 @@
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/or"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/edt_petname"
@@ -171,7 +176,6 @@
                 android:fontFamily="@font/futuramediumbt"
                 tools:ignore="Autofill,LabelFor"
                 android:textColor="@color/green"
-                android:inputType="text"
                 android:textColorHint="@color/green"/>
             <TextView
                 android:id="@+id/txt_petbreed"
@@ -185,31 +189,30 @@
                 android:hint="@string/pet_name"
                 tools:ignore="Autofill,LabelFor"
                 android:textColor="@color/green"
-                android:inputType="text"
                 android:textColorHint="@color/green"/>
 
             <RelativeLayout
+                android:id="@+id/rl_pettype"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rectangular_curved_corner"
+                android:layout_height="48dp"
                 android:layout_marginTop="10dp"
+                android:background="@drawable/rectangular_curved_corner"
                 android:padding="10dp">
 
                 <Spinner
                     android:id="@+id/sprpettype"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    />
+                    android:background="@android:color/transparent" />
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:src="@drawable/dropdown"
-                    android:layout_alignParentRight="true"
                     tools:ignore="ContentDescription" />
             </RelativeLayout>
 
@@ -218,13 +221,15 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/rectangular_curved_corner"
                 android:layout_marginTop="10dp"
-                android:padding="10dp">
+                android:padding="10dp"
+                android:id="@+id/rl_petbreed">
 
                 <Spinner
                     android:id="@+id/sprpetbreed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent" />
+                    android:background="@android:color/transparent"
+                    android:autofillHints="Pet Breed"/>
 
                 <ImageView
                     android:layout_width="30dp"
@@ -239,7 +244,7 @@
 
 
             <RadioGroup
-                android:id="@+id/rgappmnttype"
+                android:id="@+id/rg_appointmenttype"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -252,7 +257,8 @@
                     android:backgroundTint="@color/green_color"
                     android:checked="true"
                     android:fontFamily="@font/futuramediumbt"
-                    android:text="@string/emergency" />
+                    android:text="@string/emergency"
+                    tools:ignore="UnusedAttribute" />
 
                 <RadioButton
                     android:id="@+id/radioButton2"
@@ -261,48 +267,96 @@
                     android:layout_marginTop="10dp"
                     android:backgroundTint="@color/green_color"
                     android:fontFamily="@font/futuramediumbt"
-                    android:text="@string/normal" />
+                    android:text="@string/normal"
+                    tools:ignore="UnusedAttribute" />
             </RadioGroup>
 
             <EditText
                 android:id="@+id/edt_allergies"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="15dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/rectangular_curved_corner"
-                android:textSize="14sp"
                 android:fontFamily="@font/futuramediumbt"
                 android:hint="@string/allergies"
-                tools:ignore="Autofill,LabelFor"
-                android:textColor="@color/green"
                 android:inputType="text"
-                android:textColorHint="@color/green"/>
+                android:padding="15dp"
+                android:textColor="@color/green"
+                android:textColorHint="@color/green"
+                android:textSize="14sp"
+                tools:ignore="Autofill,LabelFor" />
 
             <TextView
-                android:id="@+id/txt_upload"
+                android:id="@+id/txt_lbl_uploadpet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/upload_pet_current_images"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
-            <RelativeLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview_pet_pics"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/rectangular_curved_corner"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:padding="10dp">
+                app:cardBackgroundColor="@color/light_green"
+                app:cardCornerRadius="10dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
 
-            </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
+                    <TextView
+                        android:id="@+id/txt_pet_image"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rectangle_corner"
+                        android:focusable="false"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:hint="@string/choose"
+                        android:inputType="none"
+                        android:padding="15dp"
+                        android:textColorHint="@color/green"
+                        android:textSize="14sp"
+                        tools:ignore="Autofill,LabelFor" />
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:contentDescription="@string/image"
+                        android:src="@drawable/add"  />
+
+
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_upload_pet_images"
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/img_pet_imge"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/image"
+                android:src="@drawable/image_thumbnail" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_comment"
@@ -310,8 +364,7 @@
                 android:layout_height="120dp"
                 android:layout_marginTop="10dp"
                 app:cardBackgroundColor="@color/light_green"
-                app:cardCornerRadius="10dp"
-               >
+                app:cardCornerRadius="10dp">
 
                 <EditText
                     android:id="@+id/edt_comment"
@@ -336,8 +389,6 @@
         </LinearLayout>
     </ScrollView>
 
-
-
     <LinearLayout
         android:id="@+id/footerView"
         android:layout_width="match_parent"
@@ -346,19 +397,27 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btnsubmit"
+            android:id="@+id/btn_continue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_corner_button"
-            android:text="@string/continues"
-            android:textColor="@color/whiteFive"
-            android:textSize="18sp"
-            android:textAllCaps="false"
-            android:fontFamily="@font/futuramediumbt"
             android:layout_margin="20dp"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/green_bgm_border"
+            android:fontFamily="@font/futuramediumbt"
+            android:text="@string/continues"
+            android:textAllCaps="false"
+            android:textColor="@color/whiteFive"
+            android:textSize="18sp" />
 
 
     </LinearLayout>
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:indicatorColor="@color/green"
+        app:indicatorName="LineSpinFadeLoaderIndicator" />
 
 </RelativeLayout>

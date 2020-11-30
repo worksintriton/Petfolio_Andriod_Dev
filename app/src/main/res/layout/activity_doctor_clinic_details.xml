@@ -105,11 +105,22 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txt_no_records"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/norecordsfound"
+                android:textColor="@color/color"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <TextView
                 android:id="@+id/txt_clinicname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/futurabookfont"
+                android:fontFamily="@font/futuramediumbt"
                 android:text="@string/clinic_name"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -119,7 +130,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:fontFamily="@font/futurabookfont"
+                android:fontFamily="@font/futuramediumbt"
                 android:text="@string/doctor_name"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
@@ -238,7 +249,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/futurabookfont"
+                android:fontFamily="@font/futuramediumbt"
                 android:text="@string/specialization"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -248,7 +259,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/futurabookfont"
+                android:fontFamily="@font/futuramediumbt"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -257,7 +268,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
-                android:fontFamily="@font/futurabookfont"
+                android:fontFamily="@font/futuramediumbt"
                 android:text="@string/desc"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -267,27 +278,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/futurabookfont"
+                android:fontFamily="@font/futuramediumbt"
                 android:text="@string/desc_dummy"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                />
+                android:textSize="16sp" />
 
             <Button
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
                 android:id="@+id/btn_book_now"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rounded_corner_button"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/green_bgm_border"
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/book_now"
                 android:textAllCaps="false"
                 android:textColor="@color/whiteFive"
-                android:textSize="18sp"
-                />
+                android:textSize="18sp" />
 
 
 
@@ -311,7 +320,7 @@
             android:id="@+id/bottom_navigation_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:theme="@style/Widget.BottomNavigationView"
             app:elevation="8dp"
             app:itemIconSize="20dp"
             app:menu="@menu/bottom_navigation"

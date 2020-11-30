@@ -50,6 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="80dp"
         android:orientation="vertical">
 
         <Button
@@ -58,7 +59,7 @@
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:background="@drawable/rounded_corner_green"
+            android:background="@drawable/green_backround"
             android:fontFamily="@font/futuramediumbt"
             android:gravity="center"
             android:text="@string/load_more"
@@ -78,7 +79,8 @@
             android:padding="5dp"
             android:text="@string/filter"
             android:textAllCaps="false"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:visibility="invisible" />
 
     </LinearLayout>
 

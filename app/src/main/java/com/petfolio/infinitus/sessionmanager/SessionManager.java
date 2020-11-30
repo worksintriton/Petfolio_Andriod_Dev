@@ -20,7 +20,6 @@ public class SessionManager {
     int PRIVATE_MODE = 0;
     private static final String PREF_NAME = "Session Manager";
     public static final String IS_LOGIN = "IsLoggedIn";
-    public static final String KEY_NAME = "name";
     public static final String KEY_LOGIN_TYPE = "logintype";
 
     public static final String KEY_TOKEN = "keytoken";

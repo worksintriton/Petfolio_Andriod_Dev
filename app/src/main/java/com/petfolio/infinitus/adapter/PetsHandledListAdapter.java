@@ -37,7 +37,7 @@ public class PetsHandledListAdapter extends  RecyclerView.Adapter<RecyclerView.V
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.pets_type_list_model, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_pets_type_list, parent, false);
         return new ViewHolderOne(view);
     }
 

@@ -21,17 +21,21 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:layout_alignParentBottom="true"
-        app:elevation="8dp"
-        app:menu="@menu/doctor_bottom_navigation"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/rounded_curve"
-        android:layout_margin="20dp"
+        app:elevation="8dp"
         app:itemBackground="@drawable/selected_state"
         app:itemIconTint="@color/selector"
         app:itemTextColor="@color/selector"
         app:labelVisibilityMode="labeled"
-        />
+        app:menu="@menu/doctor_bottom_navigation" />
 
 
 

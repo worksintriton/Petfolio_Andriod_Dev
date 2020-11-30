@@ -67,10 +67,10 @@ public class DoctorMyCalendarTimeActivity extends AppCompatActivity implements O
 
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
-        doctorname = user.get(SessionManager.KEY_NAME);
+        doctorname = user.get(SessionManager.KEY_FIRST_NAME);
         doctoremailid = user.get(SessionManager.KEY_EMAIL_ID);
-       // userid = user.get(SessionManager.KEY_ID);
-        userid = "1234567890";
+        userid = user.get(SessionManager.KEY_ID);
+
 
         rv_doctor_mycalendar_avldays = findViewById(R.id.rv_doctor_mycalendar_avldays);
 
@@ -269,13 +269,13 @@ public class DoctorMyCalendarTimeActivity extends AppCompatActivity implements O
     @SuppressLint("LongLogTag")
     private DoctorMyCalendarUpdateDocDateRequest doctorMyCalendarUpdateDocDateRequest() {
         /*
-         * Doctor_email_id : 123123131313123123123123
+         * user_id : 123123131313123123123123
          * days : ["Monday","Tuesday","Wednesday"]
          * timing : [{"Time":"01:00 AM","Status":true},{"Time":"02:00 AM","Status":true},{"Time":"03:00 AM","Status":true},{"Time":"04:00 AM","Status":true}]
          */
 
         DoctorMyCalendarUpdateDocDateRequest doctorMyCalendarUpdateDocDateRequest = new DoctorMyCalendarUpdateDocDateRequest();
-        doctorMyCalendarUpdateDocDateRequest.setDoctor_email_id(doctoremailid);
+        doctorMyCalendarUpdateDocDateRequest.setUser_id(userid);
         doctorMyCalendarUpdateDocDateRequest.setDays(dateList);
         doctorMyCalendarUpdateDocDateRequest.setTiming(timingBeanList);
         Log.w(TAG,"doctorMyCalendarUpdateDocDateRequest"+ "--->" + new Gson().toJson(doctorMyCalendarUpdateDocDateRequest));

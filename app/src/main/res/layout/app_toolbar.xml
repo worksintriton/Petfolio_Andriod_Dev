@@ -36,7 +36,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginLeft="10dp"
-        android:text="PickUp Location"/>
+        android:text="@string/pickup_location"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

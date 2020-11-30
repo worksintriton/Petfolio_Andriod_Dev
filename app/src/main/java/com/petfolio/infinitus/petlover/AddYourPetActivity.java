@@ -31,8 +31,12 @@ import com.petfolio.infinitus.activity.LoginActivity;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.requestpojo.AddYourPetRequest;
+import com.petfolio.infinitus.requestpojo.BreedTypeRequest;
 import com.petfolio.infinitus.responsepojo.AddYourPetResponse;
+import com.petfolio.infinitus.responsepojo.BreedTypeResponse;
 import com.petfolio.infinitus.responsepojo.DropDownListResponse;
+import com.petfolio.infinitus.responsepojo.PetDetailsResponse;
+import com.petfolio.infinitus.responsepojo.PetTypeListResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -77,8 +81,8 @@ public class AddYourPetActivity extends AppCompatActivity {
     @BindView(R.id.sprpetgender)
     Spinner sprpetgender;
 
-    @BindView(R.id.sprpetcolor)
-    Spinner sprpetcolor;
+    @BindView(R.id.edt_petcolor)
+    EditText edt_petcolor;
 
     @BindView(R.id.edt_petweight)
     EditText edt_petweight;
@@ -120,6 +124,17 @@ public class AddYourPetActivity extends AppCompatActivity {
     private String userid;
     private List<DropDownListResponse.DataBean.SpecialzationBean> petSpecilaziationList;
 
+    private List<PetTypeListResponse.DataBean.UsertypedataBean> usertypedataBeanList;
+
+    private String petTypeid;
+
+    private String strSelectyourPetType;
+
+    HashMap<String, String> hashMap_PetTypeid = new HashMap<>();
+    private String petTypeId;
+    private List<PetDetailsResponse.DataBean> petDetailsResponseByUserIdList;
+    private List<BreedTypeResponse.DataBean> breedTypedataBeanList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +149,8 @@ public class AddYourPetActivity extends AppCompatActivity {
 
 
         if (new ConnectionDetector(AddYourPetActivity.this).isNetworkAvailable(AddYourPetActivity.this)) {
-            dropDownListResponseCall();
+            petTypeListResponseCall();
+
         }
 
         sprpettype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -142,7 +158,10 @@ public class AddYourPetActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int arg2, long arg3) {
                 ((TextView) parent.getChildAt(0)).setTextColor(getResources().getColor(R.color.green));
                 strPetType = sprpettype.getSelectedItem().toString();
-                Log.w(TAG,"strPetType :"+strPetType);
+                petTypeId = hashMap_PetTypeid.get(strPetType);
+                breedTypeResponseByPetIdCall(petTypeId);
+
+                Log.w(TAG,"petTypeId : "+petTypeId+" strPetType :"+strPetType);
 
 
             }
@@ -175,22 +194,6 @@ public class AddYourPetActivity extends AppCompatActivity {
                 ((TextView) parent.getChildAt(0)).setTextColor(getResources().getColor(R.color.green));
                 strPetGenderType = sprpetgender.getSelectedItem().toString();
                 Log.w(TAG,"strPetGenderType :"+strPetGenderType);
-
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
-
-            }
-        });
-        sprpetcolor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int arg2, long arg3) {
-                ((TextView) parent.getChildAt(0)).setTextColor(getResources().getColor(R.color.green));
-                strPetColorType = sprpetcolor.getSelectedItem().toString();
-                Log.w(TAG,"strPetColorType :"+strPetColorType);
 
 
             }
@@ -313,18 +316,11 @@ public class AddYourPetActivity extends AppCompatActivity {
                         if(petSpecilaziationList != null && petSpecilaziationList.size()>0){
 
                         }
-                        if(petTypeList != null && petTypeList.size()>0){
-                            setPetType(petTypeList);
-                        }
-                        if(petBreedTypeList != null && petBreedTypeList.size()>0){
-                            setPetBreedType(petBreedTypeList);
-                        }
+
                         if(genderTypeList != null && genderTypeList.size()>0){
                             setPetGenderType(genderTypeList);
                         }
-                        if(petColorTypeList != null && petColorTypeList.size()>0){
-                            setPetColorType(petColorTypeList);
-                        }
+
 
                     }
 
@@ -349,22 +345,6 @@ public class AddYourPetActivity extends AppCompatActivity {
 
     }
 
-    private void setPetColorType(List<DropDownListResponse.DataBean.ColorBean> petColorTypeList) {
-        ArrayList<String> petColortypeArrayList = new ArrayList<>();
-        petColortypeArrayList.add("Select Pet Color");
-        for (int i = 0; i < petColorTypeList.size(); i++) {
-
-            String petPetColorType = petColorTypeList.get(i).getColor();
-            Log.w(TAG,"petGenderType-->"+petPetColorType);
-            petColortypeArrayList.add(petPetColorType);
-
-            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(AddYourPetActivity.this, R.layout.spinner_item, petColortypeArrayList);
-            spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item); // The drop down view
-            sprpetcolor.setAdapter(spinnerArrayAdapter);
-
-
-        }
-    }
 
     private void setPetGenderType(List<DropDownListResponse.DataBean.GenderBean> genderTypeList) {
         ArrayList<String> petGendertypeArrayList = new ArrayList<>();
@@ -383,39 +363,7 @@ public class AddYourPetActivity extends AppCompatActivity {
         }
     }
 
-    private void setPetBreedType(List<DropDownListResponse.DataBean.PetBreedBean> petBreedTypeList) {
-        ArrayList<String> petBreedtypeArrayList = new ArrayList<>();
-        petBreedtypeArrayList.add("Select Pet Breed");
-        for (int i = 0; i < petBreedTypeList.size(); i++) {
 
-            String petType = petBreedTypeList.get(i).getPet_breed();
-            Log.w(TAG,"petType-->"+petType);
-            petBreedtypeArrayList.add(petType);
-
-            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(AddYourPetActivity.this, R.layout.spinner_item, petBreedtypeArrayList);
-            spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item); // The drop down view
-            sprpetbreed.setAdapter(spinnerArrayAdapter);
-
-
-        }
-    }
-
-    private void setPetType(List<DropDownListResponse.DataBean.PetTypeBean> petTypeList) {
-        ArrayList<String> pettypeArrayList = new ArrayList<>();
-        pettypeArrayList.add("Select Pet Type");
-        for (int i = 0; i < petTypeList.size(); i++) {
-
-            String petType = petTypeList.get(i).getPet_type();
-            Log.w(TAG,"petType-->"+petType);
-            pettypeArrayList.add(petType);
-
-            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(AddYourPetActivity.this, R.layout.spinner_item, pettypeArrayList);
-            spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item); // The drop down view
-            sprpettype.setAdapter(spinnerArrayAdapter);
-
-
-        }
-    }
 
     private void SelectDate() {
 
@@ -592,7 +540,7 @@ public class AddYourPetActivity extends AppCompatActivity {
         addYourPetRequest.setPet_type(strPetType);
         addYourPetRequest.setPet_breed(strPetBreedType);
         addYourPetRequest.setPet_gender(strPetGenderType);
-        addYourPetRequest.setPet_color(strPetColorType);
+        addYourPetRequest.setPet_color(edt_petcolor.getText().toString());
         addYourPetRequest.setPet_weight(Integer.parseInt(edt_petweight.getText().toString()));
         addYourPetRequest.setPet_age(Integer.parseInt(edt_petage.getText().toString()));
         addYourPetRequest.setVaccinated(isvaccinated);
@@ -627,5 +575,136 @@ public class AddYourPetActivity extends AppCompatActivity {
         super.onBackPressed();
         startActivity(new Intent(AddYourPetActivity.this,LoginActivity.class));
         finish();
+    }
+
+
+    public void petTypeListResponseCall(){
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        //Creating an object of our api interface
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<PetTypeListResponse> call = apiInterface.petTypeListResponseCall(RestUtils.getContentType());
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<PetTypeListResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<PetTypeListResponse> call, @NonNull Response<PetTypeListResponse> response) {
+                avi_indicator.smoothToHide();
+
+
+                if (response.body() != null) {
+                    if(200 == response.body().getCode()){
+                        Log.w(TAG,"PetTypeListResponse" + new Gson().toJson(response.body()));
+                        dropDownListResponseCall();
+                        usertypedataBeanList = response.body().getData().getUsertypedata();
+                        if(usertypedataBeanList != null && usertypedataBeanList.size()>0){
+                            setPetType(usertypedataBeanList);
+                        }
+                    }
+
+
+
+                }
+
+
+
+
+
+
+
+
+            }
+
+
+            @Override
+            public void onFailure(@NonNull Call<PetTypeListResponse> call,@NonNull  Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"PetTypeListResponse flr"+t.getMessage());
+            }
+        });
+
+    }
+    private void setPetType(List<PetTypeListResponse.DataBean.UsertypedataBean> usertypedataBeanList) {
+        ArrayList<String> pettypeArrayList = new ArrayList<>();
+        pettypeArrayList.add("Select Pet Type");
+        for (int i = 0; i < usertypedataBeanList.size(); i++) {
+
+            String petType = usertypedataBeanList.get(i).getPet_type_title();
+            hashMap_PetTypeid.put(usertypedataBeanList.get(i).getPet_type_title(), usertypedataBeanList.get(i).get_id());
+
+            Log.w(TAG,"petType-->"+petType);
+            pettypeArrayList.add(petType);
+
+            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(AddYourPetActivity.this, R.layout.spinner_item, pettypeArrayList);
+            spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item); // The drop down view
+            sprpettype.setAdapter(spinnerArrayAdapter);
+
+
+        }
+    }
+
+    private void breedTypeResponseByPetIdCall(String petTypeId) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<BreedTypeResponse> call = ApiService.breedTypeResponseByPetIdCall(RestUtils.getContentType(),breedTypeRequest(petTypeId));
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<BreedTypeResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<BreedTypeResponse> call, @NonNull Response<BreedTypeResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG, "BreedTypeResponse" + "--->" + new Gson().toJson(response.body()));
+
+
+                if (response.body() != null) {
+                    if (200 == response.body().getCode()) {
+                        breedTypedataBeanList = response.body().getData();
+                        if(breedTypedataBeanList != null && breedTypedataBeanList.size()>0){
+                            setBreedType(breedTypedataBeanList);
+                        }
+
+                    }
+
+                } else {
+
+                }
+
+
+            }
+
+
+
+            @Override
+            public void onFailure(@NonNull Call<BreedTypeResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+
+                Log.w(TAG,"BreedTypeResponse flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    private void setBreedType(List<BreedTypeResponse.DataBean> breedTypedataBeanList) {
+        ArrayList<String> pettypeArrayList = new ArrayList<>();
+        pettypeArrayList.add("Select Pet Breed");
+        for (int i = 0; i < breedTypedataBeanList.size(); i++) {
+
+            String petType = breedTypedataBeanList.get(i).getPet_breed();
+
+            Log.w(TAG,"petType-->"+petType);
+            pettypeArrayList.add(petType);
+
+            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(AddYourPetActivity.this, R.layout.spinner_item, pettypeArrayList);
+            spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item); // The drop down view
+            sprpetbreed.setAdapter(spinnerArrayAdapter);
+
+
+        }
+    }
+    private BreedTypeRequest breedTypeRequest(String petTypeId) {
+        BreedTypeRequest breedTypeRequest = new BreedTypeRequest();
+        breedTypeRequest.setPet_type_id(petTypeId);
+        Log.w(TAG,"breedTypeRequest"+ "--->" + new Gson().toJson(breedTypeRequest));
+        return breedTypeRequest;
     }
 }

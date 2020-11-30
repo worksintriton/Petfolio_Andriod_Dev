@@ -20,8 +20,8 @@
 
         <ImageView
             android:id="@+id/close"
-            android:layout_width="wrap_content"
-            android:layout_height="15dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="end"
             android:contentDescription="@string/image"
             android:src="@drawable/ic_baseline_close_24" />
@@ -41,17 +41,19 @@
                 android:padding="2dp"
                 android:text="@string/education1"
                 android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/educ_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                               android:fontFamily="@font/futuramediumbt"
+                android:fontFamily="@font/futuramediumbt"
                 android:padding="2dp"
                 android:text=""
                 android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textSize="14sp"
+                android:ellipsize="end"
+                android:maxLines="1"/>
 
 
         </LinearLayout>
@@ -68,21 +70,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                               android:fontFamily="@font/futuramediumbt"
+                android:fontFamily="@font/futuramediumbt"
                 android:padding="2dp"
                 android:text="@string/year_of_completion1"
                 android:textColor="@color/green"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/edu_yr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                               android:fontFamily="@font/futuramediumbt"
+                android:fontFamily="@font/futuramediumbt"
                 android:padding="2dp"
                 android:text=""
                 android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textSize="14sp"
+                android:ellipsize="end"
+                android:maxLines="1"/>
 
 
         </LinearLayout>
