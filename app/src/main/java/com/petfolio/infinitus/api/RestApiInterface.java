@@ -17,6 +17,7 @@ import com.petfolio.infinitus.requestpojo.LoginRequest;
 import com.petfolio.infinitus.requestpojo.PetAppointmentCreateRequest;
 import com.petfolio.infinitus.requestpojo.PetDetailsRequest;
 import com.petfolio.infinitus.requestpojo.PetDoctorAvailableTimeRequest;
+import com.petfolio.infinitus.requestpojo.PetLoverAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverDashboardRequest;
 import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
 import com.petfolio.infinitus.requestpojo.SignupRequest;
@@ -43,6 +44,7 @@ import com.petfolio.infinitus.responsepojo.PetAppointmentCreateResponse;
 import com.petfolio.infinitus.responsepojo.PetDetailsResponse;
 import com.petfolio.infinitus.responsepojo.PetDoctorAvailableTimeResponse;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
+import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.PetTypeListResponse;
 import com.petfolio.infinitus.responsepojo.ResendOTPResponse;
 import com.petfolio.infinitus.responsepojo.SignupResponse;
@@ -144,7 +146,7 @@ public interface RestApiInterface {
     Call<DoctorMissedAppointmentResponse>doctorMissedAppointmentResponseCall(@Header("Content-Type") String type, @Body DoctorNewAppointmentRequest doctorNewAppointmentRequest);
 
 
-    /*Doctor Missed Appointment*/
+    /*Doctor fetch details based on id*/
     @POST("doctordetails/fetch_doctor_id")
     Call<DoctorDetailsResponse>doctorDetailsResponseCall(@Header("Content-Type") String type, @Body DoctorDetailsRequest doctorDetailsRequest );
 
@@ -167,11 +169,24 @@ public interface RestApiInterface {
     Call<PetDoctorAvailableTimeResponse>petDoctorAvailableTimeResponseCall(@Header("Content-Type") String type, @Body PetDoctorAvailableTimeRequest petDoctorAvailableTimeRequest   );
 
 
+    /*Appointment check */
+    @POST("appointments/check")
+    Call<AppointmentCheckResponse>appointmentCheckResponseCall(@Header("Content-Type") String type, @Body AppointmentCheckRequest appointmentCheckRequest);
+
     /*Pet Appointment Create*/
     @POST("appointments/mobile/create")
     Call<PetAppointmentCreateResponse>petAppointmentCreateResponseCall(@Header("Content-Type") String type, @Body PetAppointmentCreateRequest petAppointmentCreateRequest);
 
+    /*Pet Current Appointment*/
+    @POST("appointments/mobile/plove_getlist/newapp")
+    Call<PetNewAppointmentResponse>petNewAppointmentResponseCall(@Header("Content-Type") String type, @Body PetLoverAppointmentRequest petLoverAppointmentRequest);
 
-    @POST("appointments/check")
-    Call<AppointmentCheckResponse>appointmentCheckResponseCall(@Header("Content-Type") String type, @Body AppointmentCheckRequest appointmentCheckRequest);
+    /*Pet Completed Appointment*/
+    @POST("appointments/mobile/plove_getlist/comapp")
+    Call<PetNewAppointmentResponse>petCompletedAppointmentResponseCall(@Header("Content-Type") String type, @Body PetLoverAppointmentRequest petLoverAppointmentRequest);
+
+    /*Pet Cancelled Appointment*/
+    @POST("appointments/mobile/plove_getlist/missapp")
+    Call<PetNewAppointmentResponse>petMissedAppointmentResponseCall(@Header("Content-Type") String type, @Body PetLoverAppointmentRequest petLoverAppointmentRequest);
+
 }

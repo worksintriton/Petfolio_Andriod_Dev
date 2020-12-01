@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp">
+    android:id="@+id/ll_new"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cdvw_newappointment"
@@ -22,10 +22,7 @@
                 android:id="@+id/cv_pet"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
                 app:cardCornerRadius="10dp"
                 app:cardPreventCornerOverlap="false"
                 app:cardUseCompatPadding="false">
@@ -53,12 +50,12 @@
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@id/cv_pet"
                 android:layout_toRightOf="@id/cv_pet"
+                android:ellipsize="end"
                 android:fontFamily="@font/futuramediumbt"
+                android:maxLines="1"
                 android:text="@string/pet_name"
                 android:textColor="@color/black"
-                android:textSize="14sp"
-                android:ellipsize="end"
-                android:maxLines="1"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/txt_pettype"
@@ -68,11 +65,11 @@
                 android:layout_alignStart="@id/txt_petname"
                 android:layout_alignLeft="@id/txt_petname"
                 android:layout_marginTop="5dp"
-                android:fontFamily="@font/futuramediumbt"
-                android:text="@string/pet_type"
-                android:textSize="14sp"
                 android:ellipsize="end"
-                android:maxLines="1"/>
+                android:fontFamily="@font/futuramediumbt"
+                android:maxLines="1"
+                android:text="@string/pet_type"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/txt_service_info"
@@ -81,31 +78,27 @@
                 android:layout_below="@id/txt_pettype"
                 android:layout_alignStart="@id/txt_pettype"
                 android:layout_alignLeft="@id/txt_pettype"
-                android:layout_marginTop="20dp"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:fontFamily="@font/futuramediumbt"
-                android:text="@string/serv_name"
+                android:layout_marginTop="10dp"
                 android:ellipsize="end"
-                android:maxLines="1"/>
+                android:fontFamily="@font/futuramediumbt"
+                android:maxLines="1"
+                android:text="@string/serv_name"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txt_service_info"
+                android:layout_below="@id/cv_pet"
                 android:layout_centerHorizontal="true"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btn_cancel"
                     android:layout_width="110dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:layout_gravity="center"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
@@ -118,7 +111,7 @@
                 <Button
                     android:id="@+id/btn_complete"
                     android:layout_width="110dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:layout_gravity="center"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"

@@ -206,6 +206,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         signupRequest.setUser_phone(edt_phone.getText().toString());
         signupRequest.setUser_type(UserTypeValue);
         signupRequest.setDate_of_reg(currentDateandTime);
+        signupRequest.setMobile_type("Android");
         Log.w(TAG,"signupRequest "+ new Gson().toJson(signupRequest));
         return signupRequest;
     }

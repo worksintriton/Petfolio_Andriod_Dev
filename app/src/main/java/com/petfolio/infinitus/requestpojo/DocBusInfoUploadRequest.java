@@ -34,6 +34,17 @@ public class DocBusInfoUploadRequest {
     private double clinic_lat;
     private double clinic_long;
 
+    private String mobile_type;
+
+    public String getMobile_type() {
+        return mobile_type;
+    }
+
+    public void setMobile_type(String mobile_type) {
+        this.mobile_type = mobile_type;
+    }
+
+
     /**
      * education : 10 th pass
      * year : 2020
@@ -84,7 +95,7 @@ public class DocBusInfoUploadRequest {
 
 
 
-    public DocBusInfoUploadRequest(String user_id, String dr_title, String dr_name, String clinic_name, String clinic_loc, double clinic_lat, double clinic_long, List<EducationDetailsBean> education_details, List<ExperienceDetailsBean> experience_details, List<SpecializationBean> specialization, List<PetHandledBean> pet_handled, List<ClinicPicBean> clinic_pic, List<CertificatePicBean> certificate_pic, List<GovtIdPicBean> govt_id_pic, List<PhotoIdPicBean> photo_id_pic, int profile_status, String profile_verification_status, String date_and_time) {
+    public DocBusInfoUploadRequest(String user_id, String dr_title, String dr_name, String clinic_name, String clinic_loc, double clinic_lat, double clinic_long, List<EducationDetailsBean> education_details, List<ExperienceDetailsBean> experience_details, List<SpecializationBean> specialization, List<PetHandledBean> pet_handled, List<ClinicPicBean> clinic_pic, List<CertificatePicBean> certificate_pic, List<GovtIdPicBean> govt_id_pic, List<PhotoIdPicBean> photo_id_pic, int profile_status, String profile_verification_status, String date_and_time,String mobile_type) {
         this.user_id = user_id;
         this.dr_title = dr_title;
         this.dr_name = dr_name;
@@ -103,6 +114,7 @@ public class DocBusInfoUploadRequest {
         this.profile_status = profile_status;
         this.profile_verification_status = profile_verification_status;
         this.date_and_time = date_and_time;
+        this.mobile_type = mobile_type;
     }
 
     public String getUser_id() {

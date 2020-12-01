@@ -30,6 +30,16 @@ public class LocationAddRequest {
     private boolean default_status;
     private String date_and_time;
 
+    private String mobile_type;
+
+    public String getMobile_type() {
+        return mobile_type;
+    }
+
+    public void setMobile_type(String mobile_type) {
+        this.mobile_type = mobile_type;
+    }
+
     public String getUser_id() {
         return user_id;
     }

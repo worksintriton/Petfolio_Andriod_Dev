@@ -362,6 +362,7 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
         locationAddRequest.setLocation_nickname(edt_pickname.getText().toString());
         locationAddRequest.setDefault_status(true);
         locationAddRequest.setDate_and_time(currentDateandTime);
+        locationAddRequest.setMobile_type("Android");
 
         Log.w(TAG," locationAddRequest"+ new Gson().toJson(locationAddRequest));
         return locationAddRequest;

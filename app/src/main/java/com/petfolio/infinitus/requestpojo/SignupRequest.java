@@ -17,6 +17,15 @@ public class SignupRequest {
     private String user_phone;
     private int user_type;
     private String date_of_reg;
+    private String mobile_type;
+
+    public String getMobile_type() {
+        return mobile_type;
+    }
+
+    public void setMobile_type(String mobile_type) {
+        this.mobile_type = mobile_type;
+    }
 
     public String getFirst_name() {
         return first_name;

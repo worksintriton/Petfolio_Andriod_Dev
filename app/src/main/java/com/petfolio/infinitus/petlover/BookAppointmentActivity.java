@@ -883,6 +883,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
         addYourPetRequest.setLast_vaccination_date("");
         addYourPetRequest.setDefault_status(true);
         addYourPetRequest.setDate_and_time(currentDateandTime);
+        addYourPetRequest.setMobile_type("Android");
         Log.w(TAG, "addYourPetRequest" + new Gson().toJson(addYourPetRequest));
         return addYourPetRequest;
     }

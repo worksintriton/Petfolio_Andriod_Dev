@@ -49,6 +49,15 @@ public class PetAppointmentCreateRequest {
     private String allergies;
     private int amount;
     private List<DocAttchedBean> doc_attched;
+    private String mobile_type;
+
+    public String getMobile_type() {
+        return mobile_type;
+    }
+
+    public void setMobile_type(String mobile_type) {
+        this.mobile_type = mobile_type;
+    }
 
 
     public String getDoctor_id() {

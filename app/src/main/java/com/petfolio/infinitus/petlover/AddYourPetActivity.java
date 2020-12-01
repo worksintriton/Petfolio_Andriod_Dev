@@ -275,7 +275,7 @@ public class AddYourPetActivity extends AppCompatActivity {
         if (can_proceed) {
             if (new ConnectionDetector(AddYourPetActivity.this).isNetworkAvailable(AddYourPetActivity.this)) {
 
-                if(validdSelectPetType() && validdSelectPetBreedType() && validdSelectPetGenderType() && validdSelectPetColorType()) {
+                if(validdSelectPetType() && validdSelectPetBreedType() && validdSelectPetGenderType() ) {
                     addYourPetResponseCall();
                 }
             }
@@ -547,6 +547,7 @@ public class AddYourPetActivity extends AppCompatActivity {
         addYourPetRequest.setLast_vaccination_date(SelectedLastVaccinateddate);
         addYourPetRequest.setDefault_status(true);
         addYourPetRequest.setDate_and_time(currentDateandTime);
+        addYourPetRequest.setMobile_type("Android");
         Log.w(TAG,"addYourPetRequest"+ new Gson().toJson(addYourPetRequest));
         return addYourPetRequest;
     }

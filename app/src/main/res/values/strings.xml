@@ -145,5 +145,9 @@
     <string name="cancel_appointment_date">Cancelled on 01-Sep 2020</string>
     <string name="pickup_location">PickUp Location</string>
     <string name="current_location">Current Location</string>
+    <string name="my_appointment">My appointment</string>
+    <string name="pet_care">Pet Care</string>
+    <string name="current">Current</string>
+    <string name="cancelled">Cancelled</string>
 
 </resources>

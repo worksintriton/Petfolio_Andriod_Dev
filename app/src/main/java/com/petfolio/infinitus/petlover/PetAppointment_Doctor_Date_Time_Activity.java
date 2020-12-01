@@ -121,7 +121,6 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
     //List<TimeSlotDivider> timeSlotDividerList= new ArrayList<>();
     List<String> stringLinkedList= new LinkedList<>();
 
-    LinearLayout rootContainer;
 
     int timeslotcount;
     private RadioButton lastCheckedRB = null;
@@ -171,15 +170,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         rv_doctoravailabeslottime = findViewById(R.id.rv_doctoravailabeslottime);
 
-        rootContainer = findViewById(R.id.rootContainer);
-        proced_appoinment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
-                                appointmentCheckResponseCall();
-                }
-            }
-        });
+
 
 
 
@@ -252,6 +243,20 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         sub_layer1 = findViewById(R.id.sub_layer1);
         sub_layer1.setVisibility(View.GONE);
 
+        proced_appoinment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(selectedTimeSlot != null && !selectedTimeSlot.isEmpty()){
+                    if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
+                        appointmentCheckResponseCall();
+                    }
+                }else{
+                    showErrorLoading("Please select time slot ");
+
+                }
+
+            }
+        });
 
 
 
@@ -507,7 +512,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         call.enqueue(new Callback<AppointmentCheckResponse>() {
             @Override
             public void onResponse(@NonNull Call<AppointmentCheckResponse> call, @NonNull Response<AppointmentCheckResponse> response) {
-                progressDialog.dismiss();
+                avi_indicator.smoothToHide();
                 Log.w(TAG,"appointmentCheckResponseCall"+ "--->" + new Gson().toJson(response.body()));
 
 
@@ -538,7 +543,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
             @Override
             public void onFailure(@NonNull Call<AppointmentCheckResponse> call, @NonNull Throwable t) {
-                progressDialog.dismiss();
+                avi_indicator.smoothToHide();
 
                 Log.w(TAG,"AppointmentCheckResponseflr"+"--->" + t.getMessage());
             }
@@ -655,6 +660,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         petAppointmentCreateRequest.setAppointment_types("");
         petAppointmentCreateRequest.setAllergies(allergies);
         petAppointmentCreateRequest.setAmount(0);
+        petAppointmentCreateRequest.setMobile_type("Android");
         Log.w(TAG,"petAppointmentCreateRequest"+ "--->" + new Gson().toJson(petAppointmentCreateRequest));
         return petAppointmentCreateRequest;
     }

@@ -5,6 +5,14 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:indicatorColor="@color/green"
+        app:indicatorName="LineSpinFadeLoaderIndicator" />
+
     <LinearLayout
         android:id="@+id/headerView"
         android:layout_width="wrap_content"
@@ -18,29 +26,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/footerView"
-        android:layout_below="@+id/headerView" >
+        android:layout_below="@+id/headerView">
 
         <LinearLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
-                android:layout_marginTop="20dp"
                 android:id="@+id/txt_no_records"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/norecordsfound"
-                android:textSize="16sp"
-                android:textColor="@color/color"
+                android:layout_marginTop="20dp"
                 android:gravity="center"
-                android:visibility="gone"/>
+                android:text="@string/norecordsfound"
+                android:textColor="@color/color"
+                android:textSize="16sp"
+                android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
                 android:id="@+id/rv_currappointment"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"/>
+                android:layout_margin="10dp" />
 
         </LinearLayout>
     </ScrollView>
@@ -52,11 +61,4 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical"/>
 
-    <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/avi_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        app:indicatorColor="@color/green"
-        app:indicatorName="LineSpinFadeLoaderIndicator" />
 </RelativeLayout>
