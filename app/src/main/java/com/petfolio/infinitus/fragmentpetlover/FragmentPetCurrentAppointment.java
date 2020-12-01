@@ -53,12 +53,7 @@ public class FragmentPetCurrentAppointment extends Fragment {
 
     @BindView(R.id.rv_completedappointment)
     RecyclerView rv_completedappointment;
-    /*DoctorPastAppointmentAdapter doctorPastAppointmentAdapter;
-    private SharedPreferences preferences;
 
-    DoctorPastAppointmentResponse pastAppointmentResponse;
-    private List<DoctorPastAppointmentResponse.DataBean> pastAppointmentResponseList = null;
-*/
 
 
 
@@ -89,15 +84,11 @@ public class FragmentPetCurrentAppointment extends Fragment {
         session = new SessionManager(getContext());
         HashMap<String, String> user = session.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
-        String patientname = user.get(SessionManager.KEY_FIRST_NAME);
-
-        Log.w(TAG," userid : "+userid +"patientname :"+patientname);
+        Log.w(TAG," userid : "+userid);
 
       
 
         if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-
-
             petNewAppointmentResponseCall();
         }
         return view;

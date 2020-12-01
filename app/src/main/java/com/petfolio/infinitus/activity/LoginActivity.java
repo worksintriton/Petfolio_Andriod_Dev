@@ -199,7 +199,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void insertmappermission() {
 
         int haslocationpermission;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
             haslocationpermission = checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) | checkSelfPermission(Manifest.permission.RECEIVE_SMS);
 

@@ -22,7 +22,7 @@ public class ImageFilePath {
      */
     static String nopath = "Select Video Only";
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
+    @TargetApi(Build.VERSION_CODES.M)
     @SuppressLint("NewApi")
     public static String getPath(final Context context, final Uri uri) {
 

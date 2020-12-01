@@ -13,24 +13,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.responsepojo.DoctorMissedAppointmentResponse;
-import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
+import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
 
 import java.util.List;
 
 
-public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class PetMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private  String TAG = "DoctorNewAppointmentAdapter";
-    private List<DoctorMissedAppointmentResponse.DataBean> missedAppointmentResponseList;
+    private  String TAG = "PetMissedAppointmentAdapter";
+    private List<PetNewAppointmentResponse.DataBean> missedAppointmentResponseList;
     private Context context;
 
-    DoctorMissedAppointmentResponse.DataBean currentItem;
+    PetNewAppointmentResponse.DataBean currentItem;
 
 
-    public DoctorMissedAppointmentAdapter(Context context, List<DoctorMissedAppointmentResponse.DataBean> missedAppointmentResponseList, RecyclerView inbox_list) {
+    public PetMissedAppointmentAdapter(Context context, List<PetNewAppointmentResponse.DataBean> missedAppointmentResponseList, RecyclerView inbox_list) {
         this.missedAppointmentResponseList = missedAppointmentResponseList;
         this.context = context;
 
@@ -62,22 +60,41 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
         holder.txt_service_info.setText("Service name :"+" "+missedAppointmentResponseList.get(0).getService_name()+" Service Cost : "+missedAppointmentResponseList.get(0).getService_amount());
         holder.txt_missed_date.setText("Missed on:"+" "+missedAppointmentResponseList.get(0).getMissed_at());
 
-        if (missedAppointmentResponseList.get(0).getPet_id().getPet_img() != null && !missedAppointmentResponseList.get(0).getPet_id().getPet_img().isEmpty()) {
 
-            Glide.with(context)
-                    .load(missedAppointmentResponseList.get(0).getPet_id().getPet_img())
-                    .into(holder.img_pet_imge);
+
+
+
+
+
+           /*if (currentItem.getPic() != null && !currentItem.getPic().isEmpty()) {
+
+                Glide.with(context)
+                        .load(currentItem.getPic())
+                        .into(holder.cv_doctor_pic);
+
+            }
+           else{
+                Glide.with(context)
+                        .load(R.drawable.ic_drawer_delivery)
+                        .into(holder.cv_doctor_pic);
+
+            }*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         }
-        else{
-            Glide.with(context)
-                    .load(R.drawable.image_thumbnail)
-                    .into(holder.img_pet_imge);
-
-        }
-
-
-       }
        /* holder.btn_pastappointment_details_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

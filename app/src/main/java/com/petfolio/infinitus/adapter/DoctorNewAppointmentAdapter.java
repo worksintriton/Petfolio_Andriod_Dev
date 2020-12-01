@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
 
@@ -62,39 +63,19 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
         holder.txt_pettype.setText("Pet type : "+ newAppointmentResponseList.get(0).getPet_id().getPet_type());
         holder.txt_service_info.setText("Service name :"+" "+newAppointmentResponseList.get(0).getService_name()+" Service Cost : "+newAppointmentResponseList.get(0).getService_amount());
 
-
-
-
-
-
-
-           /*if (currentItem.getPic() != null && !currentItem.getPic().isEmpty()) {
+           if (newAppointmentResponseList.get(0).getPet_id().getPet_img() != null && !newAppointmentResponseList.get(0).getPet_id().getPet_img().isEmpty()) {
 
                 Glide.with(context)
-                        .load(currentItem.getPic())
-                        .into(holder.cv_doctor_pic);
+                        .load(newAppointmentResponseList.get(0).getPet_id().getPet_img())
+                        .into(holder.img_pet_imge);
 
             }
            else{
                 Glide.with(context)
-                        .load(R.drawable.ic_drawer_delivery)
-                        .into(holder.cv_doctor_pic);
+                        .load(R.drawable.image_thumbnail)
+                        .into(holder.img_pet_imge);
 
-            }*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            }
 
         }
        /* holder.btn_pastappointment_details_view.setOnClickListener(new View.OnClickListener() {

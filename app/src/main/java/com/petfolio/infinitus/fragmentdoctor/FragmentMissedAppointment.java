@@ -54,12 +54,6 @@ public class FragmentMissedAppointment extends Fragment {
 
     @BindView(R.id.rv_missedappointment)
     RecyclerView rv_missedappointment;
-    /*DoctorPastAppointmentAdapter doctorPastAppointmentAdapter;
-    private SharedPreferences preferences;
-
-    DoctorPastAppointmentResponse pastAppointmentResponse;
-    private List<DoctorPastAppointmentResponse.DataBean> pastAppointmentResponseList = null;
-*/
 
 
 

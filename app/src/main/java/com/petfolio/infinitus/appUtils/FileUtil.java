@@ -34,7 +34,7 @@ public class FileUtil {
     @SuppressLint("NewApi")
     public static String getPath(final Context context, final Uri uri) {
         // check here to KITKAT or new version
-        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
         String selection = null;
         String[] selectionArgs = null;
         // DocumentProvider
@@ -99,7 +99,7 @@ public class FileUtil {
 
                 } else {
                     final String id = DocumentsContract.getDocumentId(uri);
-                    final boolean isOreo = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
+                    final boolean isOreo = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
                     if (id.startsWith("raw:")) {
                         return id.replaceFirst("raw:", "");
                     }
@@ -154,7 +154,7 @@ public class FileUtil {
             if (isGoogleDriveUri(uri)) {
                 return getDriveFilePath(uri, context);
             }
-            if( Build.VERSION.SDK_INT == Build.VERSION_CODES.N)
+            if( Build.VERSION.SDK_INT == Build.VERSION_CODES.M)
             {
                 // return getFilePathFromURI(context,uri);
                 return getMediaFilePathForN(uri, context);

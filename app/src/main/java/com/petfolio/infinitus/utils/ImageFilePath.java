@@ -22,12 +22,12 @@ public class ImageFilePath {
      */
     static String nopath = "Select Video Only";
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
+    @TargetApi(Build.VERSION_CODES.M)
     @SuppressLint("NewApi")
     public static String getPath(final Context context, final Uri uri) {
 
         // check here to KITKAT or new version
-        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
 
         // DocumentProvider
         if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {

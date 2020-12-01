@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.responsepojo.DoctorCompletedAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
@@ -60,25 +61,19 @@ public class DoctorCompletedAppointmentAdapter extends  RecyclerView.Adapter<Rec
         holder.txt_service_info.setText("Service name :"+" "+completedAppointmentResponseList.get(0).getService_name()+" Service Cost : "+completedAppointmentResponseList.get(0).getService_amount());
         holder.txt_completed_date.setText("Completed on:"+" "+completedAppointmentResponseList.get(0).getCompleted_at());
 
+        if (completedAppointmentResponseList.get(0).getPet_id().getPet_img() != null && !completedAppointmentResponseList.get(0).getPet_id().getPet_img().isEmpty()) {
 
+            Glide.with(context)
+                    .load(completedAppointmentResponseList.get(0).getPet_id().getPet_img())
+                    .into(holder.img_pet_imge);
 
+        }
+        else{
+            Glide.with(context)
+                    .load(R.drawable.image_thumbnail)
+                    .into(holder.img_pet_imge);
 
-
-
-
-           /*if (currentItem.getPic() != null && !currentItem.getPic().isEmpty()) {
-
-                Glide.with(context)
-                        .load(currentItem.getPic())
-                        .into(holder.cv_doctor_pic);
-
-            }
-           else{
-                Glide.with(context)
-                        .load(R.drawable.ic_drawer_delivery)
-                        .into(holder.cv_doctor_pic);
-
-            }*/
+        }
 
 
 
