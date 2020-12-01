@@ -661,6 +661,8 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         petAppointmentCreateRequest.setAllergies(allergies);
         petAppointmentCreateRequest.setAmount(0);
         petAppointmentCreateRequest.setMobile_type("Android");
+        petAppointmentCreateRequest.setService_name("");
+        petAppointmentCreateRequest.setService_amount("");
         Log.w(TAG,"petAppointmentCreateRequest"+ "--->" + new Gson().toJson(petAppointmentCreateRequest));
         return petAppointmentCreateRequest;
     }

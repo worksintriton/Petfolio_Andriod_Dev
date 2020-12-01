@@ -50,6 +50,24 @@ public class PetAppointmentCreateRequest {
     private int amount;
     private List<DocAttchedBean> doc_attched;
     private String mobile_type;
+    private String service_name;
+    private String service_amount;
+
+    public String getService_name() {
+        return service_name;
+    }
+
+    public void setService_name(String service_name) {
+        this.service_name = service_name;
+    }
+
+    public String getService_amount() {
+        return service_amount;
+    }
+
+    public void setService_amount(String service_amount) {
+        this.service_amount = service_amount;
+    }
 
     public String getMobile_type() {
         return mobile_type;
