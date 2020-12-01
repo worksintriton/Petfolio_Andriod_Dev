@@ -1,0 +1,276 @@
+package com.petfolio.infinitus.requestpojo;
+
+import java.util.List;
+
+public class PetAppointmentCreateRequest {
+
+    /**
+     * doctor_id : 5fb62a1924583828f10f8731
+     * booking_date : 19/11/2020
+     * booking_time : 12:22 pm
+     * booking_date_time : 19/11/2020 12:22 pm
+     * communication_type :
+     * video_id : http://vidoe.com
+     * user_id : 5fb6162a211fce241eaf53a9
+     * pet_id : 5fb38ea334f6014ea9013d30
+     * problem_info : problem info
+     * doc_attched : [{"file":"http://google.pdf"}]
+     * doc_feedback : doc feedback
+     * doc_rate : 5
+     * user_feedback : user feedback
+     * user_rate : 4.5
+     * display_date : 19/11/2020 01:00 PM
+     * server_date_time : 09/12/2020 03:00 PM
+     * payment_id : 1234567890
+     * payment_method : Card
+     * appointment_types : Normal
+     * allergies : this is
+     * amount : 400
+     */
+
+    private String doctor_id;
+    private String booking_date;
+    private String booking_time;
+    private String booking_date_time;
+    private String communication_type;
+    private String video_id;
+    private String user_id;
+    private String pet_id;
+    private String problem_info;
+    private String doc_feedback;
+    private int doc_rate;
+    private String user_feedback;
+    private double user_rate;
+    private String display_date;
+    private String server_date_time;
+    private String payment_id;
+    private String payment_method;
+    private String appointment_types;
+    private String allergies;
+    private int amount;
+    private List<DocAttchedBean> doc_attched;
+
+
+    public String getDoctor_id() {
+        return doctor_id;
+    }
+
+    public void setDoctor_id(String doctor_id) {
+        this.doctor_id = doctor_id;
+
+    }
+
+
+    public String getBooking_date() {
+        return booking_date;
+    }
+
+    public void setBooking_date(String booking_date) {
+        this.booking_date = booking_date;
+
+    }
+
+
+    public String getBooking_time() {
+        return booking_time;
+    }
+
+    public void setBooking_time(String booking_time) {
+        this.booking_time = booking_time;
+
+    }
+
+
+    public String getBooking_date_time() {
+        return booking_date_time;
+    }
+
+    public void setBooking_date_time(String booking_date_time) {
+        this.booking_date_time = booking_date_time;
+
+    }
+
+
+    public String getCommunication_type() {
+        return communication_type;
+    }
+
+    public void setCommunication_type(String communication_type) {
+        this.communication_type = communication_type;
+
+    }
+
+
+    public String getVideo_id() {
+        return video_id;
+    }
+
+    public void setVideo_id(String video_id) {
+        this.video_id = video_id;
+
+    }
+
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
+
+
+    public String getPet_id() {
+        return pet_id;
+    }
+
+    public void setPet_id(String pet_id) {
+        this.pet_id = pet_id;
+
+    }
+
+
+    public String getProblem_info() {
+        return problem_info;
+    }
+
+    public void setProblem_info(String problem_info) {
+        this.problem_info = problem_info;
+
+    }
+
+
+    public String getDoc_feedback() {
+        return doc_feedback;
+    }
+
+    public void setDoc_feedback(String doc_feedback) {
+        this.doc_feedback = doc_feedback;
+
+    }
+
+
+    public int getDoc_rate() {
+        return doc_rate;
+    }
+
+    public void setDoc_rate(int doc_rate) {
+        this.doc_rate = doc_rate;
+
+    }
+
+
+    public String getUser_feedback() {
+        return user_feedback;
+    }
+
+    public void setUser_feedback(String user_feedback) {
+        this.user_feedback = user_feedback;
+
+    }
+
+
+    public double getUser_rate() {
+        return user_rate;
+    }
+
+    public void setUser_rate(double user_rate) {
+        this.user_rate = user_rate;
+
+    }
+
+    public String getDisplay_date() {
+        return display_date;
+    }
+
+    public void setDisplay_date(String display_date) {
+        this.display_date = display_date;
+
+    }
+
+
+    public String getServer_date_time() {
+        return server_date_time;
+    }
+
+    public void setServer_date_time(String server_date_time) {
+        this.server_date_time = server_date_time;
+
+    }
+
+
+    public String getPayment_id() {
+        return payment_id;
+    }
+
+    public void setPayment_id(String payment_id) {
+        this.payment_id = payment_id;
+
+    }
+
+
+    public String getPayment_method() {
+        return payment_method;
+    }
+
+    public void setPayment_method(String payment_method) {
+        this.payment_method = payment_method;
+
+    }
+
+
+    public String getAppointment_types() {
+        return appointment_types;
+    }
+
+    public void setAppointment_types(String appointment_types) {
+        this.appointment_types = appointment_types;
+    }
+
+    public String getAllergies() {
+        return allergies;
+    }
+
+    public void setAllergies(String allergies) {
+        this.allergies = allergies;
+
+    }
+
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+
+    }
+
+
+    public List<DocAttchedBean> getDoc_attched() {
+        return doc_attched;
+    }
+
+    public void setDoc_attched(List<DocAttchedBean> doc_attched) {
+        this.doc_attched = doc_attched;
+
+    }
+
+    public static class DocAttchedBean {
+        /**
+         * file : http://google.pdf
+         */
+
+        private String file;
+
+
+        public String getFile() {
+            return file;
+        }
+
+        public void setFile(String file) {
+            this.file = file;
+
+        }
+    }
+}

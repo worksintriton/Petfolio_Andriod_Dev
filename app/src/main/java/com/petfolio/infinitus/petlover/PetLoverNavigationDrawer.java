@@ -65,7 +65,7 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
     BroadcastReceiver imgReceiver;
 
-    private String TAG ="NavigationDrawer";
+    private String TAG ="PetLoverNavigationDrawer";
 
 
     ProgressDialog progressDialog;
@@ -148,11 +148,11 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
                     // For rest of the options we just show a toast on click
                     case R.id.nav_item_two:
-                        gotoMyAppointments();
+
                         return true;
 
                     case R.id.nav_item_three:
-                        gotoHealthFiles();
+                        gotoMyAppointments();
                         return true;
 
                     case R.id.nav_item_four:
@@ -311,6 +311,7 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
 
     private void gotoMyAppointments() {
+        startActivity(new Intent(getApplicationContext(),PetMyappointmentsActivity.class));
 
     }
 

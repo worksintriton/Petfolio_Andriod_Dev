@@ -247,7 +247,7 @@
             <TextView
                 android:id="@+id/txt_specialization"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/specialization"
@@ -261,7 +261,8 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:text=""/>
 
             <TextView
                 android:id="@+id/txt_desc"

@@ -34,7 +34,11 @@ import com.petfolio.infinitus.adapter.PetMyCalendarAvailableAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.interfaces.OnItemSelectedTime;
+import com.petfolio.infinitus.requestpojo.AppointmentCheckRequest;
+import com.petfolio.infinitus.requestpojo.PetAppointmentCreateRequest;
 import com.petfolio.infinitus.requestpojo.PetDoctorAvailableTimeRequest;
+import com.petfolio.infinitus.responsepojo.AppointmentCheckResponse;
+import com.petfolio.infinitus.responsepojo.PetAppointmentCreateResponse;
 import com.petfolio.infinitus.responsepojo.PetDoctorAvailableTimeResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -138,6 +142,9 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
     private List<PetDoctorAvailableTimeResponse.DataBean.TimesBean> timesBeanList;
     private String petid,allergies,probleminfo;
     private String userid;
+    private String doctorid;
+
+
 
 
     @Override
@@ -165,6 +172,14 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         rv_doctoravailabeslottime = findViewById(R.id.rv_doctoravailabeslottime);
 
         rootContainer = findViewById(R.id.rootContainer);
+        proced_appoinment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
+                                appointmentCheckResponseCall();
+                }
+            }
+        });
 
 
 
@@ -177,6 +192,8 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
             petid = extras.getString("petid");
             allergies = extras.getString("allergies");
             probleminfo = extras.getString("probleminfo");
+            doctorid = extras.getString("doctorid");
+
             Log.w(TAG,"petid-->"+petid+ "allergies : "+allergies+"  probleminfo : "+probleminfo);
 
             if(Languages != null && !Languages.isEmpty()){
@@ -345,7 +362,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
                             video.setVisibility(View.GONE);
                             view.setVisibility(View.GONE);
                             tvlblavailabletime.setVisibility(View.VISIBLE);
-                            tvlbldoctoravailable.setVisibility(View.VISIBLE);
+                            //tvlbldoctoravailable.setVisibility(View.VISIBLE);
                             Comm_type_chat = response.body().getData().get(0).getComm_type_chat();
                             Comm_type_video = response.body().getData().get(0).getComm_type_video();
                             Log.w(TAG,"doctorDateAvailabilityResponseCall11 Comm_type_chat : "+Comm_type_chat+" Comm_type_video : "+Comm_type_video);
@@ -416,7 +433,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         String currentdate =  currentDateandTime24hrs.substring(0, currentDateandTime24hrs.indexOf(' '));
 
         PetDoctorAvailableTimeRequest petDoctorAvailableTimeRequest = new PetDoctorAvailableTimeRequest();
-        petDoctorAvailableTimeRequest.setUser_id(userid);
+        petDoctorAvailableTimeRequest.setUser_id(doctorid);
         petDoctorAvailableTimeRequest.setDate(Date);
         petDoctorAvailableTimeRequest.setCur_time(currenttime);
         petDoctorAvailableTimeRequest.setCur_date(currentdate);
@@ -464,7 +481,9 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
         Intent intent = new Intent(getApplicationContext(), BookAppointmentActivity.class);
+        intent.putExtra("doctorid",doctorid);
         startActivity(intent);
         finish();
     }
@@ -475,6 +494,169 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         Log.w(TAG,"onItemSelectedTime : "+selectedTime);
         selectedTimeSlot = selectedTime;
 
+    }
+
+
+    private void appointmentCheckResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<AppointmentCheckResponse> call = ApiService.appointmentCheckResponseCall(RestUtils.getContentType(),appointmentCheckRequest());
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<AppointmentCheckResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<AppointmentCheckResponse> call, @NonNull Response<AppointmentCheckResponse> response) {
+                progressDialog.dismiss();
+                Log.w(TAG,"appointmentCheckResponseCall"+ "--->" + new Gson().toJson(response.body()));
+
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
+
+                            petAppointmentCreateResponseCall();
+                        }
+                        /*Intent intent = new Intent(PatientAppointment_Doctor_Date_Time_Activity.this, AilmentActivity.class);
+                        intent.putExtra("id", _id);
+                        intent.putExtra("doctortitle", doctortitle);
+                        intent.putExtra("doctor_name", Doctor_name);
+                        intent.putExtra("doctor_email_id", Doctor_email_id);
+                        intent.putExtra("doctor_ava_Date", Doctor_ava_Date);
+                        intent.putExtra("isCheckedChat", isCheckedChat);
+                        intent.putExtra("isCheckedVideo", isCheckedVideo);
+                        intent.putExtra("selectedtimeslot", selectedTimeSlot);
+                        startActivity(intent);*/
+                    }else{
+                        showErrorLoading(response.body().getMessage());
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<AppointmentCheckResponse> call, @NonNull Throwable t) {
+                progressDialog.dismiss();
+
+                Log.w(TAG,"AppointmentCheckResponseflr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    private AppointmentCheckRequest appointmentCheckRequest() {
+        /*
+         * Booking_Date : 02-12-2020
+         * Booking_Time : 09:00 AM
+         * user_id : 5fc4eb2c913fec4204e4b15d
+         */
+
+        AppointmentCheckRequest appointmentCheckRequest = new AppointmentCheckRequest();
+        appointmentCheckRequest.setUser_id(doctorid);
+        appointmentCheckRequest.setBooking_Date(Doctor_ava_Date);
+        appointmentCheckRequest.setBooking_Time(selectedTimeSlot);
+        Log.w(TAG,"appointmentCheckRequest"+ "--->" + new Gson().toJson(appointmentCheckRequest));
+        return appointmentCheckRequest;
+    }
+
+
+    private void petAppointmentCreateResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<PetAppointmentCreateResponse> call = ApiService.petAppointmentCreateResponseCall(RestUtils.getContentType(),petAppointmentCreateRequest());
+
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<PetAppointmentCreateResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<PetAppointmentCreateResponse> call, @NonNull Response<PetAppointmentCreateResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"PetDoctorAvailableTimeResponse"+ "--->" + new Gson().toJson(response.body()));
+
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                            Intent intent = new Intent(PetAppointment_Doctor_Date_Time_Activity.this,PetLoverDashboardActivity.class);
+                            startActivity(intent);
+
+                    }
+                    else{
+
+                        showErrorLoading(response.body().getMessage());
+
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<PetAppointmentCreateResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+
+                Log.w(TAG,"PetDoctorAvailableTimeResponseflr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    private PetAppointmentCreateRequest petAppointmentCreateRequest() {
+
+        /*
+         * doctor_id : 5fb62a1924583828f10f8731
+         * booking_date : 19/11/2020
+         * booking_time : 12:22 pm
+         * booking_date_time : 19/11/2020 12:22 pm
+         * communication_type :
+         * video_id : http://vidoe.com
+         * user_id : 5fb6162a211fce241eaf53a9
+         * pet_id : 5fb38ea334f6014ea9013d30
+         * problem_info : problem info
+         * doc_attched : [{"file":"http://google.pdf"}]
+         * doc_feedback : doc feedback
+         * doc_rate : 5
+         * user_feedback : user feedback
+         * user_rate : 4.5
+         * display_date : 19/11/2020 01:00 PM
+         * server_date_time : 09/12/2020 03:00 PM
+         * payment_id : 1234567890
+         * payment_method : Card
+         * appointment_types : Normal
+         * allergies : this is
+         * amount : 400
+         */
+        List<PetAppointmentCreateRequest.DocAttchedBean> doc_attched = new ArrayList<>();
+
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+        String currentDateandTime24hrs = simpleDateFormat.format(new Date());
+        String currenttime = currentDateandTime24hrs.substring(currentDateandTime24hrs.indexOf(' ') + 1);
+        String currentdate =  currentDateandTime24hrs.substring(0, currentDateandTime24hrs.indexOf(' '));
+
+        PetAppointmentCreateRequest petAppointmentCreateRequest = new PetAppointmentCreateRequest();
+        petAppointmentCreateRequest.setDoctor_id(doctorid);
+        petAppointmentCreateRequest.setBooking_date(Doctor_ava_Date);
+        petAppointmentCreateRequest.setBooking_time(selectedTimeSlot);
+        petAppointmentCreateRequest.setBooking_date_time(Doctor_ava_Date+" "+selectedTimeSlot);
+        petAppointmentCreateRequest.setCommunication_type("");
+        petAppointmentCreateRequest.setVideo_id("");
+        petAppointmentCreateRequest.setUser_id(userid);
+        petAppointmentCreateRequest.setPet_id(petid);
+        petAppointmentCreateRequest.setProblem_info(probleminfo);
+        petAppointmentCreateRequest.setDoc_attched(doc_attched);
+        petAppointmentCreateRequest.setDoc_feedback("");
+        petAppointmentCreateRequest.setDoc_rate(0);
+        petAppointmentCreateRequest.setUser_feedback("");
+        petAppointmentCreateRequest.setUser_rate(0);
+        petAppointmentCreateRequest.setDisplay_date("");
+        petAppointmentCreateRequest.setServer_date_time("");
+        petAppointmentCreateRequest.setPayment_id("");
+        petAppointmentCreateRequest.setPayment_method("");
+        petAppointmentCreateRequest.setAppointment_types("");
+        petAppointmentCreateRequest.setAllergies(allergies);
+        petAppointmentCreateRequest.setAmount(0);
+        Log.w(TAG,"petAppointmentCreateRequest"+ "--->" + new Gson().toJson(petAppointmentCreateRequest));
+        return petAppointmentCreateRequest;
     }
 
 

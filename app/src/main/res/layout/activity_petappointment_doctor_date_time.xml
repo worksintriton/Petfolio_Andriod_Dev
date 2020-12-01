@@ -110,13 +110,14 @@
 
             <TextView
                 android:id="@+id/tvlblavailabletime"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
-                android:fontFamily="@font/futurabt"
+                android:fontFamily="@font/futuramediumbt"
                 android:text="Time"
-                android:textSize="16sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
             <LinearLayout
                 android:id="@+id/rootContainer"
@@ -158,7 +159,8 @@
                 android:fontFamily="@font/futurabt"
                 android:text="Appointment Type"
                 android:textColor="@color/color"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:visibility="gone"/>
             <RelativeLayout
                 android:id="@+id/sub_layer1"
                 android:layout_width="263dp"
@@ -166,7 +168,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="20dp"
+                android:visibility="gone">
 
                 <RadioGroup
                     android:layout_width="match_parent"

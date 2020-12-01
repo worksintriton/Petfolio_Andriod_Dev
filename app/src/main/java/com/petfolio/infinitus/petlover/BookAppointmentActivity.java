@@ -134,6 +134,9 @@ public class BookAppointmentActivity extends AppCompatActivity {
     @BindView(R.id.edt_comment)
     EditText edt_comment;
 
+    @BindView(R.id.img_back)
+    ImageView img_back;
+
     private List<PetTypeListResponse.DataBean.UsertypedataBean> usertypedataBeanList;
     private String strPetType;
     private String strPetBreedType;
@@ -162,6 +165,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
     private boolean isSelectYourPet;
     private String selectedAppointmentType;
     private String petId;
+    private String doctorid;
 
 
     @Override
@@ -176,6 +180,13 @@ public class BookAppointmentActivity extends AppCompatActivity {
         img_pet_imge.setVisibility(View.GONE);
         rv_upload_pet_images.setVisibility(View.GONE);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            doctorid = extras.getString("doctorid");
+
+            Log.w(TAG,"Bundle "+" doctorid : "+doctorid);
+        }
+
         SessionManager sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
@@ -188,6 +199,13 @@ public class BookAppointmentActivity extends AppCompatActivity {
             }
 
         }
+
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         spr_selectyourpettype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -297,6 +315,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
                         }else{
                             Intent intent = new Intent(BookAppointmentActivity.this, PetAppointment_Doctor_Date_Time_Activity.class);
                             intent.putExtra("petid",petId);
+                            intent.putExtra("doctorid",doctorid);
                             intent.putExtra("allergies",edt_allergies.getText().toString());
                             intent.putExtra("probleminfo",edt_comment.getText().toString());
                             startActivity(intent);
@@ -808,6 +827,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
                         Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
                         Intent intent = new Intent(BookAppointmentActivity.this, PetAppointment_Doctor_Date_Time_Activity.class);
                         intent.putExtra("petid",response.body().getData().get_id());
+                        intent.putExtra("doctorid",doctorid);
                         intent.putExtra("allergies",edt_allergies.getText().toString());
                         intent.putExtra("probleminfo",edt_comment.getText().toString());
                         startActivity(intent);
@@ -901,7 +921,13 @@ public class BookAppointmentActivity extends AppCompatActivity {
         return can_proceed;
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(),DoctorClinicDetailsActivity.class);
+        intent.putExtra("doctorid",doctorid);
+        startActivity(intent);
+    }
 }
 
 

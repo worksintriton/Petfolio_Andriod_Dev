@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
@@ -52,14 +53,29 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
     @BindView(R.id.tabDots)
     TabLayout tabLayout;
 
+    @BindView(R.id.txt_clinicname)
+    TextView txt_clinicname;
+
+    @BindView(R.id.txt_drname)
+    TextView txt_drname;
+
     @BindView(R.id.txt_dr_specialization)
     TextView txt_dr_specialization;
+
+    @BindView(R.id.txt_review_count)
+    TextView txt_review_count;
+
+    @BindView(R.id.txt_star_rating)
+    TextView txt_star_rating;
 
     @BindView(R.id.txt_dr_desc)
     TextView txt_dr_desc;
 
     @BindView(R.id.btn_book_now)
     Button btn_book_now;
+
+    @BindView(R.id.img_back)
+    ImageView img_back;
 
 
 
@@ -70,7 +86,11 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
 
     private String doctorid;
     private List<DoctorDetailsResponse.DataBean.ClinicPicBean> doctorclinicdetailsResponseList;
-    private String concatenatedStarNames;
+    private String concatenatedStarNames = "";
+    private String doctorname;
+    private Integer reviewcount;
+    private Integer starcount;
+    private String clinicname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,21 +101,32 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
 
 
         avi_indicator.setVisibility(View.GONE);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            doctorid = extras.getString("doctorid");
+            doctorname = extras.getString("doctorname");
+
+
+            Log.w(TAG,"Bundle "+" doctorid : "+doctorid);
+        }
 
         btn_book_now.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DoctorClinicDetailsActivity.this,BookAppointmentActivity.class);
+                intent.putExtra("doctorid",doctorid);
                 startActivity(intent);
             }
         });
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            doctorid = extras.getString("doctorid");
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
-            Log.w(TAG,"Bundle "+" doctorid : "+doctorid);
-        }
+
 
         if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
             if(doctorid != null){
@@ -126,6 +157,25 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
                     if(200 == response.body().getCode()){
 
                         doctorclinicdetailsResponseList  = response.body().getData().getClinic_pic();
+                        clinicname =  response.body().getData().getClinic_name();
+                        doctorname = response.body().getData().getDr_name();
+                        reviewcount  = response.body().getData().getReview_count();
+                        starcount =  response.body().getData().getStar_count();
+
+                        if(clinicname != null){
+                            txt_clinicname.setText(clinicname);
+                        }
+                        if(doctorname != null){
+                            txt_drname.setText(clinicname);
+                        }
+                        if(reviewcount != null){
+                            txt_review_count.setText(reviewcount+"");
+                        }
+                        if(starcount != null){
+                            txt_star_rating.setText(starcount+"");
+                        }
+
+
                         Log.w(TAG,"Size"+doctorclinicdetailsResponseList.size());
                         Log.w(TAG,"doctorclinicdetailsResponseList : "+new Gson().toJson(doctorclinicdetailsResponseList));
 
@@ -205,4 +255,11 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(DoctorClinicDetailsActivity.this,PetLoverDashboardActivity.class);
+        startActivity(intent);
+
+    }
 }
