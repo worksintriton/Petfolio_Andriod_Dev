@@ -1,7 +1,7 @@
 package com.petfolio.infinitus.doctor;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -31,6 +31,7 @@ import com.petfolio.infinitus.responsepojo.DoctorMyCalendarUpdateDocDateResponse
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,7 +44,6 @@ import retrofit2.Response;
 
 public class DoctorMyCalendarTimeActivity extends AppCompatActivity implements OnItemClickSpecialization {
     private static final String TAG = "DoctorMyCalendarTimeActivity" ;
-    private ProgressDialog progressDialog;
     RecyclerView rv_doctor_mycalendar_avldays;
     private SharedPreferences preferences;
 
@@ -56,6 +56,8 @@ public class DoctorMyCalendarTimeActivity extends AppCompatActivity implements O
     private String userid;
 
     String date;
+    AVLoadingIndicatorView avi_indicator;
+
 
 
     @SuppressLint("LongLogTag")
@@ -70,6 +72,9 @@ public class DoctorMyCalendarTimeActivity extends AppCompatActivity implements O
         doctorname = user.get(SessionManager.KEY_FIRST_NAME);
         doctoremailid = user.get(SessionManager.KEY_EMAIL_ID);
         userid = user.get(SessionManager.KEY_ID);
+
+        avi_indicator = findViewById(R.id.avi_indicator);
+        avi_indicator.setVisibility(View.GONE);
 
 
         rv_doctor_mycalendar_avldays = findViewById(R.id.rv_doctor_mycalendar_avldays);
@@ -111,9 +116,8 @@ public class DoctorMyCalendarTimeActivity extends AppCompatActivity implements O
     }
     @SuppressLint("LongLogTag")
     private void doctorMyCalendarAvlTimesResponseCall() {
-        progressDialog = new ProgressDialog(DoctorMyCalendarTimeActivity.this);
-        progressDialog.setMessage("Uploading Data, please wait..");
-        progressDialog.show();
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
         Call<DoctorMyCalendarAvlTimesResponse> call = ApiService.doctorMyCalendarAvlTimesResponseCall(RestUtils.getContentType(),doctorMyCalendarAvlTimesRequest());
         Log.w(TAG,"url  :%s"+" "+call.request().url().toString());
@@ -122,7 +126,7 @@ public class DoctorMyCalendarTimeActivity extends AppCompatActivity implements O
             @SuppressLint("LongLogTag")
             @Override
             public void onResponse(@NonNull Call<DoctorMyCalendarAvlTimesResponse> call, @NonNull Response<DoctorMyCalendarAvlTimesResponse> response) {
-                progressDialog.dismiss();
+                avi_indicator.smoothToHide();
                 Log.w(TAG,"DoctorMyCalendarAvlDaysResponse"+ "--->" + new Gson().toJson(response.body()));
 
 
@@ -153,7 +157,7 @@ public class DoctorMyCalendarTimeActivity extends AppCompatActivity implements O
             @SuppressLint("LongLogTag")
             @Override
             public void onFailure(@NonNull Call<DoctorMyCalendarAvlTimesResponse> call, @NonNull Throwable t) {
-                progressDialog.dismiss();
+                avi_indicator.smoothToHide();
 
                 Log.w(TAG,"DoctorMyCalendarAvlDaysResponse"+"--->" + t.getMessage());
             }
@@ -226,9 +230,8 @@ public class DoctorMyCalendarTimeActivity extends AppCompatActivity implements O
 
     @SuppressLint("LongLogTag")
     private void doctorMyCalendarUpdateDocDateResponseCall() {
-        progressDialog = new ProgressDialog(DoctorMyCalendarTimeActivity.this);
-        progressDialog.setMessage("Uploading Data, please wait..");
-        progressDialog.show();
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
         Call<DoctorMyCalendarUpdateDocDateResponse> call = ApiService.doctorMyCalendarUpdateDocDateResponseCall(RestUtils.getContentType(),doctorMyCalendarUpdateDocDateRequest());
         Log.w(TAG,"url  :%s"+" "+call.request().url().toString());
@@ -237,7 +240,7 @@ public class DoctorMyCalendarTimeActivity extends AppCompatActivity implements O
             @SuppressLint("LongLogTag")
             @Override
             public void onResponse(@NonNull Call<DoctorMyCalendarUpdateDocDateResponse> call, @NonNull Response<DoctorMyCalendarUpdateDocDateResponse> response) {
-                progressDialog.dismiss();
+                avi_indicator.smoothToHide();
                 Log.w(TAG,"DoctorMyCalendarAvlDaysResponse"+ "--->" + new Gson().toJson(response.body()));
 
 
@@ -259,7 +262,7 @@ public class DoctorMyCalendarTimeActivity extends AppCompatActivity implements O
             @SuppressLint("LongLogTag")
             @Override
             public void onFailure(@NonNull Call<DoctorMyCalendarUpdateDocDateResponse> call, @NonNull Throwable t) {
-                progressDialog.dismiss();
+                avi_indicator.smoothToHide();
 
                 Log.w(TAG,"DoctorMyCalendarAvlDaysResponse"+"--->" + t.getMessage());
             }

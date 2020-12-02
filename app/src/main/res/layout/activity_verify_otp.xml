@@ -70,22 +70,23 @@
             android:text="@string/you_will_get_a_otp_via_sms"
             android:textSize="20sp"
             android:layout_marginBottom="20dp"/>
+
         <EditText
             android:id="@+id/edt_otp"
-            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="30dp"
             android:background="@drawable/rectangle_corner"
-            android:textSize="14sp"
             android:fontFamily="@font/futuramediumbt"
             android:hint="@string/enter_your_otp"
-            tools:ignore="Autofill,LabelFor,RtlCompat,TextFields"
-            android:layout_marginBottom="30dp"
-            android:textColor="@color/green"
-            android:layout_marginStart="10dp"
             android:inputType="number"
-            android:maxLength="6"/>
+            android:maxLength="6"
+            android:padding="15dp"
+            android:textColor="@color/green_color"
+            android:textSize="14sp"
+            tools:ignore="Autofill,LabelFor,RtlCompat,TextFields" />
         <TextView
             android:id="@+id/txt_timer_count"
             android:layout_width="match_parent"
@@ -114,30 +115,32 @@
                 android:fontFamily="@font/futuramediumbt"
                 android:textSize="16sp"
                 android:text="@string/dontreceiveotp"/>
+
             <TextView
                 android:id="@+id/txt_resend"
-                android:layout_marginStart="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
                 android:fontFamily="@font/futuramediumbt"
-                android:textSize="16sp"
                 android:text="@string/resend"
-                android:textColor="@color/green"
-                android:layout_marginLeft="5dp" />
+                android:textColor="@color/green_color"
+                android:textSize="16sp" />
 
         </LinearLayout>
+
         <Button
             android:id="@+id/btn_verify"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_corner_button"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_curve"
+            android:fontFamily="@font/futuramediumbt"
             android:text="Verify"
+            android:textAllCaps="false"
             android:textColor="@color/whiteFive"
             android:textSize="18sp"
-            android:textAllCaps="false"
-            android:fontFamily="@font/futuramediumbt"
-            tools:ignore="HardcodedText"
-            android:layout_marginBottom="20dp"/>
+            tools:ignore="HardcodedText" />
     </LinearLayout>
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/avi_indicator"

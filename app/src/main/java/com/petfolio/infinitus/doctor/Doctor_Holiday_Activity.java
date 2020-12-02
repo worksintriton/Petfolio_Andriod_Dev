@@ -41,6 +41,7 @@ import com.petfolio.infinitus.responsepojo.HolidayListResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
+import com.wang.avi.AVLoadingIndicatorView;
 
 
 import org.jetbrains.annotations.NotNull;
@@ -63,13 +64,13 @@ public class Doctor_Holiday_Activity extends AppCompatActivity implements OnItem
 
     private ImageView backarrow;
 
+    AVLoadingIndicatorView avi_indicator;
 
 
     private String TAG = "Doctor_Holiday_Activity";
 
 
 
-    private ProgressDialog progressDialog;
     AlertDialog.Builder alertDialogBuilder;
     AlertDialog alertDialog;
     String DocEmail = "",DocID = "",DocPic = "";
@@ -113,7 +114,8 @@ public class Doctor_Holiday_Activity extends AppCompatActivity implements OnItem
         Log.w(TAG,"onCreateView");
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
+        avi_indicator = findViewById(R.id.avi_indicator);
+        avi_indicator.setVisibility(View.GONE);
 
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
@@ -158,9 +160,8 @@ public class Doctor_Holiday_Activity extends AppCompatActivity implements OnItem
     }
 
     private void holidayListResponseCall() {
-        progressDialog = new ProgressDialog(Doctor_Holiday_Activity.this);
-        progressDialog.setMessage("Uploading Data, please wait..");
-        progressDialog.show();
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
         Call<HolidayListResponse> call = ApiService.holidayListResponseCall(RestUtils.getContentType(),holidayListRequest());
         Log.w(TAG,"url  :%s"+call.request().url().toString());
@@ -168,13 +169,12 @@ public class Doctor_Holiday_Activity extends AppCompatActivity implements OnItem
         call.enqueue(new Callback<HolidayListResponse>() {
             @Override
             public void onResponse(@NonNull Call<HolidayListResponse> call, @NonNull Response<HolidayListResponse> response) {
-                progressDialog.dismiss();
+                avi_indicator.smoothToHide();
                 Log.w(TAG,"HolidayListResponse"+ "--->" + new Gson().toJson(response.body()));
 
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                            progressDialog.dismiss();
                             Log.w(TAG,"PatientGetpaylistResponse" + "--->" + new Gson().toJson(response.body()));
                             holidayListResponseList = response.body().getData();
                             Log.w(TAG,"Size%s"+ holidayListResponseList.size());
@@ -205,7 +205,7 @@ public class Doctor_Holiday_Activity extends AppCompatActivity implements OnItem
 
             @Override
             public void onFailure(@NonNull Call<HolidayListResponse> call, @NonNull Throwable t) {
-                progressDialog.dismiss();
+                avi_indicator.smoothToShow();
 
                 Log.w(TAG,"HolidayListResponseflr"+"--->" + t.getMessage());
             }
@@ -255,9 +255,8 @@ public class Doctor_Holiday_Activity extends AppCompatActivity implements OnItem
 
 
     private void createHolidayResponseCall() {
-        progressDialog = new ProgressDialog(Doctor_Holiday_Activity.this);
-        progressDialog.setMessage("Uploading Data, please wait..");
-        progressDialog.show();
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
         Call<CreateHolidayResponse> call = ApiService.createHolidayResponseCall(RestUtils.getContentType(),createHolidayRequest());
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
@@ -265,7 +264,7 @@ public class Doctor_Holiday_Activity extends AppCompatActivity implements OnItem
         call.enqueue(new Callback<CreateHolidayResponse>() {
             @Override
             public void onResponse(@NonNull Call<CreateHolidayResponse> call, @NonNull Response<CreateHolidayResponse> response) {
-                progressDialog.dismiss();
+                avi_indicator.smoothToHide();
                 Log.w(TAG,"CreateHolidayResponse"+ "--->" + new Gson().toJson(response.body()));
 
 
@@ -286,7 +285,7 @@ public class Doctor_Holiday_Activity extends AppCompatActivity implements OnItem
 
             @Override
             public void onFailure(@NonNull Call<CreateHolidayResponse> call, @NonNull Throwable t) {
-                progressDialog.dismiss();
+                avi_indicator.smoothToHide();
 
                 Log.w(TAG,"DoctorTimeCheckResponseflr"+"--->" + t.getMessage());
             }
