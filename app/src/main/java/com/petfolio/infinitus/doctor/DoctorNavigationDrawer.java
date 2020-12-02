@@ -30,6 +30,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
+import com.petfolio.infinitus.sessionmanager.SessionManager;
 //import com.petfolio.infinitus.sessionmanager.SessionManager;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -77,10 +78,7 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
     private String addressLine = "";
 
     String emailid = "",patientid = "";
-
-
-
-
+    private SessionManager session;
 
 
     @Override
@@ -91,13 +89,7 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
 
         inflater = LayoutInflater.from(this);
         view = inflater.inflate(R.layout.doctor_navigation_drawer_layout, null);
-       /* session = new SessionManager(getApplicationContext());
-        HashMap<String, String> user = session.getUserDetails();
-        name = user.get(SessionManager.KEY_USER_NAME);
-        user_mode = user.get(SessionManager.KEY_USER_MODE);
-        phoneNo = user.get(SessionManager.KEY_MOBILE);
-        image_url = session.getImagePath();
-        jockey_id = Integer.valueOf(user.get(SessionManager.JOCKEY_ID));*/
+
 
 
 
@@ -107,8 +99,8 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
         initUI(view);
         initToolBar(view);
 
-//        session = new SessionManager(getApplicationContext());
-//        session.checkLogin();
+       session = new SessionManager(getApplicationContext());
+       session.checkLogin();
 
        // myBoradcastReceiver();
     }
@@ -361,6 +353,8 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
 
 
     private void gotoLogout() {
+        session.logoutUser();
+        session.setIsLogin(false);
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         finish();
 
@@ -373,6 +367,8 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
         super.onResume();
         try{
             Log.w(TAG,"onResume--->");
+
+
 
        /* session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();

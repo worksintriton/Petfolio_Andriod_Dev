@@ -111,7 +111,6 @@ public class SessionManager {
     }
 
     public void logoutUser() {
-
         editor.clear();
         editor.commit();
 

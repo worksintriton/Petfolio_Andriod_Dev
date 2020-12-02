@@ -357,8 +357,11 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
 
     private void gotoLogout() {
+        session.logoutUser();
+        session.setIsLogin(false);
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         finish();
+
 
 
 
