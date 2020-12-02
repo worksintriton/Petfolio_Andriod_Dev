@@ -6,8 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/whiteTwo"
     android:orientation="vertical">
-
-
     <LinearLayout
         android:id="@+id/headerView"
         android:layout_width="match_parent"
@@ -95,7 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            >
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/pet_care"
@@ -120,7 +118,6 @@
                 tools:ignore="ContentDescription" />
 
         </RelativeLayout>
-
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tablayout"
             style="@style/TabLayout"
@@ -142,7 +139,7 @@
                 android:id="@+id/tabcurrent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/current"
+                android:text="@string/tabnew"
                 />
 
             <com.google.android.material.tabs.TabItem
@@ -155,10 +152,9 @@
                 android:id="@+id/tabcancelled"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/cancelled" />
+                android:text="@string/tabmissed" />
 
         </com.google.android.material.tabs.TabLayout>
-
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"
@@ -167,7 +163,6 @@
             android:layerType="software" />
 
     </LinearLayout>
-
     <ScrollView
         android:id="@+id/scrollablContent"
         android:layout_width="match_parent"
@@ -201,7 +196,6 @@
         </LinearLayout>
 
     </ScrollView>
-
     <LinearLayout
         android:id="@+id/footerView"
         android:layout_width="match_parent"

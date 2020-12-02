@@ -19,13 +19,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.DoctorCompletedAppointmentAdapter;
-import com.petfolio.infinitus.adapter.PetLoverCurrentAppointmentAdapter;
+import com.petfolio.infinitus.adapter.PetCompletedAppointmentAdapter;
+import com.petfolio.infinitus.adapter.PetMissedAppointmentAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.requestpojo.DoctorNewAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverAppointmentRequest;
 import com.petfolio.infinitus.responsepojo.DoctorCompletedAppointmentResponse;
-import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -42,8 +42,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentPetCurrentAppointment extends Fragment {
-    private String TAG = "FragmentPetCurrentAppointment";
+public class FragmentPetMissedAppointment extends Fragment {
+    private String TAG = "FragmentPetMissedAppointment";
 
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
@@ -51,20 +51,21 @@ public class FragmentPetCurrentAppointment extends Fragment {
     @BindView(R.id.txt_no_records)
     TextView txt_no_records;
 
-    @BindView(R.id.rv_completedappointment)
-    RecyclerView rv_completedappointment;
+    @BindView(R.id.rv_missedappointment)
+    RecyclerView rv_missedappointment;
 
 
 
 
     SessionManager session;
-    String type = "",name = "",userid = "";
+    String type = "",name = "",doctorid = "";
     private SharedPreferences preferences;
     private Context mContext;
-    private List<PetNewAppointmentResponse.DataBean> newAppointmentResponseList;
+    private List<PetNewAppointmentResponse.DataBean> missedAppointmentResponseList;
+    private String userid;
 
 
-    public FragmentPetCurrentAppointment() {
+    public FragmentPetMissedAppointment() {
 
     }
 
@@ -74,7 +75,7 @@ public class FragmentPetCurrentAppointment extends Fragment {
         Log.w(TAG,"onCreateView");
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        View view = inflater.inflate(R.layout.fragment_completed_appointment, container, false);
+        View view = inflater.inflate(R.layout.fragment_missed, container, false);
 
         ButterKnife.bind(this, view);
         mContext = getActivity();
@@ -89,44 +90,44 @@ public class FragmentPetCurrentAppointment extends Fragment {
       
 
         if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-            petNewAppointmentResponseCall();
+            petMissedAppointmentResponseCall();
         }
         return view;
     }
 
 
 
-    private void petNewAppointmentResponseCall() {
+    private void petMissedAppointmentResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<PetNewAppointmentResponse> call = ApiService.petNewAppointmentResponseCall(RestUtils.getContentType(),petLoverAppointmentRequest());
+        Call<PetNewAppointmentResponse> call = ApiService.petMissedAppointmentResponseCall(RestUtils.getContentType(),petLoverAppointmentRequest());
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<PetNewAppointmentResponse>() {
             @Override
             public void onResponse(@NonNull Call<PetNewAppointmentResponse> call, @NonNull Response<PetNewAppointmentResponse> response) {
-               avi_indicator.smoothToHide();
-                Log.w(TAG,"PetNewAppointmentResponse"+ "--->" + new Gson().toJson(response.body()));
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"petMissedAppointmentResponseCall"+ "--->" + new Gson().toJson(response.body()));
 
 
-               if (response.body() != null) {
+                if (response.body() != null) {
 
-                   if(200 == response.body().getCode()){
-                       newAppointmentResponseList = response.body().getData();
-                       Log.w(TAG,"Size"+newAppointmentResponseList.size());
-                       Log.w(TAG,"newAppointmentResponseList : "+new Gson().toJson(newAppointmentResponseList));
-                       if(response.body().getData().isEmpty()){
-                           txt_no_records.setVisibility(View.VISIBLE);
-                           txt_no_records.setText("No new appointments");
-                           rv_completedappointment.setVisibility(View.GONE);
-                       }else{
-                           txt_no_records.setVisibility(View.GONE);
-                           rv_completedappointment.setVisibility(View.VISIBLE);
-                           setView();
-                       }
+                    if(200 == response.body().getCode()){
+                        missedAppointmentResponseList = response.body().getData();
+                        Log.w(TAG,"Size"+missedAppointmentResponseList.size());
+                        Log.w(TAG,"missedAppointmentResponseList : "+new Gson().toJson(missedAppointmentResponseList));
+                        if(response.body().getData().isEmpty()){
+                            txt_no_records.setVisibility(View.VISIBLE);
+                            txt_no_records.setText("No missed appointments");
+                            rv_missedappointment.setVisibility(View.GONE);
+                        }else{
+                            txt_no_records.setVisibility(View.GONE);
+                            rv_missedappointment.setVisibility(View.VISIBLE);
+                            setView();
+                        }
 
-                   }
+                    }
 
 
 
@@ -149,10 +150,10 @@ public class FragmentPetCurrentAppointment extends Fragment {
         return petLoverAppointmentRequest;
     }
     private void setView() {
-        rv_completedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv_completedappointment.setItemAnimator(new DefaultItemAnimator());
-        PetLoverCurrentAppointmentAdapter petLoverCurrentAppointmentAdapter = new PetLoverCurrentAppointmentAdapter(getContext(), newAppointmentResponseList, rv_completedappointment);
-        rv_completedappointment.setAdapter(petLoverCurrentAppointmentAdapter);
+        rv_missedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv_missedappointment.setItemAnimator(new DefaultItemAnimator());
+        PetMissedAppointmentAdapter petMissedAppointmentAdapter = new PetMissedAppointmentAdapter(getContext(), missedAppointmentResponseList, rv_missedappointment);
+        rv_missedappointment.setAdapter(petMissedAppointmentAdapter);
 
     }
 }

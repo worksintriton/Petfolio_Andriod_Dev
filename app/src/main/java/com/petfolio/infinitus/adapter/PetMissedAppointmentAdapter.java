@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
 
@@ -38,7 +39,7 @@ public class PetMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_missed_appointment, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_pet_missed_appointment, parent, false);
         return new ViewHolderOne(view);
     }
 
@@ -55,31 +56,32 @@ public class PetMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
         Log.w(TAG,"Pet name-->"+missedAppointmentResponseList.get(0).getPet_id().getPet_name());
 
         currentItem = missedAppointmentResponseList.get(position);
-        holder.txt_petname.setText("Pet name : "+missedAppointmentResponseList.get(0).getPet_id().getPet_name());
-        holder.txt_pettype.setText("Pet type : "+ missedAppointmentResponseList.get(0).getPet_id().getPet_type());
-        holder.txt_service_info.setText("Service name :"+" "+missedAppointmentResponseList.get(0).getService_name()+" Service Cost : "+missedAppointmentResponseList.get(0).getService_amount());
-        holder.txt_missed_date.setText("Missed on:"+" "+missedAppointmentResponseList.get(0).getMissed_at());
 
 
+        holder.txt_petname.setText("Clinic name : "+missedAppointmentResponseList.get(0).getDoc_business_info().get(0).getClinic_name());
+        holder.txt_pettype.setText("Pet name : "+ missedAppointmentResponseList.get(0).getPet_id().getPet_name());
+
+        if(missedAppointmentResponseList.get(0).getService_name() != null){
+            holder.txt_service_info.setText("Service name :"+" "+missedAppointmentResponseList.get(0).getService_name());
+        }
+        if(missedAppointmentResponseList.get(0).getService_amount() != null){
+            holder.txt_service_cost.setText(" Service Cost : "+missedAppointmentResponseList.get(0).getService_amount());
+        }
 
 
+        if (missedAppointmentResponseList.get(0).getDoc_business_info().get(0).getClinic_pic().get(0).getClinic_pic() != null && !missedAppointmentResponseList.get(0).getDoc_business_info().get(0).getClinic_pic().get(0).getClinic_pic().isEmpty()) {
 
+            Glide.with(context)
+                    .load(missedAppointmentResponseList.get(0).getDoc_business_info().get(0).getClinic_pic().get(0).getClinic_pic())
+                    .into(holder.img_pet_imge);
 
+        }
+        else{
+            Glide.with(context)
+                    .load(R.drawable.image_thumbnail)
+                    .into(holder.img_pet_imge);
 
-           /*if (currentItem.getPic() != null && !currentItem.getPic().isEmpty()) {
-
-                Glide.with(context)
-                        .load(currentItem.getPic())
-                        .into(holder.cv_doctor_pic);
-
-            }
-           else{
-                Glide.with(context)
-                        .load(R.drawable.ic_drawer_delivery)
-                        .into(holder.cv_doctor_pic);
-
-            }*/
-
+        }
 
 
 
@@ -170,7 +172,7 @@ public class PetMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
     }
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_petname,txt_pettype,txt_service_info,txt_missed_date;
+        public TextView txt_petname,txt_pettype,txt_service_info,txt_service_cost,txt_missed_date;
         public ImageView img_pet_imge;
         public Button btn_cancel,btn_complete;
 
@@ -182,6 +184,7 @@ public class PetMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
             txt_petname = itemView.findViewById(R.id.txt_petname);
             txt_pettype = itemView.findViewById(R.id.txt_pettype);
             txt_service_info = itemView.findViewById(R.id.txt_service_info);
+            txt_service_cost = itemView.findViewById(R.id.txt_service_cost);
             txt_missed_date = itemView.findViewById(R.id.txt_missed_date);
             btn_cancel = itemView.findViewById(R.id.btn_cancel);
             btn_complete = itemView.findViewById(R.id.btn_complete);

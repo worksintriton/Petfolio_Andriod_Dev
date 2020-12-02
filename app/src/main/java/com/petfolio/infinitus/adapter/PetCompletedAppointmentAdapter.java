@@ -39,7 +39,7 @@ public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_completed_appointment, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_petcompleted_appointment, parent, false);
         return new ViewHolderOne(view);
     }
 

@@ -40,7 +40,7 @@ public class DoctorCompletedAppointmentAdapter extends  RecyclerView.Adapter<Rec
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_completed_appointment, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_doctor_completed_appointment, parent, false);
         return new ViewHolderOne(view);
     }
 
@@ -58,8 +58,14 @@ public class DoctorCompletedAppointmentAdapter extends  RecyclerView.Adapter<Rec
 
         holder.txt_petname.setText("Pet name : "+completedAppointmentResponseList.get(0).getPet_id().getPet_name());
         holder.txt_pettype.setText("Pet type : "+ completedAppointmentResponseList.get(0).getPet_id().getPet_type());
-        holder.txt_service_info.setText("Service name :"+" "+completedAppointmentResponseList.get(0).getService_name()+" Service Cost : "+completedAppointmentResponseList.get(0).getService_amount());
         holder.txt_completed_date.setText("Completed on:"+" "+completedAppointmentResponseList.get(0).getCompleted_at());
+
+        if(completedAppointmentResponseList.get(0).getService_name() != null){
+            holder.txt_service_info.setText("Service name :"+" "+completedAppointmentResponseList.get(0).getService_name());
+        }
+        if(completedAppointmentResponseList.get(0).getService_amount() != null){
+            holder.txt_service_cost.setText(" Service Cost : "+completedAppointmentResponseList.get(0).getService_amount());
+        }
 
         if (completedAppointmentResponseList.get(0).getPet_id().getPet_img() != null && !completedAppointmentResponseList.get(0).getPet_id().getPet_img().isEmpty()) {
 
@@ -165,7 +171,7 @@ public class DoctorCompletedAppointmentAdapter extends  RecyclerView.Adapter<Rec
     }
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_petname,txt_pettype,txt_service_info,txt_completed_date;
+        public TextView txt_petname,txt_pettype,txt_service_info,txt_service_cost,txt_completed_date;
         public ImageView img_pet_imge;
         public Button btn_cancel,btn_complete;
 
@@ -177,6 +183,7 @@ public class DoctorCompletedAppointmentAdapter extends  RecyclerView.Adapter<Rec
             txt_petname = itemView.findViewById(R.id.txt_petname);
             txt_pettype = itemView.findViewById(R.id.txt_pettype);
             txt_service_info = itemView.findViewById(R.id.txt_service_info);
+            txt_service_cost = itemView.findViewById(R.id.txt_service_cost);
             txt_completed_date = itemView.findViewById(R.id.txt_completed_date);
             btn_cancel = itemView.findViewById(R.id.btn_cancel);
             btn_complete = itemView.findViewById(R.id.btn_complete);

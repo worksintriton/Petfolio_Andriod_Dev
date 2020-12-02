@@ -22,7 +22,9 @@
                 android:id="@+id/cv_pet"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
                 app:cardCornerRadius="10dp"
                 app:cardPreventCornerOverlap="false"
                 app:cardUseCompatPadding="false">
@@ -55,7 +57,7 @@
                 android:maxLines="1"
                 android:text="@string/pet_name"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/txt_pettype"
@@ -69,7 +71,7 @@
                 android:fontFamily="@font/futuramediumbt"
                 android:maxLines="1"
                 android:text="@string/pet_type"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/txt_service_info"
@@ -78,21 +80,33 @@
                 android:layout_below="@id/txt_pettype"
                 android:layout_alignStart="@id/txt_pettype"
                 android:layout_alignLeft="@id/txt_pettype"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/futuramediumbt"
                 android:maxLines="1"
                 android:text="@string/serv_name"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/txt_service_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_service_info"
+                android:layout_alignStart="@id/txt_pettype"
+                android:layout_alignLeft="@id/txt_pettype"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/futuramediumbt"
+                android:maxLines="1"
+                android:text="@string/service_cost"
+                android:textSize="12sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cv_pet"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="horizontal">
 
                 <Button
@@ -106,7 +120,8 @@
                     android:fontFamily="@font/futuramediumbt"
                     android:text="@string/cancel"
                     android:textAllCaps="false"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/btn_complete"
@@ -119,7 +134,8 @@
                     android:fontFamily="@font/futuramediumbt"
                     android:text="@string/complete"
                     android:textAllCaps="false"
-                    android:textColor="@color/light_green" />
+                    android:textColor="@color/light_green"
+                    android:textSize="12sp" />
 
 
             </LinearLayout>

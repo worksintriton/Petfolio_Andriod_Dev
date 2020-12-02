@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -15,9 +14,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.petfolio.infinitus.R;
 
-import com.petfolio.infinitus.fragmentpetlover.FragmentPetCancelledAppointment;
+import com.petfolio.infinitus.fragmentpetlover.FragmentPetMissedAppointment;
 import com.petfolio.infinitus.fragmentpetlover.FragmentPetCompletedAppointment;
-import com.petfolio.infinitus.fragmentpetlover.FragmentPetCurrentAppointment;
+import com.petfolio.infinitus.fragmentpetlover.FragmentPetNewAppointment;
 import com.wang.avi.AVLoadingIndicatorView;
 
 
@@ -77,9 +76,9 @@ public class PetMyappointmentsActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FragmentPetCurrentAppointment(), "Current");
+        adapter.addFragment(new FragmentPetNewAppointment(), "New");
         adapter.addFragment(new FragmentPetCompletedAppointment(), "Completed");
-         adapter.addFragment(new FragmentPetCancelledAppointment(), "Cancelled");
+         adapter.addFragment(new FragmentPetMissedAppointment(), "Missed");
         viewPager.setAdapter(adapter);
     }
 

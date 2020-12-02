@@ -1,7 +1,6 @@
 package com.petfolio.infinitus.adapter;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
 
 import android.util.Log;
@@ -42,7 +41,7 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_new_appointment, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_doctor_new_appointment, parent, false);
         return new ViewHolderOne(view);
     }
 
@@ -61,7 +60,12 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
         currentItem = newAppointmentResponseList.get(position);
         holder.txt_petname.setText("Pet name : "+newAppointmentResponseList.get(0).getPet_id().getPet_name());
         holder.txt_pettype.setText("Pet type : "+ newAppointmentResponseList.get(0).getPet_id().getPet_type());
-        holder.txt_service_info.setText("Service name :"+" "+newAppointmentResponseList.get(0).getService_name()+" Service Cost : "+newAppointmentResponseList.get(0).getService_amount());
+        if(newAppointmentResponseList.get(0).getService_name() != null){
+            holder.txt_service_info.setText("Service name :"+" "+newAppointmentResponseList.get(0).getService_name());
+        }
+        if(newAppointmentResponseList.get(0).getService_amount() != null){
+            holder.txt_service_cost.setText(" Service Cost : "+newAppointmentResponseList.get(0).getService_amount());
+        }
 
            if (newAppointmentResponseList.get(0).getPet_id().getPet_img() != null && !newAppointmentResponseList.get(0).getPet_id().getPet_img().isEmpty()) {
 
@@ -153,7 +157,7 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
     }
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_petname,txt_pettype,txt_service_info;
+        public TextView txt_petname,txt_pettype,txt_service_info,txt_service_cost;
         public ImageView img_pet_imge;
         public Button btn_cancel,btn_complete;
 
@@ -165,6 +169,7 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
             txt_petname = itemView.findViewById(R.id.txt_petname);
             txt_pettype = itemView.findViewById(R.id.txt_pettype);
             txt_service_info = itemView.findViewById(R.id.txt_service_info);
+            txt_service_cost = itemView.findViewById(R.id.txt_service_cost);
             btn_cancel = itemView.findViewById(R.id.btn_cancel);
             btn_complete = itemView.findViewById(R.id.btn_complete);
 

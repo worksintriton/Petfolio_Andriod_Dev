@@ -25,7 +25,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
-                app:cardCornerRadius="1dp"
+                app:cardCornerRadius="10dp"
                 app:cardPreventCornerOverlap="true"
                 app:cardUseCompatPadding="true">
 
@@ -37,14 +37,13 @@
                         android:id="@+id/img_pet_imge"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
+                        android:layout_centerHorizontal="true"
                         android:contentDescription="@string/image"
                         android:scaleType="fitXY"
                         app:srcCompat="@drawable/image_thumbnail" />
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
-
 
             <TextView
                 android:id="@+id/txt_petname"
@@ -105,7 +104,7 @@
 
 
             <TextView
-                android:id="@+id/txt_completed_date"
+                android:id="@+id/txt_missed_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cv_pet"
@@ -116,8 +115,8 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/futuramediumbt"
                 android:maxLines="1"
-                android:text="@string/completed_on_date"
-                android:textColor="@color/green"
+                android:text="@string/missed_on_date"
+                android:textColor="@color/missed_red"
                 android:textSize="12sp" />
 
         </RelativeLayout>

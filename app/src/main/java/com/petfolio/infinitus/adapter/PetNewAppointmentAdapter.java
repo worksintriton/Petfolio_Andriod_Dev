@@ -6,30 +6,29 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
 
 import java.util.List;
 
 
-public class PetLoverCurrentAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private  String TAG = "PetLoverCurrentAppointmentAdapter";
+    private  String TAG = "PetNewAppointmentAdapter";
     private List<PetNewAppointmentResponse.DataBean> newAppointmentResponseList;
     private Context context;
 
     PetNewAppointmentResponse.DataBean currentItem;
 
 
-    public PetLoverCurrentAppointmentAdapter(Context context, List<PetNewAppointmentResponse.DataBean> newAppointmentResponseList, RecyclerView inbox_list) {
+    public PetNewAppointmentAdapter(Context context, List<PetNewAppointmentResponse.DataBean> newAppointmentResponseList, RecyclerView inbox_list) {
         this.newAppointmentResponseList = newAppointmentResponseList;
         this.context = context;
 
@@ -39,7 +38,7 @@ public class PetLoverCurrentAppointmentAdapter extends  RecyclerView.Adapter<Rec
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_current_appointment, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_pet_new_appointment, parent, false);
         return new ViewHolderOne(view);
     }
 
@@ -56,9 +55,15 @@ public class PetLoverCurrentAppointmentAdapter extends  RecyclerView.Adapter<Rec
         Log.w(TAG,"Pet name-->"+newAppointmentResponseList.get(0).getPet_id().getPet_name());
 
         currentItem = newAppointmentResponseList.get(position);
-        holder.txt_drname.setText("Doctor name : "+newAppointmentResponseList.get(0).getDoctor_id().getFirst_name());
-        holder.txt_servname.setText("Service name : "+ newAppointmentResponseList.get(0).getServer_date_time());
-        holder.txt_price.setText("Price :"+" "+newAppointmentResponseList.get(0).getAmount());
+        holder.txt_clinicname.setText("Clinic name : "+newAppointmentResponseList.get(0).getDoc_business_info().get(0).getClinic_name());
+        holder.txt_petname.setText("Pet name : "+ newAppointmentResponseList.get(0).getPet_id().getPet_name());
+
+        if(newAppointmentResponseList.get(0).getService_name() != null){
+            holder.txt_service_info.setText("Service name :"+" "+newAppointmentResponseList.get(0).getService_name());
+        }
+        if(newAppointmentResponseList.get(0).getService_amount() != null){
+            holder.txt_service_cost.setText(" Service Cost : "+newAppointmentResponseList.get(0).getService_amount());
+        }
 
 
 
@@ -66,20 +71,20 @@ public class PetLoverCurrentAppointmentAdapter extends  RecyclerView.Adapter<Rec
 
 
 
-         /*  if (currentItem.getPic() != null && !currentItem.getPic().isEmpty()) {
+        if (newAppointmentResponseList.get(0).getDoc_business_info().get(0).getClinic_pic().get(0).getClinic_pic() != null && !newAppointmentResponseList.get(0).getDoc_business_info().get(0).getClinic_pic().get(0).getClinic_pic().isEmpty()) {
 
                 Glide.with(context)
-                        .load(currentItem.getPic())
-                        .into(holder.cv_doctor_pic);
+                        .load(newAppointmentResponseList.get(0).getDoc_business_info().get(0).getClinic_pic().get(0).getClinic_pic())
+                        .into(holder.img_clinic_imge);
 
             }
            else{
                 Glide.with(context)
-                        .load(R.drawable.ic_drawer_delivery)
-                        .into(holder.cv_doctor_pic);
+                        .load(R.drawable.image_thumbnail)
+                        .into(holder.img_clinic_imge);
 
             }
-*/
+
 
 
 
@@ -170,20 +175,18 @@ public class PetLoverCurrentAppointmentAdapter extends  RecyclerView.Adapter<Rec
     }
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_drname,txt_servname,txt_price,txt_cancel_appoinmnt;
-        public ImageView img_dr;
-        public Button btn_chat;
+        public TextView txt_clinicname,txt_petname,txt_service_info,txt_service_cost;
+        public ImageView img_clinic_imge;
 
 
 
         public ViewHolderOne(View itemView) {
             super(itemView);
-            img_dr = itemView.findViewById(R.id.img_dr);
-            txt_drname = itemView.findViewById(R.id.txt_drname);
-            txt_servname = itemView.findViewById(R.id.txt_servname);
-            txt_price = itemView.findViewById(R.id.txt_price);
-            btn_chat = itemView.findViewById(R.id.btn_chat);
-            txt_cancel_appoinmnt = itemView.findViewById(R.id.txt_cancel_appoinmnt);
+            img_clinic_imge = itemView.findViewById(R.id.img_clinic_imge);
+            txt_clinicname = itemView.findViewById(R.id.txt_clinicname);
+            txt_petname = itemView.findViewById(R.id.txt_petname);
+            txt_service_info = itemView.findViewById(R.id.txt_service_info);
+            txt_service_cost = itemView.findViewById(R.id.txt_service_cost);
 
 
 

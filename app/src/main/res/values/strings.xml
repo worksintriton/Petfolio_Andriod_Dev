@@ -110,7 +110,7 @@
     <string name="logout">Logout</string>
     <string name="norecordsfound">No Records Found</string>
 
-    <string name="serv_name">Service name * Service cost ₹ 800</string>
+    <string name="serv_name">Service name</string>
     <string name="cancel">Cancel</string>
     <string name="complete">Complete</string>
     <string name="completed_on_date">Completed on 01-Sep-2020</string>
@@ -149,5 +149,8 @@
     <string name="pet_care">Pet Care</string>
     <string name="current">Current</string>
     <string name="cancelled">Cancelled</string>
+    <string name="service_cost">Service Cost</string>
+
+    <string name="petlovers">Petlovers</string>
 
 </resources>

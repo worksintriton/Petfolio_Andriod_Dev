@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cdvw_newappointment"
@@ -25,7 +24,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
                 app:cardCornerRadius="10dp"
                 app:cardPreventCornerOverlap="true"
                 app:cardUseCompatPadding="true">
@@ -51,16 +50,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
+                android:layout_marginLeft="2dp"
                 android:layout_marginTop="5dp"
                 android:layout_toEndOf="@id/cv_pet"
                 android:layout_toRightOf="@id/cv_pet"
+                android:ellipsize="end"
+                android:fontFamily="@font/futuramediumbt"
+                android:maxLines="1"
                 android:text="@string/pet_name"
                 android:textColor="@color/black"
-                android:textSize="14sp"
-                android:fontFamily="@font/futuramediumbt"
-                android:layout_marginLeft="2dp"
-                android:ellipsize="end"
-                android:maxLines="1"/>
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/txt_pettype"
@@ -70,43 +69,55 @@
                 android:layout_alignStart="@id/txt_petname"
                 android:layout_alignLeft="@id/txt_petname"
                 android:layout_marginTop="5dp"
-                android:fontFamily="@font/futuramediumbt"
-                android:text="@string/pet_type"
-                android:textSize="14sp"
                 android:ellipsize="end"
-                android:maxLines="1"/>
+                android:fontFamily="@font/futuramediumbt"
+                android:maxLines="1"
+                android:text="@string/pet_type"
+                android:textSize="12sp" />
 
-            <TextView
+             <TextView
                 android:id="@+id/txt_service_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txt_pettype"
                 android:layout_alignStart="@id/txt_pettype"
                 android:layout_alignLeft="@id/txt_pettype"
-                android:layout_marginTop="20dp"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:fontFamily="@font/futuramediumbt"
-                android:text="@string/serv_name"
+                android:layout_marginTop="5dp"
                 android:ellipsize="end"
-                android:maxLines="1"/>
+                android:fontFamily="@font/futuramediumbt"
+                android:maxLines="1"
+                android:text="@string/serv_name"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/txt_service_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_service_info"
+                android:layout_alignStart="@id/txt_pettype"
+                android:layout_alignLeft="@id/txt_pettype"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/futuramediumbt"
+                android:maxLines="1"
+                android:text="@string/service_cost"
+                android:textSize="12sp" />
 
 
             <TextView
                 android:id="@+id/txt_missed_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txt_service_info"
+                android:layout_below="@id/cv_pet"
                 android:layout_alignStart="@id/cv_pet"
                 android:layout_alignLeft="@id/cv_pet"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:ellipsize="end"
                 android:fontFamily="@font/futuramediumbt"
+                android:maxLines="1"
                 android:text="@string/missed_on_date"
                 android:textColor="@color/missed_red"
-                android:textSize="14sp"
-                android:ellipsize="end"
-                android:maxLines="1"/>
+                android:textSize="12sp" />
 
         </RelativeLayout>
 
