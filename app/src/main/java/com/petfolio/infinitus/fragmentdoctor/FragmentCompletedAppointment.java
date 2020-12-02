@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -51,12 +52,13 @@ public class FragmentCompletedAppointment extends Fragment {
 
     @BindView(R.id.rv_completedappointment)
     RecyclerView rv_completedappointment;
-    /*DoctorPastAppointmentAdapter doctorPastAppointmentAdapter;
-    private SharedPreferences preferences;
 
-    DoctorPastAppointmentResponse pastAppointmentResponse;
-    private List<DoctorPastAppointmentResponse.DataBean> pastAppointmentResponseList = null;
-*/
+    @BindView(R.id.btn_load_more)
+    Button btn_load_more;
+
+    @BindView(R.id.btn_filter)
+    Button btn_filter;
+
 
 
 
@@ -83,6 +85,8 @@ public class FragmentCompletedAppointment extends Fragment {
         mContext = getActivity();
 
         avi_indicator.setVisibility(View.GONE);
+        btn_load_more.setVisibility(View.GONE);
+        btn_filter.setVisibility(View.GONE);
 
         session = new SessionManager(getContext());
         HashMap<String, String> user = session.getProfileDetails();
@@ -96,8 +100,6 @@ public class FragmentCompletedAppointment extends Fragment {
       
 
         if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-
-
             doctorCompletedAppointmentResponseCall();
         }
         return view;
@@ -129,9 +131,13 @@ public class FragmentCompletedAppointment extends Fragment {
                            txt_no_records.setVisibility(View.VISIBLE);
                            txt_no_records.setText("No completed appointments");
                            rv_completedappointment.setVisibility(View.GONE);
+                           btn_load_more.setVisibility(View.GONE);
+                           btn_filter.setVisibility(View.GONE);
                        }else{
                            txt_no_records.setVisibility(View.GONE);
                            rv_completedappointment.setVisibility(View.VISIBLE);
+                           btn_load_more.setVisibility(View.VISIBLE);
+                           btn_filter.setVisibility(View.VISIBLE);
                            setView();
                        }
 

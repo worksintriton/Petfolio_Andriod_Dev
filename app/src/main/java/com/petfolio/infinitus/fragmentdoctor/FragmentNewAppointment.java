@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -53,6 +54,9 @@ public class FragmentNewAppointment extends Fragment {
     @BindView(R.id.rv_newappointment)
     RecyclerView rv_newappointment;
 
+    @BindView(R.id.btn_load_more)
+    Button btn_load_more;
+
 
 
 
@@ -79,6 +83,7 @@ public class FragmentNewAppointment extends Fragment {
         mContext = getActivity();
 
         avi_indicator.setVisibility(View.GONE);
+        btn_load_more.setVisibility(View.GONE);
 
         session = new SessionManager(getContext());
         HashMap<String, String> user = session.getProfileDetails();
@@ -92,8 +97,6 @@ public class FragmentNewAppointment extends Fragment {
       
 
         if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-
-
             doctorNewAppointmentResponseCall();
         }
         return view;
@@ -112,7 +115,7 @@ public class FragmentNewAppointment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<DoctorNewAppointmentResponse> call, @NonNull Response<DoctorNewAppointmentResponse> response) {
                avi_indicator.smoothToHide();
-                Log.w(TAG,"doctorPastAppointmentResponseCall"+ "--->" + new Gson().toJson(response.body()));
+                Log.w(TAG,"doctorNewAppointmentResponseCall"+ "--->" + new Gson().toJson(response.body()));
 
 
                if (response.body() != null) {
@@ -125,9 +128,11 @@ public class FragmentNewAppointment extends Fragment {
                            txt_no_records.setVisibility(View.VISIBLE);
                            txt_no_records.setText("No new appointments");
                            rv_newappointment.setVisibility(View.GONE);
+                           btn_load_more.setVisibility(View.GONE);
                        }else{
                            txt_no_records.setVisibility(View.GONE);
                            rv_newappointment.setVisibility(View.VISIBLE);
+                           btn_load_more.setVisibility(View.VISIBLE);
                            setView();
                        }
 

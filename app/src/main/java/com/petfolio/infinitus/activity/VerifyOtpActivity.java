@@ -21,6 +21,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
@@ -32,7 +37,9 @@ import com.petfolio.infinitus.petlover.AddYourPetActivity;
 import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinitus.receiver.OTPSmsListener;
 import com.petfolio.infinitus.receiver.SmsBroadcastListener;
+import com.petfolio.infinitus.requestpojo.FBTokenUpdateRequest;
 import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
+import com.petfolio.infinitus.responsepojo.FBTokenUpdateResponse;
 import com.petfolio.infinitus.responsepojo.ResendOTPResponse;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -86,6 +93,8 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
     private int usertype = 0;
 
     private boolean isOTPExpired ;
+    private String userid;
+    private String token;
 
 
     @Override
@@ -104,9 +113,39 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
             phonenumber = extras.getString("phonemumber");
             otp = extras.getInt("otp");
             usertype = extras.getInt("usertype");
+            userid = extras.getString("userid");
             userstatus = extras.getString("userstatus");
             fromactivity = extras.getString("fromactivity");
-            Log.w(TAG,"Bundle "+" phonenumber : "+phonenumber+" otp :"+otp+" usertype : "+usertype+" userstatus : "+userstatus);
+            Log.w(TAG,"Bundle "+" phonenumber : "+phonenumber+" otp :"+otp+" usertype : "+usertype+" userstatus : "+userstatus+ " userid : "+userid);
+        }
+
+
+        try{
+
+            FirebaseMessaging.getInstance().setAutoInitEnabled(true);
+
+            FirebaseMessaging.getInstance().getToken()
+                    .addOnCompleteListener(new OnCompleteListener<String>() {
+                        @Override
+                        public void onComplete(@NonNull Task<String> task) {
+                            if (!task.isSuccessful()) {
+                                Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                                return;
+                            }
+
+                            // Get new FCM registration token
+                             token = task.getResult();
+                            Log.w(TAG,"token--->"+ token);
+
+
+
+                        }
+                    });
+
+
+
+        }catch (Exception e){
+            e.printStackTrace();
         }
 
 
@@ -207,27 +246,13 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
          }
 
          if (can_proceed) {
-             if(fromactivity != null && fromactivity.equalsIgnoreCase("LoginActivity")){
-                 if(usertype != 0){
-                     if(usertype == 1){
-                         startActivity(new Intent(VerifyOtpActivity.this, PetLoverDashboardActivity.class));
+             if (new ConnectionDetector(VerifyOtpActivity.this).isNetworkAvailable(VerifyOtpActivity.this)) {
+                if(token != null && userid != null){
+                    fBTokenUpdateResponseCall();
+                }
 
-                     }else if(usertype == 4 ){
-                         startActivity(new Intent(VerifyOtpActivity.this, DoctorDashboardActivity.class));
-
-                     }
-                 }
-             }else{
-                 if(usertype != 0){
-                     if(usertype == 1 ){
-                         startActivity(new Intent(VerifyOtpActivity.this, AddYourPetActivity.class));
-
-                     }else if(usertype == 4 ){
-                         startActivity(new Intent(VerifyOtpActivity.this, DoctorBusinessInfoActivity.class));
-
-                     }
-                 }
              }
+
 
 
 
@@ -318,5 +343,72 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
     protected void onPause() {
         super.onPause();
 
+    }
+
+
+    private void fBTokenUpdateResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<FBTokenUpdateResponse> call = apiInterface.fBTokenUpdateResponseCall(RestUtils.getContentType(), fbTokenUpdateRequest());
+        Log.w(TAG,"fBTokenUpdateResponseCall url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<FBTokenUpdateResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<FBTokenUpdateResponse> call, @NonNull Response<FBTokenUpdateResponse> response) {
+
+                Log.w(TAG,"NotificationUpdateResponse"+ "--->" + new Gson().toJson(response.body()));
+
+                avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        if(fromactivity != null && fromactivity.equalsIgnoreCase("LoginActivity")){
+                            if(usertype != 0){
+                                if(usertype == 1){
+                                    startActivity(new Intent(VerifyOtpActivity.this, PetLoverDashboardActivity.class));
+
+                                }else if(usertype == 4 ){
+                                    startActivity(new Intent(VerifyOtpActivity.this, DoctorDashboardActivity.class));
+
+                                }
+                            }
+                        }
+                        else{
+                            if(usertype != 0){
+                                if(usertype == 1 ){
+                                    startActivity(new Intent(VerifyOtpActivity.this, AddYourPetActivity.class));
+
+                                }else if(usertype == 4 ){
+                                    startActivity(new Intent(VerifyOtpActivity.this, DoctorBusinessInfoActivity.class));
+
+                                }
+                            }
+                        }
+                    }
+                    else{
+
+                        showErrorLoading(response.body().getMessage());
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<FBTokenUpdateResponse> call, @NonNull Throwable t) {
+
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"FBTokenUpdateResponse"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    private FBTokenUpdateRequest fbTokenUpdateRequest() {
+        FBTokenUpdateRequest fbTokenUpdateRequest = new FBTokenUpdateRequest();
+        fbTokenUpdateRequest.setUser_id(userid);
+        fbTokenUpdateRequest.setFb_token(token);
+        Log.w(TAG,"fbTokenUpdateRequest"+ "--->" + new Gson().toJson(fbTokenUpdateRequest));
+        return fbTokenUpdateRequest;
     }
 }

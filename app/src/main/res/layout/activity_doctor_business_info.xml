@@ -4,13 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/avi_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        app:indicatorColor="@color/green"
-        app:indicatorName="LineSpinFadeLoaderIndicator" />
+
 
     <LinearLayout
         android:id="@+id/headerView"
@@ -150,7 +144,7 @@
                     <Button
                         android:id="@+id/buttonAddedu"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
@@ -160,7 +154,8 @@
                         android:text="@string/add"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:gravity="center"/>
 
                 </LinearLayout>
 
@@ -305,17 +300,18 @@
                     <Button
                         android:id="@+id/buttonAddexpr"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
-                        android:background="@drawable/green_backround"
+                        android:background="@drawable/rounded_curve"
                         android:fontFamily="@font/futuralightbt"
                         android:padding="5dp"
                         android:text="@string/add"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:gravity="center"/>
 
                 </LinearLayout>
 
@@ -761,5 +757,13 @@
             android:textColor="@color/whiteFive"
             android:textSize="18sp" />
     </LinearLayout>
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:indicatorColor="@color/green"
+        app:indicatorName="LineSpinFadeLoaderIndicator" />
 
 </RelativeLayout>

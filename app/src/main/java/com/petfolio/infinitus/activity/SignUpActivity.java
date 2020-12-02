@@ -246,6 +246,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         intent.putExtra("phonemumber",response.body().getData().getUser_phone());
                         intent.putExtra("otp",response.body().getData().getOtp());
                         intent.putExtra("usertype",response.body().getData().getUser_type());
+                        intent.putExtra("userid",response.body().getData().get_id());
                         intent.putExtra("userstatus","Incomplete");
                         startActivity(intent);
 

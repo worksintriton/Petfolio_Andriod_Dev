@@ -10,6 +10,7 @@ import com.petfolio.infinitus.requestpojo.DoctorMyCalendarAvlDaysRequest;
 import com.petfolio.infinitus.requestpojo.DoctorMyCalendarAvlTimesRequest;
 import com.petfolio.infinitus.requestpojo.DoctorMyCalendarUpdateDocDateRequest;
 import com.petfolio.infinitus.requestpojo.DoctorNewAppointmentRequest;
+import com.petfolio.infinitus.requestpojo.FBTokenUpdateRequest;
 import com.petfolio.infinitus.requestpojo.HolidayDeleteRequest;
 import com.petfolio.infinitus.requestpojo.HolidayListRequest;
 import com.petfolio.infinitus.requestpojo.LocationAddRequest;
@@ -35,6 +36,7 @@ import com.petfolio.infinitus.responsepojo.DoctorMyCalendarAvlTimesResponse;
 import com.petfolio.infinitus.responsepojo.DoctorMyCalendarUpdateDocDateResponse;
 import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.DropDownListResponse;
+import com.petfolio.infinitus.responsepojo.FBTokenUpdateResponse;
 import com.petfolio.infinitus.responsepojo.FileUploadResponse;
 import com.petfolio.infinitus.responsepojo.HolidayDeleteResponse;
 import com.petfolio.infinitus.responsepojo.HolidayListResponse;
@@ -82,6 +84,12 @@ public interface RestApiInterface {
     /*Login*/
     @POST(" userdetails/mobile/login")
     Call<LoginResponse> loginResponseCall(@Header("Content-Type") String type, @Body LoginRequest loginRequest );
+
+
+    /*Notification token update*/
+    @POST("userdetails/mobile/update/fb_token")
+    Call<FBTokenUpdateResponse>fBTokenUpdateResponseCall(@Header("Content-Type") String type, @Body FBTokenUpdateRequest fbTokenUpdateRequest);
+
 
     /*dropdown list*/
     @GET("petdetails/mobile/dropdownslist")

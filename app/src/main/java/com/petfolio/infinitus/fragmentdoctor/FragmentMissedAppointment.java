@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -55,6 +56,12 @@ public class FragmentMissedAppointment extends Fragment {
     @BindView(R.id.rv_missedappointment)
     RecyclerView rv_missedappointment;
 
+    @BindView(R.id.btn_load_more)
+    Button btn_load_more;
+
+    @BindView(R.id.btn_filter)
+    Button btn_filter;
+
 
 
     SessionManager session;
@@ -80,6 +87,8 @@ public class FragmentMissedAppointment extends Fragment {
         mContext = getActivity();
 
         avi_indicator.setVisibility(View.GONE);
+        btn_load_more.setVisibility(View.GONE);
+        btn_filter.setVisibility(View.GONE);
 
         session = new SessionManager(getContext());
         HashMap<String, String> user = session.getProfileDetails();
@@ -123,9 +132,13 @@ public class FragmentMissedAppointment extends Fragment {
                            txt_no_records.setVisibility(View.VISIBLE);
                            txt_no_records.setText("No missed appointments");
                            rv_missedappointment.setVisibility(View.GONE);
+                           btn_load_more.setVisibility(View.GONE);
+                           btn_filter.setVisibility(View.GONE);
                        }else{
                            txt_no_records.setVisibility(View.GONE);
                            rv_missedappointment.setVisibility(View.VISIBLE);
+                           btn_load_more.setVisibility(View.VISIBLE);
+                           btn_filter.setVisibility(View.VISIBLE);
                            setView();
                        }
                    }else{
