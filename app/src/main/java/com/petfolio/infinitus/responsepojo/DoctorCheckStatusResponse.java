@@ -2,11 +2,10 @@ package com.petfolio.infinitus.responsepojo;
 
 public class DoctorCheckStatusResponse {
 
-
     /**
      * Status : Success
-     * Message : Docotor Status
-     * Data : {"user_id":"5fc7970c07fcd32b6c98c01a","profile_status":0,"profile_verification_status":"Not verified"}
+     * Message : Doctor Status
+     * Data : {"user_id":"5fc761dab8b7931efc42592f","profile_status":true,"profile_verification_status":"verified"}
      * Code : 200
      */
 
@@ -22,7 +21,6 @@ public class DoctorCheckStatusResponse {
 
     public void setStatus(String Status) {
         this.Status = Status;
-
     }
 
 
@@ -32,7 +30,6 @@ public class DoctorCheckStatusResponse {
 
     public void setMessage(String Message) {
         this.Message = Message;
-
     }
 
 
@@ -42,7 +39,6 @@ public class DoctorCheckStatusResponse {
 
     public void setData(DataBean Data) {
         this.Data = Data;
-
     }
 
 
@@ -52,20 +48,18 @@ public class DoctorCheckStatusResponse {
 
     public void setCode(int Code) {
         this.Code = Code;
-
     }
 
     public static class DataBean  {
         /**
-         * user_id : 5fc7970c07fcd32b6c98c01a
-         * profile_status : 0
-         * profile_verification_status : Not verified
+         * user_id : 5fc761dab8b7931efc42592f
+         * profile_status : true
+         * profile_verification_status : verified
          */
 
         private String user_id;
-        private int profile_status;
+        private boolean profile_status;
         private String profile_verification_status;
-
 
         public String getUser_id() {
             return user_id;
@@ -73,15 +67,14 @@ public class DoctorCheckStatusResponse {
 
         public void setUser_id(String user_id) {
             this.user_id = user_id;
-
         }
 
 
-        public int getProfile_status() {
+        public boolean isProfile_status() {
             return profile_status;
         }
 
-        public void setProfile_status(int profile_status) {
+        public void setProfile_status(boolean profile_status) {
             this.profile_status = profile_status;
         }
 

@@ -102,10 +102,6 @@ public class FragmentDoctorDashboard extends Fragment  {
             doctorCheckStatusResponseCall();
         }
 
-        if(isDoctorStatus){
-            setupViewPager(viewPager);
-            tablayout.setupWithViewPager(viewPager);
-        }
 
 
 
@@ -173,7 +169,7 @@ public class FragmentDoctorDashboard extends Fragment  {
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        if(response.body().getData().getProfile_status() == 0){
+                        if(!response.body().getData().isProfile_status()){
                             Intent intent = new Intent(mContext, DoctorBusinessInfoActivity.class);
                             intent.putExtra("fromactivity",TAG);
                             startActivity(intent);
@@ -181,9 +177,16 @@ public class FragmentDoctorDashboard extends Fragment  {
                             String profileVerificationStatus = response.body().getData().getProfile_verification_status();
                             if( profileVerificationStatus != null && profileVerificationStatus.equalsIgnoreCase("Not verified")){
                                 showProfileStatus(response.body().getMessage());
-                                return;
+
                             }else{
                                 isDoctorStatus = true;
+                                Log.w(TAG,"isDoctorStatus else : "+isDoctorStatus);
+
+                                if(isDoctorStatus){
+                                    setupViewPager(viewPager);
+                                    tablayout.setupWithViewPager(viewPager);
+                                }
+
                             }
 
 
