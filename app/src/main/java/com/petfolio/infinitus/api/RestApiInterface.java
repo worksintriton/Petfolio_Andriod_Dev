@@ -21,6 +21,7 @@ import com.petfolio.infinitus.requestpojo.PetDetailsRequest;
 import com.petfolio.infinitus.requestpojo.PetDoctorAvailableTimeRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverDashboardRequest;
+import com.petfolio.infinitus.requestpojo.PrescriptionCreateRequest;
 import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
 import com.petfolio.infinitus.requestpojo.SignupRequest;
 import com.petfolio.infinitus.requestpojo.UserStatusUpdateRequest;
@@ -50,6 +51,7 @@ import com.petfolio.infinitus.responsepojo.PetDoctorAvailableTimeResponse;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.PetTypeListResponse;
+import com.petfolio.infinitus.responsepojo.PrescriptionCreateResponse;
 import com.petfolio.infinitus.responsepojo.ResendOTPResponse;
 import com.petfolio.infinitus.responsepojo.SignupResponse;
 import com.petfolio.infinitus.responsepojo.UserStatusUpdateResponse;
@@ -202,5 +204,9 @@ public interface RestApiInterface {
     /*Doctor Check status*/
     @POST("doctordetails/check_status")
     Call<DoctorCheckStatusResponse>doctorCheckStatusResponseCall(@Header("Content-Type") String type, @Body DoctorCheckStatusRequest doctorCheckStatusRequest );
+
+    /*Prescriptoin Create*/
+    @POST("prescription/create")
+    Call<PrescriptionCreateResponse>prescriptionCreateRequestCall(@Header("Content-Type") String type, @Body PrescriptionCreateRequest prescriptionCreateRequest);
 
 }

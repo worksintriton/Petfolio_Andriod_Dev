@@ -160,7 +160,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
 
     MultipartBody.Part filePart;
     String currentDateandTime;
-    private String uploadimagepath;
+    private String uploadimagepath = "";
     private Dialog alertDialog;
     private boolean isSelectYourPet;
     private String selectedAppointmentType;

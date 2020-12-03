@@ -25,6 +25,7 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 
+import com.petfolio.infinitus.appUtils.NumericKeyBoardTransformationMethod;
 import com.petfolio.infinitus.requestpojo.LoginRequest;
 
 
@@ -76,6 +77,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        edt_emailorphone.setTransformationMethod(new NumericKeyBoardTransformationMethod());
+
 
         avi_indicator.setVisibility(View.GONE);
 

@@ -1,7 +1,11 @@
 package com.petfolio.infinitus.fragmentdoctor;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -23,7 +28,10 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.DoctorNewAppointmentAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.doctor.DoctorBusinessInfoActivity;
+import com.petfolio.infinitus.requestpojo.DoctorCheckStatusRequest;
 import com.petfolio.infinitus.requestpojo.DoctorNewAppointmentRequest;
+import com.petfolio.infinitus.responsepojo.DoctorCheckStatusResponse;
 import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -94,7 +102,6 @@ public class FragmentNewAppointment extends Fragment {
 
         Log.w(TAG,"Doctorid"+doctorid +"patientname :"+patientname);
 
-      
 
         if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
             doctorNewAppointmentResponseCall();
@@ -170,4 +177,6 @@ public class FragmentNewAppointment extends Fragment {
         rv_newappointment.setAdapter(doctorNewAppointmentAdapter);
 
     }
+
+
 }

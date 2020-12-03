@@ -1,44 +1,39 @@
 package com.petfolio.infinitus.doctor;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
 import android.util.Log;
-
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.activity.VerifyOtpActivity;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.fragmentdoctor.FragmentDoctorDashboard;
 import com.petfolio.infinitus.fragmentpetlover.HomeFragment;
-import com.petfolio.infinitus.petlover.AddYourPetActivity;
-import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
+import com.petfolio.infinitus.petlover.PetAppointment_Doctor_Date_Time_Activity;
 import com.petfolio.infinitus.requestpojo.DoctorCheckStatusRequest;
-import com.petfolio.infinitus.requestpojo.FBTokenUpdateRequest;
 import com.petfolio.infinitus.responsepojo.DoctorCheckStatusResponse;
-import com.petfolio.infinitus.responsepojo.FBTokenUpdateResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
+import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Objects;
-
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -47,8 +42,6 @@ import retrofit2.Response;
 
 public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements Serializable, BottomNavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.avi_indicator)
-    AVLoadingIndicatorView avi_indicator;
 
     @BindView(R.id.bottom_navigation_view)
     BottomNavigationView bottom_navigation_view;
@@ -68,6 +61,7 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
 
     String fromactivity;
     private String userid;
+    private Dialog dialog;
 
 
     @Override
@@ -81,7 +75,8 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
         HashMap<String, String> user = session.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
 
-        avi_indicator.setVisibility(View.GONE);
+
+
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -258,46 +253,6 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
     }
 
 
-    private void doctorCheckStatusResponseCall() {
-        avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();
-        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-        Call<DoctorCheckStatusResponse> call = apiInterface.doctorCheckStatusResponseCall(RestUtils.getContentType(), doctorCheckStatusRequest());
-        Log.w(TAG,"doctorCheckStatusResponseCall url  :%s"+" "+ call.request().url().toString());
-
-        call.enqueue(new Callback<DoctorCheckStatusResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<DoctorCheckStatusResponse> call, @NonNull Response<DoctorCheckStatusResponse> response) {
-
-                Log.w(TAG,"doctorCheckStatusResponseCall"+ "--->" + new Gson().toJson(response.body()));
-
-                avi_indicator.smoothToHide();
-
-                if (response.body() != null) {
-                    if(response.body().getCode() == 200){
-
-                    }
-                    else{
-                        showErrorLoading(response.body().getMessage());
-                    }
-                }
 
 
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<DoctorCheckStatusResponse> call, @NonNull Throwable t) {
-
-                avi_indicator.smoothToHide();
-                Log.w(TAG,"doctorCheckStatusResponseCall"+"--->" + t.getMessage());
-            }
-        });
-
-    }
-    private DoctorCheckStatusRequest doctorCheckStatusRequest() {
-        DoctorCheckStatusRequest doctorCheckStatusRequest = new DoctorCheckStatusRequest();
-        doctorCheckStatusRequest.setUserId(userid);
-        Log.w(TAG,"doctorCheckStatusRequest"+ "--->" + new Gson().toJson(doctorCheckStatusRequest));
-        return doctorCheckStatusRequest;
-    }
 }

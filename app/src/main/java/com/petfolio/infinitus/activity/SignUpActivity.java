@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.appUtils.NumericKeyBoardTransformationMethod;
 import com.petfolio.infinitus.requestpojo.SignupRequest;
 import com.petfolio.infinitus.requestpojo.UserStatusUpdateRequest;
 import com.petfolio.infinitus.responsepojo.SignupResponse;
@@ -95,6 +96,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         ButterKnife.bind(this);
         avi_indicator.setVisibility(View.GONE);
 
+        edt_phone.setTransformationMethod(new NumericKeyBoardTransformationMethod());
 
         img_back.setOnClickListener(this);
         btn_changeusertype.setOnClickListener(this);

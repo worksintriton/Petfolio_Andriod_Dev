@@ -1,13 +1,18 @@
 package com.petfolio.infinitus.requestpojo;
 
 public class DoctorCheckStatusRequest{
-	private String userId;
 
-	public String getUserId() {
-		return userId;
+	/**
+	 * user_id : 5fc761dab8b7931efc42592f
+	 */
+
+	private String user_id;
+
+	public String getUser_id() {
+		return user_id;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
 }

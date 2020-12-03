@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">PetFolio</string>
     <string name="verify_otp">Verify OTP</string>
-    <string name="emailorphonenumber">Email / Phone Number</string>
+    <string name="emailorphonenumber">Phone Number</string>
     <string name="new_here">New here ?</string>
     <string name="sign_up">Sign up</string>
     <string name="change_user_type">Change user type</string>
@@ -152,5 +152,8 @@
     <string name="service_cost">Service Cost</string>
 
     <string name="petlovers">Petlovers</string>
+    <string name="prescriptiondetails">Prescription Details</string>
+    <string name="prescriptionmsg">Note: Pls use the + button to submit the entered details.</string>
+
 
 </resources>
