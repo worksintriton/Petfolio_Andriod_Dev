@@ -5,6 +5,7 @@ import com.petfolio.infinitus.requestpojo.AppointmentCheckRequest;
 import com.petfolio.infinitus.requestpojo.BreedTypeRequest;
 import com.petfolio.infinitus.requestpojo.CreateHolidayRequest;
 import com.petfolio.infinitus.requestpojo.DocBusInfoUploadRequest;
+import com.petfolio.infinitus.requestpojo.DoctorCheckStatusRequest;
 import com.petfolio.infinitus.requestpojo.DoctorDetailsRequest;
 import com.petfolio.infinitus.requestpojo.DoctorMyCalendarAvlDaysRequest;
 import com.petfolio.infinitus.requestpojo.DoctorMyCalendarAvlTimesRequest;
@@ -28,6 +29,7 @@ import com.petfolio.infinitus.responsepojo.AppointmentCheckResponse;
 import com.petfolio.infinitus.responsepojo.BreedTypeResponse;
 import com.petfolio.infinitus.responsepojo.CreateHolidayResponse;
 import com.petfolio.infinitus.responsepojo.DocBusInfoUploadResponse;
+import com.petfolio.infinitus.responsepojo.DoctorCheckStatusResponse;
 import com.petfolio.infinitus.responsepojo.DoctorCompletedAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.DoctorDetailsResponse;
 import com.petfolio.infinitus.responsepojo.DoctorMissedAppointmentResponse;
@@ -80,11 +82,9 @@ public interface RestApiInterface {
     @POST("userdetails/mobile/resendotp")
     Call<ResendOTPResponse> resendOTPResponsecall(@Header("Content-Type") String type, @Body ResendOTPRequest resendOTPRequest );
 
-
     /*Login*/
-    @POST(" userdetails/mobile/login")
+    @POST("userdetails/mobile/login")
     Call<LoginResponse> loginResponseCall(@Header("Content-Type") String type, @Body LoginRequest loginRequest );
-
 
     /*Notification token update*/
     @POST("userdetails/mobile/update/fb_token")
@@ -107,10 +107,12 @@ public interface RestApiInterface {
     @POST("locationdetails/create")
     Call<LocationAddResponse> locationAddResponseCall(@Header("Content-Type") String type, @Body LocationAddRequest locationAddRequest);
 
+    /*Image upload*/
     @Multipart
     @POST("upload")
     Call<FileUploadResponse> getImageStroeResponse(@Part MultipartBody.Part file);
 
+    /*Doctor Business info create*/
     @POST("doctordetails/create")
     Call<DocBusInfoUploadResponse> docsBusInfoUpldResponse(@Header("Content-Type") String type, @Body DocBusInfoUploadRequest docBusInfoUploadRequest);
 
@@ -196,5 +198,9 @@ public interface RestApiInterface {
     /*Pet Cancelled Appointment*/
     @POST("appointments/mobile/plove_getlist/missapp")
     Call<PetNewAppointmentResponse>petMissedAppointmentResponseCall(@Header("Content-Type") String type, @Body PetLoverAppointmentRequest petLoverAppointmentRequest);
+
+    /*Doctor Check status*/
+    @POST("doctordetails/check_status")
+    Call<DoctorCheckStatusResponse>doctorCheckStatusResponseCall(@Header("Content-Type") String type, @Body DoctorCheckStatusRequest doctorCheckStatusRequest );
 
 }
