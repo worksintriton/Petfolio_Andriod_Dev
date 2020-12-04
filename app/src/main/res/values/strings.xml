@@ -173,4 +173,32 @@
 
     <string name="add_a_new_address">Add a new address</string>
     <string name="address_info">TESSDGD dgsdg dgasdg saddagdasg dsgasdg sadgdsgds SGADSGD</string>
+    <string name="saved_address">2 Saved Address</string>
+
+    <string name="accept">Accept</string>
+    <string name="pet_details">Pet Details</string>
+    <string name="pet_name_details">Pet Name :</string>
+    <string name="pet_type_details">Pet Type :</string>
+    <string name="breed">breed :</string>
+    <string name="gender">Gender : </string>
+    <string name="colour">Colour : </string>
+    <string name="weight">Weight : </string>
+    <string name="age">Age :</string>
+    <string name="vaccinated_details">Vaccinated :</string>
+
+    <string name="medical_history">See Medical History</string>
+    <string name="order_date">Order date</string>
+    <string name="order">Order #</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="order_cost">Order cost</string>
+    <string name="address">Address</string>
+    <string name="order_details">Order Details</string>
+    <string name="allergies_pet_details">Allergies :</string>
+    <string name="prescription">Prescription</string>
+    <string name="before_given_prescription_details">Before given Prescription Details</string>
+    <string name="vaccination">Vaccination</string>
+    <string name="before_given_vaccination_details">Before given Vaccination Details</string>
+    <string name="add_prescription">Add Prescription</string>
+    <string name="add_vaccination">Add Vaccination</string>
+    <string name="service_name">Service Name</string>
 </resources>
