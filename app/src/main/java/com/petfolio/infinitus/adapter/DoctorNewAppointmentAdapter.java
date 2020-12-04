@@ -3,6 +3,7 @@ package com.petfolio.infinitus.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.doctor.PrescriptionActivity;
+import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
+import com.petfolio.infinitus.interfaces.OnItemDeleteHoliday;
 import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
 
 import java.util.List;
@@ -30,10 +34,15 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
 
     DoctorNewAppointmentResponse.DataBean currentItem;
 
+    private OnAppointmentCancel onAppointmentCancel;
 
-    public DoctorNewAppointmentAdapter(Context context, List<DoctorNewAppointmentResponse.DataBean> newAppointmentResponseList, RecyclerView inbox_list) {
+
+
+    public DoctorNewAppointmentAdapter(Context context, List<DoctorNewAppointmentResponse.DataBean> newAppointmentResponseList, RecyclerView inbox_list,OnAppointmentCancel onAppointmentCancel) {
         this.newAppointmentResponseList = newAppointmentResponseList;
         this.context = context;
+        this.onAppointmentCancel = onAppointmentCancel;
+
 
 
     }
@@ -81,49 +90,33 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
 
             }
 
-        }
-       /* holder.btn_pastappointment_details_view.setOnClickListener(new View.OnClickListener() {
+
+
+        holder.btn_complete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent i = new Intent(context, DoctorPastAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                i.putExtra("Patientname",pastAppointmentResponseList.get(position).getPatient_Name());
-                i.putExtra("Bookingdate",pastAppointmentResponseList.get(position).getBooking_Date());
-                i.putExtra("Bookingtime",pastAppointmentResponseList.get(position).getBooking_Time());
-                i.putExtra("Doctorname",pastAppointmentResponseList.get(position).getDoctor_Name());
-                i.putExtra("Ailmentdetails",pastAppointmentResponseList.get(position).getProblem_info());
-                i.putExtra("Id",pastAppointmentResponseList.get(position).get_id());
-                i.putExtra("Doctorid",pastAppointmentResponseList.get(position).getDoctor_ID());
-                i.putExtra("Doctorimage",pastAppointmentResponseList.get(position).getDoctor_Image());
-                i.putExtra("Doctoremailid",pastAppointmentResponseList.get(position).getDoctor_EmailId());
-                i.putExtra("Patientemailid",pastAppointmentResponseList.get(position).getPatient_EmailId());
-                i.putExtra("Patientid",pastAppointmentResponseList.get(position).getPatient_ID());
-                i.putExtra("Bookingfor",pastAppointmentResponseList.get(position).getBooking_for());
-                i.putExtra("Familyid",pastAppointmentResponseList.get(position).getFamily_ID());
-                i.putExtra("Familyname",pastAppointmentResponseList.get(position).getFamily_Name());
-                i.putExtra("video",pastAppointmentResponseList.get(position).getCommunication_Video());
-                i.putExtra("chat",pastAppointmentResponseList.get(position).getCommunication_Chat());
-                i.putExtra("patientnoshow",pastAppointmentResponseList.get(position).getAppointment_patient_St());
-                i.putExtra("Documentsattached",pastAppointmentResponseList.get(position).getDoc_attached().toString());
-
-                *//* pastmedications,patientage,patientheight,patientweight,patientgender*//*
-                i.putExtra("pastmedications",pastAppointmentResponseList.get(position).getPassed_Medications());
-                i.putExtra("patientage",String.valueOf(pastAppointmentResponseList.get(position).getPatiend_details().getAge()));
-                i.putExtra("patientheight",pastAppointmentResponseList.get(position).getPatiend_details().getHeight());
-                i.putExtra("patientweight",pastAppointmentResponseList.get(position).getPatiend_details().getWeight());
-                i.putExtra("patientgender",pastAppointmentResponseList.get(position).getPatiend_details().getGender());
-
-
-
-                Log.w(TAG,"ImageList--->"+pastAppointmentResponseList.get(position).getDoc_attached().toString());
-
-
-
-                //  i.putExtra("Documentsattached",pastAppointmentResponseList.get(position).getDoc_attached().get(position));
+            public void onClick(View v) { Intent i = new Intent(context, PrescriptionActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("petname",newAppointmentResponseList.get(position).getPet_id().getPet_name());
+                i.putExtra("pettype",newAppointmentResponseList.get(position).getPet_id().getPet_type());
+                i.putExtra("id",newAppointmentResponseList.get(position).get_id());
+                i.putExtra("userid",newAppointmentResponseList.get(position).getUser_id().get_id());
+                i.putExtra("allergies",newAppointmentResponseList.get(position).getAllergies());
+                i.putExtra("probleminfo",newAppointmentResponseList.get(position).getProblem_info());
                 context.startActivity(i);
 
             }
-        });*/
+        });
+
+        holder.btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { Intent i = new Intent(context, PrescriptionActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                onAppointmentCancel.onAppointmentCancel(newAppointmentResponseList.get(position).get_id());
+
+            }
+        });
+
+
+
+    }
 
         /*if(pastAppointmentResponseList.get(position).getCommunication_Chat().equalsIgnoreCase("True")){
             holder.ivmessgaechat.setVisibility(View.VISIBLE);

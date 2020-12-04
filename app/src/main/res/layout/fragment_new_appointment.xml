@@ -37,10 +37,10 @@
                 android:visibility="gone"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
                 android:id="@+id/rv_newappointment"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"/>
+                android:layout_margin="5dp" />
 
         </LinearLayout>
     </ScrollView>
@@ -50,7 +50,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="80dp"
         android:orientation="vertical">
 
         <Button
@@ -58,6 +57,7 @@
             android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/green_bgm_border"
             android:fontFamily="@font/futuramediumbt"
             android:gravity="center"
@@ -79,7 +79,7 @@
             android:text="@string/filter"
             android:textAllCaps="false"
             android:textColor="@color/black"
-            android:visibility="invisible" />
+            android:visibility="gone" />
 
     </LinearLayout>
 

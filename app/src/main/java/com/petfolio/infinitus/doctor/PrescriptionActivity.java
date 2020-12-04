@@ -3,6 +3,7 @@ package com.petfolio.infinitus.doctor;
 import android.animation.LayoutTransition;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,7 +23,11 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.requestpojo.AppoinmentCompleteRequest;
+import com.petfolio.infinitus.requestpojo.DoctorCheckStatusRequest;
 import com.petfolio.infinitus.requestpojo.PrescriptionCreateRequest;
+import com.petfolio.infinitus.responsepojo.AppoinmentCompleteResponse;
+import com.petfolio.infinitus.responsepojo.DoctorCheckStatusResponse;
 import com.petfolio.infinitus.responsepojo.PrescriptionCreateResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -75,6 +80,8 @@ public class PrescriptionActivity extends AppCompatActivity {
     private String Date = "";
     private String Doctor_Email_id = "";
     private String Patient_Email_id = "";
+    private String userid;
+    private String appoinmentid;
 
 
     @Override
@@ -97,20 +104,12 @@ public class PrescriptionActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            Appointment_ID = extras.getString("id");
-            Doctor_Name = extras.getString("doctorname");
-            Doctor_Image = extras.getString("doctorimage");
-            Doctor_Email_id = extras.getString("doctoremailid");
-            Doctor_ID  = extras.getString("doctorid");
-            Patient_Name = extras.getString("patientname");
-            Patient_Image = extras.getString("patientimage");
-            Patient_Email_id = extras.getString("patientemailid");
-            Patient_ID = extras.getString("patientid");
-            Treatment_Done_by = extras.getString("Bookingfor");
-            Family_ID = extras.getString("Familyid");
-            Family_Name = extras.getString("Familyname");
 
-            Log.w(TAG,"appointmentid :"+" "+Appointment_ID);
+            appoinmentid = extras.getString("id");
+            userid = extras.getString("userid");
+
+
+            Log.w(TAG,"userid :"+" "+userid);
 
         }
 
@@ -268,7 +267,8 @@ public class PrescriptionActivity extends AppCompatActivity {
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-
+                        Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
+                        appoinmentCompleteResponseCall();
 
                     }
                     else{
@@ -311,7 +311,7 @@ public class PrescriptionActivity extends AppCompatActivity {
         prescriptionCreateRequest.setPDF_format("");
         prescriptionCreateRequest.setPrescription_type("");
         prescriptionCreateRequest.setPrescription_img("");
-        prescriptionCreateRequest.setUser_id(Patient_Name);
+        prescriptionCreateRequest.setUser_id(userid);
         prescriptionCreateRequest.setPrescription_data(prescriptionDataList);
         prescriptionCreateRequest.setTreatment_Done_by(Treatment_Done_by);
         Log.w(TAG,"prescriptionCreateRequest"+ "--->" + new Gson().toJson(prescriptionCreateRequest));
@@ -359,5 +359,65 @@ public class PrescriptionActivity extends AppCompatActivity {
         intent.putExtra("Familyname", Family_Name);
         startActivity(intent);
         finish();*/
+    }
+
+
+    private void appoinmentCompleteResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<AppoinmentCompleteResponse> call = apiInterface.appoinmentCompleteResponseCall(RestUtils.getContentType(), appoinmentCompleteRequest());
+        Log.w(TAG,"AppoinmentCompleteResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<AppoinmentCompleteResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<AppoinmentCompleteResponse> call, @NonNull Response<AppoinmentCompleteResponse> response) {
+
+                Log.w(TAG,"AppoinmentCompleteResponse"+ "--->" + new Gson().toJson(response.body()));
+
+                avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        startActivity(new Intent(PrescriptionActivity.this,DoctorDashboardActivity.class));
+
+
+
+
+
+                    }
+                    else{
+                        //showErrorLoading(response.body().getMessage());
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<AppoinmentCompleteResponse> call, @NonNull Throwable t) {
+
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"AppoinmentCompleteResponseflr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    private AppoinmentCompleteRequest appoinmentCompleteRequest() {
+        /*
+         * _id : 5fc639ea72fc42044bfa1683
+         * completed_at : 23-10-2000 10 : 00 AM
+         * appoinment_status : Completed
+         */
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
+
+        AppoinmentCompleteRequest appoinmentCompleteRequest = new AppoinmentCompleteRequest();
+        appoinmentCompleteRequest.set_id(appoinmentid);
+        appoinmentCompleteRequest.setCompleted_at(currentDateandTime);
+        appoinmentCompleteRequest.setAppoinment_status("Completed");
+        Log.w(TAG,"appoinmentCompleteRequest"+ "--->" + new Gson().toJson(appoinmentCompleteRequest));
+        return appoinmentCompleteRequest;
     }
 }

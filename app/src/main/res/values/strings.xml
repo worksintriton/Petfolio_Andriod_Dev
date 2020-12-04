@@ -155,5 +155,22 @@
     <string name="prescriptiondetails">Prescription Details</string>
     <string name="prescriptionmsg">Note: Pls use the + button to submit the entered details.</string>
 
+    <string name="cancelappointment">Are you sure you want to cancel this appoinment?</string>
 
+
+    <string name="profile">Profile</string>
+    <string name="edit_no_underline">Edit</string>
+    <string name="user_name">User Name</string>
+    <string name="dummy_gmail_com">dummy@gmail.com</string>
+    <string name="phn_num">9876543210</string>
+    <string name="pets">Pets</string>
+    <string name="subscribe">Subscribe</string>
+    <string name="change_password">Change Password</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="manage_address">Manage Address</string>
+
+    <string name="upload_image">Upload Image</string>
+
+    <string name="add_a_new_address">Add a new address</string>
+    <string name="address_info">TESSDGD dgsdg dgasdg saddagdasg dsgasdg sadgdsgds SGADSGD</string>
 </resources>

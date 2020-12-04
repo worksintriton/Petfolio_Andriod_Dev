@@ -1,5 +1,6 @@
 package com.petfolio.infinitus.petlover;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
@@ -32,6 +33,8 @@ import com.petfolio.infinitus.activity.LoginActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 
 
+import java.util.HashMap;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -49,7 +52,7 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
     ImageView drawerImg;
     CircleImageView nav_header_imageView;
     FrameLayout frameLayout;
-    TextView header_title, nav_header_textView;
+    TextView nav_header_profilename, nav_header_emailid,nav_header_edit;
     //SessionManager session;
     String name, image_url, phoneNo;
     private Integer jockey_id;
@@ -83,6 +86,7 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
 
 
+    @SuppressLint("InflateParams")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,13 +95,14 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
         inflater = LayoutInflater.from(this);
         view = inflater.inflate(R.layout.navigation_drawer_layout, null);
-       /* session = new SessionManager(getApplicationContext());
-        HashMap<String, String> user = session.getUserDetails();
-        name = user.get(SessionManager.KEY_USER_NAME);
-        user_mode = user.get(SessionManager.KEY_USER_MODE);
+        session = new SessionManager(getApplicationContext());
+        HashMap<String, String> user = session.getProfileDetails();
+        name = user.get(SessionManager.KEY_FIRST_NAME);
+        emailid = user.get(SessionManager.KEY_EMAIL_ID);
         phoneNo = user.get(SessionManager.KEY_MOBILE);
-        image_url = session.getImagePath();
-        jockey_id = Integer.valueOf(user.get(SessionManager.JOCKEY_ID));*/
+       String userid = user.get(SessionManager.KEY_ID);
+       Log.w(TAG,"userid : "+userid);
+
 
 
 
@@ -189,9 +194,28 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
         drawerLayout = view.findViewById(R.id.drawer_layout);
         header = navigationView.getHeaderView(0);
         nav_header_imageView = header.findViewById(R.id.nav_header_imageView);
-        nav_header_textView = header.findViewById(R.id.nav_header_emailid);
+        nav_header_emailid = header.findViewById(R.id.nav_header_emailid);
+        nav_header_profilename = header.findViewById(R.id.nav_header_profilename);
+        nav_header_edit = header.findViewById(R.id.nav_header_edit);
         // Glide.with(this).load(image_url).into(nav_header_imageView);
-        nav_header_textView.setText(name);
+
+        nav_header_emailid.setText(emailid);
+        nav_header_profilename.setText(name);
+
+        LinearLayout llheader = header.findViewById(R.id.llheader);
+        llheader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class));
+            }
+        });
+
+        nav_header_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),PetLoverEditProfileActivity.class));
+            }
+        });
 
 
        /* if (!image_url.isEmpty()) {

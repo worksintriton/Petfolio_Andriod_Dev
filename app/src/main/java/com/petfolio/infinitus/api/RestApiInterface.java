@@ -1,6 +1,8 @@
 package com.petfolio.infinitus.api;
 
 import com.petfolio.infinitus.requestpojo.AddYourPetRequest;
+import com.petfolio.infinitus.requestpojo.AppoinmentCancelledRequest;
+import com.petfolio.infinitus.requestpojo.AppoinmentCompleteRequest;
 import com.petfolio.infinitus.requestpojo.AppointmentCheckRequest;
 import com.petfolio.infinitus.requestpojo.BreedTypeRequest;
 import com.petfolio.infinitus.requestpojo.CreateHolidayRequest;
@@ -15,6 +17,7 @@ import com.petfolio.infinitus.requestpojo.FBTokenUpdateRequest;
 import com.petfolio.infinitus.requestpojo.HolidayDeleteRequest;
 import com.petfolio.infinitus.requestpojo.HolidayListRequest;
 import com.petfolio.infinitus.requestpojo.LocationAddRequest;
+import com.petfolio.infinitus.requestpojo.LocationListAddressRequest;
 import com.petfolio.infinitus.requestpojo.LoginRequest;
 import com.petfolio.infinitus.requestpojo.PetAppointmentCreateRequest;
 import com.petfolio.infinitus.requestpojo.PetDetailsRequest;
@@ -26,6 +29,8 @@ import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
 import com.petfolio.infinitus.requestpojo.SignupRequest;
 import com.petfolio.infinitus.requestpojo.UserStatusUpdateRequest;
 import com.petfolio.infinitus.responsepojo.AddYourPetResponse;
+import com.petfolio.infinitus.responsepojo.AppoinmentCancelledResponse;
+import com.petfolio.infinitus.responsepojo.AppoinmentCompleteResponse;
 import com.petfolio.infinitus.responsepojo.AppointmentCheckResponse;
 import com.petfolio.infinitus.responsepojo.BreedTypeResponse;
 import com.petfolio.infinitus.responsepojo.CreateHolidayResponse;
@@ -44,6 +49,7 @@ import com.petfolio.infinitus.responsepojo.FileUploadResponse;
 import com.petfolio.infinitus.responsepojo.HolidayDeleteResponse;
 import com.petfolio.infinitus.responsepojo.HolidayListResponse;
 import com.petfolio.infinitus.responsepojo.LocationAddResponse;
+import com.petfolio.infinitus.responsepojo.LocationListAddressResponse;
 import com.petfolio.infinitus.responsepojo.LoginResponse;
 import com.petfolio.infinitus.responsepojo.PetAppointmentCreateResponse;
 import com.petfolio.infinitus.responsepojo.PetDetailsResponse;
@@ -208,5 +214,17 @@ public interface RestApiInterface {
     /*Prescriptoin Create*/
     @POST("prescription/create")
     Call<PrescriptionCreateResponse>prescriptionCreateRequestCall(@Header("Content-Type") String type, @Body PrescriptionCreateRequest prescriptionCreateRequest);
+
+    /*Update Appointment Status complete*/
+    @POST("appointments/edit")
+    Call<AppoinmentCompleteResponse>appoinmentCompleteResponseCall(@Header("Content-Type") String type, @Body AppoinmentCompleteRequest appoinmentCompleteRequest );
+
+    /*Update Appointment Status cancel*/
+    @POST("appointments/edit")
+    Call<AppoinmentCancelledResponse>appoinmentCancelledResponseCall(@Header("Content-Type") String type, @Body AppoinmentCancelledRequest appoinmentCancelledRequest );
+
+    /*Listing Location by ID*/
+    @POST("locationdetails/mobile/getlist_id")
+    Call<LocationListAddressResponse>locationListAddressResponseCall(@Header("Content-Type") String type, @Body LocationListAddressRequest locationListAddressRequest  );
 
 }

@@ -20,55 +20,61 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/profile" />
-
-        <TextView
-            android:id="@+id/nav_header_profilename"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:fontFamily="@font/futuramediumbt"
-            android:gravity="center"
-            android:text="profile name"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#444444"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/nav_header_profilename"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="@font/futuramediumbt"
+                android:gravity="center"
+                android:text="profile name"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#444444"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/nav_header_emailid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="@font/futuramediumbt"
+                android:gravity="center"
+                android:text="Email"
+                android:textColor="#444444"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"/>
+        </LinearLayout>
+
+
 
 
 
 
 
     </LinearLayout>
-        <TextView
-            android:id="@+id/nav_header_emailid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/futuramediumbt"
-            android:gravity="center"
-            android:text="Email"
-            android:textColor="#444444"
-            android:textSize="18sp"
-            android:textStyle="bold" />
 
 
-        <TextView
-            android:id="@+id/nav_header_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/futuramediumbt"
-            android:gravity="center"
-            android:text="@string/edit"
-            android:textColor="#60BD78"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/nav_header_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/futuramediumbt"
+        android:gravity="center"
+        android:text="@string/edit"
+        android:textColor="#60BD78"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
 
 

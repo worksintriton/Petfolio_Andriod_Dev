@@ -13,7 +13,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -37,15 +38,14 @@
         android:allowBackup="true"
         android:icon="@drawable/app_logo"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@drawable/app_logo"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,UnusedAttribute"
-        tools:replace="android:theme"
-        android:requestLegacyExternalStorage="true">
-
+        tools:replace="android:theme">
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -62,7 +62,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.VerifyOtpActivity"
             android:screenOrientation="portrait"
@@ -83,8 +82,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-
-
         <activity
             android:name=".petlover.AddYourPetActivity"
             android:screenOrientation="portrait"
@@ -100,23 +97,48 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".petlover.BookAppointmentActivity"
+        <activity
+            android:name=".petlover.BookAppointmentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".petlover.DoctorClinicDetailsActivity"
+        <activity
+            android:name=".petlover.DoctorClinicDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".petlover.PetAppointment_Doctor_Date_Time_Activity"
+        <activity
+            android:name=".petlover.PetAppointment_Doctor_Date_Time_Activity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".petlover.PetMyappointmentsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".petlover.PetLoverEditProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".petlover.PetLoverProfileScreenActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".petlover.PetLoverEditProfileImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
 
-        <activity android:name=".petlover.PetMyappointmentsActivity"
+        <activity android:name=".petlover.ManageAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
+
+
 
         <activity
             android:name=".activity.location.PickUpLocationAllowActivity"
@@ -138,8 +160,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-
-
         <activity
             android:name=".doctor.DoctorBusinessInfoActivity"
             android:screenOrientation="portrait"
@@ -148,22 +168,28 @@
         <activity
             android:name=".doctor.DoctorMyCalendarTimeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Design.Light.NoActionBar" />
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".doctor.Doctor_Holiday_Activity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Design.Light.NoActionBar" />
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".doctor.DoctorMyCalendarActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Design.Light.NoActionBar" />
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".doctor.DoctorDashboardActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Design.Light.NoActionBar" />
-
-
-
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".doctor.PrescriptionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
 
         <receiver
             android:name=".receiver.SmsBroadcastListener"
@@ -172,8 +198,6 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
-
-
 
         <service
             android:name=".fcm.MyFirebaseMessagingService"
