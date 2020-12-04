@@ -35,12 +35,14 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
     DoctorNewAppointmentResponse.DataBean currentItem;
 
     private OnAppointmentCancel onAppointmentCancel;
+    private int size;
 
 
 
-    public DoctorNewAppointmentAdapter(Context context, List<DoctorNewAppointmentResponse.DataBean> newAppointmentResponseList, RecyclerView inbox_list,OnAppointmentCancel onAppointmentCancel) {
+    public DoctorNewAppointmentAdapter(Context context, List<DoctorNewAppointmentResponse.DataBean> newAppointmentResponseList, RecyclerView inbox_list,int size,OnAppointmentCancel onAppointmentCancel) {
         this.newAppointmentResponseList = newAppointmentResponseList;
         this.context = context;
+        this.size = size;
         this.onAppointmentCancel = onAppointmentCancel;
 
 
@@ -140,7 +142,8 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
 
     @Override
     public int getItemCount() {
-        return newAppointmentResponseList.size();
+        return Math.min(newAppointmentResponseList.size(), size);
+
     }
 
 

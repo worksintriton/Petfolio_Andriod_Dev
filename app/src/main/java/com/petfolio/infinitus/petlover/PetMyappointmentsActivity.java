@@ -1,5 +1,6 @@
 package com.petfolio.infinitus.petlover;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -85,8 +86,8 @@ public class PetMyappointmentsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-       /* Intent i = new Intent(PatientMyAppointmentsActivity.this, PatientDashboardActivity.class);
-        startActivity(i);*/
+        Intent i = new Intent(PetMyappointmentsActivity.this, PetLoverDashboardActivity.class);
+        startActivity(i);
         finish();
     }
 

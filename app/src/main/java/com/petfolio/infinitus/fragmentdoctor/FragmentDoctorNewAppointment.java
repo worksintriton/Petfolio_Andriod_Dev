@@ -57,8 +57,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentNewAppointment extends Fragment implements OnAppointmentCancel {
-    private String TAG = "FragmentNewAppointment";
+public class FragmentDoctorNewAppointment extends Fragment implements OnAppointmentCancel, View.OnClickListener {
+    private String TAG = "FragmentDoctorNewAppointment";
 
 
 
@@ -85,7 +85,7 @@ public class FragmentNewAppointment extends Fragment implements OnAppointmentCan
     private Dialog dialog;
 
 
-    public FragmentNewAppointment() {
+    public FragmentDoctorNewAppointment() {
 
     }
 
@@ -95,13 +95,14 @@ public class FragmentNewAppointment extends Fragment implements OnAppointmentCan
         Log.w(TAG,"onCreateView");
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        View view = inflater.inflate(R.layout.fragment_new_appointment, container, false);
+        View view = inflater.inflate(R.layout.fragment_doctor_new_appointment, container, false);
 
         ButterKnife.bind(this, view);
         mContext = getActivity();
 
         avi_indicator.setVisibility(View.GONE);
         btn_load_more.setVisibility(View.GONE);
+        btn_load_more.setOnClickListener(this);
 
         session = new SessionManager(getContext());
         HashMap<String, String> user = session.getProfileDetails();
@@ -146,10 +147,15 @@ public class FragmentNewAppointment extends Fragment implements OnAppointmentCan
                            txt_no_records.setText("No new appointments");
                            rv_newappointment.setVisibility(View.GONE);
                            btn_load_more.setVisibility(View.GONE);
-                       }else{
+                       }
+                       else{
                            txt_no_records.setVisibility(View.GONE);
                            rv_newappointment.setVisibility(View.VISIBLE);
-                           btn_load_more.setVisibility(View.VISIBLE);
+                           if(newAppointmentResponseList.size()>3){
+                               btn_load_more.setVisibility(View.VISIBLE);
+                           }else{
+                               btn_load_more.setVisibility(View.GONE);
+                           }
                            setView();
                        }
 
@@ -183,7 +189,16 @@ public class FragmentNewAppointment extends Fragment implements OnAppointmentCan
     private void setView() {
         rv_newappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_newappointment.setItemAnimator(new DefaultItemAnimator());
-        DoctorNewAppointmentAdapter doctorNewAppointmentAdapter = new DoctorNewAppointmentAdapter(getContext(), newAppointmentResponseList, rv_newappointment,this);
+        int size = 3;
+        DoctorNewAppointmentAdapter doctorNewAppointmentAdapter = new DoctorNewAppointmentAdapter(getContext(), newAppointmentResponseList, rv_newappointment,size,this);
+        rv_newappointment.setAdapter(doctorNewAppointmentAdapter);
+
+    }
+    private void setViewLoadMore() {
+        rv_newappointment.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv_newappointment.setItemAnimator(new DefaultItemAnimator());
+        int size = newAppointmentResponseList.size();
+        DoctorNewAppointmentAdapter doctorNewAppointmentAdapter = new DoctorNewAppointmentAdapter(getContext(), newAppointmentResponseList, rv_newappointment,size,this);
         rv_newappointment.setAdapter(doctorNewAppointmentAdapter);
 
     }
@@ -240,8 +255,6 @@ public class FragmentNewAppointment extends Fragment implements OnAppointmentCan
 
 
     }
-
-
     private void appoinmentCancelledResponseCall(String id) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -303,5 +316,14 @@ public class FragmentNewAppointment extends Fragment implements OnAppointmentCan
         appoinmentCancelledRequest.setAppoinment_status("Missed");
         Log.w(TAG,"appoinmentCancelledRequest"+ "--->" + new Gson().toJson(appoinmentCancelledRequest));
         return appoinmentCancelledRequest;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_load_more:
+                setViewLoadMore();
+                break;
+        }
     }
 }

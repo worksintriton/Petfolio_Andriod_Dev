@@ -92,7 +92,7 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
     }
 
     private void gotoManageAddress() {
-        startActivity(new Intent(getApplicationContext(),ManageAddressActivity.class));
+        startActivity(new Intent(PetLoverProfileScreenActivity.this,ManageAddressActivity.class));
     }
 
     private void confirmLogoutDialog(){

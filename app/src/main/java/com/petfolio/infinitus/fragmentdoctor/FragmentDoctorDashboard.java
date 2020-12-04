@@ -10,9 +10,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -24,7 +22,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
@@ -112,9 +109,9 @@ public class FragmentDoctorDashboard extends Fragment  {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager(),3);
-        adapter.addFragment(new FragmentNewAppointment(), "New");
-        adapter.addFragment(new FragmentCompletedAppointment(), "Completed");
-        adapter.addFragment(new FragmentMissedAppointment(), "Missed");
+        adapter.addFragment(new FragmentDoctorNewAppointment(), "New");
+        adapter.addFragment(new FragmentDoctorCompletedAppointment(), "Completed");
+        adapter.addFragment(new FragmentDoctorMissedAppointment(), "Missed");
         viewPager.setAdapter(adapter);
     }
 

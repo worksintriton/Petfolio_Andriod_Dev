@@ -201,4 +201,5 @@
     <string name="add_prescription">Add Prescription</string>
     <string name="add_vaccination">Add Vaccination</string>
     <string name="service_name">Service Name</string>
+    <string name="locationnickname">Location Nick name</string>
 </resources>

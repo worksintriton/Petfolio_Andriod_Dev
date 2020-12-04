@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,14 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.adapter.DoctorCompletedAppointmentAdapter;
-import com.petfolio.infinitus.adapter.PetCompletedAppointmentAdapter;
 import com.petfolio.infinitus.adapter.PetMissedAppointmentAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.requestpojo.DoctorNewAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverAppointmentRequest;
-import com.petfolio.infinitus.responsepojo.DoctorCompletedAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -42,7 +39,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentPetMissedAppointment extends Fragment {
+public class FragmentPetMissedAppointment extends Fragment implements View.OnClickListener {
     private String TAG = "FragmentPetMissedAppointment";
 
     @BindView(R.id.avi_indicator)
@@ -53,6 +50,14 @@ public class FragmentPetMissedAppointment extends Fragment {
 
     @BindView(R.id.rv_missedappointment)
     RecyclerView rv_missedappointment;
+
+
+    @BindView(R.id.btn_load_more)
+    Button btn_load_more;
+
+    @BindView(R.id.btn_filter)
+    Button btn_filter;
+
 
 
 
@@ -75,12 +80,17 @@ public class FragmentPetMissedAppointment extends Fragment {
         Log.w(TAG,"onCreateView");
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        View view = inflater.inflate(R.layout.fragment_missed, container, false);
+        View view = inflater.inflate(R.layout.fragment_pet_missed, container, false);
 
         ButterKnife.bind(this, view);
         mContext = getActivity();
 
         avi_indicator.setVisibility(View.GONE);
+        btn_load_more.setVisibility(View.GONE);
+        btn_filter.setVisibility(View.GONE);
+
+        btn_load_more.setOnClickListener(this);
+
 
         session = new SessionManager(getContext());
         HashMap<String, String> user = session.getProfileDetails();
@@ -121,9 +131,15 @@ public class FragmentPetMissedAppointment extends Fragment {
                             txt_no_records.setVisibility(View.VISIBLE);
                             txt_no_records.setText("No missed appointments");
                             rv_missedappointment.setVisibility(View.GONE);
+                            btn_load_more.setVisibility(View.GONE);
                         }else{
                             txt_no_records.setVisibility(View.GONE);
                             rv_missedappointment.setVisibility(View.VISIBLE);
+                            if(missedAppointmentResponseList.size()>3){
+                                btn_load_more.setVisibility(View.VISIBLE);
+                            }else{
+                                btn_load_more.setVisibility(View.GONE);
+                            }
                             setView();
                         }
 
@@ -152,8 +168,26 @@ public class FragmentPetMissedAppointment extends Fragment {
     private void setView() {
         rv_missedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_missedappointment.setItemAnimator(new DefaultItemAnimator());
-        PetMissedAppointmentAdapter petMissedAppointmentAdapter = new PetMissedAppointmentAdapter(getContext(), missedAppointmentResponseList, rv_missedappointment);
+        int size =3;
+        PetMissedAppointmentAdapter petMissedAppointmentAdapter = new PetMissedAppointmentAdapter(getContext(), missedAppointmentResponseList, rv_missedappointment,size);
         rv_missedappointment.setAdapter(petMissedAppointmentAdapter);
 
+    }
+    private void setViewLoadMore() {
+        rv_missedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv_missedappointment.setItemAnimator(new DefaultItemAnimator());
+        int size = missedAppointmentResponseList.size();
+        PetMissedAppointmentAdapter petMissedAppointmentAdapter = new PetMissedAppointmentAdapter(getContext(), missedAppointmentResponseList, rv_missedappointment,size);
+        rv_missedappointment.setAdapter(petMissedAppointmentAdapter);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_load_more:
+                setViewLoadMore();
+                break;
+        }
     }
 }

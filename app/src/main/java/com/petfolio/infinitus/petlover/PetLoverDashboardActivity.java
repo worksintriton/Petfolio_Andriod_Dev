@@ -19,7 +19,7 @@ import android.view.View;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.fragmentpetlover.HomeFragment;
+import com.petfolio.infinitus.fragmentpetlover.PetHomeFragment;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.Serializable;
@@ -39,7 +39,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
 
     private String TAG = "PetLoverDashboardActivity";
 
-    final Fragment homeFragment = new HomeFragment();
+    final Fragment homeFragment = new PetHomeFragment();
     /*final Fragment searchFragment = new SearchFragment();
     final Fragment myVehicleFragment = new MyVehicleFragment();
     final Fragment cartFragment = new CartFragment();
@@ -80,7 +80,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
             if(tag.equalsIgnoreCase("1")){
                 active = homeFragment;
                 bottom_navigation_view.setSelectedItemId(R.id.home);
-                loadFragment(new HomeFragment());
+                loadFragment(new PetHomeFragment());
             }else if(tag.equalsIgnoreCase("2")){
                 //active = searchFragment;
                 bottom_navigation_view.setSelectedItemId(R.id.search);
@@ -185,7 +185,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
                 bottom_navigation_view.setSelectedItemId(R.id.home);
                 // load fragment
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_container,new HomeFragment());
+                transaction.replace(R.id.main_container,new PetHomeFragment());
                 transaction.commit();
             }
 
@@ -194,7 +194,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
             bottom_navigation_view.setSelectedItemId(R.id.home);
             // load fragment
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.main_container,new HomeFragment());
+            transaction.replace(R.id.main_container,new PetHomeFragment());
             transaction.commit();
         }
     }
@@ -210,7 +210,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
 
         switch (item.getItemId()) {
                 case R.id.home:
-                replaceFragment(new HomeFragment());
+                replaceFragment(new PetHomeFragment());
                 break;
                 case R.id.search:
                 //replaceFragment(new SearchFragment());

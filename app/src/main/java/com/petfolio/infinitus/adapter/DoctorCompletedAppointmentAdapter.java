@@ -26,13 +26,15 @@ public class DoctorCompletedAppointmentAdapter extends  RecyclerView.Adapter<Rec
     private  String TAG = "DoctorCompletedAppointmentAdapter";
     private List<DoctorCompletedAppointmentResponse.DataBean> completedAppointmentResponseList;
     private Context context;
+    private int size;
 
     DoctorNewAppointmentResponse.DataBean currentItem;
 
 
-    public DoctorCompletedAppointmentAdapter(Context context, List<DoctorCompletedAppointmentResponse.DataBean> completedAppointmentResponseList, RecyclerView inbox_list) {
+    public DoctorCompletedAppointmentAdapter(Context context, List<DoctorCompletedAppointmentResponse.DataBean> completedAppointmentResponseList, RecyclerView inbox_list,int size) {
         this.completedAppointmentResponseList = completedAppointmentResponseList;
         this.context = context;
+        this.size = size;
 
 
     }
@@ -96,72 +98,11 @@ public class DoctorCompletedAppointmentAdapter extends  RecyclerView.Adapter<Rec
 
 
         }
-       /* holder.btn_pastappointment_details_view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(context, DoctorPastAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                i.putExtra("Patientname",pastAppointmentResponseList.get(position).getPatient_Name());
-                i.putExtra("Bookingdate",pastAppointmentResponseList.get(position).getBooking_Date());
-                i.putExtra("Bookingtime",pastAppointmentResponseList.get(position).getBooking_Time());
-                i.putExtra("Doctorname",pastAppointmentResponseList.get(position).getDoctor_Name());
-                i.putExtra("Ailmentdetails",pastAppointmentResponseList.get(position).getProblem_info());
-                i.putExtra("Id",pastAppointmentResponseList.get(position).get_id());
-                i.putExtra("Doctorid",pastAppointmentResponseList.get(position).getDoctor_ID());
-                i.putExtra("Doctorimage",pastAppointmentResponseList.get(position).getDoctor_Image());
-                i.putExtra("Doctoremailid",pastAppointmentResponseList.get(position).getDoctor_EmailId());
-                i.putExtra("Patientemailid",pastAppointmentResponseList.get(position).getPatient_EmailId());
-                i.putExtra("Patientid",pastAppointmentResponseList.get(position).getPatient_ID());
-                i.putExtra("Bookingfor",pastAppointmentResponseList.get(position).getBooking_for());
-                i.putExtra("Familyid",pastAppointmentResponseList.get(position).getFamily_ID());
-                i.putExtra("Familyname",pastAppointmentResponseList.get(position).getFamily_Name());
-                i.putExtra("video",pastAppointmentResponseList.get(position).getCommunication_Video());
-                i.putExtra("chat",pastAppointmentResponseList.get(position).getCommunication_Chat());
-                i.putExtra("patientnoshow",pastAppointmentResponseList.get(position).getAppointment_patient_St());
-                i.putExtra("Documentsattached",pastAppointmentResponseList.get(position).getDoc_attached().toString());
-
-                *//* pastmedications,patientage,patientheight,patientweight,patientgender*//*
-                i.putExtra("pastmedications",pastAppointmentResponseList.get(position).getPassed_Medications());
-                i.putExtra("patientage",String.valueOf(pastAppointmentResponseList.get(position).getPatiend_details().getAge()));
-                i.putExtra("patientheight",pastAppointmentResponseList.get(position).getPatiend_details().getHeight());
-                i.putExtra("patientweight",pastAppointmentResponseList.get(position).getPatiend_details().getWeight());
-                i.putExtra("patientgender",pastAppointmentResponseList.get(position).getPatiend_details().getGender());
-
-
-
-                Log.w(TAG,"ImageList--->"+pastAppointmentResponseList.get(position).getDoc_attached().toString());
-
-
-
-                //  i.putExtra("Documentsattached",pastAppointmentResponseList.get(position).getDoc_attached().get(position));
-                context.startActivity(i);
-
-            }
-        });*/
-
-        /*if(pastAppointmentResponseList.get(position).getCommunication_Chat().equalsIgnoreCase("True")){
-            holder.ivmessgaechat.setVisibility(View.VISIBLE);
-        }else{
-            holder.ivmessgaechat.setVisibility(View.GONE);
-        }
-*/
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     @Override
     public int getItemCount() {
-        return completedAppointmentResponseList.size();
+        return Math.min(completedAppointmentResponseList.size(), size);
     }
 
 

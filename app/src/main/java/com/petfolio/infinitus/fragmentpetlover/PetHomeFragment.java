@@ -90,7 +90,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class HomeFragment extends Fragment implements Serializable, OnMapReadyCallback,
+public class PetHomeFragment extends Fragment implements Serializable, OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener,View.OnClickListener  {
@@ -189,7 +189,7 @@ public class HomeFragment extends Fragment implements Serializable, OnMapReadyCa
 
 
 
-    public HomeFragment() {
+    public PetHomeFragment() {
         // Required empty public constructor
     }
 
@@ -205,7 +205,7 @@ public class HomeFragment extends Fragment implements Serializable, OnMapReadyCa
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.w(TAG,"onCreateView-->");
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home_pet, container, false);
         preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         ButterKnife.bind(this, view);
         mContext = getActivity();

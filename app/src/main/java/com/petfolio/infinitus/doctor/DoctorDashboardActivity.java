@@ -5,40 +5,22 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.api.APIClient;
-import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.fragmentdoctor.FragmentDoctorDashboard;
-import com.petfolio.infinitus.fragmentpetlover.HomeFragment;
-import com.petfolio.infinitus.petlover.PetAppointment_Doctor_Date_Time_Activity;
-import com.petfolio.infinitus.requestpojo.DoctorCheckStatusRequest;
-import com.petfolio.infinitus.responsepojo.DoctorCheckStatusResponse;
+import com.petfolio.infinitus.fragmentpetlover.PetHomeFragment;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
-import com.petfolio.infinitus.utils.ConnectionDetector;
-import com.petfolio.infinitus.utils.RestUtils;
-import com.wang.avi.AVLoadingIndicatorView;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements Serializable, BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -90,7 +72,7 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
             if(tag.equalsIgnoreCase("1")){
                 active = homeFragment;
                 bottom_navigation_view.setSelectedItemId(R.id.home);
-                loadFragment(new HomeFragment());
+                loadFragment(new PetHomeFragment());
             }else if(tag.equalsIgnoreCase("2")){
                 //active = searchFragment;
                 bottom_navigation_view.setSelectedItemId(R.id.search);
@@ -196,7 +178,7 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
                 bottom_navigation_view.setSelectedItemId(R.id.home);
                 // load fragment
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_container,new HomeFragment());
+                transaction.replace(R.id.main_container,new PetHomeFragment());
                 transaction.commit();
             }
 
@@ -205,7 +187,7 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
             bottom_navigation_view.setSelectedItemId(R.id.home);
             // load fragment
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.main_container,new HomeFragment());
+            transaction.replace(R.id.main_container,new PetHomeFragment());
             transaction.commit();
         }
     }
@@ -221,7 +203,7 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
 
         switch (item.getItemId()) {
             case R.id.home:
-                replaceFragment(new HomeFragment());
+                replaceFragment(new PetHomeFragment());
                 break;
             case R.id.search:
                 //replaceFragment(new SearchFragment());

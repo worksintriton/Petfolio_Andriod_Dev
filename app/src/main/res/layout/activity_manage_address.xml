@@ -36,8 +36,8 @@
                 android:id="@+id/txt_toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/manage_address"
                 android:textColor="@color/black"
@@ -118,9 +118,9 @@
                 android:visibility="gone" />
 
             <TextView
-                android:id="@+id/txt_usrname"
+                android:id="@+id/txt_savedaddress"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="4dp"
                 android:layout_marginTop="5dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/futuramediumbt"

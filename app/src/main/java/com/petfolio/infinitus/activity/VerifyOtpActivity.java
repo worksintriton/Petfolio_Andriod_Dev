@@ -121,9 +121,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
 
 
         try{
-
             FirebaseMessaging.getInstance().setAutoInitEnabled(true);
-
             FirebaseMessaging.getInstance().getToken()
                     .addOnCompleteListener(new OnCompleteListener<String>() {
                         @Override
