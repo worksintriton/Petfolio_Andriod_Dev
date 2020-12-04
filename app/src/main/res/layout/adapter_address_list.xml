@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/light_green_bgm"
+    android:padding="10dp">
+
+
+    <TextView
+        android:id="@+id/txt_usrname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/futuramediumbt"
+        android:maxLines="1"
+        android:text="@string/user_name"
+        android:textColor="@color/new_txt_color"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/img_settings"
+        tools:ignore="ContentDescription"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/options"
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:id="@+id/txt_address"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_usrname"
+        android:layout_alignStart="@id/txt_usrname"
+        android:layout_alignLeft="@id/txt_usrname"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/futuramediumbt"
+        android:lineSpacingExtra="8sp"
+        android:maxLines="3"
+        android:text="@string/address_info"
+        android:textColor="@color/new_txt_color"
+        android:textSize="14sp" />
+
+</RelativeLayout>
