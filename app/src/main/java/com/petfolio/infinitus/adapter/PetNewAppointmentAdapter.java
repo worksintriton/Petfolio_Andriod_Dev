@@ -3,12 +3,14 @@ package com.petfolio.infinitus.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -74,6 +76,13 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
             holder.txt_service_cost.setText(" Service Cost : "+newAppointmentResponseList.get(0).getService_amount());
         }
 
+        if(newAppointmentResponseList.get(position).getAppointment_types() != null && newAppointmentResponseList.get(position).getAppointment_types().equalsIgnoreCase("Emergency")){
+        holder.img_emergency_appointment.setVisibility(View.VISIBLE);
+        }else{
+            holder.img_emergency_appointment.setVisibility(View.GONE);
+
+        }
+
 
 
 
@@ -123,7 +132,7 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_clinicname,txt_petname,txt_service_info,txt_service_cost;
-        public ImageView img_clinic_imge;
+        public ImageView img_clinic_imge,img_emergency_appointment;
         public Button btn_cancel;
 
 
@@ -135,8 +144,9 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
             txt_petname = itemView.findViewById(R.id.txt_petname);
             txt_service_info = itemView.findViewById(R.id.txt_service_info);
             txt_service_cost = itemView.findViewById(R.id.txt_service_cost);
-
             btn_cancel = itemView.findViewById(R.id.btn_cancel);
+            img_emergency_appointment = itemView.findViewById(R.id.img_emergency_appointment);
+            img_emergency_appointment.setVisibility(View.GONE);
 
 
         }

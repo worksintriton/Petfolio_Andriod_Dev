@@ -98,6 +98,7 @@ public class PetLoverDoctorAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
                 intent.putExtra("doctorname",doctorDetailsResponseList.get(position).getDoctor_name());
                 intent.putExtra("reviewcount",doctorDetailsResponseList.get(position).getReview_count());
                 intent.putExtra("starcount",doctorDetailsResponseList.get(position).getStar_count());
+                intent.putExtra("distance",doctorDetailsResponseList.get(position).getDistance());
                 Log.w(TAG,"doctorid :"+doctorDetailsResponseList.get(position).get_id());
                 context.startActivity(intent);
                 }

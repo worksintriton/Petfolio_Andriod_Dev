@@ -79,15 +79,10 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
     LocationRequest mLocationRequest;
     private GoogleMap mMap;
 
-    @BindView(R.id.toolbar_title)
-    TextView toolbar_title;
-
-
-
     @BindView(R.id.btn_setpickuppoint)
     Button btn_setpickuppoint;
 
-    @BindView(R.id.imgBack)
+    @BindView(R.id.img_back)
     ImageView imgBack;
 
     @BindView(R.id.imgLocationPinUp)
@@ -114,8 +109,7 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
 
     String CityName, AddressLine ,PostalCode;
 
-    @BindView(R.id.bottom_navigation_view)
-    BottomNavigationView bottom_navigation_view;
+
 
 
 

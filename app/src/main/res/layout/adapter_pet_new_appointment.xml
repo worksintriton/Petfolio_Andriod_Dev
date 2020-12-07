@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_new"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cdvw_newappointment"
@@ -13,10 +15,20 @@
         app:cardCornerRadius="10dp"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true">
+        <ImageView
+            android:id="@+id/img_emergency_appointment"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/emergency_call"
+            android:layout_gravity="end"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/rl_appointmentroot">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_pet"
@@ -46,6 +58,7 @@
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
+
 
             <TextView
                 android:id="@+id/txt_clinicname"

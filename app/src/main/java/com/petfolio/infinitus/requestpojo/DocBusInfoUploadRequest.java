@@ -24,6 +24,7 @@ public class DocBusInfoUploadRequest {
      * profile_status : 0
      * profile_verification_status : Not verified
      * date_and_time : 23-10-2020 11:10 AM
+     * mobile_type : Android
      */
 
     private String user_id;

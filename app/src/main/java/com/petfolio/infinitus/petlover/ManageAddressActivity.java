@@ -153,7 +153,6 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
         Log.w(TAG,"locationListAddressRequest"+ "--->" + new Gson().toJson(locationListAddressRequest));
         return locationListAddressRequest;
     }
-
     private void setView() {
         rv_adddress_list.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rv_adddress_list.setItemAnimator(new DefaultItemAnimator());

@@ -68,6 +68,9 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
     @BindView(R.id.txt_star_rating)
     TextView txt_star_rating;
 
+    @BindView(R.id.txt_distance)
+    TextView txt_distance;
+
     @BindView(R.id.txt_dr_desc)
     TextView txt_dr_desc;
 
@@ -91,6 +94,8 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
     private Integer reviewcount;
     private Integer starcount;
     private String clinicname;
+    private String distance;
+    private String ClinicLocationname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +110,7 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
         if (extras != null) {
             doctorid = extras.getString("doctorid");
             doctorname = extras.getString("doctorname");
+            distance = extras.getString("distance");
 
 
             Log.w(TAG,"Bundle "+" doctorid : "+doctorid);
@@ -162,6 +168,9 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
                         reviewcount  = response.body().getData().getReview_count();
                         starcount =  response.body().getData().getStar_count();
 
+                        ClinicLocationname = response.body().getData().getClinic_loc();
+
+
                         if(clinicname != null){
                             txt_clinicname.setText(clinicname);
                         }
@@ -171,8 +180,13 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
                         if(reviewcount != null){
                             txt_review_count.setText(reviewcount+"");
                         }
-                        if(starcount != null){
+                        if(starcount != null ){
                             txt_star_rating.setText(starcount+"");
+                        }
+
+
+                        if(distance != null && ClinicLocationname != null){
+                            txt_distance.setText(ClinicLocationname+", "+distance+" KM.");
                         }
 
 
@@ -183,7 +197,7 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
 
                             for (int i = 0; i < doctorclinicdetailsResponseList.size(); i++) {
                                 doctorclinicdetailsResponseList.get(i).getClinic_pic();
-                                Log.w(TAG, "RES" + " " +  doctorclinicdetailsResponseList.get(i).getClinic_pic());
+                                Log.w(TAG, "RES" + ", " +  doctorclinicdetailsResponseList.get(i).getClinic_pic());
                             }
 
 

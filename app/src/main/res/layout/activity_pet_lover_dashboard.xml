@@ -24,11 +24,13 @@
         app:itemIconSize="20dp"
         app:menu="@menu/bottom_navigation"
         android:background="@drawable/rounded_curve"
-        android:layout_margin="20dp"
         app:itemBackground="@drawable/selected_state"
         app:itemIconTint="@color/selector"
         app:itemTextColor="@color/selector"
         app:labelVisibilityMode="labeled"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
         />
 
 

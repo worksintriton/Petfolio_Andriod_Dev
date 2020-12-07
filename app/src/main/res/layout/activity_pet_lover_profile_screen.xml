@@ -4,14 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/avi_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        app:indicatorColor="@color/green"
-        app:indicatorName="LineSpinFadeLoaderIndicator" />
+
 
     <LinearLayout
         android:id="@+id/headerView"
@@ -115,16 +108,7 @@
             android:layout_marginEnd="20dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txt_no_records"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:text="@string/norecordsfound"
-                android:textColor="@color/color"
-                android:textSize="16sp"
-                android:visibility="gone" />
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -260,6 +244,18 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/txt_no_records"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:text="@string/norecordsfound"
+                    android:textColor="@color/color"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -268,19 +264,10 @@
                         android:id="@+id/rv_pet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp" />
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        app:reverseLayout="true"/>
 
-                    <ImageView
-                        android:id="@+id/img_add_new_pet"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_alignRight="@id/rv_pet"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:contentDescription="@string/image"
-                        android:src="@drawable/addaddr" />
 
                 </RelativeLayout>
 
@@ -436,5 +423,13 @@
 
 
     </LinearLayout>
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:indicatorColor="@color/green"
+        app:indicatorName="LineSpinFadeLoaderIndicator" />
 
 </RelativeLayout>

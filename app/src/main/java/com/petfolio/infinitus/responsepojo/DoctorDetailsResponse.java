@@ -94,6 +94,16 @@ public class DoctorDetailsResponse {
         private String date_and_time;
         private String descri;
         private int star_count;
+        private String distance;
+
+        public String getDistance() {
+            return distance;
+        }
+
+        public void setDistance(String distance) {
+            this.distance = distance;
+        }
+
         private int review_count;
         private List<EducationDetailsBean> education_details;
         private List<ExperienceDetailsBean> experience_details;

@@ -19,9 +19,11 @@ import com.petfolio.infinitus.requestpojo.HolidayListRequest;
 import com.petfolio.infinitus.requestpojo.LocationAddRequest;
 import com.petfolio.infinitus.requestpojo.LocationListAddressRequest;
 import com.petfolio.infinitus.requestpojo.LoginRequest;
+import com.petfolio.infinitus.requestpojo.PetAddImageRequest;
 import com.petfolio.infinitus.requestpojo.PetAppointmentCreateRequest;
 import com.petfolio.infinitus.requestpojo.PetDetailsRequest;
 import com.petfolio.infinitus.requestpojo.PetDoctorAvailableTimeRequest;
+import com.petfolio.infinitus.requestpojo.PetListRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverDashboardRequest;
 import com.petfolio.infinitus.requestpojo.PrescriptionCreateRequest;
@@ -51,9 +53,11 @@ import com.petfolio.infinitus.responsepojo.HolidayListResponse;
 import com.petfolio.infinitus.responsepojo.LocationAddResponse;
 import com.petfolio.infinitus.responsepojo.LocationListAddressResponse;
 import com.petfolio.infinitus.responsepojo.LoginResponse;
+import com.petfolio.infinitus.responsepojo.PetAddImageResponse;
 import com.petfolio.infinitus.responsepojo.PetAppointmentCreateResponse;
 import com.petfolio.infinitus.responsepojo.PetDetailsResponse;
 import com.petfolio.infinitus.responsepojo.PetDoctorAvailableTimeResponse;
+import com.petfolio.infinitus.responsepojo.PetListResponse;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.PetTypeListResponse;
@@ -226,5 +230,15 @@ public interface RestApiInterface {
     /*Listing Location by ID*/
     @POST("locationdetails/mobile/getlist_id")
     Call<LocationListAddressResponse>locationListAddressResponseCall(@Header("Content-Type") String type, @Body LocationListAddressRequest locationListAddressRequest  );
+
+    /*Pet Details List by User ID*/
+    @POST("petdetails/mobile/getlist_id")
+    Call<PetListResponse>petListResponseCall(@Header("Content-Type") String type, @Body PetListRequest petListRequest  );
+
+
+    /*Pet Details List by User ID*/
+    @POST("petdetails/edit")
+    Call<PetAddImageResponse>PetAddImageResponseCall(@Header("Content-Type") String type, @Body PetAddImageRequest petAddImageRequest  );
+
 
 }

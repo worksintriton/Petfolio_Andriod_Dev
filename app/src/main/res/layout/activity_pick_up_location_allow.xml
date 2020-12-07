@@ -5,8 +5,6 @@
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-
     <LinearLayout
         android:background="@color/white"
         android:id="@+id/headerView"
@@ -14,13 +12,88 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:orientation="vertical">
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/app_toolbar"
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_header3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/whiteTwo"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:titleTextAppearance="@style/TitleBarTextAppearance">
+
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/back"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/txt_toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:fontFamily="@font/futuramediumbt"
+                android:text="@string/choose_location"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="end">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/ic_sos"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/ic_notifications"
+                    tools:ignore="ContentDescription" />
+
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/ic_bag"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_user"
+                    tools:ignore="ContentDescription" />
+            </LinearLayout>
+
+
+        </androidx.appcompat.widget.Toolbar>
 
     </LinearLayout>
+
     <RelativeLayout
         android:layout_below="@+id/headerView"
         android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -58,55 +131,52 @@
 
                     />
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/rl_placessearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/edittext_bg_rect_color"
+                android:background="@drawable/search_loctn_bgm"
                 android:layout_marginTop="60dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:padding="10dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tv_searchlocationaddress"
-                        android:layout_marginStart="10dp"
+                    <ImageView
+                        android:id="@+id/imageView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="@string/search_location_address"
-                        android:textColorHint="@color/green"
-                        android:fontFamily="@font/futuramediumbt"
-                        android:textColor="@color/green"
-                        android:textSize="12sp"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        android:layout_marginEnd="30dp"
+                        android:src="@drawable/ic_baseline_location_searching_24"
+                        android:contentDescription="@string/image" />
+
+                    <TextView
+                        android:id="@+id/tv_searchlocationaddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="30dp"
                         android:layout_marginRight="30dp"
-                        android:padding="5dp"/>
+                        android:ellipsize="end"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:hint="@string/search_location_address"
+                        android:maxLines="1"
+                        android:padding="5dp"
+                        android:textColor="@color/green"
+                        android:textColorHint="@color/dark_gray"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
-
-
 
             </RelativeLayout>
 
 
-
-
-
-
         </RelativeLayout>
-
-
-
-
-
-
 
     </RelativeLayout>
 
@@ -120,11 +190,11 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="110dp"
-        android:background="@drawable/button_capsule"
+        android:background="@drawable/new_rounded_corner_btn_orange"
         android:fontFamily="@font/futuramediumbt"
-        android:text="Set Location"
+        android:text="@string/set_location"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/new_txt_color"
         android:textSize="14sp" />
 
     <com.wang.avi.AVLoadingIndicatorView
@@ -134,13 +204,14 @@
         android:layout_centerInParent="true"
         app:indicatorColor="@color/mediumPinkTwo"
         app:indicatorName="LineSpinFadeLoaderIndicator" />
+
     <ImageView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_centerInParent="true"
         android:id="@+id/imgLocationPinUp"
-        android:src="@drawable/map_pin"
-        />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:contentDescription="@string/image"
+        android:src="@drawable/map_pin" />
 
 
     <LinearLayout
@@ -148,31 +219,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:itemIconTint="@drawable/drawer_item_color"
-            app:itemTextColor="@drawable/drawer_item_color"
-            app:itemIconSize="20dp"
-            app:elevation="8dp"
-            app:labelVisibilityMode="labeled"
-            app:menu="@menu/bottom_navigation"
-            android:background="@drawable/rounded_corner_button"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp"
-
-            />
-
-
-
-
-
-
-    </LinearLayout>
+        android:orientation="horizontal"/>
 
 </RelativeLayout>
 

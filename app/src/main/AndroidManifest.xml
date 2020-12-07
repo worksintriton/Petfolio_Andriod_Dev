@@ -27,6 +27,8 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
+
+
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -46,6 +48,8 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,UnusedAttribute"
         tools:replace="android:theme">
+        <activity android:name=".petlover.EditYourPetImageActivity"></activity>
+        <activity android:name=".petlover.EditYourPetProfileInfoActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -87,7 +91,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity
+      <activity
             android:name=".petlover.RegisterYourPetActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
@@ -132,14 +136,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-
-        <activity android:name=".petlover.ManageAddressActivity"
+        <activity
+            android:name=".petlover.ManageAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-
-
-
         <activity
             android:name=".activity.location.PickUpLocationAllowActivity"
             android:screenOrientation="portrait"
@@ -216,6 +217,17 @@
         <meta-data
             android:name="firebase_analytics_collection_enabled"
             android:value="false" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
     </application>
 
 </manifest>

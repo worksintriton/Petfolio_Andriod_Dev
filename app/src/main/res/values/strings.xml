@@ -202,4 +202,23 @@
     <string name="add_vaccination">Add Vaccination</string>
     <string name="service_name">Service Name</string>
     <string name="locationnickname">Location Nick name</string>
+
+
+    <string name="edit_pet_info">Edit pet info</string>
+    <string name="save_address">Save Address</string>
+    <string name="add_address">Add Address</string>
+    <string name="change">Change</string>
+    <string name="save_as">Save as</string>
+    <string name="home">Home</string>
+    <string name="work">Work</string>
+    <string name="others">Others</string>
+    <string name="pick_a_name_for_this_location">Pick a name for this location</string>
+    <string name="city_name">City Name</string>
+    <string name="location">Location</string>
+    <string name="pincode">Pincode</string>
+    <string name="set_location">Set Location</string>
+    <string name="choose_location">Choose Location</string>
+    <string name="edit_address">Edit Address</string>
+    <string name="add_your_pet">Add your Pet</string>
+    <string name="registeryourpet">Register your Pet</string>
 </resources>

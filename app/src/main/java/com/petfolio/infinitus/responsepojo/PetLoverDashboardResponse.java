@@ -328,6 +328,15 @@ public class PetLoverDashboardResponse {
                 private String doctor_name;
                 private String doctor_img;
                 private int star_count;
+                private String distance;
+
+                public String getDistance() {
+                    return distance;
+                }
+
+                public void setDistance(String distance) {
+                    this.distance = distance;
+                }
                 private int review_count;
                 private List<SpecializationBean> specialization;
 

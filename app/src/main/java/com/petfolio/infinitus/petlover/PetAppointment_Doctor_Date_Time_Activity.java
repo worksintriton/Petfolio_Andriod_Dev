@@ -142,8 +142,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
     private String petid,allergies,probleminfo;
     private String userid;
     private String doctorid;
-
-
+    private String selectedAppointmentType;
 
 
     @Override
@@ -184,8 +183,9 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
             allergies = extras.getString("allergies");
             probleminfo = extras.getString("probleminfo");
             doctorid = extras.getString("doctorid");
+            selectedAppointmentType = extras.getString("selectedAppointmentType");
 
-            Log.w(TAG,"petid-->"+petid+ "allergies : "+allergies+"  probleminfo : "+probleminfo);
+            Log.w(TAG,"petid-->"+petid+ "allergies : "+allergies+"  probleminfo : "+probleminfo+" selectedAppointmentType : "+selectedAppointmentType);
 
             if(Languages != null && !Languages.isEmpty()){
                 Languages = Languages.replaceAll("\\[", "").replaceAll("\\]","");
@@ -657,7 +657,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         petAppointmentCreateRequest.setServer_date_time("");
         petAppointmentCreateRequest.setPayment_id("");
         petAppointmentCreateRequest.setPayment_method("");
-        petAppointmentCreateRequest.setAppointment_types("");
+        petAppointmentCreateRequest.setAppointment_types(selectedAppointmentType);
         petAppointmentCreateRequest.setAllergies(allergies);
         petAppointmentCreateRequest.setAmount(0);
         petAppointmentCreateRequest.setMobile_type("Android");

@@ -494,7 +494,8 @@ public class AddYourPetActivity extends AppCompatActivity {
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
                         Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
-                        Intent intent = new Intent(AddYourPetActivity.this,AddYourPetActivity.class);
+                        Intent intent = new Intent(AddYourPetActivity.this,RegisterYourPetActivity.class);
+                        intent.putExtra("petid",response.body().getData().get_id());
                         startActivity(intent);
 
                     } else {
@@ -535,7 +536,7 @@ public class AddYourPetActivity extends AppCompatActivity {
         
         AddYourPetRequest addYourPetRequest = new AddYourPetRequest();
         addYourPetRequest.setUser_id(userid);
-        addYourPetRequest.setPet_img("");
+        addYourPetRequest.setPet_img("http://mysalveo.com/api/uploads/images.jpeg");
         addYourPetRequest.setPet_name(edt_petname.getText().toString());
         addYourPetRequest.setPet_type(strPetType);
         addYourPetRequest.setPet_breed(strPetBreedType);

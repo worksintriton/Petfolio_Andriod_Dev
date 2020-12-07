@@ -163,7 +163,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
     private String uploadimagepath = "";
     private Dialog alertDialog;
     private boolean isSelectYourPet;
-    private String selectedAppointmentType;
+    private String selectedAppointmentType = "Emergency";
     private String petId;
     private String doctorid;
 
@@ -318,6 +318,8 @@ public class BookAppointmentActivity extends AppCompatActivity {
                             intent.putExtra("doctorid",doctorid);
                             intent.putExtra("allergies",edt_allergies.getText().toString());
                             intent.putExtra("probleminfo",edt_comment.getText().toString());
+                            intent.putExtra("selectedAppointmentType",selectedAppointmentType);
+                            Log.w(TAG,"selectedAppointmentType : "+selectedAppointmentType);
                             startActivity(intent);
                         }
 
@@ -363,7 +365,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
             int radioButtonID = rg_appointmenttype.getCheckedRadioButtonId();
             RadioButton radioButton = rg_appointmenttype.findViewById(radioButtonID);
             selectedAppointmentType = (String) radioButton.getText();
-            Log.w(TAG, "selectedAppointmentType" + selectedAppointmentType);
+            Log.w(TAG, "selectedAppointmentType : " + selectedAppointmentType);
 
 
         });
@@ -830,6 +832,8 @@ public class BookAppointmentActivity extends AppCompatActivity {
                         intent.putExtra("doctorid",doctorid);
                         intent.putExtra("allergies",edt_allergies.getText().toString());
                         intent.putExtra("probleminfo",edt_comment.getText().toString());
+                        intent.putExtra("selectedAppointmentType",selectedAppointmentType);
+                        Log.w(TAG,"selectedAppointmentType : "+selectedAppointmentType);
                         startActivity(intent);
 
                     } else {

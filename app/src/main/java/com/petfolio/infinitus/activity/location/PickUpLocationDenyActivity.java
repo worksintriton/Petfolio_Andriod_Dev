@@ -354,14 +354,24 @@ public class PickUpLocationDenyActivity extends FragmentActivity implements OnMa
         mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
             public void onCameraIdle() {
-                // mMap.clear();
-                imgLocationPinUp.setVisibility(View.GONE);
-                LatLng center = mMap.getCameraPosition().target;
-                double CameraLat = mMap.getCameraPosition().target.latitude;
-                double CameraLong = mMap.getCameraPosition().target.longitude;
-                Log.w(TAG,"setOnCameraIdleListener--->"+"CameraLat :"+CameraLat+" "+"CameraLong :"+CameraLong);
 
-                getChangeLocationBackground(CameraLat,CameraLong);
+                Bundle extras = getIntent().getExtras();
+                if (extras != null) {
+                    //CityName = extras.getString("cityname");
+                    String placesearchactivity = extras.getString("placesearchactivity");
+                    if(placesearchactivity != null && placesearchactivity.equalsIgnoreCase("placesearchactivity")) {
+
+
+                        // mMap.clear();
+                        imgLocationPinUp.setVisibility(View.GONE);
+                        LatLng center = mMap.getCameraPosition().target;
+                        double CameraLat = mMap.getCameraPosition().target.latitude;
+                        double CameraLong = mMap.getCameraPosition().target.longitude;
+                        Log.w(TAG, "setOnCameraIdleListener--->" + "CameraLat :" + CameraLat + " " + "CameraLong :" + CameraLong);
+
+                        getChangeLocationBackground(CameraLat, CameraLong);
+                    }
+                }
 
             }
         });
@@ -402,10 +412,13 @@ public class PickUpLocationDenyActivity extends FragmentActivity implements OnMa
             mCurrLocationMarker.remove();
         }
         //Showing Current Location Marker on Map
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        Log.w(TAG,"latLng--->"+latLng);
+       // LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+       // Log.w(TAG,"latLng--->"+latLng);
 
-        strlatlng  = String.valueOf(latLng);
+         LatLng latLng = null;
+
+
+        // strlatlng  = String.valueOf(latLng);
 
         MarkerOptions markerOptions = new MarkerOptions();
       /*  markerOptions.position(latLng);
@@ -427,7 +440,8 @@ public class PickUpLocationDenyActivity extends FragmentActivity implements OnMa
         if (extras != null) {
             //CityName = extras.getString("cityname");
             String placesearchactivity = extras.getString("placesearchactivity");
-            fromactivity = extras.getString("fromactivity");
+
+                fromactivity = extras.getString("fromactivity");
             double lat = extras.getDouble("lat");
             double lon = extras.getDouble("lon");
             if(lat != 0 && lon != 0){
@@ -571,7 +585,7 @@ public class PickUpLocationDenyActivity extends FragmentActivity implements OnMa
                 }
 
             }else{
-                getLatandLong();
+                //getLatandLong();
             }
         }catch (Exception e){
             e.printStackTrace();
