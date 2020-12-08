@@ -63,7 +63,9 @@
                 android:textColor="@color/green"
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp"
-                tools:ignore="Autofill,LabelFor" />
+                tools:ignore="Autofill,LabelFor"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -153,7 +155,9 @@
                 android:textColor="@color/green"
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp"
-                tools:ignore="Autofill,LabelFor" />
+                tools:ignore="Autofill,LabelFor"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                />
 
             <EditText
                 android:id="@+id/edt_petweight"

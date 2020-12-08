@@ -149,7 +149,9 @@
                 android:textColor="@color/new_light_green"
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp"
-                tools:ignore="Autofill,LabelFor" />
+                tools:ignore="Autofill,LabelFor"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                />
 
             <TextView
                 android:id="@+id/txt_pettype"
