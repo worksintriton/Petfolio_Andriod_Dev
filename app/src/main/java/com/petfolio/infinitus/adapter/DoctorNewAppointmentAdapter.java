@@ -77,7 +77,7 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
             holder.txt_service_info.setText("Service name :"+" "+newAppointmentResponseList.get(0).getService_name());
         }
         if(newAppointmentResponseList.get(0).getService_amount() != null){
-            holder.txt_service_cost.setText(" Service Cost : "+newAppointmentResponseList.get(0).getService_amount());
+            holder.txt_service_cost.setText("Service Cost : "+newAppointmentResponseList.get(0).getService_amount());
         }
 
            if (newAppointmentResponseList.get(0).getPet_id().getPet_img() != null && !newAppointmentResponseList.get(0).getPet_id().getPet_img().isEmpty()) {

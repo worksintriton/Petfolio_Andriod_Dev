@@ -67,7 +67,7 @@ public class PetMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
             holder.txt_service_info.setText("Service name :"+" "+missedAppointmentResponseList.get(0).getService_name());
         }
         if(missedAppointmentResponseList.get(0).getService_amount() != null){
-            holder.txt_service_cost.setText(" Service Cost : "+missedAppointmentResponseList.get(0).getService_amount());
+            holder.txt_service_cost.setText("Service Cost : "+missedAppointmentResponseList.get(0).getService_amount());
         }
 
 

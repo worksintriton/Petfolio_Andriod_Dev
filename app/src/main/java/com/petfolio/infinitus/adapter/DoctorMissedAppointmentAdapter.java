@@ -66,7 +66,7 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
             holder.txt_service_info.setText("Service name :"+" "+missedAppointmentResponseList.get(0).getService_name());
         }
         if(missedAppointmentResponseList.get(0).getService_amount() != null){
-            holder.txt_service_cost.setText(" Service Cost : "+missedAppointmentResponseList.get(0).getService_amount());
+            holder.txt_service_cost.setText("Service Cost : "+missedAppointmentResponseList.get(0).getService_amount());
         }
         if (missedAppointmentResponseList.get(0).getPet_id().getPet_img() != null && !missedAppointmentResponseList.get(0).getPet_id().getPet_img().isEmpty()) {
 

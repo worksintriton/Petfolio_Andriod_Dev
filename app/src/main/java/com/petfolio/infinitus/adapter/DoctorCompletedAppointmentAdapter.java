@@ -66,7 +66,7 @@ public class DoctorCompletedAppointmentAdapter extends  RecyclerView.Adapter<Rec
             holder.txt_service_info.setText("Service name :"+" "+completedAppointmentResponseList.get(0).getService_name());
         }
         if(completedAppointmentResponseList.get(0).getService_amount() != null){
-            holder.txt_service_cost.setText(" Service Cost : "+completedAppointmentResponseList.get(0).getService_amount());
+            holder.txt_service_cost.setText("Service Cost : "+completedAppointmentResponseList.get(0).getService_amount());
         }
 
         if (completedAppointmentResponseList.get(0).getPet_id().getPet_img() != null && !completedAppointmentResponseList.get(0).getPet_id().getPet_img().isEmpty()) {

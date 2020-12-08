@@ -73,7 +73,7 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
             holder.txt_service_info.setText("Service name :"+" "+newAppointmentResponseList.get(0).getService_name());
         }
         if(newAppointmentResponseList.get(0).getService_amount() != null){
-            holder.txt_service_cost.setText(" Service Cost : "+newAppointmentResponseList.get(0).getService_amount());
+            holder.txt_service_cost.setText("Service Cost : "+newAppointmentResponseList.get(0).getService_amount());
         }
 
         if(newAppointmentResponseList.get(position).getAppointment_types() != null && newAppointmentResponseList.get(position).getAppointment_types().equalsIgnoreCase("Emergency")){

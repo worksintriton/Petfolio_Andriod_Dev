@@ -59,8 +59,13 @@ public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
 
         holder.txt_petname.setText("Pet name : "+completedAppointmentResponseList.get(0).getPet_id().getPet_name());
         holder.txt_pettype.setText("Pet type : "+ completedAppointmentResponseList.get(0).getPet_id().getPet_type());
-        holder.txt_service_info.setText("Service name :"+" "+completedAppointmentResponseList.get(0).getService_name()+" Service Cost : "+completedAppointmentResponseList.get(0).getService_amount());
         holder.txt_completed_date.setText("Completed on:"+" "+completedAppointmentResponseList.get(0).getCompleted_at());
+        if(completedAppointmentResponseList.get(0).getService_name() != null){
+            holder.txt_service_info.setText("Service name :"+" "+completedAppointmentResponseList.get(0).getService_name());
+        }
+        if(completedAppointmentResponseList.get(0).getService_amount() != null){
+            holder.txt_service_cost.setText("Service Cost : "+completedAppointmentResponseList.get(0).getService_amount());
+        }
 
 
 
@@ -111,7 +116,7 @@ public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
     }
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_petname,txt_pettype,txt_service_info,txt_completed_date;
+        public TextView txt_petname,txt_pettype,txt_service_info,txt_completed_date,txt_service_cost;
         public ImageView img_pet_imge;
         public Button btn_cancel,btn_complete;
 
@@ -126,6 +131,8 @@ public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
             txt_completed_date = itemView.findViewById(R.id.txt_completed_date);
             btn_cancel = itemView.findViewById(R.id.btn_cancel);
             btn_complete = itemView.findViewById(R.id.btn_complete);
+            txt_service_cost = itemView.findViewById(R.id.txt_service_cost);
+
 
 
 
