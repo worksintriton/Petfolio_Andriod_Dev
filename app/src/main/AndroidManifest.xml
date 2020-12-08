@@ -27,8 +27,6 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
-
-
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -48,8 +46,6 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,UnusedAttribute"
         tools:replace="android:theme">
-        <activity android:name=".petlover.EditYourPetImageActivity"></activity>
-        <activity android:name=".petlover.EditYourPetProfileInfoActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -91,7 +87,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-      <activity
+        <activity
             android:name=".petlover.RegisterYourPetActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
@@ -137,7 +133,18 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".petlover.ManageAddressActivity"
+            android:name=".petlover.EditYourPetImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".petlover.EditYourPetProfileInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".activity.location.ManageAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
@@ -158,6 +165,27 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.location.PlacesSearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.location.PickUpLocationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.location.AddMyAddressOldUserActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.location.EditMyAddressActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".activity.location.PickUpLocationEditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
@@ -227,7 +255,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-
     </application>
 
 </manifest>

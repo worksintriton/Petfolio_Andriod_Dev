@@ -97,8 +97,15 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
 
                 popup.show();//showing popup menu
             }
-        });//closing the setOnClickListener method
+        });
+        //closing the setOnClickListener method
 
+        if(position == petListResponseList.size()+1){
+            holder.ll_add.setVisibility(View.VISIBLE);
+        }else{
+            holder.ll_add.setVisibility(View.GONE);
+
+        }
 
     }
 

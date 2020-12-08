@@ -35,8 +35,10 @@
                 android:text="profile name"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#444444"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end"/>
             <TextView
                 android:id="@+id/nav_header_emailid"
                 android:layout_width="wrap_content"
@@ -47,9 +49,11 @@
                 android:gravity="center"
                 android:text="Email"
                 android:textColor="#444444"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"
+                android:maxLines="1"
+                android:ellipsize="end"/>
         </LinearLayout>
 
 

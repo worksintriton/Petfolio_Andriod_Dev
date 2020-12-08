@@ -17,7 +17,10 @@ import com.petfolio.infinitus.requestpojo.FBTokenUpdateRequest;
 import com.petfolio.infinitus.requestpojo.HolidayDeleteRequest;
 import com.petfolio.infinitus.requestpojo.HolidayListRequest;
 import com.petfolio.infinitus.requestpojo.LocationAddRequest;
+import com.petfolio.infinitus.requestpojo.LocationDeleteRequest;
 import com.petfolio.infinitus.requestpojo.LocationListAddressRequest;
+import com.petfolio.infinitus.requestpojo.LocationStatusChangeRequest;
+import com.petfolio.infinitus.requestpojo.LocationUpdateRequest;
 import com.petfolio.infinitus.requestpojo.LoginRequest;
 import com.petfolio.infinitus.requestpojo.PetAddImageRequest;
 import com.petfolio.infinitus.requestpojo.PetAppointmentCreateRequest;
@@ -51,7 +54,10 @@ import com.petfolio.infinitus.responsepojo.FileUploadResponse;
 import com.petfolio.infinitus.responsepojo.HolidayDeleteResponse;
 import com.petfolio.infinitus.responsepojo.HolidayListResponse;
 import com.petfolio.infinitus.responsepojo.LocationAddResponse;
+import com.petfolio.infinitus.responsepojo.LocationDeleteResponse;
 import com.petfolio.infinitus.responsepojo.LocationListAddressResponse;
+import com.petfolio.infinitus.responsepojo.LocationStatusChangeResponse;
+import com.petfolio.infinitus.responsepojo.LocationUpdateResponse;
 import com.petfolio.infinitus.responsepojo.LoginResponse;
 import com.petfolio.infinitus.responsepojo.PetAddImageResponse;
 import com.petfolio.infinitus.responsepojo.PetAppointmentCreateResponse;
@@ -74,6 +80,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 
 public interface RestApiInterface {
@@ -239,6 +246,19 @@ public interface RestApiInterface {
     /*Pet Details List by User ID*/
     @POST("petdetails/edit")
     Call<PetAddImageResponse>PetAddImageResponseCall(@Header("Content-Type") String type, @Body PetAddImageRequest petAddImageRequest  );
+
+    /*location list delete*/
+    @POST("locationdetails/delete")
+    Call<LocationDeleteResponse> locationDeleteResponseCall(@Header("Content-Type") String type, @Body LocationDeleteRequest locationDeleteRequest);
+
+    /*Location status change*/
+    @POST("locationdetails/edit")
+    Call<LocationStatusChangeResponse>locationStatusChangeResponseCall(@Header("Content-Type") String type, @Body LocationStatusChangeRequest locationStatusChangeRequest);
+
+    /*Location update*/
+    @POST("locationdetails/edit")
+    Call<LocationUpdateResponse>locationUpdateResponseCall(@Header("Content-Type") String type, @Body LocationUpdateRequest locationUpdateRequest);
+
 
 
 }

@@ -44,7 +44,7 @@
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/choose_location"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

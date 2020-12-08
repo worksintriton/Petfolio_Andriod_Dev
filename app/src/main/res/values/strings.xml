@@ -221,4 +221,9 @@
     <string name="edit_address">Edit Address</string>
     <string name="add_your_pet">Add your Pet</string>
     <string name="registeryourpet">Register your Pet</string>
+
+    <string name="deletemsg">Are you sure you want to delete this location details?</string>
+    <string name="locationstatuschange">Are you sure you want to change this location as default address?</string>
+    <string name="save_changes">Save Changes</string>
+
 </resources>

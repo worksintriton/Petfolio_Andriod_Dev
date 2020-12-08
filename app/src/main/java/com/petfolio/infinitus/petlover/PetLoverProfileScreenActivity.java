@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
-import com.petfolio.infinitus.adapter.ManageAddressListAdapter;
+import com.petfolio.infinitus.activity.location.ManageAddressActivity;
 import com.petfolio.infinitus.adapter.ManagePetListAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
@@ -115,6 +115,7 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(),PetLoverDashboardActivity.class));
         finish();
     }
 
@@ -136,7 +137,7 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
     }
 
     private void gotoManageAddress() {
-        startActivity(new Intent(PetLoverProfileScreenActivity.this,ManageAddressActivity.class));
+        startActivity(new Intent(PetLoverProfileScreenActivity.this, ManageAddressActivity.class));
     }
 
     private void confirmLogoutDialog(){

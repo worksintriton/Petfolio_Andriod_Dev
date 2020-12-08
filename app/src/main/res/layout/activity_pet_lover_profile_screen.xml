@@ -98,7 +98,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/footerView"
-        android:layout_below="@+id/headerView">
+        android:layout_below="@+id/headerView"
+        android:layout_marginBottom="30dp">
 
         <LinearLayout
             android:id="@+id/content"
@@ -304,7 +305,7 @@
                     android:fontFamily="@font/futuramediumbt"
                     android:text="@string/manage_address"
                     android:textColor="@color/new_txt_color"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -331,7 +332,7 @@
                     android:fontFamily="@font/futuramediumbt"
                     android:text="@string/subscribe"
                     android:textColor="@color/new_txt_color"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -358,7 +359,7 @@
                     android:fontFamily="@font/futuramediumbt"
                     android:text="@string/change_password"
                     android:textColor="@color/new_txt_color"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -385,7 +386,7 @@
                     android:fontFamily="@font/futuramediumbt"
                     android:text="@string/logout"
                     android:textColor="@color/new_txt_color"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 

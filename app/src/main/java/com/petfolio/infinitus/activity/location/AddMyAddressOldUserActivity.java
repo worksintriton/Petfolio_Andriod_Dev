@@ -1,6 +1,5 @@
 package com.petfolio.infinitus.activity.location;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -34,7 +32,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
@@ -62,10 +59,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class AddMyAddressActivity extends FragmentActivity implements OnMapReadyCallback,
+public class AddMyAddressOldUserActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener, View.OnClickListener {
+
+
+    String TAG = "AddMyAddressOldUserActivity";
+
 
     @BindView(R.id.toolbar_title)
     TextView toolbar_title;
@@ -76,9 +77,6 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
 
     @BindView(R.id.txt_cityname)
     TextView txt_cityname;
-
-    @BindView(R.id.txt_cityname_title)
-    TextView txt_cityname_title;
 
     @BindView(R.id.txt_address)
     TextView txt_address;
@@ -114,7 +112,6 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
-    String TAG = "AddMyAddressActivity";
 
     String userid = "",state = "",country = "",postalcode = "",street;
 
@@ -138,7 +135,7 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
 
         ButterKnife.bind(this);
 
-        SessionManager sessionManager = new SessionManager(AddMyAddressActivity.this);
+        SessionManager sessionManager = new SessionManager(AddMyAddressOldUserActivity.this);
         HashMap<String, String> user = sessionManager.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
         Log.w(TAG,"userid--->"+userid);
@@ -179,7 +176,6 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
             PostalCode = extras.getString("PostalCode");
 
             txt_cityname.setText(CityName);
-            txt_cityname_title.setText(CityName);
             txt_address.setText(AddressLine);
             txt_pincode.setText(PostalCode);
 
@@ -279,7 +275,7 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
         }
 
         if (can_proceed) {
-            if (new ConnectionDetector(AddMyAddressActivity.this).isNetworkAvailable(AddMyAddressActivity.this)) {
+            if (new ConnectionDetector(AddMyAddressOldUserActivity.this).isNetworkAvailable(AddMyAddressOldUserActivity.this)) {
                 locationAddResponseCall();
                 }
 
@@ -307,7 +303,7 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
                 if (response.body() != null) {
 
                     if(response.body().getCode() == 200){
-                        Intent i = new Intent(AddMyAddressActivity.this, PetLoverDashboardActivity.class);
+                        Intent i = new Intent(AddMyAddressOldUserActivity.this, ManageAddressActivity.class);
                         startActivity(i);
 
                     }

@@ -96,7 +96,7 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
         LocationListener,View.OnClickListener  {
 
 
-    private String TAG = "HomeFragment";
+    private String TAG = "PetHomeFragment";
 
 
 
@@ -508,8 +508,11 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
             btn_deny.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    showLocationDenyAlert();
                     dialog.dismiss();
+                    startActivity(new Intent(mContext, PickUpLocationDenyActivity.class));
+
+                   // showLocationDenyAlert();
+
 
                 }
             });

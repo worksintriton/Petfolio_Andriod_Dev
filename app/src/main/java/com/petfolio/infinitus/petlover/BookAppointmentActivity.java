@@ -113,8 +113,8 @@ public class BookAppointmentActivity extends AppCompatActivity {
     @BindView(R.id.txt_or)
     TextView txt_or;
 
-    @BindView(R.id.cardview_pet_pics)
-    CardView cardview_pet_pics;
+    @BindView(R.id.rl_pet_pics)
+    RelativeLayout rl_pet_pics;
 
     @BindView(R.id.rv_upload_pet_images)
     RecyclerView rv_upload_pet_images;
@@ -231,7 +231,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
                     rl_petbreed.setVisibility(View.GONE);
                     rv_upload_pet_images.setVisibility(View.GONE);
                     txt_lbl_uploadpet.setVisibility(View.GONE);
-                    cardview_pet_pics.setVisibility(View.GONE);
+                    rl_pet_pics.setVisibility(View.GONE);
 
                 }
                 else {
@@ -250,7 +250,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
                     rl_petbreed.setVisibility(View.VISIBLE);
                     rv_upload_pet_images.setVisibility(View.VISIBLE);
                     txt_lbl_uploadpet.setVisibility(View.VISIBLE);
-                    cardview_pet_pics.setVisibility(View.VISIBLE);
+                    rl_pet_pics.setVisibility(View.VISIBLE);
 
 
                 }
@@ -354,7 +354,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
             }
         });
 
-        cardview_pet_pics.setOnClickListener(new View.OnClickListener() {
+        rl_pet_pics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 choosePetImage();

@@ -4,7 +4,15 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/light_green_bgm"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:layout_marginTop="5dp"
+    android:id="@+id/rl_root">
+
+    <ImageView
+        android:id="@+id/iv_default_location"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:background="@drawable/circledot" />
 
 
     <TextView
