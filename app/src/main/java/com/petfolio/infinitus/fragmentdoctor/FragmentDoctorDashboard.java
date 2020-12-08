@@ -92,12 +92,16 @@ public class FragmentDoctorDashboard extends Fragment  {
         SessionManager session = new SessionManager(mContext);
         HashMap<String, String> user = session.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
+        Log.w(TAG,"userid : "+userid);
 
 
 
-        if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-            doctorCheckStatusResponseCall();
+        if(userid != null){
+            if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
+                doctorCheckStatusResponseCall();
+            }
         }
+
 
 
 

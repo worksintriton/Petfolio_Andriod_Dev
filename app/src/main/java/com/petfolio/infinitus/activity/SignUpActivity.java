@@ -230,9 +230,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
                     if (200 == response.body().getCode()) {
 
-                        SessionManager sessionManager = new SessionManager(SignUpActivity.this);
-                        sessionManager.logoutUser();
-                        sessionManager.setIsLogin(true);
+                      /*  SessionManager sessionManager = new SessionManager(SignUpActivity.this);
+                        //sessionManager.logoutUser();
+                        //sessionManager.setIsLogin(true);
                         sessionManager.createLoginSession(
                                 response.body().getData().get_id(),
                                 response.body().getData().getFirst_name(),
@@ -241,7 +241,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                 response.body().getData().getUser_phone(),
                                 String.valueOf(response.body().getData().getUser_type()),
                                 response.body().getData().getUser_status()
-                        );
+                        );*/
 
                         Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
                         Intent intent = new Intent(SignUpActivity.this,VerifyOtpActivity.class);
@@ -250,6 +250,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         intent.putExtra("usertype",response.body().getData().getUser_type());
                         intent.putExtra("userid",response.body().getData().get_id());
                         intent.putExtra("userstatus","Incomplete");
+                        intent.putExtra("firstname", response.body().getData().getFirst_name());
+                        intent.putExtra("lastname",response.body().getData().getLast_name());
+                        intent.putExtra("useremail", response.body().getData().getUser_email());
                         startActivity(intent);
 
 

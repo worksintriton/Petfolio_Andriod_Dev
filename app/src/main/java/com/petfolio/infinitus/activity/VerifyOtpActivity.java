@@ -42,6 +42,7 @@ import com.petfolio.infinitus.requestpojo.FBTokenUpdateRequest;
 import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
 import com.petfolio.infinitus.responsepojo.FBTokenUpdateResponse;
 import com.petfolio.infinitus.responsepojo.ResendOTPResponse;
+import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -96,6 +97,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
     private boolean isOTPExpired ;
     private String userid;
     private String token;
+    private String firstname,lastname,useremail;
 
 
     @Override
@@ -116,6 +118,12 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
             usertype = extras.getInt("usertype");
             userid = extras.getString("userid");
             userstatus = extras.getString("userstatus");
+            firstname = extras.getString("firstname");
+            lastname = extras.getString("lastname");
+            useremail = extras.getString("useremail");
+
+
+
             fromactivity = extras.getString("fromactivity");
             Log.w(TAG,"Bundle "+" phonenumber : "+phonenumber+" otp :"+otp+" usertype : "+usertype+" userstatus : "+userstatus+ " userid : "+userid);
         }
@@ -367,6 +375,20 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
+
+                        SessionManager sessionManager = new SessionManager(VerifyOtpActivity.this);
+                        sessionManager.setIsLogin(true);
+                        sessionManager.createLoginSession(
+                                userid,
+                                firstname,
+                                lastname,
+                                useremail,
+                                phonenumber,
+                                String.valueOf(usertype),
+                                userstatus
+
+                        );
+
                         if(fromactivity != null && fromactivity.equalsIgnoreCase("LoginActivity")){
                             if(usertype != 0){
                                 if(usertype == 1){

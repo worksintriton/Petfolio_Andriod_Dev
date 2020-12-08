@@ -135,18 +135,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (200 == response.body().getCode()) {
 
                         Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
-                       SessionManager sessionManager = new SessionManager(LoginActivity.this);
-                        sessionManager.logoutUser();
-                        sessionManager.setIsLogin(true);
-                        sessionManager.createLoginSession(
-                               response.body().getData().getUser_details().get_id(),
-                               response.body().getData().getUser_details().getFirst_name(),
-                               response.body().getData().getUser_details().getLast_name(),
-                               response.body().getData().getUser_details().getUser_email(),
-                               response.body().getData().getUser_details().getUser_phone(),
-                               String.valueOf(response.body().getData().getUser_details().getUser_type()),
-                               response.body().getData().getUser_details().getUser_status()
-                       );
+
 
                         Intent intent = new Intent(LoginActivity.this,VerifyOtpActivity.class);
                         intent.putExtra("phonemumber",response.body().getData().getUser_details().getUser_phone());
@@ -154,6 +143,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         intent.putExtra("userstatus",response.body().getData().getUser_details().getUser_status());
                         intent.putExtra("usertype",response.body().getData().getUser_details().getUser_type());
                         intent.putExtra("userid",response.body().getData().getUser_details().get_id());
+
+                        intent.putExtra("firstname", response.body().getData().getUser_details().getFirst_name());
+                        intent.putExtra("lastname",response.body().getData().getUser_details().getLast_name());
+                        intent.putExtra("useremail", response.body().getData().getUser_details().getUser_email());
                         intent.putExtra("fromactivity",TAG);
                         startActivity(intent);
 
