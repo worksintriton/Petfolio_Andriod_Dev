@@ -261,7 +261,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
 
          if (can_proceed) {
              if (new ConnectionDetector(VerifyOtpActivity.this).isNetworkAvailable(VerifyOtpActivity.this)) {
-                if(token != null && userid != null){
+                 if(token != null && userid != null){
                     fBTokenUpdateResponseCall();
                 }
 

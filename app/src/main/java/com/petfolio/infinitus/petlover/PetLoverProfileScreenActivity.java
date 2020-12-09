@@ -195,7 +195,7 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
 
                         if(response.body().getData().isEmpty()){
                             txt_no_records.setVisibility(View.VISIBLE);
-                            txt_no_records.setText("No new address");
+                            txt_no_records.setText("No new pets");
                             rv_pet.setVisibility(View.GONE);
                         }
                         else{

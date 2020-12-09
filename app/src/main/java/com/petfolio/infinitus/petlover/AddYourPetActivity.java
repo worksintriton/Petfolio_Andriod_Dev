@@ -102,8 +102,8 @@ public class AddYourPetActivity extends AppCompatActivity {
     @BindView(R.id.txt_petlastvaccinatedage)
     TextView txt_petlastvaccinatedage;
 
-    @BindView(R.id.btn_submit)
-    Button btn_submit;
+    @BindView(R.id.btn_continue)
+    Button btn_continue;
 
     private List<DropDownListResponse.DataBean.PetTypeBean> petTypeList;
     private List<DropDownListResponse.DataBean.PetBreedBean> petBreedTypeList;
@@ -224,7 +224,7 @@ public class AddYourPetActivity extends AppCompatActivity {
         });
 
         rlpetlastvaccinatedagedate.setOnClickListener(v -> SelectDate());
-        btn_submit.setOnClickListener(v -> addYourPetValidator());
+        btn_continue.setOnClickListener(v -> addYourPetValidator());
         img_back.setOnClickListener(v -> onBackPressed());
         txt_skip.setOnClickListener(v -> {
             Intent intent = new Intent(AddYourPetActivity.this,PetLoverDashboardActivity.class);

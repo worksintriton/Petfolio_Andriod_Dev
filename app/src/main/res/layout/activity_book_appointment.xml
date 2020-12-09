@@ -273,7 +273,7 @@
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp"
                 tools:ignore="Autofill,LabelFor"
-                android:maxLength="100"
+                android:maxLength="95"
                 android:maxLines="2"
                 android:ellipsize="end"/>
 
