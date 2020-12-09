@@ -66,14 +66,14 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
         Log.w(TAG,"Pet name-->"+newAppointmentResponseList.get(0).getPet_id().getPet_name());
 
         currentItem = newAppointmentResponseList.get(position);
-        holder.txt_clinicname.setText("Clinic name : "+newAppointmentResponseList.get(0).getDoc_business_info().get(0).getClinic_name());
-        holder.txt_petname.setText("Pet name : "+ newAppointmentResponseList.get(0).getPet_id().getPet_name());
+        holder.txt_clinicname.setText(newAppointmentResponseList.get(0).getDoc_business_info().get(0).getClinic_name());
+        holder.txt_petname.setText(newAppointmentResponseList.get(0).getPet_id().getPet_name());
 
         if(newAppointmentResponseList.get(0).getService_name() != null){
-            holder.txt_service_info.setText("Service name :"+" "+newAppointmentResponseList.get(0).getService_name());
+            holder.txt_service_info.setText(newAppointmentResponseList.get(0).getService_name());
         }
         if(newAppointmentResponseList.get(0).getService_amount() != null){
-            holder.txt_service_cost.setText("Service Cost : "+newAppointmentResponseList.get(0).getService_amount());
+            holder.txt_service_cost.setText(newAppointmentResponseList.get(0).getService_amount());
         }
 
         if(newAppointmentResponseList.get(position).getAppointment_types() != null && newAppointmentResponseList.get(position).getAppointment_types().equalsIgnoreCase("Emergency")){

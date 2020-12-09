@@ -226,4 +226,10 @@
     <string name="locationstatuschange">Are you sure you want to change this location as default address?</string>
     <string name="save_changes">Save Changes</string>
 
+    <string name="turn_on_your">Turn on your</string>
+    <string name="location_services">location services</string>
+    <string name="deny">Deny</string>
+    <string name="allow">Allow</string>
+    <string name="colon1">:</string>
+
 </resources>

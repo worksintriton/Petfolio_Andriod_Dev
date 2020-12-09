@@ -36,7 +36,9 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinitus.requestpojo.LocationAddRequest;
+import com.petfolio.infinitus.requestpojo.LocationUpdateRequest;
 import com.petfolio.infinitus.responsepojo.LocationAddResponse;
+import com.petfolio.infinitus.responsepojo.LocationUpdateResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -78,6 +80,9 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
     @BindView(R.id.txt_cityname)
     TextView txt_cityname;
 
+    @BindView(R.id.txt_cityname_title)
+    TextView txt_cityname_title;
+
     @BindView(R.id.txt_address)
     TextView txt_address;
 
@@ -113,7 +118,7 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
     AVLoadingIndicatorView avi_indicator;
 
 
-    String userid = "",state = "",country = "",postalcode = "",street;
+    String userid = "",locationnickname,state = "",country = "",postalcode = "",street;
 
 
     String name = "", emailID = "",  mobile = "", type = "";
@@ -124,6 +129,8 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
 
     String LocationType = "Home";
     private String PostalCode;
+    private boolean defaultstatus;
+    private String id;
 
 
     @Override
@@ -135,10 +142,7 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
 
         ButterKnife.bind(this);
 
-        SessionManager sessionManager = new SessionManager(AddMyAddressOldUserActivity.this);
-        HashMap<String, String> user = sessionManager.getProfileDetails();
-        userid = user.get(SessionManager.KEY_ID);
-        Log.w(TAG,"userid--->"+userid);
+
         avi_indicator.setVisibility(View.GONE);
         imgBack.setOnClickListener(this);
         btn_change.setOnClickListener(this);
@@ -175,7 +179,15 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
             AddressLine = extras.getString("address");
             PostalCode = extras.getString("PostalCode");
 
+
+            id = extras.getString("id");
+            userid = extras.getString("userid");
+            locationnickname = extras.getString("nickname");
+            //LocationType = extras.getString("locationtype");
+            defaultstatus = extras.getBoolean("defaultstatus");
+
             txt_cityname.setText(CityName);
+            txt_cityname_title.setText(CityName);
             txt_address.setText(AddressLine);
             txt_pincode.setText(PostalCode);
 
@@ -184,6 +196,11 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
 
 
         }
+
+        SessionManager session = new SessionManager(getApplicationContext());
+        HashMap<String, String> user = session.getProfileDetails();
+        userid = user.get(SessionManager.KEY_ID);
+        Log.w(TAG," userid : "+userid);
 
         rglocationtype.setOnCheckedChangeListener((group, checkedId) -> {
             int radioButtonID = rglocationtype.getCheckedRadioButtonId();
@@ -277,12 +294,106 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
         if (can_proceed) {
             if (new ConnectionDetector(AddMyAddressOldUserActivity.this).isNetworkAvailable(AddMyAddressOldUserActivity.this)) {
                 locationAddResponseCall();
+
+
                 }
 
 
             }
 
         }
+
+
+
+
+
+    public void locationUpdateResponseCall(){
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        //Creating an object of our api interface
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<LocationUpdateResponse> call = apiInterface.locationUpdateResponseCall(RestUtils.getContentType(),locationUpdateRequest());
+        Log.w(TAG,"url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<LocationUpdateResponse>() {
+            @Override
+            public void onResponse(@NotNull Call<LocationUpdateResponse> call, @NotNull Response<LocationUpdateResponse> response) {
+                avi_indicator.smoothToHide();
+
+                Log.w(TAG, "LocationUpdateResponse" + new Gson().toJson(response.body()));
+
+
+                if (response.body() != null) {
+
+                    if(response.body().getCode() == 200){
+                        Intent i = new Intent(AddMyAddressOldUserActivity.this, ManageAddressActivity.class);
+                        startActivity(i);
+
+                    }
+                }else{
+                    if(response.body() != null){
+                        showErrorLoading(response.body().getMessage());
+
+                    }
+                }
+
+            }
+
+
+
+
+
+
+            @Override
+            public void onFailure(@NotNull Call<LocationUpdateResponse> call, @NotNull Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"LocationUpdateResponse flr"+t.getMessage());
+            }
+        });
+
+    }
+    private LocationUpdateRequest locationUpdateRequest() {
+        /*
+         * _id : 5fcf09c3928d5f5634501b35
+         * user_id : 5fc61b82b750da703e48da78
+         * location_state : asdfasdfasd
+         * location_country : asdfasdfasd
+         * location_city : asdfasdfasd
+         * location_pin : asdfasdfasd
+         * location_address : asdfasdfasd
+         * location_lat : 18.90123
+         * location_long : 12.09123
+         * location_title : 23-10-1996 12:09 AM
+         * location_nickname : 123
+         * default_status : false
+         * date_and_time : 23-10-1996 12:09 AM
+         * __v : 0
+         */
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
+        Log.w(TAG,"AddLocationRequest--->"+"latitude"+latitude+" "+"longtitude :"+longtitude);
+
+
+        LocationUpdateRequest locationUpdateRequest = new LocationUpdateRequest();
+        locationUpdateRequest.set_id(id);
+        locationUpdateRequest.setUser_id(userid);
+        locationUpdateRequest.setLocation_state(state);
+        locationUpdateRequest.setLocation_country(country);
+        locationUpdateRequest.setLocation_city(CityName);
+        locationUpdateRequest.setLocation_pin(postalcode);
+        locationUpdateRequest.setLocation_address(AddressLine);
+        locationUpdateRequest.setLocation_lat(latitude);
+        locationUpdateRequest.setLocation_long(longtitude);
+        locationUpdateRequest.setLocation_title(LocationType);
+        locationUpdateRequest.setLocation_nickname(edt_pickname.getText().toString());
+        locationUpdateRequest.setDefault_status(defaultstatus);
+        locationUpdateRequest.setDate_and_time(currentDateandTime);
+
+        Log.w(TAG," locationUpdateRequest"+ new Gson().toJson(locationUpdateRequest));
+        return locationUpdateRequest;
+    }
+
 
     public void locationAddResponseCall(){
         avi_indicator.setVisibility(View.VISIBLE);
@@ -360,7 +471,7 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
         locationAddRequest.setLocation_long(longtitude);
         locationAddRequest.setLocation_title(LocationType);
         locationAddRequest.setLocation_nickname(edt_pickname.getText().toString());
-        locationAddRequest.setDefault_status(true);
+        locationAddRequest.setDefault_status(false);
         locationAddRequest.setDate_and_time(currentDateandTime);
         locationAddRequest.setMobile_type("Android");
 

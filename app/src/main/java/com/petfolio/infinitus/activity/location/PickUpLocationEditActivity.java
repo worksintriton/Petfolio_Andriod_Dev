@@ -115,6 +115,8 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
     // Initialize the AutocompleteSupportFragment.
     AutocompleteSupportFragment autocompleteFragment;
     private String fromactivity;
+    private String id,userid,locationnickname,LocationType;
+    private boolean defaultstatus;
 
 
     @Override
@@ -130,6 +132,13 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
         if (extras != null) {
             fromactivity = extras.getString("fromactivity");
             Log.w(TAG,"fromactivity if : "+fromactivity);
+            id = extras.getString("id");
+            userid = extras.getString("userid");
+            locationnickname = extras.getString("nickname");
+            LocationType = extras.getString("locationtype");
+            defaultstatus = extras.getBoolean("defaultstatus");
+            latitude = extras.getDouble("lat");
+            longitude = extras.getDouble("lon");
 
         }else{
             fromactivity  = TAG;
@@ -144,6 +153,11 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PickUpLocationEditActivity.this, PlacesSearchActivity.class);
+                intent.putExtra("id",id);
+                intent.putExtra("userid",userid);
+                intent.putExtra("nickname",locationnickname);
+                intent.putExtra("locationtype",LocationType);
+                intent.putExtra("defaultstatus",defaultstatus);
                 intent.putExtra("fromactivity",TAG);
                 startActivity(intent);
             }
@@ -185,11 +199,20 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
             @Override
             public void onClick(View v) {
                 if(CityName != null){
-                       Intent intent = new Intent(PickUpLocationEditActivity.this,AddMyAddressOldUserActivity.class);
+                       Intent intent = new Intent(PickUpLocationEditActivity.this,EditMyAddressActivity.class);
                         intent.putExtra("latlng",strlatlng);
                         intent.putExtra("cityname",CityName);
                         intent.putExtra("address",AddressLine);
-                        intent.putExtra("PostalCode",PostalCode);
+                        intent.putExtra("pincode",PostalCode);
+                        intent.putExtra("id",id);
+                        intent.putExtra("userid",userid);
+                        intent.putExtra("nickname",locationnickname);
+                        intent.putExtra("locationtype",LocationType);
+                        intent.putExtra("defaultstatus",defaultstatus);
+                        intent.putExtra("lat",latitude);
+                        intent.putExtra("lon",longitude);
+
+
                         intent.putExtra("fromactivity",fromactivity);
                         startActivity(intent);
                 }else{
@@ -426,7 +449,7 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
             if(lat != 0 && lon != 0){
                 latitude = lat;
                 longitude = lon;
-                Log.w(TAG,"BundleData for search places :"+"lat :"+lat+" "+"lon :"+lon);
+                Log.w(TAG,"BundleData for search places :"+"lat :"+lat+" "+"lon :"+lon+" fromactivity : "+fromactivity);
 
                 latLng = new LatLng(lat, lon);
             }
@@ -442,7 +465,20 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
                     Log.w(TAG,"onLocationChanged BundleData"+strlatlng);
                     getAddressResultResponse(latLng);
                 }
-            }else {
+            }
+            else if(fromactivity != null && fromactivity.equalsIgnoreCase("EditMyAddressActivity")){
+                Log.w(TAG,"else if fromactivity : "+fromactivity);
+
+                if(latitude != 0 && longitude != 0){
+                    latLng = new LatLng(latitude,longitude);
+                    Log.w(TAG,"onLocationChanged BundleData if-->"+"Call getAddressResultResponse");
+                    Log.w(TAG,"onLocationChanged BundleData for searched places :"+"lat :"+lat+" "+"lon :"+lon);
+                    strlatlng = String.valueOf(latLng);
+                    Log.w(TAG,"onLocationChanged BundleData"+strlatlng);
+                    getAddressResultResponse(latLng);
+                }
+            }
+            else {
                 Log.w(TAG,"onLocationChanged BundleData else");
                 mMap.clear();
                 //  mMap.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getName().toString()));

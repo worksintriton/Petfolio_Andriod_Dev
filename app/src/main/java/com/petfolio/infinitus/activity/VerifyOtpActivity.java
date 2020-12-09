@@ -32,6 +32,7 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.appUtils.ApplicationData;
+import com.petfolio.infinitus.appUtils.NumericKeyBoardTransformationMethod;
 import com.petfolio.infinitus.doctor.DoctorBusinessInfoActivity;
 import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
 import com.petfolio.infinitus.petlover.AddYourPetActivity;
@@ -107,6 +108,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
         applicationData = (ApplicationData) getApplication();
 
         ButterKnife.bind(this);
+        edt_otp.setTransformationMethod(new NumericKeyBoardTransformationMethod());
 
         
         avi_indicator.setVisibility(View.GONE);

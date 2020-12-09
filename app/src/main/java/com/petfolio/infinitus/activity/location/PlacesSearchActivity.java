@@ -75,6 +75,9 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
     String placesresults = "";
     private String fromactivity;
 
+    private String id,userid,locationnickname,LocationType;
+    private boolean defaultstatus;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +93,14 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             fromactivity = extras.getString("fromactivity");
+
             Log.w(TAG,"fromactivity if : "+fromactivity);
+
+            id = extras.getString("id");
+            userid = extras.getString("userid");
+            locationnickname = extras.getString("nickname");
+            LocationType = extras.getString("locationtype");
+            defaultstatus = extras.getBoolean("defaultstatus");
 
         }
 
@@ -242,6 +252,8 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
                     Log.w(TAG,"addressResponseCall cityname-->"+selectedPlaceName+" fromactivity : "+fromactivity);
 
                     if(fromactivity != null && fromactivity.equalsIgnoreCase("PickUpLocationDenyActivity")){
+                        Log.w(TAG,"if-->"+fromactivity);
+
                         Intent i = new Intent(PlacesSearchActivity.this, PickUpLocationDenyActivity.class);
                         i.putExtra("cityname",selectedPlaceName);
                         i.putExtra("placesearchactivity","placesearchactivity");
@@ -251,7 +263,26 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
                         i.putExtras(b);
                         startActivity(i);
                     }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PickUpLocationEditActivity")){
+                        Log.w(TAG,"else if-->"+fromactivity);
+
                         Intent i = new Intent(PlacesSearchActivity.this, PickUpLocationEditActivity.class);
+                        i.putExtra("cityname",selectedPlaceName);
+                        i.putExtra("placesearchactivity","placesearchactivity");
+                        Bundle b = new Bundle();
+                        b.putDouble("lat", lat);
+                        b.putDouble("lon", lon);
+                        i.putExtras(b);
+
+                        i.putExtra("id",id);
+                        i.putExtra("userid",userid);
+                        i.putExtra("nickname",locationnickname);
+                        i.putExtra("locationtype",LocationType);
+                        i.putExtra("defaultstatus",defaultstatus);
+                        startActivity(i);
+                    }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PickUpLocationActivity")){
+                        Log.w(TAG,"else if-->"+fromactivity);
+
+                        Intent i = new Intent(PlacesSearchActivity.this, PickUpLocationActivity.class);
                         i.putExtra("cityname",selectedPlaceName);
                         i.putExtra("placesearchactivity","placesearchactivity");
                         Bundle b = new Bundle();
@@ -260,6 +291,8 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
                         i.putExtras(b);
                         startActivity(i);
                     }else{
+                        Log.w(TAG,"else -->"+"PickUpLocationAllowActivity");
+
                         Intent i = new Intent(PlacesSearchActivity.this, PickUpLocationAllowActivity.class);
                         i.putExtra("cityname",selectedPlaceName);
                         i.putExtra("placesearchactivity","placesearchactivity");

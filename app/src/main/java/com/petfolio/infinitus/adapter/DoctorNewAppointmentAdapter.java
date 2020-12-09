@@ -71,13 +71,13 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
         Log.w(TAG,"Pet name-->"+newAppointmentResponseList.get(0).getPet_id().getPet_name());
 
         currentItem = newAppointmentResponseList.get(position);
-        holder.txt_petname.setText("Pet name : "+newAppointmentResponseList.get(0).getPet_id().getPet_name());
-        holder.txt_pettype.setText("Pet type : "+ newAppointmentResponseList.get(0).getPet_id().getPet_type());
+        holder.txt_petname.setText(newAppointmentResponseList.get(0).getPet_id().getPet_name());
+        holder.txt_pettype.setText(newAppointmentResponseList.get(0).getPet_id().getPet_type());
         if(newAppointmentResponseList.get(0).getService_name() != null){
-            holder.txt_service_info.setText("Service name :"+" "+newAppointmentResponseList.get(0).getService_name());
+            holder.txt_service_info.setText(newAppointmentResponseList.get(0).getService_name());
         }
         if(newAppointmentResponseList.get(0).getService_amount() != null){
-            holder.txt_service_cost.setText("Service Cost : "+newAppointmentResponseList.get(0).getService_amount());
+            holder.txt_service_cost.setText(newAppointmentResponseList.get(0).getService_amount());
         }
 
            if (newAppointmentResponseList.get(0).getPet_id().getPet_img() != null && !newAppointmentResponseList.get(0).getPet_id().getPet_img().isEmpty()) {

@@ -28,7 +28,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:layout_above="@+id/llNotification"
                 android:background="#ffffff"
                 android:orientation="horizontal">
               <!--  <ImageView
@@ -53,59 +52,67 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Turn on your"
-                android:textSize="18sp"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/futuramediumbt"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:layout_marginTop="40dp"
-                />
+                android:gravity="center"
+                android:text="@string/turn_on_your"
+                android:textColor="@color/new_txt_color"
+                android:textSize="18sp"
+                android:textStyle="normal" />
+
             <TextView
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="location services"
-                android:textSize="18sp"
                 android:fontFamily="@font/futuramediumbt"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                />
+                android:gravity="center"
+                android:text="@string/location_services"
+                android:textColor="@color/new_txt_color"
+                android:textSize="18sp"
+                android:textStyle="normal" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_marginTop="20dp">
+                android:layout_margin="20dp">
+
                 <Button
                     android:id="@+id/btn_deny"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/rounded_corner_button_deny"
-                    android:text="Deny"
-                    android:textColor="@color/white"
-                    android:textAllCaps="false"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginEnd="10dp"/>
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/new_rounded_corner_btn_orange"
+                    android:fontFamily="@font/futuramediumbt"
+                    android:text="@string/deny"
+                    android:textAllCaps="false"
+                    android:textColor="@color/new_txt_color"
+                    android:textSize="18sp"
+                    android:textStyle="normal" />
+
                 <Button
                     android:id="@+id/btn_allow"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_marginBottom="20dp"
-                    android:background="@drawable/rounded_corner_button_allow"
-                    android:text="Allow"
+                    android:layout_weight="1"
+                    android:background="@drawable/new_rounded_corner_btn"
+                    android:fontFamily="@font/futuramediumbt"
+                    android:text="@string/allow"
+                    android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textAllCaps="false"/>
+                    android:textSize="18sp"
+                    android:textStyle="normal" />
 
             </LinearLayout>
 

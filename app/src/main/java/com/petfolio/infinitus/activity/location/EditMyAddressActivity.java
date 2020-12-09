@@ -34,10 +34,8 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
-import com.petfolio.infinitus.requestpojo.LocationAddRequest;
+
 import com.petfolio.infinitus.requestpojo.LocationUpdateRequest;
-import com.petfolio.infinitus.responsepojo.LocationAddResponse;
 import com.petfolio.infinitus.responsepojo.LocationUpdateResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -46,11 +44,11 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
+
 import java.util.Locale;
 import java.util.Objects;
 
@@ -124,7 +122,7 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
     AVLoadingIndicatorView avi_indicator;
 
 
-    String userid = "",state = "",country = "",postalcode = "",street;
+    String userid = "",state = "",country = "",street;
 
 
     String name = "", emailID = "",  mobile = "", type = "";
@@ -198,6 +196,7 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
             defaultstatus = extras.getBoolean("defaultstatus");
             latitude = extras.getDouble("lat");
             longtitude = extras.getDouble("lon");
+            Log.w(TAG," latitude : "+latitude+" longtitude : "+longtitude);
 
             if(locationnickname != null){
                 edt_pickname.setText(locationnickname);
@@ -311,7 +310,14 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
                 break;
             case R.id.btn_change:
                Intent intent = new Intent(getApplicationContext(),PickUpLocationEditActivity.class);
-               intent.putExtra("fromactivity",TAG);
+                intent.putExtra("id",id);
+                intent.putExtra("userid",userid);
+                intent.putExtra("nickname",locationnickname);
+                intent.putExtra("locationtype",LocationType);
+                intent.putExtra("defaultstatus",defaultstatus);
+                intent.putExtra("lat",latitude);
+                intent.putExtra("lon",longtitude);
+                intent.putExtra("fromactivity",TAG);
                startActivity(intent);
                 break;
             case  R.id.btn_savethislocation:
@@ -363,7 +369,7 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
                 if (response.body() != null) {
 
                     if(response.body().getCode() == 200){
-                        Intent i = new Intent(EditMyAddressActivity.this, PetLoverDashboardActivity.class);
+                        Intent i = new Intent(EditMyAddressActivity.this, ManageAddressActivity.class);
                         startActivity(i);
 
                     }
@@ -418,7 +424,7 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
         locationUpdateRequest.setLocation_state(state);
         locationUpdateRequest.setLocation_country(country);
         locationUpdateRequest.setLocation_city(CityName);
-        locationUpdateRequest.setLocation_pin(postalcode);
+        locationUpdateRequest.setLocation_pin(pincode);
         locationUpdateRequest.setLocation_address(AddressLine);
         locationUpdateRequest.setLocation_lat(latitude);
         locationUpdateRequest.setLocation_long(longtitude);
@@ -431,45 +437,6 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
         return locationUpdateRequest;
     }
 
-    private void getAddress(double latitude, double longitude) {
-        StringBuilder result = new StringBuilder();
-        try {
-            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-            List<Address> listAddresses = geocoder.getFromLocation(latitude, longitude, 1);
-            if (null != listAddresses && listAddresses.size() > 0) {
-                Address address = listAddresses.get(0);
-                result.append(address.getLocality()).append("\n");
-                result.append(address.getCountryName());
-                Log.w(TAG,"getAddress-->"+result.toString());
-
-                 state = listAddresses.get(0).getAdminArea();
-                 country = listAddresses.get(0).getCountryName();
-                 String subLocality = listAddresses.get(0).getSubLocality();
-                 postalcode = listAddresses.get(0).getPostalCode();
-                AddressLine = listAddresses.get(0).getAddressLine(0);
-                CityName = listAddresses.get(0).getLocality();
-
-
-                // Thoroughfare seems to be the street name without numbers
-                 street = address.getThoroughfare();
-
-                 if(street != null){
-                     txt_location.setText(street);
-                 }else if(subLocality != null ){
-                     txt_location.setText(subLocality);
-                 }
-
-
-                Log.w(TAG,"AddressLine :"+AddressLine+"CityName :"+CityName+"street :"+street);
-
-                Log.w(TAG,"state :"+state+" "+"country :"+country+"subLocality :"+subLocality+"postalcode :"+postalcode);
-            }
-        } catch (IOException e) {
-            Log.e("tag", Objects.requireNonNull(e.getMessage()));
-        }
-
-        result.toString();
-    }
 
 
     public void showErrorLoading(String errormesage){

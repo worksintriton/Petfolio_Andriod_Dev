@@ -54,17 +54,15 @@ public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
 
     @SuppressLint("SetTextI18n")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
-
         Log.w(TAG,"Pet name-->"+completedAppointmentResponseList.get(0).getPet_id().getPet_name());
-
-        holder.txt_petname.setText("Pet name : "+completedAppointmentResponseList.get(0).getPet_id().getPet_name());
-        holder.txt_pettype.setText("Pet type : "+ completedAppointmentResponseList.get(0).getPet_id().getPet_type());
+        holder.txt_petname.setText(completedAppointmentResponseList.get(0).getDoc_business_info().get(0).getClinic_name());
+        holder.txt_pettype.setText(completedAppointmentResponseList.get(0).getPet_id().getPet_name());
         holder.txt_completed_date.setText("Completed on:"+" "+completedAppointmentResponseList.get(0).getCompleted_at());
         if(completedAppointmentResponseList.get(0).getService_name() != null){
-            holder.txt_service_info.setText("Service name :"+" "+completedAppointmentResponseList.get(0).getService_name());
+            holder.txt_service_info.setText(completedAppointmentResponseList.get(0).getService_name());
         }
         if(completedAppointmentResponseList.get(0).getService_amount() != null){
-            holder.txt_service_cost.setText("Service Cost : "+completedAppointmentResponseList.get(0).getService_amount());
+            holder.txt_service_cost.setText(completedAppointmentResponseList.get(0).getService_amount());
         }
 
 

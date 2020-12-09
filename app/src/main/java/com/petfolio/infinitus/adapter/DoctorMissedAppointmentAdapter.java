@@ -58,15 +58,15 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
         Log.w(TAG,"Pet name-->"+missedAppointmentResponseList.get(0).getPet_id().getPet_name());
 
         currentItem = missedAppointmentResponseList.get(position);
-        holder.txt_petname.setText("Pet name : "+missedAppointmentResponseList.get(0).getPet_id().getPet_name());
-        holder.txt_pettype.setText("Pet type : "+ missedAppointmentResponseList.get(0).getPet_id().getPet_type());
+        holder.txt_petname.setText(missedAppointmentResponseList.get(0).getPet_id().getPet_name());
+        holder.txt_pettype.setText(missedAppointmentResponseList.get(0).getPet_id().getPet_type());
         holder.txt_missed_date.setText("Missed on:"+" "+missedAppointmentResponseList.get(0).getMissed_at());
 
         if(missedAppointmentResponseList.get(0).getService_name() != null){
-            holder.txt_service_info.setText("Service name :"+" "+missedAppointmentResponseList.get(0).getService_name());
+            holder.txt_service_info.setText(missedAppointmentResponseList.get(0).getService_name());
         }
         if(missedAppointmentResponseList.get(0).getService_amount() != null){
-            holder.txt_service_cost.setText("Service Cost : "+missedAppointmentResponseList.get(0).getService_amount());
+            holder.txt_service_cost.setText(missedAppointmentResponseList.get(0).getService_amount());
         }
         if (missedAppointmentResponseList.get(0).getPet_id().getPet_img() != null && !missedAppointmentResponseList.get(0).getPet_id().getPet_img().isEmpty()) {
 

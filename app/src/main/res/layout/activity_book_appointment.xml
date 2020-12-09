@@ -273,8 +273,9 @@
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp"
                 tools:ignore="Autofill,LabelFor"
-                android:inputType="textMultiLine"
-                android:scrollbars="vertical"/>
+                android:maxLength="100"
+                android:maxLines="2"
+                android:ellipsize="end"/>
 
             <TextView
                 android:id="@+id/txt_lbl_uploadpet"

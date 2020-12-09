@@ -81,7 +81,7 @@
             android:background="@drawable/rectangle_corner"
             android:fontFamily="@font/futuramediumbt"
             android:hint="@string/enter_your_otp"
-            android:inputType="number"
+            android:inputType="numberPassword"
             android:maxLength="6"
             android:padding="15dp"
             android:textColor="@color/green_color"
