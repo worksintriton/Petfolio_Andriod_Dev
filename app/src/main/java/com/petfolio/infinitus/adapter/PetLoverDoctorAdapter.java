@@ -74,6 +74,8 @@ public class PetLoverDoctorAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
           currentItem = doctorDetailsResponseList.get(position);
           holder.txt_doctors_name.setText(currentItem.getDoctor_name());
           holder.txt_doctors_specialization.setText(currentItem.getSpecialization().get(0).getSpecialization());
+          holder.txt_star_rating.setText( doctorDetailsResponseList.get(position).getStar_count()+"");
+          holder.txt_review_count.setText( doctorDetailsResponseList.get(position).getReview_count()+"");
           if (currentItem.getDoctor_img() != null && !currentItem.getDoctor_img().isEmpty()) {
 
             Glide.with(context)
@@ -145,7 +147,7 @@ public class PetLoverDoctorAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
     }
 
     class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_doctors_name,txt_doctors_specialization;
+        public TextView txt_doctors_name,txt_doctors_specialization,txt_star_rating,txt_review_count;
         public LinearLayout ll_root;
         public ImageView img_doctors_image;
 
@@ -158,6 +160,8 @@ public class PetLoverDoctorAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
             txt_doctors_specialization = itemView.findViewById(R.id.txt_doctors_specialization);
             img_doctors_image = itemView.findViewById(R.id.img_doctors_image);
             ll_root = itemView.findViewById(R.id.ll_root);
+            txt_star_rating = itemView.findViewById(R.id.txt_star_rating);
+            txt_review_count = itemView.findViewById(R.id.txt_review_count);
 
 
 

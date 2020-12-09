@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="10dp"
     android:orientation="vertical">
 
@@ -10,9 +11,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:id="@+id/ll_root"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginStart="10dp">
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp">
         <ImageView
             android:id="@+id/img_products_image"
             android:layout_width="105dp"
@@ -43,7 +44,7 @@
                 android:fontFamily="@font/futuramediumbt"
                 android:text="Product price"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="10sp"
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:layout_marginTop="5dp" />
@@ -52,25 +53,66 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/futuramediumbt"
-                android:text="@string/specialization"
+                android:text="productsoffer"
                 android:textColor="@color/green"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:layout_marginTop="5dp"
                 />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
+
+            <RelativeLayout
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/light_orange_background">
+
+                <TextView
+                    android:id="@+id/txt_star_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="5dp"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/futuramediumbt"
+                    android:text="@string/rating_value"
+                    android:textColorHint="@color/new_txt_color"
+                    android:textSize="12sp"
+                    app:drawableLeftCompat="@drawable/ic_baseline_star_rate_24"
+                    app:drawableStartCompat="@drawable/ic_baseline_star_rate_24" />
 
 
-
-
-
-
-
-
-
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/txt_review_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/futurabookfont"
+                android:padding="2dp"
+                android:text="@string/review_count"
+                android:textColor="@color/new_sec_txt_color"
+                android:textSize="14sp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"/>
         </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+    </LinearLayout>
 
 
 </LinearLayout>

@@ -60,11 +60,6 @@ public class PetLoverServicesAdapter extends  RecyclerView.Adapter<RecyclerView.
 
     @SuppressLint("SetTextI18n")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
-
-
-
-
-
           currentItem = serviceDetailsResponseList.get(position);
           holder.txt_petlover_servicesname.setText(currentItem.getService_title());
           if (currentItem.getService_icon() != null && !currentItem.getService_icon().isEmpty()) {
@@ -74,7 +69,7 @@ public class PetLoverServicesAdapter extends  RecyclerView.Adapter<RecyclerView.
                     //.load(R.drawable.logo)
                     .into(holder.img_petlover_services);
 
-        }
+           }
           else{
             Glide.with(context)
                     .load(R.drawable.services)
@@ -91,7 +86,6 @@ public class PetLoverServicesAdapter extends  RecyclerView.Adapter<RecyclerView.
         gradientDrawable.setCornerRadius(radius);
         gradientDrawable.setStroke(strokeWidth, Color.parseColor(currentItem.getBackground_color()));
         holder.ll_root.setBackground(gradientDrawable);
-
         holder.ll_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -2,6 +2,7 @@ package com.petfolio.infinitus.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,9 +57,12 @@ public class PetLoverProductsAdapter extends  RecyclerView.Adapter<RecyclerView.
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
           currentItem = productDetailsResponseList.get(position);
+          Log.w(TAG,"Offervalue :"+currentItem.getProduct_offer_value());
           holder.txt_products_title.setText(currentItem.getProduct_title());
-          holder.txt_products_price.setText(currentItem.getProduct_prices()+"");
-          holder.txt_products_offer.setText(currentItem.getProduct_offer_value()+"");
+        //  holder.txt_products_price.setText(currentItem.getProduct_prices()+"");
+          holder.txt_products_offer.setText("  "+currentItem.getProduct_offer_value()+" % off");
+          holder.txt_star_rating.setText( productDetailsResponseList.get(position).getReview_count()+"");
+          holder.txt_review_count.setText( productDetailsResponseList.get(position).getReview_count()+"");
           if (currentItem.getProducts_img() != null && !currentItem.getProducts_img().isEmpty()) {
 
             Glide.with(context)
@@ -142,7 +146,7 @@ public class PetLoverProductsAdapter extends  RecyclerView.Adapter<RecyclerView.
     }
 
     class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_products_title,txt_products_price,txt_products_offer;
+        public TextView txt_products_title,txt_products_price,txt_products_offer,txt_star_rating,txt_review_count;
         public LinearLayout ll_root;
         public ImageView img_products_image;
 
@@ -156,6 +160,8 @@ public class PetLoverProductsAdapter extends  RecyclerView.Adapter<RecyclerView.
             txt_products_offer = itemView.findViewById(R.id.txt_products_offer);
             img_products_image = itemView.findViewById(R.id.img_products_image);
             ll_root = itemView.findViewById(R.id.ll_root);
+            txt_star_rating = itemView.findViewById(R.id.txt_star_rating);
+            txt_review_count = itemView.findViewById(R.id.txt_review_count);
 
 
 

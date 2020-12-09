@@ -175,7 +175,7 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
                             txt_clinicname.setText(clinicname);
                         }
                         if(doctorname != null){
-                            txt_drname.setText(clinicname);
+                            txt_drname.setText(doctorname);
                         }
                         if(reviewcount != null){
                             txt_review_count.setText(reviewcount+"");

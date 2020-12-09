@@ -252,7 +252,7 @@ public interface RestApiInterface {
     Call<LocationDeleteResponse> locationDeleteResponseCall(@Header("Content-Type") String type, @Body LocationDeleteRequest locationDeleteRequest);
 
     /*Location status change*/
-    @POST("locationdetails/edit")
+    @POST("locationdetails/default/edit")
     Call<LocationStatusChangeResponse>locationStatusChangeResponseCall(@Header("Content-Type") String type, @Body LocationStatusChangeRequest locationStatusChangeRequest);
 
     /*Location update*/

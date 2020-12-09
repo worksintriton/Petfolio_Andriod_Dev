@@ -33,6 +33,8 @@ import com.petfolio.infinitus.activity.LoginActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 //import com.petfolio.infinitus.sessionmanager.SessionManager;
 
+import java.util.HashMap;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -49,6 +51,8 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
     private ActionBarDrawerToggle drawerToggle;
     ImageView drawerImg;
     CircleImageView nav_header_imageView;
+    TextView nav_header_profilename, nav_header_emailid,nav_header_edit;
+
     FrameLayout frameLayout;
     TextView header_title, nav_header_textView;
     //SessionManager session;
@@ -90,7 +94,11 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
         inflater = LayoutInflater.from(this);
         view = inflater.inflate(R.layout.doctor_navigation_drawer_layout, null);
 
-
+        session = new SessionManager(getApplicationContext());
+        HashMap<String, String> user = session.getProfileDetails();
+        name = user.get(SessionManager.KEY_FIRST_NAME);
+        emailid = user.get(SessionManager.KEY_EMAIL_ID);
+        phoneNo = user.get(SessionManager.KEY_MOBILE);
 
 
 
@@ -99,8 +107,6 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
         initUI(view);
         initToolBar(view);
 
-       session = new SessionManager(getApplicationContext());
-       session.checkLogin();
 
        // myBoradcastReceiver();
     }
@@ -137,7 +143,6 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
 
                     //Replacing the main content with ContentFragment Which is our Inbox View;
                     case R.id.nav_item_one:
-                        gotoMyAppointments();
                         return true;
 
                     // For rest of the options we just show a toast on click
@@ -146,19 +151,15 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
                         return true;
 
                     case R.id.nav_item_three:
-                        gotoHealthFiles();
                         return true;
 
                     case R.id.nav_item_five:
-                        gotoMyFamily();
                         return true;
 
                     case R.id.nav_item_six:
-                        gotoInvoices();
                         return true;
 
                     case R.id.nav_item_seven:
-                        gotoTermsandConditions();
                         return true;
                     case R.id.nav_item_eight:
                         confirmLogoutDialog();
@@ -182,9 +183,13 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
         drawerLayout = view.findViewById(R.id.drawer_layout);
         header = navigationView.getHeaderView(0);
         nav_header_imageView = header.findViewById(R.id.nav_header_imageView);
-        nav_header_textView = header.findViewById(R.id.nav_header_emailid);
+        nav_header_emailid = header.findViewById(R.id.nav_header_emailid);
+        nav_header_profilename = header.findViewById(R.id.nav_header_profilename);
+        nav_header_edit = header.findViewById(R.id.nav_header_edit);
         // Glide.with(this).load(image_url).into(nav_header_imageView);
-        nav_header_textView.setText(name);
+
+        nav_header_emailid.setText(emailid);
+        nav_header_profilename.setText(name);
 
 
        /* if (!image_url.isEmpty()) {
@@ -301,55 +306,9 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
     }
 
 
-    private void gotoMyFamily() {
-      // finish();
-    }
 
 
 
-    private void gotoMyAppointments() {
-
-    }
-
-    private void gotoHealthFiles() {
-
-
-    }
-
-    private void gotoInvoices() {
-
-    }
-    private void gotoAboutSalveoHealthCare() {
-
-    }
-
-    private void gotoTermsandConditions() {
-      /*  Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.addCategory(Intent.CATEGORY_BROWSABLE);
-        intent.setData(Uri.parse("http://www.mysalveo.com/#/terms"));
-        startActivity(intent);*/
-        try
-        {
-             String pdfUrl = "http://mysalveo.com/api/uploads/Salveo%20Terms%20&%20Conditions,%20Privacy%20Policy.pdf";
-            Intent intentUrl = new Intent(Intent.ACTION_VIEW);
-            intentUrl.setDataAndType(Uri.parse(pdfUrl), "application/pdf");
-            intentUrl.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intentUrl);
-        }
-        catch (ActivityNotFoundException e)
-        {
-            Toast.makeText(DoctorNavigationDrawer.this, "No PDF Viewer Installed", Toast.LENGTH_LONG).show();
-        }
-
-    }
-
-
-
-    private void gotoProfile() {
-
-
-    }
 
 
     private void gotoLogout() {

@@ -2,11 +2,10 @@ package com.petfolio.infinitus.petlover;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -112,8 +111,7 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
         initUI(view);
         initToolBar(view);
 
-        session = new SessionManager(getApplicationContext());
-        session.checkLogin();
+
 
        // myBoradcastReceiver();
     }
@@ -148,7 +146,7 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
                     //Replacing the main content with ContentFragment Which is our Inbox View;
                     case R.id.nav_item_one:
-                        gotoMyFamily();
+
                         return true;
 
                     // For rest of the options we just show a toast on click
@@ -161,18 +159,14 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
                         return true;
 
                     case R.id.nav_item_four:
-                        gotoInvoices();
                         return true;
 
                     case R.id.nav_item_five:
-                        gotoAboutSalveoHealthCare();
                         return true;
 
                     case R.id.nav_item_six:
-                        gotoTermsandConditions();
                         return true;
                     case R.id.nav_item_seven:
-                        Log.w(TAG,"Click logout");
                         confirmLogoutDialog();
                         return true;
 
@@ -328,9 +322,7 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
     }
 
 
-    private void gotoMyFamily() {
-      // finish();
-    }
+
 
 
 
@@ -339,45 +331,13 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
     }
 
-    private void gotoHealthFiles() {
-
-
-    }
-
-    private void gotoInvoices() {
-
-    }
-    private void gotoAboutSalveoHealthCare() {
-
-    }
-
-    private void gotoTermsandConditions() {
-      /*  Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.addCategory(Intent.CATEGORY_BROWSABLE);
-        intent.setData(Uri.parse("http://www.mysalveo.com/#/terms"));
-        startActivity(intent);*/
-        try
-        {
-             String pdfUrl = "http://mysalveo.com/api/uploads/Salveo%20Terms%20&%20Conditions,%20Privacy%20Policy.pdf";
-            Intent intentUrl = new Intent(Intent.ACTION_VIEW);
-            intentUrl.setDataAndType(Uri.parse(pdfUrl), "application/pdf");
-            intentUrl.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intentUrl);
-        }
-        catch (ActivityNotFoundException e)
-        {
-            Toast.makeText(PetLoverNavigationDrawer.this, "No PDF Viewer Installed", Toast.LENGTH_LONG).show();
-        }
-
-    }
 
 
 
-    private void gotoProfile() {
 
 
-    }
+
+
 
 
     private void gotoLogout() {

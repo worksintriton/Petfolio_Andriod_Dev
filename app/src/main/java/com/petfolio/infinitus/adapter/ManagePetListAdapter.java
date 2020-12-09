@@ -90,7 +90,6 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
-                        Toast.makeText(context,"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();
                         return true;
                     }
                 });
@@ -100,7 +99,7 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
         });
         //closing the setOnClickListener method
 
-        if(position == petListResponseList.size()+1){
+        if(position == petListResponseList.size()){
             holder.ll_add.setVisibility(View.VISIBLE);
         }else{
             holder.ll_add.setVisibility(View.GONE);
