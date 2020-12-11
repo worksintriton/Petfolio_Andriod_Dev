@@ -56,6 +56,9 @@ public class DropDownListResponse {
         private List<SpecialzationBean> specialzation;
         private List<PetHandleBean> pet_handle;
         private List<ServicesBean> services;
+        private List<CommunicationTypeBean> communication_type;
+
+
 
         public List<PetTypeBean> getPet_type() {
             return Pet_type;
@@ -143,6 +146,14 @@ public class DropDownListResponse {
             public void setPet_breed(String pet_breed) {
                 this.pet_breed = pet_breed;
             }
+        }
+
+        public List<CommunicationTypeBean> getCommunication_type() {
+            return communication_type;
+        }
+
+        public void setCommunication_type(List<CommunicationTypeBean> communication_type) {
+            this.communication_type = communication_type;
         }
 
         public static class GenderBean {
@@ -244,5 +255,36 @@ public class DropDownListResponse {
                 this.services = services;
             }
         }
+
+        public static class CommunicationTypeBean {
+            /**
+             * com_type : Online
+             * Value : 0
+             */
+
+            private String com_type;
+            private int Value;
+
+
+            public String getCom_type() {
+                return com_type;
+            }
+
+            public void setCom_type(String com_type) {
+                this.com_type = com_type;
+
+            }
+
+
+            public int getValue() {
+                return Value;
+            }
+
+            public void setValue(int Value) {
+                this.Value = Value;
+
+            }
+        }
+
     }
 }

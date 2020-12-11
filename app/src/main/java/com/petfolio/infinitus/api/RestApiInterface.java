@@ -13,6 +13,7 @@ import com.petfolio.infinitus.requestpojo.DoctorMyCalendarAvlDaysRequest;
 import com.petfolio.infinitus.requestpojo.DoctorMyCalendarAvlTimesRequest;
 import com.petfolio.infinitus.requestpojo.DoctorMyCalendarUpdateDocDateRequest;
 import com.petfolio.infinitus.requestpojo.DoctorNewAppointmentRequest;
+import com.petfolio.infinitus.requestpojo.DoctorSearchRequest;
 import com.petfolio.infinitus.requestpojo.FBTokenUpdateRequest;
 import com.petfolio.infinitus.requestpojo.HolidayDeleteRequest;
 import com.petfolio.infinitus.requestpojo.HolidayListRequest;
@@ -50,6 +51,7 @@ import com.petfolio.infinitus.responsepojo.DoctorMyCalendarAvlDaysResponse;
 import com.petfolio.infinitus.responsepojo.DoctorMyCalendarAvlTimesResponse;
 import com.petfolio.infinitus.responsepojo.DoctorMyCalendarUpdateDocDateResponse;
 import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
+import com.petfolio.infinitus.responsepojo.DoctorSearchResponse;
 import com.petfolio.infinitus.responsepojo.DropDownListResponse;
 import com.petfolio.infinitus.responsepojo.FBTokenUpdateResponse;
 import com.petfolio.infinitus.responsepojo.FileUploadResponse;
@@ -269,6 +271,10 @@ public interface RestApiInterface {
     /*Location update*/
     @POST("locationdetails/edit")
     Call<LocationUpdateResponse>locationUpdateResponseCall(@Header("Content-Type") String type, @Body LocationUpdateRequest locationUpdateRequest);
+
+    /*Doctor Name and specialization search*/
+    @POST("doctordetails/text_search")
+    Call<DoctorSearchResponse>doctorSearchResponseCall(@Header("Content-Type") String type, @Body DoctorSearchRequest doctorSearchRequest);
 
 
 

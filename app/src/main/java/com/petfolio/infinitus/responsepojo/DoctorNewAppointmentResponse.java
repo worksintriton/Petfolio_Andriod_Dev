@@ -959,8 +959,7 @@ public class DoctorNewAppointmentResponse {
       private String dr_name;
       private String clinic_name;
       private String clinic_loc;
-      private int clinic_lat;
-      private int clinic_long;
+
       private boolean profile_status;
       private String profile_verification_status;
       private String date_and_time;
@@ -1035,21 +1034,7 @@ public class DoctorNewAppointmentResponse {
 
       }
 
-      public int getClinic_lat() {
-        return clinic_lat;
-      }
 
-      public void setClinic_lat(int clinic_lat) {
-        this.clinic_lat = clinic_lat;
-      }
-
-      public int getClinic_long() {
-        return clinic_long;
-      }
-
-      public void setClinic_long(int clinic_long) {
-        this.clinic_long = clinic_long;
-      }
 
       public boolean isProfile_status() {
         return profile_status;

@@ -78,6 +78,32 @@
                 android:textSize="14sp"
                 tools:ignore="Autofill,LabelFor" />
 
+            <!--Communication type-->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rectangle_corner"
+                android:padding="10dp">
+
+                <Spinner
+                    android:id="@+id/spr_communicationtype"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:src="@drawable/option"
+                    tools:ignore="ContentDescription" />
+
+            </RelativeLayout>
+
             <!--Education Details-->
 
             <TextView

@@ -110,6 +110,9 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
     @BindView(R.id.rlpetlastvaccinatedagedate)
     RelativeLayout rlpetlastvaccinatedagedate;
 
+    @BindView(R.id.llpetlastvaccinatedagedate)
+    LinearLayout llpetlastvaccinatedagedate;
+
 
     @BindView(R.id.txt_petlastvaccinatedage)
     TextView txt_petlastvaccinatedage;
@@ -117,10 +120,8 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
     @BindView(R.id.btn_save_changes)
     Button btn_save_changes;
 
-    private List<DropDownListResponse.DataBean.PetTypeBean> petTypeList;
-    private List<DropDownListResponse.DataBean.PetBreedBean> petBreedTypeList;
+
     private List<DropDownListResponse.DataBean.GenderBean> genderTypeList;
-    private List<DropDownListResponse.DataBean.ColorBean> petColorTypeList;
 
     private String strPetType;
     private String strPetBreedType;
@@ -131,7 +132,6 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
     String SelectedLastVaccinateddate = "";
     private static final int DATE_PICKER_ID = 0 ;
     private Dialog alertDialog;
-    private List<DropDownListResponse.DataBean.SpecialzationBean> petSpecilaziationList;
 
     private List<PetTypeListResponse.DataBean.UsertypedataBean> usertypedataBeanList;
 
@@ -194,8 +194,12 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
 
             if(vaccinatedstatus){
                 radioButton_Yes.setChecked(true);
+                rlpetlastvaccinatedagedate.setVisibility(View.VISIBLE);
+                llpetlastvaccinatedagedate.setVisibility(View.VISIBLE);
             }else{
                 radioButton_No.setChecked(true);
+                rlpetlastvaccinatedagedate.setVisibility(View.GONE);
+                llpetlastvaccinatedagedate.setVisibility(View.GONE);
 
             }
 
@@ -204,12 +208,17 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
                 RadioButton radioButton = rgvaccinated.findViewById(radioButtonID);
                 selectedRadioButton = (String) radioButton.getText();
                 Log.w(TAG,"selectedRadioButton" + selectedRadioButton);
+
+
                 if(selectedRadioButton.equalsIgnoreCase("Yes")){
                     vaccinatedstatus = true;
-
-                }else{
+                    rlpetlastvaccinatedagedate.setVisibility(View.VISIBLE);
+                    llpetlastvaccinatedagedate.setVisibility(View.VISIBLE);
+                }
+                else{
                     vaccinatedstatus = false;
-
+                    rlpetlastvaccinatedagedate.setVisibility(View.GONE);
+                    llpetlastvaccinatedagedate.setVisibility(View.GONE);
 
                 }
 
@@ -352,17 +361,7 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
                         Log.w(TAG,"DropDownListResponse" + new Gson().toJson(response.body()));
-
-                        petTypeList = response.body().getData().getPet_type();
-                        petBreedTypeList = response.body().getData().getPet_breed();
                         genderTypeList = response.body().getData().getGender();
-                        petColorTypeList = response.body().getData().getColor();
-                        petSpecilaziationList = response.body().getData().getSpecialzation();
-                        Log.w(TAG,"petSpecilaziationList : "+new Gson().toJson(petSpecilaziationList));
-                        if(petSpecilaziationList != null && petSpecilaziationList.size()>0){
-
-                        }
-
                         if(genderTypeList != null && genderTypeList.size()>0){
                             setPetGenderType(genderTypeList);
                         }

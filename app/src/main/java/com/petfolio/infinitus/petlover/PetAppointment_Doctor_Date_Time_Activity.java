@@ -57,6 +57,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -581,13 +582,20 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                            Intent intent = new Intent(PetAppointment_Doctor_Date_Time_Activity.this,PetLoverDashboardActivity.class);
-                            startActivity(intent);
+                        if(response.body().getMessage() != null){
+                            showSuceessLoading(response.body().getMessage());
+
+                        }
+
+
 
                     }
                     else{
+                        if(response.body().getMessage() != null){
+                            showErrorLoading(response.body().getMessage());
 
-                        showErrorLoading(response.body().getMessage());
+                        }
+
 
                     }
                 }
@@ -604,6 +612,8 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         });
 
     }
+
+
     private PetAppointmentCreateRequest petAppointmentCreateRequest() {
 
         /*
@@ -664,6 +674,59 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         Log.w(TAG,"petAppointmentCreateRequest"+ "--->" + new Gson().toJson(petAppointmentCreateRequest));
         return petAppointmentCreateRequest;
     }
+
+    private void showSuceessLoading1(String message) {
+
+        new SweetAlertDialog(PetAppointment_Doctor_Date_Time_Activity.this, SweetAlertDialog.SUCCESS_TYPE)
+                .setTitleText("Successfull")
+                .setContentText(message)
+                .setCancelText("Cancel")
+                .setConfirmText("Ok")
+                .showCancelButton(true)
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.cancel();
+                    }
+                })
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        Intent intent = new Intent(PetAppointment_Doctor_Date_Time_Activity.this, PetLoverDashboardActivity.class);
+                        startActivity(intent);
+                        sweetAlertDialog.dismiss();
+
+
+                    }
+                })
+                .show();
+    }
+
+    public void showSuceessLoading(String errormesage){
+        alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(errormesage);
+        alertDialogBuilder.setPositiveButton("ok",
+                (arg0, arg1) -> hideLoadingSuccess());
+
+
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+
+    public void hideLoadingSuccess() {
+        try {
+            Intent intent = new Intent(PetAppointment_Doctor_Date_Time_Activity.this, PetLoverDashboardActivity.class);
+            startActivity(intent);
+            alertDialog.dismiss();
+
+        } catch (Exception ignored) {
+
+        }
+    }
+
+
 
 
 }

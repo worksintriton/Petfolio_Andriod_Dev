@@ -29,7 +29,6 @@ import androidx.core.content.ContextCompat;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.activity.LoginActivity;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.appUtils.FileUtil;
@@ -63,7 +62,7 @@ import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class EditYourPetImageActivity extends AppCompatActivity implements View.OnClickListener {
-    private static final String TAG = "RegisterYourPetActivity";
+    private  String TAG = "EditYourPetImageActivity";
     @BindView(R.id.img_back)
     ImageView img_back;
 
@@ -96,7 +95,7 @@ public class EditYourPetImageActivity extends AppCompatActivity implements View.
 
 
 
-    private String ServerUrlImagePath;
+
 
     private static final int REQUEST_READ_CLINIC_PIC_PERMISSION = 786;
     private static final int REQUEST_CLINIC_CAMERA_PERMISSION_CODE = 785 ;
@@ -123,6 +122,7 @@ public class EditYourPetImageActivity extends AppCompatActivity implements View.
         txt_skip.setOnClickListener(this);
         btn_continue.setOnClickListener(this);
         txt_change_petimage.setOnClickListener(this);
+        img_pet_imge.setOnClickListener(this);
 
         SessionManager  session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
@@ -131,7 +131,7 @@ public class EditYourPetImageActivity extends AppCompatActivity implements View.
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            petid = extras.getString("id");
+            petid = extras.getString("petid");
             petimage = extras.getString("petimage");
         }
 
@@ -166,9 +166,21 @@ public class EditYourPetImageActivity extends AppCompatActivity implements View.
 
                     }
                 break;
+                case R.id.img_pet_imge:
+                    changePetImage();
+                break;
                 case R.id.btn_continue:
                     PetAddImageResponseCall();
                 break;
+        }
+    }
+
+    private void changePetImage() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkMultiplePermissions(REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS, EditYourPetImageActivity.this);
+        }else{
+            choosePetImage();
+
         }
     }
 
@@ -349,14 +361,14 @@ public class EditYourPetImageActivity extends AppCompatActivity implements View.
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
 
-                        ServerUrlImagePath = response.body().getData();
+                        petimage = response.body().getData();
                         btn_continue.setVisibility(View.VISIBLE);
 
-                        Log.w(TAG, "ServerUrlImagePath " + ServerUrlImagePath);
+                        Log.w(TAG, "ServerUrlImagePath " + petimage);
 
                         if( response.body().getData() != null){
                             Glide.with(EditYourPetImageActivity.this)
-                                    .load(ServerUrlImagePath)
+                                    .load(petimage)
                                     .into(img_pet_imge);
                         }else{
                             Glide.with(EditYourPetImageActivity.this)
@@ -563,7 +575,7 @@ public class EditYourPetImageActivity extends AppCompatActivity implements View.
     private PetAddImageRequest petAddImageRequest() {
         PetAddImageRequest petAddImageRequest = new PetAddImageRequest();
         petAddImageRequest.set_id(petid);
-        petAddImageRequest.setPet_img(ServerUrlImagePath);
+        petAddImageRequest.setPet_img(petimage);
         Log.w(TAG,"petAddImageRequest"+ "--->" + new Gson().toJson(petAddImageRequest));
         return petAddImageRequest;
     }

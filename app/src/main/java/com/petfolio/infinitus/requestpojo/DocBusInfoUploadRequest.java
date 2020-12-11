@@ -25,6 +25,7 @@ public class DocBusInfoUploadRequest {
      * profile_verification_status : Not verified
      * date_and_time : 23-10-2020 11:10 AM
      * mobile_type : Android
+     * communication_type  : 1
      */
 
     private String user_id;
@@ -36,6 +37,15 @@ public class DocBusInfoUploadRequest {
     private double clinic_long;
 
     private String mobile_type;
+    private String communication_type;
+
+    public String getCommunication_type() {
+        return communication_type;
+    }
+
+    public void setCommunication_type(String communication_type) {
+        this.communication_type = communication_type;
+    }
 
     public String getMobile_type() {
         return mobile_type;
@@ -90,13 +100,22 @@ public class DocBusInfoUploadRequest {
 
     private List<PhotoIdPicBean> photo_id_pic;
 
-    private int profile_status;
+    private boolean profile_status;
+
+    public boolean isProfile_status() {
+        return profile_status;
+    }
+
+    public void setProfile_status(boolean profile_status) {
+        this.profile_status = profile_status;
+    }
+
     private String profile_verification_status;
     private String date_and_time;
 
 
 
-    public DocBusInfoUploadRequest(String user_id, String dr_title, String dr_name, String clinic_name, String clinic_loc, double clinic_lat, double clinic_long, List<EducationDetailsBean> education_details, List<ExperienceDetailsBean> experience_details, List<SpecializationBean> specialization, List<PetHandledBean> pet_handled, List<ClinicPicBean> clinic_pic, List<CertificatePicBean> certificate_pic, List<GovtIdPicBean> govt_id_pic, List<PhotoIdPicBean> photo_id_pic, int profile_status, String profile_verification_status, String date_and_time,String mobile_type) {
+    public DocBusInfoUploadRequest(String user_id, String dr_title, String dr_name, String clinic_name, String clinic_loc, double clinic_lat, double clinic_long, List<EducationDetailsBean> education_details, List<ExperienceDetailsBean> experience_details, List<SpecializationBean> specialization, List<PetHandledBean> pet_handled, List<ClinicPicBean> clinic_pic, List<CertificatePicBean> certificate_pic, List<GovtIdPicBean> govt_id_pic, List<PhotoIdPicBean> photo_id_pic, boolean profile_status, String profile_verification_status, String date_and_time,String mobile_type,String communication_type) {
         this.user_id = user_id;
         this.dr_title = dr_title;
         this.dr_name = dr_name;
@@ -116,6 +135,7 @@ public class DocBusInfoUploadRequest {
         this.profile_verification_status = profile_verification_status;
         this.date_and_time = date_and_time;
         this.mobile_type = mobile_type;
+        this.communication_type = communication_type;
     }
 
     public String getUser_id() {
@@ -174,13 +194,6 @@ public class DocBusInfoUploadRequest {
         this.clinic_long = clinic_long;
     }
 
-    public int getProfile_status() {
-        return profile_status;
-    }
-
-    public void setProfile_status(int profile_status) {
-        this.profile_status = profile_status;
-    }
 
     public String getProfile_verification_status() {
         return profile_verification_status;

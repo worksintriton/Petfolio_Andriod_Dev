@@ -104,10 +104,8 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
     @BindView(R.id.btn_continue)
     Button btn_continue;
 
-    private List<DropDownListResponse.DataBean.PetTypeBean> petTypeList;
-    private List<DropDownListResponse.DataBean.PetBreedBean> petBreedTypeList;
+
     private List<DropDownListResponse.DataBean.GenderBean> genderTypeList;
-    private List<DropDownListResponse.DataBean.ColorBean> petColorTypeList;
 
     private String strPetType;
     private String strPetBreedType;
@@ -121,7 +119,6 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
     Boolean isvaccinated = true;
     private Dialog alertDialog;
     private String userid;
-    private List<DropDownListResponse.DataBean.SpecialzationBean> petSpecilaziationList;
 
     private List<PetTypeListResponse.DataBean.UsertypedataBean> usertypedataBeanList;
 
@@ -303,15 +300,8 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
                     if(200 == response.body().getCode()){
                         Log.w(TAG,"DropDownListResponse" + new Gson().toJson(response.body()));
 
-                        petTypeList = response.body().getData().getPet_type();
-                        petBreedTypeList = response.body().getData().getPet_breed();
                         genderTypeList = response.body().getData().getGender();
-                        petColorTypeList = response.body().getData().getColor();
-                        petSpecilaziationList = response.body().getData().getSpecialzation();
-                        Log.w(TAG,"petSpecilaziationList : "+new Gson().toJson(petSpecilaziationList));
-                        if(petSpecilaziationList != null && petSpecilaziationList.size()>0){
 
-                        }
 
                         if(genderTypeList != null && genderTypeList.size()>0){
                             setPetGenderType(genderTypeList);
