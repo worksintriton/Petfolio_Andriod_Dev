@@ -123,6 +123,7 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
         txt_skip.setOnClickListener(this);
         btn_continue.setOnClickListener(this);
         txt_uploadpetimage.setOnClickListener(this);
+        img_pet_imge.setOnClickListener(this);
 
         SessionManager  session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
@@ -146,17 +147,32 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
                 case R.id.txt_skip:
                     gotoPetLoverProfileScreenActivity();
                 break;
-                case R.id.txt_uploadpetimage:
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        checkMultiplePermissions(REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS, AddYourPetImageOlduserActivity.this);
-                    }else{
-                        choosePetImage();
 
-                    }
+                case R.id.txt_uploadpetimage:
+                   gotoUplodPetImage();
                 break;
+
+                case R.id.img_pet_imge:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    checkMultiplePermissions(REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS, AddYourPetImageOlduserActivity.this);
+                }else{
+                    choosePetImage();
+
+                }
+                break;
+
                 case R.id.btn_continue:
                     PetAddImageResponseCall();
                 break;
+        }
+    }
+
+    private void gotoUplodPetImage() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkMultiplePermissions(REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS, AddYourPetImageOlduserActivity.this);
+        }else{
+            choosePetImage();
+
         }
     }
 

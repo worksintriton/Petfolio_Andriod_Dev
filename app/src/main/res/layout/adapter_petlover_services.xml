@@ -8,16 +8,18 @@
     <RelativeLayout
         android:id="@+id/rl_root"
         android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:orientation="vertical">
+        android:layout_height="80dp">
 
-        <com.github.siyamed.shapeimageview.CircularImageView
-            android:id="@+id/civ_serviceimage"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-           android:layout_centerInParent="true"
-            android:scaleType="fitXY"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/cv_serviceimage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
             android:src="@drawable/services" />
+
+
+
+
 
 
     </RelativeLayout>

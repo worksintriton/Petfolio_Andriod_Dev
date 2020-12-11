@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/futuramediumbt"
             android:text="@string/sign_up"
-            android:textColor="@color/black"
+            android:textColor="@color/new_txt_color"
             android:textSize="20sp" />
 
 
@@ -62,7 +62,7 @@
                     android:layout_marginLeft="20dp"
                     android:fontFamily="@font/futuramediumbt"
                     android:text="@string/usertypes"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_txt_color"
                     android:textSize="20sp" />
 
                 <RelativeLayout
@@ -76,16 +76,16 @@
                         android:layout_height="35dp"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
-                        android:background="@drawable/button_capsule"
+                        android:background="@drawable/new_rounded_corner_btn_orange"
+                        android:drawableStart="@drawable/drawableleftchangeusertype"
                         android:drawableLeft="@drawable/drawableleftchangeusertype"
                         android:fontFamily="@font/futuramediumbt"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
                         android:text="@string/change_user_type"
                         android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"
-                        android:drawableStart="@drawable/drawableleftchangeusertype" />
+                        android:textColor="@color/new_txt_color"
+                        android:textSize="14sp" />
                 </RelativeLayout>
 
             </LinearLayout>
@@ -104,17 +104,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/rectangle_corner"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     android:fontFamily="@font/futuramediumbt"
                     android:hint="@string/first_name"
                     android:inputType="text"
                     android:maxLength="25"
                     android:padding="15dp"
-                    android:textColor="@color/green_color"
-                    android:textColorHint="@color/green_color"
+                    android:textColor="@color/new_light_green"
+                    android:textColorHint="@color/dark_gray"
                     android:textSize="14sp"
-                    tools:ignore="Autofill,LabelFor"
-                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                    />
+                    tools:ignore="Autofill,LabelFor" />
 
                 <EditText
                     android:id="@+id/edt_lastname"
@@ -122,17 +121,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/rectangle_corner"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     android:fontFamily="@font/futuramediumbt"
                     android:hint="@string/last_name"
                     android:inputType="text"
                     android:maxLength="25"
                     android:padding="15dp"
-                    android:textColor="@color/green_color"
-                    android:textColorHint="@color/green_color"
+                    android:textColor="@color/new_light_green"
+                    android:textColorHint="@color/dark_gray"
                     android:textSize="14sp"
-                    tools:ignore="Autofill,LabelFor"
-                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                    />
+                    tools:ignore="Autofill,LabelFor" />
 
                 <EditText
                     android:id="@+id/edt_email"
@@ -144,8 +142,8 @@
                     android:hint="@string/email"
                     android:inputType="text"
                     android:padding="15dp"
-                    android:textColor="@color/green_color"
-                    android:textColorHint="@color/green_color"
+                    android:textColor="@color/new_light_green"
+                    android:textColorHint="@color/dark_gray"
                     android:textSize="14sp"
                     tools:ignore="Autofill,LabelFor,TextFields" />
 
@@ -163,11 +161,11 @@
                         android:background="@null"
                         android:fontFamily="@font/futuramediumbt"
                         android:hint="@string/phone"
-                        android:inputType="numberPassword"
+                        android:inputType="phone"
                         android:maxLength="10"
                         android:padding="15dp"
-                        android:textColor="@color/green_color"
-                        android:textColorHint="@color/green_color"
+                        android:textColor="@color/new_light_green"
+                        android:textColorHint="@color/dark_gray"
                         android:textSize="14sp"
                         tools:ignore="Autofill,LabelFor" />
 
@@ -176,7 +174,7 @@
                         android:id="@+id/txt_country_code"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/rounded_curve"
+                        android:background="@drawable/rounded_color_pr"
                         android:fontFamily="@font/futuramediumbt"
                         android:gravity="center"
                         android:padding="10dp"
@@ -207,11 +205,11 @@
             android:id="@+id/btn_continue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_curve"
+            android:background="@drawable/new_rounded_corner_btn"
             android:fontFamily="@font/futuramediumbt"
             android:text="Continue"
             android:textAllCaps="false"
-            android:textColor="@color/whiteFive"
+            android:textColor="@color/white"
             android:textSize="18sp"
             tools:ignore="HardcodedText" />
     </LinearLayout>
@@ -221,7 +219,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        app:indicatorColor="@color/green"
+        app:indicatorColor="@color/new_green_btn"
         app:indicatorName="LineSpinFadeLoaderIndicator" />
 
 

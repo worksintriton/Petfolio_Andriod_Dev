@@ -36,6 +36,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.AddImageListAdapter;
@@ -166,6 +167,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
     private String selectedAppointmentType = "Emergency";
     private String petId;
     private String doctorid;
+    private String petimage;
 
 
     @Override
@@ -226,6 +228,17 @@ public class BookAppointmentActivity extends AppCompatActivity {
                     edt_petname.setText(petName);
                     txt_pettype.setText(petType);
                     txt_petbreed.setText(petBreed);
+
+                    if(petimage != null){
+                        Glide.with(BookAppointmentActivity.this)
+                                .load(petimage)
+                                .into(img_pet_imge);
+                    }else{
+                        Glide.with(BookAppointmentActivity.this)
+                                .load(R.drawable.image_thumbnail)
+                                .into(img_pet_imge);
+
+                    }
 
                     rl_pettype.setVisibility(View.GONE);
                     rl_petbreed.setVisibility(View.GONE);
@@ -321,6 +334,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
                             intent.putExtra("selectedAppointmentType",selectedAppointmentType);
                             Log.w(TAG,"selectedAppointmentType : "+selectedAppointmentType);
                             startActivity(intent);
+
                         }
 
                     }
@@ -561,6 +575,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
             petType = petDetailsResponseByUserIdList.get(i).getPet_type();
             petBreed = petDetailsResponseByUserIdList.get(i).getPet_breed();
             petId =   petDetailsResponseByUserIdList.get(i).get_id();
+            petimage =   petDetailsResponseByUserIdList.get(i).getPet_img();
 
 
             Log.w(TAG, "petType-->" + petType);

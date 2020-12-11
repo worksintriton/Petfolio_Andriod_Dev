@@ -224,6 +224,13 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
 
         avi_indicator.setVisibility(View.GONE);
 
+        txt_doctors.setVisibility(View.GONE);
+        txt_seemore_doctors.setVisibility(View.GONE);
+        txt_services.setVisibility(View.GONE);
+        txt_seemore_services.setVisibility(View.GONE);
+        txt_products.setVisibility(View.GONE);
+        txt_seemore_products.setVisibility(View.GONE);
+
         SessionManager sessionManager = new SessionManager(mContext);
         HashMap<String, String> user = sessionManager.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
@@ -310,6 +317,13 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
                 Log.w(TAG,"PetLoverDashboardResponse" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
+                        txt_doctors.setVisibility(View.VISIBLE);
+                        txt_seemore_doctors.setVisibility(View.VISIBLE);
+                        txt_services.setVisibility(View.VISIBLE);
+                        txt_seemore_services.setVisibility(View.VISIBLE);
+                        txt_products.setVisibility(View.VISIBLE);
+                        txt_seemore_products.setVisibility(View.VISIBLE);
+
                         if (response.body().getData().getDashboarddata() != null) {
                             listHomeBannerResponse = response.body().getData().getDashboarddata().getBanner_details();
                             for (int i = 0; i < listHomeBannerResponse.size(); i++) {

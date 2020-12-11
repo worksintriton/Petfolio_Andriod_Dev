@@ -73,7 +73,12 @@ public class PetLoverDoctorAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
 
           currentItem = doctorDetailsResponseList.get(position);
           holder.txt_doctors_name.setText(currentItem.getDoctor_name());
-          holder.txt_doctors_specialization.setText(currentItem.getSpecialization().get(0).getSpecialization());
+          List<PetLoverDashboardResponse.DataBean.DashboarddataBean.DoctorDetailsBean.SpecializationBean> specializationBeanList = currentItem.getSpecialization();
+
+          for(int i=0;i<specializationBeanList.size();i++){
+              holder.txt_doctors_specialization.setText(specializationBeanList.get(i).getSpecialization());
+
+          }
           holder.txt_star_rating.setText( doctorDetailsResponseList.get(position).getStar_count()+"");
           holder.txt_review_count.setText( doctorDetailsResponseList.get(position).getReview_count()+"");
           if (currentItem.getDoctor_img() != null && !currentItem.getDoctor_img().isEmpty()) {

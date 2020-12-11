@@ -39,7 +39,7 @@
             android:fontFamily="@font/futuramediumbt"
             android:gravity="end"
             android:text="@string/skip"
-            android:textColor="@color/new_txt_color"
+            android:textColor="@color/new_light_green"
             android:textSize="20sp" />
 
 
@@ -320,7 +320,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/new_rounded_corner_btn"
             android:fontFamily="@font/futuramediumbt"
-            android:text="@string/continues"
+            android:text="@string/submit"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="18sp"
@@ -333,7 +333,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="gone"
-        app:indicatorColor="@color/green"
+        app:indicatorColor="@color/new_green_btn"
         app:indicatorName="LineSpinFadeLoaderIndicator" />
 
 

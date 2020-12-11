@@ -105,6 +105,7 @@ public class UserTypesListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
         if (usertypedataBeanList.get(position).isSelected()) {
             Log.w(TAG, "IF isSelected--->");
             holder.ll_usertypes.setBackgroundResource(R.drawable.user_type_bgm);
+            holder.chx_usertypes.setVisibility(View.VISIBLE);
             holder.chx_usertypes.setChecked(true);
             return;
 
@@ -113,6 +114,7 @@ public class UserTypesListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
             Log.w(TAG, "ELSE isSelected--->");
 
            holder.ll_usertypes.setBackgroundResource(R.drawable.user_bgm_trans);
+            holder.chx_usertypes.setVisibility(View.INVISIBLE);
             holder.chx_usertypes.setChecked(false);
 
         }

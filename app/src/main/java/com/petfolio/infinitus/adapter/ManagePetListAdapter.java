@@ -72,10 +72,10 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
         currentItem = petListResponseList.get(position);
         holder.txt_pet_name.setText(petListResponseList.get(position).getPet_name());
 
-        if (petListResponseList.get(position).getPet_img() != null && !petListResponseList.get(0).getPet_img().isEmpty()) {
+        if (petListResponseList.get(position).getPet_img() != null && !petListResponseList.get(position).getPet_img().isEmpty()) {
 
             Glide.with(context)
-                    .load(petListResponseList.get(0).getPet_img())
+                    .load(petListResponseList.get(position).getPet_img())
                     .into(holder.img_pet_imge);
 
         }

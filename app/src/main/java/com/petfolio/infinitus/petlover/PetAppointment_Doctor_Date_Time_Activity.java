@@ -342,8 +342,6 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
                         timesBeanList = response.body().getData().get(0).getTimes();
                         Log.w(TAG,"Size"+doctorDateAvailabilityResponseList.size());
                         if(!response.body().getData().isEmpty()){
-
-
                             Doctor_name = response.body().getData().get(0).getDoctor_name();
                             Doctor_email_id = response.body().getData().get(0).getDoctor_email_id();
                             Doctor_ava_Date = response.body().getData().get(0).getDoctor_ava_Date();

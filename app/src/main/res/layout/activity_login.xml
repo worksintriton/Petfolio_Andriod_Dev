@@ -57,27 +57,29 @@
             android:background="@drawable/rectangle_corner"
             android:fontFamily="@font/futuramediumbt"
             android:hint="@string/emailorphonenumber"
+            android:imeOptions="actionDone"
             android:inputType="numberPassword"
             android:maxLength="10"
+            android:maxLines="1"
             android:padding="15dp"
-            android:textColor="@color/green_color"
-            android:textColorHint="@color/green_color"
+            android:textColor="@color/new_light_green"
+            android:textColorHint="@color/dark_gray"
             android:textSize="14sp"
-            tools:ignore="Autofill,LabelFor,TextFields"
-            android:imeOptions="actionDone"
-            android:maxLines="1"/>
+            tools:ignore="Autofill,LabelFor,TextFields" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="30dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/futuramediumbt"
-                android:textSize="16sp"
-                android:text="@string/new_here"/>
+                android:text="@string/new_here"
+                android:textColor="@color/new_sec_txt_color"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/txt_signup"
@@ -87,7 +89,7 @@
                 android:layout_marginLeft="5dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/sign_up"
-                android:textColor="@color/green_color"
+                android:textColor="@color/new_green_btn"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -96,11 +98,11 @@
             android:id="@+id/btn_verifyotp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_curve"
+            android:background="@drawable/new_rounded_corner_btn"
             android:fontFamily="@font/futuramediumbt"
             android:text="@string/log_in"
             android:textAllCaps="false"
-            android:textColor="@color/whiteFive"
+            android:textColor="@color/white"
             android:textSize="18sp" />
     </LinearLayout>
 
@@ -109,7 +111,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        app:indicatorColor="@color/green"
+        app:indicatorColor="@color/new_green_btn"
         app:indicatorName="LineSpinFadeLoaderIndicator" />
 
 

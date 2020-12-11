@@ -238,4 +238,12 @@
     <string name="product_price">Product price</string>
     <string name="productsoffer">productsoffer</string>
 
+
+    <string name="doctor_comments">Doctor comments</string>
+    <string name="enter_comments">Enter comments..</string>
+    <string name="prescription_medicines">Prescription medicines</string>
+    <string name="no_of_days">No of days</string>
+    <string name="medicine">Medicine</string>
+    <string name="consumption_per_day">Consumption per day</string>
+
 </resources>
