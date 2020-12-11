@@ -2,6 +2,9 @@ package com.petfolio.infinitus.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.activity.location.EditMyAddressActivity;
+import com.petfolio.infinitus.interfaces.PetDeleteListener;
+import com.petfolio.infinitus.petlover.AddYourPetOldUserActivity;
+import com.petfolio.infinitus.petlover.EditYourPetProfileInfoActivity;
 import com.petfolio.infinitus.responsepojo.LocationListAddressResponse;
 import com.petfolio.infinitus.responsepojo.PetListResponse;
 
@@ -31,15 +38,18 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
 
     PetListResponse.DataBean currentItem;
 
+    PetDeleteListener petDeleteListener;
+
 
 
 
     public static String id = "";
 
 
-    public ManagePetListAdapter(Context context, List<PetListResponse.DataBean> petListResponseList, RecyclerView inbox_list) {
+    public ManagePetListAdapter(Context context, List<PetListResponse.DataBean> petListResponseList, RecyclerView inbox_list, PetDeleteListener petDeleteListener) {
         this.petListResponseList = petListResponseList;
         this.context = context;
+        this.petDeleteListener = petDeleteListener;
 
     }
 
@@ -76,6 +86,13 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
 
         }
 
+        holder.ll_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, AddYourPetOldUserActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(i);
+            }
+        });
 
 
         holder.img_settings.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +107,28 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
+                        String titleName = String.valueOf(item.getTitle());
+                        if(titleName != null && titleName.equalsIgnoreCase("Edit")){
+                            Intent i = new Intent(context, EditYourPetProfileInfoActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            i.putExtra("id",petListResponseList.get(position).get_id());
+                            i.putExtra("userid",petListResponseList.get(position).getUser_id());
+                            i.putExtra("petimage",petListResponseList.get(position).getPet_img());
+                            i.putExtra("petname",petListResponseList.get(position).getPet_name());
+                            i.putExtra("pettype",petListResponseList.get(position).getPet_type());
+                            i.putExtra("petbreed",petListResponseList.get(position).getPet_breed());
+                            i.putExtra("petgender",petListResponseList.get(position).getPet_gender());
+                            i.putExtra("petcolor",petListResponseList.get(position).getPet_color());
+                            i.putExtra("petweight",petListResponseList.get(position).getPet_weight());
+                            i.putExtra("petage",petListResponseList.get(position).getPet_age());
+                            i.putExtra("vaccinatedstatus",petListResponseList.get(position).isVaccinated());
+                            i.putExtra("vaccinateddate",petListResponseList.get(position).getLast_vaccination_date());
+                            i.putExtra("defaultstatus",petListResponseList.get(position).isDefault_status());
+                            context.startActivity(i);
+
+                        } else if(titleName != null && titleName.equalsIgnoreCase("Delete")){
+                            petDeleteListener.petDeleteListener(petListResponseList.get(position).isDefault_status(),petListResponseList.get(position).get_id());
+
+                        }
                         return true;
                     }
                 });
@@ -99,11 +138,11 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
         });
         //closing the setOnClickListener method
 
-        if(position == petListResponseList.size()){
-            holder.ll_add.setVisibility(View.VISIBLE);
-        }else{
-            holder.ll_add.setVisibility(View.GONE);
 
+
+
+       if(position == petListResponseList.size()-1){
+            holder.ll_add.setVisibility(View.VISIBLE);
         }
 
     }

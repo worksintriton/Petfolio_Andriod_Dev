@@ -2,20 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-   >
-
-    <TextView
-        android:id="@+id/txt_no_records"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="@string/norecordsfound"
-        android:textColor="@color/color"
-        android:textSize="16sp"
-        android:visibility="gone" />
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:id="@+id/headerView"
@@ -37,11 +24,13 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:fontFamily="@font/futuramediumbt"
-            android:text="@string/edit_pet_info"
+            android:text="@string/add_your_pet"
             android:textColor="@color/new_txt_color"
             android:textSize="20sp" />
+
+
 
 
     </LinearLayout>
@@ -57,10 +46,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:orientation="vertical">
+            android:layout_marginEnd="30dp"
+            android:orientation="vertical"
+            android:layout_marginBottom="30dp">
 
             <EditText
                 android:id="@+id/edt_petname"
@@ -76,7 +66,9 @@
                 android:textColor="@color/green"
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp"
-                tools:ignore="Autofill,LabelFor" />
+                tools:ignore="Autofill,LabelFor"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -166,7 +158,9 @@
                 android:textColor="@color/green"
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp"
-                tools:ignore="Autofill,LabelFor" />
+                tools:ignore="Autofill,LabelFor"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                />
 
             <EditText
                 android:id="@+id/edt_petweight"
@@ -222,17 +216,18 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/radioButton_Yes"
+                        android:id="@+id/radioButton1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/new_green_btn"
+                        android:checked="true"
                         android:fontFamily="@font/futuramediumbt"
                         android:text="@string/yes"
                         android:textColor="@color/new_txt_color"
                         android:textSize="16sp" />
 
                     <RadioButton
-                        android:id="@+id/radioButton_No"
+                        android:id="@+id/radioButton2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
@@ -310,12 +305,12 @@
         android:layout_marginBottom="10dp">
 
         <Button
-            android:id="@+id/btn_save_changes"
+            android:id="@+id/btn_continue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/new_rounded_corner_btn"
             android:fontFamily="@font/futuramediumbt"
-            android:text="Save Changes"
+            android:text="@string/continues"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="18sp"
@@ -327,7 +322,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="gone"
         app:indicatorColor="@color/green"
         app:indicatorName="LineSpinFadeLoaderIndicator" />
 

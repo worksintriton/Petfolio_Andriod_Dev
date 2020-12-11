@@ -60,6 +60,7 @@ import retrofit2.Response;
 
 public class AddYourPetActivity extends AppCompatActivity {
     private static final String TAG = "AddYourPetActivity";
+
     @BindView(R.id.img_back)
     ImageView img_back;
 
@@ -287,8 +288,6 @@ public class AddYourPetActivity extends AppCompatActivity {
 
 
     }
-
-
     public void dropDownListResponseCall(){
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -344,8 +343,6 @@ public class AddYourPetActivity extends AppCompatActivity {
         });
 
     }
-
-
     private void setPetGenderType(List<DropDownListResponse.DataBean.GenderBean> genderTypeList) {
         ArrayList<String> petGendertypeArrayList = new ArrayList<>();
         petGendertypeArrayList.add("Select Pet Gender");
@@ -362,9 +359,6 @@ public class AddYourPetActivity extends AppCompatActivity {
 
         }
     }
-
-
-
     private void SelectDate() {
 
         final Calendar c = Calendar.getInstance();
@@ -455,19 +449,6 @@ public class AddYourPetActivity extends AppCompatActivity {
         if(strPetGenderType.equalsIgnoreCase("Select Pet Gender")){
             final AlertDialog alertDialog = new AlertDialog.Builder(AddYourPetActivity.this).create();
             alertDialog.setMessage(getString(R.string.err_msg_type_of_petgendertype));
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
-                    (dialog, which) -> alertDialog.cancel());
-            alertDialog.show();
-
-            return false;
-        }
-
-        return true;
-    }
-    public boolean validdSelectPetColorType() {
-        if(strPetColorType.equalsIgnoreCase("Select Pet Color")){
-            final AlertDialog alertDialog = new AlertDialog.Builder(AddYourPetActivity.this).create();
-            alertDialog.setMessage(getString(R.string.err_msg_type_of_petcolortype));
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
                     (dialog, which) -> alertDialog.cancel());
             alertDialog.show();

@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -133,8 +134,8 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
 
         try{
             // Initialize Firebase
-            FirebaseApp.initializeApp(this);
-            FirebaseMessaging.getInstance().setAutoInitEnabled(true);
+            FirebaseApp.initializeApp(getApplicationContext());
+            FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);            FirebaseMessaging.getInstance().setAutoInitEnabled(true);
             FirebaseMessaging.getInstance().getToken()
                     .addOnCompleteListener(new OnCompleteListener<String>() {
                         @Override

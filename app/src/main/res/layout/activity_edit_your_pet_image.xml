@@ -2,19 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-  >
-
-    <TextView
-        android:id="@+id/txt_no_records"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="@string/norecordsfound"
-        android:textColor="@color/color"
-        android:textSize="16sp"
-        android:visibility="gone" />
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:id="@+id/headerView"
@@ -45,7 +33,7 @@
         <TextView
             android:id="@+id/txt_skip"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
             android:fontFamily="@font/futuramediumbt"
@@ -58,45 +46,38 @@
     </LinearLayout>
 
 
+    <LinearLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/footerView"
+        android:layout_below="@+id/headerView"
+        android:fillViewport="true"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/content"
+        <ImageView
+            android:id="@+id/img_pet_imge"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/upload"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/txt_change_petimage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_above="@+id/footerView"
-            android:layout_below="@+id/headerView"
-            android:fillViewport="true"
-            android:layout_marginBottom="20dp">
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/futuramediumbt"
+            android:gravity="center"
+            android:text="@string/change_pet_image"
+            android:textColor="@color/new_txt_color"
+            android:textSize="18sp" />
 
 
-
-            <ImageView
-                android:id="@+id/img_loginheader"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="50dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/upload"
-                tools:ignore="ContentDescription" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/futuramediumbt"
-                android:gravity="center"
-                android:text="@string/upload_pet_image"
-                android:textColor="@color/new_txt_color"
-                android:textSize="18sp" />
-
-
-        </LinearLayout>
+    </LinearLayout>
 
 
     <LinearLayout
@@ -110,12 +91,12 @@
         android:layout_marginBottom="10dp">
 
         <Button
-            android:id="@+id/btn_choose"
+            android:id="@+id/btn_continue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/new_rounded_corner_btn"
             android:fontFamily="@font/futuramediumbt"
-            android:text="Choose"
+            android:text="@string/continues"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="18sp"
@@ -127,7 +108,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="gone"
         app:indicatorColor="@color/green"
         app:indicatorName="LineSpinFadeLoaderIndicator" />
 

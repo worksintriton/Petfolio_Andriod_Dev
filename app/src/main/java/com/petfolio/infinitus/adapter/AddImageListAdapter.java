@@ -27,13 +27,16 @@ public class AddImageListAdapter extends RecyclerView.Adapter<AddImageListAdapte
         this.context = context;
         this.ClinicPicBeans = ClinicPicBeans;
 
+
     }
 
     @NonNull
     @Override
     public AddImageListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_images_upload, parent, false);
+
         return new AddImageListHolder(view);
+
     }
 
     @Override

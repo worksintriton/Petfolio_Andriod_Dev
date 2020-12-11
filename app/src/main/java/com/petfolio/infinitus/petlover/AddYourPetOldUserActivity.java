@@ -1,9 +1,5 @@
 package com.petfolio.infinitus.petlover;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -24,19 +20,21 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
-import com.petfolio.infinitus.activity.location.EditMyAddressActivity;
+import com.petfolio.infinitus.activity.location.ManageAddressActivity;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.requestpojo.AddYourPetRequest;
 import com.petfolio.infinitus.requestpojo.BreedTypeRequest;
-import com.petfolio.infinitus.requestpojo.PetAddImageRequest;
-import com.petfolio.infinitus.requestpojo.PetEditRequest;
+import com.petfolio.infinitus.responsepojo.AddYourPetResponse;
 import com.petfolio.infinitus.responsepojo.BreedTypeResponse;
 import com.petfolio.infinitus.responsepojo.DropDownListResponse;
-import com.petfolio.infinitus.responsepojo.PetAddImageResponse;
 import com.petfolio.infinitus.responsepojo.PetDetailsResponse;
 import com.petfolio.infinitus.responsepojo.PetTypeListResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
@@ -60,31 +58,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EditYourPetProfileInfoActivity extends AppCompatActivity {
+public class AddYourPetOldUserActivity extends AppCompatActivity {
+    private  String TAG = "AddYourPetOldUserActivity";
+    @BindView(R.id.img_back)
+    ImageView img_back;
 
-    private String TAG = "EditYourPetProfileInfoActivity";
-    private boolean vaccinatedstatus,defaultstatus;
-    private String petid,userid,petimage,petname,pettype,petbreed,petgender,petcolor;
-    private int petweight,petage;
 
 
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
-
-    @BindView(R.id.rgvaccinated)
-    RadioGroup rgvaccinated;
-
-    @BindView(R.id.radioButton_Yes)
-    RadioButton radioButton_Yes;
-
-    @BindView(R.id.radioButton_No)
-    RadioButton radioButton_No;
-    private String selectedRadioButton;
-
-
-    @BindView(R.id.img_back)
-    ImageView img_back;
-
 
     @BindView(R.id.edt_petname)
     EditText edt_petname;
@@ -107,15 +89,20 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
     @BindView(R.id.edt_petage)
     EditText edt_petage;
 
+    @BindView(R.id.rgvaccinated)
+    RadioGroup rgvaccinated;
+
     @BindView(R.id.rlpetlastvaccinatedagedate)
     RelativeLayout rlpetlastvaccinatedagedate;
 
+    @BindView(R.id.llpetlastvaccinatedagedate)
+    LinearLayout llpetlastvaccinatedagedate;
 
     @BindView(R.id.txt_petlastvaccinatedage)
     TextView txt_petlastvaccinatedage;
 
-    @BindView(R.id.btn_save_changes)
-    Button btn_save_changes;
+    @BindView(R.id.btn_continue)
+    Button btn_continue;
 
     private List<DropDownListResponse.DataBean.PetTypeBean> petTypeList;
     private List<DropDownListResponse.DataBean.PetBreedBean> petBreedTypeList;
@@ -126,16 +113,21 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
     private String strPetBreedType;
     private String strPetGenderType;
     private String strPetColorType;
+    private String selectedRadioButton = "Yes";
 
     private int year, month, day;
     String SelectedLastVaccinateddate = "";
     private static final int DATE_PICKER_ID = 0 ;
+    Boolean isvaccinated = true;
     private Dialog alertDialog;
+    private String userid;
     private List<DropDownListResponse.DataBean.SpecialzationBean> petSpecilaziationList;
 
     private List<PetTypeListResponse.DataBean.UsertypedataBean> usertypedataBeanList;
 
+    private String petTypeid;
 
+    private String strSelectyourPetType;
 
     HashMap<String, String> hashMap_PetTypeid = new HashMap<>();
     private String petTypeId;
@@ -146,86 +138,20 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_your_pet_profile_info);
+        setContentView(R.layout.activity_add_your_pet_old_user);
         ButterKnife.bind(this);
-        SessionManager sessionManager = new SessionManager(EditYourPetProfileInfoActivity.this);
-        HashMap<String, String> user = sessionManager.getProfileDetails();
-        userid = user.get(SessionManager.KEY_ID);
-        Log.w(TAG,"userid--->"+userid);
         avi_indicator.setVisibility(View.GONE);
 
-
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            petid = extras.getString("id");
-            userid = extras.getString("userid");
-            petimage = extras.getString("petimage");
-            petname = extras.getString("petname");
-            strPetType = extras.getString("pettype");
-            strPetBreedType = extras.getString("petbreed");
-            strPetGenderType = extras.getString("petgender");
-            petcolor = extras.getString("petcolor");
-            petweight = extras.getInt("petweight");
-            petage = extras.getInt("petage");
-            vaccinatedstatus = extras.getBoolean("vaccinatedstatus");
-            SelectedLastVaccinateddate = extras.getString("vaccinateddate");
-            defaultstatus = extras.getBoolean("defaultstatus");
-
-            Log.w(TAG,"strPetType : "+strPetType+" strPetBreedType : "+strPetBreedType+" strPetGenderType : "+strPetGenderType);
-
-            if(petname != null){
-                edt_petname.setText(petname);
-            }
-
-            if(petcolor != null){
-                edt_petcolor.setText(petcolor);
-            }
-
-            if(petage != 0){
-                edt_petage.setText(petage+"");
-            }
-            if(petweight != 0){
-                edt_petweight.setText(petweight+"");
-            }
-            if(SelectedLastVaccinateddate != null){
-                txt_petlastvaccinatedage.setText(SelectedLastVaccinateddate);
-            }
+        SessionManager sessionManager = new SessionManager(AddYourPetOldUserActivity.this);
+        HashMap<String, String> user = sessionManager.getProfileDetails();
+        userid = user.get(SessionManager.KEY_ID);
 
 
-            if(vaccinatedstatus){
-                radioButton_Yes.setChecked(true);
-            }else{
-                radioButton_No.setChecked(true);
-
-            }
-
-            rgvaccinated.setOnCheckedChangeListener((group, checkedId) -> {
-                int radioButtonID = rgvaccinated.getCheckedRadioButtonId();
-                RadioButton radioButton = rgvaccinated.findViewById(radioButtonID);
-                selectedRadioButton = (String) radioButton.getText();
-                Log.w(TAG,"selectedRadioButton" + selectedRadioButton);
-                if(selectedRadioButton.equalsIgnoreCase("Yes")){
-                    vaccinatedstatus = true;
-
-                }else{
-                    vaccinatedstatus = false;
-
-
-                }
-
-
-            });
-
-
-
-
-        }
-
-
-        if (new ConnectionDetector(EditYourPetProfileInfoActivity.this).isNetworkAvailable(EditYourPetProfileInfoActivity.this)) {
+        if (new ConnectionDetector(AddYourPetOldUserActivity.this).isNetworkAvailable(AddYourPetOldUserActivity.this)) {
             petTypeListResponseCall();
 
         }
+
         sprpettype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int arg2, long arg3) {
@@ -278,13 +204,32 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
             }
         });
 
+        rgvaccinated.setOnCheckedChangeListener((group, checkedId) -> {
+            int radioButtonID = rgvaccinated.getCheckedRadioButtonId();
+            RadioButton radioButton = rgvaccinated.findViewById(radioButtonID);
+            selectedRadioButton = (String) radioButton.getText();
+            Log.w(TAG,"selectedRadioButton" + selectedRadioButton);
+            if(selectedRadioButton.equalsIgnoreCase("Yes")){
+                isvaccinated = true;
+                rlpetlastvaccinatedagedate.setVisibility(View.VISIBLE);
+                llpetlastvaccinatedagedate.setVisibility(View.VISIBLE);
+            }else{
+                isvaccinated = false;
+                rlpetlastvaccinatedagedate.setVisibility(View.GONE);
+                llpetlastvaccinatedagedate.setVisibility(View.GONE);
+
+            }
+
+        });
 
         rlpetlastvaccinatedagedate.setOnClickListener(v -> SelectDate());
-        btn_save_changes.setOnClickListener(v -> addYourPetValidator());
+        btn_continue.setOnClickListener(v -> addYourPetValidator());
         img_back.setOnClickListener(v -> onBackPressed());
+
+
+
+
     }
-
-
     public void addYourPetValidator() {
         boolean can_proceed = true;
 
@@ -318,13 +263,16 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
             edt_petage.setError("Please enter pet age");
             edt_petage.requestFocus();
             can_proceed = false;
+        } else if (selectedRadioButton.equalsIgnoreCase("Yes") && SelectedLastVaccinateddate.isEmpty()) {
+            showErrorLoading("Please select pet last vaccinated age");
+            can_proceed = false;
         }
 
         if (can_proceed) {
-            if (new ConnectionDetector(EditYourPetProfileInfoActivity.this).isNetworkAvailable(EditYourPetProfileInfoActivity.this)) {
+            if (new ConnectionDetector(AddYourPetOldUserActivity.this).isNetworkAvailable(AddYourPetOldUserActivity.this)) {
 
                 if(validdSelectPetType() && validdSelectPetBreedType() && validdSelectPetGenderType() ) {
-                    petUpdateResponseCall();
+                    addYourPetResponseCall();
                 }
             }
 
@@ -335,6 +283,8 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
 
 
     }
+
+
     public void dropDownListResponseCall(){
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -390,6 +340,8 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
         });
 
     }
+
+
     private void setPetGenderType(List<DropDownListResponse.DataBean.GenderBean> genderTypeList) {
         ArrayList<String> petGendertypeArrayList = new ArrayList<>();
         petGendertypeArrayList.add("Select Pet Gender");
@@ -399,17 +351,16 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
             Log.w(TAG,"petGenderType-->"+petGenderType);
             petGendertypeArrayList.add(petGenderType);
 
-            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(EditYourPetProfileInfoActivity.this, R.layout.spinner_item, petGendertypeArrayList);
+            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(AddYourPetOldUserActivity.this, R.layout.spinner_item, petGendertypeArrayList);
             spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item); // The drop down view
             sprpetgender.setAdapter(spinnerArrayAdapter);
 
-            if (strPetGenderType != null) {
-                int spinnerPosition = spinnerArrayAdapter.getPosition(strPetGenderType);
-                sprpetgender.setSelection(spinnerPosition);
-            }
 
         }
     }
+
+
+
     private void SelectDate() {
 
         final Calendar c = Calendar.getInstance();
@@ -472,7 +423,7 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
     };
     public boolean validdSelectPetType() {
         if(strPetType.equalsIgnoreCase("Select Pet Type")){
-            final AlertDialog alertDialog = new AlertDialog.Builder(EditYourPetProfileInfoActivity.this).create();
+            final AlertDialog alertDialog = new AlertDialog.Builder(AddYourPetOldUserActivity.this).create();
             alertDialog.setMessage(getString(R.string.err_msg_type_of_pettype));
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
                     (dialog, which) -> alertDialog.cancel());
@@ -485,7 +436,7 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
     }
     public boolean validdSelectPetBreedType() {
         if(strPetBreedType.equalsIgnoreCase("Select Pet Breed")){
-            final AlertDialog alertDialog = new AlertDialog.Builder(EditYourPetProfileInfoActivity.this).create();
+            final AlertDialog alertDialog = new AlertDialog.Builder(AddYourPetOldUserActivity.this).create();
             alertDialog.setMessage(getString(R.string.err_msg_type_of_petbreedtype));
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
                     (dialog, which) -> alertDialog.cancel());
@@ -498,7 +449,7 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
     }
     public boolean validdSelectPetGenderType() {
         if(strPetGenderType.equalsIgnoreCase("Select Pet Gender")){
-            final AlertDialog alertDialog = new AlertDialog.Builder(EditYourPetProfileInfoActivity.this).create();
+            final AlertDialog alertDialog = new AlertDialog.Builder(AddYourPetOldUserActivity.this).create();
             alertDialog.setMessage(getString(R.string.err_msg_type_of_petgendertype));
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
                     (dialog, which) -> alertDialog.cancel());
@@ -509,11 +460,118 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
 
         return true;
     }
+    public boolean validdSelectPetColorType() {
+        if(strPetColorType.equalsIgnoreCase("Select Pet Color")){
+            final AlertDialog alertDialog = new AlertDialog.Builder(AddYourPetOldUserActivity.this).create();
+            alertDialog.setMessage(getString(R.string.err_msg_type_of_petcolortype));
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
+                    (dialog, which) -> alertDialog.cancel());
+            alertDialog.show();
+
+            return false;
+        }
+
+        return true;
+    }
+
+
+    private void addYourPetResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<AddYourPetResponse> call = apiInterface.addYourPetResponseCall(RestUtils.getContentType(), addYourPetRequest());
+        Log.w(TAG,"AddYourPetResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<AddYourPetResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<AddYourPetResponse> call, @NonNull Response<AddYourPetResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"AddYourPetResponse" + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+                    if (200 == response.body().getCode()) {
+                        Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
+                        Intent intent = new Intent(AddYourPetOldUserActivity.this,AddYourPetImageOlduserActivity.class);
+                        intent.putExtra("petid",response.body().getData().get_id());
+                        startActivity(intent);
+
+                    } else {
+                        showErrorLoading(response.body().getMessage());
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<AddYourPetResponse> call,@NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.e("AddYourPetResponse flr", "--->" + t.getMessage());
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+    private AddYourPetRequest addYourPetRequest() {
+        /*
+         * user_id : 5fb36ca169f71e30a0ffd3f7
+         * pet_img : http://mysalveo.com/api/uploads/images.jpeg
+         * pet_name : POP
+         * pet_type : Dog
+         * pet_breed : breed 1
+         * pet_gender : Male
+         * pet_color : white
+         * pet_weight : 120
+         * pet_age : 20
+         * vaccinated : true
+         * last_vaccination_date : 23-10-1996
+         * default_status : true
+         * date_and_time : 23-10-1996 12:09 AM
+         */
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
+        
+        AddYourPetRequest addYourPetRequest = new AddYourPetRequest();
+        addYourPetRequest.setUser_id(userid);
+        addYourPetRequest.setPet_img("http://mysalveo.com/api/uploads/images.jpeg");
+        addYourPetRequest.setPet_name(edt_petname.getText().toString());
+        addYourPetRequest.setPet_type(strPetType);
+        addYourPetRequest.setPet_breed(strPetBreedType);
+        addYourPetRequest.setPet_gender(strPetGenderType);
+        addYourPetRequest.setPet_color(edt_petcolor.getText().toString());
+        addYourPetRequest.setPet_weight(Integer.parseInt(edt_petweight.getText().toString()));
+        addYourPetRequest.setPet_age(Integer.parseInt(edt_petage.getText().toString()));
+        addYourPetRequest.setVaccinated(isvaccinated);
+        addYourPetRequest.setLast_vaccination_date(SelectedLastVaccinateddate);
+        addYourPetRequest.setDefault_status(true);
+        addYourPetRequest.setDate_and_time(currentDateandTime);
+        addYourPetRequest.setMobile_type("Android");
+        Log.w(TAG,"addYourPetRequest"+ new Gson().toJson(addYourPetRequest));
+        return addYourPetRequest;
+    }
+    public void showErrorLoading(String errormesage){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(errormesage);
+        alertDialogBuilder.setPositiveButton("ok",
+                (arg0, arg1) -> hideLoading());
+
+
+
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+    public void hideLoading(){
+        try {
+            alertDialog.dismiss();
+        }catch (Exception ignored){
+
+        }
+    }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(EditYourPetProfileInfoActivity.this, PetLoverProfileScreenActivity.class));
+        startActivity(new Intent(AddYourPetOldUserActivity.this, PetLoverProfileScreenActivity.class));
         finish();
     }
 
@@ -575,14 +633,9 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
             Log.w(TAG,"petType-->"+petType);
             pettypeArrayList.add(petType);
 
-            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(EditYourPetProfileInfoActivity.this, R.layout.spinner_item, pettypeArrayList);
+            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(AddYourPetOldUserActivity.this, R.layout.spinner_item, pettypeArrayList);
             spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item); // The drop down view
             sprpettype.setAdapter(spinnerArrayAdapter);
-
-            if (strPetType != null) {
-                int spinnerPosition = spinnerArrayAdapter.getPosition(strPetType);
-                sprpettype.setSelection(spinnerPosition);
-            }
 
 
         }
@@ -639,14 +692,9 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
             Log.w(TAG,"petType-->"+petType);
             pettypeArrayList.add(petType);
 
-            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(EditYourPetProfileInfoActivity.this, R.layout.spinner_item, pettypeArrayList);
+            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(AddYourPetOldUserActivity.this, R.layout.spinner_item, pettypeArrayList);
             spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item); // The drop down view
             sprpetbreed.setAdapter(spinnerArrayAdapter);
-
-            if (strPetBreedType != null) {
-                int spinnerPosition = spinnerArrayAdapter.getPosition(strPetBreedType);
-                sprpetbreed.setSelection(spinnerPosition);
-            }
 
 
         }
@@ -656,110 +704,5 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
         breedTypeRequest.setPet_type_id(petTypeId);
         Log.w(TAG,"breedTypeRequest"+ "--->" + new Gson().toJson(breedTypeRequest));
         return breedTypeRequest;
-    }
-
-
-    private void petUpdateResponseCall() {
-        avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();
-        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-        Call<PetAddImageResponse> call = apiInterface.petUpdateResponseCall(RestUtils.getContentType(), petEditRequest());
-        Log.w(TAG,"PetAddImageResponse url  :%s"+" "+ call.request().url().toString());
-
-        call.enqueue(new Callback<PetAddImageResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<PetAddImageResponse> call, @NonNull Response<PetAddImageResponse> response) {
-
-                Log.w(TAG,"PetAddImageResponse"+ "--->" + new Gson().toJson(response.body()));
-
-                avi_indicator.smoothToHide();
-
-                if (response.body() != null) {
-                    if(response.body().getCode() == 200){
-                        Intent intent = new Intent(getApplicationContext(),EditYourPetImageActivity.class);
-                        intent.putExtra("petid",petid);
-                        intent.putExtra("userid",userid);
-                        intent.putExtra("petimage",petimage);
-                        startActivity(intent);
-                    }
-                    else{
-                        showErrorLoading(response.body().getMessage());
-                    }
-                }
-
-
-
-
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<PetAddImageResponse> call, @NonNull Throwable t) {
-
-                avi_indicator.smoothToHide();
-                Log.w(TAG,"PetAddImageResponse flr"+"--->" + t.getMessage());
-            }
-        });
-
-    }
-    private PetEditRequest petEditRequest() {
-        /*
-         * _id : 5fc61eadb750da703e48da7f
-         * user_id : 5fc61e79b750da703e48da7e
-         * pet_img :
-         * pet_name : IOS_pet_1
-         * pet_type : Dog
-         * pet_breed : Testing - 1
-         * pet_gender : Male
-         * pet_color : white
-         * pet_weight : 1
-         * pet_age : 1
-         * vaccinated : true
-         * last_vaccination_date : 01-12-2019
-         * default_status : true
-         * date_and_time : 01/12/2020 04:15 PM
-         * mobile_type : IOS
-         * __v : 0
-         */
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
-        String currentDateandTime = sdf.format(new Date());
-
-        PetEditRequest petEditRequest = new PetEditRequest();
-        petEditRequest.set_id(petid);
-        petEditRequest.setUser_id(userid);
-        petEditRequest.setPet_img(petimage);
-        petEditRequest.setPet_name(edt_petname.getText().toString());
-        petEditRequest.setPet_type(strPetType);
-        petEditRequest.setPet_breed(strPetBreedType);
-        petEditRequest.setPet_gender(strPetGenderType);
-        petEditRequest.setPet_color(edt_petcolor.getText().toString());
-        petEditRequest.setPet_weight(Integer.parseInt(edt_petweight.getText().toString()));
-        petEditRequest.setPet_age(Integer.parseInt(edt_petage.getText().toString()));
-        petEditRequest.setVaccinated(vaccinatedstatus);
-        petEditRequest.setLast_vaccination_date(SelectedLastVaccinateddate);
-        petEditRequest.setDefault_status(defaultstatus);
-        petEditRequest.setDate_and_time(currentDateandTime);
-        petEditRequest.setMobile_type("Android");
-        Log.w(TAG,"petEditRequest"+ "--->" + new Gson().toJson(petEditRequest));
-        return petEditRequest;
-    }
-
-    public void showErrorLoading(String errormesage){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage(errormesage);
-        alertDialogBuilder.setPositiveButton("ok",
-                (arg0, arg1) -> hideLoading());
-
-
-
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
-    public void hideLoading(){
-        try {
-            alertDialog.dismiss();
-        }catch (Exception ignored){
-
-        }
     }
 }

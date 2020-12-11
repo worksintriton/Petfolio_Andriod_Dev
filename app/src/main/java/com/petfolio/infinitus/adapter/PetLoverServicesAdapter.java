@@ -9,17 +9,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.github.siyamed.shapeimageview.CircularImageView;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class PetLoverServicesAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -67,26 +71,25 @@ public class PetLoverServicesAdapter extends  RecyclerView.Adapter<RecyclerView.
             Glide.with(context)
                     .load(currentItem.getService_icon())
                     //.load(R.drawable.logo)
-                    .into(holder.img_petlover_services);
+                    .into(holder.civ_serviceimage);
 
            }
           else{
             Glide.with(context)
                     .load(R.drawable.services)
-                    .into(holder.img_petlover_services);
+                    .into(holder.civ_serviceimage);
 
         }
 
       //  int color = Integer.parseInt(currentItem.getBackground_color());
-        int radius = 15; //radius will be 5px
+        int radius = 100; //radius will be 5px
         int strokeWidth = 1;
-
         GradientDrawable gradientDrawable = new GradientDrawable();
         gradientDrawable.setColor(Color.parseColor(currentItem.getBackground_color()));
         gradientDrawable.setCornerRadius(radius);
         gradientDrawable.setStroke(strokeWidth, Color.parseColor(currentItem.getBackground_color()));
-        holder.ll_root.setBackground(gradientDrawable);
-        holder.ll_root.setOnClickListener(new View.OnClickListener() {
+        holder.rl_root.setBackground(gradientDrawable);
+        holder.rl_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -155,8 +158,8 @@ public class PetLoverServicesAdapter extends  RecyclerView.Adapter<RecyclerView.
 
     class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_petlover_servicesname;
-        public LinearLayout ll_root;
-        public ImageView img_petlover_services;
+        public RelativeLayout rl_root;
+        public CircularImageView civ_serviceimage;
 
 
 
@@ -164,8 +167,8 @@ public class PetLoverServicesAdapter extends  RecyclerView.Adapter<RecyclerView.
         public ViewHolderOne(View itemView) {
             super(itemView);
             txt_petlover_servicesname = itemView.findViewById(R.id.txt_petlover_servicesname);
-            img_petlover_services = itemView.findViewById(R.id.img_petlover_services);
-            ll_root = itemView.findViewById(R.id.ll_root);
+            civ_serviceimage = itemView.findViewById(R.id.civ_serviceimage);
+            rl_root = itemView.findViewById(R.id.rl_root);
 
 
 

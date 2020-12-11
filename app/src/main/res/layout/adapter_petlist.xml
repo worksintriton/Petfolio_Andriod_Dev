@@ -61,8 +61,8 @@
 
         <ImageView
             android:id="@+id/imgdelete"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:src="@drawable/addaddr"
             android:scaleType="centerInside"/>
 

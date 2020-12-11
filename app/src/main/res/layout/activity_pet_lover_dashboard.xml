@@ -13,25 +13,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        app:indicatorColor="@color/green"
+        app:indicatorColor="@color/new_green_btn"
         app:indicatorName="LineSpinFadeLoaderIndicator" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:elevation="8dp"
-        app:itemIconSize="20dp"
-        app:menu="@menu/bottom_navigation"
-        android:background="@drawable/rounded_curve"
-        app:itemBackground="@drawable/selected_state"
-        app:itemIconTint="@color/selector"
-        app:itemTextColor="@color/selector"
-        app:labelVisibilityMode="labeled"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
-        />
+        android:background="@drawable/new_rounded_corner_btn"
+        app:elevation="8dp"
+        app:itemBackground="@drawable/selected_state"
+        app:itemIconSize="20dp"
+        app:itemIconTint="@color/selector"
+        app:itemTextColor="@color/selector"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_navigation" />
 
 
 

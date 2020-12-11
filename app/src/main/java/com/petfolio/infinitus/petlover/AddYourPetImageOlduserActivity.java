@@ -30,6 +30,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
+import com.petfolio.infinitus.activity.location.ManageAddressActivity;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.appUtils.FileUtil;
@@ -62,8 +63,8 @@ import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class EditYourPetImageActivity extends AppCompatActivity implements View.OnClickListener {
-    private static final String TAG = "RegisterYourPetActivity";
+public class AddYourPetImageOlduserActivity extends AppCompatActivity implements View.OnClickListener {
+    private  String TAG = "AddYourPetImageOlduserActivity";
     @BindView(R.id.img_back)
     ImageView img_back;
 
@@ -78,14 +79,13 @@ public class EditYourPetImageActivity extends AppCompatActivity implements View.
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
-    @BindView(R.id.txt_change_petimage)
-    TextView txt_change_petimage;
+    @BindView(R.id.txt_uploadpetimage)
+    TextView txt_uploadpetimage;
 
     @BindView(R.id.btn_continue)
     Button btn_continue;
 
     private String petid;
-    private String petimage;
 
     public final int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 1;
     private static final String CAMERA_PERMISSION = CAMERA ;
@@ -114,7 +114,7 @@ public class EditYourPetImageActivity extends AppCompatActivity implements View.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_your_pet_image);
+        setContentView(R.layout.activity_add_your_pet_image_old_user);
         Log.w(TAG,"onCreate ");
         ButterKnife.bind(this);
         avi_indicator.setVisibility(View.GONE);
@@ -122,7 +122,7 @@ public class EditYourPetImageActivity extends AppCompatActivity implements View.
         img_back.setOnClickListener(this);
         txt_skip.setOnClickListener(this);
         btn_continue.setOnClickListener(this);
-        txt_change_petimage.setOnClickListener(this);
+        txt_uploadpetimage.setOnClickListener(this);
 
         SessionManager  session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
@@ -131,19 +131,7 @@ public class EditYourPetImageActivity extends AppCompatActivity implements View.
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            petid = extras.getString("id");
-            petimage = extras.getString("petimage");
-        }
-
-        if(petimage != null){
-            Glide.with(EditYourPetImageActivity.this)
-                    .load(petimage)
-                    .into(img_pet_imge);
-        }else{
-            Glide.with(EditYourPetImageActivity.this)
-                    .load(R.drawable.image_thumbnail)
-                    .into(img_pet_imge);
-
+            petid = extras.getString("petid");
         }
 
 
@@ -158,9 +146,9 @@ public class EditYourPetImageActivity extends AppCompatActivity implements View.
                 case R.id.txt_skip:
                     gotoPetLoverProfileScreenActivity();
                 break;
-                case R.id.txt_change_petimage:
+                case R.id.txt_uploadpetimage:
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        checkMultiplePermissions(REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS, EditYourPetImageActivity.this);
+                        checkMultiplePermissions(REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS, AddYourPetImageOlduserActivity.this);
                     }else{
                         choosePetImage();
 
@@ -173,14 +161,14 @@ public class EditYourPetImageActivity extends AppCompatActivity implements View.
     }
 
     private void gotoPetLoverProfileScreenActivity() {
-        Intent intent = new Intent(EditYourPetImageActivity.this,PetLoverProfileScreenActivity.class);
+        Intent intent = new Intent(AddYourPetImageOlduserActivity.this, PetLoverProfileScreenActivity.class);
         startActivity(intent);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(EditYourPetImageActivity.this, PetLoverProfileScreenActivity.class));
+        startActivity(new Intent(AddYourPetImageOlduserActivity.this, PetLoverProfileScreenActivity.class));
         finish();
     }
 
@@ -192,12 +180,12 @@ public class EditYourPetImageActivity extends AppCompatActivity implements View.
 
             final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
             //AlertDialog.Builder alert=new AlertDialog.Builder(this);
-            AlertDialog.Builder builder = new AlertDialog.Builder(EditYourPetImageActivity.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(AddYourPetImageOlduserActivity.this);
             builder.setTitle("Choose option");
             builder.setItems(items, (dialog, item) -> {
                 if (items[item].equals("Take Photo"))
                 {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(EditYourPetImageActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(AddYourPetImageOlduserActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
                     {
                         requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CLINIC_CAMERA_PERMISSION_CODE);
                     }
@@ -215,7 +203,7 @@ public class EditYourPetImageActivity extends AppCompatActivity implements View.
                 else if (items[item].equals("Choose from Library"))
                 {
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(EditYourPetImageActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(AddYourPetImageOlduserActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
                     {
                         requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_CLINIC_PIC_PERMISSION);
                     }
@@ -293,7 +281,7 @@ public class EditYourPetImageActivity extends AppCompatActivity implements View.
 
                         Log.w("filename", " " + filename);
 
-                        String filePath = FileUtil.getPath(EditYourPetImageActivity.this,selectedImageUri);
+                        String filePath = FileUtil.getPath(AddYourPetImageOlduserActivity.this,selectedImageUri);
 
                         assert filePath != null;
 
@@ -355,11 +343,11 @@ public class EditYourPetImageActivity extends AppCompatActivity implements View.
                         Log.w(TAG, "ServerUrlImagePath " + ServerUrlImagePath);
 
                         if( response.body().getData() != null){
-                            Glide.with(EditYourPetImageActivity.this)
+                            Glide.with(AddYourPetImageOlduserActivity.this)
                                     .load(ServerUrlImagePath)
                                     .into(img_pet_imge);
                         }else{
-                            Glide.with(EditYourPetImageActivity.this)
+                            Glide.with(AddYourPetImageOlduserActivity.this)
                                     .load(R.drawable.image_thumbnail)
                                     .into(img_pet_imge);
 

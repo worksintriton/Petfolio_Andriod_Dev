@@ -24,8 +24,10 @@ import com.petfolio.infinitus.requestpojo.LocationUpdateRequest;
 import com.petfolio.infinitus.requestpojo.LoginRequest;
 import com.petfolio.infinitus.requestpojo.PetAddImageRequest;
 import com.petfolio.infinitus.requestpojo.PetAppointmentCreateRequest;
+import com.petfolio.infinitus.requestpojo.PetDeleteRequest;
 import com.petfolio.infinitus.requestpojo.PetDetailsRequest;
 import com.petfolio.infinitus.requestpojo.PetDoctorAvailableTimeRequest;
+import com.petfolio.infinitus.requestpojo.PetEditRequest;
 import com.petfolio.infinitus.requestpojo.PetListRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverDashboardRequest;
@@ -61,6 +63,7 @@ import com.petfolio.infinitus.responsepojo.LocationUpdateResponse;
 import com.petfolio.infinitus.responsepojo.LoginResponse;
 import com.petfolio.infinitus.responsepojo.PetAddImageResponse;
 import com.petfolio.infinitus.responsepojo.PetAppointmentCreateResponse;
+import com.petfolio.infinitus.responsepojo.PetDeleteResponse;
 import com.petfolio.infinitus.responsepojo.PetDetailsResponse;
 import com.petfolio.infinitus.responsepojo.PetDoctorAvailableTimeResponse;
 import com.petfolio.infinitus.responsepojo.PetListResponse;
@@ -243,9 +246,17 @@ public interface RestApiInterface {
     Call<PetListResponse>petListResponseCall(@Header("Content-Type") String type, @Body PetListRequest petListRequest  );
 
 
-    /*Pet Details List by User ID*/
+    /*update petimage Petdetails Using User id*/
     @POST("petdetails/edit")
     Call<PetAddImageResponse>PetAddImageResponseCall(@Header("Content-Type") String type, @Body PetAddImageRequest petAddImageRequest  );
+
+    /*Edit Petdetails Using User id*/
+    @POST("petdetails/edit")
+    Call<PetAddImageResponse>petUpdateResponseCall(@Header("Content-Type") String type, @Body PetEditRequest petEditRequest   );
+
+    /*Delete Petdetails Using User id*/
+    @POST("petdetails/delete")
+    Call<PetDeleteResponse>petDeleteResponseCall(@Header("Content-Type") String type, @Body PetDeleteRequest petDeleteRequest  );
 
     /*location list delete*/
     @POST("locationdetails/delete")

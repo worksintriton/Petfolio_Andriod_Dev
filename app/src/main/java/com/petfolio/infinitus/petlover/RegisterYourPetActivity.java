@@ -274,7 +274,7 @@ public class RegisterYourPetActivity extends AppCompatActivity implements View.O
 
                 RequestBody requestFile = RequestBody.create(MediaType.parse("image*/"), file);
 
-                filePart = MultipartBody.Part.createFormData("sampleFile",  userid+ currentDateandTime + file.getName(), requestFile);
+                filePart = MultipartBody.Part.createFormData("sampleFile",  userid+currentDateandTime+file.getName(), requestFile);
 
                 uploadPetImage();
 
@@ -309,7 +309,7 @@ public class RegisterYourPetActivity extends AppCompatActivity implements View.O
                         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
                         String currentDateandTime = sdf.format(new Date());
 
-                        filePart = MultipartBody.Part.createFormData("sampleFile", userid+ currentDateandTime + file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                        filePart = MultipartBody.Part.createFormData("sampleFile", userid+currentDateandTime+file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
 
                         uploadPetImage();
 

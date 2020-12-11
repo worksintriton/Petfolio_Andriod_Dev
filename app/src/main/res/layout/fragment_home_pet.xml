@@ -45,13 +45,12 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="160dp"
-                            android:background="@drawable/rounded_corner_button"
                             android:elevation="9dp">
 
                             <androidx.viewpager.widget.ViewPager
                                 android:id="@+id/pager"
                                 android:layout_width="match_parent"
-                                  android:layout_height="match_parent" />
+                                android:layout_height="match_parent" />
 
                             <com.google.android.material.tabs.TabLayout
                                 android:id="@+id/tabDots"
@@ -100,23 +99,23 @@
                             android:layout_height="match_parent"
                             android:fontFamily="@font/futuramediumbt"
                             android:text="@string/doctors"
-                            android:textColor="@color/black"
+                            android:textColor="@color/new_txt_color"
                             android:textSize="16sp"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold" />
 
 
                         <TextView
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:textSize="16sp"
                             android:id="@+id/txt_seemore_doctors"
-                            android:gravity="end"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/see_more"
-                            android:textColor="@color/black"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
                             android:drawablePadding="10dp"
-                            android:fontFamily="@font/futuramediumbt"/>
+                            android:fontFamily="@font/futuramediumbt"
+                            android:gravity="end"
+                            android:text="@string/see_more"
+                            android:textColor="@color/new_txt_color"
+                            android:textSize="16sp" />
 
                     </LinearLayout>
 
@@ -143,27 +142,29 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_marginTop="10dp">
+
                         <TextView
                             android:id="@+id/txt_services"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/services"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
                             android:fontFamily="@font/futuramediumbt"
-                            android:textStyle="bold"/>
-                        <TextView
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
+                            android:text="@string/services"
+                            android:textColor="@color/new_txt_color"
                             android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
                             android:id="@+id/txt_seemore_services"
-                            android:gravity="end"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/see_more"
-                            android:textColor="@color/black"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
                             android:drawablePadding="10dp"
-                            android:fontFamily="@font/futuramediumbt"/>
+                            android:fontFamily="@font/futuramediumbt"
+                            android:gravity="end"
+                            android:text="@string/see_more"
+                            android:textColor="@color/new_txt_color"
+                            android:textSize="16sp" />
 
                     </LinearLayout>
 
@@ -198,29 +199,29 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_marginTop="10dp">
+
                         <TextView
                             android:id="@+id/txt_products"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/products"
-                            android:textSize="16sp"
-                            android:textColor="@color/black"
                             android:fontFamily="@font/futuramediumbt"
-                            android:textStyle="bold"
-                            />
+                            android:text="@string/products"
+                            android:textColor="@color/new_txt_color"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
 
                         <TextView
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:textSize="16sp"
                             android:id="@+id/txt_seemore_products"
-                            android:gravity="end"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/see_more"
-                            android:textColor="@color/black"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
                             android:drawablePadding="10dp"
-                            android:fontFamily="@font/futuramediumbt"/>
+                            android:fontFamily="@font/futuramediumbt"
+                            android:gravity="end"
+                            android:text="@string/see_more"
+                            android:textColor="@color/new_txt_color"
+                            android:textSize="16sp" />
 
                     </LinearLayout>
 
@@ -278,12 +279,13 @@
             android:background="@color/green"
             app:menu="@menu/buttom_navigation_items"/>
     </LinearLayout>
+
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/avi_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        app:indicatorColor="@color/green"
+        app:indicatorColor="@color/new_green_btn"
         app:indicatorName="LineSpinFadeLoaderIndicator" />
 
     <RelativeLayout

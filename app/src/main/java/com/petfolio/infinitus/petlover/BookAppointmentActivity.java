@@ -686,7 +686,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
 
                 RequestBody requestFile = RequestBody.create(MediaType.parse("image*/"), file);
 
-                filePart = MultipartBody.Part.createFormData("sampleFile", userid + currentDateandTime + file.getName(), requestFile);
+                filePart = MultipartBody.Part.createFormData("sampleFile", userid+file.getName().trim(), requestFile);
 
                 uploadPetImage();
 
@@ -714,7 +714,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
                         long length = file.length() / 1024; // Size in KB
 
                         Log.w("filesize", " " + length);
-                        filePart = MultipartBody.Part.createFormData("sampleFile", userid + currentDateandTime + file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                        filePart = MultipartBody.Part.createFormData("sampleFile", userid+currentDateandTime+file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
                         uploadPetImage();
 
 
@@ -751,18 +751,14 @@ public class BookAppointmentActivity extends AppCompatActivity {
 
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
-
                         // FileUploadResponse fileUploadResponse = new FileUploadResponse(response.body().getStatus(),response.body().getMessage(),response.body().getData(),response.body().getCode());
-
-                        DocBusInfoUploadRequest.ClinicPicBean clinicPicBean = new DocBusInfoUploadRequest.ClinicPicBean(response.body().getData());
-
+                        DocBusInfoUploadRequest.ClinicPicBean clinicPicBean = new DocBusInfoUploadRequest.ClinicPicBean(response.body().getData().trim());
                         clinicPicBeans.add(clinicPicBean);
                         Log.w(TAG, "clinicPicBeans : " + new Gson().toJson(clinicPicBeans));
-
                         Log.w(TAG, "uploadimagepath " + response.body().getData());
+                        Log.w(TAG, "clinicPicBeans size " + clinicPicBeans.size());
                         uploadimagepath = response.body().getData();
-
-                        if (clinicPicBeans.size() > 0) {
+                        if (uploadimagepath != null) {
                             setView();
                         }
 
@@ -786,6 +782,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
     }
 
     private void setView() {
+        rv_upload_pet_images.setVisibility(View.VISIBLE);
         rv_upload_pet_images.setLayoutManager(new LinearLayoutManager(this));
         rv_upload_pet_images.setItemAnimator(new DefaultItemAnimator());
         AddImageListAdapter addImageListAdapter = new AddImageListAdapter(getApplicationContext(), clinicPicBeans);

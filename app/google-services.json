@@ -8,12 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:790404680855:android:ff99654ddd10aafcb3edd2",
+        "mobilesdk_app_id": "1:790404680855:android:4f9f7c7d5ba0f82ab3edd2",
         "android_client_info": {
           "package_name": "com.petfolio.infinitus"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "790404680855-6c3gdd6145oh8o2sqch87iu35j8kc0p6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.petfolio.infinitus",
+            "certificate_hash": "eebde092ffa21f0eaeee9e4208e4effdea5126cc"
+          }
+        },
         {
           "client_id": "790404680855-v86dp340g9hdvp5t8ktdiscro8okjjuc.apps.googleusercontent.com",
           "client_type": 3
