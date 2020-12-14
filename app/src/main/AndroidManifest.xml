@@ -46,6 +46,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,UnusedAttribute"
         tools:replace="android:theme">
+        <activity android:name=".petlover.SearchDoctorActivity"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -137,7 +138,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".petlover.AddYourPetOldUserActivity"
             android:screenOrientation="portrait"
@@ -148,16 +148,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".petlover.EditYourPetImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-
-
-
-
         <activity
             android:name=".activity.location.ManageAddressActivity"
             android:screenOrientation="portrait"
@@ -198,7 +193,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".activity.location.PickUpLocationEditActivity"
             android:screenOrientation="portrait"

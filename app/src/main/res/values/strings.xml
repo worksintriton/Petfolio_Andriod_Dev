@@ -247,4 +247,20 @@
     <string name="medicine">Medicine</string>
     <string name="consumption_per_day">Consumption per day</string>
 
+    <string name="search">Search</string>
+    <string name="near_by_doctors">Near by Doctors</string>
+    <string name="_4_doctors">4 Doctors</string>
+    <string name="place_alone">place</string>
+    <string name="bullet">•</string>
+    <string name="_2_km_away">2 km away</string>
+    <string name="book">Book</string>
+    <string name="search_history">Search History</string>
+    <string name="offline">Offline</string>
+    <string name="online">Online</string>
+
+    <string name="emergency_new">Emergency ?</string>
+    <string name="call">Call</string>
+    <string name="contact">Contact</string>
+    <string name="phn_nu">9876543210</string>
+
 </resources>

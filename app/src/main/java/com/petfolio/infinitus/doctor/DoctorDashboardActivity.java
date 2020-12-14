@@ -75,20 +75,16 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
                 loadFragment(new PetHomeFragment());
             }else if(tag.equalsIgnoreCase("2")){
                 //active = searchFragment;
-                bottom_navigation_view.setSelectedItemId(R.id.search);
+                bottom_navigation_view.setSelectedItemId(R.id.shop);
                 // loadFragment(new SearchFragment());
             }else if(tag.equalsIgnoreCase("3")){
                 // active = myVehicleFragment;
-                bottom_navigation_view.setSelectedItemId(R.id.myvehicle);
+                bottom_navigation_view.setSelectedItemId(R.id.feed);
                 // loadFragment(new MyVehicleFragment());
             }else if(tag.equalsIgnoreCase("4")){
                 //active = cartFragment;
-                bottom_navigation_view.setSelectedItemId(R.id.cart);
+                bottom_navigation_view.setSelectedItemId(R.id.market);
                 //loadFragment(new CartFragment());
-            } else if(tag.equalsIgnoreCase("5")){
-                //active = accountFragment;
-                bottom_navigation_view.setSelectedItemId(R.id.account);
-                //loadFragment(new AccountFragment());
             }
         }
         else{
@@ -205,18 +201,16 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
             case R.id.home:
                 replaceFragment(new PetHomeFragment());
                 break;
-            case R.id.search:
+            case R.id.shop:
                 //replaceFragment(new SearchFragment());
                 break;
-            case R.id.myvehicle:
+            case R.id.feed:
                 //replaceFragment(new MyVehicleFragment());
                 break;
-            case R.id.cart:
+            case R.id.market:
                 // replaceFragment(new CartFragment());
                 break;
-            case R.id.account:
-                // replaceFragment(new AccountFragment());
-                break;
+
 
             default:
                 return  false;

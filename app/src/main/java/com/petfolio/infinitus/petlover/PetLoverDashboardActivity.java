@@ -19,6 +19,7 @@ import android.view.View;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.fragmentpetlover.PetCareFragment;
 import com.petfolio.infinitus.fragmentpetlover.PetHomeFragment;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -39,15 +40,17 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
 
     private String TAG = "PetLoverDashboardActivity";
 
-    final Fragment homeFragment = new PetHomeFragment();
-    /*final Fragment searchFragment = new SearchFragment();
-    final Fragment myVehicleFragment = new MyVehicleFragment();
-    final Fragment cartFragment = new CartFragment();
-    final Fragment accountFragment = new AccountFragment();*/
+    final Fragment petHomeFragment = new PetHomeFragment();
+    final Fragment petCareFragment = new PetCareFragment();
+
+/* final Fragment searchFragment = new SearchFragment();
+ final Fragment myVehicleFragment = new MyVehicleFragment();
+ final Fragment cartFragment = new CartFragment();
+ final Fragment accountFragment = new AccountFragment();*/
     private String active_tag = "1";
 
 
-    Fragment active = homeFragment;
+    Fragment active = petHomeFragment;
     String tag;
 
     String fromactivity;
@@ -78,25 +81,19 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
         tag = getIntent().getStringExtra("tag");
         if(tag != null){
             if(tag.equalsIgnoreCase("1")){
-                active = homeFragment;
+                active = petHomeFragment;
                 bottom_navigation_view.setSelectedItemId(R.id.home);
                 loadFragment(new PetHomeFragment());
             }else if(tag.equalsIgnoreCase("2")){
-                //active = searchFragment;
-                bottom_navigation_view.setSelectedItemId(R.id.search);
-               // loadFragment(new SearchFragment());
+                bottom_navigation_view.setSelectedItemId(R.id.shop);
             }else if(tag.equalsIgnoreCase("3")){
-               // active = myVehicleFragment;
-                bottom_navigation_view.setSelectedItemId(R.id.myvehicle);
-               // loadFragment(new MyVehicleFragment());
+                bottom_navigation_view.setSelectedItemId(R.id.services);
             }else if(tag.equalsIgnoreCase("4")){
-                //active = cartFragment;
-                bottom_navigation_view.setSelectedItemId(R.id.cart);
-                //loadFragment(new CartFragment());
+                active = petCareFragment;
+                bottom_navigation_view.setSelectedItemId(R.id.care);
+                loadFragment(new PetCareFragment());
             } else if(tag.equalsIgnoreCase("5")){
-                //active = accountFragment;
-                bottom_navigation_view.setSelectedItemId(R.id.account);
-                //loadFragment(new AccountFragment());
+                bottom_navigation_view.setSelectedItemId(R.id.market);
             }
         }else{
             bottom_navigation_view.setSelectedItemId(R.id.home);
@@ -212,17 +209,14 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
                 case R.id.home:
                 replaceFragment(new PetHomeFragment());
                 break;
-                case R.id.search:
-                //replaceFragment(new SearchFragment());
+                case R.id.shop:
                 break;
-                case R.id.myvehicle:
-                //replaceFragment(new MyVehicleFragment());
+                case R.id.services:
                 break;
-                case R.id.cart:
-               // replaceFragment(new CartFragment());
+                case R.id.care:
+                replaceFragment(new PetCareFragment());
                 break;
-            case R.id.account:
-               // replaceFragment(new AccountFragment());
+            case R.id.market:
                 break;
 
             default:

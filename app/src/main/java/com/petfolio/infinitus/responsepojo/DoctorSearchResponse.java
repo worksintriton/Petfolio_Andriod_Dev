@@ -4,10 +4,11 @@ import java.util.List;
 
 public class DoctorSearchResponse {
 
+
     /**
      * Status : Success
      * Message : Vehicledetails
-     * Data : [{"education_details":[{"education":"BE","year":"2015"}],"experience_details":[{"company":"triton","from":"2020-11-30T18:30:00.000Z","to":"2020-12-11T18:30:00.000Z"}],"specialization":[{"specialization":"Testing - 1"}],"pet_handled":[{"pet_handled":"handled"}],"clinic_pic":[{"clinic_pic":"http://52.25.163.13:3000/api/uploads/Slide1.jpg"}],"certificate_pic":[{"certificate_pic":"http://52.25.163.13:3000/api/uploads/0c3b3adb1a7530892e55ef36d3be6cb8.png"}],"govt_id_pic":[{"govt_id_pic":"http://52.25.163.13:3000/api/uploads/0c3b3adb1a7530892e55ef36d3be6cb8.png"}],"photo_id_pic":[{"photo_id_pic":"http://52.25.163.13:3000/api/uploads/0c3b3adb1a7530892e55ef36d3be6cb8.png"}],"_id":"5fd2f81cd380f60fd0525642","user_id":"5fd2f7c3d380f60fd0525641","dr_title":"Dr","dr_name":"Vignesh","clinic_name":"cli","clinic_loc":"loc","clinic_lat":12.0252,"clinic_long":80.25588,"profile_status":false,"profile_verification_status":"Not verified","date_and_time":"Fri Dec 11 2020 10:18:04 GMT+0530 (India Standard Time)","delete_status":false,"__v":0}]
+     * Data : [{"_id":"5fd2f81cd380f60fd0525642","user_id":"5fd2f7c3d380f60fd0525641","dr_title":"Dr","doctor_name":"Vignesh","clinic_name":"cli","specialization":[{"specialization":"Testing - 1"}],"doctor_img":"http://52.25.163.13:3000/api/uploads/Slide1.jpg","clinic_loc":"loc","distance":2,"star_count":2.5,"review_count":234},{"_id":"5fd2fe531978e618628c9667","user_id":"5fd2fdceb8f10b159576fe93","dr_title":"Dr","doctor_name":"DINESH","clinic_name":"APOLLO HOSPITAL","specialization":[{"specialization":"special - 3"}],"doctor_img":"http://52.25.163.13:3000/api/uploads/5fd2fdceb8f10b159576fe9311-12-2020 10:34 AMPetfolio1.jpg","clinic_loc":"4/3 Marriyamman Kovil street","distance":2,"star_count":2.5,"review_count":234},{"_id":"5fd36a7d721c403653e67154","user_id":"5fd369fd721c403653e67153","dr_title":"Dr","doctor_name":"Imthi","clinic_name":"APOLLO HOSPITAL","specialization":[{"specialization":"special - 3"}],"doctor_img":"http://52.25.163.13:3000/api/uploads/5fd369fd721c403653e6715311-12-2020 06:16 PMPetfolio1.jpg","clinic_loc":"Chennai","communication_type":"Online","distance":2,"star_count":2.5,"review_count":234},{"_id":"5fd6f61f824d74099c542b5c","user_id":"5fd6f476824d74099c542b5b","dr_title":"Dr","doctor_name":"ishaaq","clinic_name":"ishaaq test","specialization":[{"specialization":"Testing - 1"},{"specialization":"special - 3"}],"doctor_img":"http://52.25.163.13:3000/api/uploads/5fd6f476824d74099c542b5b14-12-2020 10:45 AMFB_IMG_1607537784105.jpg","clinic_loc":"Perambur","communication_type":"Online Or Visit","distance":2,"star_count":2.5,"review_count":234}]
      * Code : 200
      */
 
@@ -15,7 +16,6 @@ public class DoctorSearchResponse {
     private String Message;
     private int Code;
     private List<DataBean> Data;
-
 
     public String getStatus() {
         return Status;
@@ -32,6 +32,7 @@ public class DoctorSearchResponse {
 
     public void setMessage(String Message) {
         this.Message = Message;
+
     }
 
     public int getCode() {
@@ -42,62 +43,43 @@ public class DoctorSearchResponse {
         this.Code = Code;
     }
 
-
     public List<DataBean> getData() {
         return Data;
     }
 
     public void setData(List<DataBean> Data) {
         this.Data = Data;
+
     }
 
     public static class DataBean  {
         /**
-         * education_details : [{"education":"BE","year":"2015"}]
-         * experience_details : [{"company":"triton","from":"2020-11-30T18:30:00.000Z","to":"2020-12-11T18:30:00.000Z"}]
-         * specialization : [{"specialization":"Testing - 1"}]
-         * pet_handled : [{"pet_handled":"handled"}]
-         * clinic_pic : [{"clinic_pic":"http://52.25.163.13:3000/api/uploads/Slide1.jpg"}]
-         * certificate_pic : [{"certificate_pic":"http://52.25.163.13:3000/api/uploads/0c3b3adb1a7530892e55ef36d3be6cb8.png"}]
-         * govt_id_pic : [{"govt_id_pic":"http://52.25.163.13:3000/api/uploads/0c3b3adb1a7530892e55ef36d3be6cb8.png"}]
-         * photo_id_pic : [{"photo_id_pic":"http://52.25.163.13:3000/api/uploads/0c3b3adb1a7530892e55ef36d3be6cb8.png"}]
          * _id : 5fd2f81cd380f60fd0525642
          * user_id : 5fd2f7c3d380f60fd0525641
          * dr_title : Dr
-         * dr_name : Vignesh
+         * doctor_name : Vignesh
          * clinic_name : cli
+         * specialization : [{"specialization":"Testing - 1"}]
+         * doctor_img : http://52.25.163.13:3000/api/uploads/Slide1.jpg
          * clinic_loc : loc
-         * clinic_lat : 12.0252
-         * clinic_long : 80.25588
-         * profile_status : false
-         * profile_verification_status : Not verified
-         * date_and_time : Fri Dec 11 2020 10:18:04 GMT+0530 (India Standard Time)
-         * delete_status : false
-         * __v : 0
+         * distance : 2
+         * star_count : 2.5
+         * review_count : 234
+         * communication_type : Online
          */
 
         private String _id;
         private String user_id;
         private String dr_title;
-        private String dr_name;
+        private String doctor_name;
         private String clinic_name;
+        private String doctor_img;
         private String clinic_loc;
-        private double clinic_lat;
-        private double clinic_long;
-        private boolean profile_status;
-        private String profile_verification_status;
-        private String date_and_time;
-        private boolean delete_status;
-        private int __v;
-        private List<EducationDetailsBean> education_details;
-        private List<ExperienceDetailsBean> experience_details;
+        private int distance;
+        private double star_count;
+        private int review_count;
+        private String communication_type;
         private List<SpecializationBean> specialization;
-        private List<PetHandledBean> pet_handled;
-        private List<ClinicPicBean> clinic_pic;
-        private List<CertificatePicBean> certificate_pic;
-        private List<GovtIdPicBean> govt_id_pic;
-        private List<PhotoIdPicBean> photo_id_pic;
-
 
         public String get_id() {
             return _id;
@@ -107,7 +89,6 @@ public class DoctorSearchResponse {
             this._id = _id;
 
         }
-
 
         public String getUser_id() {
             return user_id;
@@ -125,15 +106,17 @@ public class DoctorSearchResponse {
 
         public void setDr_title(String dr_title) {
             this.dr_title = dr_title;
+
         }
 
-        public String getDr_name() {
-            return dr_name;
+        public String getDoctor_name() {
+            return doctor_name;
         }
 
-        public void setDr_name(String dr_name) {
-            this.dr_name = dr_name;
+        public void setDoctor_name(String doctor_name) {
+            this.doctor_name = doctor_name;
         }
+
 
         public String getClinic_name() {
             return clinic_name;
@@ -141,7 +124,18 @@ public class DoctorSearchResponse {
 
         public void setClinic_name(String clinic_name) {
             this.clinic_name = clinic_name;
+
         }
+
+
+        public String getDoctor_img() {
+            return doctor_img;
+        }
+
+        public void setDoctor_img(String doctor_img) {
+            this.doctor_img = doctor_img;
+        }
+
 
         public String getClinic_loc() {
             return clinic_loc;
@@ -152,82 +146,40 @@ public class DoctorSearchResponse {
         }
 
 
-        public double getClinic_lat() {
-            return clinic_lat;
+        public int getDistance() {
+            return distance;
         }
 
-        public void setClinic_lat(double clinic_lat) {
-            this.clinic_lat = clinic_lat;
-        }
-
-
-        public double getClinic_long() {
-            return clinic_long;
-        }
-
-        public void setClinic_long(double clinic_long) {
-            this.clinic_long = clinic_long;
+        public void setDistance(int distance) {
+            this.distance = distance;
 
         }
 
 
-        public boolean isProfile_status() {
-            return profile_status;
+        public double getStar_count() {
+            return star_count;
         }
 
-        public void setProfile_status(boolean profile_status) {
-            this.profile_status = profile_status;
-        }
+        public void setStar_count(double star_count) {
+            this.star_count = star_count;
 
-
-        public String getProfile_verification_status() {
-            return profile_verification_status;
-        }
-
-        public void setProfile_verification_status(String profile_verification_status) {
-            this.profile_verification_status = profile_verification_status;
-        }
-
-        public String getDate_and_time() {
-            return date_and_time;
-        }
-
-        public void setDate_and_time(String date_and_time) {
-            this.date_and_time = date_and_time;
         }
 
 
-        public boolean isDelete_status() {
-            return delete_status;
+        public int getReview_count() {
+            return review_count;
         }
 
-        public void setDelete_status(boolean delete_status) {
-            this.delete_status = delete_status;
+        public void setReview_count(int review_count) {
+            this.review_count = review_count;
         }
 
-        public int get__v() {
-            return __v;
+        public String getCommunication_type() {
+            return communication_type;
         }
 
-        public void set__v(int __v) {
-            this.__v = __v;
-        }
-
-        public List<EducationDetailsBean> getEducation_details() {
-            return education_details;
-        }
-
-        public void setEducation_details(List<EducationDetailsBean> education_details) {
-            this.education_details = education_details;
-        }
-
-
-        public List<ExperienceDetailsBean> getExperience_details() {
-            return experience_details;
-        }
-
-        public void setExperience_details(List<ExperienceDetailsBean> experience_details) {
-            this.experience_details = experience_details;
+        public void setCommunication_type(String communication_type) {
+            this.communication_type = communication_type;
         }
 
         public List<SpecializationBean> getSpecialization() {
@@ -238,123 +190,12 @@ public class DoctorSearchResponse {
             this.specialization = specialization;
         }
 
-
-        public List<PetHandledBean> getPet_handled() {
-            return pet_handled;
-        }
-
-        public void setPet_handled(List<PetHandledBean> pet_handled) {
-            this.pet_handled = pet_handled;
-        }
-
-        public List<ClinicPicBean> getClinic_pic() {
-            return clinic_pic;
-        }
-
-        public void setClinic_pic(List<ClinicPicBean> clinic_pic) {
-            this.clinic_pic = clinic_pic;
-        }
-
-        public List<CertificatePicBean> getCertificate_pic() {
-            return certificate_pic;
-        }
-
-        public void setCertificate_pic(List<CertificatePicBean> certificate_pic) {
-            this.certificate_pic = certificate_pic;
-        }
-
-        public List<GovtIdPicBean> getGovt_id_pic() {
-            return govt_id_pic;
-        }
-
-        public void setGovt_id_pic(List<GovtIdPicBean> govt_id_pic) {
-            this.govt_id_pic = govt_id_pic;
-        }
-
-        public List<PhotoIdPicBean> getPhoto_id_pic() {
-            return photo_id_pic;
-        }
-
-        public void setPhoto_id_pic(List<PhotoIdPicBean> photo_id_pic) {
-            this.photo_id_pic = photo_id_pic;
-        }
-
-        public static class EducationDetailsBean {
-            /**
-             * education : BE
-             * year : 2015
-             */
-
-            private String education;
-            private String year;
-
-            public String getEducation() {
-                return education;
-            }
-
-            public void setEducation(String education) {
-                this.education = education;
-
-            }
-
-
-            public String getYear() {
-                return year;
-            }
-
-            public void setYear(String year) {
-                this.year = year;
-            }
-        }
-
-        public static class ExperienceDetailsBean {
-            /**
-             * company : triton
-             * from : 2020-11-30T18:30:00.000Z
-             * to : 2020-12-11T18:30:00.000Z
-             */
-
-            private String company;
-            private String from;
-            private String to;
-
-
-            public String getCompany() {
-                return company;
-            }
-
-            public void setCompany(String company) {
-                this.company = company;
-
-            }
-
-
-            public String getFrom() {
-                return from;
-            }
-
-            public void setFrom(String from) {
-                this.from = from;
-
-            }
-
-
-            public String getTo() {
-                return to;
-            }
-
-            public void setTo(String to) {
-                this.to = to;
-            }
-        }
-
-        public static class SpecializationBean {
+        public static class SpecializationBean  {
             /**
              * specialization : Testing - 1
              */
 
             private String specialization;
-
 
             public String getSpecialization() {
                 return specialization;
@@ -362,93 +203,6 @@ public class DoctorSearchResponse {
 
             public void setSpecialization(String specialization) {
                 this.specialization = specialization;
-            }
-        }
-
-        public static class PetHandledBean  {
-            /**
-             * pet_handled : handled
-             */
-
-            private String pet_handled;
-
-
-            public String getPet_handled() {
-                return pet_handled;
-            }
-
-            public void setPet_handled(String pet_handled) {
-                this.pet_handled = pet_handled;
-
-            }
-        }
-
-        public static class ClinicPicBean {
-            /**
-             * clinic_pic : http://52.25.163.13:3000/api/uploads/Slide1.jpg
-             */
-
-            private String clinic_pic;
-
-
-            public String getClinic_pic() {
-                return clinic_pic;
-            }
-
-            public void setClinic_pic(String clinic_pic) {
-                this.clinic_pic = clinic_pic;
-
-            }
-        }
-
-        public static class CertificatePicBean {
-            /**
-             * certificate_pic : http://52.25.163.13:3000/api/uploads/0c3b3adb1a7530892e55ef36d3be6cb8.png
-             */
-
-            private String certificate_pic;
-
-
-            public String getCertificate_pic() {
-                return certificate_pic;
-            }
-
-            public void setCertificate_pic(String certificate_pic) {
-                this.certificate_pic = certificate_pic;
-            }
-        }
-
-        public static class GovtIdPicBean{
-            /**
-             * govt_id_pic : http://52.25.163.13:3000/api/uploads/0c3b3adb1a7530892e55ef36d3be6cb8.png
-             */
-
-            private String govt_id_pic;
-
-
-            public String getGovt_id_pic() {
-                return govt_id_pic;
-            }
-
-            public void setGovt_id_pic(String govt_id_pic) {
-                this.govt_id_pic = govt_id_pic;
-
-            }
-        }
-
-        public static class PhotoIdPicBean  {
-            /**
-             * photo_id_pic : http://52.25.163.13:3000/api/uploads/0c3b3adb1a7530892e55ef36d3be6cb8.png
-             */
-
-            private String photo_id_pic;
-
-            public String getPhoto_id_pic() {
-                return photo_id_pic;
-            }
-
-            public void setPhoto_id_pic(String photo_id_pic) {
-                this.photo_id_pic = photo_id_pic;
             }
         }
     }

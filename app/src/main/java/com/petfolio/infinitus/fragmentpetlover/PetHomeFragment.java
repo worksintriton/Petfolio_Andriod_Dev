@@ -383,6 +383,8 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
                             }
                         }
 
+                        
+
 
                     }
                     else {
@@ -488,12 +490,15 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
     }
 
     private PetLoverDashboardRequest petLoverDashboardRequest() {
-        /*
-         * user_id : 5fb22773e70b0d3cc5b2c19a
-         * lat : 12.0909
-         * long : 80.09093
+        /**
+         * Doctor : 0
+         * Product : 0
+         * address : Unnamed Road, Tamil Nadu 621006, India
+         * lat : 11.055715
+         * lon : 78.632249
+         * service : 0
+         * user_id : 5fd227ac80791a71361baad3
          * user_type : 1
-         * address : Muthamil nager, Kodugaiyur, Chennai - 600 118
          */
 
 
@@ -503,6 +508,9 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
         petLoverDashboardRequest.setLongX(longitude);
         petLoverDashboardRequest.setUser_type(1);
         petLoverDashboardRequest.setAddress(AddressLine);
+        petLoverDashboardRequest.setDoctor(0);
+        petLoverDashboardRequest.setProduct(0);
+        petLoverDashboardRequest.setService(0);
 
 
         Log.w(TAG,"petLoverDashboardRequest"+ new Gson().toJson(petLoverDashboardRequest));
