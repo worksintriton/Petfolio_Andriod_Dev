@@ -75,7 +75,7 @@ public class DoctorSearchResponse {
         private String clinic_name;
         private String doctor_img;
         private String clinic_loc;
-        private int distance;
+        private String distance;
         private double star_count;
         private int review_count;
         private String communication_type;
@@ -146,11 +146,11 @@ public class DoctorSearchResponse {
         }
 
 
-        public int getDistance() {
+        public String getDistance() {
             return distance;
         }
 
-        public void setDistance(int distance) {
+        public void setDistance(String distance) {
             this.distance = distance;
 
         }

@@ -1,5 +1,6 @@
 package com.petfolio.infinitus.petlover;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -7,8 +8,10 @@ import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +30,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -41,6 +46,7 @@ import com.petfolio.infinitus.activity.location.ManageAddressActivity;
 import com.petfolio.infinitus.adapter.PetLoverNearByDoctorAdapter;
 import com.petfolio.infinitus.adapter.PetLoverSOSAdapter;
 import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.interfaces.SoSCallListener;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 
@@ -51,7 +57,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class PetLoverNavigationDrawer extends AppCompatActivity implements View.OnClickListener {
+public class PetLoverNavigationDrawer extends AppCompatActivity implements View.OnClickListener, SoSCallListener {
 
     public NavigationView navigationView;
     private DrawerLayout drawerLayout;
@@ -93,6 +99,9 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
     String emailid = "",patientid = "";
     private Dialog dialog;
+
+    private static final int REQUEST_PHONE_CALL =1 ;
+    private String sosPhonenumber;
 
 
     @SuppressLint("InflateParams")
@@ -271,11 +280,37 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
                     dialog.dismiss();
                 }
             });
+            if(sosList != null && sosList.size()>0){
+                rv_sosnumbers.setVisibility(View.VISIBLE);
+                btn_call.setVisibility(View.VISIBLE);
+                txt_no_records.setVisibility(View.GONE);
+                rv_sosnumbers.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                rv_sosnumbers.setItemAnimator(new DefaultItemAnimator());
+                PetLoverSOSAdapter petLoverSOSAdapter = new PetLoverSOSAdapter(getApplicationContext(), sosList,this);
+                rv_sosnumbers.setAdapter(petLoverSOSAdapter);
+            }else{
+                rv_sosnumbers.setVisibility(View.GONE);
+                btn_call.setVisibility(View.GONE);
+                txt_no_records.setVisibility(View.VISIBLE);
+                txt_no_records.setText("No phone numbers");
 
-            rv_sosnumbers.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-            rv_sosnumbers.setItemAnimator(new DefaultItemAnimator());
-            PetLoverSOSAdapter petLoverSOSAdapter = new PetLoverSOSAdapter(getApplicationContext(), sosList);
-            rv_sosnumbers.setAdapter(petLoverSOSAdapter);
+            }
+
+            btn_call.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(PetLoverNavigationDrawer.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
+                    }
+                    else
+                    {
+                        gotoPhone();
+                    }
+
+                }
+            });
+
+
 
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
@@ -289,6 +324,15 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
 
     }
+    private void gotoPhone() {
+        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + sosPhonenumber));
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        startActivity(intent);
+    }
+
+
 
 
 
@@ -403,12 +447,10 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
     }
 
 
-
-
-
-
-
-
-
-
+    @Override
+    public void soSCallListener(long phonenumber) {
+        if(phonenumber != 0){
+            sosPhonenumber = String.valueOf(phonenumber);
+        }
+    }
 }

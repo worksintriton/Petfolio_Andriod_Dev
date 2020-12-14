@@ -65,6 +65,8 @@ import com.petfolio.infinitus.adapter.PetLoverServicesAdapter;
 import com.petfolio.infinitus.adapter.ViewPagerDashboardAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.petlover.DoctorClinicDetailsActivity;
+import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinitus.requestpojo.PetLoverDashboardRequest;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 import com.petfolio.infinitus.service.GPSTracker;
@@ -169,6 +171,10 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
     TextView txt_seemore_products;
 
 
+   @BindView(R.id.txt_doctor_norecord)
+    TextView txt_doctor_norecord;
+
+
     private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.BannerDetailsBean> listHomeBannerResponse;
     private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.DoctorDetailsBean> doctorDetailsResponseList;
     private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ServiceDetailsBean> serviceDetailsResponseList;
@@ -186,6 +192,9 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
     private GoogleMap mMap;
     private GPSTracker gpsTracker;
     private SupportMapFragment mapFragment;
+    private AlertDialog.Builder alertDialogBuilder;
+    private String title;
+    private String doctornotavlmsg;
 
 
     public PetHomeFragment() {
@@ -259,7 +268,8 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.txt_seemore_doctors:
-                if(doctorDetailsResponseList.size()>0){
+                callDirections("4");
+               /* if(doctorDetailsResponseList.size()>0){
                     rvdoctors.setVisibility(View.VISIBLE);
                     txt_doctors.setVisibility(View.VISIBLE);
                     setViewDoctorsSeeMore();
@@ -268,7 +278,9 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
                     rvdoctors.setVisibility(View.GONE);
                     txt_doctors.setVisibility(View.GONE);
 
-                }
+                }*/
+
+
                 break;
             case R.id.txt_seemore_services:
                 if(serviceDetailsResponseList.size()>0){
@@ -301,12 +313,21 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
 
     }
 
+    public void callDirections(String tag){
+        Intent intent = new Intent(mContext, PetLoverDashboardActivity.class);
+        intent.putExtra("tag",tag);
+        startActivity(intent);
 
-    private void petLoverDashboardResponseCall() {
+
+    }
+
+
+
+    private void petLoverDashboardResponseCall(int doctor, int service, int product) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-        Call<PetLoverDashboardResponse> call = apiInterface.petLoverDashboardResponseCall(RestUtils.getContentType(), petLoverDashboardRequest());
+        Call<PetLoverDashboardResponse> call = apiInterface.petLoverDashboardResponseCall(RestUtils.getContentType(), petLoverDashboardRequest(doctor,service,product));
         Log.w(TAG,"PetLoverDashboardResponse url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<PetLoverDashboardResponse>() {
@@ -341,9 +362,27 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
                                 rvdoctors.setVisibility(View.VISIBLE);
                                 txt_doctors.setVisibility(View.VISIBLE);
                                 setViewDoctors(doctorDetailsResponseList);
+
                             } else {
                                 rvdoctors.setVisibility(View.GONE);
-                                txt_doctors.setVisibility(View.GONE);
+                                txt_doctor_norecord.setVisibility(View.VISIBLE);
+                                txt_doctor_norecord.setText("No doctors found");
+                                if(response.body().getData().getMessages() != null){
+                                    for(int i= 0;i< response.body().getData().getMessages().size();i++){
+                                        title =  response.body().getData().getMessages().get(i).getTitle();
+                                        if(title.equalsIgnoreCase("Doctor")){
+                                            doctornotavlmsg =  response.body().getData().getMessages().get(i).getMessage();
+                                            break;
+
+                                        }
+
+                                    }
+
+
+                                    showAlertDoctorNotAvlLoading(doctornotavlmsg);
+                                }
+
+
 
                             }
 
@@ -490,8 +529,8 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
 
     }
 
-    private PetLoverDashboardRequest petLoverDashboardRequest() {
-        /**
+    private PetLoverDashboardRequest petLoverDashboardRequest(int doctor, int service, int product) {
+        /*
          * Doctor : 0
          * Product : 0
          * address : Unnamed Road, Tamil Nadu 621006, India
@@ -509,9 +548,9 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
         petLoverDashboardRequest.setLongX(longitude);
         petLoverDashboardRequest.setUser_type(1);
         petLoverDashboardRequest.setAddress(AddressLine);
-        petLoverDashboardRequest.setDoctor(0);
-        petLoverDashboardRequest.setProduct(0);
-        petLoverDashboardRequest.setService(0);
+        petLoverDashboardRequest.setDoctor(doctor);
+        petLoverDashboardRequest.setProduct(product);
+        petLoverDashboardRequest.setService(service);
 
 
         Log.w(TAG,"petLoverDashboardRequest"+ new Gson().toJson(petLoverDashboardRequest));
@@ -663,7 +702,7 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
 
 
                         if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
-                            petLoverDashboardResponseCall();
+                            petLoverDashboardResponseCall(0,0,0);
                         }
 
 
@@ -833,7 +872,7 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
                             if(mContext != null) {
                                 if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
 
-                                    petLoverDashboardResponseCall();
+                                    petLoverDashboardResponseCall(0, 0, 0);
 
 
                                 }
@@ -886,6 +925,28 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
                         break;
                 }
                 break;
+        }
+    }
+
+    public void showAlertDoctorNotAvlLoading(String errormesage){
+        alertDialogBuilder = new AlertDialog.Builder(mContext);
+        alertDialogBuilder.setMessage(errormesage);
+        alertDialogBuilder.setPositiveButton("ok",
+                (arg0, arg1) -> hideLoadingDoctornotavl());
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+    public void hideLoadingDoctornotavl() {
+        try {
+            if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
+                petLoverDashboardResponseCall(1, 0, 0);
+            }
+
+            alertDialog.dismiss();
+
+        } catch (Exception ignored) {
+
         }
     }
 

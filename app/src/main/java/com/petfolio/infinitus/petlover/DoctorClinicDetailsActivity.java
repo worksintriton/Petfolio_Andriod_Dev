@@ -96,6 +96,7 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
     private String clinicname;
     private String distance;
     private String ClinicLocationname;
+    private String fromactivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +112,7 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
             doctorid = extras.getString("doctorid");
             doctorname = extras.getString("doctorname");
             distance = extras.getString("distance");
+            fromactivity = extras.getString("fromactivity");
 
 
             Log.w(TAG,"Bundle "+" doctorid : "+doctorid);
@@ -121,6 +123,7 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(DoctorClinicDetailsActivity.this,BookAppointmentActivity.class);
                 intent.putExtra("doctorid",doctorid);
+                intent.putExtra("fromactivity",fromactivity);
                 startActivity(intent);
             }
         });
@@ -272,8 +275,25 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(DoctorClinicDetailsActivity.this,PetLoverDashboardActivity.class);
-        startActivity(intent);
+
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("PetCareFragment")){
+            callDirections("4");
+        }else {
+            Intent intent = new Intent(DoctorClinicDetailsActivity.this,PetLoverDashboardActivity.class);
+            startActivity(intent);
+
+        }
+
+
 
     }
+
+    public void callDirections(String tag){
+        Intent intent = new Intent(DoctorClinicDetailsActivity.this,PetLoverDashboardActivity.class);
+        intent.putExtra("tag",tag);
+        startActivity(intent);
+        finish();
+
+    }
+
 }

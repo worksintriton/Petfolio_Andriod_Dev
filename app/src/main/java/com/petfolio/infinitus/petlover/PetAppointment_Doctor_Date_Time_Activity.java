@@ -675,32 +675,6 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         return petAppointmentCreateRequest;
     }
 
-    private void showSuceessLoading1(String message) {
-
-        new SweetAlertDialog(PetAppointment_Doctor_Date_Time_Activity.this, SweetAlertDialog.SUCCESS_TYPE)
-                .setTitleText("Successfull")
-                .setContentText(message)
-                .setCancelText("Cancel")
-                .setConfirmText("Ok")
-                .showCancelButton(true)
-                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sDialog) {
-                        sDialog.cancel();
-                    }
-                })
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        Intent intent = new Intent(PetAppointment_Doctor_Date_Time_Activity.this, PetLoverDashboardActivity.class);
-                        startActivity(intent);
-                        sweetAlertDialog.dismiss();
-
-
-                    }
-                })
-                .show();
-    }
 
     public void showSuceessLoading(String errormesage){
         alertDialogBuilder = new AlertDialog.Builder(this);
@@ -713,8 +687,6 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
-
-
     public void hideLoadingSuccess() {
         try {
             Intent intent = new Intent(PetAppointment_Doctor_Date_Time_Activity.this, PetLoverDashboardActivity.class);

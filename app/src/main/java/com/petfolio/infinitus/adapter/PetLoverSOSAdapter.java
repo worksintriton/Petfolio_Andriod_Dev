@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.interfaces.SoSCallListener;
 import com.petfolio.infinitus.responsepojo.DoctorSearchResponse;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 
@@ -26,6 +28,8 @@ public class PetLoverSOSAdapter extends  RecyclerView.Adapter<RecyclerView.ViewH
 
     private Context context;
 
+    private SoSCallListener soSCallListener;
+
 
 
 
@@ -35,9 +39,10 @@ public class PetLoverSOSAdapter extends  RecyclerView.Adapter<RecyclerView.ViewH
     private int row_index;
 
 
-    public PetLoverSOSAdapter(Context context, List<PetLoverDashboardResponse.DataBean.SOSBean> sosList) {
+    public PetLoverSOSAdapter(Context context, List<PetLoverDashboardResponse.DataBean.SOSBean> sosList, SoSCallListener soSCallListener) {
         this.sosList = sosList;
         this.context = context;
+        this.soSCallListener = soSCallListener;
 
     }
 
@@ -56,9 +61,7 @@ public class PetLoverSOSAdapter extends  RecyclerView.Adapter<RecyclerView.ViewH
 
     @SuppressLint("SetTextI18n")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
-
           currentItem = sosList.get(position);
-
           holder.txt_phn_num.setText(sosList.get(position).getNumber()+"");
 
 
@@ -77,14 +80,17 @@ public class PetLoverSOSAdapter extends  RecyclerView.Adapter<RecyclerView.ViewH
 
 
 
-        if(row_index==position){
-            //holder.ll_root.setBackgroundResource(R.drawable.rounded_sos_bgm);
-            holder.txt_phn_num.setTextColor(Color.parseColor("#ffffff"));//for both textviews
+        if(row_index == position){
+            Log.w(TAG,"phonenumber : "+sosList.get(position).getNumber());
+            soSCallListener.soSCallListener(sosList.get(position).getNumber());
+            holder.ll_root.setBackgroundResource(R.drawable.rounded_sos_bgm);
+            holder.txt_phn_num.setTextColor(Color.parseColor("#ffffff"));
+            holder.txt_contact.setTextColor(Color.parseColor("#ffffff"));//for both textviews
         }
-        else
-        {
+        else {
             holder.ll_root.setBackgroundResource(R.drawable.user_bgm_trans);
-            holder.txt_phn_num.setTextColor(Color.parseColor("#555555"));//for both textviews
+            holder.txt_phn_num.setTextColor(Color.parseColor("#555555"));
+            holder.txt_contact.setTextColor(Color.parseColor("#555555"));//for both textviews
         }
 
 
@@ -119,7 +125,7 @@ public class PetLoverSOSAdapter extends  RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_phn_num;
+        public TextView txt_phn_num,txt_contact;
         public LinearLayout ll_root;
 
 
@@ -129,6 +135,7 @@ public class PetLoverSOSAdapter extends  RecyclerView.Adapter<RecyclerView.ViewH
             super(itemView);
 
             txt_phn_num = itemView.findViewById(R.id.txt_phn_num);
+            txt_contact = itemView.findViewById(R.id.txt_contact);
             ll_root = itemView.findViewById(R.id.ll_root);
 
 

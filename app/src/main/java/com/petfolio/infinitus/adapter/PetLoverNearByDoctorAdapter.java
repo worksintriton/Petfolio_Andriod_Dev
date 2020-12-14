@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.fragmentpetlover.PetCareFragment;
+import com.petfolio.infinitus.petlover.BookAppointmentActivity;
 import com.petfolio.infinitus.petlover.DoctorClinicDetailsActivity;
 import com.petfolio.infinitus.responsepojo.DoctorSearchResponse;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
@@ -28,6 +31,8 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
     private  String TAG = "PetLoverNearByDoctorAdapter";
 
     private Context context;
+
+
 
 
 
@@ -96,12 +101,32 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
             public void onClick(View v) {
 
                 Intent intent = new Intent(context, DoctorClinicDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("doctorid",doctorDetailsResponseList.get(position).get_id());
+                intent.putExtra("doctorid",doctorDetailsResponseList.get(position).getUser_id());
                 intent.putExtra("doctorname",doctorDetailsResponseList.get(position).getDoctor_name());
                 intent.putExtra("reviewcount",doctorDetailsResponseList.get(position).getReview_count());
                 intent.putExtra("starcount",doctorDetailsResponseList.get(position).getStar_count());
                 intent.putExtra("distance",doctorDetailsResponseList.get(position).getDistance());
-                Log.w(TAG,"doctorid :"+doctorDetailsResponseList.get(position).get_id());
+                intent.putExtra("fromactivity", "PetCareFragment");
+                Log.w(TAG,"doctorid :"+doctorDetailsResponseList.get(position).getUser_id());
+                context.startActivity(intent);
+                }
+
+
+
+
+        });
+        holder.btn_book.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context, BookAppointmentActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("doctorid",doctorDetailsResponseList.get(position).getUser_id());
+                intent.putExtra("doctorname",doctorDetailsResponseList.get(position).getDoctor_name());
+                intent.putExtra("reviewcount",doctorDetailsResponseList.get(position).getReview_count());
+                intent.putExtra("starcount",doctorDetailsResponseList.get(position).getStar_count());
+                intent.putExtra("distance",doctorDetailsResponseList.get(position).getDistance());
+                intent.putExtra("fromto", "direct");
+                Log.w(TAG,"doctorid :"+doctorDetailsResponseList.get(position).getUser_id());
                 context.startActivity(intent);
                 }
 
@@ -150,6 +175,7 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
         public TextView txt_doctors_name,txt_doctors_specialization,txt_star_rating,txt_review_count,txt_place,txt_km;
         public LinearLayout ll_root;
         public ImageView img_doctors_image;
+        public Button btn_book;
 
 
 
@@ -164,6 +190,7 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
             txt_review_count = itemView.findViewById(R.id.txt_review_count);
             txt_place = itemView.findViewById(R.id.txt_place);
             txt_km = itemView.findViewById(R.id.txt_km);
+            btn_book = itemView.findViewById(R.id.btn_book);
 
 
 

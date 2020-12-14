@@ -168,6 +168,8 @@ public class BookAppointmentActivity extends AppCompatActivity {
     private String petId;
     private String doctorid;
     private String petimage;
+    private String fromactivity;
+    private String fromto;
 
 
     @Override
@@ -185,6 +187,9 @@ public class BookAppointmentActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             doctorid = extras.getString("doctorid");
+            fromactivity = extras.getString("fromactivity");
+            fromto = extras.getString("fromto");
+
 
             Log.w(TAG,"Bundle "+" doctorid : "+doctorid);
         }
@@ -941,10 +946,32 @@ public class BookAppointmentActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(getApplicationContext(),DoctorClinicDetailsActivity.class);
-        intent.putExtra("doctorid",doctorid);
-        startActivity(intent);
+        if(fromto != null && fromto.equalsIgnoreCase("direct")){
+            callDirections("4");
+        } else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetCareFragment")){
+            Intent intent = new Intent(getApplicationContext(),DoctorClinicDetailsActivity.class);
+            intent.putExtra("doctorid",doctorid);
+            intent.putExtra("fromactivity",fromactivity);
+            startActivity(intent);
+        }else{
+            Intent intent = new Intent(getApplicationContext(),DoctorClinicDetailsActivity.class);
+            intent.putExtra("doctorid",doctorid);
+            startActivity(intent);
+
+        }
+
+
+
     }
+
+    public void callDirections(String tag){
+        Intent intent = new Intent(BookAppointmentActivity.this,PetLoverDashboardActivity.class);
+        intent.putExtra("tag",tag);
+        startActivity(intent);
+        finish();
+
+    }
+
 }
 
 
