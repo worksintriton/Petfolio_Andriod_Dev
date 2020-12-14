@@ -57,7 +57,6 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
     private Integer jockey_id;
    // private APIInterface apiInterface;
    // private AppliedJockeyResponse appliedJockeyResponse;
-    ProgressDialog pDialog;
 
      public TextView tvWelcomeName;
      Button btnNotificationPatient;
@@ -125,10 +124,7 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
     }
 
     private void initUI(View view) {
-        pDialog = new ProgressDialog(PetLoverNavigationDrawer.this);
-        pDialog.setMessage(PetLoverNavigationDrawer.this.getString(R.string.please_wait));
-        pDialog.setIndeterminate(true);
-        pDialog.setCancelable(true);
+
         //Initializing NavigationView
         navigationView = view.findViewById(R.id.nav_view);
         navigationView.setItemIconTintList(null);
@@ -233,6 +229,14 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
         tvWelcomeName.setText("Home " );
 
+        ImageView img_sos = toolbar.findViewById(R.id.img_sos);
+
+        img_sos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
 
         toggleView();
