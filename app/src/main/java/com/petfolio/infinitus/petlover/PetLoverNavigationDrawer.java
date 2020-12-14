@@ -1,17 +1,21 @@
 package com.petfolio.infinitus.petlover;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -25,14 +29,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
+import com.petfolio.infinitus.activity.location.ManageAddressActivity;
+import com.petfolio.infinitus.adapter.PetLoverNearByDoctorAdapter;
+import com.petfolio.infinitus.adapter.PetLoverSOSAdapter;
+import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 
 
 import java.util.HashMap;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -78,10 +92,7 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
     private String addressLine = "";
 
     String emailid = "",patientid = "";
-
-
-
-
+    private Dialog dialog;
 
 
     @SuppressLint("InflateParams")
@@ -234,6 +245,8 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
         img_sos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.w(TAG,"SOSLIST"+new Gson().toJson(APIClient.sosList));
+                showSOSAlert(APIClient.sosList);
 
             }
         });
@@ -242,6 +255,40 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
         toggleView();
     }
 
+    private void showSOSAlert(List<PetLoverDashboardResponse.DataBean.SOSBean> sosList) {
+
+        try {
+
+            dialog = new Dialog(PetLoverNavigationDrawer.this);
+            dialog.setContentView(R.layout.sos_popup_layout);
+            RecyclerView rv_sosnumbers = (RecyclerView)dialog.findViewById(R.id.rv_sosnumbers);
+            Button btn_call = (Button)dialog.findViewById(R.id.btn_call);
+            TextView txt_no_records = (TextView)dialog.findViewById(R.id.txt_no_records);
+            ImageView img_close = (ImageView)dialog.findViewById(R.id.img_close);
+            img_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+
+            rv_sosnumbers.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            rv_sosnumbers.setItemAnimator(new DefaultItemAnimator());
+            PetLoverSOSAdapter petLoverSOSAdapter = new PetLoverSOSAdapter(getApplicationContext(), sosList);
+            rv_sosnumbers.setAdapter(petLoverSOSAdapter);
+
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
 
 
 

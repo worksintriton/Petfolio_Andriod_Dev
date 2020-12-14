@@ -1,5 +1,8 @@
 package com.petfolio.infinitus.api;
 
+import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
+
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -18,6 +21,8 @@ public class APIClient {
 
     public static String BASE_URL = "http://52.25.163.13:3000/api/";
     public static String IMAGE_BASE_URL = "http://52.25.163.13:3000/";
+
+    public static List<PetLoverDashboardResponse.DataBean.SOSBean> sosList;
 
     public static Retrofit getClient() {
         client = new OkHttpClient();

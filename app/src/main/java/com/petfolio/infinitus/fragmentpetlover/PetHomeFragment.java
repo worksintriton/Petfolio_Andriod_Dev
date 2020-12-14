@@ -188,7 +188,6 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
     private SupportMapFragment mapFragment;
 
 
-
     public PetHomeFragment() {
         // Required empty public constructor
     }
@@ -383,7 +382,9 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
                             }
                         }
 
-                        
+                        if(response.body().getData().getSOS() != null){
+                         APIClient.sosList = response.body().getData().getSOS();
+                        }
 
 
                     }
