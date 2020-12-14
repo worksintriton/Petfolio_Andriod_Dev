@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -100,6 +102,14 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     private TextView headertitle;
 
 
+    @BindView(R.id.txt_communicationtype)
+    TextView txt_communicationtype;
+
+    @BindView(R.id.switchButton_communcationtype)
+    SwitchCompat switchButton_communcationtype;
+
+
+
 
 
 
@@ -142,6 +152,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     private List<DoctorSearchResponse.DataBean> doctorDetailsResponseList;
     private Dialog alertDialog;
     private String searchString = "";
+    private int communication_type = 0;
 
 
     public PetCareFragment() {
@@ -171,16 +182,38 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
         avi_indicator.setVisibility(View.GONE);
 
 
+
+
         SessionManager sessionManager = new SessionManager(mContext);
         HashMap<String, String> user = sessionManager.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
         Log.w(TAG,"customerid-->"+userid);
 
 
-        if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
-            doctorSearchResponseCall(searchString);
-        }
+        switchButton_communcationtype.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    txt_communicationtype.setText("Communicatoin Online");
+                    communication_type = 1;
+                    if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
+                        doctorSearchResponseCall(searchString,communication_type);
+                    }
+                }else{
+                    txt_communicationtype.setText("Communicatoin Offline");
+                    communication_type = 0;
+                    if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
+                        doctorSearchResponseCall(searchString,communication_type);
+                    }
 
+                }
+            }
+        });
+
+
+        if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
+            doctorSearchResponseCall(searchString,communication_type);
+        }
         edt_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -193,13 +226,13 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
                 Log.w(TAG,"onTextChanged-->"+s.toString());
                 searchString = s.toString();
                 if(!searchString.isEmpty()){
-                    doctorSearchResponseCall(searchString);
+                    doctorSearchResponseCall(searchString, communication_type);
                    /* img_search.setVisibility(View.VISIBLE);
                     img_clear.setVisibility(View.VISIBLE);*/
 
                 }else{
                     searchString ="";
-                    doctorSearchResponseCall(searchString);
+                    doctorSearchResponseCall(searchString, communication_type);
                     /*img_search.setVisibility(View.GONE);
                     img_clear.setVisibility(View.GONE);*/
                 }
@@ -243,11 +276,11 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     }
 
 
-    private void doctorSearchResponseCall(String searchString) {
+    private void doctorSearchResponseCall(String searchString, int communication_type) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-        Call<DoctorSearchResponse> call = apiInterface.doctorSearchResponseCall(RestUtils.getContentType(), doctorSearchRequest(searchString));
+        Call<DoctorSearchResponse> call = apiInterface.doctorSearchResponseCall(RestUtils.getContentType(), doctorSearchRequest(searchString,communication_type));
         Log.w(TAG,"DoctorSearchResponse url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<DoctorSearchResponse>() {
@@ -305,7 +338,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     }
 
 
-    private DoctorSearchRequest doctorSearchRequest(String searchString) {
+    private DoctorSearchRequest doctorSearchRequest(String searchString, int communication_type) {
         /*
          * search_string :
          * communication_type : 0
@@ -315,7 +348,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
         DoctorSearchRequest doctorSearchRequest = new DoctorSearchRequest();
         doctorSearchRequest.setSearch_string(searchString);
-        doctorSearchRequest.setCommunication_type(0);
+        doctorSearchRequest.setCommunication_type(communication_type);
         doctorSearchRequest.setUser_id(userid);
         Log.w(TAG,"doctorSearchRequest"+ new Gson().toJson(doctorSearchRequest));
         return doctorSearchRequest;

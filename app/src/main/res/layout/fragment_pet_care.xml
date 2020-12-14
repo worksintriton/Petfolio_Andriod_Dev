@@ -123,21 +123,31 @@
                     android:textAllCaps="false"
                     android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end">
+                    <TextView
+                        android:id="@+id/txt_communicationtype"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="Communication  offline"
+                        android:textColor="@color/new_sec_txt_color"
+                        android:textSize="12sp" />
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switchButton_communcationtype"
+                        android:layout_width="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:checked="false"
+                        android:layout_height="wrap_content"
 
-                <ToggleButton
-                    android:id="@+id/tb_status"
-                    android:layout_width="60dp"
-                    android:layout_height="35dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_gravity="end"
-                    android:background="@drawable/new_rounded_corner_btn_orange"
-                    android:fontFamily="@font/futuramediumbt"
-                    android:textAllCaps="false"
-                    android:textColor="@color/new_txt_color"
-                    android:textOff="@string/online"
-                    android:textOn="@string/offline"
-                    android:textSize="12sp"
-                    android:layout_alignParentRight="true" />
+                        />
+
+                </RelativeLayout>
+
+
+
 
 
             </RelativeLayout>

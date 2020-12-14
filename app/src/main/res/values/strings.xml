@@ -262,5 +262,8 @@
     <string name="call">Call</string>
     <string name="contact">Contact</string>
     <string name="phn_nu">9876543210</string>
+    <string name="filters">Filters</string>
+    <string name="clear_all">Clear All</string>
+    <string name="apply">Apply</string>
 
 </resources>
