@@ -1,5 +1,6 @@
 package com.petfolio.infinitus.api;
 
+import com.petfolio.infinitus.requestpojo.AddReviewRequest;
 import com.petfolio.infinitus.requestpojo.AddYourPetRequest;
 import com.petfolio.infinitus.requestpojo.AppoinmentCancelledRequest;
 import com.petfolio.infinitus.requestpojo.AppoinmentCompleteRequest;
@@ -37,6 +38,7 @@ import com.petfolio.infinitus.requestpojo.PrescriptionCreateRequest;
 import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
 import com.petfolio.infinitus.requestpojo.SignupRequest;
 import com.petfolio.infinitus.requestpojo.UserStatusUpdateRequest;
+import com.petfolio.infinitus.responsepojo.AddReviewResponse;
 import com.petfolio.infinitus.responsepojo.AddYourPetResponse;
 import com.petfolio.infinitus.responsepojo.AppoinmentCancelledResponse;
 import com.petfolio.infinitus.responsepojo.AppoinmentCompleteResponse;
@@ -281,6 +283,11 @@ public interface RestApiInterface {
     /*Doctor specialization near by and review Filter api*/
     @POST("doctordetails/filter_doctor")
     Call<FilterDoctorResponse>filterDoctorResponseCall(@Header("Content-Type") String type, @Body FilterDoctorRequest filterDoctorRequest );
+
+
+    /*Pet lover review add*/
+    @POST("appointments/reviews/update")
+    Call<AddReviewResponse>addReviewResponseCall(@Header("Content-Type") String type, @Body AddReviewRequest addReviewRequest  );
 
 
 

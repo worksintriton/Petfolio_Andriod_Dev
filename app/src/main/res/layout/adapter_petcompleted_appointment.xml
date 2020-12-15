@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cdvw_newappointment"
         android:layout_width="match_parent"
@@ -47,7 +46,7 @@
 
             <LinearLayout
                 android:id="@+id/ly_petname"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/cv_pet"
                 android:layout_toRightOf="@id/cv_pet"
@@ -218,6 +217,23 @@
 
             </LinearLayout>
 
+
+            <Button
+                android:id="@+id/btn_add_review"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="end"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/new_rounded_corner_btn"
+                android:fontFamily="@font/futuramediumbt"
+                android:text="@string/add_review"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:layout_alignParentEnd="true" />
 
             <TextView
                 android:id="@+id/txt_completed_date"

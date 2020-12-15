@@ -71,6 +71,10 @@ public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
 
 
 
+
+
+
+
         /*if (currentItem.getc() != null && !currentItem.getPic().isEmpty()) {
 
                 Glide.with(context)
@@ -116,7 +120,7 @@ public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
     static class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_petname,txt_pettype,txt_service_info,txt_completed_date,txt_service_cost;
         public ImageView img_pet_imge;
-        public Button btn_cancel,btn_complete;
+        public Button btn_cancel,btn_complete,btn_add_review;
 
 
 
@@ -130,6 +134,7 @@ public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
             btn_cancel = itemView.findViewById(R.id.btn_cancel);
             btn_complete = itemView.findViewById(R.id.btn_complete);
             txt_service_cost = itemView.findViewById(R.id.txt_service_cost);
+            btn_add_review = itemView.findViewById(R.id.btn_add_review);
 
 
 
