@@ -54,10 +54,8 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
     String tag;
 
     String fromactivity;
-
-
-
-
+    private int reviewcount;
+    private String specialization;
 
 
     @Override
@@ -75,6 +73,9 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
         if (extras != null) {
 
             fromactivity = extras.getString("fromactivity");
+            reviewcount = extras.getInt("reviewcount");
+            specialization = extras.getString("specialization");
+
 
         }
 
@@ -114,26 +115,13 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
         if(fromactivity != null){
             Log.w(TAG,"fromactivity loadFragment : "+fromactivity);
 
-            if(fromactivity.equalsIgnoreCase("PopularServiceActivity")) {
+            if(fromactivity.equalsIgnoreCase("FiltersActivity")) {
                 bundle.putString("fromactivity", fromactivity);
-
+                bundle.putString("specialization", specialization);
+                bundle.putInt("reviewcount", reviewcount);
                 // set Fragmentclass Arguments
                 fragment.setArguments(bundle);
                 Log.w(TAG,"fromactivity : "+fromactivity);
-                // load fragment
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_container, fragment);
-                transaction.addToBackStack(null);
-                transaction.commitAllowingStateLoss();
-            }
-            else if(fromactivity.equalsIgnoreCase("SubServicesActivity")) {
-                bundle.putString("fromactivity", fromactivity);
-
-
-                // set Fragmentclass Arguments
-                fragment.setArguments(bundle);
-                Log.w(TAG,"fromactivity : "+fromactivity);
-
                 // load fragment
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.main_container, fragment);

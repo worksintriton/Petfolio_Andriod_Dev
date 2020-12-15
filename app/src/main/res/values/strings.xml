@@ -50,7 +50,6 @@
     <string name="please_wait">Please Wait</string>
     <string name="log_in">Log in</string>
     <string name="see_more">See more</string>
-    <string name="doctors">Doctors</string>
     <string name="services">Services</string>
     <string name="products">Products</string>
     <string name="specialization">Specialization</string>
@@ -249,7 +248,7 @@
 
     <string name="search">Search</string>
     <string name="near_by_doctors">Near by Doctors</string>
-    <string name="_4_doctors">4 Doctors</string>
+    <string name="doctors">Doctors</string>
     <string name="place_alone">place</string>
     <string name="bullet">•</string>
     <string name="_2_km_away">2 km away</string>
@@ -265,5 +264,15 @@
     <string name="filters">Filters</string>
     <string name="clear_all">Clear All</string>
     <string name="apply">Apply</string>
+
+    <string name="review">Review</string>
+    <string name="near_by">Near by</string>
+    <string name="up"><![CDATA[& Up]]></string>
+
+    <string name="excellent">Excellent</string>
+    <string name="average">Average</string>
+    <string name="below_average">Below Average</string>
+    <string name="poor">Poor</string>
+    <string name="communication_type">Communication Offline</string>
 
 </resources>
