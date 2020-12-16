@@ -29,6 +29,7 @@ import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Objects;
 import java.util.Timer;
@@ -67,6 +68,9 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.txt_star_rating)
     TextView txt_star_rating;
+
+    @BindView(R.id.txt_place)
+    TextView txt_place;
 
     @BindView(R.id.txt_distance)
     TextView txt_distance;
@@ -186,10 +190,13 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
                         if(starcount != null ){
                             txt_star_rating.setText(starcount+"");
                         }
+                        if(ClinicLocationname != null ){
+                            txt_place.setText(ClinicLocationname+"");
+                        }
 
 
                         if(distance != null && ClinicLocationname != null){
-                            txt_distance.setText(ClinicLocationname+", "+distance+" KM.");
+                            txt_distance.setText(distance+" KM.");
                         }
 
 

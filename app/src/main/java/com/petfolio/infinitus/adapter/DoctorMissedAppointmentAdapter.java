@@ -55,23 +55,23 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
     @SuppressLint("SetTextI18n")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
-        Log.w(TAG,"Pet name-->"+missedAppointmentResponseList.get(0).getPet_id().getPet_name());
+        Log.w(TAG,"Pet name-->"+missedAppointmentResponseList.get(position).getPet_id().getPet_name());
 
         currentItem = missedAppointmentResponseList.get(position);
-        holder.txt_petname.setText(missedAppointmentResponseList.get(0).getPet_id().getPet_name());
-        holder.txt_pettype.setText(missedAppointmentResponseList.get(0).getPet_id().getPet_type());
-        holder.txt_missed_date.setText("Missed on:"+" "+missedAppointmentResponseList.get(0).getMissed_at());
+        holder.txt_petname.setText(missedAppointmentResponseList.get(position).getPet_id().getPet_name());
+        holder.txt_pettype.setText(missedAppointmentResponseList.get(position).getPet_id().getPet_type());
+        holder.txt_missed_date.setText("Missed on:"+" "+missedAppointmentResponseList.get(position).getMissed_at());
 
-        if(missedAppointmentResponseList.get(0).getService_name() != null){
-            holder.txt_service_info.setText(missedAppointmentResponseList.get(0).getService_name());
+        if(missedAppointmentResponseList.get(position).getAppointment_types() != null){
+            holder.txt_type.setText(missedAppointmentResponseList.get(position).getAppointment_types());
         }
-        if(missedAppointmentResponseList.get(0).getService_amount() != null){
-            holder.txt_service_cost.setText(missedAppointmentResponseList.get(0).getService_amount());
+        if(missedAppointmentResponseList.get(position).getService_amount() != null){
+            holder.txt_service_cost.setText(missedAppointmentResponseList.get(position).getService_amount());
         }
-        if (missedAppointmentResponseList.get(0).getPet_id().getPet_img() != null && !missedAppointmentResponseList.get(0).getPet_id().getPet_img().isEmpty()) {
+        if (missedAppointmentResponseList.get(position).getPet_id().getPet_img() != null && !missedAppointmentResponseList.get(position).getPet_id().getPet_img().isEmpty()) {
 
             Glide.with(context)
-                    .load(missedAppointmentResponseList.get(0).getPet_id().getPet_img())
+                    .load(missedAppointmentResponseList.get(position).getPet_id().getPet_img())
                     .into(holder.img_pet_imge);
 
         }
@@ -98,7 +98,7 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
     }
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_petname,txt_pettype,txt_service_info,txt_service_cost,txt_missed_date;
+        public TextView txt_petname,txt_pettype,txt_type,txt_service_cost,txt_missed_date;
         public ImageView img_pet_imge;
         public Button btn_cancel,btn_complete;
 
@@ -109,7 +109,7 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
             img_pet_imge = itemView.findViewById(R.id.img_pet_imge);
             txt_petname = itemView.findViewById(R.id.txt_petname);
             txt_pettype = itemView.findViewById(R.id.txt_pettype);
-            txt_service_info = itemView.findViewById(R.id.txt_service_info);
+            txt_type = itemView.findViewById(R.id.txt_type);
             txt_service_cost = itemView.findViewById(R.id.txt_service_cost);
             txt_missed_date = itemView.findViewById(R.id.txt_missed_date);
             btn_cancel = itemView.findViewById(R.id.btn_cancel);

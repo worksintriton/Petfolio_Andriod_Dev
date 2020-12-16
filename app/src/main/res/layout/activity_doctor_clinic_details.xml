@@ -159,12 +159,13 @@
                 android:baselineAligned="false">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="0.90"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/txt_distance"
+                        android:id="@+id/txt_place"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -172,16 +173,28 @@
                         android:fontFamily="@font/futurabookfont"
                         android:maxLines="1"
                         android:padding="2dp"
-                        android:text="@string/place"
+                        android:text="@string/place_alone"
+                        android:textColor="@color/new_sec_txt_color"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/txt_distance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/futurabookfont"
+                        android:maxLines="1"
+                        android:text="@string/_2_km_away"
                         android:textColor="@color/new_sec_txt_color"
                         android:textSize="12sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="0.10"
                     android:gravity="end">
 
 
@@ -288,10 +301,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
 
 
         <Button
@@ -314,16 +327,15 @@
             android:id="@+id/bottom_navigation_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/new_rounded_corner_btn"
             android:theme="@style/Widget.BottomNavigationView"
             app:elevation="8dp"
-            app:itemIconSize="20dp"
-            app:menu="@menu/bottom_navigation"
-            android:background="@drawable/rounded_curve"
             app:itemBackground="@drawable/selected_state"
+            app:itemIconSize="20dp"
             app:itemIconTint="@color/selector"
             app:itemTextColor="@color/selector"
             app:labelVisibilityMode="labeled"
-            />
+            app:menu="@menu/bottom_navigation" />
 
 
     </LinearLayout>

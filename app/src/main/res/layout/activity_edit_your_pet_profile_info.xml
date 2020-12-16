@@ -41,6 +41,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/footerView"
         android:layout_below="@+id/headerView"
+        android:layout_marginBottom="20dp"
         android:fillViewport="true">
 
         <LinearLayout
@@ -57,6 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/rectangle_corner"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 android:fontFamily="@font/futuramediumbt"
                 android:hint="@string/pet_name"
                 android:inputType="text"
@@ -65,9 +67,7 @@
                 android:textColor="@color/green"
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp"
-                tools:ignore="Autofill,LabelFor"
-                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                />
+                tools:ignore="Autofill,LabelFor" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -243,6 +243,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
                 android:orientation="vertical">
 
                 <TextView

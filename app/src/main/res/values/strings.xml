@@ -150,7 +150,7 @@
     <string name="pet_care">Pet Care</string>
     <string name="current">Current</string>
     <string name="cancelled">Cancelled</string>
-    <string name="service_cost">Service Cost</string>
+    <string name="service_cost">Cost</string>
 
     <string name="petlovers">Petlovers</string>
     <string name="prescriptiondetails">Prescription Details</string>
@@ -274,5 +274,9 @@
     <string name="below_average">Below Average</string>
     <string name="poor">Poor</string>
     <string name="communication_type">Communication Offline</string>
+
+    <string name="review_added">Review Added</string>
+    <string name="back">Back</string>
+    <string name="type">Type</string>
 
 </resources>
