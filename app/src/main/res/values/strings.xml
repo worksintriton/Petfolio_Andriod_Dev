@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">PetFolio</string>
     <string name="verify_otp">Verify OTP</string>
     <string name="emailorphonenumber">Phone Number</string>
@@ -53,6 +53,7 @@
     <string name="services">Services</string>
     <string name="products">Products</string>
     <string name="specialization">Specialization</string>
+    <string name="addyourservices">Add your services</string>
     <string name="edit"> <u>Edit</u></string>
     <string name="turn_on_your_location_services">Turn on your location services</string>
     <string name="search_location_address">Search Location Address</string>
@@ -61,8 +62,10 @@
 
 
     <string name="doctor_business_info_title">Doctor Business Info</string>
+    <string name="serviceproviderbusiness">Service Provider Business</string>
     <string name="image">Image</string>
     <string name="clinic_name">Clinic name</string>
+    <string name="business_name">Business name</string>
     <string name="education">Education</string>
     <string name="year_of_completion">Year of Completion</string>
     <string name="add">Add</string>
@@ -80,10 +83,13 @@
     <string name="clinic_address">Clinic Address</string>
     <string name="write_here">Write Here....</string>
     <string name="clinic_pict">Clinic pictures</string>
+    <string name="service_gallery_images">Service gallery images</string>
     <string name="certificate">Certificate</string>
+    <string name="certificates_if_any">Certificates if any</string>
     <string name="govt_proof">Govt ID Proof</string>
     <string name="photoid_proof">Photo ID Proof</string>
     <string name="choose">Choose</string>
+    <string name="specialization_ifany">Specialization if any</string>
     <string name="submit">Submit</string>
     <string name="dismiss">Dismiss</string>
     <string name="alert">Sorry you cannot add more than 3</string>
@@ -101,6 +107,7 @@
     <string name="shop">Shop</string>
     <string name="feeds">Feeds</string>
     <string name="market">Marketplace</string>
+    <string name="Market">Market</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tabnew">New</string>
@@ -143,6 +150,7 @@
     <string name="cancel_appointment">Cancel appointment</string>
     <string name="chat">Chat</string>
     <string name="add_review">Add Review</string>
+    <string name="all_categories">All categories</string>
     <string name="cancel_appointment_date">Cancelled on 01-Sep 2020</string>
     <string name="pickup_location">PickUp Location</string>
     <string name="current_location">Current Location</string>
@@ -278,5 +286,13 @@
     <string name="review_added">Review Added</string>
     <string name="back">Back</string>
     <string name="type">Type</string>
+
+    <string name="business">Business</string>
+
+    <string name="recent_search">Recent search</string>
+    <string name="today_deal">Todays deal</string>
+    <string name="most_searched_products">most searched products</string>
+
+
 
 </resources>

@@ -141,6 +141,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
         finish();
     }
 
@@ -160,7 +161,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
                     if (200 == response.body().getCode()) {
                         if(response.body().getData().getUser_details().get_id() != null){
-                            userStatusUpdateResponse(response.body().getData().getUser_details().get_id() );
+                            userStatusUpdateResponseCall(response.body().getData().getUser_details().get_id() );
                         }
                        /* Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
                         Intent intent = new Intent(SignUpActivity.this,VerifyOtpActivity.class);
@@ -214,7 +215,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    private void userStatusUpdateResponse(String id) {
+    private void userStatusUpdateResponseCall(String id) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);

@@ -47,13 +47,12 @@
         tools:ignore="AllowBackup,UnusedAttribute"
         tools:replace="android:theme">
 
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".activity.SplashActivity"
+            android:name=".serviceprovider.ServiceProviderRegisterFormActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan">
@@ -163,8 +162,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-
-        
         <activity
             android:name=".activity.location.ManageAddressActivity"
             android:screenOrientation="portrait"
@@ -237,6 +234,23 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".doctor.PrescriptionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+        <!--
+          <activity android:name=".serviceprovider.ServiceProviderRegisterFormActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+        -->
+
+        <!--<activity android:name=".serviceprovider.ServiceProviderDashboardActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />-->
+
+        <activity
+            android:name=".vendor.VendorRegisterFormActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />

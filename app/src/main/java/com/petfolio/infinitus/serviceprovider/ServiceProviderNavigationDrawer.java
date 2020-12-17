@@ -1,4 +1,4 @@
-package com.petfolio.infinitus.petlover;
+package com.petfolio.infinitus.serviceprovider;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -7,7 +7,6 @@ import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
-
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -25,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,14 +40,14 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
-import com.petfolio.infinitus.activity.location.ManageAddressActivity;
-import com.petfolio.infinitus.adapter.PetLoverNearByDoctorAdapter;
 import com.petfolio.infinitus.adapter.PetLoverSOSAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.interfaces.SoSCallListener;
+import com.petfolio.infinitus.petlover.PetLoverEditProfileActivity;
+import com.petfolio.infinitus.petlover.PetLoverProfileScreenActivity;
+import com.petfolio.infinitus.petlover.PetMyappointmentsActivity;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
-
 
 import java.util.HashMap;
 import java.util.List;
@@ -57,8 +55,12 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class PetLoverNavigationDrawer extends AppCompatActivity implements View.OnClickListener, SoSCallListener {
+public class ServiceProviderNavigationDrawer extends AppCompatActivity implements View.OnClickListener, SoSCallListener {
 
+
+    private String TAG ="ServiceProviderNavigationDrawer";
+
+    public NavigationView navigationView;
     private DrawerLayout drawerLayout;
     LayoutInflater inflater;
     View view, header;
@@ -74,13 +76,13 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
     //SessionManager session;
     String name, image_url, phoneNo;
 
+
      public TextView tvWelcomeName;
-     Button btnNotificationPatient;
 
      public Menu menu;
 
+    BroadcastReceiver imgReceiver;
 
-    private String TAG ="PetLoverNavigationDrawer";
 
 
     ProgressDialog progressDialog;
@@ -103,35 +105,44 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.AppTheme_NoActionBar);
-        Log.w(TAG, "onCreate---->");
+        Log.w(TAG,"onCreate---->");
 
         inflater = LayoutInflater.from(this);
-        view = inflater.inflate(R.layout.navigation_drawer_layout, null);
+        view = inflater.inflate(R.layout.navigation_drawer_sp_layout, null);
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
         name = user.get(SessionManager.KEY_FIRST_NAME);
         emailid = user.get(SessionManager.KEY_EMAIL_ID);
         phoneNo = user.get(SessionManager.KEY_MOBILE);
-        String userid = user.get(SessionManager.KEY_ID);
-        Log.w(TAG, "userid : " + userid);
+       String userid = user.get(SessionManager.KEY_ID);
+       Log.w(TAG,"userid : "+userid);
 
 
-        Log.w(TAG, "user details--->" + "name :" + " " + name + " " + "image_url :" + image_url);
+
+
+
+        Log.w(TAG,"user details--->"+"name :"+" "+ name+" " +"image_url :"+ image_url);
 
         initUI(view);
         initToolBar(view);
+
+
+
+       // myBoradcastReceiver();
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        if (imgReceiver != null) {
+            unregisterReceiver(imgReceiver);
+        }
     }
 
     private void initUI(View view) {
 
         //Initializing NavigationView
-        NavigationView navigationView = view.findViewById(R.id.nav_view);
-
+        navigationView = view.findViewById(R.id.nav_view);
         navigationView.setItemIconTintList(null);
 
         frameLayout = view.findViewById(R.id.base_container);
@@ -143,6 +154,8 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
                 drawerLayout.closeDrawers();
                 //Check to see which item was being clicked and perform appropriate action
                 switch (menuItem.getItemId()) {
+
+
                     //Replacing the main content with ContentFragment Which is our Inbox View;
                     case R.id.nav_item_one:
 
@@ -199,14 +212,14 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
         llheader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class));
+                startActivity(new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class));
             }
         });
 
         nav_header_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),PetLoverEditProfileActivity.class));
+                startActivity(new Intent(getApplicationContext(), PetLoverEditProfileActivity.class));
             }
         });
 
@@ -232,81 +245,12 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
         tvWelcomeName.setText("Home " );
 
-        ImageView img_sos = toolbar.findViewById(R.id.img_sos);
 
-        img_sos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.w(TAG,"SOSLIST"+new Gson().toJson(APIClient.sosList));
-                showSOSAlert(APIClient.sosList);
-
-            }
-        });
 
 
         toggleView();
     }
 
-    private void showSOSAlert(List<PetLoverDashboardResponse.DataBean.SOSBean> sosList) {
-
-        try {
-
-            dialog = new Dialog(PetLoverNavigationDrawer.this);
-            dialog.setContentView(R.layout.sos_popup_layout);
-            RecyclerView rv_sosnumbers = (RecyclerView)dialog.findViewById(R.id.rv_sosnumbers);
-            Button btn_call = (Button)dialog.findViewById(R.id.btn_call);
-            TextView txt_no_records = (TextView)dialog.findViewById(R.id.txt_no_records);
-            ImageView img_close = (ImageView)dialog.findViewById(R.id.img_close);
-            img_close.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
-            if(sosList != null && sosList.size()>0){
-                rv_sosnumbers.setVisibility(View.VISIBLE);
-                btn_call.setVisibility(View.VISIBLE);
-                txt_no_records.setVisibility(View.GONE);
-                rv_sosnumbers.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                rv_sosnumbers.setItemAnimator(new DefaultItemAnimator());
-                PetLoverSOSAdapter petLoverSOSAdapter = new PetLoverSOSAdapter(getApplicationContext(), sosList,this);
-                rv_sosnumbers.setAdapter(petLoverSOSAdapter);
-            }else{
-                rv_sosnumbers.setVisibility(View.GONE);
-                btn_call.setVisibility(View.GONE);
-                txt_no_records.setVisibility(View.VISIBLE);
-                txt_no_records.setText("No phone numbers");
-
-            }
-
-            btn_call.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(PetLoverNavigationDrawer.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
-                    }
-                    else
-                    {
-                        gotoPhone();
-                    }
-
-                }
-            });
-
-
-
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.show();
-
-
-        } catch (WindowManager.BadTokenException e) {
-            e.printStackTrace();
-        }
-
-
-
-
-    }
     private void gotoPhone() {
         Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + sosPhonenumber));
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
@@ -373,7 +317,7 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
     private void confirmLogoutDialog(){
 
-        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(PetLoverNavigationDrawer.this);
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(ServiceProviderNavigationDrawer.this);
         alertDialogBuilder.setMessage("Are you sure want to logout?");
         alertDialogBuilder.setPositiveButton("yes",
                 new DialogInterface.OnClickListener() {
@@ -405,7 +349,7 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
 
     private void gotoMyAppointments() {
-        startActivity(new Intent(getApplicationContext(),PetMyappointmentsActivity.class));
+        startActivity(new Intent(getApplicationContext(), PetMyappointmentsActivity.class));
 
     }
 

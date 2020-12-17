@@ -348,7 +348,6 @@
                 android:layout_height="wrap_content" />
 
             <!--Specialization Details-->
-
             <TextView
                 android:id="@+id/textView12"
                 android:layout_width="wrap_content"
@@ -359,7 +358,6 @@
                 android:text="@string/specialization"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
-
             <androidx.cardview.widget.CardView
                 android:id="@+id/cdvw_Specialization"
                 android:layout_width="match_parent"
@@ -388,7 +386,6 @@
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcylr_added_specializationlist"
                 android:layout_width="match_parent"

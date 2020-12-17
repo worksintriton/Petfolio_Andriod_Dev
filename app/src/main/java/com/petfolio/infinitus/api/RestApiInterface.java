@@ -38,6 +38,7 @@ import com.petfolio.infinitus.requestpojo.PrescriptionCreateRequest;
 import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
 import com.petfolio.infinitus.requestpojo.SignupRequest;
 import com.petfolio.infinitus.requestpojo.UserStatusUpdateRequest;
+import com.petfolio.infinitus.requestpojo.VendorRegisterFormCreateRequest;
 import com.petfolio.infinitus.responsepojo.AddReviewResponse;
 import com.petfolio.infinitus.responsepojo.AddYourPetResponse;
 import com.petfolio.infinitus.responsepojo.AppoinmentCancelledResponse;
@@ -78,9 +79,11 @@ import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.PetTypeListResponse;
 import com.petfolio.infinitus.responsepojo.PrescriptionCreateResponse;
 import com.petfolio.infinitus.responsepojo.ResendOTPResponse;
+import com.petfolio.infinitus.responsepojo.SPServiceListResponse;
 import com.petfolio.infinitus.responsepojo.SignupResponse;
 import com.petfolio.infinitus.responsepojo.UserStatusUpdateResponse;
 import com.petfolio.infinitus.responsepojo.UserTypeListResponse;
+import com.petfolio.infinitus.responsepojo.VendorRegisterFormCreateResponse;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -122,6 +125,10 @@ public interface RestApiInterface {
     /*dropdown list*/
     @GET("petdetails/mobile/dropdownslist")
     Call<DropDownListResponse> dropDownListResponseCall(@Header("Content-Type") String type);
+
+    /*service provider services list*/
+    @GET("service_provider/sp_dropdown")
+    Call<SPServiceListResponse> SPServiceListResponseCall(@Header("Content-Type") String type);
 
     /*Add your pet*/
     @POST("petdetails/mobile/create")
@@ -288,6 +295,13 @@ public interface RestApiInterface {
     /*Pet lover review add*/
     @POST("appointments/reviews/update")
     Call<AddReviewResponse>addReviewResponseCall(@Header("Content-Type") String type, @Body AddReviewRequest addReviewRequest  );
+
+
+
+
+    /*vendor register form create*/
+    @POST("vendordetails/create")
+    Call<VendorRegisterFormCreateResponse>vendorRegisterFormCreateResponseCall(@Header("Content-Type") String type, @Body VendorRegisterFormCreateRequest vendorRegisterFormCreateRequest);
 
 
 
