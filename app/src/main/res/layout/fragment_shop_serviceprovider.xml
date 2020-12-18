@@ -171,13 +171,13 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/rvdoctors"
+                        android:id="@+id/rv_recentsearch"
                         android:layout_marginTop="10dp"
                         />
 
                     <TextView
                         android:layout_marginTop="20dp"
-                        android:id="@+id/txt_doctor_norecord"
+                        android:id="@+id/txt_recent_search_norecord"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
@@ -201,27 +201,16 @@
                         android:layout_marginTop="10dp">
 
                         <TextView
-                            android:id="@+id/txt_services"
-                            android:layout_width="47dp"
+                            android:id="@+id/txt_today_deal"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/futuramediumbt"
-                            android:text="@string/services"
+                            android:text="@string/today_deal"
                             android:textColor="@color/new_txt_color"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/txt_seemore_services"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:drawablePadding="10dp"
-                            android:fontFamily="@font/futuramediumbt"
-                            android:gravity="end"
-                            android:text="@string/see_more"
-                            android:textColor="@color/new_txt_color"
-                            android:textSize="16sp" />
+
 
                     </LinearLayout>
 
@@ -229,13 +218,13 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/rvservice"
+                        android:id="@+id/rv_today_deal"
                         android:layout_marginTop="10dp"
                         />
 
                     <TextView
                         android:layout_marginTop="20dp"
-                        android:id="@+id/txt_services_norecord"
+                        android:id="@+id/txt_today_deal_norecord"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
@@ -258,27 +247,16 @@
                         android:layout_marginTop="10dp">
 
                         <TextView
-                            android:id="@+id/txt_products"
+                            android:id="@+id/txt_most_searched_products"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/futuramediumbt"
-                            android:text="@string/products"
+                            android:text="@string/most_searched_products"
                             android:textColor="@color/new_txt_color"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/txt_seemore_products"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:drawablePadding="10dp"
-                            android:fontFamily="@font/futuramediumbt"
-                            android:gravity="end"
-                            android:text="@string/see_more"
-                            android:textColor="@color/new_txt_color"
-                            android:textSize="16sp" />
+
 
                     </LinearLayout>
 
@@ -286,7 +264,7 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/rvproducts"
+                        android:id="@+id/rv_most_searched_products"
                         android:layout_marginTop="10dp"
                         />
 

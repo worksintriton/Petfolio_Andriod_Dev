@@ -158,8 +158,6 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
 
 
-        session = new SessionManager(getApplicationContext());
-        session.checkLogin();
 
         SessionManager sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getProfileDetails();

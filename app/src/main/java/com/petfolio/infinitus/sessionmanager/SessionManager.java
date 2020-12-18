@@ -1,5 +1,6 @@
 package com.petfolio.infinitus.sessionmanager;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -7,10 +8,7 @@ import android.util.Log;
 import java.util.HashMap;
 
 public class SessionManager {
-    public static final String KEY_DOCTOR_TITLE = "doctortitle";
-    public static final String KEY_DOCTOR_COMMUNICATION_TYPE = "doctorcommunicationtype";
-    public static final String KEY_DOCTOR_TIME_TYPE = "doctortimetype";
-    public static final String KEY_DOCTOR_PROFILE_STATUS = "profilestatus";
+
     public static final String KEY_FIRST_NAME = "firstname" ;
     public static final String KEY_LAST_NAME = "lastname";
     String TAG = "SessionManager";
@@ -20,9 +18,7 @@ public class SessionManager {
     int PRIVATE_MODE = 0;
     private static final String PREF_NAME = "Session Manager";
     public static final String IS_LOGIN = "IsLoggedIn";
-    public static final String KEY_LOGIN_TYPE = "logintype";
 
-    public static final String KEY_TOKEN = "keytoken";
     public static final String KEY_PROFILE_STATUS= "profilestatus";
 
 
@@ -39,19 +35,13 @@ public class SessionManager {
 
 
 
+    @SuppressLint("CommitPrefEdits")
     public SessionManager(Context context) {
         this._context = context;
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
     }
 
-    public void updateToken(String refreshedToken) {
-
-        editor.putString(KEY_TOKEN, refreshedToken);
-        editor.commit();
-
-        Log.d(TAG, "------------->update token" + refreshedToken);
-    }
 
 
 
@@ -84,7 +74,7 @@ public class SessionManager {
 
 
     public HashMap<String, String> getProfileDetails() {
-        HashMap<String, String> user = new HashMap<String, String>();
+        HashMap<String, String> user = new HashMap<>();
         user.put(KEY_ID, pref.getString(KEY_ID, ""));
         user.put(KEY_FIRST_NAME, pref.getString(KEY_FIRST_NAME, ""));
         user.put(KEY_LAST_NAME, pref.getString(KEY_LAST_NAME, ""));
@@ -98,17 +88,6 @@ public class SessionManager {
 
 
 
-    public boolean checkLogin() {
-
-        if (!this.isLoggedIn()) {
-
-
-        } else if (this.isLoggedIn()) {
-
-        }
-
-        return false;
-    }
 
     public void logoutUser() {
         editor.clear();

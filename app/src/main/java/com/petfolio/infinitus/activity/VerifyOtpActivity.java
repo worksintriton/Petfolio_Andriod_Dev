@@ -3,13 +3,9 @@ package com.petfolio.infinitus.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -20,13 +16,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
@@ -38,18 +29,18 @@ import com.petfolio.infinitus.doctor.DoctorBusinessInfoActivity;
 import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
 import com.petfolio.infinitus.petlover.AddYourPetActivity;
 import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
-import com.petfolio.infinitus.receiver.OTPSmsListener;
 import com.petfolio.infinitus.receiver.SmsBroadcastListener;
 import com.petfolio.infinitus.requestpojo.FBTokenUpdateRequest;
 import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
 import com.petfolio.infinitus.responsepojo.FBTokenUpdateResponse;
 import com.petfolio.infinitus.responsepojo.ResendOTPResponse;
+import com.petfolio.infinitus.serviceprovider.ServiceProviderDashboardActivity;
+import com.petfolio.infinitus.serviceprovider.ServiceProviderRegisterFormActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -60,30 +51,36 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class VerifyOtpActivity extends AppCompatActivity implements View.OnClickListener {
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
     ImageView img_back;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_verify)
     Button btn_verify;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_otp)
     EditText edt_otp;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_resend)
     TextView txt_resend;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_timer_count)
     TextView txt_timer_count;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.llresendotp)
     LinearLayout llresendotp;
 
-    private String TAG = "VerifyOtpActivity";
+    private final String TAG = "VerifyOtpActivity";
     private CountDownTimer timer;
-    private CountDownTimer countDownTimer;
 
     private ApplicationData applicationData;
     private String phonenumber;
@@ -91,7 +88,6 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
     Dialog alertDialog;
     private String autoOTP;
 
-    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
     private String userstatus;
     private String fromactivity;
     private int usertype = 0;
@@ -135,23 +131,21 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
         try{
             // Initialize Firebase
             FirebaseApp.initializeApp(getApplicationContext());
-            FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);            FirebaseMessaging.getInstance().setAutoInitEnabled(true);
+            FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
+            FirebaseMessaging.getInstance().setAutoInitEnabled(true);
             FirebaseMessaging.getInstance().getToken()
-                    .addOnCompleteListener(new OnCompleteListener<String>() {
-                        @Override
-                        public void onComplete(@NonNull Task<String> task) {
-                            if (!task.isSuccessful()) {
-                                Log.w(TAG, "Fetching FCM registration token failed", task.getException());
-                                return;
-                            }
-
-                            // Get new FCM registration token
-                             token = task.getResult();
-                            Log.w(TAG,"token--->"+ token);
-
-
-
+                    .addOnCompleteListener(task -> {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
                         }
+
+                        // Get new FCM registration token
+                         token = task.getResult();
+                        Log.w(TAG,"token--->"+ token);
+
+
+
                     });
 
 
@@ -169,19 +163,16 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
         btn_verify.setOnClickListener(this);
         txt_resend.setOnClickListener(this);
 
-        SmsBroadcastListener.bindListener(new OTPSmsListener() {
-            @Override
-            public void onMessageReceived(String otpText) {
-                avi_indicator.smoothToHide();
-                Log.w(TAG,"extractedOTP--->"+otpText);
-                autoOTP = otpText;
+        SmsBroadcastListener.bindListener(otpText -> {
+            avi_indicator.smoothToHide();
+            Log.w(TAG,"extractedOTP--->"+otpText);
+            autoOTP = otpText;
 
-                if(autoOTP != null) {
-                    edt_otp.setText(autoOTP);
-                }
-
-
+            if(autoOTP != null) {
+                edt_otp.setText(autoOTP);
             }
+
+
         });
 
 
@@ -220,6 +211,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
         timer.start();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -397,6 +389,9 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                                 if(usertype == 1){
                                     startActivity(new Intent(VerifyOtpActivity.this, PetLoverDashboardActivity.class));
 
+                                }else if(usertype == 2 ){
+                                    startActivity(new Intent(VerifyOtpActivity.this, ServiceProviderDashboardActivity.class));
+
                                 }else if(usertype == 4 ){
                                     startActivity(new Intent(VerifyOtpActivity.this, DoctorDashboardActivity.class));
 
@@ -407,6 +402,9 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                             if(usertype != 0){
                                 if(usertype == 1 ){
                                     startActivity(new Intent(VerifyOtpActivity.this, AddYourPetActivity.class));
+
+                                }else if(usertype == 2 ){
+                                    startActivity(new Intent(VerifyOtpActivity.this, ServiceProviderRegisterFormActivity.class));
 
                                 }else if(usertype == 4 ){
                                     startActivity(new Intent(VerifyOtpActivity.this, DoctorBusinessInfoActivity.class));

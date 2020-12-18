@@ -5,11 +5,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.session.MediaSessionManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,18 +23,12 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-
 import com.petfolio.infinitus.appUtils.NumericKeyBoardTransformationMethod;
 import com.petfolio.infinitus.requestpojo.LoginRequest;
-
-
 import com.petfolio.infinitus.responsepojo.LoginResponse;
-
-import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
@@ -44,24 +37,27 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_loginheader)
     ImageView img_loginheader;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_emailorphone)
     EditText edt_emailorphone;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_signup)
     TextView txt_signup;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_verifyotp)
     Button btn_verifyotp;
 
-    private String TAG = "LoginActivity";
-    private AlertDialog.Builder alertDialogBuilder;
+    private final String TAG = "LoginActivity";
     Dialog alertDialog;
 
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
@@ -87,6 +83,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -174,7 +171,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return loginRequest;
     }
     public void showErrorLoading(String errormesage){
-        alertDialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage(errormesage);
         alertDialogBuilder.setPositiveButton("ok",
                 (arg0, arg1) -> hideLoading());
@@ -236,10 +233,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
 
-            } else {
-                // Permission Denied
-              /*  Toast.makeText(Permission_Activity.this, "WRITE_CONTACTS Denied", Toast.LENGTH_SHORT)
-                        .show();*/
             }
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -248,15 +241,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onBackPressed() {
-       // super.onBackPressed();
         new android.app.AlertDialog.Builder(LoginActivity.this)
                 .setMessage("Are you sure you want to exit?")
                 .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        LoginActivity.this.finishAffinity();
-                    }
-                })
+                .setPositiveButton("Yes", (dialog, id) -> LoginActivity.this.finishAffinity())
                 .setNegativeButton("No", null)
                 .show();
     }

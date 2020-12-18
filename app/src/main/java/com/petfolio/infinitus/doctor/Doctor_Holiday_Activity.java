@@ -117,8 +117,6 @@ public class Doctor_Holiday_Activity extends AppCompatActivity implements OnItem
         avi_indicator = findViewById(R.id.avi_indicator);
         avi_indicator.setVisibility(View.GONE);
 
-        session = new SessionManager(getApplicationContext());
-        session.checkLogin();
 
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();

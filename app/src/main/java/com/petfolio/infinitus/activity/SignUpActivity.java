@@ -28,13 +28,10 @@ import com.petfolio.infinitus.requestpojo.SignupRequest;
 import com.petfolio.infinitus.requestpojo.UserStatusUpdateRequest;
 import com.petfolio.infinitus.responsepojo.SignupResponse;
 import com.petfolio.infinitus.responsepojo.UserStatusUpdateResponse;
-import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
-
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
@@ -48,39 +45,47 @@ import retrofit2.Response;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
     ImageView img_back;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_usertypes)
     TextView txt_usertypes;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_changeusertype)
     Button btn_changeusertype;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_firstname)
     EditText edt_firstname;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_lastname)
     EditText edt_lastname;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_email)
     EditText edt_email;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_phone)
     EditText edt_phone;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_continue)
     Button btn_continue;
 
-    private String TAG = "SignUpActivity";
+    private final String TAG = "SignUpActivity";
 
     private String UserType;
     private int UserTypeValue;
-    private AlertDialog.Builder alertDialogBuilder;
-    private Dialog alertDialog;
+     Dialog alertDialog;
 
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
@@ -106,17 +111,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         if (extras != null) {
             UserType = extras.getString("UserType");
             UserTypeValue = extras.getInt("UserTypeValue");
-            txt_usertypes.setText(UserType);
         }else{
             UserType = "Pet lover";
             UserTypeValue = 1;
-            txt_usertypes.setText(UserType);
         }
-
+        txt_usertypes.setText(UserType);
 
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -288,7 +292,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     public void showErrorLoading(String errormesage){
-        alertDialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage(errormesage);
         alertDialogBuilder.setPositiveButton("ok",
                 (arg0, arg1) -> hideLoading());
@@ -314,7 +318,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         int firstnamelength = edt_firstname.getText().toString().trim().length();
         int lastnamelength = edt_firstname.getText().toString().trim().length();
         String emailAddress = edt_email.getText().toString().trim();
-        String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,4})$";
+        String emailPattern = "^[_A-Za-z0-9-+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,4})$";
 
 
         if (Objects.requireNonNull(edt_firstname.getText()).toString().trim().equals("") && Objects.requireNonNull(edt_lastname.getText()).toString().trim().equals("") &&
@@ -409,10 +413,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
 
 
-            } else {
-                // Permission Denied
-              /*  Toast.makeText(Permission_Activity.this, "WRITE_CONTACTS Denied", Toast.LENGTH_SHORT)
-                        .show();*/
             }
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);

@@ -38,7 +38,7 @@ import com.petfolio.infinitus.requestpojo.PrescriptionCreateRequest;
 import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
 import com.petfolio.infinitus.requestpojo.SignupRequest;
 import com.petfolio.infinitus.requestpojo.UserStatusUpdateRequest;
-import com.petfolio.infinitus.requestpojo.VendorRegisterFormCreateRequest;
+import com.petfolio.infinitus.requestpojo.ServiceProviderRegisterFormCreateRequest;
 import com.petfolio.infinitus.responsepojo.AddReviewResponse;
 import com.petfolio.infinitus.responsepojo.AddYourPetResponse;
 import com.petfolio.infinitus.responsepojo.AppoinmentCancelledResponse;
@@ -83,7 +83,7 @@ import com.petfolio.infinitus.responsepojo.SPServiceListResponse;
 import com.petfolio.infinitus.responsepojo.SignupResponse;
 import com.petfolio.infinitus.responsepojo.UserStatusUpdateResponse;
 import com.petfolio.infinitus.responsepojo.UserTypeListResponse;
-import com.petfolio.infinitus.responsepojo.VendorRegisterFormCreateResponse;
+import com.petfolio.infinitus.responsepojo.ServiceProviderRegisterFormCreateResponse;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -92,7 +92,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
 import retrofit2.http.Part;
 
 public interface RestApiInterface {
@@ -299,9 +298,9 @@ public interface RestApiInterface {
 
 
 
-    /*vendor register form create*/
-    @POST("vendordetails/create")
-    Call<VendorRegisterFormCreateResponse>vendorRegisterFormCreateResponseCall(@Header("Content-Type") String type, @Body VendorRegisterFormCreateRequest vendorRegisterFormCreateRequest);
+    /*Service provider register form create*/
+    @POST("service_provider/create")
+    Call<ServiceProviderRegisterFormCreateResponse>serviceProviderRegisterFormCreateResponseCall(@Header("Content-Type") String type, @Body ServiceProviderRegisterFormCreateRequest serviceProviderRegisterFormCreateRequest);
 
 
 

@@ -2,6 +2,7 @@ package com.petfolio.infinitus.adapter;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +12,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.requestpojo.VendorRegisterFormCreateRequest;
+import com.petfolio.infinitus.interfaces.AddMoreServiceRemoveListener;
+import com.petfolio.infinitus.requestpojo.ServiceProviderRegisterFormCreateRequest;
 
 import java.util.List;
 
 public class AddMoreServiceAdapter extends RecyclerView.Adapter<AddMoreServiceAdapter.AddExpViewHolder> {
+    private static  String TAG =  "AddMoreServiceAdapter";
     Context context;
-    private List<VendorRegisterFormCreateRequest.BusServiceListBean> bus_service_list;
+    private List<ServiceProviderRegisterFormCreateRequest.BusServiceListBean> bus_service_list;
     View view;
+    private AddMoreServiceRemoveListener addMoreServiceRemoveListener;
 
-    public AddMoreServiceAdapter(Context context, List<VendorRegisterFormCreateRequest.BusServiceListBean> bus_service_list) {
+    public AddMoreServiceAdapter(Context context, List<ServiceProviderRegisterFormCreateRequest.BusServiceListBean> bus_service_list,AddMoreServiceRemoveListener addMoreServiceRemoveListener) {
         this.context = context;
         this.bus_service_list = bus_service_list;
+        this.addMoreServiceRemoveListener = addMoreServiceRemoveListener;
 
     }
 
@@ -36,7 +42,6 @@ public class AddMoreServiceAdapter extends RecyclerView.Adapter<AddMoreServiceAd
 
     @Override
     public void onBindViewHolder(@NonNull AddExpViewHolder holder, final int position) {
-        final  VendorRegisterFormCreateRequest.BusServiceListBean busServiceListBean = bus_service_list.get(position);
         if (bus_service_list.get(position).getBus_service_list()!= null) {
             holder.txt_servicename.setText(bus_service_list.get(position).getBus_service_list());
         }
@@ -44,7 +49,9 @@ public class AddMoreServiceAdapter extends RecyclerView.Adapter<AddMoreServiceAd
 
 
         holder.img_close.setOnClickListener(view -> {
+            addMoreServiceRemoveListener.addMoreServiceRemoveListener(position,bus_service_list.get(position).getBus_service_list());
             bus_service_list.remove(position);
+            Log.w(TAG,"Remove bus_service_list : "+new Gson().toJson(bus_service_list));
             notifyDataSetChanged();
         });
 

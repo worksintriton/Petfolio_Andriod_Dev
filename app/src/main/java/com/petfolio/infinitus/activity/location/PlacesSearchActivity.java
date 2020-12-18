@@ -6,11 +6,10 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -48,27 +47,32 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
     String TAG = "PlacesSearchActivity";
 
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_placessearch)
     EditText edtPlacesSearch;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.imgBack)
     ImageView imgBack;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_close)
     ImageView img_close;
 
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_placesresults)
     RecyclerView rv_placesresults;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_norecords)
     TextView tv_norecords;
 
     private Context mContext;
-    private SharedPreferences preferences;
 
     private List<PlacesResultsResponse.PredictionsBean> predictionsBeanList;
 
@@ -87,7 +91,6 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
 
         ButterKnife.bind(this);
         mContext = PlacesSearchActivity.this;
-        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
 
         Bundle extras = getIntent().getExtras();

@@ -2,10 +2,10 @@ package com.petfolio.infinitus.serviceprovider;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,10 +14,8 @@ import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.fragmentpetlover.PetCareFragment;
 import com.petfolio.infinitus.fragmentpetlover.PetHomeFragment;
 import com.petfolio.infinitus.fragmentserviceprovider.ServiceProviderShopFragment;
-import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.Serializable;
@@ -28,23 +26,24 @@ import butterknife.ButterKnife;
 
 public class ServiceProviderDashboardActivity  extends ServiceProviderNavigationDrawer implements Serializable, BottomNavigationView.OnNavigationItemSelectedListener {
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.bottom_navigation_view)
     BottomNavigationView bottom_navigation_view;
 
-    private String TAG = "ServiceProviderDashboardActivity";
+    private final String TAG = "ServiceProviderDashboardActivity";
 
     final Fragment serviceProviderShopFragment = new ServiceProviderShopFragment();
-
-    private String active_tag = "1";
 
 
     Fragment active = serviceProviderShopFragment;
     String tag;
-    private String fromactivity;
+     String fromactivity;
 
+    @SuppressLint("LongLogTag")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +67,7 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
         }else{
             bottom_navigation_view.setSelectedItemId(R.id.home);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            String active_tag = "1";
             transaction.replace(R.id.main_container, active, active_tag);
             transaction.commit();
         }
@@ -77,6 +77,7 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
 
 
 
+    @SuppressLint("LongLogTag")
     private void loadFragment(Fragment fragment) {
         Bundle bundle = new Bundle();
         if(fromactivity != null){
@@ -110,6 +111,7 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
             transaction.commitAllowingStateLoss();
         }
     }
+    @SuppressLint("LongLogTag")
     @Override
     public void onBackPressed() {
         Log.w(TAG,"tag : "+tag);
@@ -123,9 +125,7 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
         }
         else if(tag != null ){
             Log.w(TAG,"Else IF--->"+"fromactivity : "+fromactivity);
-            if(fromactivity != null){
-
-            }else{
+            if(fromactivity == null){
                 bottom_navigation_view.setSelectedItemId(R.id.shop);
                 // load fragment
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -147,6 +147,7 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
         transaction.replace(R.id.main_container,fragment);
         transaction.commit();
     }
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -165,6 +166,7 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
         }
         return true;
     }
+    @SuppressLint("LongLogTag")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

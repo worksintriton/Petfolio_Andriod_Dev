@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -67,37 +66,48 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener, View.OnClickListener {
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.toolbar_title)
     TextView toolbar_title;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.imgBack)
     ImageView imgBack;
 
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_cityname)
     TextView txt_cityname;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_cityname_title)
     TextView txt_cityname_title;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_address)
     TextView txt_address;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_change)
     Button btn_change;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_savethislocation)
     Button btn_savethislocation;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_pickname)
     EditText edt_pickname;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_pincode)
     TextView txt_pincode;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_location)
     TextView txt_location;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rglocationtype)
     RadioGroup rglocationtype;
 
@@ -111,6 +121,7 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
 
     String CityName = "", AddressLine = "";
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
@@ -119,14 +130,12 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
     String userid = "",state = "",country = "",postalcode = "",street;
 
 
-    String name = "", emailID = "",  mobile = "", type = "";
 
     AlertDialog.Builder alertDialogBuilder;
     AlertDialog alertDialog;
 
 
     String LocationType = "Home";
-    private String PostalCode;
 
 
     @Override
@@ -176,12 +185,12 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
 
             CityName = extras.getString("cityname");
             AddressLine = extras.getString("address");
-            PostalCode = extras.getString("PostalCode");
+            String postalCode = extras.getString("PostalCode");
 
             txt_cityname.setText(CityName);
             txt_cityname_title.setText(CityName);
             txt_address.setText(AddressLine);
-            txt_pincode.setText(PostalCode);
+            txt_pincode.setText(postalCode);
 
 
 
@@ -249,6 +258,7 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
         finish();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -310,12 +320,11 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
                         Intent i = new Intent(AddMyAddressActivity.this, PetLoverDashboardActivity.class);
                         startActivity(i);
 
-                    }
-                }else{
-                    if(response.body() != null){
+                    }else{
                         showErrorLoading(response.body().getMessage());
 
                     }
+
                 }
 
             }

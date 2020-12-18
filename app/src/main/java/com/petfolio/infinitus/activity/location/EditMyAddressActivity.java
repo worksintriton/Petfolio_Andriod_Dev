@@ -1,8 +1,8 @@
 package com.petfolio.infinitus.activity.location;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
+
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -67,44 +67,56 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
     String TAG = "EditMyAddressActivity";
 
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
     ImageView img_back;
 
-
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_cityname)
     TextView txt_cityname;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_cityname_title)
     TextView txt_cityname_title;
 
-
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_address)
     TextView txt_address;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_change)
     Button btn_change;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_savethislocation)
     Button btn_savethislocation;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_pickname)
     EditText edt_pickname;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_pincode)
     TextView txt_pincode;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_location)
     TextView txt_location;
 
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rglocationtype)
     RadioGroup rglocationtype;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.radioButton_Home)
     RadioButton radioButton_Home;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.radioButton_Work)
     RadioButton radioButton_Work;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.radioButton_Others)
     RadioButton radioButton_Others;
 
@@ -118,21 +130,20 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
 
     String CityName = "", AddressLine = "";
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
 
-    String userid = "",state = "",country = "",street;
+    String userid = "",state = "",country = "";
 
 
-    String name = "", emailID = "",  mobile = "", type = "";
 
     AlertDialog.Builder alertDialogBuilder;
     AlertDialog alertDialog;
 
 
     String LocationType = "Home";
-    private String PostalCode;
     private String pincode;
     private boolean defaultstatus;
     private String locationnickname;
@@ -179,7 +190,6 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
                 longtitude = Double.parseDouble(lon);
 
 
-                LatLng latLng = new LatLng(latitude, longtitude);
             }
 
 
@@ -302,6 +312,7 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
         finish();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -373,11 +384,12 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
                         startActivity(i);
 
                     }
-                }else{
-                    if(response.body() != null){
-                        showErrorLoading(response.body().getMessage());
+                    else{
+                        if(response.body().getMessage() != null){
+                            showErrorLoading(response.body().getMessage());
 
-                    }
+                        }
+                }
                 }
 
             }

@@ -1,56 +1,31 @@
 package com.petfolio.infinitus.serviceprovider;
 
-import android.Manifest;
+
 import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.navigation.NavigationView;
-import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
-import com.petfolio.infinitus.adapter.PetLoverSOSAdapter;
-import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.interfaces.SoSCallListener;
 import com.petfolio.infinitus.petlover.PetLoverEditProfileActivity;
 import com.petfolio.infinitus.petlover.PetLoverProfileScreenActivity;
 import com.petfolio.infinitus.petlover.PetMyappointmentsActivity;
-import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
-
 import java.util.HashMap;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -58,17 +33,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ServiceProviderNavigationDrawer extends AppCompatActivity implements View.OnClickListener, SoSCallListener {
 
 
-    private String TAG ="ServiceProviderNavigationDrawer";
-
     public NavigationView navigationView;
     private DrawerLayout drawerLayout;
     LayoutInflater inflater;
     View view, header;
     Toolbar toolbar;
 
-    // Make sure to be using android.support.v7.app.ActionBarDrawerToggle version.
-    // The android.support.v4.app.ActionBarDrawerToggle has been deprecated.
-    private ActionBarDrawerToggle drawerToggle;
+
     ImageView drawerImg;
     CircleImageView nav_header_imageView;
     FrameLayout frameLayout;
@@ -85,26 +56,20 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
 
 
 
-    ProgressDialog progressDialog;
 
 
     SessionManager session;
 
-    private double latitude, longitude;
-    private String addressLine = "";
 
-    String emailid = "",patientid = "";
-    private Dialog dialog;
-
-    private static final int REQUEST_PHONE_CALL =1 ;
-    private String sosPhonenumber;
+    String emailid = "";
 
 
-    @SuppressLint("InflateParams")
+    @SuppressLint({"InflateParams", "LongLogTag"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.AppTheme_NoActionBar);
+        String TAG = "ServiceProviderNavigationDrawer";
         Log.w(TAG,"onCreate---->");
 
         inflater = LayoutInflater.from(this);
@@ -139,6 +104,7 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     private void initUI(View view) {
 
         //Initializing NavigationView
@@ -147,48 +113,45 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
 
         frameLayout = view.findViewById(R.id.base_container);
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                //Closing drawer on item click
-                drawerLayout.closeDrawers();
-                //Check to see which item was being clicked and perform appropriate action
-                switch (menuItem.getItemId()) {
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            //Closing drawer on item click
+            drawerLayout.closeDrawers();
+            //Check to see which item was being clicked and perform appropriate action
+            switch (menuItem.getItemId()) {
 
 
-                    //Replacing the main content with ContentFragment Which is our Inbox View;
-                    case R.id.nav_item_one:
+                //Replacing the main content with ContentFragment Which is our Inbox View;
+                case R.id.nav_item_one:
 
-                        return true;
+                    return true;
 
-                    // For rest of the options we just show a toast on click
-                    case R.id.nav_item_two:
+                // For rest of the options we just show a toast on click
+                case R.id.nav_item_two:
 
-                        return true;
+                    return true;
 
-                    case R.id.nav_item_three:
-                        gotoMyAppointments();
-                        return true;
+                case R.id.nav_item_three:
+                    gotoMyAppointments();
+                    return true;
 
-                    case R.id.nav_item_four:
-                        return true;
+                case R.id.nav_item_four:
+                    return true;
 
-                    case R.id.nav_item_five:
-                        return true;
+                case R.id.nav_item_five:
+                    return true;
 
-                    case R.id.nav_item_six:
-                        return true;
-                    case R.id.nav_item_seven:
-                        confirmLogoutDialog();
-                        return true;
+                case R.id.nav_item_six:
+                    return true;
+                case R.id.nav_item_seven:
+                    confirmLogoutDialog();
+                    return true;
 
 
 
 
-                    default:
-                        return true;
+                default:
+                    return true;
 
-                }
             }
         });
 
@@ -209,19 +172,9 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
         nav_header_profilename.setText(name);
 
         LinearLayout llheader = header.findViewById(R.id.llheader);
-        llheader.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class));
-            }
-        });
+        llheader.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class)));
 
-        nav_header_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), PetLoverEditProfileActivity.class));
-            }
-        });
+        nav_header_edit.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), PetLoverEditProfileActivity.class)));
 
 
        /* if (!image_url.isEmpty()) {
@@ -235,6 +188,7 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
     }
 
 
+    @SuppressLint("SetTextI18n")
     private void initToolBar(View view) {
         toolbar = view.findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -243,7 +197,7 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
 
         tvWelcomeName = toolbar.findViewById(R.id.toolbar_title);
 
-        tvWelcomeName.setText("Home " );
+        tvWelcomeName.setText("Home");
 
 
 
@@ -251,34 +205,24 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
         toggleView();
     }
 
-    private void gotoPhone() {
-        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + sosPhonenumber));
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        startActivity(intent);
-    }
 
 
 
 
 
     private void toggleView() {
-        drawerImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.isClickable()) {
-                    drawerMethod();
-                } else {
+        drawerImg.setOnClickListener(v -> {
+            if (v.isClickable()) {
+                drawerMethod();
+            } else {
 
-                    Intent intent_re = getIntent();
-                    overridePendingTransition(0, 0);
-                    intent_re.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    finish();
-                    overridePendingTransition(0, 0);
-                    startActivity(intent_re);
+                Intent intent_re = getIntent();
+                overridePendingTransition(0, 0);
+                intent_re.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                finish();
+                overridePendingTransition(0, 0);
+                startActivity(intent_re);
 
-                }
             }
         });
     }
@@ -305,10 +249,8 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.img_menu:
-                drawerMethod();
-                break;
+        if (v.getId() == R.id.img_menu) {
+            drawerMethod();
         }
     }
 
@@ -320,23 +262,9 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
         android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(ServiceProviderNavigationDrawer.this);
         alertDialogBuilder.setMessage("Are you sure want to logout?");
         alertDialogBuilder.setPositiveButton("yes",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1)
-                    {
+                (arg0, arg1) -> gotoLogout());
 
-                        gotoLogout();
-
-
-                    }
-                });
-
-        alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                alertDialogBuilder.setCancelable(true);
-            }
-        });
+        alertDialogBuilder.setNegativeButton("No", (dialog, which) -> alertDialogBuilder.setCancelable(true));
 
         android.app.AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
@@ -376,8 +304,8 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
 
     @Override
     public void soSCallListener(long phonenumber) {
-        if(phonenumber != 0){
-            sosPhonenumber = String.valueOf(phonenumber);
-        }
+        /*if(phonenumber != 0){
+            String sosPhonenumber = String.valueOf(phonenumber);
+        }*/
     }
 }

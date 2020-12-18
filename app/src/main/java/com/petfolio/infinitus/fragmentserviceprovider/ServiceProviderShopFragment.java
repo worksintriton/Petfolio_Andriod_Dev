@@ -25,7 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,8 +35,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -54,23 +52,16 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.tabs.TabLayout;
-import com.google.gson.Gson;
+
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.location.PickUpLocationAllowActivity;
 import com.petfolio.infinitus.activity.location.PickUpLocationDenyActivity;
-import com.petfolio.infinitus.adapter.PetLoverDoctorAdapter;
-import com.petfolio.infinitus.adapter.PetLoverProductsAdapter;
-import com.petfolio.infinitus.adapter.PetLoverServicesAdapter;
-import com.petfolio.infinitus.adapter.ViewPagerDashboardAdapter;
-import com.petfolio.infinitus.api.APIClient;
-import com.petfolio.infinitus.api.RestApiInterface;
+
 import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
-import com.petfolio.infinitus.requestpojo.PetLoverDashboardRequest;
-import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
+
 import com.petfolio.infinitus.service.GPSTracker;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
-import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.jetbrains.annotations.NotNull;
@@ -81,13 +72,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+
 
 
 public class ServiceProviderShopFragment extends Fragment implements Serializable, OnMapReadyCallback,
@@ -97,28 +85,18 @@ public class ServiceProviderShopFragment extends Fragment implements Serializabl
 
 
     private String TAG = "ServiceProviderShopFragment";
-
-
-
     int currentPage = 0;
     Timer timer;
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000;
 
-
-
-
-
     String token = "";
     String type ="";
-    String name = "",patientid = "";
 
-    static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     double latitude, longitude;
 
     private Handler handler = new Handler();
     Runnable runnable;
-    private TextView headertitle;
 
 
 
@@ -130,54 +108,66 @@ public class ServiceProviderShopFragment extends Fragment implements Serializabl
     Dialog dialog;
     private String userid;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.pager)
     ViewPager viewPager;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tabDots)
     TabLayout tabLayout;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.rvdoctors)
-    RecyclerView rvdoctors;
+    @BindView(R.id.edt_search)
+    EditText edt_search;
 
-    @BindView(R.id.txt_doctors)
-    TextView txt_doctors;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.btn_all_categories)
+    Button btn_all_categories;
 
-    @BindView(R.id.txt_seemore_doctors)
-    TextView txt_seemore_doctors;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_recent_search)
+    TextView txt_recent_search;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rv_recentsearch)
+    RecyclerView rv_recentsearch;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_recent_search_norecord)
+    TextView txt_recent_search_norecord;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_today_deal)
+    TextView txt_today_deal;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rv_today_deal)
+    RecyclerView rv_today_deal;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_today_deal_norecord)
+    TextView txt_today_deal_norecord;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_most_searched_products)
+    TextView txt_most_searched_products;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rv_most_searched_products)
+    RecyclerView rv_most_searched_products;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_no_products)
+    TextView txt_no_products;
 
 
-    @BindView(R.id.rvservice)
-    RecyclerView rvservice;
-
-    @BindView(R.id.txt_services)
-    TextView txt_services;
-
-    @BindView(R.id.txt_seemore_services)
-    TextView txt_seemore_services;
-
-    @BindView(R.id.rvproducts)
-    RecyclerView rvproducts;
-
-    @BindView(R.id.txt_products)
-    TextView txt_products;
-
-    @BindView(R.id.txt_seemore_products)
-    TextView txt_seemore_products;
 
 
-   @BindView(R.id.txt_doctor_norecord)
-    TextView txt_doctor_norecord;
 
-
-    private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.BannerDetailsBean> listHomeBannerResponse;
-    private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.DoctorDetailsBean> doctorDetailsResponseList;
-    private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ServiceDetailsBean> serviceDetailsResponseList;
-    private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ProductsDetailsBean> productDetailsResponseList;
-    private Dialog alertDialog;
 
     private String AddressLine;
     private SharedPreferences preferences;
@@ -191,8 +181,8 @@ public class ServiceProviderShopFragment extends Fragment implements Serializabl
     private GPSTracker gpsTracker;
     private SupportMapFragment mapFragment;
     private AlertDialog.Builder alertDialogBuilder;
-    private String title;
-    private String doctornotavlmsg;
+
+    private Dialog alertDialog;
 
 
     public ServiceProviderShopFragment() {
@@ -230,20 +220,13 @@ public class ServiceProviderShopFragment extends Fragment implements Serializabl
 
         avi_indicator.setVisibility(View.GONE);
 
-        txt_doctors.setVisibility(View.GONE);
-        txt_seemore_doctors.setVisibility(View.GONE);
-        txt_services.setVisibility(View.GONE);
-        txt_seemore_services.setVisibility(View.GONE);
-        txt_products.setVisibility(View.GONE);
-        txt_seemore_products.setVisibility(View.GONE);
+
 
         SessionManager sessionManager = new SessionManager(mContext);
         HashMap<String, String> user = sessionManager.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
         Log.w(TAG,"customerid-->"+userid);
-        txt_seemore_doctors.setOnClickListener(this);
-        txt_seemore_services.setOnClickListener(this);
-        txt_seemore_products.setOnClickListener(this);
+
 
         return view;
     }
@@ -265,46 +248,6 @@ public class ServiceProviderShopFragment extends Fragment implements Serializabl
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.txt_seemore_doctors:
-                callDirections("4");
-               /* if(doctorDetailsResponseList.size()>0){
-                    rvdoctors.setVisibility(View.VISIBLE);
-                    txt_doctors.setVisibility(View.VISIBLE);
-                    setViewDoctorsSeeMore();
-                }
-                else{
-                    rvdoctors.setVisibility(View.GONE);
-                    txt_doctors.setVisibility(View.GONE);
-
-                }*/
-
-
-                break;
-            case R.id.txt_seemore_services:
-                if(serviceDetailsResponseList.size()>0){
-                    rvservice.setVisibility(View.VISIBLE);
-                    txt_services.setVisibility(View.VISIBLE);
-                    setViewServicesSeeMore();
-                }
-                else{
-                    rvservice.setVisibility(View.GONE);
-                    txt_services.setVisibility(View.GONE);
-
-                }
-                break;
-
-            case R.id.txt_seemore_products:
-                if(serviceDetailsResponseList.size()>0){
-                    rvproducts.setVisibility(View.VISIBLE);
-                    txt_products.setVisibility(View.VISIBLE);
-                    setViewProductsSeeMore();
-                }
-                else{
-                    rvproducts.setVisibility(View.GONE);
-                    txt_products.setVisibility(View.GONE);
-
-                }
-                break;
 
 
         }
@@ -320,240 +263,6 @@ public class ServiceProviderShopFragment extends Fragment implements Serializabl
     }
 
 
-
-    private void petLoverDashboardResponseCall(int doctor, int service, int product) {
-        avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();
-        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-        Call<PetLoverDashboardResponse> call = apiInterface.petLoverDashboardResponseCall(RestUtils.getContentType(), petLoverDashboardRequest(doctor,service,product));
-        Log.w(TAG,"PetLoverDashboardResponse url  :%s"+" "+ call.request().url().toString());
-
-        call.enqueue(new Callback<PetLoverDashboardResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<PetLoverDashboardResponse> call, @NonNull Response<PetLoverDashboardResponse> response) {
-                avi_indicator.smoothToHide();
-                Log.w(TAG,"PetLoverDashboardResponse" + new Gson().toJson(response.body()));
-                if (response.body() != null) {
-                    if (200 == response.body().getCode()) {
-                        txt_doctors.setVisibility(View.VISIBLE);
-                        txt_seemore_doctors.setVisibility(View.VISIBLE);
-                        txt_services.setVisibility(View.VISIBLE);
-                        txt_seemore_services.setVisibility(View.VISIBLE);
-                        txt_products.setVisibility(View.VISIBLE);
-                        txt_seemore_products.setVisibility(View.VISIBLE);
-
-                        if (response.body().getData().getDashboarddata() != null) {
-                            listHomeBannerResponse = response.body().getData().getDashboarddata().getBanner_details();
-                            for (int i = 0; i < listHomeBannerResponse.size(); i++) {
-                                listHomeBannerResponse.get(i).getImg_path();
-                                Log.w(TAG, "RES" + " " + listHomeBannerResponse.get(i).getImg_path());
-                            }
-
-                            if (listHomeBannerResponse != null) {
-                                viewpageData(listHomeBannerResponse);
-                            }
-                        }
-                        if (response.body().getData().getDashboarddata().getDoctor_details() != null) {
-                            doctorDetailsResponseList = response.body().getData().getDashboarddata().getDoctor_details();
-                            Log.w(TAG, "doctorDetailsResponseList Size" + doctorDetailsResponseList.size());
-                            if (doctorDetailsResponseList != null && doctorDetailsResponseList.size()>0) {
-                                rvdoctors.setVisibility(View.VISIBLE);
-                                txt_doctors.setVisibility(View.VISIBLE);
-                                setViewDoctors(doctorDetailsResponseList);
-
-                            } else {
-                                rvdoctors.setVisibility(View.GONE);
-                                txt_doctor_norecord.setVisibility(View.VISIBLE);
-                                txt_doctor_norecord.setText("No doctors found");
-                                if(response.body().getData().getMessages() != null){
-                                    for(int i= 0;i< response.body().getData().getMessages().size();i++){
-                                        title =  response.body().getData().getMessages().get(i).getTitle();
-                                        if(title.equalsIgnoreCase("Doctor")){
-                                            doctornotavlmsg =  response.body().getData().getMessages().get(i).getMessage();
-                                            break;
-
-                                        }
-
-                                    }
-
-
-                                    showAlertDoctorNotAvlLoading(doctornotavlmsg);
-                                }
-
-
-
-                            }
-
-                        }
-                        if (response.body().getData().getDashboarddata().getService_details() != null) {
-                            serviceDetailsResponseList = response.body().getData().getDashboarddata().getService_details();
-                            Log.w(TAG, "serviceDetailsResponseList Size" + serviceDetailsResponseList.size());
-                            if (serviceDetailsResponseList != null && serviceDetailsResponseList.size()>0) {
-                                rvservice.setVisibility(View.VISIBLE);
-                                txt_services.setVisibility(View.VISIBLE);
-                                setViewServices(serviceDetailsResponseList);
-                            } else {
-                                rvservice.setVisibility(View.GONE);
-                                txt_services.setVisibility(View.GONE);
-
-                            }
-
-                        }
-                        if (response.body().getData().getDashboarddata().getProducts_details() != null) {
-                            productDetailsResponseList = response.body().getData().getDashboarddata().getProducts_details();
-                            Log.w(TAG, "productDetailsResponseList Size" + productDetailsResponseList.size());
-                            if (productDetailsResponseList != null && productDetailsResponseList.size()>0) {
-                                rvproducts.setVisibility(View.VISIBLE);
-                                txt_products.setVisibility(View.VISIBLE);
-                                setViewProducts(productDetailsResponseList);
-                            } else {
-                                rvproducts.setVisibility(View.GONE);
-                                txt_products.setVisibility(View.GONE);
-
-                            }
-
-                        }
-                        if(response.body().getData().getLocationDetails() != null){
-                            if(response.body().getData().getLocationDetails().isEmpty()){
-                                showLocationAlert();
-                            }
-                        }
-
-                        if(response.body().getData().getSOS() != null){
-                         APIClient.sosList = response.body().getData().getSOS();
-                        }
-
-
-                    }
-                    else {
-                        showErrorLoading(response.body().getMessage());
-                    }
-
-                }
-
-
-            }
-
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onFailure(@NonNull Call<PetLoverDashboardResponse> call,@NonNull Throwable t) {
-                avi_indicator.smoothToHide();
-                Log.e("PetLoverDashboardResponseflr", "--->" + t.getMessage());
-                Toast.makeText(mContext, t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-
-    private void setViewProducts(List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ProductsDetailsBean> productDetailsResponseList) {
-        rvproducts.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
-        rvproducts.setMotionEventSplittingEnabled(false);
-        int size =3;
-        rvproducts.setItemAnimator(new DefaultItemAnimator());
-        PetLoverProductsAdapter petLoverProductsAdapter = new PetLoverProductsAdapter(mContext, productDetailsResponseList, rvproducts, size);
-        rvproducts.setAdapter(petLoverProductsAdapter);
-    }
-    private void setViewProductsSeeMore() {
-        rvproducts.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
-        rvproducts.setMotionEventSplittingEnabled(false);
-        int size = productDetailsResponseList.size();
-        rvproducts.setItemAnimator(new DefaultItemAnimator());
-        PetLoverProductsAdapter petLoverProductsAdapter = new PetLoverProductsAdapter(mContext, productDetailsResponseList, rvproducts, size);
-        rvproducts.setAdapter(petLoverProductsAdapter);
-    }
-
-    private void setViewServices(List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ServiceDetailsBean> serviceDetailsResponseList) {
-        rvservice.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
-        rvservice.setMotionEventSplittingEnabled(false);
-        int size =3;
-        rvservice.setItemAnimator(new DefaultItemAnimator());
-        PetLoverServicesAdapter petLoverServicesAdapter = new PetLoverServicesAdapter(mContext, serviceDetailsResponseList, rvservice, size);
-        rvservice.setAdapter(petLoverServicesAdapter);
-    }
-    private void setViewServicesSeeMore() {
-        rvservice.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
-        rvservice.setMotionEventSplittingEnabled(false);
-        int size = serviceDetailsResponseList.size();
-        rvservice.setItemAnimator(new DefaultItemAnimator());
-        PetLoverServicesAdapter petLoverServicesAdapter = new PetLoverServicesAdapter(mContext, serviceDetailsResponseList, rvservice, size);
-        rvservice.setAdapter(petLoverServicesAdapter);
-        petLoverServicesAdapter.notifyDataSetChanged();
-    }
-
-    private void setViewDoctors(List<PetLoverDashboardResponse.DataBean.DashboarddataBean.DoctorDetailsBean> doctorDetailsResponseList) {
-        rvdoctors.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
-        rvdoctors.setMotionEventSplittingEnabled(false);
-        int size =3;
-        rvdoctors.setItemAnimator(new DefaultItemAnimator());
-        PetLoverDoctorAdapter petLoverDoctorAdapter = new PetLoverDoctorAdapter(mContext, doctorDetailsResponseList, rvdoctors, size);
-        rvdoctors.setAdapter(petLoverDoctorAdapter);
-    }
-
-    private void setViewDoctorsSeeMore() {
-        rvdoctors.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
-        rvdoctors.setMotionEventSplittingEnabled(false);
-        int size = doctorDetailsResponseList.size();
-        rvdoctors.setItemAnimator(new DefaultItemAnimator());
-        PetLoverDoctorAdapter petLoverDoctorAdapter = new PetLoverDoctorAdapter(mContext, doctorDetailsResponseList, rvdoctors, size);
-        rvdoctors.setAdapter(petLoverDoctorAdapter);
-        petLoverDoctorAdapter.notifyDataSetChanged();
-
-    }
-    private void viewpageData(List<PetLoverDashboardResponse.DataBean.DashboarddataBean.BannerDetailsBean> listHomeBannerResponse) {
-        tabLayout.setupWithViewPager(viewPager, true);
-
-        ViewPagerDashboardAdapter viewPagerDashboardAdapter = new ViewPagerDashboardAdapter(mContext, listHomeBannerResponse);
-        viewPager.setAdapter(viewPagerDashboardAdapter);
-        /*After setting the adapter use the timer */
-        final Handler handler = new Handler();
-        final Runnable Update =  new Runnable() {
-            public void run() {
-                if (currentPage == listHomeBannerResponse.size()) {
-                    currentPage = 0;
-                }
-                viewPager.setCurrentItem(currentPage++, false);
-            }
-        };
-
-        timer = new Timer(); // This will create a new Thread
-        timer.schedule(new TimerTask() { // task to be scheduled
-            @Override
-            public void run() {
-                handler.post(Update);
-            }
-        }, DELAY_MS, PERIOD_MS);
-
-
-
-    }
-
-    private PetLoverDashboardRequest petLoverDashboardRequest(int doctor, int service, int product) {
-        /*
-         * Doctor : 0
-         * Product : 0
-         * address : Unnamed Road, Tamil Nadu 621006, India
-         * lat : 11.055715
-         * lon : 78.632249
-         * service : 0
-         * user_id : 5fd227ac80791a71361baad3
-         * user_type : 1
-         */
-
-
-        PetLoverDashboardRequest petLoverDashboardRequest = new PetLoverDashboardRequest();
-        petLoverDashboardRequest.setUser_id(userid);
-        petLoverDashboardRequest.setLat(latitude);
-        petLoverDashboardRequest.setLongX(longitude);
-        petLoverDashboardRequest.setUser_type(1);
-        petLoverDashboardRequest.setAddress(AddressLine);
-        petLoverDashboardRequest.setDoctor(doctor);
-        petLoverDashboardRequest.setProduct(product);
-        petLoverDashboardRequest.setService(service);
-
-
-        Log.w(TAG,"petLoverDashboardRequest"+ new Gson().toJson(petLoverDashboardRequest));
-        return petLoverDashboardRequest;
-    }
 
 
     private void showLocationAlert() {
@@ -580,34 +289,6 @@ public class ServiceProviderShopFragment extends Fragment implements Serializabl
                 @Override
                 public void onClick(View view) {
                     startActivity(new Intent(mContext, PickUpLocationAllowActivity.class));
-                    dialog.dismiss();
-
-                }
-            });
-            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.show();
-
-        } catch (WindowManager.BadTokenException e) {
-            e.printStackTrace();
-        }
-
-
-
-
-    }
-    private void showLocationDenyAlert() {
-
-        try {
-
-            Dialog dialog = new Dialog(mContext);
-            dialog.setContentView(R.layout.alert_location_deny_layout);
-            dialog.setCanceledOnTouchOutside(false);
-
-            ImageView img_close = dialog.findViewById(R.id.img_close);
-            img_close.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    startActivity(new Intent(mContext, PickUpLocationDenyActivity.class));
                     dialog.dismiss();
 
                 }
@@ -700,7 +381,6 @@ public class ServiceProviderShopFragment extends Fragment implements Serializabl
 
 
                         if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
-                            petLoverDashboardResponseCall(0,0,0);
                         }
 
 
@@ -870,7 +550,6 @@ public class ServiceProviderShopFragment extends Fragment implements Serializabl
                             if(mContext != null) {
                                 if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
 
-                                    petLoverDashboardResponseCall(0, 0, 0);
 
 
                                 }
@@ -938,7 +617,6 @@ public class ServiceProviderShopFragment extends Fragment implements Serializabl
     public void hideLoadingDoctornotavl() {
         try {
             if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
-                petLoverDashboardResponseCall(1, 0, 0);
             }
 
             alertDialog.dismiss();

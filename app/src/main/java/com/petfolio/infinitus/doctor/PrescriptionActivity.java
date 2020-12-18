@@ -90,8 +90,7 @@ public class PrescriptionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_prescription);
 
 
-        session = new SessionManager(getApplicationContext());
-        session.checkLogin();
+
 
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
@@ -114,12 +113,7 @@ public class PrescriptionActivity extends AppCompatActivity {
         }
 
         RelativeLayout back_rela = findViewById(R.id.back_rela);
-        back_rela.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        back_rela.setOnClickListener(v -> onBackPressed());
 
 
 

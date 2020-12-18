@@ -2,7 +2,7 @@ package com.petfolio.infinitus.responsepojo;
 
 import java.util.List;
 
-public class VendorRegisterFormCreateResponse {
+public class ServiceProviderRegisterFormCreateResponse {
 
     /**
      * Status : Success

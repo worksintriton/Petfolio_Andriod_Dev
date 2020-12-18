@@ -2,7 +2,7 @@ package com.petfolio.infinitus.requestpojo;
 
 import java.util.List;
 
-public class VendorRegisterFormCreateRequest {
+public class ServiceProviderRegisterFormCreateRequest {
 
 
     /**

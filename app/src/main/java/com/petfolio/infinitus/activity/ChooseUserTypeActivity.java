@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,18 +38,24 @@ public class ChooseUserTypeActivity extends AppCompatActivity implements UserTyp
 
     private static final String TAG = "ChooseUserTypeActivity";
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_usertype)
     RecyclerView rv_usertype;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_norecords)
     TextView tv_norecords;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
     ImageView img_back;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_change)
     Button btn_change;
 
@@ -155,6 +162,7 @@ public class ChooseUserTypeActivity extends AppCompatActivity implements UserTyp
         finish();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()){

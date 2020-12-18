@@ -1,12 +1,14 @@
 package com.petfolio.infinitus.activity.location;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -45,6 +47,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,22 +59,27 @@ import retrofit2.Response;
 public class ManageAddressActivity extends AppCompatActivity implements View.OnClickListener, LocationDeleteListener, LocationDefaultListener {
 
     private static final String TAG = "ManageAddressActivity" ;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
     ImageView img_back;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
-
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_no_records)
     TextView txt_no_records;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_savedaddress)
     TextView txt_savedaddress;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_adddress_list)
     RecyclerView rv_adddress_list;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.ll_add_newaddress)
     LinearLayout ll_add_newaddress;
 
@@ -79,6 +87,7 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
     private String userid;
     private List<LocationListAddressResponse.DataBean> addressList;
     private Dialog dialog;
+    Dialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +111,7 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -135,6 +145,7 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
         Log.w(TAG,"locationListAddressResponseCall url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<LocationListAddressResponse>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(@NonNull Call<LocationListAddressResponse> call, @NonNull Response<LocationListAddressResponse> response) {
 
@@ -164,7 +175,7 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
 
                     }
                     else{
-                        //showErrorLoading(response.body().getMessage());
+                        showErrorLoading(response.body().getMessage());
                     }
                 }
 
@@ -208,40 +219,29 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private void showStatusAlert(final String locationid) {
 
         try {
 
             dialog = new Dialog(ManageAddressActivity.this);
             dialog.setContentView(R.layout.alert_approve_reject_layout);
-            TextView tvheader = (TextView)dialog.findViewById(R.id.tvInternetNotConnected);
+            TextView tvheader = dialog.findViewById(R.id.tvInternetNotConnected);
             tvheader.setText(R.string.deletemsg);
-            Button dialogButtonApprove = (Button) dialog.findViewById(R.id.btnApprove);
+            Button dialogButtonApprove = dialog.findViewById(R.id.btnApprove);
             dialogButtonApprove.setText("Yes");
-            Button dialogButtonRejected = (Button) dialog.findViewById(R.id.btnReject);
+            Button dialogButtonRejected = dialog.findViewById(R.id.btnReject);
             dialogButtonRejected.setText("No");
 
-            dialogButtonApprove.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
+            dialogButtonApprove.setOnClickListener(view -> {
+                dialog.dismiss();
 
-                    locationDeleteResponseCall(locationid);
+                locationDeleteResponseCall(locationid);
 
 
-                }
             });
-            dialogButtonRejected.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-
-
-
-
-                }
-            });
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialogButtonRejected.setOnClickListener(view -> dialog.dismiss());
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
 
         } catch (WindowManager.BadTokenException e) {
@@ -307,41 +307,36 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
         showLocationStatusChangeAlert(locationid,userid);
     }
 
+    @SuppressLint("SetTextI18n")
     private void showLocationStatusChangeAlert(String locationid, String userid) {
 
         try {
 
             dialog = new Dialog(ManageAddressActivity.this);
             dialog.setContentView(R.layout.alert_approve_reject_layout);
-            TextView tvheader = (TextView)dialog.findViewById(R.id.tvInternetNotConnected);
+            TextView tvheader = dialog.findViewById(R.id.tvInternetNotConnected);
             tvheader.setText(R.string.locationstatuschange);
-            Button dialogButtonApprove = (Button) dialog.findViewById(R.id.btnApprove);
+            Button dialogButtonApprove = dialog.findViewById(R.id.btnApprove);
             dialogButtonApprove.setText("Yes");
-            Button dialogButtonRejected = (Button) dialog.findViewById(R.id.btnReject);
+            Button dialogButtonRejected = dialog.findViewById(R.id.btnReject);
             dialogButtonRejected.setText("No");
 
-            dialogButtonApprove.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
+            dialogButtonApprove.setOnClickListener(view -> {
+                dialog.dismiss();
 
-                    locationStatusChangeResponseCall(locationid,userid);
+                locationStatusChangeResponseCall(locationid,userid);
 
 
-                }
             });
-            dialogButtonRejected.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // Toasty.info(context, "Rejected Successfully", Toast.LENGTH_SHORT, true).show();
-                    dialog.dismiss();
+            dialogButtonRejected.setOnClickListener(view -> {
+                // Toasty.info(context, "Rejected Successfully", Toast.LENGTH_SHORT, true).show();
+                dialog.dismiss();
 
 
 
 
-                }
             });
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
 
         } catch (WindowManager.BadTokenException e) {
@@ -407,4 +402,24 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
         return locationStatusChangeRequest;
     }
 
+
+
+    public void showErrorLoading(String errormesage){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(errormesage);
+        alertDialogBuilder.setPositiveButton("ok",
+                (arg0, arg1) -> hideLoading());
+
+
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+    public void hideLoading(){
+        try {
+            alertDialog.dismiss();
+        }catch (Exception ignored){
+
+        }
+    }
 }

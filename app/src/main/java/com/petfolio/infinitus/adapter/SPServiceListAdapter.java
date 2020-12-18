@@ -66,13 +66,13 @@ public class SPServiceListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
             {
                 spServiceList.get(pos).setSelected(false);
 
-                spServiceChckedListener.onItemSpecUnCheck(pos,spServiceList.get(pos).getService_list());
+                spServiceChckedListener.onItemSPServiceUnCheck(pos,spServiceList.get(pos).getService_list());
 
             }
 
             else
             {
-                spServiceChckedListener.onItemSpecCheck(pos,spServiceList.get(pos).getService_list(),spServiceList);
+                spServiceChckedListener.onItemSPServiceCheck(pos,spServiceList.get(pos).getService_list(),spServiceList);
 
             }
 
