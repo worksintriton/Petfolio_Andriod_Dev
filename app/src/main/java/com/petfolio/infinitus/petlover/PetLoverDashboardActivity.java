@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -32,9 +33,11 @@ import butterknife.ButterKnife;
 
 public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer implements Serializable, BottomNavigationView.OnNavigationItemSelectedListener {
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.bottom_navigation_view)
     BottomNavigationView bottom_navigation_view;
 
@@ -94,7 +97,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
                 bottom_navigation_view.setSelectedItemId(R.id.care);
                 loadFragment(new PetCareFragment());
             } else if(tag.equalsIgnoreCase("5")){
-                bottom_navigation_view.setSelectedItemId(R.id.market);
+                bottom_navigation_view.setSelectedItemId(R.id.community);
             }
         }else{
             bottom_navigation_view.setSelectedItemId(R.id.home);
@@ -201,7 +204,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
                 case R.id.care:
                 replaceFragment(new PetCareFragment());
                 break;
-            case R.id.market:
+            case R.id.community:
                 break;
 
             default:

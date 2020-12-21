@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +14,6 @@ import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.fragmentdoctor.FragmentDoctorDashboard;
-import com.petfolio.infinitus.fragmentpetlover.PetHomeFragment;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 
 import java.io.Serializable;
@@ -25,16 +25,14 @@ import butterknife.ButterKnife;
 public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements Serializable, BottomNavigationView.OnNavigationItemSelectedListener {
 
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.bottom_navigation_view)
     BottomNavigationView bottom_navigation_view;
 
     private String TAG = "DoctorDashboardActivity";
 
     final Fragment homeFragment = new FragmentDoctorDashboard();
-    /*final Fragment searchFragment = new SearchFragment();
-    final Fragment myVehicleFragment = new MyVehicleFragment();
-    final Fragment cartFragment = new CartFragment();
-    final Fragment accountFragment = new AccountFragment();*/
+
     private String active_tag = "1";
 
 
@@ -72,19 +70,15 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
             if(tag.equalsIgnoreCase("1")){
                 active = homeFragment;
                 bottom_navigation_view.setSelectedItemId(R.id.home);
-                loadFragment(new PetHomeFragment());
+                loadFragment(new FragmentDoctorDashboard());
             }else if(tag.equalsIgnoreCase("2")){
                 //active = searchFragment;
                 bottom_navigation_view.setSelectedItemId(R.id.shop);
                 // loadFragment(new SearchFragment());
             }else if(tag.equalsIgnoreCase("3")){
                 // active = myVehicleFragment;
-                bottom_navigation_view.setSelectedItemId(R.id.feed);
+                bottom_navigation_view.setSelectedItemId(R.id.community);
                 // loadFragment(new MyVehicleFragment());
-            }else if(tag.equalsIgnoreCase("4")){
-                //active = cartFragment;
-                bottom_navigation_view.setSelectedItemId(R.id.market);
-                //loadFragment(new CartFragment());
             }
         }
         else{
@@ -106,32 +100,6 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
         if(fromactivity != null){
             Log.w(TAG,"fromactivity loadFragment : "+fromactivity);
 
-            if(fromactivity.equalsIgnoreCase("PopularServiceActivity")) {
-                bundle.putString("fromactivity", fromactivity);
-
-                // set Fragmentclass Arguments
-                fragment.setArguments(bundle);
-                Log.w(TAG,"fromactivity : "+fromactivity);
-                // load fragment
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_container, fragment);
-                transaction.addToBackStack(null);
-                transaction.commitAllowingStateLoss();
-            }
-            else if(fromactivity.equalsIgnoreCase("SubServicesActivity")) {
-                bundle.putString("fromactivity", fromactivity);
-
-
-                // set Fragmentclass Arguments
-                fragment.setArguments(bundle);
-                Log.w(TAG,"fromactivity : "+fromactivity);
-
-                // load fragment
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_container, fragment);
-                transaction.addToBackStack(null);
-                transaction.commitAllowingStateLoss();
-            }
         }else {
 
 
@@ -163,18 +131,12 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
         else if(tag != null ){
             Log.w(TAG,"Else IF--->"+"fromactivity : "+fromactivity);
             if(fromactivity != null){
-                if(fromactivity.equalsIgnoreCase("PopularServiceActivity")) {
-                    Intent intent = new Intent(DoctorDashboardActivity.this, com.petfolio.infinitus.petlover.PetLoverDashboardActivity.class);
-                    intent.putExtra("fromactivity", "PopularServiceActivity");
-
-                    startActivity(intent);
-                }
 
             }else{
                 bottom_navigation_view.setSelectedItemId(R.id.home);
                 // load fragment
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_container,new PetHomeFragment());
+                transaction.replace(R.id.main_container,new FragmentDoctorDashboard());
                 transaction.commit();
             }
 
@@ -183,7 +145,7 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
             bottom_navigation_view.setSelectedItemId(R.id.home);
             // load fragment
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.main_container,new PetHomeFragment());
+            transaction.replace(R.id.main_container,new FragmentDoctorDashboard());
             transaction.commit();
         }
     }
@@ -199,17 +161,13 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
 
         switch (item.getItemId()) {
             case R.id.home:
-                replaceFragment(new PetHomeFragment());
+                replaceFragment(new FragmentDoctorDashboard());
                 break;
             case R.id.shop:
-                //replaceFragment(new SearchFragment());
                 break;
-            case R.id.feed:
-                //replaceFragment(new MyVehicleFragment());
+            case R.id.community:
                 break;
-            case R.id.market:
-                // replaceFragment(new CartFragment());
-                break;
+
 
 
             default:

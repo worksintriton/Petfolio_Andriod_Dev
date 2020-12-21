@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.petfolio.infinitus"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -76,6 +76,9 @@ dependencies {
     implementation 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
 
 
+
+
+
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-location:17.1.0'
     implementation 'com.google.android.gms:play-services-places:17.0.0'
@@ -95,6 +98,13 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-analytics'
+
+
+    implementation 'com.vivekkaushik.datepicker:datePickerTimeline:0.0.4'
+
+
+
+
 
 
 

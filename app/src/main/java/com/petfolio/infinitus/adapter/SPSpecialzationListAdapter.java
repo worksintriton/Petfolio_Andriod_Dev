@@ -11,27 +11,25 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.interfaces.SPServiceChckedListener;
-import com.petfolio.infinitus.interfaces.SpecTypeChckedListener;
-import com.petfolio.infinitus.responsepojo.DropDownListResponse;
+import com.petfolio.infinitus.interfaces.SPSpecialzationChckedListener;
 import com.petfolio.infinitus.responsepojo.SPServiceListResponse;
 
 import java.util.List;
 
 
-public class SPServiceListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SPSpecialzationListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private  String TAG = "SpecTypesListAdapter";
+    private  String TAG = "SPSpecialzationListAdapter";
     private Context mcontext;
-    private List<SPServiceListResponse.DataBean.ServiceListBean> spServiceList;
-    SPServiceListResponse.DataBean.ServiceListBean currentItem;
-    private SPServiceChckedListener spServiceChckedListener;
+    private List<SPServiceListResponse.DataBean.SpecializationBean> spSpecialzationList;
+    SPServiceListResponse.DataBean.SpecializationBean currentItem;
+    private SPSpecialzationChckedListener spSpecialzationChckedListener;
 
 
-    public SPServiceListAdapter(Context context,List<SPServiceListResponse.DataBean.ServiceListBean> spServiceList, SPServiceChckedListener spServiceChckedListener) {
-        this.spServiceList = spServiceList;
+    public SPSpecialzationListAdapter(Context context, List<SPServiceListResponse.DataBean.SpecializationBean> spSpecialzationList, SPSpecialzationChckedListener spSpecialzationChckedListener) {
+        this.spSpecialzationList = spSpecialzationList;
         this.mcontext = context;
-        this.spServiceChckedListener = spServiceChckedListener;
+        this.spSpecialzationChckedListener = spSpecialzationChckedListener;
     }
 
     @NonNull
@@ -50,11 +48,11 @@ public class SPServiceListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
 
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
-        currentItem = spServiceList.get(position);
+        currentItem = spSpecialzationList.get(position);
 
 
 
-        holder.txt_spectypes.setText(currentItem.getService_list());
+        holder.txt_spectypes.setText(currentItem.getSpecialization());
 
         holder.chx_spectypes.setChecked(currentItem.isSelected());
 
@@ -64,17 +62,17 @@ public class SPServiceListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
 
             Integer pos = (Integer) holder.chx_spectypes.getTag();
 
-            if (spServiceList.get(pos).isSelected())
+            if (spSpecialzationList.get(pos).isSelected())
             {
-                spServiceList.get(pos).setSelected(false);
+                spSpecialzationList.get(pos).setSelected(false);
 
-                spServiceChckedListener.onItemSPServiceUnCheck(pos,spServiceList.get(pos).getService_list());
+                spSpecialzationChckedListener.onItemSPSpecialzationUnCheck(pos,spSpecialzationList.get(pos).getSpecialization());
 
             }
 
             else
             {
-                spServiceChckedListener.onItemSPServiceCheck(pos,spServiceList.get(pos).getService_list(),spServiceList);
+                spSpecialzationChckedListener.onItemSPSpecialzationCheck(pos,spSpecialzationList.get(pos).getSpecialization(),spSpecialzationList);
 
             }
 
@@ -83,7 +81,7 @@ public class SPServiceListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
     }
     @Override
     public int getItemCount() {
-        return spServiceList.size();
+        return spSpecialzationList.size();
     }
 
 

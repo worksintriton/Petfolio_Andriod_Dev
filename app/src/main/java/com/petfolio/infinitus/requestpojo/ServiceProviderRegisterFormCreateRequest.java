@@ -19,6 +19,8 @@ public class ServiceProviderRegisterFormCreateRequest {
      * bus_certif : [{"bus_certif":"http://mysalveo.com/api/uploads/images.jpeg"},{"bus_certif":"http://mysalveo.com/api/uploads/images.jpeg"},{"bus_certif":"http://mysalveo.com/api/uploads/images.jpeg"}]
      * date_and_time : 23-10-2020 12:00 AM
      * mobile_type : Admin
+     * profile_status : true
+     * profile_verification_status : Not verified
      */
 
     private String user_id;
@@ -30,6 +32,25 @@ public class ServiceProviderRegisterFormCreateRequest {
     private String bus_proof;
     private String date_and_time;
     private String mobile_type;
+    private boolean profile_status;
+    private String profile_verification_status;
+
+    public boolean isProfile_status() {
+        return profile_status;
+    }
+
+    public void setProfile_status(boolean profile_status) {
+        this.profile_status = profile_status;
+    }
+
+    public String getProfile_verification_status() {
+        return profile_verification_status;
+    }
+
+    public void setProfile_verification_status(String profile_verification_status) {
+        this.profile_verification_status = profile_verification_status;
+    }
+
     private List<BusServiceListBean> bus_service_list;
     private List<BusSpecListBean> bus_spec_list;
     private List<BusServiceGallBean> bus_service_gall;

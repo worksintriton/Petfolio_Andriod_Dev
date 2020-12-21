@@ -1,49 +1,50 @@
 package com.petfolio.infinitus.serviceprovider;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.fragmentpetlover.PetHomeFragment;
-import com.petfolio.infinitus.fragmentserviceprovider.ServiceProviderShopFragment;
-import com.wang.avi.AVLoadingIndicatorView;
+
+import com.petfolio.infinitus.sessionmanager.SessionManager;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ServiceProviderDashboardActivity  extends ServiceProviderNavigationDrawer implements Serializable, BottomNavigationView.OnNavigationItemSelectedListener {
+public class ServiceProviderDashboardActivity extends ServiceProviderNavigationDrawer implements Serializable, BottomNavigationView.OnNavigationItemSelectedListener {
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.avi_indicator)
-    AVLoadingIndicatorView avi_indicator;
 
-    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.bottom_navigation_view)
     BottomNavigationView bottom_navigation_view;
 
-    private final String TAG = "ServiceProviderDashboardActivity";
+    private String TAG = "ServiceProviderDashboardActivity";
 
-    final Fragment serviceProviderShopFragment = new ServiceProviderShopFragment();
+    final Fragment homeFragment = new FragmentSPDashboard();
+
+    private String active_tag = "1";
 
 
-    Fragment active = serviceProviderShopFragment;
+    Fragment active = homeFragment;
     String tag;
-     String fromactivity;
 
-    @SuppressLint("LongLogTag")
+    String fromactivity;
+    private String userid;
+    private Dialog dialog;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,50 +52,56 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
         ButterKnife.bind(this);
         Log.w(TAG,"onCreate-->");
 
-        avi_indicator.setVisibility(View.GONE);
+        SessionManager session = new SessionManager(getApplicationContext());
+        HashMap<String, String> user = session.getProfileDetails();
+        userid = user.get(SessionManager.KEY_ID);
+
+
+
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+
+            fromactivity = extras.getString("fromactivity");
+
+        }
 
         tag = getIntent().getStringExtra("tag");
         if(tag != null){
             if(tag.equalsIgnoreCase("1")){
-                active = serviceProviderShopFragment;
-                bottom_navigation_view.setSelectedItemId(R.id.shop);
-                loadFragment(new ServiceProviderShopFragment());
+                active = homeFragment;
+                bottom_navigation_view.setSelectedItemId(R.id.home);
+                loadFragment(new FragmentSPDashboard());
             }else if(tag.equalsIgnoreCase("2")){
-                bottom_navigation_view.setSelectedItemId(R.id.feed);
+                //active = searchFragment;
+                bottom_navigation_view.setSelectedItemId(R.id.shop);
+                // loadFragment(new SearchFragment());
             }else if(tag.equalsIgnoreCase("3")){
-                bottom_navigation_view.setSelectedItemId(R.id.market);
+                // active = myVehicleFragment;
+                bottom_navigation_view.setSelectedItemId(R.id.community);
+                // loadFragment(new MyVehicleFragment());
             }
-        }else{
+        }
+        else{
             bottom_navigation_view.setSelectedItemId(R.id.home);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            String active_tag = "1";
             transaction.replace(R.id.main_container, active, active_tag);
             transaction.commit();
         }
         bottom_navigation_view.setOnNavigationItemSelectedListener(this);
 
+
+
     }
 
 
 
-    @SuppressLint("LongLogTag")
     private void loadFragment(Fragment fragment) {
         Bundle bundle = new Bundle();
         if(fromactivity != null){
             Log.w(TAG,"fromactivity loadFragment : "+fromactivity);
 
-            if(fromactivity.equalsIgnoreCase("FiltersActivity")) {
-                bundle.putString("fromactivity", fromactivity);
 
-                // set Fragmentclass Arguments
-                fragment.setArguments(bundle);
-                Log.w(TAG,"fromactivity : "+fromactivity);
-                // load fragment
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_container, fragment);
-                transaction.addToBackStack(null);
-                transaction.commitAllowingStateLoss();
-            }
         }else {
 
 
@@ -111,7 +118,7 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
             transaction.commitAllowingStateLoss();
         }
     }
-    @SuppressLint("LongLogTag")
+
     @Override
     public void onBackPressed() {
         Log.w(TAG,"tag : "+tag);
@@ -125,11 +132,13 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
         }
         else if(tag != null ){
             Log.w(TAG,"Else IF--->"+"fromactivity : "+fromactivity);
-            if(fromactivity == null){
+            if(fromactivity != null){
+
+            }else{
                 bottom_navigation_view.setSelectedItemId(R.id.shop);
                 // load fragment
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_container,new PetHomeFragment());
+                transaction.replace(R.id.main_container,new FragmentSPDashboard());
                 transaction.commit();
             }
 
@@ -138,26 +147,30 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
             bottom_navigation_view.setSelectedItemId(R.id.shop);
             // load fragment
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.main_container,new PetHomeFragment());
+            transaction.replace(R.id.main_container,new FragmentSPDashboard());
             transaction.commit();
         }
     }
+
     private void replaceFragment(Fragment fragment){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_container,fragment);
         transaction.commit();
     }
+
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()) {
+            case R.id.home:
+                //replaceFragment(new SearchFragment());
+                break;
             case R.id.shop:
-                replaceFragment(new ServiceProviderShopFragment());
+                //replaceFragment(new MyVehicleFragment());
                 break;
-            case R.id.feed:
-                break;
-            case R.id.market:
+            case R.id.community:
+                // replaceFragment(new CartFragment());
                 break;
 
 
@@ -166,7 +179,7 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
         }
         return true;
     }
-    @SuppressLint("LongLogTag")
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -176,4 +189,8 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
         Fragment fragment = Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.main_container));
         fragment.onActivityResult(requestCode,resultCode,data);
     }
+
+
+
+
 }

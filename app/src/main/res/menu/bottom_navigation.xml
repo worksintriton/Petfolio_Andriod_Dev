@@ -30,9 +30,9 @@
     <item
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:id="@+id/market"
+        android:id="@+id/community"
         android:icon="@drawable/ic_market"
-        android:title="Market"/>
+        android:title="@string/community"/>
 
 
 
