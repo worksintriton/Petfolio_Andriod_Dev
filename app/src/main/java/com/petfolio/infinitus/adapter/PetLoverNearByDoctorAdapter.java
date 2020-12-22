@@ -17,11 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.fragmentpetlover.PetCareFragment;
 import com.petfolio.infinitus.petlover.BookAppointmentActivity;
 import com.petfolio.infinitus.petlover.DoctorClinicDetailsActivity;
 import com.petfolio.infinitus.responsepojo.DoctorSearchResponse;
-import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 
 import java.util.List;
 

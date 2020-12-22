@@ -63,6 +63,7 @@
 
     <string name="doctor_business_info_title">Doctor Business Info</string>
     <string name="serviceproviderbusiness">Service Provider Business</string>
+    <string name="editserviceproviderbusiness">Edit Service Provider Business</string>
     <string name="image">Image</string>
     <string name="clinic_name">Clinic name</string>
     <string name="business_name">Business name</string>
@@ -293,6 +294,35 @@
     <string name="today_deal">Todays deal</string>
     <string name="most_searched_products">most searched products</string>
     <string name="community">Community</string>
+
+
+    <string name="review_msg">Our team is reviewing your profile and will get in touch with you to close the formalities</string>
+    <string name="back_to_login">Back to login</string>
+
+    <string name="near_by_services">Near by Services</string>
+    <string name="popular_services">Popular services</string>
+    <string name="sort">Sort</string>
+    <string name="providers">Providers</string>
+    <string name="service_providers">Service providers</string>
+    <string name="serviceoffer">20 % off</string>
+    <string name="service_price">Service price</string>
+    <string name="addr_dummy">225/1,Duraiswamy Nagar main road</string>
+    <string name="dummy_km">2250.56 KM</string>
+    <string name="sort_by">Sort by</string>
+    <string name="add_service">Add Service</string>
+    <string name="add_pet_care_service">Add pet care Service</string>
+    <string name="age_alone">Age</string>
+    <string name="cost_aloned">Cost</string>
+    <string name="service_description">Service description</string>
+    <string name="upload_photos">Upload photos</string>
+    <string name="chooose_upload"><![CDATA[Chooose & upload]]></string>
+
+    <string name="time">Time</string>
+    <string name="food_type">Food type</string>
+    <string name="appointment_booked">Appointment Booked</string>
+    <string name="my_dogs">My Dog</string>
+    <string name="trainer">Trainer!</string>
+    <string name="supporting_sub_text_here">Supporting Sub Text Here</string>
 
 
 

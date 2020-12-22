@@ -30,7 +30,7 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/futuramediumbt"
             android:padding="2dp"
-            android:text="@string/serviceproviderbusiness"
+            android:text="@string/editserviceproviderbusiness"
             android:textColor="@color/black"
             android:textSize="20sp" />
 

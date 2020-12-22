@@ -20,17 +20,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
-import com.petfolio.infinitus.interfaces.SoSCallListener;
-import com.petfolio.infinitus.petlover.PetLoverEditProfileActivity;
-import com.petfolio.infinitus.petlover.PetLoverProfileScreenActivity;
-import com.petfolio.infinitus.petlover.PetMyappointmentsActivity;
+
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class ServiceProviderNavigationDrawer extends AppCompatActivity implements View.OnClickListener, SoSCallListener {
+public class ServiceProviderNavigationDrawer extends AppCompatActivity implements View.OnClickListener {
 
 
     public NavigationView navigationView;
@@ -43,19 +40,16 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
     ImageView drawerImg;
     CircleImageView nav_header_imageView;
     FrameLayout frameLayout;
-    TextView nav_header_profilename, nav_header_emailid,nav_header_edit;
+    TextView nav_header_profilename, nav_header_emailid, nav_header_edit;
     //SessionManager session;
     String name, image_url, phoneNo;
 
 
-     public TextView tvWelcomeName;
+    public TextView tvWelcomeName;
 
-     public Menu menu;
+    public Menu menu;
 
     BroadcastReceiver imgReceiver;
-
-
-
 
 
     SessionManager session;
@@ -70,7 +64,7 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
         super.onCreate(savedInstanceState);
         setTheme(R.style.AppTheme_NoActionBar);
         String TAG = "ServiceProviderNavigationDrawer";
-        Log.w(TAG,"onCreate---->");
+        Log.w(TAG, "onCreate---->");
 
         inflater = LayoutInflater.from(this);
         view = inflater.inflate(R.layout.navigation_drawer_sp_layout, null);
@@ -79,21 +73,17 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
         name = user.get(SessionManager.KEY_FIRST_NAME);
         emailid = user.get(SessionManager.KEY_EMAIL_ID);
         phoneNo = user.get(SessionManager.KEY_MOBILE);
-       String userid = user.get(SessionManager.KEY_ID);
-       Log.w(TAG,"userid : "+userid);
+        String userid = user.get(SessionManager.KEY_ID);
+        Log.w(TAG, "userid : " + userid);
 
 
-
-
-
-        Log.w(TAG,"user details--->"+"name :"+" "+ name+" " +"image_url :"+ image_url);
+        Log.w(TAG, "user details--->" + "name :" + " " + name + " " + "image_url :" + image_url);
 
         initUI(view);
         initToolBar(view);
 
 
-
-       // myBoradcastReceiver();
+        // myBoradcastReceiver();
     }
 
     @Override
@@ -127,7 +117,7 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
 
                 // For rest of the options we just show a toast on click
                 case R.id.nav_item_two:
-
+                    gotoMyCalendar();
                     return true;
 
                 case R.id.nav_item_three:
@@ -147,16 +137,13 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
                     return true;
 
 
-
-
                 default:
                     return true;
 
             }
         });
 
-         menu = navigationView.getMenu();
-
+        menu = navigationView.getMenu();
 
 
         // Initializing Drawer Layout and ActionBarToggle
@@ -171,20 +158,16 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
         nav_header_emailid.setText(emailid);
         nav_header_profilename.setText(name);
 
-        LinearLayout llheader = header.findViewById(R.id.llheader);
-        llheader.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class)));
 
-        nav_header_edit.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), PetLoverEditProfileActivity.class)));
+        nav_header_edit.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ServiceProviderEditFormActivity.class)));
 
 
-       /* if (!image_url.isEmpty()) {
-            Glide.with(this)
-                    .load(image_url)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true)
-                    .error(R.drawable.logo_white)
-                    .into(nav_header_imageView);
-        }*/
+
+    }
+
+    private void gotoMyCalendar() {
+        Intent i = new Intent(ServiceProviderNavigationDrawer.this, SPMyCalendarActivity.class);
+        startActivity(i);
     }
 
 
@@ -200,14 +183,8 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
         tvWelcomeName.setText("Home");
 
 
-
-
         toggleView();
     }
-
-
-
-
 
 
     private void toggleView() {
@@ -255,9 +232,7 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
     }
 
 
-
-
-    private void confirmLogoutDialog(){
+    private void confirmLogoutDialog() {
 
         android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(ServiceProviderNavigationDrawer.this);
         alertDialogBuilder.setMessage("Are you sure want to logout?");
@@ -272,22 +247,9 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
     }
 
 
-
-
-
-
     private void gotoMyAppointments() {
-        startActivity(new Intent(getApplicationContext(), PetMyappointmentsActivity.class));
 
     }
-
-
-
-
-
-
-
-
 
 
     private void gotoLogout() {
@@ -297,15 +259,7 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
         finish();
 
 
-
-
     }
 
 
-    @Override
-    public void soSCallListener(long phonenumber) {
-        /*if(phonenumber != 0){
-            String sosPhonenumber = String.valueOf(phonenumber);
-        }*/
-    }
 }

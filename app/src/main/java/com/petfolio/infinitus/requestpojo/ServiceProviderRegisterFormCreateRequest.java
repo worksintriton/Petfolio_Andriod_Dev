@@ -21,6 +21,9 @@ public class ServiceProviderRegisterFormCreateRequest {
      * mobile_type : Admin
      * profile_status : true
      * profile_verification_status : Not verified
+     *"sp_loc" : "No, chennai tamil nadu",
+     *"sp_lat" : 12.00909,
+     *"sp_long" : 80.980098,
      */
 
     private String user_id;
@@ -34,6 +37,33 @@ public class ServiceProviderRegisterFormCreateRequest {
     private String mobile_type;
     private boolean profile_status;
     private String profile_verification_status;
+    private String sp_loc;
+    private double sp_lat;
+    private double sp_long;
+
+    public String getSp_loc() {
+        return sp_loc;
+    }
+
+    public void setSp_loc(String sp_loc) {
+        this.sp_loc = sp_loc;
+    }
+
+    public double getSp_lat() {
+        return sp_lat;
+    }
+
+    public void setSp_lat(double sp_lat) {
+        this.sp_lat = sp_lat;
+    }
+
+    public double getSp_long() {
+        return sp_long;
+    }
+
+    public void setSp_long(double sp_long) {
+        this.sp_long = sp_long;
+    }
 
     public boolean isProfile_status() {
         return profile_status;

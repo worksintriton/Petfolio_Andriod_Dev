@@ -1,5 +1,6 @@
 package com.petfolio.infinitus.serviceprovider;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -27,13 +28,10 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.doctor.DoctorBusinessInfoActivity;
 import com.petfolio.infinitus.fragmentdoctor.FragmentDoctorCompletedAppointment;
 import com.petfolio.infinitus.fragmentdoctor.FragmentDoctorMissedAppointment;
 import com.petfolio.infinitus.fragmentdoctor.FragmentDoctorNewAppointment;
-import com.petfolio.infinitus.requestpojo.DoctorCheckStatusRequest;
 import com.petfolio.infinitus.requestpojo.SPCheckStatusRequest;
-import com.petfolio.infinitus.responsepojo.DoctorCheckStatusResponse;
 import com.petfolio.infinitus.responsepojo.SPCheckStatusResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -56,12 +54,16 @@ import retrofit2.Response;
 public class FragmentSPDashboard extends Fragment  {
 
     private   String TAG = "FragmentSPDashboard";
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tablayout)
     TabLayout tablayout;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.viewPager)
     ViewPager viewPager;
 
@@ -188,7 +190,7 @@ public class FragmentSPDashboard extends Fragment  {
                                 Log.w(TAG,"isDoctorStatus else : "+isDoctorStatus);
 
                                 if(isDoctorStatus){
-                                    setupViewPager(viewPager);
+                                    //setupViewPager(viewPager);
                                     tablayout.setupWithViewPager(viewPager);
                                 }
 

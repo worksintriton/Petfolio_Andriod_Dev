@@ -37,6 +37,7 @@ import com.petfolio.infinitus.requestpojo.PetLoverDashboardRequest;
 import com.petfolio.infinitus.requestpojo.PrescriptionCreateRequest;
 import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
 import com.petfolio.infinitus.requestpojo.SPCheckStatusRequest;
+import com.petfolio.infinitus.requestpojo.SPDetailsByUserIdRequest;
 import com.petfolio.infinitus.requestpojo.SignupRequest;
 import com.petfolio.infinitus.requestpojo.UserStatusUpdateRequest;
 import com.petfolio.infinitus.requestpojo.ServiceProviderRegisterFormCreateRequest;
@@ -156,7 +157,6 @@ public interface RestApiInterface {
     /*Doctor Create holiday*/
     @POST("holiday/create")
     Call<CreateHolidayResponse>createHolidayResponseCall(@Header("Content-Type") String type, @Body CreateHolidayRequest createHolidayRequest );
-
 
     /*Doctor Listing added holidays*/
     @POST("holiday/getlist_id")
@@ -304,9 +304,31 @@ public interface RestApiInterface {
     @POST("service_provider/create")
     Call<ServiceProviderRegisterFormCreateResponse>serviceProviderRegisterFormCreateResponseCall(@Header("Content-Type") String type, @Body ServiceProviderRegisterFormCreateRequest serviceProviderRegisterFormCreateRequest);
 
+    /*Service provider details by id*/
+    @POST("service_provider/getlist_id")
+    Call<ServiceProviderRegisterFormCreateResponse>spDetailsReponseByUserIdCall(@Header("Content-Type") String type, @Body SPDetailsByUserIdRequest spDetailsByUserIdRequest);
+
+    /*Service provider update*/
+    @POST("service_provider/edit")
+    Call<ServiceProviderRegisterFormCreateResponse>spUpdateReponseCall(@Header("Content-Type") String type, @Body ServiceProviderRegisterFormCreateRequest serviceProviderRegisterFormCreateRequest);
+
+
     /*SP Check status*/
     @POST("service_provider/check_status")
     Call<SPCheckStatusResponse>SPCheckStatusResponseCall(@Header("Content-Type") String type, @Body SPCheckStatusRequest spCheckStatusRequest );
+
+
+    /*SP Create holiday*/
+    @POST("sp_holiday/create")
+    Call<CreateHolidayResponse>spCreateHolidayResponseCall(@Header("Content-Type") String type, @Body CreateHolidayRequest createHolidayRequest );
+
+    /*SP Listing added holidays*/
+    @POST("sp_holiday/getlist_id")
+    Call<HolidayListResponse>spHolidayListResponseCall(@Header("Content-Type") String type, @Body HolidayListRequest holidayListRequest  );
+
+    /*SP holiday delete*/
+    @POST("sp_holiday/delete")
+    Call<HolidayDeleteResponse>spHolidayDeleteResponseCall(@Header("Content-Type") String type, @Body HolidayDeleteRequest holidayDeleteRequest  );
 
 
 }

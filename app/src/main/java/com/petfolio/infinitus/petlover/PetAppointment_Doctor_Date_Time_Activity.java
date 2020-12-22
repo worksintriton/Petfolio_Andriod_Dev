@@ -102,39 +102,15 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
     private String Comm_type_video = "";
 
     SessionManager session;
-    String isCheckedChat = "No", isCheckedVideo = "No";
-
-    String doctorChatAvailable, doctorVideoAvailable;
 
 
-/*    PatientDoctorAvailableTimeResponse doctorDateAvailabilityResponse;
-    private List<PatientDoctorAvailableTimeResponse.DataBean> doctorDateAvailabilityResponseList = null;
-    private List<PatientDoctorAvailableTimeResponse.DataBean.TimesBean> timesBeanList = null;*/
 
-    String patientname = "",patientemailid = "";
-
-    String Languages = "",Specilization = "",Service = "",Id = "",Pic = "",Name = "",DOB = "",Qualifications = "",HighestQualifications = "",Experience = "",Information = "",
-            Availabletype = "",Specialmention = "",Charge = "",Chargeper15mins = "",Gender ="";
-    String DocEmail = "";
 
     private Boolean isAppointment = true;
     View view;
     TextView tvlblavailabletime,tvlbldoctoravailable;
 
-    //List<TimeSlotDivider> timeSlotDividerList= new ArrayList<>();
-    List<String> stringLinkedList= new LinkedList<>();
 
-
-    int timeslotcount;
-    private RadioButton lastCheckedRB = null;
-
-
-    boolean isDoctorChatavl = false,isDoctorVideoavl = false;
-
-
-
-    boolean isvalid = false;
-    String doctortitle;
 
 
 
@@ -194,17 +170,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
             Log.w(TAG,"petid-->"+petid+ "allergies : "+allergies+"  probleminfo : "+probleminfo+" selectedAppointmentType : "+selectedAppointmentType);
 
-            if(Languages != null && !Languages.isEmpty()){
-                Languages = Languages.replaceAll("\\[", "").replaceAll("\\]","");
-                Log.w(TAG,"Languages-->"+Languages);
-            }
 
-            if(Specilization != null && !Specilization.isEmpty()){
-                Specilization = Specilization.replaceAll("\\[", "").replaceAll("\\]","");
-                Log.w(TAG,"Specilization-->"+Specilization);
-            }
-
-            Service = extras.getString("Service");
 
 
 
