@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface SPSpecialzationChckedListener {
 
-    void onItemSPSpecialzationCheck(int position, String specValue, List<SPServiceListResponse.DataBean.SpecializationBean> dataBeanList);
+    void onItemSPSpecialzationCheck(int position, String specValue);
 
     void onItemSPSpecialzationUnCheck(int position, String specValue);
 

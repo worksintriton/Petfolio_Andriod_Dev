@@ -1,6 +1,7 @@
 package com.petfolio.infinitus.petlover;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,6 +21,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -45,10 +47,14 @@ import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 
+import com.razorpay.Checkout;
+import com.razorpay.PaymentResultListener;
 import com.vivekkaushik.datepicker.DatePickerTimeline;
 import com.vivekkaushik.datepicker.OnDateSelectedListener;
 import com.wang.avi.AVLoadingIndicatorView;
 
+
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -61,14 +67,15 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity implements OnItemSelectedTime {
+public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity implements OnItemSelectedTime, PaymentResultListener {
 
-    private Button proced_appoinment;
+    private Button btn_bookappointment;
     private CheckBox chat, video;
 
     private ImageView img_back;
@@ -128,6 +135,8 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
     private String userid;
     private String doctorid;
     private String selectedAppointmentType;
+    private double totalamount =1;
+    private String Payment_id;
 
 
     @Override
@@ -140,6 +149,8 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
         avi_indicator.setVisibility(View.GONE);
 
+        /*Razorpay init*/
+        Checkout.preload(getApplicationContext());
 
 
 
@@ -199,7 +210,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         radioButton1 = findViewById(R.id.radioButton1);
         radioButton2 = findViewById(R.id.radioButton2);
 
-        proced_appoinment = findViewById(R.id.btn_bookappointment);
+        btn_bookappointment = findViewById(R.id.btn_bookappointment);
 
 
         chat = findViewById(R.id.chat);
@@ -216,10 +227,11 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         sub_layer1 = findViewById(R.id.sub_layer1);
         sub_layer1.setVisibility(View.GONE);
 
-        proced_appoinment.setOnClickListener(new View.OnClickListener() {
+        btn_bookappointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(selectedTimeSlot != null && !selectedTimeSlot.isEmpty()){
+
                     if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
                         appointmentCheckResponseCall();
                     }
@@ -307,8 +319,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
                 Log.w(TAG,"Selected Date-->"+Date);
 
                 if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
-
-                    petDoctorAvailableTimeResponseCall(formattedDate);
+                    petDoctorAvailableTimeResponseCall(Date);
                 }
 
 
@@ -376,7 +387,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
                             Comm_type_video = response.body().getData().get(0).getComm_type_video();
                             Log.w(TAG,"doctorDateAvailabilityResponseCall Comm_type_chat : "+Comm_type_chat+" Comm_type_video : "+Comm_type_video);
                             sub_layer1.setVisibility(View.VISIBLE);
-                            proced_appoinment.setVisibility(View.VISIBLE);
+                            btn_bookappointment.setVisibility(View.VISIBLE);
                             List<PetDoctorAvailableTimeResponse.DataBean.TimesBean>timeBeanList = new ArrayList<>();
 
                             if(doctorDateAvailabilityResponseList.size()>0) {
@@ -429,7 +440,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
                     }
                     else{
                         sub_layer1.setVisibility(View.GONE);
-                        proced_appoinment.setVisibility(View.GONE);
+                        btn_bookappointment.setVisibility(View.GONE);
                         tvlblavailabletime.setVisibility(View.GONE);
                         tvlbldoctoravailable.setVisibility(View.GONE);
                         showErrorLoading(response.body().getMessage());
@@ -543,20 +554,12 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
+                        startPayment();
+                        /*if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
 
                             petAppointmentCreateResponseCall();
-                        }
-                        /*Intent intent = new Intent(PatientAppointment_Doctor_Date_Time_Activity.this, AilmentActivity.class);
-                        intent.putExtra("id", _id);
-                        intent.putExtra("doctortitle", doctortitle);
-                        intent.putExtra("doctor_name", Doctor_name);
-                        intent.putExtra("doctor_email_id", Doctor_email_id);
-                        intent.putExtra("doctor_ava_Date", Doctor_ava_Date);
-                        intent.putExtra("isCheckedChat", isCheckedChat);
-                        intent.putExtra("isCheckedVideo", isCheckedVideo);
-                        intent.putExtra("selectedtimeslot", selectedTimeSlot);
-                        startActivity(intent);*/
+                        }*/
+
                     }else{
                         showErrorLoading(response.body().getMessage());
                     }
@@ -589,8 +592,6 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         Log.w(TAG,"appointmentCheckRequest"+ "--->" + new Gson().toJson(appointmentCheckRequest));
         return appointmentCheckRequest;
     }
-
-
     private void petAppointmentCreateResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -638,8 +639,6 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         });
 
     }
-
-
     private PetAppointmentCreateRequest petAppointmentCreateRequest() {
 
         /*
@@ -700,8 +699,6 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         Log.w(TAG,"petAppointmentCreateRequest"+ "--->" + new Gson().toJson(petAppointmentCreateRequest));
         return petAppointmentCreateRequest;
     }
-
-
     public void showSuceessLoading(String errormesage){
         alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage(errormesage);
@@ -725,6 +722,65 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
     }
 
 
+    public void startPayment() {
+        /*
+          You need to pass current activity in order to let Razorpay create CheckoutActivity
+         */
+        final Activity activity = this;
+
+        final Checkout co = new Checkout();
+
+        Double d = totalamount;
+        int amout = d.intValue();
 
 
+        Integer totalamout = amout*100;
+
+        try {
+            JSONObject options = new JSONObject();
+            options.put("name", "PetFolio");
+            options.put("description", userid);
+            //You can omit the image option to fetch the image from dashboard
+            options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
+            options.put("currency", "INR");
+            options.put("amount", totalamout);
+
+
+            co.open(activity, options);
+        } catch (Exception e) {
+            Log.w(TAG,"Error in payment: " + e.getMessage());
+
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public void onPaymentSuccess(String razorpayPaymentID) {
+        try {
+            Payment_id = razorpayPaymentID;
+
+            Log.w(TAG, "Payment Successful: " + razorpayPaymentID);
+            Toasty.success(getApplicationContext(), "Payment Successful. View your booking details in upcoming appointments.", Toast.LENGTH_SHORT, true).show();
+
+
+            if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
+                petAppointmentCreateResponseCall();
+            }
+
+
+
+
+        } catch (Exception e) {
+            Log.w(TAG, "Exception in onPaymentSuccess", e);
+        }
+    }
+    @Override
+    public void onPaymentError(int code, String response) {
+        try {
+            Log.w(TAG,  "Payment failed: " + code + " " + response);
+            Toasty.error(getApplicationContext(), "Payment failed. Please try again with another payment method..", Toast.LENGTH_SHORT, true).show();
+
+        } catch (Exception e) {
+            Log.w(TAG, "Exception in onPaymentError", e);
+        }
+    }
 }

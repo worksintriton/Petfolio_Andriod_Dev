@@ -102,6 +102,10 @@ dependencies {
 
     implementation 'com.vivekkaushik.datepicker:datePickerTimeline:0.0.4'
 
+    /*Payment gateway razorpay*/
+    implementation 'com.razorpay:checkout:1.5.16'
+
+
 
 
 

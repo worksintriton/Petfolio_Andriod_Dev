@@ -93,15 +93,7 @@ public class SPServiceListResponse {
 
         public static class ServiceListBean  {
 
-            private boolean isSelected;
 
-            public boolean isSelected() {
-                return isSelected;
-            }
-
-            public void setSelected(boolean selected) {
-                isSelected = selected;
-            }
 
             /**
              * service_list : Service - 1
@@ -122,15 +114,7 @@ public class SPServiceListResponse {
 
         public static class SpecializationBean {
 
-            private boolean isSelected;
 
-            public boolean isSelected() {
-                return isSelected;
-            }
-
-            public void setSelected(boolean selected) {
-                isSelected = selected;
-            }
             /**
              * Specialization : Specialization - 1
              */

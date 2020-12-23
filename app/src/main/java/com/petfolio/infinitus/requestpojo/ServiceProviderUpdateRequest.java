@@ -2,11 +2,12 @@ package com.petfolio.infinitus.requestpojo;
 
 import java.util.List;
 
-public class ServiceProviderRegisterFormCreateRequest {
+public class ServiceProviderUpdateRequest {
 
 
     /**
      * user_id : 5fc61b82b750da703e48da78
+     * _id : 5fc61b82b750da703e48da78
      * bus_user_name : mohammed Imthiyas
      * bus_user_email : mohammed@gmail.com
      * bussiness_name : Mohammed imthiyas
@@ -28,14 +29,6 @@ public class ServiceProviderRegisterFormCreateRequest {
 
     private String user_id;
     private String _id;
-    private String bus_user_name;
-    private String bus_user_email;
-    private String bussiness_name;
-    private String bus_user_phone;
-    private String bus_profile;
-    private String bus_proof;
-    private String date_and_time;
-    private String mobile_type;
 
     public String get_id() {
         return _id;
@@ -45,6 +38,14 @@ public class ServiceProviderRegisterFormCreateRequest {
         this._id = _id;
     }
 
+    private String bus_user_name;
+    private String bus_user_email;
+    private String bussiness_name;
+    private String bus_user_phone;
+    private String bus_profile;
+    private String bus_proof;
+    private String date_and_time;
+    private String mobile_type;
     private boolean profile_status;
     private String profile_verification_status;
     private String sp_loc;

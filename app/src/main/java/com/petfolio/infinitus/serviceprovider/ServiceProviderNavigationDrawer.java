@@ -133,6 +133,9 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
                 case R.id.nav_item_six:
                     return true;
                 case R.id.nav_item_seven:
+
+                    return true;
+                    case R.id.nav_item_eight:
                     confirmLogoutDialog();
                     return true;
 

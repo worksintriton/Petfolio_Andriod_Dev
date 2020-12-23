@@ -1,6 +1,7 @@
 package com.petfolio.infinitus.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,26 +12,28 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.interfaces.SPServiceChckedListener;
-import com.petfolio.infinitus.interfaces.SpecTypeChckedListener;
-import com.petfolio.infinitus.responsepojo.DropDownListResponse;
 import com.petfolio.infinitus.responsepojo.SPServiceListResponse;
+import com.petfolio.infinitus.responsepojo.ServiceProviderRegisterFormCreateResponse;
 
 import java.util.List;
 
 
-public class SPServiceListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SPServiceListEditAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private  String TAG = "SPServiceListAdapter";
+    private  String TAG = "SPServiceListEditAdapter";
     private Context mcontext;
     private List<SPServiceListResponse.DataBean.ServiceListBean> spServiceList;
+    private List<ServiceProviderRegisterFormCreateResponse.DataBean.BusServiceListBean> spServiceListEdit;
     SPServiceListResponse.DataBean.ServiceListBean currentItem;
     private SPServiceChckedListener spServiceChckedListener;
 
 
-    public SPServiceListAdapter(Context context,List<SPServiceListResponse.DataBean.ServiceListBean> spServiceList, SPServiceChckedListener spServiceChckedListener) {
+    public SPServiceListEditAdapter(Context context, List<SPServiceListResponse.DataBean.ServiceListBean> spServiceList,List<ServiceProviderRegisterFormCreateResponse.DataBean.BusServiceListBean> spServiceListEdit, SPServiceChckedListener spServiceChckedListener) {
         this.spServiceList = spServiceList;
+        this.spServiceListEdit = spServiceListEdit;
         this.mcontext = context;
         this.spServiceChckedListener = spServiceChckedListener;
     }
@@ -57,27 +60,41 @@ public class SPServiceListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
 
         holder.txt_spectypes.setText(currentItem.getService_list());
 
-     /*   holder.chx_spectypes.setChecked(currentItem.isSelected());
+       /* holder.chx_spectypes.setChecked(currentItem.isSelected());
+
         holder.chx_spectypes.setTag(position);
-        holder.chx_spectypes.setOnClickListener(v -> {
+
+       holder.chx_spectypes.setOnClickListener(v -> {
 
             Integer pos = (Integer) holder.chx_spectypes.getTag();
 
             if (spServiceList.get(pos).isSelected())
             {
                 spServiceList.get(pos).setSelected(false);
-
                 spServiceChckedListener.onItemSPServiceUnCheck(pos,spServiceList.get(pos).getService_list());
 
             }
 
             else
             {
-                spServiceChckedListener.onItemSPServiceCheck(pos,spServiceList.get(pos).getService_list());
+                spServiceChckedListener.onItemSPServiceCheck(pos,spServiceList.get(pos).getService_list(),spServiceList);
 
             }
 
         });*/
+
+
+        for(int i=0;i<spServiceListEdit.size();i++){
+            if(null!=spServiceListEdit && null!=currentItem.getService_list() && spServiceListEdit.get(i).getBus_service_list().equalsIgnoreCase(currentItem.getService_list().trim())){
+                holder.chx_spectypes.setChecked(true);
+                Log.w(TAG,"ServiceEdit");
+
+
+            }
+
+        }
+
+
 
         holder.chx_spectypes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -97,6 +114,12 @@ public class SPServiceListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
 
             }
         });
+
+
+
+
+
+
 
 
     }

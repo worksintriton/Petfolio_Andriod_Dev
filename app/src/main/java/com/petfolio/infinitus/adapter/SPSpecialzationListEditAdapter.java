@@ -1,6 +1,7 @@
 package com.petfolio.infinitus.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,21 +15,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.interfaces.SPSpecialzationChckedListener;
 import com.petfolio.infinitus.responsepojo.SPServiceListResponse;
+import com.petfolio.infinitus.responsepojo.ServiceProviderRegisterFormCreateResponse;
 
 import java.util.List;
 
 
-public class SPSpecialzationListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SPSpecialzationListEditAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private  String TAG = "SPSpecialzationListAdapter";
+    private  String TAG = "SPSpecialzationListEditAdapter";
     private Context mcontext;
     private List<SPServiceListResponse.DataBean.SpecializationBean> spSpecialzationList;
     SPServiceListResponse.DataBean.SpecializationBean currentItem;
     private SPSpecialzationChckedListener spSpecialzationChckedListener;
+    private List<ServiceProviderRegisterFormCreateResponse.DataBean.BusSpecListBean> spSpecialzationListEdit;
 
 
-    public SPSpecialzationListAdapter(Context context, List<SPServiceListResponse.DataBean.SpecializationBean> spSpecialzationList, SPSpecialzationChckedListener spSpecialzationChckedListener) {
+    public SPSpecialzationListEditAdapter(Context context, List<SPServiceListResponse.DataBean.SpecializationBean> spSpecialzationList,List<ServiceProviderRegisterFormCreateResponse.DataBean.BusSpecListBean> spSpecialzationListEdit, SPSpecialzationChckedListener spSpecialzationChckedListener) {
         this.spSpecialzationList = spSpecialzationList;
+        this.spSpecialzationListEdit = spSpecialzationListEdit;
         this.mcontext = context;
         this.spSpecialzationChckedListener = spSpecialzationChckedListener;
     }
@@ -50,9 +54,6 @@ public class SPSpecialzationListAdapter extends  RecyclerView.Adapter<RecyclerVi
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
         currentItem = spSpecialzationList.get(position);
-
-
-
         holder.txt_spectypes.setText(currentItem.getSpecialization());
 
         /*holder.chx_spectypes.setChecked(currentItem.isSelected());
@@ -73,11 +74,20 @@ public class SPSpecialzationListAdapter extends  RecyclerView.Adapter<RecyclerVi
 
             else
             {
-                spSpecialzationChckedListener.onItemSPSpecialzationCheck(pos,spSpecialzationList.get(pos).getSpecialization());
+                spSpecialzationChckedListener.onItemSPSpecialzationCheck(pos,spSpecialzationList.get(pos).getSpecialization(),spSpecialzationList);
 
             }
 
         });*/
+        for(int i=0;i<spSpecialzationListEdit.size();i++){
+            if(null!=spSpecialzationListEdit && null!=currentItem.getSpecialization() && spSpecialzationListEdit.get(i).getBus_spec_list().equalsIgnoreCase(currentItem.getSpecialization().trim())){
+                holder.chx_spectypes.setChecked(true);
+                Log.w(TAG,"ServiceEdit");
+
+            }
+
+        }
+
 
         holder.chx_spectypes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -104,13 +114,10 @@ public class SPSpecialzationListAdapter extends  RecyclerView.Adapter<RecyclerVi
     public int getItemCount() {
         return spSpecialzationList.size();
     }
-
-
     @Override
     public int getItemViewType(int position) {
         return position;
     }
-
     static class ViewHolderOne extends RecyclerView.ViewHolder {
 
         public TextView txt_spectypes;
