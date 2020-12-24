@@ -74,11 +74,6 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
     @BindView(R.id.imgBack)
     ImageView imgBack;
 
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.txt_cityname)
-    TextView txt_cityname;
-
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_cityname_title)
     TextView txt_cityname_title;
@@ -100,12 +95,16 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
     EditText edt_pickname;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.txt_pincode)
-    TextView txt_pincode;
+    @BindView(R.id.edt_cityname)
+    EditText edt_cityname;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.txt_location)
-    TextView txt_location;
+    @BindView(R.id.edt_pincode)
+    EditText edt_pincode;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.edt_location)
+    EditText edt_location;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rglocationtype)
@@ -187,10 +186,10 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
             AddressLine = extras.getString("address");
             String postalCode = extras.getString("PostalCode");
 
-            txt_cityname.setText(CityName);
+            edt_cityname.setText(CityName);
             txt_cityname_title.setText(CityName);
             txt_address.setText(AddressLine);
-            txt_pincode.setText(postalCode);
+            edt_pincode.setText(postalCode);
 
 
 
@@ -404,9 +403,9 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
                  street = address.getThoroughfare();
 
                  if(street != null){
-                     txt_location.setText(street);
+                    edt_location.setText(street);
                  }else if(subLocality != null ){
-                     txt_location.setText(subLocality);
+                    edt_location.setText(subLocality);
                  }
 
 

@@ -33,10 +33,13 @@
 
             <CheckBox
                 android:id="@+id/chx_usertypes"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:buttonTint="@color/new_green_btn"
-                android:layout_gravity="bottom|end" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:button="@drawable/cb_selector"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="5dp"
+                android:checked="true" />
 
         </androidx.cardview.widget.CardView>
 

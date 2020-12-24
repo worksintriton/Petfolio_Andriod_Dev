@@ -36,6 +36,7 @@ import com.petfolio.infinitus.requestpojo.PetLoverAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverDashboardRequest;
 import com.petfolio.infinitus.requestpojo.PrescriptionCreateRequest;
 import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
+import com.petfolio.infinitus.requestpojo.SPAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.SPCheckStatusRequest;
 import com.petfolio.infinitus.requestpojo.SPDetailsByUserIdRequest;
 import com.petfolio.infinitus.requestpojo.SignupRequest;
@@ -81,6 +82,7 @@ import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.PetTypeListResponse;
 import com.petfolio.infinitus.responsepojo.PrescriptionCreateResponse;
 import com.petfolio.infinitus.responsepojo.ResendOTPResponse;
+import com.petfolio.infinitus.responsepojo.SPAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.SPCheckStatusResponse;
 import com.petfolio.infinitus.responsepojo.SPServiceListResponse;
 import com.petfolio.infinitus.responsepojo.SignupResponse;
@@ -329,6 +331,21 @@ public interface RestApiInterface {
     /*SP holiday delete*/
     @POST("sp_holiday/delete")
     Call<HolidayDeleteResponse>spHolidayDeleteResponseCall(@Header("Content-Type") String type, @Body HolidayDeleteRequest holidayDeleteRequest  );
+
+
+
+    /*SP New Appointment*/
+    @POST("sp_appointments/mobile/sp_getlist/newapp")
+    Call<SPAppointmentResponse>spNewAppointmentResponseCall(@Header("Content-Type") String type, @Body SPAppointmentRequest spAppointmentRequest);
+
+    /*SP Completed Appointment*/
+    @POST("sp_appointments/mobile/sp_getlist/comapp")
+    Call<SPAppointmentResponse>spCompletedAppointmentResponseCall(@Header("Content-Type") String type, @Body SPAppointmentRequest spAppointmentRequest);
+
+    /*SP Missed Appointment*/
+    @POST("sp_appointments/mobile/sp_getlist/missapp")
+    Call<SPAppointmentResponse>spMissedAppointmentResponseCall(@Header("Content-Type") String type, @Body SPAppointmentRequest spAppointmentRequest);
+
 
 
 }

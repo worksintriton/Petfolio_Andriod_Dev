@@ -54,11 +54,10 @@
     <string name="products">Products</string>
     <string name="specialization">Specialization</string>
     <string name="addyourservices">Add your services</string>
-    <string name="edit"> <u>Edit</u></string>
     <string name="turn_on_your_location_services">Turn on your location services</string>
     <string name="search_location_address">Search Location Address</string>
     <string name="noplacesfound">No Places Found</string>
-    <string name="save_this_location_and_procced">Save this location &amp; procced</string>
+    <string name="save_this_location_and_procced">Save this location &amp; Proceed</string>
 
 
     <string name="doctor_business_info_title">Doctor Business Info</string>
@@ -324,6 +323,9 @@
     <string name="trainer">Trainer!</string>
     <string name="supporting_sub_text_here">Supporting Sub Text Here</string>
 
+    <string name="profile_name">profile name</string>
+
+    <string name="edit"><u>Edit</u></string>
 
 
 </resources>

@@ -60,28 +60,7 @@ public class SPServiceListEditAdapter extends  RecyclerView.Adapter<RecyclerView
 
         holder.txt_spectypes.setText(currentItem.getService_list());
 
-       /* holder.chx_spectypes.setChecked(currentItem.isSelected());
 
-        holder.chx_spectypes.setTag(position);
-
-       holder.chx_spectypes.setOnClickListener(v -> {
-
-            Integer pos = (Integer) holder.chx_spectypes.getTag();
-
-            if (spServiceList.get(pos).isSelected())
-            {
-                spServiceList.get(pos).setSelected(false);
-                spServiceChckedListener.onItemSPServiceUnCheck(pos,spServiceList.get(pos).getService_list());
-
-            }
-
-            else
-            {
-                spServiceChckedListener.onItemSPServiceCheck(pos,spServiceList.get(pos).getService_list(),spServiceList);
-
-            }
-
-        });*/
 
 
         for(int i=0;i<spServiceListEdit.size();i++){

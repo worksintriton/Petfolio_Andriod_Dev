@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -38,6 +39,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.github.siyamed.shapeimageview.CircularImageView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
@@ -190,12 +193,13 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
         nav_header_emailid = header.findViewById(R.id.nav_header_emailid);
         nav_header_profilename = header.findViewById(R.id.nav_header_profilename);
         nav_header_edit = header.findViewById(R.id.nav_header_edit);
-        // Glide.with(this).load(image_url).into(nav_header_imageView);
+
+        Glide.with(this).load(R.drawable.profile).circleCrop().into(nav_header_imageView);
 
         nav_header_emailid.setText(emailid);
         nav_header_profilename.setText(name);
 
-        LinearLayout llheader = header.findViewById(R.id.llheader);
+        RelativeLayout llheader = header.findViewById(R.id.llheader);
         llheader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

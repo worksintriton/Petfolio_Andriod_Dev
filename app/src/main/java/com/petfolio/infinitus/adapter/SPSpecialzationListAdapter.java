@@ -55,29 +55,7 @@ public class SPSpecialzationListAdapter extends  RecyclerView.Adapter<RecyclerVi
 
         holder.txt_spectypes.setText(currentItem.getSpecialization());
 
-        /*holder.chx_spectypes.setChecked(currentItem.isSelected());
 
-        holder.chx_spectypes.setTag(position);
-
-        holder.chx_spectypes.setOnClickListener(v -> {
-
-            Integer pos = (Integer) holder.chx_spectypes.getTag();
-
-            if (spSpecialzationList.get(pos).isSelected())
-            {
-                spSpecialzationList.get(pos).setSelected(false);
-
-                spSpecialzationChckedListener.onItemSPSpecialzationUnCheck(pos,spSpecialzationList.get(pos).getSpecialization());
-
-            }
-
-            else
-            {
-                spSpecialzationChckedListener.onItemSPSpecialzationCheck(pos,spSpecialzationList.get(pos).getSpecialization());
-
-            }
-
-        });*/
 
         holder.chx_spectypes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

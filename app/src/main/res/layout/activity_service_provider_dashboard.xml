@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         app:indicatorColor="@color/new_green_btn"
-        app:indicatorName="LineSpinFadeLoaderIndicator" />
+        app:indicatorName="LineSpinFadeLoaderIndicator"
+        android:visibility="gone"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"

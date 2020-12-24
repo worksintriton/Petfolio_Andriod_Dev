@@ -52,33 +52,7 @@ public class SPServiceListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
         currentItem = spServiceList.get(position);
-
-
-
         holder.txt_spectypes.setText(currentItem.getService_list());
-
-     /*   holder.chx_spectypes.setChecked(currentItem.isSelected());
-        holder.chx_spectypes.setTag(position);
-        holder.chx_spectypes.setOnClickListener(v -> {
-
-            Integer pos = (Integer) holder.chx_spectypes.getTag();
-
-            if (spServiceList.get(pos).isSelected())
-            {
-                spServiceList.get(pos).setSelected(false);
-
-                spServiceChckedListener.onItemSPServiceUnCheck(pos,spServiceList.get(pos).getService_list());
-
-            }
-
-            else
-            {
-                spServiceChckedListener.onItemSPServiceCheck(pos,spServiceList.get(pos).getService_list());
-
-            }
-
-        });*/
-
         holder.chx_spectypes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -90,7 +64,6 @@ public class SPServiceListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
                     }
 
                 }else{
-
                     spServiceChckedListener.onItemSPServiceUnCheck(position,chservice);
 
                 }

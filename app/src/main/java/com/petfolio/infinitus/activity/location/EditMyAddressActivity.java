@@ -71,9 +71,6 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
     @BindView(R.id.img_back)
     ImageView img_back;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.txt_cityname)
-    TextView txt_cityname;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_cityname_title)
@@ -96,14 +93,16 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
     EditText edt_pickname;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.txt_pincode)
-    TextView txt_pincode;
+    @BindView(R.id.edt_cityname)
+    EditText edt_cityname;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.txt_location)
-    TextView txt_location;
+    @BindView(R.id.edt_pincode)
+    EditText edt_pincode;
 
-
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.edt_location)
+    EditText edt_location;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rglocationtype)
     RadioGroup rglocationtype;
@@ -212,7 +211,7 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
                 edt_pickname.setText(locationnickname);
 
             }if(pincode != null){
-                txt_pincode.setText(pincode);
+                edt_pincode.setText(pincode);
 
             }
 
@@ -223,11 +222,11 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
 
 
 
-            txt_cityname.setText(CityName);
+            edt_cityname.setText(CityName);
             txt_cityname_title.setText(CityName);
             if(AddressLine != null && !AddressLine.isEmpty()){
                 txt_address.setText(AddressLine);
-                txt_location.setText(AddressLine);
+               edt_location.setText(AddressLine);
 
             }
 

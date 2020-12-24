@@ -76,11 +76,6 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
     @BindView(R.id.imgBack)
     ImageView imgBack;
 
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.txt_cityname)
-    TextView txt_cityname;
-
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_cityname_title)
     TextView txt_cityname_title;
@@ -98,16 +93,21 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
     Button btn_savethislocation;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.edt_cityname)
+    EditText edt_cityname;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.edt_pincode)
+    EditText edt_pincode;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.edt_location)
+    EditText edt_location;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_pickname)
     EditText edt_pickname;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.txt_pincode)
-    TextView txt_pincode;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.txt_location)
-    TextView txt_location;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rglocationtype)
@@ -189,10 +189,10 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
             userid = extras.getString("userid");
             locationnickname = extras.getString("nickname");
 
-            txt_cityname.setText(CityName);
+            edt_cityname.setText(CityName);
             txt_cityname_title.setText(CityName);
             txt_address.setText(AddressLine);
-            txt_pincode.setText(postalCode);
+            edt_pincode.setText(postalCode);
 
 
 
@@ -417,9 +417,9 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
                  street = address.getThoroughfare();
 
                  if(street != null){
-                     txt_location.setText(street);
+                     edt_location.setText(street);
                  }else if(subLocality != null ){
-                     txt_location.setText(subLocality);
+                     edt_location.setText(subLocality);
                  }
 
 

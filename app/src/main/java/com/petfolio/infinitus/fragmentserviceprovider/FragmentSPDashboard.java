@@ -1,4 +1,4 @@
-package com.petfolio.infinitus.serviceprovider;
+package com.petfolio.infinitus.fragmentserviceprovider;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -28,11 +28,13 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.fragmentdoctor.FragmentDoctorCompletedAppointment;
-import com.petfolio.infinitus.fragmentdoctor.FragmentDoctorMissedAppointment;
-import com.petfolio.infinitus.fragmentdoctor.FragmentDoctorNewAppointment;
+
+import com.petfolio.infinitus.fragmentserviceprovider.FragmentSPCompletedAppointment;
+import com.petfolio.infinitus.fragmentserviceprovider.FragmentSPMissedAppointment;
+import com.petfolio.infinitus.fragmentserviceprovider.FragmentSPNewAppointment;
 import com.petfolio.infinitus.requestpojo.SPCheckStatusRequest;
 import com.petfolio.infinitus.responsepojo.SPCheckStatusResponse;
+import com.petfolio.infinitus.serviceprovider.ServiceProviderRegisterFormActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -119,9 +121,9 @@ public class FragmentSPDashboard extends Fragment  {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager(),3);
-        adapter.addFragment(new FragmentDoctorNewAppointment(), "New");
-        adapter.addFragment(new FragmentDoctorCompletedAppointment(), "Completed");
-        adapter.addFragment(new FragmentDoctorMissedAppointment(), "Missed");
+        adapter.addFragment(new FragmentSPNewAppointment(), "New");
+        adapter.addFragment(new FragmentSPCompletedAppointment(), "Completed");
+        adapter.addFragment(new FragmentSPMissedAppointment(), "Missed");
         viewPager.setAdapter(adapter);
     }
 
@@ -187,10 +189,10 @@ public class FragmentSPDashboard extends Fragment  {
 
                             }else{
                                 isDoctorStatus = true;
-                                Log.w(TAG,"isDoctorStatus else : "+isDoctorStatus);
+                                Log.w(TAG,"isSPStatus else : "+isDoctorStatus);
 
                                 if(isDoctorStatus){
-                                    //setupViewPager(viewPager);
+                                    setupViewPager(viewPager);
                                     tablayout.setupWithViewPager(viewPager);
                                 }
 

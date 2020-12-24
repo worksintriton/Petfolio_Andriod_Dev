@@ -216,8 +216,8 @@
                 android:layout_marginEnd="30dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/txt_pincode"
+                <EditText
+                    android:id="@+id/edt_pincode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -225,13 +225,14 @@
                     android:fontFamily="@font/futuramediumbt"
                     android:hint="@string/pincode"
                     android:padding="15dp"
-                    android:textColor="@color/green"
+                    android:inputType="number"
+                    android:textColor="@color/new_light_green"
                     android:textColorHint="@color/dark_gray"
                     android:textSize="14sp"
                     tools:ignore="Autofill,LabelFor,TextFields" />
 
-                <TextView
-                    android:id="@+id/txt_location"
+                <EditText
+                    android:id="@+id/edt_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -239,15 +240,14 @@
                     android:fontFamily="@font/futuramediumbt"
                     android:hint="@string/location"
                     android:padding="15dp"
-                    android:textColor="@color/green"
+                    android:inputType="text"
+                    android:textColor="@color/new_light_green"
                     android:textColorHint="@color/dark_gray"
                     android:textSize="14sp"
-                    tools:ignore="Autofill,LabelFor,TextFields"
-                    android:maxLines="2"
-                    android:ellipsize="end"/>
+                    tools:ignore="Autofill,LabelFor,TextFields" />
 
-                <TextView
-                    android:id="@+id/txt_cityname"
+                <EditText
+                    android:id="@+id/edt_cityname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -255,9 +255,10 @@
                     android:fontFamily="@font/futuramediumbt"
                     android:hint="@string/city_name"
                     android:padding="15dp"
-                    android:textColor="@color/green"
+                    android:textColor="@color/new_light_green"
                     android:textColorHint="@color/dark_gray"
                     android:textSize="14sp"
+                    android:inputType="text"
                     tools:ignore="Autofill,LabelFor,TextFields" />
 
                 <EditText
@@ -359,7 +360,7 @@
             android:text="@string/save_changes"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
     </LinearLayout>
 

@@ -554,11 +554,10 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        startPayment();
-                        /*if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
-
+                       // startPayment();
+                        if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
                             petAppointmentCreateResponseCall();
-                        }*/
+                        }
 
                     }else{
                         showErrorLoading(response.body().getMessage());

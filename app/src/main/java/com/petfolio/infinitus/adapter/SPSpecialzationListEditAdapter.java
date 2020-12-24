@@ -56,29 +56,7 @@ public class SPSpecialzationListEditAdapter extends  RecyclerView.Adapter<Recycl
         currentItem = spSpecialzationList.get(position);
         holder.txt_spectypes.setText(currentItem.getSpecialization());
 
-        /*holder.chx_spectypes.setChecked(currentItem.isSelected());
 
-        holder.chx_spectypes.setTag(position);
-
-        holder.chx_spectypes.setOnClickListener(v -> {
-
-            Integer pos = (Integer) holder.chx_spectypes.getTag();
-
-            if (spSpecialzationList.get(pos).isSelected())
-            {
-                spSpecialzationList.get(pos).setSelected(false);
-
-                spSpecialzationChckedListener.onItemSPSpecialzationUnCheck(pos,spSpecialzationList.get(pos).getSpecialization());
-
-            }
-
-            else
-            {
-                spSpecialzationChckedListener.onItemSPSpecialzationCheck(pos,spSpecialzationList.get(pos).getSpecialization(),spSpecialzationList);
-
-            }
-
-        });*/
         for(int i=0;i<spSpecialzationListEdit.size();i++){
             if(null!=spSpecialzationListEdit && null!=currentItem.getSpecialization() && spSpecialzationListEdit.get(i).getBus_spec_list().equalsIgnoreCase(currentItem.getSpecialization().trim())){
                 holder.chx_spectypes.setChecked(true);
@@ -126,9 +104,7 @@ public class SPSpecialzationListEditAdapter extends  RecyclerView.Adapter<Recycl
 
         public ViewHolderOne(View itemView) {
             super(itemView);
-
             txt_spectypes = itemView.findViewById(R.id.spec_name);
-
             chx_spectypes = itemView.findViewById(R.id.checkbox_specialization_type);
 
 

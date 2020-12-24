@@ -141,7 +141,8 @@
                         android:maxLines="1"
                         android:text="@string/edit_no_underline"
                         android:textColor="@color/new_light_green"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:visibility="gone"/>
 
                 </RelativeLayout>
 
