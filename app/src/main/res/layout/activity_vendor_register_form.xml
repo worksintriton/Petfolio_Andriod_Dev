@@ -58,14 +58,14 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/edt_firstname"
+                    android:id="@+id/edt_business_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/rectangle_corner"
                     android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     android:fontFamily="@font/futuramediumbt"
-                    android:hint="@string/first_name"
+                    android:hint="@string/business_name"
                     android:inputType="text"
                     android:maxLength="25"
                     android:padding="15dp"
@@ -75,15 +75,15 @@
                     tools:ignore="Autofill,LabelFor" />
 
                 <EditText
-                    android:id="@+id/edt_lastname"
+                    android:id="@+id/edt_business_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/rectangle_corner"
                     android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     android:fontFamily="@font/futuramediumbt"
-                    android:hint="@string/last_name"
-                    android:inputType="text"
+                    android:hint="@string/businessemail"
+                    android:inputType="textEmailAddress"
                     android:maxLength="25"
                     android:padding="15dp"
                     android:textColor="@color/new_light_green"
@@ -92,13 +92,13 @@
                     tools:ignore="Autofill,LabelFor" />
 
                 <EditText
-                    android:id="@+id/edt_email"
+                    android:id="@+id/edt_business"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/rectangle_corner"
                     android:fontFamily="@font/futuramediumbt"
-                    android:hint="@string/email"
+                    android:hint="@string/business"
                     android:inputType="text"
                     android:padding="15dp"
                     android:textColor="@color/new_light_green"
@@ -144,6 +144,287 @@
 
                 </LinearLayout>
 
+                <EditText
+                    android:id="@+id/edt_business_registration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/rectangle_corner"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    android:fontFamily="@font/futuramediumbt"
+                    android:hint="@string/businessregistrationdetails"
+                    android:inputType="text"
+                    android:maxLength="25"
+                    android:padding="15dp"
+                    android:textColor="@color/new_light_green"
+                    android:textColorHint="@color/dark_gray"
+                    android:textSize="14sp"
+                    tools:ignore="Autofill,LabelFor" />
+
+
+                  <!--Service gallery images-->
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/futuramediumbt"
+                android:padding="2dp"
+                android:text="@string/upload_gallery_images"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview_service_pics"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:cardBackgroundColor="@color/light_green"
+                app:cardCornerRadius="10dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/rl_service_gallery_image">
+
+                    <TextView
+                        android:id="@+id/txt_service_pic_choose"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rectangle_corner"
+                        android:focusable="false"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:hint="@string/choose"
+                        android:inputType="none"
+                        android:padding="15dp"
+                        android:textColorHint="@color/dark_gray"
+                        android:textSize="14sp"
+                        tools:ignore="Autofill,LabelFor" />
+
+                    <ImageView
+                        android:id="@+id/img_service_pic"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:contentDescription="@string/image"
+                        android:src="@drawable/add"  />
+
+
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcylr_choosen_service_img"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content" />
+
+            <!--Photo ID proof-->
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/futuramediumbt"
+                android:padding="2dp"
+                android:text="@string/photoid_proof"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cdvw_photo_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                app:cardBackgroundColor="@color/light_green"
+                app:cardCornerRadius="10dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:id="@+id/rl_photoid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rectangle_corner"
+                        android:focusable="false"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:hint="@string/choose"
+                        android:inputType="none"
+                        android:padding="15dp"
+                        android:textColorHint="@color/dark_gray"
+                        android:textSize="14sp"
+                        tools:ignore="Autofill,LabelFor" />
+
+                    <ImageView
+                        android:id="@+id/img_photoid"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:contentDescription="@string/image"
+                        android:src="@drawable/add" />
+
+
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcylr_choosen_photoid_img"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content" />
+
+            <!--Govt ID proof-->
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/futuramediumbt"
+                android:padding="2dp"
+                android:text="@string/govt_proof"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cdvw_govt_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:cardBackgroundColor="@color/light_green"
+                app:cardCornerRadius="10dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rl_govtid">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rectangle_corner"
+                        android:focusable="false"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:hint="@string/choose"
+                        android:inputType="none"
+                        android:padding="15dp"
+                        android:textColorHint="@color/dark_gray"
+                        android:textSize="14sp"
+                        tools:ignore="Autofill,LabelFor" />
+
+                    <ImageView
+                        android:id="@+id/img_govtid"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:contentDescription="@string/image"
+                        android:src="@drawable/add" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcylr_choosen_govtid_images"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content" />
+
+            <!--Certificate-->
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/futuramediumbt"
+                android:padding="2dp"
+                android:text="@string/certificates_if_any"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cdvw_certificate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:cardBackgroundColor="@color/light_green"
+                app:cardCornerRadius="10dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rl_certificates">
+
+                    <TextView
+                        android:id="@+id/edtx_clinic_certif_choose"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rectangle_corner"
+                        android:focusable="false"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:hint="@string/choose"
+                        android:inputType="none"
+                        android:padding="15dp"
+                        android:textColorHint="@color/dark_gray"
+                        android:textSize="14sp"
+                        tools:ignore="Autofill,LabelFor" />
+
+                    <ImageView
+                        android:id="@+id/img_cert"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:contentDescription="@string/image"
+                        android:src="@drawable/add"  />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcylr_choosen_certificate_img"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content" />
+
+
+
+
+
 
             </LinearLayout>
 
@@ -161,12 +442,12 @@
         android:layout_marginBottom="20dp">
 
         <Button
-            android:id="@+id/btn_continue"
+            android:id="@+id/btn_submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/new_rounded_corner_btn"
             android:fontFamily="@font/futuramediumbt"
-            android:text="Continue"
+            android:text="@string/submit"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="18sp"

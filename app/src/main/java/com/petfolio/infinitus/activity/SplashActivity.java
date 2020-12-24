@@ -56,6 +56,10 @@ public class SplashActivity extends AppCompatActivity {
                         startActivity(new Intent(SplashActivity.this, ServiceProviderDashboardActivity.class));
                         finish();
 
+                    }else if(usertype.equalsIgnoreCase("3")){
+                      /*  startActivity(new Intent(SplashActivity.this, ServiceProviderDashboardActivity.class));
+                        finish();
+*/
                     }else if(usertype.equalsIgnoreCase("4")){
                         startActivity(new Intent(SplashActivity.this, DoctorDashboardActivity.class));
                         finish();

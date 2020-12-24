@@ -1,4 +1,4 @@
-package com.petfolio.infinitus.fragmentserviceprovider;
+package com.petfolio.infinitus.fragmentvendor;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -78,13 +78,13 @@ import butterknife.ButterKnife;
 
 
 
-public class ServiceProviderShopFragment extends Fragment implements Serializable, OnMapReadyCallback,
+public class VendorShopFragment extends Fragment implements Serializable, OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener,View.OnClickListener  {
 
 
-    private String TAG = "ServiceProviderShopFragment";
+    private String TAG = "VendorShopFragment";
     int currentPage = 0;
     Timer timer;
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
@@ -185,7 +185,7 @@ public class ServiceProviderShopFragment extends Fragment implements Serializabl
     private Dialog alertDialog;
 
 
-    public ServiceProviderShopFragment() {
+    public VendorShopFragment() {
         // Required empty public constructor
     }
 
@@ -201,7 +201,7 @@ public class ServiceProviderShopFragment extends Fragment implements Serializabl
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.w(TAG,"onCreateView-->");
-        View view = inflater.inflate(R.layout.fragment_shop_serviceprovider, container, false);
+        View view = inflater.inflate(R.layout.fragment_shop_vendor, container, false);
         preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         ButterKnife.bind(this, view);
         mContext = getActivity();

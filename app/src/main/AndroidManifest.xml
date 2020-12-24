@@ -237,43 +237,56 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
-          <activity android:name=".serviceprovider.ServiceProviderRegisterFormActivity"
+        <activity
+            android:name=".serviceprovider.ServiceProviderRegisterFormActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
-        <activity android:name=".serviceprovider.ServiceProviderEditFormActivity"
+        <activity
+            android:name=".serviceprovider.ServiceProviderEditFormActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
-        <activity android:name=".serviceprovider.ServiceProviderDashboardActivity"
+        <activity
+            android:name=".serviceprovider.ServiceProviderDashboardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
-        <activity android:name=".serviceprovider.SPMyCalendarActivity"
+        <activity
+            android:name=".serviceprovider.SPMyCalendarActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
-        <activity android:name=".serviceprovider.SP_Holiday_Activity"
+        <activity
+            android:name=".serviceprovider.SP_Holiday_Activity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
-        <activity android:name=".serviceprovider.SPMyCalendarTimeActivity"
+        <activity
+            android:name=".serviceprovider.SPMyCalendarTimeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
 
         <activity
             android:name=".vendor.VendorRegisterFormActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
+        
+        <activity
+            android:name=".vendor.VendorDashboardActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+
+
+        <activity android:name=".vendor.VendorAddProductsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+
+
 
         <receiver
             android:name=".receiver.SmsBroadcastListener"
@@ -309,13 +322,10 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
-        </provider>
-
-        <!-- Add your API key here -->
+        </provider> <!-- Add your API key here -->
         <meta-data
             android:name="com.razorpay.ApiKey"
             android:value="rzp_test_zioohqmxDjJJtd" />
-        <!--key secret : TRnYEvdt2Tcrh3DHXsJjBhCH-->
     </application>
 
 </manifest>
