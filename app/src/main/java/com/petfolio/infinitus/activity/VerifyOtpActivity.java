@@ -94,7 +94,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
 
     private boolean isOTPExpired ;
     private String userid;
-    private String token;
+    private String token = "";
     private String firstname,lastname,useremail;
 
 
@@ -254,7 +254,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
 
          if (can_proceed) {
              if (new ConnectionDetector(VerifyOtpActivity.this).isNetworkAvailable(VerifyOtpActivity.this)) {
-                 if(token != null && userid != null){
+                 if(userid != null){
                     fBTokenUpdateResponseCall();
                 }
 

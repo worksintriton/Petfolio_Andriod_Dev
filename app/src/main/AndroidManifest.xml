@@ -268,12 +268,13 @@
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
 
-        <activity
-            android:name=".vendor.VendorRegisterFormActivity"
+
+       <!-- <activity
+            android:name=".vendor.VenderRegisterFormActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
-        
+            android:windowSoftInputMode="adjustPan" />-->
+
         <activity
             android:name=".vendor.VendorDashboardActivity"
             android:screenOrientation="portrait"
