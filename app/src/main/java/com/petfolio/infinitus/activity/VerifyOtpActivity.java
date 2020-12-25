@@ -253,6 +253,8 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
          }
 
          if (can_proceed) {
+             Toasty.success(getApplicationContext(),"userid : "+userid+ "fbtoken : "+token, Toast.LENGTH_SHORT, true).show();
+
              if (new ConnectionDetector(VerifyOtpActivity.this).isNetworkAvailable(VerifyOtpActivity.this)) {
                  if(userid != null){
                     fBTokenUpdateResponseCall();
@@ -366,6 +368,8 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
 
                 Log.w(TAG,"NotificationUpdateResponse"+ "--->" + new Gson().toJson(response.body()));
 
+                Toasty.success(getApplicationContext(),"NotificationUpdateResponse : "+new Gson().toJson(response.body()), Toast.LENGTH_SHORT, true).show();
+
                 avi_indicator.smoothToHide();
 
                 if (response.body() != null) {
@@ -426,7 +430,9 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
             public void onFailure(@NonNull Call<FBTokenUpdateResponse> call, @NonNull Throwable t) {
 
                 avi_indicator.smoothToHide();
-                Log.w(TAG,"FBTokenUpdateResponse"+"--->" + t.getMessage());
+                Log.w(TAG,"FBTokenUpdateResponse flr"+"--->" + t.getMessage());
+                Toasty.success(getApplicationContext(),"NotificationUpdateResponse flr : "+t.getMessage(), Toast.LENGTH_SHORT, true).show();
+
             }
         });
 
@@ -436,6 +442,8 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
         fbTokenUpdateRequest.setUser_id(userid);
         fbTokenUpdateRequest.setFb_token(token);
         Log.w(TAG,"fbTokenUpdateRequest"+ "--->" + new Gson().toJson(fbTokenUpdateRequest));
+        Toasty.success(getApplicationContext(),"fbTokenUpdateRequest : "+new Gson().toJson(fbTokenUpdateRequest), Toast.LENGTH_SHORT, true).show();
+
         return fbTokenUpdateRequest;
     }
 }
