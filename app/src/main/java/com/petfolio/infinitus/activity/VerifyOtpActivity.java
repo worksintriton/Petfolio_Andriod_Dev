@@ -39,6 +39,8 @@ import com.petfolio.infinitus.serviceprovider.ServiceProviderRegisterFormActivit
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
+import com.petfolio.infinitus.vendor.VenderRegisterFormActivity;
+import com.petfolio.infinitus.vendor.VendorDashboardActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.concurrent.TimeUnit;
@@ -253,7 +255,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
          }
 
          if (can_proceed) {
-             Toasty.success(getApplicationContext(),"userid : "+userid+ "fbtoken : "+token, Toast.LENGTH_SHORT, true).show();
+           //  Toasty.success(getApplicationContext(),"userid : "+userid+ "fbtoken : "+token, Toast.LENGTH_SHORT, true).show();
 
              if (new ConnectionDetector(VerifyOtpActivity.this).isNetworkAvailable(VerifyOtpActivity.this)) {
                  if(userid != null){
@@ -368,7 +370,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
 
                 Log.w(TAG,"NotificationUpdateResponse"+ "--->" + new Gson().toJson(response.body()));
 
-                Toasty.success(getApplicationContext(),"NotificationUpdateResponse : "+new Gson().toJson(response.body()), Toast.LENGTH_SHORT, true).show();
+            //    Toasty.success(getApplicationContext(),"NotificationUpdateResponse : "+new Gson().toJson(response.body()), Toast.LENGTH_SHORT, true).show();
 
                 avi_indicator.smoothToHide();
 
@@ -396,6 +398,9 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                                 }else if(usertype == 2 ){
                                     startActivity(new Intent(VerifyOtpActivity.this, ServiceProviderDashboardActivity.class));
 
+                                }else if(usertype == 3 ){
+                                    startActivity(new Intent(VerifyOtpActivity.this, VendorDashboardActivity.class));
+
                                 }else if(usertype == 4 ){
                                     startActivity(new Intent(VerifyOtpActivity.this, DoctorDashboardActivity.class));
 
@@ -409,6 +414,9 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
 
                                 }else if(usertype == 2 ){
                                     startActivity(new Intent(VerifyOtpActivity.this, ServiceProviderRegisterFormActivity.class));
+
+                                }else if(usertype == 3 ){
+                                    startActivity(new Intent(VerifyOtpActivity.this, VenderRegisterFormActivity.class));
 
                                 }else if(usertype == 4 ){
                                     startActivity(new Intent(VerifyOtpActivity.this, DoctorBusinessInfoActivity.class));
@@ -431,7 +439,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
 
                 avi_indicator.smoothToHide();
                 Log.w(TAG,"FBTokenUpdateResponse flr"+"--->" + t.getMessage());
-                Toasty.success(getApplicationContext(),"NotificationUpdateResponse flr : "+t.getMessage(), Toast.LENGTH_SHORT, true).show();
+                //Toasty.success(getApplicationContext(),"NotificationUpdateResponse flr : "+t.getMessage(), Toast.LENGTH_SHORT, true).show();
 
             }
         });
@@ -442,7 +450,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
         fbTokenUpdateRequest.setUser_id(userid);
         fbTokenUpdateRequest.setFb_token(token);
         Log.w(TAG,"fbTokenUpdateRequest"+ "--->" + new Gson().toJson(fbTokenUpdateRequest));
-        Toasty.success(getApplicationContext(),"fbTokenUpdateRequest : "+new Gson().toJson(fbTokenUpdateRequest), Toast.LENGTH_SHORT, true).show();
+      //  Toasty.success(getApplicationContext(),"fbTokenUpdateRequest : "+new Gson().toJson(fbTokenUpdateRequest), Toast.LENGTH_SHORT, true).show();
 
         return fbTokenUpdateRequest;
     }

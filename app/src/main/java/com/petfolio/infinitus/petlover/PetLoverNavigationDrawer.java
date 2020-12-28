@@ -153,7 +153,7 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
                     // For rest of the options we just show a toast on click
                     case R.id.nav_item_two:
-
+                        gotoMyOrders();
                         return true;
 
                     case R.id.nav_item_three:
@@ -410,6 +410,10 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
     private void gotoMyAppointments() {
         startActivity(new Intent(getApplicationContext(),PetMyappointmentsActivity.class));
+
+    }
+    private void gotoMyOrders() {
+        startActivity(new Intent(getApplicationContext(),PetMyOrdrersActivity.class));
 
     }
 

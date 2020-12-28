@@ -4,7 +4,6 @@ import java.util.List;
 
 public class VendorRegisterFormCreateRequest {
 
-
     /**
      * user_id : 123123213
      * user_name : Mohammed imthiyas
@@ -22,9 +21,9 @@ public class VendorRegisterFormCreateRequest {
      * mobile_type : Admin
      * profile_status : true
      * profile_verification_status : Not Verified
-     * bussiness_loc : 12.0
+     * bussiness_loc : Moolakadai
      * bussiness_lat : 80.0
-     * bussiness_long : Moolakadai
+     * bussiness_long : 12.0
      * delete_status : true
      */
 
@@ -66,7 +65,6 @@ public class VendorRegisterFormCreateRequest {
 
     public void setUser_name(String user_name) {
         this.user_name = user_name;
-
     }
 
 
@@ -126,7 +124,6 @@ public class VendorRegisterFormCreateRequest {
 
     public void setBusiness_reg(String business_reg) {
         this.business_reg = business_reg;
-
     }
 
 
@@ -136,9 +133,7 @@ public class VendorRegisterFormCreateRequest {
 
     public void setPhoto_id_proof(String photo_id_proof) {
         this.photo_id_proof = photo_id_proof;
-
     }
-
 
     public String getGovt_id_proof() {
         return govt_id_proof;
@@ -148,7 +143,6 @@ public class VendorRegisterFormCreateRequest {
         this.govt_id_proof = govt_id_proof;
 
     }
-
 
     public String getDate_and_time() {
         return date_and_time;
@@ -169,7 +163,6 @@ public class VendorRegisterFormCreateRequest {
 
     }
 
-
     public boolean isProfile_status() {
         return profile_status;
     }
@@ -179,16 +172,13 @@ public class VendorRegisterFormCreateRequest {
 
     }
 
-
     public String getProfile_verification_status() {
         return profile_verification_status;
     }
 
     public void setProfile_verification_status(String profile_verification_status) {
         this.profile_verification_status = profile_verification_status;
-
     }
-
 
     public String getBussiness_loc() {
         return bussiness_loc;
@@ -196,9 +186,7 @@ public class VendorRegisterFormCreateRequest {
 
     public void setBussiness_loc(String bussiness_loc) {
         this.bussiness_loc = bussiness_loc;
-
     }
-
 
     public double getBussiness_lat() {
         return bussiness_lat;
@@ -206,9 +194,7 @@ public class VendorRegisterFormCreateRequest {
 
     public void setBussiness_lat(double bussiness_lat) {
         this.bussiness_lat = bussiness_lat;
-
     }
-
 
     public double getBussiness_long() {
         return bussiness_long;
@@ -216,7 +202,6 @@ public class VendorRegisterFormCreateRequest {
 
     public void setBussiness_long(double bussiness_long) {
         this.bussiness_long = bussiness_long;
-
     }
 
     public boolean isDelete_status() {
@@ -225,7 +210,6 @@ public class VendorRegisterFormCreateRequest {
 
     public void setDelete_status(boolean delete_status) {
         this.delete_status = delete_status;
-
     }
 
 
@@ -248,7 +232,7 @@ public class VendorRegisterFormCreateRequest {
 
     }
 
-    public static class BussinessGalleryBean  {
+    public static class BussinessGalleryBean {
         /**
          * bussiness_gallery : http://mysalveo.com/api/uploads/images.jpeg
          */
@@ -266,13 +250,12 @@ public class VendorRegisterFormCreateRequest {
         }
     }
 
-    public static class CertifiBean {
+    public static class CertifiBean{
         /**
          * certifi : http://mysalveo.com/api/uploads/images.jpeg
          */
 
         private String certifi;
-
 
         public String getCertifi() {
             return certifi;

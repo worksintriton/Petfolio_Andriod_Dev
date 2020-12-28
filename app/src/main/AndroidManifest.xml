@@ -162,6 +162,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".petlover.PetMyOrdrersActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+
         <activity
             android:name=".activity.location.ManageAddressActivity"
             android:screenOrientation="portrait"
@@ -269,11 +277,11 @@
             android:windowSoftInputMode="adjustPan" />
 
 
-       <!-- <activity
+        <activity
             android:name=".vendor.VenderRegisterFormActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />-->
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".vendor.VendorDashboardActivity"

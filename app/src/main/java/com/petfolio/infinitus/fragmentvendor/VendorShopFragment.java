@@ -53,10 +53,17 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.tabs.TabLayout;
 
+import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.location.PickUpLocationAllowActivity;
 import com.petfolio.infinitus.activity.location.PickUpLocationDenyActivity;
 
+import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.fragmentserviceprovider.FragmentSPCompletedAppointment;
+import com.petfolio.infinitus.fragmentserviceprovider.FragmentSPDashboard;
+import com.petfolio.infinitus.fragmentserviceprovider.FragmentSPMissedAppointment;
+import com.petfolio.infinitus.fragmentserviceprovider.FragmentSPNewAppointment;
 import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 
 import com.petfolio.infinitus.service.GPSTracker;
@@ -120,6 +127,10 @@ public class VendorShopFragment extends Fragment implements Serializable, OnMapR
     @BindView(R.id.tabDots)
     TabLayout tabLayout;
 
+
+
+
+
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_search)
     EditText edt_search;
@@ -166,6 +177,7 @@ public class VendorShopFragment extends Fragment implements Serializable, OnMapR
 
 
 
+    private boolean isDoctorStatus = false;
 
 
 
@@ -625,5 +637,10 @@ public class VendorShopFragment extends Fragment implements Serializable, OnMapR
 
         }
     }
+
+
+
+
+
 
 }
