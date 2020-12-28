@@ -1,5 +1,6 @@
 package com.petfolio.infinitus.petlover;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,8 +16,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.fragmentpetlover.myorders.FragmentPetMissedOrders;
 import com.petfolio.infinitus.fragmentpetlover.myorders.FragmentPetCompletedOrders;
+import com.petfolio.infinitus.fragmentpetlover.myorders.FragmentPetMissedOrders;
 import com.petfolio.infinitus.fragmentpetlover.myorders.FragmentPetNewOrders;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -25,13 +26,15 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class PetMyOrdrersActivity extends AppCompatActivity {
-    private String TAG = "PetMyOrdrersActivity";
+public class PetCartActivity extends AppCompatActivity {
+    private String TAG = "PetCartActivity";
 
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.bottom_navigation_view)
     BottomNavigationView bottom_navigation_view;
 
@@ -45,8 +48,7 @@ public class PetMyOrdrersActivity extends AppCompatActivity {
 
     String fromactivity;
 
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
+
     private ImageView img_back;
 
 
@@ -57,13 +59,11 @@ public class PetMyOrdrersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pet_myorders);
+        setContentView(R.layout.activity_pet_cart);
         Log.w(TAG,"onCreate");
-        tabLayout = findViewById(R.id.tablayout);
-        viewPager = findViewById(R.id.viewPager);
+
         img_back = findViewById(R.id.img_back);
-        setupViewPager(viewPager);
-        tabLayout.setupWithViewPager(viewPager);
+
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,7 +83,7 @@ public class PetMyOrdrersActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(PetMyOrdrersActivity.this, PetLoverDashboardActivity.class);
+        Intent i = new Intent(PetCartActivity.this, PetLoverDashboardActivity.class);
         startActivity(i);
         finish();
     }

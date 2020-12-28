@@ -159,6 +159,7 @@
     <string name="current">Current</string>
     <string name="cancelled">Cancelled</string>
     <string name="service_cost">Cost</string>
+    <string name="cart">Cart</string>
 
     <string name="petlovers">Petlovers</string>
     <string name="prescriptiondetails">Prescription Details</string>
@@ -240,7 +241,7 @@
     <string name="location_services">location services</string>
     <string name="deny">Deny</string>
     <string name="allow">Allow</string>
-    <string name="colon1">:</string>
+    <string name="colon1">.</string>
     <string name="sub_services">Sub Services</string>
     <string name="producttitle">producttitle</string>
     <string name="product_price">Product price</string>
@@ -331,6 +332,13 @@
     <string name="businessemail">Business email</string>
     <string name="businessregistrationdetails">Business registration details</string>
     <string name="upload_gallery_images">Upload gallery images</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="discountamount">Discount Amount</string>
+    <string name="shippingamount">Shipping Amount</string>
+    <string name="totalamount">Total Amount</string>
+    <string name="proceedtobuy">Proceed to Buy</string>
+    <string name="coupon_applied">coupon applied</string>
+    <string name="coupon">Coupon </string>
 
 
 </resources>

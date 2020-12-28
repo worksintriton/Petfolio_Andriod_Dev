@@ -51,8 +51,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentPetCurrentOrders extends Fragment implements OnAppointmentCancel, View.OnClickListener {
-    private String TAG = "FragmentPetCurrentOrders";
+public class FragmentPetNewOrders extends Fragment implements OnAppointmentCancel, View.OnClickListener {
+    private String TAG = "FragmentPetNewOrders";
 
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
@@ -75,7 +75,7 @@ public class FragmentPetCurrentOrders extends Fragment implements OnAppointmentC
     private Dialog dialog;
 
 
-    public FragmentPetCurrentOrders() {
+    public FragmentPetNewOrders() {
 
     }
 

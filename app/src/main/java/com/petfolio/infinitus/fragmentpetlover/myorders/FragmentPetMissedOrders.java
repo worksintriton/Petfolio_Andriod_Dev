@@ -39,8 +39,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentPetCancelledOrders extends Fragment implements View.OnClickListener {
-    private String TAG = "FragmentPetCancelledOrders";
+public class FragmentPetMissedOrders extends Fragment implements View.OnClickListener {
+    private String TAG = "FragmentPetMissedOrders";
 
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
@@ -70,7 +70,7 @@ public class FragmentPetCancelledOrders extends Fragment implements View.OnClick
     private String userid;
 
 
-    public FragmentPetCancelledOrders() {
+    public FragmentPetMissedOrders() {
 
     }
 
