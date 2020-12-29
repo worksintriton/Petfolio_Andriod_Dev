@@ -238,18 +238,19 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
+
         <Button
             android:id="@+id/btn_bookappointment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_corner_button"
-            android:text="@string/book_appointment"
-            android:textColor="@color/whiteFive"
-            android:textSize="18sp"
-            android:textAllCaps="false"
-            android:fontFamily="@font/futuramediumbt"
             android:layout_margin="20dp"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/new_rounded_corner_btn"
+            android:fontFamily="@font/futuramediumbt"
+            android:text="@string/continues"
+            android:textAllCaps="false"
+            android:textColor="@color/whiteFive"
+            android:textSize="18sp" />
     </LinearLayout>
 
     <com.wang.avi.AVLoadingIndicatorView

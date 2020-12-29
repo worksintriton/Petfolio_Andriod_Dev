@@ -53,6 +53,8 @@ public class PetAppointmentCreateRequest {
     private String service_name;
     private String service_amount;
 
+
+
     public String getService_name() {
         return service_name;
     }

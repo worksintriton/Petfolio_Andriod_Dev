@@ -162,19 +162,22 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".petlover.PetMyOrdrersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".petlover.PetCartActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
 
+
+        <activity android:name=".petlover.ProductDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".activity.location.ManageAddressActivity"
@@ -281,27 +284,21 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
-
         <activity
             android:name=".vendor.VenderRegisterFormActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".vendor.VendorDashboardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
-
-        <activity android:name=".vendor.VendorAddProductsActivity"
+        <activity
+            android:name=".vendor.VendorAddProductsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
-
 
         <receiver
             android:name=".receiver.SmsBroadcastListener"

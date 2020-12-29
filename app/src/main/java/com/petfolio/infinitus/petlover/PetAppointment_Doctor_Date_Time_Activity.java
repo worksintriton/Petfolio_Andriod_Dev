@@ -73,7 +73,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity implements OnItemSelectedTime, PaymentResultListener {
+public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity implements OnItemSelectedTime {
 
     private Button btn_bookappointment;
     private CheckBox chat, video;
@@ -99,12 +99,13 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
     private SharedPreferences preferences;
 
     RelativeLayout sub_layer1;
-    String selectedTimeSlot = "";
+
 
     private String _id = "";
     private String Doctor_name ="";
     private String Doctor_email_id ="";
     private String Doctor_ava_Date = "";
+    private String selectedTimeSlot = "";
     private String Comm_type_chat = "";
     private String Comm_type_video = "";
 
@@ -137,6 +138,10 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
     private String selectedAppointmentType;
     private double totalamount =1;
     private String Payment_id;
+    private String fromactivity;
+    private String fromto;
+    private int amount;
+    private String communicationtype;
 
 
     @Override
@@ -172,12 +177,20 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
+            doctorid = extras.getString("doctorid");
+            fromactivity = extras.getString("fromactivity");
+            fromto = extras.getString("fromto");
+            Log.w(TAG,"fromactivity : "+fromactivity+ " fromto : "+fromto);
+
 
             petid = extras.getString("petid");
             allergies = extras.getString("allergies");
             probleminfo = extras.getString("probleminfo");
             doctorid = extras.getString("doctorid");
             selectedAppointmentType = extras.getString("selectedAppointmentType");
+
+            amount = extras.getInt("amount");
+            communicationtype = extras.getString("communicationtype");
 
             Log.w(TAG,"petid-->"+petid+ "allergies : "+allergies+"  probleminfo : "+probleminfo+" selectedAppointmentType : "+selectedAppointmentType);
 
@@ -523,11 +536,32 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent intent = new Intent(getApplicationContext(), BookAppointmentActivity.class);
-        intent.putExtra("doctorid",doctorid);
+        if(fromto != null && fromto.equalsIgnoreCase("direct")){
+            callDirections("4");
+        } else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetCareFragment")){
+            Intent intent = new Intent(getApplicationContext(),DoctorClinicDetailsActivity.class);
+            intent.putExtra("doctorid",doctorid);
+            intent.putExtra("fromactivity",fromactivity);
+            startActivity(intent);
+
+        }else{
+            Intent intent = new Intent(getApplicationContext(), DoctorClinicDetailsActivity.class);
+            intent.putExtra("doctorid",doctorid);
+            startActivity(intent);
+            finish();
+
+        }
+
+
+    }
+    public void callDirections(String tag){
+        Intent intent = new Intent(getApplicationContext(),PetLoverDashboardActivity.class);
+        intent.putExtra("tag",tag);
         startActivity(intent);
         finish();
+
     }
+
 
 
     @Override
@@ -554,10 +588,20 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                       // startPayment();
+                        Intent intent = new Intent(PetAppointment_Doctor_Date_Time_Activity.this,BookAppointmentActivity.class);
+                        intent.putExtra("doctorid",doctorid);
+                        intent.putExtra("fromactivity",fromactivity);
+                        intent.putExtra("Doctor_ava_Date",Doctor_ava_Date);
+                        intent.putExtra("selectedTimeSlot",selectedTimeSlot);
+                        intent.putExtra("amount",amount);
+                        intent.putExtra("communicationtype",communicationtype);
+                        intent.putExtra("fromto",fromto);
+                        startActivity(intent);
+
+                     /*  // startPayment();
                         if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
                             petAppointmentCreateResponseCall();
-                        }
+                        }*/
 
                     }else{
                         showErrorLoading(response.body().getMessage());
@@ -591,195 +635,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         Log.w(TAG,"appointmentCheckRequest"+ "--->" + new Gson().toJson(appointmentCheckRequest));
         return appointmentCheckRequest;
     }
-    private void petAppointmentCreateResponseCall() {
-        avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();
-        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<PetAppointmentCreateResponse> call = ApiService.petAppointmentCreateResponseCall(RestUtils.getContentType(),petAppointmentCreateRequest());
-
-        Log.w(TAG,"url  :%s"+ call.request().url().toString());
-
-        call.enqueue(new Callback<PetAppointmentCreateResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<PetAppointmentCreateResponse> call, @NonNull Response<PetAppointmentCreateResponse> response) {
-                avi_indicator.smoothToHide();
-                Log.w(TAG,"PetDoctorAvailableTimeResponse"+ "--->" + new Gson().toJson(response.body()));
-
-
-                if (response.body() != null) {
-                    if(response.body().getCode() == 200){
-                        if(response.body().getMessage() != null){
-                            showSuceessLoading(response.body().getMessage());
-
-                        }
 
 
 
-                    }
-                    else{
-                        if(response.body().getMessage() != null){
-                            showErrorLoading(response.body().getMessage());
-
-                        }
-
-
-                    }
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<PetAppointmentCreateResponse> call, @NonNull Throwable t) {
-                avi_indicator.smoothToHide();
-
-                Log.w(TAG,"PetDoctorAvailableTimeResponseflr"+"--->" + t.getMessage());
-            }
-        });
-
-    }
-    private PetAppointmentCreateRequest petAppointmentCreateRequest() {
-
-        /*
-         * doctor_id : 5fb62a1924583828f10f8731
-         * booking_date : 19/11/2020
-         * booking_time : 12:22 pm
-         * booking_date_time : 19/11/2020 12:22 pm
-         * communication_type :
-         * video_id : http://vidoe.com
-         * user_id : 5fb6162a211fce241eaf53a9
-         * pet_id : 5fb38ea334f6014ea9013d30
-         * problem_info : problem info
-         * doc_attched : [{"file":"http://google.pdf"}]
-         * doc_feedback : doc feedback
-         * doc_rate : 5
-         * user_feedback : user feedback
-         * user_rate : 4.5
-         * display_date : 19/11/2020 01:00 PM
-         * server_date_time : 09/12/2020 03:00 PM
-         * payment_id : 1234567890
-         * payment_method : Card
-         * appointment_types : Normal
-         * allergies : this is
-         * amount : 400
-         */
-        List<PetAppointmentCreateRequest.DocAttchedBean> doc_attched = new ArrayList<>();
-
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
-        String currentDateandTime24hrs = simpleDateFormat.format(new Date());
-        String currenttime = currentDateandTime24hrs.substring(currentDateandTime24hrs.indexOf(' ') + 1);
-        String currentdate =  currentDateandTime24hrs.substring(0, currentDateandTime24hrs.indexOf(' '));
-
-        PetAppointmentCreateRequest petAppointmentCreateRequest = new PetAppointmentCreateRequest();
-        petAppointmentCreateRequest.setDoctor_id(doctorid);
-        petAppointmentCreateRequest.setBooking_date(Doctor_ava_Date);
-        petAppointmentCreateRequest.setBooking_time(selectedTimeSlot);
-        petAppointmentCreateRequest.setBooking_date_time(Doctor_ava_Date+" "+selectedTimeSlot);
-        petAppointmentCreateRequest.setCommunication_type("");
-        petAppointmentCreateRequest.setVideo_id("");
-        petAppointmentCreateRequest.setUser_id(userid);
-        petAppointmentCreateRequest.setPet_id(petid);
-        petAppointmentCreateRequest.setProblem_info(probleminfo);
-        petAppointmentCreateRequest.setDoc_attched(doc_attched);
-        petAppointmentCreateRequest.setDoc_feedback("");
-        petAppointmentCreateRequest.setDoc_rate(0);
-        petAppointmentCreateRequest.setUser_feedback("");
-        petAppointmentCreateRequest.setUser_rate(0);
-        petAppointmentCreateRequest.setDisplay_date("");
-        petAppointmentCreateRequest.setServer_date_time("");
-        petAppointmentCreateRequest.setPayment_id("");
-        petAppointmentCreateRequest.setPayment_method("");
-        petAppointmentCreateRequest.setAppointment_types(selectedAppointmentType);
-        petAppointmentCreateRequest.setAllergies(allergies);
-        petAppointmentCreateRequest.setAmount(0);
-        petAppointmentCreateRequest.setMobile_type("Android");
-        petAppointmentCreateRequest.setService_name("");
-        petAppointmentCreateRequest.setService_amount("");
-        Log.w(TAG,"petAppointmentCreateRequest"+ "--->" + new Gson().toJson(petAppointmentCreateRequest));
-        return petAppointmentCreateRequest;
-    }
-    public void showSuceessLoading(String errormesage){
-        alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage(errormesage);
-        alertDialogBuilder.setPositiveButton("ok",
-                (arg0, arg1) -> hideLoadingSuccess());
-
-
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
-    public void hideLoadingSuccess() {
-        try {
-            Intent intent = new Intent(PetAppointment_Doctor_Date_Time_Activity.this, PetLoverDashboardActivity.class);
-            startActivity(intent);
-            alertDialog.dismiss();
-
-        } catch (Exception ignored) {
-
-        }
-    }
-
-
-    public void startPayment() {
-        /*
-          You need to pass current activity in order to let Razorpay create CheckoutActivity
-         */
-        final Activity activity = this;
-
-        final Checkout co = new Checkout();
-
-        Double d = totalamount;
-        int amout = d.intValue();
-
-
-        Integer totalamout = amout*100;
-
-        try {
-            JSONObject options = new JSONObject();
-            options.put("name", "PetFolio");
-            options.put("description", userid);
-            //You can omit the image option to fetch the image from dashboard
-            options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
-            options.put("currency", "INR");
-            options.put("amount", totalamout);
-
-
-            co.open(activity, options);
-        } catch (Exception e) {
-            Log.w(TAG,"Error in payment: " + e.getMessage());
-
-            e.printStackTrace();
-        }
-    }
-    @Override
-    public void onPaymentSuccess(String razorpayPaymentID) {
-        try {
-            Payment_id = razorpayPaymentID;
-
-            Log.w(TAG, "Payment Successful: " + razorpayPaymentID);
-            Toasty.success(getApplicationContext(), "Payment Successful. View your booking details in upcoming appointments.", Toast.LENGTH_SHORT, true).show();
-
-
-            if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
-                petAppointmentCreateResponseCall();
-            }
-
-
-
-
-        } catch (Exception e) {
-            Log.w(TAG, "Exception in onPaymentSuccess", e);
-        }
-    }
-    @Override
-    public void onPaymentError(int code, String response) {
-        try {
-            Log.w(TAG,  "Payment failed: " + code + " " + response);
-            Toasty.error(getApplicationContext(), "Payment failed. Please try again with another payment method..", Toast.LENGTH_SHORT, true).show();
-
-        } catch (Exception e) {
-            Log.w(TAG, "Exception in onPaymentError", e);
-        }
-    }
 }

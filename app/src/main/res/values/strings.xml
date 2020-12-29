@@ -130,6 +130,7 @@
     <string name="rating_value">4.5</string>
     <string name="specialization_dummy">Lorem ipsum ,dolor sit amet, consectetur , adipiscing</string>
     <string name="desc">Description</string>
+    <string name="product_desc">Product Description</string>
     <string name="desc_dummy">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
     <string name="appointment">Appointment</string>
     <string name="or">Or</string>
@@ -160,6 +161,8 @@
     <string name="cancelled">Cancelled</string>
     <string name="service_cost">Cost</string>
     <string name="cart">Cart</string>
+    <string name="product_details">Product Details</string>
+
 
     <string name="petlovers">Petlovers</string>
     <string name="prescriptiondetails">Prescription Details</string>
@@ -339,6 +342,9 @@
     <string name="proceedtobuy">Proceed to Buy</string>
     <string name="coupon_applied">coupon applied</string>
     <string name="coupon">Coupon </string>
+    <string name="percentage_discount">20 % discount </string>
+    <string name="product_quantity">Product Quantity : 437</string>
+    <string name="related_products">Related Products</string>
 
 
 </resources>

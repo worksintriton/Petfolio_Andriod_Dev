@@ -105,6 +105,25 @@ public class DoctorDetailsResponse {
         }
 
         private int review_count;
+        private int amount;
+        private String communication_type;
+
+        public int getAmount() {
+            return amount;
+        }
+
+        public void setAmount(int amount) {
+            this.amount = amount;
+        }
+
+        public String getCommunication_type() {
+            return communication_type;
+        }
+
+        public void setCommunication_type(String communication_type) {
+            this.communication_type = communication_type;
+        }
+
         private List<EducationDetailsBean> education_details;
         private List<ExperienceDetailsBean> experience_details;
         private List<SpecializationBean> specialization;

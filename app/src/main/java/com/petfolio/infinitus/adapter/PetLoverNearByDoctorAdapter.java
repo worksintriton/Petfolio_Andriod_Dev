@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.petlover.BookAppointmentActivity;
 import com.petfolio.infinitus.petlover.DoctorClinicDetailsActivity;
+import com.petfolio.infinitus.petlover.PetAppointment_Doctor_Date_Time_Activity;
 import com.petfolio.infinitus.responsepojo.DoctorSearchResponse;
 
 import java.util.List;
@@ -117,12 +118,13 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(context, BookAppointmentActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent intent = new Intent(context, PetAppointment_Doctor_Date_Time_Activity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("doctorid",doctorDetailsResponseList.get(position).getUser_id());
                 intent.putExtra("doctorname",doctorDetailsResponseList.get(position).getDoctor_name());
                 intent.putExtra("reviewcount",doctorDetailsResponseList.get(position).getReview_count());
                 intent.putExtra("starcount",doctorDetailsResponseList.get(position).getStar_count());
                 intent.putExtra("distance",doctorDetailsResponseList.get(position).getDistance());
+                intent.putExtra("fromactivity", "PetCareFragment");
                 intent.putExtra("fromto", "direct");
                 Log.w(TAG,"doctorid :"+doctorDetailsResponseList.get(position).getUser_id());
                 context.startActivity(intent);

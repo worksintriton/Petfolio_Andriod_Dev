@@ -4,15 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
@@ -25,9 +28,7 @@ import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -41,44 +42,61 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
 
     private static  String TAG = "DoctorClinicDetailsActivity";
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.pager)
     ViewPager viewPager;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tabDots)
     TabLayout tabLayout;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_clinicname)
     TextView txt_clinicname;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_drname)
     TextView txt_drname;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_dr_specialization)
     TextView txt_dr_specialization;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_review_count)
     TextView txt_review_count;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_star_rating)
     TextView txt_star_rating;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_place)
     TextView txt_place;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_distance)
     TextView txt_distance;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_dr_desc)
     TextView txt_dr_desc;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_book_now)
     Button btn_book_now;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
     ImageView img_back;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.bottom_navigation_view)
+    BottomNavigationView bottom_navigation_view;
 
 
 
@@ -97,6 +115,9 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
     private String distance;
     private String ClinicLocationname;
     private String fromactivity;
+    private int amount;
+    private String communicationtype;
+    private String active_tag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,15 +136,19 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
             fromactivity = extras.getString("fromactivity");
 
 
-            Log.w(TAG,"Bundle "+" doctorid : "+doctorid);
+
+
+            Log.w(TAG,"Bundle "+" doctorid : "+doctorid+ "fromactivity : "+fromactivity);
         }
 
         btn_book_now.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DoctorClinicDetailsActivity.this,BookAppointmentActivity.class);
+                Intent intent = new Intent(DoctorClinicDetailsActivity.this,PetAppointment_Doctor_Date_Time_Activity.class);
                 intent.putExtra("doctorid",doctorid);
                 intent.putExtra("fromactivity",fromactivity);
+                intent.putExtra("amount",amount);
+                intent.putExtra("communicationtype",communicationtype);
                 startActivity(intent);
             }
         });
@@ -143,6 +168,47 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
             }
 
         }
+
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("PetCareFragment")){
+            bottom_navigation_view.setSelectedItemId(R.id.care);
+        }
+
+
+        bottom_navigation_view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.home:
+                        //active = homeFragment;
+                        active_tag = "1";
+                        callDirections(active_tag);
+                        break;
+                    case R.id.shop:
+                        active_tag = "2";
+                        callDirections(active_tag);
+                        break;
+
+
+                    case R.id.services:
+                        active_tag = "3";
+                        callDirections(active_tag);
+                        break;
+                    case R.id.care:
+                        active_tag = "4";
+                        callDirections(active_tag);
+                        break;
+                    case R.id.community:
+                        active_tag = "5";
+                        callDirections(active_tag);
+                        break;
+
+                }
+                return true;
+            }
+
+        });
+
 
 
     }
@@ -170,6 +236,8 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
                         doctorname = response.body().getData().getDr_name();
                         reviewcount  = response.body().getData().getReview_count();
                         starcount =  response.body().getData().getStar_count();
+                        amount =  response.body().getData().getAmount();
+                        communicationtype =  response.body().getData().getCommunication_type();
 
                         ClinicLocationname = response.body().getData().getClinic_loc();
 
