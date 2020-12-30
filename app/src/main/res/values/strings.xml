@@ -65,6 +65,7 @@
     <string name="editserviceproviderbusiness">Edit Service Provider Business</string>
     <string name="image">Image</string>
     <string name="clinic_name">Clinic name</string>
+    <string name="charge_amount">Service charge amount</string>
     <string name="business_name">Business name</string>
     <string name="education">Education</string>
     <string name="year_of_completion">Year of Completion</string>

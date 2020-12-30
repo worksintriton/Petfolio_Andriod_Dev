@@ -29,6 +29,7 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.doctor.DoctorBusinessInfoActivity;
+import com.petfolio.infinitus.doctor.DoctorMyCalendarNewUserActivity;
 import com.petfolio.infinitus.requestpojo.DoctorCheckStatusRequest;
 import com.petfolio.infinitus.responsepojo.DoctorCheckStatusResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
@@ -172,6 +173,10 @@ public class FragmentDoctorDashboard extends Fragment  {
                     if(response.body().getCode() == 200){
                         if(!response.body().getData().isProfile_status()){
                             Intent intent = new Intent(mContext, DoctorBusinessInfoActivity.class);
+                            intent.putExtra("fromactivity",TAG);
+                            startActivity(intent);
+                        }else if(!response.body().getData().isCalender_status()){
+                            Intent intent = new Intent(mContext, DoctorMyCalendarNewUserActivity.class);
                             intent.putExtra("fromactivity",TAG);
                             startActivity(intent);
                         }else{
