@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
 
@@ -22,7 +21,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -40,13 +38,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.github.siyamed.shapeimageview.CircularImageView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
-import com.petfolio.infinitus.activity.location.ManageAddressActivity;
-import com.petfolio.infinitus.adapter.PetLoverNearByDoctorAdapter;
 import com.petfolio.infinitus.adapter.PetLoverSOSAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.interfaces.SoSCallListener;
@@ -62,6 +57,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PetLoverNavigationDrawer extends AppCompatActivity implements View.OnClickListener, SoSCallListener {
 
+
+    private String TAG ="PetLoverNavigationDrawer";
+
     private DrawerLayout drawerLayout;
     LayoutInflater inflater;
     View view, header;
@@ -73,7 +71,7 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
     ImageView drawerImg;
     CircleImageView nav_header_imageView;
     FrameLayout frameLayout;
-    TextView nav_header_profilename, nav_header_emailid,nav_header_edit;
+    TextView nav_header_profilename, nav_header_emailid;
     //SessionManager session;
     String name, image_url, phoneNo;
 
@@ -83,7 +81,6 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
      public Menu menu;
 
 
-    private String TAG ="PetLoverNavigationDrawer";
 
 
     ProgressDialog progressDialog;
@@ -139,7 +136,51 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
         frameLayout = view.findViewById(R.id.base_container);
 
+
+         menu = navigationView.getMenu();
+
+
+
+        // Initializing Drawer Layout and ActionBarToggle
+        drawerLayout = view.findViewById(R.id.drawer_layout);
+        header = navigationView.getHeaderView(0);
+        nav_header_imageView = header.findViewById(R.id.nav_header_imageView);
+        nav_header_emailid = header.findViewById(R.id.nav_header_emailid);
+        nav_header_profilename = header.findViewById(R.id.nav_header_profilename);
+
+        Glide.with(this).load(R.drawable.profile).circleCrop().into(nav_header_imageView);
+
+        nav_header_emailid.setText(emailid);
+        nav_header_profilename.setText(name);
+
+        RelativeLayout llheader = header.findViewById(R.id.llheader);
+        llheader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class));
+            }
+        });
+
+        TextView nav_header_edit = header.findViewById(R.id.nav_header_edit);
+        nav_header_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),PetLoverEditProfileActivity.class));
+            }
+        });
+
+
+       /* if (!image_url.isEmpty()) {
+            Glide.with(this)
+                    .load(image_url)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .error(R.drawable.logo_white)
+                    .into(nav_header_imageView);
+        }*/
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 //Closing drawer on item click
@@ -182,47 +223,6 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
             }
         });
 
-         menu = navigationView.getMenu();
-
-
-
-        // Initializing Drawer Layout and ActionBarToggle
-        drawerLayout = view.findViewById(R.id.drawer_layout);
-        header = navigationView.getHeaderView(0);
-        nav_header_imageView = header.findViewById(R.id.nav_header_imageView);
-        nav_header_emailid = header.findViewById(R.id.nav_header_emailid);
-        nav_header_profilename = header.findViewById(R.id.nav_header_profilename);
-        nav_header_edit = header.findViewById(R.id.nav_header_edit);
-
-        Glide.with(this).load(R.drawable.profile).circleCrop().into(nav_header_imageView);
-
-        nav_header_emailid.setText(emailid);
-        nav_header_profilename.setText(name);
-
-        RelativeLayout llheader = header.findViewById(R.id.llheader);
-        llheader.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class));
-            }
-        });
-
-        nav_header_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),PetLoverEditProfileActivity.class));
-            }
-        });
-
-
-       /* if (!image_url.isEmpty()) {
-            Glide.with(this)
-                    .load(image_url)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true)
-                    .error(R.drawable.logo_white)
-                    .into(nav_header_imageView);
-        }*/
     }
 
 

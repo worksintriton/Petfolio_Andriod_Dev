@@ -83,6 +83,64 @@
                 android:orientation="vertical"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp">
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:id="@+id/txt_services"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/futuramediumbt"
+                            android:text="@string/services"
+                            android:textColor="@color/new_txt_color"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txt_seemore_services"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:drawablePadding="10dp"
+                            android:fontFamily="@font/futuramediumbt"
+                            android:gravity="end"
+                            android:text="@string/see_more"
+                            android:textColor="@color/missed_red_color"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rvservice"
+                        android:layout_marginTop="10dp"
+                        />
+
+                    <TextView
+                        android:layout_marginTop="20dp"
+                        android:id="@+id/txt_services_norecord"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:visibility="gone"/>
+
+
+
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -114,7 +172,7 @@
                             android:fontFamily="@font/futuramediumbt"
                             android:gravity="end"
                             android:text="@string/see_more"
-                            android:textColor="@color/new_txt_color"
+                            android:textColor="@color/missed_red_color"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -154,63 +212,6 @@
                         android:layout_marginTop="10dp">
 
                         <TextView
-                            android:id="@+id/txt_services"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/futuramediumbt"
-                            android:text="@string/services"
-                            android:textColor="@color/new_txt_color"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/txt_seemore_services"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:drawablePadding="10dp"
-                            android:fontFamily="@font/futuramediumbt"
-                            android:gravity="end"
-                            android:text="@string/see_more"
-                            android:textColor="@color/new_txt_color"
-                            android:textSize="16sp" />
-
-                    </LinearLayout>
-
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/rvservice"
-                        android:layout_marginTop="10dp"
-                        />
-
-                    <TextView
-                        android:layout_marginTop="20dp"
-                        android:id="@+id/txt_services_norecord"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"
-                        android:gravity="center"
-                        android:visibility="gone"/>
-
-
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp">
-
-                        <TextView
                             android:id="@+id/txt_products"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -230,7 +231,7 @@
                             android:fontFamily="@font/futuramediumbt"
                             android:gravity="end"
                             android:text="@string/see_more"
-                            android:textColor="@color/new_txt_color"
+                            android:textColor="@color/missed_red_color"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -257,6 +258,64 @@
 
                 </LinearLayout>
 
+                <!--Puppy Love-->
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:id="@+id/txt_puppy_love"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/futuramediumbt"
+                            android:text="@string/puppy_love"
+                            android:textColor="@color/new_txt_color"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txt_seemore_puppy_love"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:drawablePadding="10dp"
+                            android:fontFamily="@font/futuramediumbt"
+                            android:gravity="end"
+                            android:text="@string/see_more"
+                            android:textColor="@color/missed_red_color"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rvpuppy_love"
+                        android:layout_marginTop="10dp"
+                        />
+
+                    <TextView
+                        android:layout_marginTop="20dp"
+                        android:id="@+id/txt_no_puppy_love"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:visibility="gone"/>
+
+
+
+                </LinearLayout>
 
             </LinearLayout>
             <View

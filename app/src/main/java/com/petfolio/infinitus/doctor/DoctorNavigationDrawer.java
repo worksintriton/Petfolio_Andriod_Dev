@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
+import com.petfolio.infinitus.petlover.PetLoverEditProfileActivity;
+import com.petfolio.infinitus.petlover.PetLoverProfileScreenActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 //import com.petfolio.infinitus.sessionmanager.SessionManager;
 
@@ -40,48 +43,41 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DoctorNavigationDrawer extends AppCompatActivity implements View.OnClickListener {
 
+    private String TAG ="NavigationDrawer";
+
     public NavigationView navigationView;
     private DrawerLayout drawerLayout;
     LayoutInflater inflater;
     View view, header;
     Toolbar toolbar;
 
-    // Make sure to be using android.support.v7.app.ActionBarDrawerToggle version.
-    // The android.support.v4.app.ActionBarDrawerToggle has been deprecated.
-    private ActionBarDrawerToggle drawerToggle;
+
     ImageView drawerImg;
     CircleImageView nav_header_imageView;
-    TextView nav_header_profilename, nav_header_emailid,nav_header_edit;
+    TextView nav_header_profilename, nav_header_emailid;
 
     FrameLayout frameLayout;
-    TextView header_title, nav_header_textView;
+
     //SessionManager session;
     String name, image_url, phoneNo;
-    private Integer jockey_id;
-   // private APIInterface apiInterface;
-   // private AppliedJockeyResponse appliedJockeyResponse;
-    ProgressDialog pDialog;
 
-     public TextView tvWelcomeName;
-     Button btnNotificationPatient;
-    public LinearLayout lladdfamilyheader;
+
+
      public Menu menu;
-     public MenuItem becomeajockey,jockeyoptions;
+
 
     BroadcastReceiver imgReceiver;
 
-    private String TAG ="NavigationDrawer";
 
 
-    ProgressDialog progressDialog;
+
 
 
 //    SessionManager session;
 
-    private double latitude, longitude;
-    private String addressLine = "";
 
-    String emailid = "",patientid = "";
+
+    String emailid = "";
     private SessionManager session;
 
 
@@ -120,15 +116,56 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
     }
 
     private void initUI(View view) {
-        pDialog = new ProgressDialog(DoctorNavigationDrawer.this);
-        pDialog.setMessage(DoctorNavigationDrawer.this.getString(R.string.please_wait));
-        pDialog.setIndeterminate(true);
-        pDialog.setCancelable(true);
+
         //Initializing NavigationView
         navigationView = view.findViewById(R.id.nav_view);
         navigationView.setItemIconTintList(null);
 
         frameLayout = view.findViewById(R.id.base_container);
+
+
+
+
+        menu = navigationView.getMenu();
+       // becomeajockey = menu.findItem(R.id.nav_item_seven);
+      //  jockeyoptions = menu.findItem(R.id.nav_item_eight);
+
+
+        // Initializing Drawer Layout and ActionBarToggle
+        drawerLayout = view.findViewById(R.id.drawer_layout);
+        header = navigationView.getHeaderView(0);
+        nav_header_imageView = header.findViewById(R.id.nav_header_imageView);
+        nav_header_emailid = header.findViewById(R.id.nav_header_emailid);
+        nav_header_profilename = header.findViewById(R.id.nav_header_profilename);
+        // Glide.with(this).load(image_url).into(nav_header_imageView);
+
+        nav_header_emailid.setText(emailid);
+        nav_header_profilename.setText(name);
+        RelativeLayout llheader = header.findViewById(R.id.llheader);
+        llheader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),DoctorProfileScreenActivity.class));
+            }
+        });
+
+        TextView nav_header_edit = header.findViewById(R.id.nav_header_edit);
+        nav_header_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), DoctorEditProfileActivity.class));
+            }
+        });
+
+
+       /* if (!image_url.isEmpty()) {
+            Glide.with(this)
+                    .load(image_url)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .error(R.drawable.logo_white)
+                    .into(nav_header_imageView);
+        }*/
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -172,34 +209,6 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
             }
         });
 
-
-
-        menu = navigationView.getMenu();
-       // becomeajockey = menu.findItem(R.id.nav_item_seven);
-      //  jockeyoptions = menu.findItem(R.id.nav_item_eight);
-
-
-        // Initializing Drawer Layout and ActionBarToggle
-        drawerLayout = view.findViewById(R.id.drawer_layout);
-        header = navigationView.getHeaderView(0);
-        nav_header_imageView = header.findViewById(R.id.nav_header_imageView);
-        nav_header_emailid = header.findViewById(R.id.nav_header_emailid);
-        nav_header_profilename = header.findViewById(R.id.nav_header_profilename);
-        nav_header_edit = header.findViewById(R.id.nav_header_edit);
-        // Glide.with(this).load(image_url).into(nav_header_imageView);
-
-        nav_header_emailid.setText(emailid);
-        nav_header_profilename.setText(name);
-
-
-       /* if (!image_url.isEmpty()) {
-            Glide.with(this)
-                    .load(image_url)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true)
-                    .error(R.drawable.logo_white)
-                    .into(nav_header_imageView);
-        }*/
     }
 
 

@@ -17,14 +17,12 @@ import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
-public class PetLoverProductsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private static final int TYPE_ONE = 1;
-    private static final int TYPE_LOADING = 5;
-    private  String TAG = "PetLoverProductsAdapter";
+public class PetLoverDashboardProductsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private  String TAG = "PetLoverDashboardProductsAdapter";
     private Context context;
     List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ProductsDetailsBean> productDetailsResponseList;
     PetLoverDashboardResponse.DataBean.DashboarddataBean.ProductsDetailsBean currentItem;
@@ -33,7 +31,7 @@ public class PetLoverProductsAdapter extends  RecyclerView.Adapter<RecyclerView.
 
 
 
-    public PetLoverProductsAdapter(Context context, List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ProductsDetailsBean> productDetailsResponseList, RecyclerView inbox_list, int size) {
+    public PetLoverDashboardProductsAdapter(Context context, List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ProductsDetailsBean> productDetailsResponseList, RecyclerView inbox_list, int size) {
         this.productDetailsResponseList = productDetailsResponseList;
         this.context = context;
         this.size = size;
@@ -43,7 +41,7 @@ public class PetLoverProductsAdapter extends  RecyclerView.Adapter<RecyclerView.
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_petloverproducts, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_petlover_dashboardproducts, parent, false);
         return new ViewHolderOne(view);
     }
 
@@ -57,12 +55,8 @@ public class PetLoverProductsAdapter extends  RecyclerView.Adapter<RecyclerView.
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
           currentItem = productDetailsResponseList.get(position);
-         /* Log.w(TAG,"Offervalue :"+currentItem.getProduct_offer_value());
-          holder.txt_products_title.setText(currentItem.getProduct_title());
-        //  holder.txt_products_price.setText(currentItem.getProduct_prices()+"");
-          holder.txt_products_offer.setText("  "+currentItem.getProduct_offer_value()+" % off");
-          holder.txt_star_rating.setText( productDetailsResponseList.get(position).getReview_count()+"");
-          holder.txt_review_count.setText( productDetailsResponseList.get(position).getReview_count()+"");*/
+          Log.w(TAG,"getImg_path :"+currentItem.getImg_path());
+
           if (currentItem.getImg_path() != null && !currentItem.getImg_path().isEmpty()) {
 
             Glide.with(context)
@@ -146,7 +140,6 @@ public class PetLoverProductsAdapter extends  RecyclerView.Adapter<RecyclerView.
     }
 
     class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_products_title,txt_products_price,txt_products_offer,txt_star_rating,txt_review_count;
         public LinearLayout ll_root;
         public ImageView img_products_image;
 
@@ -155,13 +148,10 @@ public class PetLoverProductsAdapter extends  RecyclerView.Adapter<RecyclerView.
 
         public ViewHolderOne(View itemView) {
             super(itemView);
-            txt_products_title = itemView.findViewById(R.id.txt_products_title);
-            txt_products_price = itemView.findViewById(R.id.txt_products_price);
-            txt_products_offer = itemView.findViewById(R.id.txt_products_offer);
+
             img_products_image = itemView.findViewById(R.id.img_products_image);
             ll_root = itemView.findViewById(R.id.ll_root);
-            txt_star_rating = itemView.findViewById(R.id.txt_star_rating);
-            txt_review_count = itemView.findViewById(R.id.txt_review_count);
+
 
 
 

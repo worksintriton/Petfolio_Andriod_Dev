@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -54,39 +55,51 @@ import retrofit2.Response;
 
 public class PetLoverProfileScreenActivity extends AppCompatActivity implements View.OnClickListener, PetDeleteListener {
     private  String TAG = "PetLoverProfileScreenActivity";
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
     ImageView img_back;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_usrname)
     TextView txt_usrname;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_mail)
     TextView txt_mail;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_phn_num)
     TextView txt_phn_num;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_manage_address)
     TextView txt_manage_address;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_change_password)
     TextView txt_change_password;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_pet)
     RecyclerView rv_pet;
 
-
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_no_records)
     TextView txt_no_records;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_logout)
     TextView txt_logout;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.ll_add)
     LinearLayout ll_add;
+
 
     private SessionManager session;
     String name,emailid,phoneNo,userid;
@@ -97,7 +110,7 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pet_lover_profile_screen);
+        setContentView(R.layout.activity_doctor_profile_screen);
         ButterKnife.bind(this);
 
         Log.w(TAG,"onCreate : ");

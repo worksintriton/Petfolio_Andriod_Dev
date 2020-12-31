@@ -52,6 +52,7 @@
     <string name="see_more">See more</string>
     <string name="services">Services</string>
     <string name="products">Products</string>
+    <string name="puppy_love">Puppy Love</string>
     <string name="specialization">Specialization</string>
     <string name="addyourservices">Add your services</string>
     <string name="turn_on_your_location_services">Turn on your location services</string>
@@ -246,6 +247,7 @@
     <string name="deny">Deny</string>
     <string name="allow">Allow</string>
     <string name="colon1">.</string>
+    <string name="colon">:</string>
     <string name="sub_services">Sub Services</string>
     <string name="producttitle">producttitle</string>
     <string name="product_price">Product price</string>
@@ -346,6 +348,7 @@
     <string name="percentage_discount">20 % discount </string>
     <string name="product_quantity">Product Quantity : 437</string>
     <string name="related_products">Related Products</string>
+    <string name="business_info">Business Info</string>
 
 
 </resources>

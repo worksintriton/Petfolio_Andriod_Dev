@@ -13,22 +13,22 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.responsepojo.DoctorDetailsByUserIdResponse;
 import com.petfolio.infinitus.responsepojo.DoctorDetailsResponse;
-import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 
 import java.util.List;
 
 
-public class ViewPagerClinicDetailsAdapter extends PagerAdapter {
+public class ViewPagerDoctorClinicDetailsAdapter extends PagerAdapter {
     private DoctorDetailsResponse.DataBean.ClinicPicBean currentItem;
-    List<DoctorDetailsResponse.DataBean.ClinicPicBean> doctorclinicdetailsResponseList;
+    List<DoctorDetailsByUserIdResponse.DataBean.ClinicPicBean> doctorclinicdetailsResponseList;
     private Context context;
     private LayoutInflater inflater;
     private View itemView;
 
-    private String TAG = "ViewPagerClinicDetailsAdapter";
+    private String TAG = "ViewPagerDoctorClinicDetailsAdapter";
 
-    public ViewPagerClinicDetailsAdapter(Context context, List<DoctorDetailsResponse.DataBean.ClinicPicBean> doctorclinicdetailsResponseList){
+    public ViewPagerDoctorClinicDetailsAdapter(Context context, List<DoctorDetailsByUserIdResponse.DataBean.ClinicPicBean> doctorclinicdetailsResponseList){
 
         this.context = context;
         this.doctorclinicdetailsResponseList = doctorclinicdetailsResponseList;

@@ -25,8 +25,8 @@
 
             <ImageView
                 android:id="@+id/img_doctors_image"
-                android:layout_width="105dp"
-                android:layout_height="100dp"
+                android:layout_width="130dp"
+                android:layout_height="90dp"
                 android:src="@drawable/services"
                 android:scaleType="fitXY"
                 android:contentDescription="@string/image" />
@@ -36,7 +36,7 @@
 
         <TextView
             android:id="@+id/txt_doctors_name"
-            android:layout_width="105dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:ellipsize="end"
@@ -48,7 +48,7 @@
 
         <TextView
             android:id="@+id/txt_doctors_specialization"
-            android:layout_width="105dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:ellipsize="end"

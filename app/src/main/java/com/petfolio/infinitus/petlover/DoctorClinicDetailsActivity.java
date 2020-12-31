@@ -316,7 +316,6 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
         Log.w(TAG,"doctorDetailsRequest"+ "--->" + new Gson().toJson(doctorDetailsRequest));
         return doctorDetailsRequest;
     }
-
     private void viewpageData(List<DoctorDetailsResponse.DataBean.ClinicPicBean> doctorclinicdetailsResponseList) {
         tabLayout.setupWithViewPager(viewPager, true);
 

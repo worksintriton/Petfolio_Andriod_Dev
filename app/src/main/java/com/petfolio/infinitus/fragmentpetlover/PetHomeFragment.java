@@ -59,13 +59,13 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.location.PickUpLocationAllowActivity;
 import com.petfolio.infinitus.activity.location.PickUpLocationDenyActivity;
+import com.petfolio.infinitus.adapter.PetLoverDashboardProductsAdapter;
+import com.petfolio.infinitus.adapter.PetLoverDashboardPubbyLoveAdapter;
 import com.petfolio.infinitus.adapter.PetLoverDoctorAdapter;
-import com.petfolio.infinitus.adapter.PetLoverProductsAdapter;
 import com.petfolio.infinitus.adapter.PetLoverServicesAdapter;
 import com.petfolio.infinitus.adapter.ViewPagerDashboardAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.petlover.DoctorClinicDetailsActivity;
 import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinitus.requestpojo.PetLoverDashboardRequest;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
@@ -99,45 +99,24 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
 
 
     private String TAG = "PetHomeFragment";
-
-
-
     int currentPage = 0;
     Timer timer;
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000;
 
-
-
-
-
-    String token = "";
-    String type ="";
-    String name = "",patientid = "";
-
-    static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     double latitude, longitude;
 
-    private Handler handler = new Handler();
-    Runnable runnable;
-    private TextView headertitle;
-
-
-
-
-
-
-
-
-    Dialog dialog;
     private String userid;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.pager)
     ViewPager viewPager;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tabDots)
     TabLayout tabLayout;
 
@@ -145,54 +124,77 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
     @BindView(R.id.rvdoctors)
     RecyclerView rvdoctors;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_doctors)
     TextView txt_doctors;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_seemore_doctors)
     TextView txt_seemore_doctors;
 
-
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rvservice)
     RecyclerView rvservice;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_services)
     TextView txt_services;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_seemore_services)
     TextView txt_seemore_services;
 
-    @BindView(R.id.rvproducts)
-    RecyclerView rvproducts;
 
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_products)
     TextView txt_products;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_seemore_products)
     TextView txt_seemore_products;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rvproducts)
+    RecyclerView rvproducts;
 
+    @SuppressLint("NonConstantResourceId")
    @BindView(R.id.txt_doctor_norecord)
     TextView txt_doctor_norecord;
+
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_puppy_love)
+    TextView txt_puppy_love;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_seemore_puppy_love)
+    TextView txt_seemore_puppy_love;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rvpuppy_love)
+    RecyclerView rvpuppy_love;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_no_puppy_love)
+    TextView txt_no_puppy_love;
 
 
     private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.BannerDetailsBean> listHomeBannerResponse;
     private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.DoctorDetailsBean> doctorDetailsResponseList;
     private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ServiceDetailsBean> serviceDetailsResponseList;
     private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ProductsDetailsBean> productDetailsResponseList;
+    private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.PuppyProductsDetailsBean> puppyProductsDetailsBeanList;
     private Dialog alertDialog;
 
     private String AddressLine;
-    private SharedPreferences preferences;
     private Context mContext;
 
     private static final int REQUEST_CHECK_SETTINGS_GPS = 0x1;
     private GoogleApiClient googleApiClient;
     Location mLastLocation;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    private GoogleMap mMap;
-    private GPSTracker gpsTracker;
     private SupportMapFragment mapFragment;
-    private AlertDialog.Builder alertDialogBuilder;
     private String title;
     private String doctornotavlmsg;
 
@@ -214,11 +216,11 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.w(TAG,"onCreateView-->");
         View view = inflater.inflate(R.layout.fragment_home_pet, container, false);
-        preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         ButterKnife.bind(this, view);
         mContext = getActivity();
 
-        gpsTracker = new GPSTracker(mContext);
+        GPSTracker gpsTracker = new GPSTracker(mContext);
 
         // SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         if (mapFragment == null) {
@@ -238,6 +240,8 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
         txt_seemore_services.setVisibility(View.GONE);
         txt_products.setVisibility(View.GONE);
         txt_seemore_products.setVisibility(View.GONE);
+        txt_puppy_love.setVisibility(View.GONE);
+        txt_seemore_puppy_love.setVisibility(View.GONE);
 
         SessionManager sessionManager = new SessionManager(mContext);
         HashMap<String, String> user = sessionManager.getProfileDetails();
@@ -246,6 +250,7 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
         txt_seemore_doctors.setOnClickListener(this);
         txt_seemore_services.setOnClickListener(this);
         txt_seemore_products.setOnClickListener(this);
+        txt_seemore_puppy_love.setOnClickListener(this);
 
         return view;
     }
@@ -264,6 +269,7 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
 
 
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -296,7 +302,7 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
                 break;
 
             case R.id.txt_seemore_products:
-                if(serviceDetailsResponseList.size()>0){
+                if(productDetailsResponseList.size()>0){
                     rvproducts.setVisibility(View.VISIBLE);
                     txt_products.setVisibility(View.VISIBLE);
                     setViewProductsSeeMore();
@@ -304,6 +310,18 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
                 else{
                     rvproducts.setVisibility(View.GONE);
                     txt_products.setVisibility(View.GONE);
+
+                }
+                break;
+                case R.id.txt_seemore_puppy_love:
+                if(puppyProductsDetailsBeanList.size()>0){
+                    rvpuppy_love.setVisibility(View.VISIBLE);
+                    txt_puppy_love.setVisibility(View.VISIBLE);
+                    setViewPuppyLoveSeeMore();
+                }
+                else{
+                    rvpuppy_love.setVisibility(View.GONE);
+                    txt_puppy_love.setVisibility(View.GONE);
 
                 }
                 break;
@@ -343,6 +361,8 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
                         txt_seemore_services.setVisibility(View.VISIBLE);
                         txt_products.setVisibility(View.VISIBLE);
                         txt_seemore_products.setVisibility(View.VISIBLE);
+                        txt_puppy_love.setVisibility(View.VISIBLE);
+                        txt_seemore_puppy_love.setVisibility(View.VISIBLE);
 
                         if (response.body().getData().getDashboarddata() != null) {
                             listHomeBannerResponse = response.body().getData().getDashboarddata().getBanner_details();
@@ -415,6 +435,23 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
                             }
 
                         }
+                        if (response.body().getData().getDashboarddata().getPuppy_Products_details() != null) {
+                            puppyProductsDetailsBeanList = response.body().getData().getDashboarddata().getPuppy_Products_details();
+                            Log.w(TAG, "puppyProductsDetailsBeanList Size" + puppyProductsDetailsBeanList.size());
+                            if (puppyProductsDetailsBeanList != null && puppyProductsDetailsBeanList.size()>0) {
+                                rvpuppy_love.setVisibility(View.VISIBLE);
+                                txt_puppy_love.setVisibility(View.VISIBLE);
+                                txt_no_puppy_love.setVisibility(View.GONE);
+                                setViewPuppyLove(puppyProductsDetailsBeanList);
+                            } else {
+                                rvpuppy_love.setVisibility(View.GONE);
+                                txt_puppy_love.setVisibility(View.GONE);
+                                txt_no_puppy_love.setVisibility(View.VISIBLE);
+                                txt_no_puppy_love.setText("No Puppies found");
+
+                            }
+
+                        }
                         if(response.body().getData().getLocationDetails() != null){
                             if(response.body().getData().getLocationDetails().isEmpty()){
                                 showLocationAlert();
@@ -452,7 +489,7 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
         rvproducts.setMotionEventSplittingEnabled(false);
         int size =3;
         rvproducts.setItemAnimator(new DefaultItemAnimator());
-        PetLoverProductsAdapter petLoverProductsAdapter = new PetLoverProductsAdapter(mContext, productDetailsResponseList, rvproducts, size);
+        PetLoverDashboardProductsAdapter petLoverProductsAdapter = new PetLoverDashboardProductsAdapter(mContext, productDetailsResponseList, rvproducts, size);
         rvproducts.setAdapter(petLoverProductsAdapter);
     }
     private void setViewProductsSeeMore() {
@@ -460,14 +497,31 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
         rvproducts.setMotionEventSplittingEnabled(false);
         int size = productDetailsResponseList.size();
         rvproducts.setItemAnimator(new DefaultItemAnimator());
-        PetLoverProductsAdapter petLoverProductsAdapter = new PetLoverProductsAdapter(mContext, productDetailsResponseList, rvproducts, size);
+        PetLoverDashboardProductsAdapter petLoverProductsAdapter = new PetLoverDashboardProductsAdapter(mContext, productDetailsResponseList, rvproducts, size);
         rvproducts.setAdapter(petLoverProductsAdapter);
+    }
+
+    private void setViewPuppyLove(List<PetLoverDashboardResponse.DataBean.DashboarddataBean.PuppyProductsDetailsBean> puppyProductsDetailsBeanList) {
+        rvpuppy_love.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+        rvpuppy_love.setMotionEventSplittingEnabled(false);
+        int size =3;
+        rvpuppy_love.setItemAnimator(new DefaultItemAnimator());
+        PetLoverDashboardPubbyLoveAdapter petLoverDashboardPubbyLoveAdapter = new PetLoverDashboardPubbyLoveAdapter(mContext, puppyProductsDetailsBeanList, rvpuppy_love, size);
+        rvpuppy_love.setAdapter(petLoverDashboardPubbyLoveAdapter);
+    }
+    private void setViewPuppyLoveSeeMore() {
+        rvpuppy_love.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+        rvpuppy_love.setMotionEventSplittingEnabled(false);
+        int size =puppyProductsDetailsBeanList.size();
+        rvpuppy_love.setItemAnimator(new DefaultItemAnimator());
+        PetLoverDashboardPubbyLoveAdapter petLoverDashboardPubbyLoveAdapter = new PetLoverDashboardPubbyLoveAdapter(mContext, puppyProductsDetailsBeanList, rvpuppy_love, size);
+        rvpuppy_love.setAdapter(petLoverDashboardPubbyLoveAdapter);
     }
 
     private void setViewServices(List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ServiceDetailsBean> serviceDetailsResponseList) {
         rvservice.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         rvservice.setMotionEventSplittingEnabled(false);
-        int size =3;
+        int size =4;
         rvservice.setItemAnimator(new DefaultItemAnimator());
         PetLoverServicesAdapter petLoverServicesAdapter = new PetLoverServicesAdapter(mContext, serviceDetailsResponseList, rvservice, size);
         rvservice.setAdapter(petLoverServicesAdapter);
@@ -811,7 +865,6 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
     @SuppressLint("LongLogTag")
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
 
 
     }
@@ -929,7 +982,7 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
     }
 
     public void showAlertDoctorNotAvlLoading(String errormesage){
-        alertDialogBuilder = new AlertDialog.Builder(mContext);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext);
         alertDialogBuilder.setMessage(errormesage);
         alertDialogBuilder.setPositiveButton("ok",
                 (arg0, arg1) -> hideLoadingDoctornotavl());

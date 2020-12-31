@@ -1,8 +1,4 @@
-package com.petfolio.infinitus.petlover;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+package com.petfolio.infinitus.doctor;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -15,6 +11,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
@@ -37,9 +37,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PetLoverEditProfileActivity extends AppCompatActivity implements View.OnClickListener{
+public class DoctorEditProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private String TAG = "PetLoverEditProfileActivity";
+    private String TAG = "DoctorEditProfileActivity";
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
@@ -115,7 +115,7 @@ public class PetLoverEditProfileActivity extends AppCompatActivity implements Vi
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(), PetLoverDashboardActivity.class));
+        startActivity(new Intent(getApplicationContext(),DoctorDashboardActivity.class));
         finish();
     }
 
@@ -135,7 +135,7 @@ public class PetLoverEditProfileActivity extends AppCompatActivity implements Vi
 
                     if (200 == response.body().getCode()) {
 
-                        Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
+                       Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
 
                         SessionManager sessionManager = new SessionManager(getApplicationContext());
                         sessionManager.setIsLogin(true);
@@ -149,7 +149,7 @@ public class PetLoverEditProfileActivity extends AppCompatActivity implements Vi
                                 userstatus
 
                         );
-                        Intent intent = new Intent(getApplicationContext(),PetLoverDashboardActivity.class);
+                        Intent intent = new Intent(getApplicationContext(),DoctorDashboardActivity.class);
                         startActivity(intent);
 
 
