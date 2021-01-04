@@ -11,6 +11,7 @@ public class SessionManager {
 
     public static final String KEY_FIRST_NAME = "firstname" ;
     public static final String KEY_LAST_NAME = "lastname";
+    public static final String KEY_PROFILE_IMAGE = "profileimage" ;
     String TAG = "SessionManager";
     SharedPreferences pref;
     SharedPreferences.Editor editor;
@@ -50,7 +51,7 @@ public class SessionManager {
 
 
     public void createLoginSession(String id, String firstname, String lastname, String useremail,String userphone,String usertype,
-                                 String userstatus) {
+                                 String userstatus,String profileimage) {
 
 
         editor.putBoolean(IS_LOGIN, true);
@@ -61,6 +62,7 @@ public class SessionManager {
         editor.putString(KEY_MOBILE, userphone);
         editor.putString(KEY_TYPE, usertype);
         editor.putString(KEY_PROFILE_STATUS, userstatus);
+        editor.putString(KEY_PROFILE_IMAGE, profileimage);
         Log.e(TAG, "................................>> session Login Details " + "KEY_ID" + id);
 
         editor.commit();
@@ -82,6 +84,7 @@ public class SessionManager {
         user.put(KEY_MOBILE, pref.getString(KEY_MOBILE, ""));
         user.put(KEY_TYPE, pref.getString(KEY_TYPE, ""));
         user.put(KEY_PROFILE_STATUS, pref.getString(KEY_PROFILE_STATUS, ""));
+        user.put(KEY_PROFILE_IMAGE, pref.getString(KEY_PROFILE_IMAGE, ""));
         return user;
     }
 

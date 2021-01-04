@@ -71,6 +71,7 @@ public class FBTokenUpdateResponse {
          * device_type :
          * mobile_type : Android
          * __v : 0
+         * profile_img
          */
 
         private String _id;
@@ -86,8 +87,16 @@ public class FBTokenUpdateResponse {
         private String device_id;
         private String device_type;
         private String mobile_type;
+        private String profile_img;
         private int __v;
 
+        public String getProfile_img() {
+            return profile_img;
+        }
+
+        public void setProfile_img(String profile_img) {
+            this.profile_img = profile_img;
+        }
 
         public String get_id() {
             return _id;

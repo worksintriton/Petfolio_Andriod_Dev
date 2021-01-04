@@ -85,6 +85,7 @@ public class DoctorDetailsByUserIdResponse {
          * updatedAt : 2020-12-30T10:45:24.521Z
          * createdAt : 2020-12-30T10:38:18.498Z
          * __v : 0
+         *  profile_img;
          */
 
         private String _id;
@@ -106,6 +107,8 @@ public class DoctorDetailsByUserIdResponse {
         private String updatedAt;
         private String createdAt;
         private int __v;
+
+
         private List<EducationDetailsBean> education_details;
         private List<ExperienceDetailsBean> experience_details;
         private List<SpecializationBean> specialization;

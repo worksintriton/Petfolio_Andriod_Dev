@@ -34,7 +34,8 @@ public class DoctorBusinessInfoUpdateRequest {
     private String clinic_loc;
     private double clinic_lat;
     private double clinic_long;
-    private String clinic_pic;
+
+
     private int profile_status;
     private String profile_verification_status;
     private String date_and_time;
@@ -42,6 +43,16 @@ public class DoctorBusinessInfoUpdateRequest {
     private List<ExperienceDetailsBean> experience_details;
     private List<SpecializationBean> specialization;
     private List<PetHandledBean> pet_handled;
+    private List<ClinicPicBean> clinic_pic;
+
+    public List<ClinicPicBean> getClinic_pic() {
+        return clinic_pic;
+    }
+
+    public void setClinic_pic(List<ClinicPicBean> clinic_pic) {
+        this.clinic_pic = clinic_pic;
+    }
+
     private List<CertificatePicBean> certificate_pic;
     private List<GovtIdPicBean> govt_id_pic;
     private List<PhotoIdPicBean> photo_id_pic;
@@ -124,14 +135,6 @@ public class DoctorBusinessInfoUpdateRequest {
     }
 
 
-    public String getClinic_pic() {
-        return clinic_pic;
-    }
-
-    public void setClinic_pic(String clinic_pic) {
-        this.clinic_pic = clinic_pic;
-
-    }
 
 
     public int getProfile_status() {
@@ -384,6 +387,19 @@ public class DoctorBusinessInfoUpdateRequest {
         public void setPhoto_id_pic(String photo_id_pic) {
             this.photo_id_pic = photo_id_pic;
 
+        }
+    }
+
+    public static class ClinicPicBean {
+        private String clinic_pic;
+
+
+        public String getClinic_pic() {
+            return clinic_pic;
+        }
+
+        public void setClinic_pic(String clinic_pic) {
+            this.clinic_pic = clinic_pic;
         }
     }
 }

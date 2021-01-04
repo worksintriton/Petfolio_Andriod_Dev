@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
@@ -36,6 +37,7 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.interfaces.PetDeleteListener;
 import com.petfolio.infinitus.petlover.AddYourPetOldUserActivity;
+import com.petfolio.infinitus.petlover.EditYourPetImageActivity;
 import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinitus.requestpojo.DoctorDetailsByUserIdRequest;
 import com.petfolio.infinitus.requestpojo.DoctorDetailsRequest;
@@ -72,6 +74,14 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
     ImageView img_back;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_profile)
+    ImageView img_profile;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_edit_image)
+    TextView txt_edit_image;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_usrname)
     TextView txt_usrname;
 
@@ -84,8 +94,13 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
     TextView txt_phn_num;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_edit_profile)
+    TextView txt_edit_profile;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_manage_address)
     TextView txt_manage_address;
+
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_change_password)
@@ -109,6 +124,10 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tabDots)
     TabLayout tabLayout;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_edit_doc_business_info)
+    TextView txt_edit_doc_business_info;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_dr_specialization)
@@ -138,6 +157,7 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
     Timer timer;
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000;
+    private String profileimage;
 
 
     @Override
@@ -156,11 +176,28 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
         emailid = user.get(SessionManager.KEY_EMAIL_ID);
         phoneNo = user.get(SessionManager.KEY_MOBILE);
         userid = user.get(SessionManager.KEY_ID);
+        profileimage = user.get(SessionManager.KEY_PROFILE_IMAGE);
+
+        Log.w(TAG,"session profileimage : "+profileimage);
 
 
         txt_usrname.setText(name);
         txt_mail.setText(emailid);
         txt_phn_num.setText(phoneNo);
+
+
+        if(profileimage != null && !profileimage.isEmpty()){
+            Glide.with(DoctorProfileScreenActivity.this)
+                    .load(profileimage)
+                    .into(img_profile);
+        }else{
+            Glide.with(DoctorProfileScreenActivity.this)
+                    .load(R.drawable.upload)
+                    .into(img_profile);
+
+        }
+
+
 
 
 
@@ -174,6 +211,9 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
         txt_manage_address.setOnClickListener(this);
         txt_change_password.setOnClickListener(this);
         txt_logout.setOnClickListener(this);
+        txt_edit_profile.setOnClickListener(this);
+        txt_edit_image.setOnClickListener(this);
+        txt_edit_doc_business_info.setOnClickListener(this);
 
 
     }
@@ -191,6 +231,15 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
         switch (v.getId()){
             case R.id.img_back:
                 onBackPressed();
+                break;
+                case R.id.txt_edit_profile:
+                startActivity(new Intent(getApplicationContext(), DoctorEditProfileActivity.class));
+                break;
+                case R.id.txt_edit_image:
+                startActivity(new Intent(getApplicationContext(), EditDoctorProfileImageActivity.class));
+                break;
+                case R.id.txt_edit_doc_business_info:
+                startActivity(new Intent(getApplicationContext(), EditDoctorBusinessInfoActivity.class));
                 break;
                 case R.id.txt_manage_address:
                     //gotoManageAddress();

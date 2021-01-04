@@ -72,6 +72,7 @@ public class DoctorEditProfileActivity extends AppCompatActivity implements View
 
     private String firstname,lastname,useremail,phonenumber,userid,usertype,userstatus;
     private Dialog alertDialog;
+    private String profileimage;
 
 
     @Override
@@ -92,6 +93,7 @@ public class DoctorEditProfileActivity extends AppCompatActivity implements View
         userid = user.get(SessionManager.KEY_ID);
         usertype = user.get(SessionManager.KEY_TYPE);
         userstatus = user.get(SessionManager.KEY_PROFILE_STATUS);
+        profileimage = user.get(SessionManager.KEY_PROFILE_IMAGE);
 
         if(firstname != null){
             edt_firstname.setText(firstname);
@@ -115,7 +117,7 @@ public class DoctorEditProfileActivity extends AppCompatActivity implements View
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(),DoctorDashboardActivity.class));
+       // startActivity(new Intent(getApplicationContext(),DoctorDashboardActivity.class));
         finish();
     }
 
@@ -146,7 +148,8 @@ public class DoctorEditProfileActivity extends AppCompatActivity implements View
                                 edt_email.getText().toString(),
                                 txt_phone.getText().toString(),
                                 String.valueOf(usertype),
-                                userstatus
+                                userstatus,
+                                profileimage
 
                         );
                         Intent intent = new Intent(getApplicationContext(),DoctorDashboardActivity.class);

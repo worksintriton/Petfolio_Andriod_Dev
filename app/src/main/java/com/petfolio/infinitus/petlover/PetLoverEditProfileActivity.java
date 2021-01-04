@@ -72,6 +72,7 @@ public class PetLoverEditProfileActivity extends AppCompatActivity implements Vi
 
     private String firstname,lastname,useremail,phonenumber,userid,usertype,userstatus;
     private Dialog alertDialog;
+    private String profileimage;
 
 
     @Override
@@ -92,6 +93,7 @@ public class PetLoverEditProfileActivity extends AppCompatActivity implements Vi
         userid = user.get(SessionManager.KEY_ID);
         usertype = user.get(SessionManager.KEY_TYPE);
         userstatus = user.get(SessionManager.KEY_PROFILE_STATUS);
+        profileimage = user.get(SessionManager.KEY_PROFILE_IMAGE);
 
         if(firstname != null){
             edt_firstname.setText(firstname);
@@ -146,7 +148,8 @@ public class PetLoverEditProfileActivity extends AppCompatActivity implements Vi
                                 edt_email.getText().toString(),
                                 txt_phone.getText().toString(),
                                 String.valueOf(usertype),
-                                userstatus
+                                userstatus,
+                                profileimage
 
                         );
                         Intent intent = new Intent(getApplicationContext(),PetLoverDashboardActivity.class);

@@ -62,6 +62,7 @@
 
 
     <string name="doctor_business_info_title">Doctor Business Info</string>
+    <string name="edit_doctor_business_info_title">Edit Doctor Business info</string>
     <string name="serviceproviderbusiness">Service Provider Business</string>
     <string name="editserviceproviderbusiness">Edit Service Provider Business</string>
     <string name="image">Image</string>
@@ -235,6 +236,7 @@
     <string name="choose_location">Choose Location</string>
     <string name="edit_address">Edit Address</string>
     <string name="add_your_pet">Add your Pet</string>
+    <string name="edit_profile_image">Edit Profile image</string>
     <string name="registeryourpet">Register your Pet</string>
 
     <string name="deletemsg">Are you sure you want to delete this location details?</string>

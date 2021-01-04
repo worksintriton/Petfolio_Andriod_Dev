@@ -368,7 +368,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onResponse(@NonNull Call<FBTokenUpdateResponse> call, @NonNull Response<FBTokenUpdateResponse> response) {
 
-                Log.w(TAG,"NotificationUpdateResponse"+ "--->" + new Gson().toJson(response.body()));
+                Log.w(TAG,"fBTokenUpdateResponseCall"+ "--->" + new Gson().toJson(response.body()));
 
             //    Toasty.success(getApplicationContext(),"NotificationUpdateResponse : "+new Gson().toJson(response.body()), Toast.LENGTH_SHORT, true).show();
 
@@ -386,7 +386,8 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                                 useremail,
                                 phonenumber,
                                 String.valueOf(usertype),
-                                userstatus
+                                userstatus,
+                                response.body().getData().getProfile_img()
 
                         );
 

@@ -278,8 +278,20 @@
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
 
+        <activity
+            android:name=".doctor.EditDoctorProfileImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".doctor.EditDoctorBusinessInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
 
 
+      <!--Service Provider-->
         <activity
             android:name=".serviceprovider.ServiceProviderRegisterFormActivity"
             android:screenOrientation="portrait"
