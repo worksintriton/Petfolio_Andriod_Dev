@@ -70,6 +70,8 @@ public class SPServiceListResponse {
         }
         private List<ServiceListBean> service_list;
         private List<SpecializationBean> Specialization;
+        private List<TimeBean> time;
+
 
 
         public List<ServiceListBean> getService_list() {
@@ -89,6 +91,13 @@ public class SPServiceListResponse {
         public void setSpecialization(List<SpecializationBean> Specialization) {
             this.Specialization = Specialization;
 
+        }
+        public List<TimeBean> getTime() {
+            return time;
+        }
+
+        public void setTime(List<TimeBean> time) {
+            this.time = time;
         }
 
         public static class ServiceListBean  {
@@ -131,5 +140,24 @@ public class SPServiceListResponse {
 
             }
         }
+
+        public static class TimeBean  {
+            /**
+             * time : 15 mins
+             */
+
+            private String time;
+
+
+            public String getTime() {
+                return time;
+            }
+
+            public void setTime(String time) {
+                this.time = time;
+
+            }
+        }
+
     }
 }

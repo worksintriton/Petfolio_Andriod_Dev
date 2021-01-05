@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
@@ -42,6 +43,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,6 +68,9 @@ public class FragmentDoctorDashboard extends Fragment  {
     private Context mContext;
     private String userid;
     private boolean isDoctorStatus = false;
+    private boolean isProfileUpdatedClose;
+
+    SessionManager session;
 
     public FragmentDoctorDashboard() {
         // Required empty public constructor
@@ -90,7 +95,7 @@ public class FragmentDoctorDashboard extends Fragment  {
         mContext = getActivity();
         avi_indicator.setVisibility(View.GONE);
 
-        SessionManager session = new SessionManager(mContext);
+         session = new SessionManager(mContext);
         HashMap<String, String> user = session.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
         Log.w(TAG,"userid : "+userid);
@@ -184,6 +189,12 @@ public class FragmentDoctorDashboard extends Fragment  {
                             if( profileVerificationStatus != null && profileVerificationStatus.equalsIgnoreCase("Not verified")){
                                 showProfileStatus(response.body().getMessage());
 
+                            }else if( profileVerificationStatus != null && profileVerificationStatus.equalsIgnoreCase("profile updated")){
+                                if(!session.isProfileUpdate()){
+                                    showProfileUpdateStatus(response.body().getMessage());
+
+                                }
+
                             }else{
                                 isDoctorStatus = true;
                                 Log.w(TAG,"isDoctorStatus else : "+isDoctorStatus);
@@ -244,6 +255,50 @@ public class FragmentDoctorDashboard extends Fragment  {
                 }
             });
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+    private void showProfileUpdateStatus(String message) {
+
+        try {
+
+            Dialog dialog = new Dialog(mContext);
+            dialog.setContentView(R.layout.alert_profile_update_layout);
+            dialog.setCancelable(false);
+            Button dialogButton = dialog.findViewById(R.id.btnDialogOk);
+            dialogButton.setText("Refresh");
+            TextView tvInternetNotConnected = dialog.findViewById(R.id.tvInternetNotConnected);
+            tvInternetNotConnected.setText(message);
+            ImageView img_close = dialog.findViewById(R.id.img_close);
+
+            dialogButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
+                        doctorCheckStatusResponseCall();
+                    }
+                    dialog.dismiss();
+
+                }
+            });
+
+            img_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    session.setIsProfileUpdate(true);
+                    isProfileUpdatedClose = true;
+                    dialog.dismiss();
+
+                }
+            });
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
 
         } catch (WindowManager.BadTokenException e) {

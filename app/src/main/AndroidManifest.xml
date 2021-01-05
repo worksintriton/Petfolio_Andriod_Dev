@@ -298,6 +298,16 @@
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".serviceprovider.SPEditProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".serviceprovider.SPProfileScreenActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".serviceprovider.ServiceProviderEditFormActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"

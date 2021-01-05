@@ -43,7 +43,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DoctorNavigationDrawer extends AppCompatActivity implements View.OnClickListener {
 
-    private String TAG ="NavigationDrawer";
+    private String TAG ="DoctorNavigationDrawer";
 
     public NavigationView navigationView;
     private DrawerLayout drawerLayout;
@@ -127,8 +127,6 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
 
 
         menu = navigationView.getMenu();
-       // becomeajockey = menu.findItem(R.id.nav_item_seven);
-      //  jockeyoptions = menu.findItem(R.id.nav_item_eight);
 
 
         // Initializing Drawer Layout and ActionBarToggle

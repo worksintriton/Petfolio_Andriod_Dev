@@ -31,6 +31,7 @@ public class SessionManager {
     public static final String KEY_ID = "id";
 
     public static final String KEEPLOGIN = "keeplogin";
+    public static final String KEEPPROFILEUPDATE = "keepprofileupdate";
 
 
 
@@ -111,6 +112,16 @@ public class SessionManager {
 
         return pref.getBoolean(KEEPLOGIN, false);
     }
+
+    public boolean isProfileUpdate() {
+        return pref.getBoolean(KEEPPROFILEUPDATE, false);
+    }
+
+    public void setIsProfileUpdate(boolean isProfileUpdate){
+        editor.putBoolean(KEEPPROFILEUPDATE,isProfileUpdate);
+        editor.apply();
+    }
+
 
 
 

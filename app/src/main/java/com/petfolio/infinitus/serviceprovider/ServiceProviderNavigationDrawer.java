@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -21,6 +22,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
 
+import com.petfolio.infinitus.doctor.DoctorEditProfileActivity;
+import com.petfolio.infinitus.doctor.DoctorProfileScreenActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import java.util.HashMap;
 
@@ -29,6 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ServiceProviderNavigationDrawer extends AppCompatActivity implements View.OnClickListener {
 
+    String TAG = "ServiceProviderNavigationDrawer";
 
     public NavigationView navigationView;
     private DrawerLayout drawerLayout;
@@ -63,7 +67,6 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.AppTheme_NoActionBar);
-        String TAG = "ServiceProviderNavigationDrawer";
         Log.w(TAG, "onCreate---->");
 
         inflater = LayoutInflater.from(this);
@@ -103,6 +106,39 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
 
         frameLayout = view.findViewById(R.id.base_container);
 
+
+        menu = navigationView.getMenu();
+
+
+        // Initializing Drawer Layout and ActionBarToggle
+        drawerLayout = view.findViewById(R.id.drawer_layout);
+        header = navigationView.getHeaderView(0);
+        nav_header_imageView = header.findViewById(R.id.nav_header_imageView);
+        nav_header_emailid = header.findViewById(R.id.nav_header_emailid);
+        nav_header_profilename = header.findViewById(R.id.nav_header_profilename);
+        nav_header_edit = header.findViewById(R.id.nav_header_edit);
+        // Glide.with(this).load(image_url).into(nav_header_imageView);
+
+        nav_header_emailid.setText(emailid);
+        nav_header_profilename.setText(name);
+        RelativeLayout llheader = header.findViewById(R.id.llheader);
+        llheader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), SPProfileScreenActivity.class));
+            }
+        });
+
+        TextView nav_header_edit = header.findViewById(R.id.nav_header_edit);
+        nav_header_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), SPEditProfileActivity.class));
+            }
+        });
+
+
+
         navigationView.setNavigationItemSelectedListener(menuItem -> {
             //Closing drawer on item click
             drawerLayout.closeDrawers();
@@ -135,7 +171,7 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
                 case R.id.nav_item_seven:
 
                     return true;
-                    case R.id.nav_item_eight:
+                case R.id.nav_item_eight:
                     confirmLogoutDialog();
                     return true;
 
@@ -145,25 +181,6 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
 
             }
         });
-
-        menu = navigationView.getMenu();
-
-
-        // Initializing Drawer Layout and ActionBarToggle
-        drawerLayout = view.findViewById(R.id.drawer_layout);
-        header = navigationView.getHeaderView(0);
-        nav_header_imageView = header.findViewById(R.id.nav_header_imageView);
-        nav_header_emailid = header.findViewById(R.id.nav_header_emailid);
-        nav_header_profilename = header.findViewById(R.id.nav_header_profilename);
-        nav_header_edit = header.findViewById(R.id.nav_header_edit);
-        // Glide.with(this).load(image_url).into(nav_header_imageView);
-
-        nav_header_emailid.setText(emailid);
-        nav_header_profilename.setText(name);
-
-
-        nav_header_edit.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ServiceProviderEditFormActivity.class)));
-
 
 
     }

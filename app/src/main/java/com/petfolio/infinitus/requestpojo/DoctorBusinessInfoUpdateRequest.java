@@ -36,7 +36,15 @@ public class DoctorBusinessInfoUpdateRequest {
     private double clinic_long;
 
 
-    private int profile_status;
+    public boolean isProfile_status() {
+        return profile_status;
+    }
+
+    public void setProfile_status(boolean profile_status) {
+        this.profile_status = profile_status;
+    }
+
+    private boolean profile_status;
     private String profile_verification_status;
     private String date_and_time;
     private List<EducationDetailsBean> education_details;
@@ -137,14 +145,6 @@ public class DoctorBusinessInfoUpdateRequest {
 
 
 
-    public int getProfile_status() {
-        return profile_status;
-    }
-
-    public void setProfile_status(int profile_status) {
-        this.profile_status = profile_status;
-
-    }
 
 
     public String getProfile_verification_status() {

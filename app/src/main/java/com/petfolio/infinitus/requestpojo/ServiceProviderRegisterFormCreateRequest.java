@@ -8,10 +8,15 @@ public class ServiceProviderRegisterFormCreateRequest {
     /**
      * user_id : 5fc61b82b750da703e48da78
      * bus_user_name : mohammed Imthiyas
+     * profile_status : true
+     * profile_verification_status : Not verified
+     * sp_loc : No, chennai tamil nadu
+     * sp_lat : 12.00909
+     * sp_long : 80.980098
      * bus_user_email : mohammed@gmail.com
      * bussiness_name : Mohammed imthiyas
      * bus_user_phone : 9876543210
-     * bus_service_list : [{"bus_service_list":"Service - 1"},{"bus_service_list":"Service - 2"},{"bus_service_list":"Service - 3"}]
+     * bus_service_list : [{"bus_service_list":"Service - 1","time_slots":"15 mins"},{"bus_service_list":"Service - 2","time_slots":"15 mins"},{"bus_service_list":"Service - 3","time_slots":"15 mins"}]
      * bus_spec_list : [{"bus_spec_list":"Spec -1"},{"bus_spec_list":"Spec -1"},{"bus_spec_list":"Spec -1"}]
      * bus_service_gall : [{"bus_service_gall":"http://mysalveo.com/api/uploads/images.jpeg"},{"bus_service_gall":"http://mysalveo.com/api/uploads/images.jpeg"},{"bus_service_gall":"http://mysalveo.com/api/uploads/images.jpeg"}]
      * bus_profile : http://mysalveo.com/api/uploads/images.jpeg
@@ -19,11 +24,6 @@ public class ServiceProviderRegisterFormCreateRequest {
      * bus_certif : [{"bus_certif":"http://mysalveo.com/api/uploads/images.jpeg"},{"bus_certif":"http://mysalveo.com/api/uploads/images.jpeg"},{"bus_certif":"http://mysalveo.com/api/uploads/images.jpeg"}]
      * date_and_time : 23-10-2020 12:00 AM
      * mobile_type : Admin
-     * profile_status : true
-     * profile_verification_status : Not verified
-     *"sp_loc" : "No, chennai tamil nadu",
-     *"sp_lat" : 12.00909,
-     *"sp_long" : 80.980098,
      */
 
     private String user_id;
@@ -215,9 +215,12 @@ public class ServiceProviderRegisterFormCreateRequest {
     public static class BusServiceListBean  {
         /**
          * bus_service_list : Service - 1
+         * time_slots : 15 mins
          */
 
         private String bus_service_list;
+        private String time_slots;
+
 
         public String getBus_service_list() {
             return bus_service_list;
@@ -225,6 +228,17 @@ public class ServiceProviderRegisterFormCreateRequest {
 
         public void setBus_service_list(String bus_service_list) {
             this.bus_service_list = bus_service_list;
+
+        }
+
+
+        public String getTime_slots() {
+            return time_slots;
+        }
+
+        public void setTime_slots(String time_slots) {
+            this.time_slots = time_slots;
+
         }
     }
 

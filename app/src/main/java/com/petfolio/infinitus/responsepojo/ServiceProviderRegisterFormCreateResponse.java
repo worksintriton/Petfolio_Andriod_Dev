@@ -232,9 +232,12 @@ public class ServiceProviderRegisterFormCreateResponse {
         public static class BusServiceListBean  {
             /**
              * bus_service_list : Service - 1
+             * time_slots : 15 mins
              */
 
             private String bus_service_list;
+            private String time_slots;
+
 
             public String getBus_service_list() {
                 return bus_service_list;
@@ -242,6 +245,17 @@ public class ServiceProviderRegisterFormCreateResponse {
 
             public void setBus_service_list(String bus_service_list) {
                 this.bus_service_list = bus_service_list;
+
+            }
+
+
+            public String getTime_slots() {
+                return time_slots;
+            }
+
+            public void setTime_slots(String time_slots) {
+                this.time_slots = time_slots;
+
             }
         }
 

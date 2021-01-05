@@ -188,7 +188,7 @@ public class EditDoctorProfileImageActivity extends AppCompatActivity implements
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(EditDoctorProfileImageActivity.this, DoctorProfileScreenActivity.class));
+       // startActivity(new Intent(EditDoctorProfileImageActivity.this, DoctorProfileScreenActivity.class));
         finish();
     }
 
@@ -562,7 +562,8 @@ public class EditDoctorProfileImageActivity extends AppCompatActivity implements
                                 profileimage
 
                         );
-                        gotoDoctorProfileScreenActivity();
+                       onBackPressed();
+                        //gotoDoctorProfileScreenActivity();
                     }
                     else{
                         //showErrorLoading(response.body().getMessage());

@@ -149,17 +149,15 @@
                         android:textSize="14sp"
                         tools:ignore="Autofill,LabelFor" />
 
-                    <EditText
-                        android:id="@+id/edtx_edu_yr"
+                    <TextView
+                        android:id="@+id/txt_edu_yr"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/rectangle_corner_white"
                         android:fontFamily="@font/futuramediumbt"
                         android:hint="@string/year_of_completion"
-                        android:inputType="none"
                         android:maxLength="25"
-                        android:focusable="false"
                         android:padding="15dp"
                         android:textColorHint="@color/dark_gray"
                         android:textSize="14sp"
