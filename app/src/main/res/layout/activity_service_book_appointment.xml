@@ -1,0 +1,245 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/headerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_header"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/whiteTwo"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:titleTextAppearance="@style/TitleBarTextAppearance">
+
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/back"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/txt_toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:fontFamily="@font/futuramediumbt"
+                android:text="@string/appointment"
+                android:textColor="@color/new_txt_color"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp">
+
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/ic_sos"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/ic_notifications"
+                    tools:ignore="ContentDescription" />
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_bag"
+                    tools:ignore="ContentDescription"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"/>
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_user"
+                    tools:ignore="ContentDescription"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp" />
+            </LinearLayout>
+
+
+        </androidx.appcompat.widget.Toolbar>
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollablContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/footerView"
+        android:layout_below="@+id/headerView">
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/futuramediumbt"
+                android:text="@string/select_available_date_and_time"
+                android:textColor="@color/new_txt_color"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_pet_pics"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txt_pet_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rectangular_curved_corner"
+                    android:focusable="false"
+                    android:fontFamily="@font/futuramediumbt"
+                    android:hint="Select date"
+                    android:inputType="none"
+                    android:padding="15dp"
+                    android:textColorHint="@color/dark_gray"
+                    android:textSize="14sp"
+                    tools:ignore="Autofill,LabelFor" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:contentDescription="@string/image"
+                    android:src="@drawable/calender" />
+
+            </RelativeLayout>
+
+            <EditText
+                android:id="@+id/edt_allergies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rectangular_curved_corner"
+                android:fontFamily="@font/futuramediumbt"
+                android:hint="@string/time"
+                android:padding="15dp"
+                android:textColor="@color/new_light_green"
+                android:textColorHint="@color/dark_gray"
+                android:textSize="14sp"
+                tools:ignore="Autofill,LabelFor"
+                android:maxLength="95"
+                android:maxLines="2"
+                android:ellipsize="end"/>
+
+
+
+
+
+            <RelativeLayout
+                android:id="@+id/rv_comment"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:id="@+id/edt_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rectangular_curved_corner"
+                    android:fontFamily="@font/futuramediumbt"
+                    android:gravity="start"
+                    android:hint="@string/add_comment_here"
+                    android:padding="15dp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/new_light_green"
+                    android:textColorHint="@color/dark_gray"
+                    android:textSize="14sp"
+                    tools:ignore="Autofill,LabelFor"
+                    android:inputType="textMultiLine"
+                    android:scrollbars="vertical"/>
+
+            </RelativeLayout>
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/footerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_continue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/new_rounded_corner_btn"
+            android:fontFamily="@font/futuramediumbt"
+            android:text="@string/book_appointment"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        app:indicatorColor="@color/new_light_green"
+        app:indicatorName="LineSpinFadeLoaderIndicator" />
+
+    <TextView
+        android:id="@+id/txt_no_records"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/norecordsfound"
+        android:textColor="@color/color"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+</RelativeLayout>

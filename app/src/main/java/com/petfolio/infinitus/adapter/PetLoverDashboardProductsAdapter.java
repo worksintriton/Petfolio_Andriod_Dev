@@ -28,13 +28,15 @@ public class PetLoverDashboardProductsAdapter extends  RecyclerView.Adapter<Recy
     PetLoverDashboardResponse.DataBean.DashboarddataBean.ProductsDetailsBean currentItem;
 
     int size;
+    private RecyclerView recyclerView;
 
 
 
-    public PetLoverDashboardProductsAdapter(Context context, List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ProductsDetailsBean> productDetailsResponseList, RecyclerView inbox_list, int size) {
+    public PetLoverDashboardProductsAdapter(Context context, List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ProductsDetailsBean> productDetailsResponseList, RecyclerView recyclerView, int size) {
         this.productDetailsResponseList = productDetailsResponseList;
         this.context = context;
         this.size = size;
+        this.recyclerView = recyclerView;
 
     }
 
@@ -42,6 +44,11 @@ public class PetLoverDashboardProductsAdapter extends  RecyclerView.Adapter<Recy
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_petlover_dashboardproducts, parent, false);
+        // recyclerView is your passed view.
+        int width = recyclerView.getWidth();
+        ViewGroup.LayoutParams params = view.getLayoutParams();
+        params.width = (int)(width * 0.8);
+        view.setLayoutParams(params);
         return new ViewHolderOne(view);
     }
 

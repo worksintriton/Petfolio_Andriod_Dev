@@ -43,6 +43,8 @@ import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
 import com.petfolio.infinitus.requestpojo.SPAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.SPCheckStatusRequest;
 import com.petfolio.infinitus.requestpojo.SPDetailsByUserIdRequest;
+import com.petfolio.infinitus.requestpojo.SPSpecificServiceDetailsRequest;
+import com.petfolio.infinitus.requestpojo.ServiceCatRequest;
 import com.petfolio.infinitus.requestpojo.SignupRequest;
 import com.petfolio.infinitus.requestpojo.UserStatusUpdateRequest;
 import com.petfolio.infinitus.requestpojo.ServiceProviderRegisterFormCreateRequest;
@@ -93,6 +95,8 @@ import com.petfolio.infinitus.responsepojo.ResendOTPResponse;
 import com.petfolio.infinitus.responsepojo.SPAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.SPCheckStatusResponse;
 import com.petfolio.infinitus.responsepojo.SPServiceListResponse;
+import com.petfolio.infinitus.responsepojo.SPSpecificServiceDetailsResponse;
+import com.petfolio.infinitus.responsepojo.ServiceCatResponse;
 import com.petfolio.infinitus.responsepojo.SignupResponse;
 import com.petfolio.infinitus.responsepojo.UserStatusUpdateResponse;
 import com.petfolio.infinitus.responsepojo.UserTypeListResponse;
@@ -150,7 +154,7 @@ public interface RestApiInterface {
     Call<AddYourPetResponse> addYourPetResponseCall(@Header("Content-Type") String type, @Body AddYourPetRequest addYourPetRequest );
 
     /*Pet lover dashboard*/
-    @POST("userdetails/petlove/mobile/dashboard")
+    @POST("userdetails/petlove/mobile/dashboard1")
     Call<PetLoverDashboardResponse> petLoverDashboardResponseCall(@Header("Content-Type") String type, @Body PetLoverDashboardRequest petLoverDashboardRequest);
 
     /*Add location*/
@@ -235,6 +239,16 @@ public interface RestApiInterface {
     /*Pet lover review add*/
     @POST("appointments/reviews/update")
     Call<AddReviewResponse>addReviewResponseCall(@Header("Content-Type") String type, @Body AddReviewRequest addReviewRequest  );
+
+
+    /*Specific service*/
+    @POST("service_provider/mobile/servicedetails")
+    Call<SPSpecificServiceDetailsResponse>SPSpecificServiceDetailsResponseCall(@Header("Content-Type") String type, @Body SPSpecificServiceDetailsRequest spSpecificServiceDetailsRequest);
+
+    /*Service category list*/
+    @POST("service_provider/mobile/service_cat")
+    Call<ServiceCatResponse>ServiceCatResponseCall(@Header("Content-Type") String type, @Body ServiceCatRequest serviceCatRequest );
+
 
     /*Doctor*/
 
@@ -376,6 +390,7 @@ public interface RestApiInterface {
     /*SP Missed Appointment*/
     @POST("sp_appointments/mobile/sp_getlist/missapp")
     Call<SPAppointmentResponse>spMissedAppointmentResponseCall(@Header("Content-Type") String type, @Body SPAppointmentRequest spAppointmentRequest);
+
 
 
     /*Vendor*/

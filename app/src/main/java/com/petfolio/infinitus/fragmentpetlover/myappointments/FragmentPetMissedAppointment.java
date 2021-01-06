@@ -1,4 +1,4 @@
-package com.petfolio.infinitus.fragmentpetlover;
+package com.petfolio.infinitus.fragmentpetlover.myappointments;
 
 import android.content.Context;
 import android.content.SharedPreferences;

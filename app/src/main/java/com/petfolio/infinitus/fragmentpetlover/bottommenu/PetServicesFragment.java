@@ -1,4 +1,4 @@
-package com.petfolio.infinitus.fragmentpetlover;
+package com.petfolio.infinitus.fragmentpetlover.bottommenu;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -7,11 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-
 import android.location.Location;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -21,11 +17,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,18 +31,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.android.gms.common.api.GoogleApiClient;
-
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.activity.location.PickUpLocationAllowActivity;
-import com.petfolio.infinitus.activity.location.PickUpLocationDenyActivity;
 import com.petfolio.infinitus.adapter.PetLoverDoctorFilterAdapter;
 import com.petfolio.infinitus.adapter.PetLoverNearByDoctorAdapter;
-
+import com.petfolio.infinitus.adapter.PetServicesAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.petlover.FiltersActivity;
@@ -78,10 +69,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class PetCareFragment extends Fragment implements Serializable, View.OnClickListener {
+public class PetServicesFragment extends Fragment implements Serializable, View.OnClickListener {
 
 
-    private String TAG = "PetCareFragment";
+    private String TAG = "PetServicesFragment";
 
 
 
@@ -106,20 +97,6 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     private TextView headertitle;
 
 
-    @BindView(R.id.txt_communicationtype)
-    TextView txt_communicationtype;
-
-    @BindView(R.id.switchButton_communcationtype)
-    SwitchCompat switchButton_communcationtype;
-
-    @BindView(R.id.txt_no_records)
-    TextView txt_no_records;
-
-
-
-
-
-
 
 
 
@@ -127,21 +104,16 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     Dialog dialog;
     private String userid;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
 
-    @BindView(R.id.rv_nearbydoctors)
-    RecyclerView rv_nearbydoctors;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rv_popular_services)
+    RecyclerView rv_popular_services;
 
-    @BindView(R.id.txt_totaldrs)
-    TextView txt_totaldrs;
 
-    @BindView(R.id.txt_filter)
-    TextView txt_filter;
-
-    @BindView(R.id.edt_search)
-    EditText edt_search;
 
 
 
@@ -165,13 +137,13 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     private List<DoctorSearchResponse.DataBean> doctorDetailsResponseList;
     private Dialog alertDialog;
     private String searchString = "";
-    private int communication_type = 0;
+
     private int reviewcount;
     private String fromactivity,specialization;
     private List<FilterDoctorResponse.DataBean> doctorFilterDetailsResponseList;
 
 
-    public PetCareFragment() {
+    public PetServicesFragment() {
         // Required empty public constructor
     }
 
@@ -187,7 +159,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.w(TAG,"onCreateView-->");
-        View view = inflater.inflate(R.layout.fragment_pet_care, container, false);
+        View view = inflater.inflate(R.layout.fragment_pet_services, container, false);
         preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         ButterKnife.bind(this, view);
         mContext = getActivity();
@@ -218,77 +190,18 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
         Log.w(TAG,"customerid-->"+userid);
 
 
-        switchButton_communcationtype.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    txt_communicationtype.setText("Communicatoin Online");
-                    communication_type = 1;
-                    if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
-                        doctorSearchResponseCall(searchString,communication_type);
-                    }
-                }else{
-                    txt_communicationtype.setText("Communicatoin Offline");
-                    communication_type = 0;
-                    if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
-                        doctorSearchResponseCall(searchString,communication_type);
-                    }
-
-                }
-            }
-        });
 
         if(fromactivity != null && fromactivity.equalsIgnoreCase("FiltersActivity")) {
             if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
-                filterDoctorResponseCall();
+
             }
         }else{
             if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
-                doctorSearchResponseCall(searchString,communication_type);
             }
         }
 
 
 
-        edt_search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                Log.w(TAG,"beforeTextChanged-->"+s.toString());
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.w(TAG,"onTextChanged-->"+s.toString());
-                searchString = s.toString();
-                if(!searchString.isEmpty()){
-                    doctorSearchResponseCall(searchString, communication_type);
-                   /* img_search.setVisibility(View.VISIBLE);
-                    img_clear.setVisibility(View.VISIBLE);*/
-
-                }else{
-                    searchString ="";
-                    doctorSearchResponseCall(searchString, communication_type);
-                    /*img_search.setVisibility(View.GONE);
-                    img_clear.setVisibility(View.GONE);*/
-                }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                Log.w(TAG,"afterTextChanged-->"+s.toString());
-
-            }
-        });
-
-        txt_filter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, FiltersActivity.class);
-                startActivity(intent);
-            }
-        });
 
 
 
@@ -339,19 +252,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
                         if (response.body().getData() != null) {
                             doctorDetailsResponseList = response.body().getData();
                             Log.w(TAG, "doctorDetailsResponseList Size" + doctorDetailsResponseList.size());
-                            if (doctorDetailsResponseList != null && doctorDetailsResponseList.size()>0) {
-                                rv_nearbydoctors.setVisibility(View.VISIBLE);
-                                txt_no_records.setVisibility(View.GONE);
-                                txt_totaldrs.setVisibility(View.VISIBLE);
-                                txt_totaldrs.setText(doctorDetailsResponseList.size()+" "+"Doctors");
-                                setViewDoctors(doctorDetailsResponseList);
-                            } else {
-                                rv_nearbydoctors.setVisibility(View.GONE);
-                                txt_totaldrs.setVisibility(View.GONE);
-                                txt_no_records.setVisibility(View.VISIBLE);
-                                txt_no_records.setText("No doctors available");
 
-                            }
 
                         }
 
@@ -376,11 +277,12 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
         });
 
     }
-    private void setViewDoctors(List<DoctorSearchResponse.DataBean> doctorDetailsResponseList) {
-        rv_nearbydoctors.setLayoutManager(new LinearLayoutManager(mContext));
-        rv_nearbydoctors.setItemAnimator(new DefaultItemAnimator());
-        PetLoverNearByDoctorAdapter petLoverNearByDoctorAdapter = new PetLoverNearByDoctorAdapter(mContext, doctorDetailsResponseList);
-        rv_nearbydoctors.setAdapter(petLoverNearByDoctorAdapter);
+    private void setViewPetServices(List<DoctorSearchResponse.DataBean> doctorDetailsResponseList) {
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.HORIZONTAL);
+        rv_popular_services.setLayoutManager(staggeredGridLayoutManager);
+        rv_popular_services.setItemAnimator(new DefaultItemAnimator());
+        PetServicesAdapter petServicesAdapter = new PetServicesAdapter(mContext, doctorDetailsResponseList);
+        rv_popular_services.setAdapter(petServicesAdapter);
     }
     private DoctorSearchRequest doctorSearchRequest(String searchString, int communication_type) {
         /*
@@ -461,84 +363,6 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
 
 
-
-    private void filterDoctorResponseCall() {
-        avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();
-        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-        Call<FilterDoctorResponse> call = apiInterface.filterDoctorResponseCall(RestUtils.getContentType(), filterDoctorRequest());
-        Log.w(TAG,"filterDoctorResponseCall url  :%s"+" "+ call.request().url().toString());
-
-        call.enqueue(new Callback<FilterDoctorResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<FilterDoctorResponse> call, @NonNull Response<FilterDoctorResponse> response) {
-                avi_indicator.smoothToHide();
-                Log.w(TAG,"filterDoctorResponseCall" + new Gson().toJson(response.body()));
-                if (response.body() != null) {
-                    if (200 == response.body().getCode()) {
-
-
-                        if (response.body().getData() != null) {
-                            doctorFilterDetailsResponseList = response.body().getData();
-                            if (doctorFilterDetailsResponseList != null && doctorFilterDetailsResponseList.size()>0) {
-                                rv_nearbydoctors.setVisibility(View.VISIBLE);
-                                txt_no_records.setVisibility(View.GONE);
-                                txt_totaldrs.setVisibility(View.VISIBLE);
-                                txt_totaldrs.setText(doctorFilterDetailsResponseList.size()+" "+"Doctors");
-                                setViewDoctorFilters(doctorFilterDetailsResponseList);
-
-                            } else {
-                                rv_nearbydoctors.setVisibility(View.GONE);
-                                txt_totaldrs.setVisibility(View.GONE);
-                                txt_no_records.setVisibility(View.VISIBLE);
-                                txt_no_records.setText("No doctors available");
-
-                            }
-
-                        }
-
-
-
-                    }
-                    else {
-                        showErrorLoading(response.body().getMessage());
-                    }
-
-                }
-
-
-            }
-
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onFailure(@NonNull Call<FilterDoctorResponse> call,@NonNull Throwable t) {
-                avi_indicator.smoothToHide();
-                Log.e("FilterDoctorResponse", "--->" + t.getMessage());
-            }
-        });
-
-    }
-    private void setViewDoctorFilters(List<FilterDoctorResponse.DataBean> doctorFilterDetailsResponseList) {
-        rv_nearbydoctors.setLayoutManager(new LinearLayoutManager(mContext));
-        rv_nearbydoctors.setItemAnimator(new DefaultItemAnimator());
-        PetLoverDoctorFilterAdapter petLoverDoctorFilterAdapter = new PetLoverDoctorFilterAdapter(mContext, doctorFilterDetailsResponseList);
-        rv_nearbydoctors.setAdapter(petLoverDoctorFilterAdapter);
-    }
-    private FilterDoctorRequest filterDoctorRequest() {
-        /*
-         * user_id : 5fd841a67aa4cc1c6a1e5636
-         * specialization :
-         * nearby : 0
-         * Review_count : 5
-         */
-        FilterDoctorRequest filterDoctorRequest = new FilterDoctorRequest();
-        filterDoctorRequest.setUser_id(userid);
-        filterDoctorRequest.setSpecialization(specialization);
-        filterDoctorRequest.setNearby(0);
-        filterDoctorRequest.setReview_count(reviewcount);
-        Log.w(TAG,"filterDoctorRequest"+ new Gson().toJson(filterDoctorRequest));
-        return filterDoctorRequest;
-    }
 
 
 

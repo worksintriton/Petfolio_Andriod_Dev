@@ -20,8 +20,9 @@ import android.view.View;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.fragmentpetlover.PetCareFragment;
-import com.petfolio.infinitus.fragmentpetlover.PetHomeFragment;
+import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetCareFragment;
+import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetHomeFragment;
+import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetServicesFragment;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.Serializable;
@@ -45,6 +46,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
 
     final Fragment petHomeFragment = new PetHomeFragment();
     final Fragment petCareFragment = new PetCareFragment();
+    final Fragment petServicesFragment = new PetServicesFragment();
 
 /* final Fragment searchFragment = new SearchFragment();
  final Fragment myVehicleFragment = new MyVehicleFragment();
@@ -91,6 +93,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
             }else if(tag.equalsIgnoreCase("2")){
                 bottom_navigation_view.setSelectedItemId(R.id.shop);
             }else if(tag.equalsIgnoreCase("3")){
+                active = petServicesFragment;
                 bottom_navigation_view.setSelectedItemId(R.id.services);
             }else if(tag.equalsIgnoreCase("4")){
                 active = petCareFragment;
@@ -161,12 +164,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
         else if(tag != null ){
             Log.w(TAG,"Else IF--->"+"fromactivity : "+fromactivity);
             if(fromactivity != null){
-                if(fromactivity.equalsIgnoreCase("PopularServiceActivity")) {
-                    Intent intent = new Intent(PetLoverDashboardActivity.this, PetLoverDashboardActivity.class);
-                    intent.putExtra("fromactivity", "PopularServiceActivity");
 
-                    startActivity(intent);
-                }
 
             }else{
                 bottom_navigation_view.setSelectedItemId(R.id.home);
@@ -190,6 +188,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
         transaction.replace(R.id.main_container,fragment);
         transaction.commit();
     }
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -200,7 +199,8 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
                 case R.id.shop:
                 break;
                 case R.id.services:
-                break;
+                    replaceFragment(new PetServicesFragment());
+                    break;
                 case R.id.care:
                 replaceFragment(new PetCareFragment());
                 break;

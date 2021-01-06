@@ -15,9 +15,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.petfolio.infinitus.R;
 
-import com.petfolio.infinitus.fragmentpetlover.FragmentPetMissedAppointment;
-import com.petfolio.infinitus.fragmentpetlover.FragmentPetCompletedAppointment;
-import com.petfolio.infinitus.fragmentpetlover.FragmentPetNewAppointment;
+import com.petfolio.infinitus.fragmentpetlover.myappointments.FragmentPetMissedAppointment;
+import com.petfolio.infinitus.fragmentpetlover.myappointments.FragmentPetCompletedAppointment;
+import com.petfolio.infinitus.fragmentpetlover.myappointments.FragmentPetNewAppointment;
 import com.wang.avi.AVLoadingIndicatorView;
 
 

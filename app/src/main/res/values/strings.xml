@@ -352,6 +352,11 @@
     <string name="related_products">Related Products</string>
     <string name="business_info">Business Info</string>
     <string name="my_services">My services</string>
+    <string name="selected_service_category">Selected Service Category</string>
+    <string name="select_available_date_and_time">Select available date and time</string>
+    <string name="service_providing_company_name">Service providing company name</string>
+    <string name="service_provider_name">Service provider name</string>
+    <string name="selected_service">Selected service</string>
 
 
 </resources>

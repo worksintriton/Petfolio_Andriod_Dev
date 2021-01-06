@@ -55,11 +55,23 @@ public class SPCheckStatusResponse {
          * user_id : 5fc761dab8b7931efc42592f
          * profile_status : true
          * profile_verification_status : verified
+         * calender_status
          */
 
         private String user_id;
         private boolean profile_status;
         private String profile_verification_status;
+
+        private boolean calender_status;
+
+        public boolean isCalender_status() {
+            return calender_status;
+        }
+
+        public void setCalender_status(boolean calender_status) {
+            this.calender_status = calender_status;
+        }
+
 
         public String getUser_id() {
             return user_id;
