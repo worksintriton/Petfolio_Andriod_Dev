@@ -20,11 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.adapter.SPMyCalendarAvailableAdapter;
+import com.petfolio.infinitus.adapter.SPMyCalendarAvailableNewUserAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.interfaces.OnItemClickSpecialization;
-import com.petfolio.infinitus.requestpojo.DoctorMyCalendarAvlDaysRequest;
 import com.petfolio.infinitus.requestpojo.SPMyCalendarAvlDaysRequest;
 import com.petfolio.infinitus.responsepojo.DoctorMyCalendarAvlDaysResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
@@ -41,9 +40,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SPMyCalendarActivity extends AppCompatActivity implements OnItemClickSpecialization {
+public class SPMyCalendarNewUserActivity extends AppCompatActivity implements OnItemClickSpecialization {
 
-    private static final String TAG = "SPMyCalendarActivity" ;
+    private static final String TAG = "SPMyCalendarNewUserActivity" ;
     RecyclerView rv_doctor_mycalendar_avldays;
     private SharedPreferences preferences;
 
@@ -61,7 +60,7 @@ public class SPMyCalendarActivity extends AppCompatActivity implements OnItemCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sp_my_calendar);
+        setContentView(R.layout.activity_doctor_my_calendar);
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         rv_doctor_mycalendar_avldays = findViewById(R.id.rv_doctor_mycalendar_avldays);
@@ -76,10 +75,10 @@ public class SPMyCalendarActivity extends AppCompatActivity implements OnItemCli
         avi_indicator.setVisibility(View.GONE);
 
 
-        if (new ConnectionDetector(SPMyCalendarActivity.this).isNetworkAvailable(SPMyCalendarActivity.this)) {
+        if (new ConnectionDetector(SPMyCalendarNewUserActivity.this).isNetworkAvailable(SPMyCalendarNewUserActivity.this)) {
             spMyCalendarAvlDaysResponseCall();
         }
-         btn_next = findViewById(R.id.btn_next);
+       btn_next = findViewById(R.id.btn_next);
         btn_next.setVisibility(View.GONE);
         btn_next.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("LongLogTag")
@@ -87,7 +86,7 @@ public class SPMyCalendarActivity extends AppCompatActivity implements OnItemCli
             public void onClick(View v) {
                 Log.w(TAG,"dateList-->"+new Gson().toJson(dateList));
                 if(dateList != null && dateList.size()>0){
-                    Intent intent = new Intent(SPMyCalendarActivity.this, SPMyCalendarTimeActivity.class);
+                    Intent intent = new Intent(SPMyCalendarNewUserActivity.this, SPMyCalendarTimeActivity.class);
                     intent.putExtra("dateList",dateList);
                     startActivity(intent);
                 }else{
@@ -107,12 +106,8 @@ public class SPMyCalendarActivity extends AppCompatActivity implements OnItemCli
         });
 
         TextView txtAddHoliday = findViewById(R.id.txtAddHoliday);
-        txtAddHoliday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(SPMyCalendarActivity.this, SP_Holiday_Activity.class));
-            }
-        });
+        txtAddHoliday.setVisibility(View.GONE);
+
         }
 
     @SuppressLint("LongLogTag")
@@ -184,8 +179,8 @@ public class SPMyCalendarActivity extends AppCompatActivity implements OnItemCli
     private void setViewAvlDays() {
         rv_doctor_mycalendar_avldays.setLayoutManager(new LinearLayoutManager(this));
         rv_doctor_mycalendar_avldays.setItemAnimator(new DefaultItemAnimator());
-        SPMyCalendarAvailableAdapter spMyCalendarAvailableAdapter = new SPMyCalendarAvailableAdapter(getApplicationContext(), dataBeanList, rv_doctor_mycalendar_avldays, this);
-        rv_doctor_mycalendar_avldays.setAdapter(spMyCalendarAvailableAdapter);
+        SPMyCalendarAvailableNewUserAdapter spMyCalendarAvailableNewUserAdapter = new SPMyCalendarAvailableNewUserAdapter(getApplicationContext(), dataBeanList, rv_doctor_mycalendar_avldays, this);
+        rv_doctor_mycalendar_avldays.setAdapter(spMyCalendarAvailableNewUserAdapter);
 
    }
 
@@ -207,8 +202,10 @@ public class SPMyCalendarActivity extends AppCompatActivity implements OnItemCli
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class));
-        finish();
+        Toasty.warning(getApplicationContext(), "This action is disabled in this screen..", Toast.LENGTH_SHORT, true).show();
+
+       /* super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), DoctorDashboardActivity.class));
+        finish();*/
     }
 }

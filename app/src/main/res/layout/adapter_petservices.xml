@@ -10,9 +10,10 @@
     <ImageView
         android:id="@+id/img_petservice"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:scaleType="fitXY"
         android:src="@drawable/backgm"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        android:adjustViewBounds="true"/>
 
 </RelativeLayout>

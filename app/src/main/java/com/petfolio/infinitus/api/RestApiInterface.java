@@ -43,6 +43,8 @@ import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
 import com.petfolio.infinitus.requestpojo.SPAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.SPCheckStatusRequest;
 import com.petfolio.infinitus.requestpojo.SPDetailsByUserIdRequest;
+import com.petfolio.infinitus.requestpojo.SPDetailsRequest;
+import com.petfolio.infinitus.requestpojo.SPMyCalendarAvlDaysRequest;
 import com.petfolio.infinitus.requestpojo.SPSpecificServiceDetailsRequest;
 import com.petfolio.infinitus.requestpojo.ServiceCatRequest;
 import com.petfolio.infinitus.requestpojo.SignupRequest;
@@ -94,6 +96,7 @@ import com.petfolio.infinitus.responsepojo.ProfileUpdateResponse;
 import com.petfolio.infinitus.responsepojo.ResendOTPResponse;
 import com.petfolio.infinitus.responsepojo.SPAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.SPCheckStatusResponse;
+import com.petfolio.infinitus.responsepojo.SPDetailsRepsonse;
 import com.petfolio.infinitus.responsepojo.SPServiceListResponse;
 import com.petfolio.infinitus.responsepojo.SPSpecificServiceDetailsResponse;
 import com.petfolio.infinitus.responsepojo.ServiceCatResponse;
@@ -249,6 +252,10 @@ public interface RestApiInterface {
     @POST("service_provider/mobile/service_cat")
     Call<ServiceCatResponse>ServiceCatResponseCall(@Header("Content-Type") String type, @Body ServiceCatRequest serviceCatRequest );
 
+    /*Service Details*/
+    @POST("service_provider/mobile/sp_fetch_by_id")
+    Call<SPDetailsRepsonse>SPDetailsRepsonseCall(@Header("Content-Type") String type, @Body SPDetailsRequest spDetailsRequest );
+
 
     /*Doctor*/
 
@@ -364,6 +371,18 @@ public interface RestApiInterface {
     @POST("service_provider/check_status")
     Call<SPCheckStatusResponse>SPCheckStatusResponseCall(@Header("Content-Type") String type, @Body SPCheckStatusRequest spCheckStatusRequest );
 
+    /*sp my calendar available days*/
+    @POST("sp_available_time/fetch_dates")
+    Call<DoctorMyCalendarAvlDaysResponse>spMyCalendarAvlDaysResponseCall(@Header("Content-Type") String type, @Body SPMyCalendarAvlDaysRequest spMyCalendarAvlDaysRequest);
+
+    /*sp my calendar available times*/
+    @POST("sp_available_time/get_time_Details")
+    Call<DoctorMyCalendarAvlTimesResponse>spMyCalendarAvlTimesResponseCall(@Header("Content-Type") String type, @Body DoctorMyCalendarAvlTimesRequest doctorMyCalendarAvlTimesRequest);
+
+    /*doctor my calendar update*/
+    @POST("sp_available_time/update_doc_date")
+    Call<DoctorMyCalendarUpdateDocDateResponse>spMyCalendarUpdateDocDateResponseCall(@Header("Content-Type") String type, @Body DoctorMyCalendarUpdateDocDateRequest doctorMyCalendarUpdateDocDateRequest);
+
 
     /*SP Create holiday*/
     @POST("sp_holiday/create")
@@ -376,6 +395,7 @@ public interface RestApiInterface {
     /*SP holiday delete*/
     @POST("sp_holiday/delete")
     Call<HolidayDeleteResponse>spHolidayDeleteResponseCall(@Header("Content-Type") String type, @Body HolidayDeleteRequest holidayDeleteRequest  );
+
 
 
 

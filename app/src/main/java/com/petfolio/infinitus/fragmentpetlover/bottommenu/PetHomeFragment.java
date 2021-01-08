@@ -335,8 +335,6 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
         Intent intent = new Intent(mContext, PetLoverDashboardActivity.class);
         intent.putExtra("tag",tag);
         startActivity(intent);
-
-
     }
 
 

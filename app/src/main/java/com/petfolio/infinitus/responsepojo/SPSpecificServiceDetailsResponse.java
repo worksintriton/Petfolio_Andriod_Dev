@@ -83,15 +83,24 @@ public class SPSpecificServiceDetailsResponse {
 
         public static class ServiceDetailsBean  {
             /**
+             * _id
              * image_path : SP - 6
              * title : http://mysalveo.com/api/uploads/images.jpeg
              * count : 0
              */
 
+            private String _id;
             private String image_path;
             private String title;
             private int count;
 
+            public String get_id() {
+                return _id;
+            }
+
+            public void set_id(String _id) {
+                this._id = _id;
+            }
 
             public String getImage_path() {
                 return image_path;

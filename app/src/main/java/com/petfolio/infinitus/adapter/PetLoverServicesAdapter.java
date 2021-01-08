@@ -86,7 +86,7 @@ public class PetLoverServicesAdapter extends  RecyclerView.Adapter<RecyclerView.
             public void onClick(View v) {
 
                 Intent intent = new Intent(context, SelectedServiceActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("serviceid",serviceDetailsResponseList.get(position).get_id());
+                intent.putExtra("catid",serviceDetailsResponseList.get(position).get_id());
                 context.startActivity(intent);
                 }
 

@@ -106,20 +106,20 @@ public class SPMyCalendarTimeActivity extends AppCompatActivity implements OnIte
         btn_sumbit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                doctorMyCalendarUpdateDocDateResponseCall();
+                spMyCalendarUpdateDocDateResponseCall();
             }
         });
 
         if (new ConnectionDetector(SPMyCalendarTimeActivity.this).isNetworkAvailable(SPMyCalendarTimeActivity.this)) {
-            doctorMyCalendarAvlTimesResponseCall();
+            spMyCalendarAvlTimesResponseCall();
         }
     }
     @SuppressLint("LongLogTag")
-    private void doctorMyCalendarAvlTimesResponseCall() {
+    private void spMyCalendarAvlTimesResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<DoctorMyCalendarAvlTimesResponse> call = ApiService.doctorMyCalendarAvlTimesResponseCall(RestUtils.getContentType(),doctorMyCalendarAvlTimesRequest());
+        Call<DoctorMyCalendarAvlTimesResponse> call = ApiService.spMyCalendarAvlTimesResponseCall(RestUtils.getContentType(),doctorMyCalendarAvlTimesRequest());
         Log.w(TAG,"url  :%s"+" "+call.request().url().toString());
 
         call.enqueue(new Callback<DoctorMyCalendarAvlTimesResponse>() {
@@ -127,7 +127,7 @@ public class SPMyCalendarTimeActivity extends AppCompatActivity implements OnIte
             @Override
             public void onResponse(@NonNull Call<DoctorMyCalendarAvlTimesResponse> call, @NonNull Response<DoctorMyCalendarAvlTimesResponse> response) {
                 avi_indicator.smoothToHide();
-                Log.w(TAG,"DoctorMyCalendarAvlDaysResponse"+ "--->" + new Gson().toJson(response.body()));
+                Log.w(TAG,"spMyCalendarAvlTimesResponseCall"+ "--->" + new Gson().toJson(response.body()));
 
 
                 if (response.body() != null) {
@@ -159,7 +159,7 @@ public class SPMyCalendarTimeActivity extends AppCompatActivity implements OnIte
             public void onFailure(@NonNull Call<DoctorMyCalendarAvlTimesResponse> call, @NonNull Throwable t) {
                 avi_indicator.smoothToHide();
 
-                Log.w(TAG,"DoctorMyCalendarAvlDaysResponse"+"--->" + t.getMessage());
+                Log.w(TAG,"spMyCalendarAvlTimesResponseCall flr"+"--->" + t.getMessage());
             }
         });
 
@@ -229,11 +229,11 @@ public class SPMyCalendarTimeActivity extends AppCompatActivity implements OnIte
 
 
     @SuppressLint("LongLogTag")
-    private void doctorMyCalendarUpdateDocDateResponseCall() {
+    private void spMyCalendarUpdateDocDateResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<DoctorMyCalendarUpdateDocDateResponse> call = ApiService.doctorMyCalendarUpdateDocDateResponseCall(RestUtils.getContentType(),doctorMyCalendarUpdateDocDateRequest());
+        Call<DoctorMyCalendarUpdateDocDateResponse> call = ApiService.spMyCalendarUpdateDocDateResponseCall(RestUtils.getContentType(),doctorMyCalendarUpdateDocDateRequest());
         Log.w(TAG,"url  :%s"+" "+call.request().url().toString());
 
         call.enqueue(new Callback<DoctorMyCalendarUpdateDocDateResponse>() {
@@ -241,7 +241,7 @@ public class SPMyCalendarTimeActivity extends AppCompatActivity implements OnIte
             @Override
             public void onResponse(@NonNull Call<DoctorMyCalendarUpdateDocDateResponse> call, @NonNull Response<DoctorMyCalendarUpdateDocDateResponse> response) {
                 avi_indicator.smoothToHide();
-                Log.w(TAG,"DoctorMyCalendarAvlDaysResponse"+ "--->" + new Gson().toJson(response.body()));
+                Log.w(TAG,"spMyCalendarUpdateDocDateResponseCall"+ "--->" + new Gson().toJson(response.body()));
 
 
                 if (response.body() != null) {
@@ -264,7 +264,7 @@ public class SPMyCalendarTimeActivity extends AppCompatActivity implements OnIte
             public void onFailure(@NonNull Call<DoctorMyCalendarUpdateDocDateResponse> call, @NonNull Throwable t) {
                 avi_indicator.smoothToHide();
 
-                Log.w(TAG,"DoctorMyCalendarAvlDaysResponse"+"--->" + t.getMessage());
+                Log.w(TAG,"spMyCalendarUpdateDocDateResponseCall flr"+"--->" + t.getMessage());
             }
         });
 

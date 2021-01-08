@@ -307,8 +307,8 @@
 
         <Button
             android:id="@+id/btn_book_now"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_width="203dp"
+            android:layout_height="29dp"
             android:layout_gravity="center"
             android:layout_marginStart="80dp"
             android:layout_marginTop="20dp"

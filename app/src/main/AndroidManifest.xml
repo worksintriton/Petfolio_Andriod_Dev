@@ -194,6 +194,11 @@
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
 
+        <activity android:name=".petlover.PetServiceAppointment_Doctor_Date_Time_Activity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+
 
         <activity
             android:name=".activity.location.ManageAddressActivity"
@@ -251,11 +256,6 @@
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".doctor.DoctorMyCalendarTimeNewUserActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.Design.Light.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
             android:name=".doctor.DoctorMyCalendarTimeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
@@ -299,12 +299,21 @@
             android:name=".doctor.EditDoctorBusinessInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
-            android:windowSoftInputMode="adjustPan" /> <!-- Service Provider -->
+            android:windowSoftInputMode="adjustPan" />
+
+
+        <!-- Service Provider -->
         <activity
             android:name=".serviceprovider.ServiceProviderRegisterFormActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".serviceprovider.SPMyCalendarNewUserActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".serviceprovider.SPEditProfileActivity"
             android:screenOrientation="portrait"

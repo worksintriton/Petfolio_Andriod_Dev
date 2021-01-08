@@ -1,7 +1,7 @@
 package com.petfolio.infinitus.adapter;
 
-import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,28 +15,34 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.doctor.DoctorMyCalendarNewUserActivity;
 import com.petfolio.infinitus.doctor.DoctorMyCalendarTimeActivity;
-import com.petfolio.infinitus.doctor.DoctorMyCalendarTimeNewUserActivity;
 import com.petfolio.infinitus.interfaces.OnItemClickSpecialization;
-import com.petfolio.infinitus.responsepojo.DoctorMyCalendarAvlTimesResponse;
+import com.petfolio.infinitus.responsepojo.DoctorMyCalendarAvlDaysResponse;
+import com.petfolio.infinitus.serviceprovider.SPMyCalendarNewUserActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class DoctorMyCalendarTimeAvailableNewUserAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SPMyCalendarAvailableNewUserAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private  String TAG = "DoctorMyCalendarTimeAvailableNewUserAdapter";
-    private List<DoctorMyCalendarAvlTimesResponse.DataBean> dataBeanList;
+    private  String TAG = "SPMyCalendarAvailableNewUserAdapter";
+    private List<DoctorMyCalendarAvlDaysResponse.DataBean> dataBeanList = null;
     private Context context;
-    DoctorMyCalendarAvlTimesResponse.DataBean currentItem;
+
+    DoctorMyCalendarAvlDaysResponse.DataBean currentItem;
+
     private OnItemClickSpecialization mCallback;
 
 
 
-    public DoctorMyCalendarTimeAvailableNewUserAdapter(Context context, List<DoctorMyCalendarAvlTimesResponse.DataBean> dataBeanList, RecyclerView inbox_list, DoctorMyCalendarTimeNewUserActivity doctorMyCalendarTimeNewUserActivity) {
+    public SPMyCalendarAvailableNewUserAdapter(Context context, List<DoctorMyCalendarAvlDaysResponse.DataBean> dataBeanList, RecyclerView inbox_list, SPMyCalendarNewUserActivity spMyCalendarNewUserActivity) {
         this.dataBeanList = dataBeanList;
         this.context = context;
-        this.mCallback = (OnItemClickSpecialization)doctorMyCalendarTimeNewUserActivity;
+        this.mCallback = (OnItemClickSpecialization)spMyCalendarNewUserActivity;
+
+
 
     }
 
@@ -59,23 +65,22 @@ public class DoctorMyCalendarTimeAvailableNewUserAdapter extends  RecyclerView.A
         currentItem = dataBeanList.get(position);
         for (int i = 0; i < dataBeanList.size(); i++) {
 
-            holder.txt_days.setText(dataBeanList.get(position).getTime());
+            holder.txt_days.setText(dataBeanList.get(position).getTitle());
 
         }
         if(dataBeanList.get(position).isStatus()){
-            holder.ch_days.setChecked(true);
+            holder.ch_days.setClickable(false);
+            holder.img_edit.setVisibility(View.VISIBLE);
 
         }else{
             holder.img_edit.setVisibility(View.GONE);
 
         }
 
-
-
         holder.ch_days.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                String chspecialization = dataBeanList.get(position).getTime();
+                String chspecialization = dataBeanList.get(position).getTitle();
 
                 if(isChecked){
                     if (holder.ch_days.isChecked()) {
@@ -91,22 +96,19 @@ public class DoctorMyCalendarTimeAvailableNewUserAdapter extends  RecyclerView.A
             }
         });
 
-/*
-        holder.llsymptoms.setOnClickListener(new View.OnClickListener() {
+
+        holder.img_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, DoctorListActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-
-                Bundle b = new Bundle();
-                b.putString("Array",symptomsGetlistResponseList.get(position).getSpecializations().toString());
-                i.putExtras(b);
-                Log.w(TAG,"Array-->"+b);
+                Intent i = new Intent(context, DoctorMyCalendarTimeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                 ArrayList<String> dateList = new ArrayList<>();
+                dateList.add(dataBeanList.get(position).getTitle());
+                i.putExtra("dateList",dateList);
                 context.startActivity(i);
 
             }
         });
-*/
+
 
 
 
@@ -125,6 +127,7 @@ public class DoctorMyCalendarTimeAvailableNewUserAdapter extends  RecyclerView.A
     public int getItemCount() {
         return dataBeanList.size();
     }
+
 
     @Override
     public int getItemViewType(int position) {

@@ -4,32 +4,30 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
+
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.text.Editable;
-import android.text.TextWatcher;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.EditText;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -38,16 +36,14 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.adapter.PetLoverDoctorFilterAdapter;
-import com.petfolio.infinitus.adapter.PetLoverNearByDoctorAdapter;
+
 import com.petfolio.infinitus.adapter.PetServicesAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.petlover.FiltersActivity;
-import com.petfolio.infinitus.requestpojo.DoctorSearchRequest;
-import com.petfolio.infinitus.requestpojo.FilterDoctorRequest;
+
+import com.petfolio.infinitus.requestpojo.ServiceCatRequest;
 import com.petfolio.infinitus.responsepojo.DoctorSearchResponse;
-import com.petfolio.infinitus.responsepojo.FilterDoctorResponse;
+import com.petfolio.infinitus.responsepojo.ServiceCatResponse;
 import com.petfolio.infinitus.service.GPSTracker;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -140,7 +136,7 @@ public class PetServicesFragment extends Fragment implements Serializable, View.
 
     private int reviewcount;
     private String fromactivity,specialization;
-    private List<FilterDoctorResponse.DataBean> doctorFilterDetailsResponseList;
+    private List<ServiceCatResponse.DataBean> serviceCatList;
 
 
     public PetServicesFragment() {
@@ -191,18 +187,10 @@ public class PetServicesFragment extends Fragment implements Serializable, View.
 
 
 
-        if(fromactivity != null && fromactivity.equalsIgnoreCase("FiltersActivity")) {
-            if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
 
-            }
-        }else{
-            if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
-            }
+        if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
+            ServiceCatResponseCall();
         }
-
-
-
-
 
 
         return view;
@@ -233,25 +221,28 @@ public class PetServicesFragment extends Fragment implements Serializable, View.
     }
 
 
-    private void doctorSearchResponseCall(String searchString, int communication_type) {
+    private void ServiceCatResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-        Call<DoctorSearchResponse> call = apiInterface.doctorSearchResponseCall(RestUtils.getContentType(), doctorSearchRequest(searchString,communication_type));
-        Log.w(TAG,"DoctorSearchResponse url  :%s"+" "+ call.request().url().toString());
+        Call<ServiceCatResponse> call = apiInterface.ServiceCatResponseCall(RestUtils.getContentType(), serviceCatRequest());
+        Log.w(TAG,"ServiceCatResponseCall url  :%s"+" "+ call.request().url().toString());
 
-        call.enqueue(new Callback<DoctorSearchResponse>() {
+        call.enqueue(new Callback<ServiceCatResponse>() {
             @Override
-            public void onResponse(@NonNull Call<DoctorSearchResponse> call, @NonNull Response<DoctorSearchResponse> response) {
+            public void onResponse(@NonNull Call<ServiceCatResponse> call, @NonNull Response<ServiceCatResponse> response) {
                 avi_indicator.smoothToHide();
-                Log.w(TAG,"DoctorSearchResponse" + new Gson().toJson(response.body()));
+                Log.w(TAG,"ServiceCatResponseCall" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
 
 
                         if (response.body().getData() != null) {
-                            doctorDetailsResponseList = response.body().getData();
-                            Log.w(TAG, "doctorDetailsResponseList Size" + doctorDetailsResponseList.size());
+                            serviceCatList = response.body().getData();
+                            if(serviceCatList != null && serviceCatList.size()>0){
+                                setViewPetServices(serviceCatList);
+                            }
+
 
 
                         }
@@ -270,34 +261,31 @@ public class PetServicesFragment extends Fragment implements Serializable, View.
 
             @SuppressLint("LongLogTag")
             @Override
-            public void onFailure(@NonNull Call<DoctorSearchResponse> call,@NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ServiceCatResponse> call,@NonNull Throwable t) {
                 avi_indicator.smoothToHide();
-                Log.e("DoctorSearchResponse", "--->" + t.getMessage());
+                Log.e(" ServiceCatResponse flr", "--->" + t.getMessage());
             }
         });
 
     }
-    private void setViewPetServices(List<DoctorSearchResponse.DataBean> doctorDetailsResponseList) {
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.HORIZONTAL);
-        rv_popular_services.setLayoutManager(staggeredGridLayoutManager);
-        rv_popular_services.setItemAnimator(new DefaultItemAnimator());
-        PetServicesAdapter petServicesAdapter = new PetServicesAdapter(mContext, doctorDetailsResponseList);
-        rv_popular_services.setAdapter(petServicesAdapter);
-    }
-    private DoctorSearchRequest doctorSearchRequest(String searchString, int communication_type) {
+
+    private ServiceCatRequest serviceCatRequest() {
         /*
-         * search_string :
-         * communication_type : 0
-         * user_id : 5fd227ac80791a71361baad3
+         * user_id : 5fd778437aa4cc1c6a1e5632
          */
+        ServiceCatRequest serviceCatRequest = new ServiceCatRequest();
+        serviceCatRequest.setUser_id(userid);
+        Log.w(TAG,"serviceCatRequest"+ new Gson().toJson(serviceCatRequest));
+        return serviceCatRequest;
+    }
 
+    private void setViewPetServices(List<ServiceCatResponse.DataBean> serviceCatList) {
+        // Setting the layout as Staggered Grid for vertical orientation
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
+        rv_popular_services.setLayoutManager(staggeredGridLayoutManager);
 
-        DoctorSearchRequest doctorSearchRequest = new DoctorSearchRequest();
-        doctorSearchRequest.setSearch_string(searchString);
-        doctorSearchRequest.setCommunication_type(communication_type);
-        doctorSearchRequest.setUser_id(userid);
-        Log.w(TAG,"doctorSearchRequest"+ new Gson().toJson(doctorSearchRequest));
-        return doctorSearchRequest;
+        PetServicesAdapter petServicesAdapter = new PetServicesAdapter(mContext, serviceCatList);
+        rv_popular_services.setAdapter(petServicesAdapter);
     }
 
 
@@ -359,11 +347,6 @@ public class PetServicesFragment extends Fragment implements Serializable, View.
             }
         }
     }
-
-
-
-
-
 
 
 

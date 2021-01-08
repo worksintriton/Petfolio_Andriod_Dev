@@ -109,7 +109,42 @@ public class SPServiceListResponse {
              */
 
             private String service_list;
+            private String bus_service_list;
+            private String time_slots;
+            private Integer amount;
+            private boolean isChbxChecked;
 
+            public boolean isChbxChecked() {
+                return isChbxChecked;
+            }
+
+            public void setChbxChecked(boolean chbxChecked) {
+                isChbxChecked = chbxChecked;
+            }
+
+            public String getBus_service_list() {
+                return bus_service_list;
+            }
+
+            public void setBus_service_list(String bus_service_list) {
+                this.bus_service_list = bus_service_list;
+            }
+
+            public String getTime_slots() {
+                return time_slots;
+            }
+
+            public void setTime_slots(String time_slots) {
+                this.time_slots = time_slots;
+            }
+
+            public Integer getAmount() {
+                return amount;
+            }
+
+            public void setAmount(Integer amount) {
+                this.amount = amount;
+            }
 
             public String getService_list() {
                 return service_list;

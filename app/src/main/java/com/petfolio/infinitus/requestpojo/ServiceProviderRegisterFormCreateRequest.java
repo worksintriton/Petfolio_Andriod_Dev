@@ -216,11 +216,21 @@ public class ServiceProviderRegisterFormCreateRequest {
         /**
          * bus_service_list : Service - 1
          * time_slots : 15 mins
+         * amount : 0
          */
 
         private String bus_service_list;
         private String time_slots;
+        private Integer amount;
 
+
+        public Integer getAmount() {
+            return amount;
+        }
+
+        public void setAmount(Integer amount) {
+            this.amount = amount;
+        }
 
         public String getBus_service_list() {
             return bus_service_list;
