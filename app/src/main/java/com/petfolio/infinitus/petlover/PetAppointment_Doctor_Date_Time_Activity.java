@@ -363,15 +363,6 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
 
     }
-
-
-
-
-
-
-
-
-
     private void petDoctorAvailableTimeResponseCall(String Date) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -509,9 +500,6 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
     }
 
-
-
-
     public void showErrorLoading(String errormesage){
         alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage(errormesage);
@@ -530,7 +518,6 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
         }
     }
-
 
     @Override
     public void onBackPressed() {
@@ -625,11 +612,11 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         /*
          * Booking_Date : 02-12-2020
          * Booking_Time : 09:00 AM
-         * user_id : 5fc4eb2c913fec4204e4b15d
+         * doctor_id : 5fc4eb2c913fec4204e4b15d
          */
 
         AppointmentCheckRequest appointmentCheckRequest = new AppointmentCheckRequest();
-        appointmentCheckRequest.setUser_id(doctorid);
+        appointmentCheckRequest.setDoctor_id(doctorid);
         appointmentCheckRequest.setBooking_Date(Doctor_ava_Date);
         appointmentCheckRequest.setBooking_Time(selectedTimeSlot);
         Log.w(TAG,"appointmentCheckRequest"+ "--->" + new Gson().toJson(appointmentCheckRequest));

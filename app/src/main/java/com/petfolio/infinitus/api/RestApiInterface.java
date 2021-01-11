@@ -42,6 +42,7 @@ import com.petfolio.infinitus.requestpojo.ProfileUpdateRequest;
 import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
 import com.petfolio.infinitus.requestpojo.SPAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.SPCheckStatusRequest;
+import com.petfolio.infinitus.requestpojo.SPCreateAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.SPDetailsByUserIdRequest;
 import com.petfolio.infinitus.requestpojo.SPDetailsRequest;
 import com.petfolio.infinitus.requestpojo.SPMyCalendarAvlDaysRequest;
@@ -95,7 +96,9 @@ import com.petfolio.infinitus.responsepojo.PrescriptionCreateResponse;
 import com.petfolio.infinitus.responsepojo.ProfileUpdateResponse;
 import com.petfolio.infinitus.responsepojo.ResendOTPResponse;
 import com.petfolio.infinitus.responsepojo.SPAppointmentResponse;
+import com.petfolio.infinitus.responsepojo.SPAvailableTimeResponse;
 import com.petfolio.infinitus.responsepojo.SPCheckStatusResponse;
+import com.petfolio.infinitus.responsepojo.SPCreateAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.SPDetailsRepsonse;
 import com.petfolio.infinitus.responsepojo.SPServiceListResponse;
 import com.petfolio.infinitus.responsepojo.SPSpecificServiceDetailsResponse;
@@ -257,6 +260,11 @@ public interface RestApiInterface {
     Call<SPDetailsRepsonse>SPDetailsRepsonseCall(@Header("Content-Type") String type, @Body SPDetailsRequest spDetailsRequest );
 
 
+    /*SP available timeslot*/
+    @POST("sp_available_time/get_sp_new")
+    Call<SPAvailableTimeResponse>spAvailableTimeResponseCall(@Header("Content-Type") String type, @Body PetDoctorAvailableTimeRequest petDoctorAvailableTimeRequest   );
+
+
     /*Doctor*/
 
     /*Doctor Business info create*/
@@ -396,6 +404,11 @@ public interface RestApiInterface {
     @POST("sp_holiday/delete")
     Call<HolidayDeleteResponse>spHolidayDeleteResponseCall(@Header("Content-Type") String type, @Body HolidayDeleteRequest holidayDeleteRequest  );
 
+
+
+    /*SP Create Appointment*/
+    @POST(" sp_appointments/mobile/create")
+    Call<SPCreateAppointmentResponse>SPCreateAppointmentResponseCall(@Header("Content-Type") String type, @Body SPCreateAppointmentRequest spCreateAppointmentRequest);
 
 
 

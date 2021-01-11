@@ -446,12 +446,31 @@ public class SPDetailsRepsonse {
          * image_path : SP - 6
          * title : http://mysalveo.com/api/uploads/images.jpeg
          * count : 0
+         *"amount": 200,
+         * "time": "15 mins"
          */
 
         private String image_path;
         private String title;
         private int count;
+        private int amount;
+        private String time;
 
+        public int getAmount() {
+            return amount;
+        }
+
+        public void setAmount(int amount) {
+            this.amount = amount;
+        }
+
+        public String getTime() {
+            return time;
+        }
+
+        public void setTime(String time) {
+            this.time = time;
+        }
 
         public String getImage_path() {
             return image_path;

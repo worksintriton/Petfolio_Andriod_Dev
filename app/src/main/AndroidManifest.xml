@@ -303,6 +303,7 @@
 
 
         <!-- Service Provider -->
+
         <activity
             android:name=".serviceprovider.ServiceProviderRegisterFormActivity"
             android:screenOrientation="portrait"

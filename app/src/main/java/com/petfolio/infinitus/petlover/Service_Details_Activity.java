@@ -111,6 +111,10 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
     private String spid,catid;
     private List<SPDetailsRepsonse.DataBean.BusServiceGallBean> spServiceGalleryResponseList;
     private String from;
+    private String spuserid;
+    private String selectedServiceTitle;
+    private String servicetime;
+    private int serviceamount;
 
 
     @Override
@@ -165,6 +169,10 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
         intent.putExtra("spid",spid);
         intent.putExtra("catid",catid);
         intent.putExtra("from",from);
+        intent.putExtra("spuserid",spuserid);
+        intent.putExtra("selectedServiceTitle",selectedServiceTitle);
+        intent.putExtra("serviceamount",serviceamount);
+        intent.putExtra("servicetime",servicetime);
         startActivity(intent);
     }
 
@@ -203,7 +211,10 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
                         int distance =  response.body().getData().getDistance();
                         String location =  response.body().getData().getSp_loc();
                         String selectedServiceImagepath =  response.body().getDetails().getImage_path();
-                        String selectedServiceTitle =  response.body().getDetails().getTitle();
+                         selectedServiceTitle =  response.body().getDetails().getTitle();
+                         serviceamount =  response.body().getDetails().getAmount();
+                         servicetime =  response.body().getDetails().getTime();
+                         spuserid = response.body().getData().getUser_id();
 
                         if(serviceprovidingcompanyname != null && !serviceprovidingcompanyname.isEmpty()){
                             txt_sp_companyname.setText(serviceprovidingcompanyname);

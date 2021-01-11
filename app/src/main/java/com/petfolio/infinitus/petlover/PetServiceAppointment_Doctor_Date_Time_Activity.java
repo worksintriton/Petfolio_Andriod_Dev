@@ -34,6 +34,7 @@ import com.petfolio.infinitus.requestpojo.AppointmentCheckRequest;
 import com.petfolio.infinitus.requestpojo.PetDoctorAvailableTimeRequest;
 import com.petfolio.infinitus.responsepojo.AppointmentCheckResponse;
 import com.petfolio.infinitus.responsepojo.PetDoctorAvailableTimeResponse;
+import com.petfolio.infinitus.responsepojo.SPAvailableTimeResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -85,9 +86,9 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
 
 
     private String _id = "";
-    private String Doctor_name ="";
-    private String Doctor_email_id ="";
-    private String Doctor_ava_Date = "";
+    private String SP_name ="";
+    private String SP_email_id ="";
+    private String SP_ava_Date = "";
     private String selectedTimeSlot = "";
     private String Comm_type_chat = "";
     private String Comm_type_video = "";
@@ -113,11 +114,9 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
     @BindView(R.id.datePickerTimeline)
     DatePickerTimeline datePickerTimeline ;
 
-    private List<PetDoctorAvailableTimeResponse.DataBean> doctorDateAvailabilityResponseList;
-    private List<PetDoctorAvailableTimeResponse.DataBean.TimesBean> timesBeanList;
+
     private String petid,allergies,probleminfo;
     private String userid;
-    private String doctorid;
     private String selectedAppointmentType;
     private double totalamount =1;
     private String Payment_id;
@@ -126,12 +125,19 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
     private int amount;
     private String communicationtype;
     private String spid,catid,from;
+    private String spuserid;
+    private String selectedServiceTitle;
+
+    private String servicetime;
+    private int serviceamount;
+    private List<SPAvailableTimeResponse.DataBean> spDateAvailabilityResponseList;
+    private List<SPAvailableTimeResponse.DataBean.TimesBean> timesBeanList;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_petappointment_doctor_date_time);
+        setContentView(R.layout.activity_petappointment_sp_date_time);
         Log.w(TAG,"onCreateView");
 
         ButterKnife.bind(this);
@@ -164,6 +170,10 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
             spid = extras.getString("spid");
             catid = extras.getString("catid");
             from = extras.getString("from");
+            spuserid = extras.getString("spuserid");
+            selectedServiceTitle = extras.getString("selectedServiceTitle");
+            serviceamount = extras.getInt("serviceamount");
+            servicetime = extras.getString("servicetime");
             Log.w(TAG,"spid : "+spid +" catid : "+catid+" from : "+from);
         }
 
@@ -176,7 +186,7 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
 
         if (new ConnectionDetector(PetServiceAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetServiceAppointment_Doctor_Date_Time_Activity.this)) {
 
-            petDoctorAvailableTimeResponseCall(formattedDate);
+            spAvailableTimeResponseCall(formattedDate);
         }
 
 
@@ -209,7 +219,9 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
                 if(selectedTimeSlot != null && !selectedTimeSlot.isEmpty()){
 
                     if (new ConnectionDetector(PetServiceAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetServiceAppointment_Doctor_Date_Time_Activity.this)) {
-                        appointmentCheckResponseCall();
+                       // appointmentCheckResponseCall();
+
+                        gotoServiceBookAppoinment();
                     }
                 }else{
                     showErrorLoading("Please select time slot ");
@@ -222,40 +234,7 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
 
 
 
-      /*  calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
 
-                String strdayOfMonth = "";
-                String strMonth = "";
-                int month1 =(month + 1);
-                if(dayOfMonth == 9 || dayOfMonth <9){
-                    strdayOfMonth = "0"+dayOfMonth;
-                    Log.w(TAG,"Selected dayOfMonth-->"+strdayOfMonth);
-                }else{
-                    strdayOfMonth = String.valueOf(dayOfMonth);
-                }
-
-                if(month1 == 9 || month1 <9){
-                    strMonth = "0"+month1;
-                    Log.w(TAG,"Selected month1-->"+strMonth);
-                }else{
-                    strMonth = String.valueOf(month1);
-                }
-                //String Date = dayOfMonth + "-" + (month + 1) + "-" + year;
-
-                String Date = strdayOfMonth + "-" + strMonth + "-" + year;
-                Log.w(TAG,"Selected Date-->"+Date);
-
-                if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
-
-                    petDoctorAvailableTimeResponseCall(formattedDate);
-                }
-
-
-
-            }
-        });*/
 
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -295,7 +274,7 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
                 Log.w(TAG,"Selected Date-->"+Date);
 
                 if (new ConnectionDetector(PetServiceAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetServiceAppointment_Doctor_Date_Time_Activity.this)) {
-                    petDoctorAvailableTimeResponseCall(Date);
+                    spAvailableTimeResponseCall(Date);
                 }
 
 
@@ -335,38 +314,38 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
 
 
 
-    private void petDoctorAvailableTimeResponseCall(String Date) {
+    private void spAvailableTimeResponseCall(String Date) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<PetDoctorAvailableTimeResponse> call = ApiService.petDoctorAvailableTimeResponseCall(RestUtils.getContentType(),petDoctorAvailableTimeRequest(Date));
+        Call<SPAvailableTimeResponse> call = ApiService.spAvailableTimeResponseCall(RestUtils.getContentType(),petDoctorAvailableTimeRequest(Date));
 
-        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+        Log.w(TAG,"spAvailableTimeResponseCall url  :%s"+ call.request().url().toString());
 
-        call.enqueue(new Callback<PetDoctorAvailableTimeResponse>() {
+        call.enqueue(new Callback<SPAvailableTimeResponse>() {
             @Override
-            public void onResponse(@NonNull Call<PetDoctorAvailableTimeResponse> call, @NonNull Response<PetDoctorAvailableTimeResponse> response) {
+            public void onResponse(@NonNull Call<SPAvailableTimeResponse> call, @NonNull Response<SPAvailableTimeResponse> response) {
                 avi_indicator.smoothToHide();
-                Log.w(TAG,"PetDoctorAvailableTimeResponse"+ "--->" + new Gson().toJson(response.body()));
+                Log.w(TAG,"spAvailableTimeResponseCall"+ "--->" + new Gson().toJson(response.body()));
 
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        doctorDateAvailabilityResponseList = response.body().getData();
+                        spDateAvailabilityResponseList = response.body().getData();
                         timesBeanList = response.body().getData().get(0).getTimes();
-                        Log.w(TAG,"Size"+doctorDateAvailabilityResponseList.size());
+                        Log.w(TAG,"Size"+spDateAvailabilityResponseList.size());
                         if(!response.body().getData().isEmpty()){
-                            Doctor_name = response.body().getData().get(0).getDoctor_name();
-                            Doctor_email_id = response.body().getData().get(0).getDoctor_email_id();
-                            Doctor_ava_Date = response.body().getData().get(0).getDoctor_ava_Date();
+                            SP_name = response.body().getData().get(0).getSp_name();
+                            SP_email_id = response.body().getData().get(0).getSp_email_id();
+                            SP_ava_Date = response.body().getData().get(0).getSp_ava_Date();
                             Comm_type_chat = response.body().getData().get(0).getComm_type_chat();
                             Comm_type_video = response.body().getData().get(0).getComm_type_video();
-                            Log.w(TAG,"doctorDateAvailabilityResponseCall Comm_type_chat : "+Comm_type_chat+" Comm_type_video : "+Comm_type_video);
+                            Log.w(TAG,"doctorDateAvailabilityResponseCall SP_ava_Date: "+SP_ava_Date);
                             sub_layer1.setVisibility(View.VISIBLE);
                             btn_bookappointment.setVisibility(View.VISIBLE);
                             List<PetDoctorAvailableTimeResponse.DataBean.TimesBean>timeBeanList = new ArrayList<>();
 
-                            if(doctorDateAvailabilityResponseList.size()>0) {
+                            if(spDateAvailabilityResponseList.size()>0) {
 
 
                                 setViewAvlDays();
@@ -428,10 +407,10 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
             }
 
             @Override
-            public void onFailure(@NonNull Call<PetDoctorAvailableTimeResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<SPAvailableTimeResponse> call, @NonNull Throwable t) {
                 avi_indicator.smoothToHide();
 
-                Log.w(TAG,"PetDoctorAvailableTimeResponseflr"+"--->" + t.getMessage());
+                Log.w(TAG,"spAvailableTimeResponseCall flr"+"--->" + t.getMessage());
             }
         });
 
@@ -444,17 +423,18 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
          * cur_date : 31-11-2020
          * cur_time : 01:00 AM
          */
+
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
         String currentDateandTime24hrs = simpleDateFormat.format(new Date());
         String currenttime = currentDateandTime24hrs.substring(currentDateandTime24hrs.indexOf(' ') + 1);
         String currentdate =  currentDateandTime24hrs.substring(0, currentDateandTime24hrs.indexOf(' '));
 
         PetDoctorAvailableTimeRequest petDoctorAvailableTimeRequest = new PetDoctorAvailableTimeRequest();
-        petDoctorAvailableTimeRequest.setUser_id(doctorid);
+        petDoctorAvailableTimeRequest.setUser_id(spuserid);
         petDoctorAvailableTimeRequest.setDate(Date);
         petDoctorAvailableTimeRequest.setCur_time(currenttime);
         petDoctorAvailableTimeRequest.setCur_date(currentdate);
-        Log.w(TAG,"petDoctorAvailableTimeRequest"+ "--->" + new Gson().toJson(petDoctorAvailableTimeRequest));
+        Log.w(TAG,"spAvailableTimeResponseRequest"+ "--->" + new Gson().toJson(petDoctorAvailableTimeRequest));
         return petDoctorAvailableTimeRequest;
     }
     private void setViewAvlDays() {
@@ -520,68 +500,22 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
     }
 
 
-    private void appointmentCheckResponseCall() {
-        avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();
-        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<AppointmentCheckResponse> call = ApiService.appointmentCheckResponseCall(RestUtils.getContentType(),appointmentCheckRequest());
-        Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
-        call.enqueue(new Callback<AppointmentCheckResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<AppointmentCheckResponse> call, @NonNull Response<AppointmentCheckResponse> response) {
-                avi_indicator.smoothToHide();
-                Log.w(TAG,"appointmentCheckResponseCall"+ "--->" + new Gson().toJson(response.body()));
-
-
-                if (response.body() != null) {
-                    if(response.body().getCode() == 200){
-                        Intent intent = new Intent(PetServiceAppointment_Doctor_Date_Time_Activity.this,BookAppointmentActivity.class);
-                        intent.putExtra("doctorid",doctorid);
-                        intent.putExtra("fromactivity",fromactivity);
-                        intent.putExtra("Doctor_ava_Date",Doctor_ava_Date);
-                        intent.putExtra("selectedTimeSlot",selectedTimeSlot);
-                        intent.putExtra("amount",amount);
-                        intent.putExtra("communicationtype",communicationtype);
-                        intent.putExtra("fromto",fromto);
-                        startActivity(intent);
-
-                     /*  // startPayment();
-                        if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
-                            petAppointmentCreateResponseCall();
-                        }*/
-
-                    }else{
-                        showErrorLoading(response.body().getMessage());
-                    }
-
-                }
+    private void gotoServiceBookAppoinment(){
+        Intent intent = new Intent(PetServiceAppointment_Doctor_Date_Time_Activity.this,ServiceBookAppointmentActivity.class);
+        intent.putExtra("spid",spid);
+        intent.putExtra("catid",catid);
+        intent.putExtra("from",from);
+        intent.putExtra("spuserid",spuserid);
+        intent.putExtra("selectedServiceTitle",selectedServiceTitle);
+        intent.putExtra("serviceamount",serviceamount);
+        intent.putExtra("servicetime",servicetime);
+        intent.putExtra("SP_ava_Date",SP_ava_Date);
+        intent.putExtra("selectedTimeSlot",selectedTimeSlot);
+        Log.w(TAG,"gotoServiceBookAppoinment : "+"SP_ava_Date : "+SP_ava_Date);
+        startActivity(intent);
 
 
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<AppointmentCheckResponse> call, @NonNull Throwable t) {
-                avi_indicator.smoothToHide();
-
-                Log.w(TAG,"AppointmentCheckResponseflr"+"--->" + t.getMessage());
-            }
-        });
-
-    }
-    private AppointmentCheckRequest appointmentCheckRequest() {
-        /*
-         * Booking_Date : 02-12-2020
-         * Booking_Time : 09:00 AM
-         * user_id : 5fc4eb2c913fec4204e4b15d
-         */
-
-        AppointmentCheckRequest appointmentCheckRequest = new AppointmentCheckRequest();
-        appointmentCheckRequest.setUser_id(doctorid);
-        appointmentCheckRequest.setBooking_Date(Doctor_ava_Date);
-        appointmentCheckRequest.setBooking_Time(selectedTimeSlot);
-        Log.w(TAG,"appointmentCheckRequest"+ "--->" + new Gson().toJson(appointmentCheckRequest));
-        return appointmentCheckRequest;
     }
 
 

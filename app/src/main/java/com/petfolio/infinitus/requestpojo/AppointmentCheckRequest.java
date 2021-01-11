@@ -5,12 +5,12 @@ public class AppointmentCheckRequest {
     /**
      * Booking_Date : 02-12-2020
      * Booking_Time : 09:00 AM
-     * user_id : 5fc4eb2c913fec4204e4b15d
+     * doctor_id : 5fc4eb2c913fec4204e4b15d
      */
 
     private String Booking_Date;
     private String Booking_Time;
-    private String user_id;
+    private String doctor_id;
 
 
     public String getBooking_Date() {
@@ -32,13 +32,11 @@ public class AppointmentCheckRequest {
 
     }
 
-
-    public String getUser_id() {
-        return user_id;
+    public String getDoctor_id() {
+        return doctor_id;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
-
+    public void setDoctor_id(String doctor_id) {
+        this.doctor_id = doctor_id;
     }
 }

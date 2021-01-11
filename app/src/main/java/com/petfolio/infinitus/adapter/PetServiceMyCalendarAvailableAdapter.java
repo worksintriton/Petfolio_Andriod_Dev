@@ -16,6 +16,7 @@ import com.petfolio.infinitus.interfaces.OnItemSelectedTime;
 import com.petfolio.infinitus.petlover.PetAppointment_Doctor_Date_Time_Activity;
 import com.petfolio.infinitus.petlover.PetServiceAppointment_Doctor_Date_Time_Activity;
 import com.petfolio.infinitus.responsepojo.PetDoctorAvailableTimeResponse;
+import com.petfolio.infinitus.responsepojo.SPAvailableTimeResponse;
 
 import java.util.List;
 
@@ -25,7 +26,8 @@ public class PetServiceMyCalendarAvailableAdapter extends  RecyclerView.Adapter<
     private static final int TYPE_LOADING = 5;
     private  String TAG = "PetMyCalendarAvailableAdapter";
 
-    private List<PetDoctorAvailableTimeResponse.DataBean.TimesBean> timesBeanList;
+
+    private List<SPAvailableTimeResponse.DataBean.TimesBean> timesBeanList;
 
 
 
@@ -42,7 +44,7 @@ public class PetServiceMyCalendarAvailableAdapter extends  RecyclerView.Adapter<
     private int selectedPosition =-1;
 
 
-    public PetServiceMyCalendarAvailableAdapter(Context context, List<PetDoctorAvailableTimeResponse.DataBean.TimesBean> timesBeanList, RecyclerView inbox_list, PetServiceAppointment_Doctor_Date_Time_Activity petServiceAppointment_doctor_date_time_activity) {
+    public PetServiceMyCalendarAvailableAdapter(Context context, List<SPAvailableTimeResponse.DataBean.TimesBean> timesBeanList, RecyclerView inbox_list, PetServiceAppointment_Doctor_Date_Time_Activity petServiceAppointment_doctor_date_time_activity) {
         this.timesBeanList = timesBeanList;
         this.context = context;
         this.mCallback = (OnItemSelectedTime)petServiceAppointment_doctor_date_time_activity;

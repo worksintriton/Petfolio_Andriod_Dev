@@ -110,7 +110,7 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctor_profile_screen);
+        setContentView(R.layout.activity_pet_lover_profile_screen);
         ButterKnife.bind(this);
 
         Log.w(TAG,"onCreate : ");

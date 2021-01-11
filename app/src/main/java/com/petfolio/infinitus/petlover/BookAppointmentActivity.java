@@ -203,6 +203,9 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     private int amount;
     private String communicationtype;
 
+    HashMap<String, String> hashMap_selectyourpet = new HashMap<>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -254,15 +257,33 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
             public void onItemSelected(AdapterView<?> parent, View view, int arg2, long arg3) {
                 ((TextView) parent.getChildAt(0)).setTextColor(getResources().getColor(R.color.green));
                 strSelectyourPetType = spr_selectyourpettype.getSelectedItem().toString();
-                Log.w(TAG, "strPetType :" + strSelectyourPetType);
+                String selectedpetid = hashMap_selectyourpet.get(strSelectyourPetType);
+
+                Log.w(TAG, "strPetType :" + strSelectyourPetType+" selectedpetid : "+selectedpetid);
                 if (!strSelectyourPetType.equalsIgnoreCase("Select Your Pet")) {
                     isSelectYourPet = true;
                     txt_or.setVisibility(View.GONE);
                     txt_pettype.setVisibility(View.VISIBLE);
                     txt_petbreed.setVisibility(View.VISIBLE);
                     img_pet_imge.setVisibility(View.VISIBLE);
+                    edt_petname.setVisibility(View.GONE);
                     edt_petname.setEnabled(false);
                     edt_petname.setInputType(InputType.TYPE_NULL);
+                    if(petDetailsResponseByUserIdList != null && petDetailsResponseByUserIdList.size()>0) {
+                        for(int i = 0;i<petDetailsResponseByUserIdList.size();i++) {
+                            if(selectedpetid != null && selectedpetid.equalsIgnoreCase(petDetailsResponseByUserIdList.get(i).get_id())) {
+                                petName = petDetailsResponseByUserIdList.get(i).getPet_name();
+                                petType = petDetailsResponseByUserIdList.get(i).getPet_type();
+                                petBreed = petDetailsResponseByUserIdList.get(i).getPet_breed();
+                                petId = petDetailsResponseByUserIdList.get(i).get_id();
+                                petimage = petDetailsResponseByUserIdList.get(i).getPet_img();
+
+                                Log.w(TAG, "for petType-->" + petType + "  petName : "+petName+" petId : "+petId+" petimage : "+petimage);
+
+                            }
+                        }
+                    }
+
 
 
                     edt_petname.setText(petName);
@@ -290,6 +311,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                 else {
                     isSelectYourPet = false;
                     txt_or.setVisibility(View.VISIBLE);
+                    edt_petname.setVisibility(View.VISIBLE);
 
                     txt_pettype.setVisibility(View.GONE);
                     txt_petbreed.setVisibility(View.GONE);
@@ -462,7 +484,6 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         });
 
     }
-
     private void setPetType(List<PetTypeListResponse.DataBean.UsertypedataBean> usertypedataBeanList) {
         ArrayList<String> pettypeArrayList = new ArrayList<>();
         pettypeArrayList.add("Select Pet Type");
@@ -481,8 +502,6 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
         }
     }
-
-
     private void breedTypeResponseByPetIdCall(String petTypeId) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -601,16 +620,10 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         ArrayList<String> pettypeArrayList = new ArrayList<>();
         pettypeArrayList.add("Select Your Pet");
         for (int i = 0; i < petDetailsResponseByUserIdList.size(); i++) {
-
-            petName = petDetailsResponseByUserIdList.get(i).getPet_name();
-            petType = petDetailsResponseByUserIdList.get(i).getPet_type();
-            petBreed = petDetailsResponseByUserIdList.get(i).getPet_breed();
-            petId =   petDetailsResponseByUserIdList.get(i).get_id();
-            petimage =   petDetailsResponseByUserIdList.get(i).getPet_img();
-
-
-            Log.w(TAG, "petType-->" + petType);
-            pettypeArrayList.add(petType);
+            hashMap_selectyourpet.put(petDetailsResponseByUserIdList.get(i).getPet_name(), petDetailsResponseByUserIdList.get(i).get_id());
+            String petName = petDetailsResponseByUserIdList.get(i).getPet_name();
+            Log.w(TAG, "petName-->" + petName);
+            pettypeArrayList.add(petName);
 
             ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(BookAppointmentActivity.this, R.layout.spinner_item, pettypeArrayList);
             spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item); // The drop down view
