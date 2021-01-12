@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.doctor.PrescriptionActivity;
 import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
+import com.petfolio.infinitus.interfaces.OnAppointmentComplete;
 import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.SPAppointmentResponse;
 
@@ -34,15 +35,17 @@ public class SPNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.
     SPAppointmentResponse.DataBean currentItem;
 
     private OnAppointmentCancel onAppointmentCancel;
+    private OnAppointmentComplete onAppointmentComplete;
     private int size;
 
 
 
-    public SPNewAppointmentAdapter(Context context, List<SPAppointmentResponse.DataBean> newAppointmentResponseList, RecyclerView inbox_list, int size, OnAppointmentCancel onAppointmentCancel) {
+    public SPNewAppointmentAdapter(Context context, List<SPAppointmentResponse.DataBean> newAppointmentResponseList, RecyclerView inbox_list, int size, OnAppointmentCancel onAppointmentCancel,OnAppointmentComplete onAppointmentComplete) {
         this.newAppointmentResponseList = newAppointmentResponseList;
         this.context = context;
         this.size = size;
         this.onAppointmentCancel = onAppointmentCancel;
+        this.onAppointmentComplete = onAppointmentComplete;
 
 
 
@@ -70,11 +73,12 @@ public class SPNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.
         currentItem = newAppointmentResponseList.get(position);
         holder.txt_petname.setText(newAppointmentResponseList.get(position).getPet_id().getPet_name());
         holder.txt_pettype.setText(newAppointmentResponseList.get(position).getPet_id().getPet_type());
-        if(newAppointmentResponseList.get(position).getAppointment_types() != null){
-            holder.txt_type.setText(newAppointmentResponseList.get(position).getAppointment_types());
+        holder.txt_lbl_type.setText("Service Name");
+        if(newAppointmentResponseList.get(position).getService_name() != null){
+            holder.txt_type.setText(newAppointmentResponseList.get(position).getService_name());
         }
         if(newAppointmentResponseList.get(position).getService_amount() != null){
-            holder.txt_service_cost.setText(newAppointmentResponseList.get(position).getService_amount());
+            holder.txt_service_cost.setText("\u20B9 "+newAppointmentResponseList.get(position).getService_amount());
         }
 
         if(newAppointmentResponseList.get(position).getBooking_date_time() != null){
@@ -108,6 +112,7 @@ public class SPNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.
             @Override
             public void onClick(View v) {
 
+                onAppointmentComplete.onAppointmentComplete(newAppointmentResponseList.get(position).get_id());
 
             }
         });
@@ -115,7 +120,7 @@ public class SPNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.
         holder.btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { Intent i = new Intent(context, PrescriptionActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                onAppointmentCancel.onAppointmentCancel(newAppointmentResponseList.get(position).get_id());
+                onAppointmentCancel.onAppointmentCancel(newAppointmentResponseList.get(position).get_id(),newAppointmentResponseList.get(position).getAppointment_types());
 
             }
         });
@@ -138,7 +143,7 @@ public class SPNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.
     }
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_petname,txt_pettype,txt_type,txt_service_cost,txt_bookedon;
+        public TextView txt_petname,txt_pettype,txt_type,txt_service_cost,txt_bookedon,txt_lbl_type;
         public ImageView img_pet_imge,img_emergency_appointment;
         public Button btn_cancel,btn_complete;
         public LinearLayout ll_new;
@@ -150,6 +155,7 @@ public class SPNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.
             img_pet_imge = itemView.findViewById(R.id.img_pet_imge);
             txt_petname = itemView.findViewById(R.id.txt_petname);
             txt_pettype = itemView.findViewById(R.id.txt_pettype);
+            txt_lbl_type = itemView.findViewById(R.id.txt_lbl_type);
             txt_type = itemView.findViewById(R.id.txt_type);
             txt_service_cost = itemView.findViewById(R.id.txt_service_cost);
             txt_bookedon = itemView.findViewById(R.id.txt_bookedon);

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.petfolio.infinitus.R;
 
 import com.petfolio.infinitus.interfaces.AddReviewListener;
+import com.petfolio.infinitus.responsepojo.PetAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
 
 import java.util.List;
@@ -24,15 +25,14 @@ import java.util.List;
 public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private  String TAG = "PetCompletedAppointmentAdapter";
-    private List<PetNewAppointmentResponse.DataBean> completedAppointmentResponseList;
+    private List<PetAppointmentResponse.DataBean> completedAppointmentResponseList;
     private Context context;
 
-    PetNewAppointmentResponse.DataBean currentItem;
     int size;
     private AddReviewListener addReviewListener;
 
 
-    public PetCompletedAppointmentAdapter(Context context, List<PetNewAppointmentResponse.DataBean> completedAppointmentResponseList, RecyclerView inbox_list, int size,AddReviewListener addReviewListener) {
+    public PetCompletedAppointmentAdapter(Context context, List<PetAppointmentResponse.DataBean> completedAppointmentResponseList, RecyclerView inbox_list, int size,AddReviewListener addReviewListener) {
         this.completedAppointmentResponseList = completedAppointmentResponseList;
         this.context = context;
         this.size = size;
@@ -57,15 +57,23 @@ public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
 
     @SuppressLint("SetTextI18n")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
-        Log.w(TAG,"Pet name-->"+completedAppointmentResponseList.get(position).getPet_id().getPet_name());
-        holder.txt_petname.setText(completedAppointmentResponseList.get(position).getDoc_business_info().get(0).getClinic_name());
-        holder.txt_pettype.setText(completedAppointmentResponseList.get(position).getPet_id().getPet_name());
+        Log.w(TAG,"Pet name-->"+completedAppointmentResponseList.get(position).getPet_name());
+        holder.txt_pettype.setText(completedAppointmentResponseList.get(position).getPet_name());
         holder.txt_completed_date.setText("Completed on:"+" "+completedAppointmentResponseList.get(position).getCompleted_at());
-        if(completedAppointmentResponseList.get(position).getAppointment_types() != null){
-            holder.txt_type.setText(completedAppointmentResponseList.get(position).getAppointment_types());
+
+
+        if(completedAppointmentResponseList.get(position).getAppointment_for() != null && completedAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("Doctor") ){
+            holder.txt_type.setText(completedAppointmentResponseList.get(position).getAppointment_for());
+            holder.txt_petname.setText(completedAppointmentResponseList.get(position).getClinic_name());
+
+
+        }else if(completedAppointmentResponseList.get(position).getAppointment_for() != null && completedAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("SP") ){
+            holder.txt_type.setText(completedAppointmentResponseList.get(position).getAppointment_for());
+            holder.txt_petname.setText(completedAppointmentResponseList.get(position).getService_provider_name());
+
         }
-        if(completedAppointmentResponseList.get(position).getService_amount() != null){
-            holder.txt_service_cost.setText(completedAppointmentResponseList.get(position).getService_amount());
+        if(completedAppointmentResponseList.get(position).getCost() != null){
+            holder.txt_service_cost.setText("\u20B9 "+completedAppointmentResponseList.get(position).getCost());
         }
 
 

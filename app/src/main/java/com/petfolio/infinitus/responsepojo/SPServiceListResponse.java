@@ -113,6 +113,15 @@ public class SPServiceListResponse {
             private String time_slots;
             private Integer amount;
             private boolean isChbxChecked;
+            private boolean isValueAdded;
+
+            public boolean isValueAdded() {
+                return isValueAdded;
+            }
+
+            public void setValueAdded(boolean valueAdded) {
+                isValueAdded = valueAdded;
+            }
 
             public boolean isChbxChecked() {
                 return isChbxChecked;

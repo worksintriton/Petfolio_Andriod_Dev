@@ -22,7 +22,6 @@ import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.doctor.PrescriptionActivity;
 import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
-import com.petfolio.infinitus.interfaces.OnItemDeleteHoliday;
 import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
 
 import java.util.List;
@@ -77,7 +76,7 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
             holder.txt_type.setText(newAppointmentResponseList.get(position).getAppointment_types());
         }
         if(newAppointmentResponseList.get(position).getService_amount() != null){
-            holder.txt_service_cost.setText(newAppointmentResponseList.get(position).getService_amount());
+            holder.txt_service_cost.setText("\u20B9 "+newAppointmentResponseList.get(position).getService_amount());
         }
 
         if(newAppointmentResponseList.get(position).getBooking_date_time() != null){
@@ -125,7 +124,7 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
         holder.btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { Intent i = new Intent(context, PrescriptionActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                onAppointmentCancel.onAppointmentCancel(newAppointmentResponseList.get(position).get_id());
+                onAppointmentCancel.onAppointmentCancel(newAppointmentResponseList.get(position).get_id(),newAppointmentResponseList.get(position).getAppointment_types());
 
             }
         });

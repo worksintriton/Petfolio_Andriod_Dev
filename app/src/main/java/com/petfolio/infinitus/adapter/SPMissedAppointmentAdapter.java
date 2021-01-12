@@ -63,11 +63,12 @@ public class SPMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerVi
         holder.txt_pettype.setText(missedAppointmentResponseList.get(position).getPet_id().getPet_type());
         holder.txt_missed_date.setText("Missed on:"+" "+missedAppointmentResponseList.get(position).getMissed_at());
 
-        if(missedAppointmentResponseList.get(position).getAppointment_types() != null){
-            holder.txt_type.setText(missedAppointmentResponseList.get(position).getAppointment_types());
+        holder.txt_lbl_type.setText("Service Name");
+        if(missedAppointmentResponseList.get(position).getService_name() != null){
+            holder.txt_type.setText(missedAppointmentResponseList.get(position).getService_name());
         }
         if(missedAppointmentResponseList.get(position).getService_amount() != null){
-            holder.txt_service_cost.setText(missedAppointmentResponseList.get(position).getService_amount());
+            holder.txt_service_cost.setText("\u20B9 "+missedAppointmentResponseList.get(position).getService_amount());
         }
         if (missedAppointmentResponseList.get(position).getPet_id().getPet_img() != null && !missedAppointmentResponseList.get(position).getPet_id().getPet_img().isEmpty()) {
 
@@ -99,17 +100,16 @@ public class SPMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerVi
     }
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_petname,txt_pettype,txt_type,txt_service_cost,txt_missed_date;
+        public TextView txt_petname,txt_pettype,txt_type,txt_service_cost,txt_missed_date,txt_lbl_type;
         public ImageView img_pet_imge;
         public Button btn_cancel,btn_complete;
-
-
 
         public ViewHolderOne(View itemView) {
             super(itemView);
             img_pet_imge = itemView.findViewById(R.id.img_pet_imge);
             txt_petname = itemView.findViewById(R.id.txt_petname);
             txt_pettype = itemView.findViewById(R.id.txt_pettype);
+            txt_lbl_type = itemView.findViewById(R.id.txt_lbl_type);
             txt_type = itemView.findViewById(R.id.txt_type);
             txt_service_cost = itemView.findViewById(R.id.txt_service_cost);
             txt_missed_date = itemView.findViewById(R.id.txt_missed_date);

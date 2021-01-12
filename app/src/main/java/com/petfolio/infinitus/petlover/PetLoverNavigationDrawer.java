@@ -194,7 +194,7 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
                     // For rest of the options we just show a toast on click
                     case R.id.nav_item_two:
-                        gotoMyOrders();
+                       // gotoMyOrders();
                         return true;
 
                     case R.id.nav_item_three:

@@ -171,21 +171,21 @@ public class FragmentPetNewOrders extends Fragment implements OnAppointmentCance
         rv_newappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_newappointment.setItemAnimator(new DefaultItemAnimator());
         int size = 3;
-        PetNewAppointmentAdapter petNewAppointmentAdapter = new PetNewAppointmentAdapter(getContext(), newAppointmentResponseList, rv_newappointment,size,this);
-        rv_newappointment.setAdapter(petNewAppointmentAdapter);
+        //PetNewAppointmentAdapter petNewAppointmentAdapter = new PetNewAppointmentAdapter(getContext(), newAppointmentResponseList, rv_newappointment,size,this);
+        //rv_newappointment.setAdapter(petNewAppointmentAdapter);
 
     }
     private void setViewLoadMore() {
         rv_newappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_newappointment.setItemAnimator(new DefaultItemAnimator());
         int size = newAppointmentResponseList.size();
-        PetNewAppointmentAdapter petNewAppointmentAdapter = new PetNewAppointmentAdapter(getContext(), newAppointmentResponseList, rv_newappointment,size,this);
-        rv_newappointment.setAdapter(petNewAppointmentAdapter);
+       // PetNewAppointmentAdapter petNewAppointmentAdapter = new PetNewAppointmentAdapter(getContext(), newAppointmentResponseList, rv_newappointment,size,this);
+       // rv_newappointment.setAdapter(petNewAppointmentAdapter);
 
     }
 
     @Override
-    public void onAppointmentCancel(String id) {
+    public void onAppointmentCancel(String id,String appointmenttype) {
         if(id != null){
             showStatusAlert(id);
         }

@@ -20,7 +20,7 @@ import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.doctor.PrescriptionActivity;
 import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
-import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
+import com.petfolio.infinitus.responsepojo.PetAppointmentResponse;
 
 import java.util.List;
 
@@ -28,16 +28,16 @@ import java.util.List;
 public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private  String TAG = "PetNewAppointmentAdapter";
-    private List<PetNewAppointmentResponse.DataBean> newAppointmentResponseList;
+    private List<PetAppointmentResponse.DataBean> newAppointmentResponseList;
     private Context context;
 
-    PetNewAppointmentResponse.DataBean currentItem;
+    PetAppointmentResponse.DataBean currentItem;
 
     private OnAppointmentCancel onAppointmentCancel;
 
     private int size;
 
-    public PetNewAppointmentAdapter(Context context, List<PetNewAppointmentResponse.DataBean> newAppointmentResponseList, RecyclerView inbox_list,int size,OnAppointmentCancel onAppointmentCancel) {
+    public PetNewAppointmentAdapter(Context context, List<PetAppointmentResponse.DataBean> newAppointmentResponseList, RecyclerView inbox_list,int size,OnAppointmentCancel onAppointmentCancel) {
         this.newAppointmentResponseList = newAppointmentResponseList;
         this.context = context;
         this.size = size;
@@ -63,26 +63,33 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
     @SuppressLint("SetTextI18n")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
-        Log.w(TAG,"Pet name-->"+newAppointmentResponseList.get(position).getPet_id().getPet_name());
+        Log.w(TAG,"Pet name-->"+newAppointmentResponseList.get(position).getPet_name());
 
         currentItem = newAppointmentResponseList.get(position);
-        holder.txt_clinicname.setText(newAppointmentResponseList.get(position).getDoc_business_info().get(0).getClinic_name());
-        holder.txt_petname.setText(newAppointmentResponseList.get(position).getPet_id().getPet_name());
+        holder.txt_petname.setText(newAppointmentResponseList.get(position).getPet_name());
 
-        if(newAppointmentResponseList.get(position).getAppointment_types() != null){
-            holder.txt_type.setText(newAppointmentResponseList.get(position).getAppointment_types());
-        }
-        if(newAppointmentResponseList.get(position).getService_amount() != null){
-            holder.txt_service_cost.setText(newAppointmentResponseList.get(position).getService_amount());
-        }
+        if(newAppointmentResponseList.get(position).getAppointment_for() != null && newAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("Doctor") ){
+            holder.txt_type.setText(newAppointmentResponseList.get(position).getAppointment_for());
+            holder.txt_clinicname.setText(newAppointmentResponseList.get(position).getClinic_name());
 
-        if(newAppointmentResponseList.get(position).getBooking_date_time() != null){
-            holder.txt_bookedon.setText("Booked for :"+" "+newAppointmentResponseList.get(position).getBooking_date_time());
+
+        }else if(newAppointmentResponseList.get(position).getAppointment_for() != null && newAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("SP") ){
+            holder.txt_type.setText(newAppointmentResponseList.get(position).getAppointment_for());
+            holder.txt_clinicname.setText(newAppointmentResponseList.get(position).getService_provider_name());
 
         }
 
+            if(newAppointmentResponseList.get(position).getCost() != null){
+            holder.txt_service_cost.setText("\u20B9 "+newAppointmentResponseList.get(position).getCost());
+            }
 
-        if(newAppointmentResponseList.get(position).getAppointment_types() != null && newAppointmentResponseList.get(position).getAppointment_types().equalsIgnoreCase("Emergency")){
+        if(newAppointmentResponseList.get(position).getBooked_at() != null){
+            holder.txt_bookedon.setText("Booked for :"+" "+newAppointmentResponseList.get(position).getBooked_at());
+
+        }
+
+
+        if(newAppointmentResponseList.get(position).getAppointment_type() != null && newAppointmentResponseList.get(position).getAppointment_type().equalsIgnoreCase("Emergency")){
         holder.img_emergency_appointment.setVisibility(View.VISIBLE);
         }else{
             holder.img_emergency_appointment.setVisibility(View.GONE);
@@ -97,10 +104,10 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
 
 
 
-        if (newAppointmentResponseList.get(0).getDoc_business_info().get(0).getClinic_pic().get(0).getClinic_pic() != null && !newAppointmentResponseList.get(0).getDoc_business_info().get(0).getClinic_pic().get(0).getClinic_pic().isEmpty()) {
+        if (newAppointmentResponseList.get(position).getPhoto() != null && !newAppointmentResponseList.get(position).getPhoto().isEmpty()) {
 
                 Glide.with(context)
-                        .load(newAppointmentResponseList.get(0).getDoc_business_info().get(0).getClinic_pic().get(0).getClinic_pic())
+                        .load(newAppointmentResponseList.get(position).getPhoto())
                         .into(holder.img_clinic_imge);
 
             }
@@ -117,7 +124,7 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
         holder.btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { Intent i = new Intent(context, PrescriptionActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                onAppointmentCancel.onAppointmentCancel(newAppointmentResponseList.get(position).get_id());
+                onAppointmentCancel.onAppointmentCancel(newAppointmentResponseList.get(position).get_id(),newAppointmentResponseList.get(position).getAppointment_for());
 
             }
         });

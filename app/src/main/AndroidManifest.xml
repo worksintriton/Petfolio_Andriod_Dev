@@ -82,7 +82,9 @@
             android:name=".activity.ChooseUserTypeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" /> <!-- Pet Lover -->
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- Pet Lover -->
         <activity
             android:name=".petlover.AddYourPetActivity"
             android:screenOrientation="portrait"
@@ -304,11 +306,11 @@
 
         <!-- Service Provider -->
 
-        <activity
+       <!-- <activity
             android:name=".serviceprovider.ServiceProviderRegisterFormActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan" />-->
         <activity
             android:name=".serviceprovider.SPMyCalendarNewUserActivity"
             android:screenOrientation="portrait"

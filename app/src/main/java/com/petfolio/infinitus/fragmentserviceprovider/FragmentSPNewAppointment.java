@@ -30,11 +30,15 @@ import com.petfolio.infinitus.adapter.SPNewAppointmentAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
+import com.petfolio.infinitus.doctor.PrescriptionActivity;
 import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
+import com.petfolio.infinitus.interfaces.OnAppointmentComplete;
 import com.petfolio.infinitus.requestpojo.AppoinmentCancelledRequest;
+import com.petfolio.infinitus.requestpojo.AppoinmentCompleteRequest;
 import com.petfolio.infinitus.requestpojo.DoctorNewAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.SPAppointmentRequest;
 import com.petfolio.infinitus.responsepojo.AppoinmentCancelledResponse;
+import com.petfolio.infinitus.responsepojo.AppoinmentCompleteResponse;
 import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.SPAppointmentResponse;
 import com.petfolio.infinitus.serviceprovider.ServiceProviderDashboardActivity;
@@ -56,7 +60,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentSPNewAppointment extends Fragment implements OnAppointmentCancel, View.OnClickListener {
+public class FragmentSPNewAppointment extends Fragment implements OnAppointmentCancel, OnAppointmentComplete, View.OnClickListener {
     private String TAG = "FragmentSPNewAppointment";
 
     @SuppressLint("NonConstantResourceId")
@@ -184,7 +188,7 @@ public class FragmentSPNewAppointment extends Fragment implements OnAppointmentC
         rv_newappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_newappointment.setItemAnimator(new DefaultItemAnimator());
         int size = 3;
-        SPNewAppointmentAdapter spNewAppointmentAdapter = new SPNewAppointmentAdapter(getContext(), newAppointmentResponseList, rv_newappointment,size,this);
+        SPNewAppointmentAdapter spNewAppointmentAdapter = new SPNewAppointmentAdapter(getContext(), newAppointmentResponseList, rv_newappointment,size,this,this);
         rv_newappointment.setAdapter(spNewAppointmentAdapter);
 
     }
@@ -192,14 +196,14 @@ public class FragmentSPNewAppointment extends Fragment implements OnAppointmentC
         rv_newappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_newappointment.setItemAnimator(new DefaultItemAnimator());
         int size = newAppointmentResponseList.size();
-        SPNewAppointmentAdapter spNewAppointmentAdapter = new SPNewAppointmentAdapter(getContext(), newAppointmentResponseList, rv_newappointment,size,this);
+        SPNewAppointmentAdapter spNewAppointmentAdapter = new SPNewAppointmentAdapter(getContext(), newAppointmentResponseList, rv_newappointment,size,this,this);
         rv_newappointment.setAdapter(spNewAppointmentAdapter);
 
     }
 
 
     @Override
-    public void onAppointmentCancel(String id) {
+    public void onAppointmentCancel(String id,String appointmenttype) {
         if(id != null){
             showStatusAlert(id);
         }
@@ -253,7 +257,7 @@ public class FragmentSPNewAppointment extends Fragment implements OnAppointmentC
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-        Call<AppoinmentCancelledResponse> call = apiInterface.appoinmentCancelledResponseCall(RestUtils.getContentType(), appoinmentCancelledRequest(id));
+        Call<AppoinmentCancelledResponse> call = apiInterface.spappoinmentCancelledResponseCall(RestUtils.getContentType(), appoinmentCancelledRequest(id));
         Log.w(TAG,"appoinmentCancelledResponseCall url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<AppoinmentCancelledResponse>() {
@@ -319,5 +323,110 @@ public class FragmentSPNewAppointment extends Fragment implements OnAppointmentC
                 setViewLoadMore();
                 break;
         }
+    }
+
+    @Override
+    public void onAppointmentComplete(String id) {
+
+        showStatusAlertCompleteAppointment(id);
+
+    }
+    private void showStatusAlertCompleteAppointment(String id) {
+
+        try {
+
+            dialog = new Dialog(mContext);
+            dialog.setContentView(R.layout.alert_approve_reject_layout);
+            TextView tvheader = (TextView)dialog.findViewById(R.id.tvInternetNotConnected);
+            tvheader.setText(R.string.completeappointment);
+            Button dialogButtonApprove = (Button) dialog.findViewById(R.id.btnApprove);
+            dialogButtonApprove.setText("Yes");
+            Button dialogButtonRejected = (Button) dialog.findViewById(R.id.btnReject);
+            dialogButtonRejected.setText("No");
+
+            dialogButtonApprove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    appoinmentCompleteResponseCall(id);
+
+
+                }
+            });
+            dialogButtonRejected.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Toasty.info(context, "Rejected Successfully", Toast.LENGTH_SHORT, true).show();
+                    dialog.dismiss();
+
+
+
+
+                }
+            });
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
+    private void appoinmentCompleteResponseCall(String id) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<AppoinmentCompleteResponse> call = apiInterface.spappoinmentCompleteResponseCall(RestUtils.getContentType(), appoinmentCompleteRequest(id));
+        Log.w(TAG,"AppoinmentCompleteResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<AppoinmentCompleteResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<AppoinmentCompleteResponse> call, @NonNull Response<AppoinmentCompleteResponse> response) {
+
+                Log.w(TAG,"AppoinmentCompleteResponse"+ "--->" + new Gson().toJson(response.body()));
+
+                avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        startActivity(new Intent(mContext, ServiceProviderDashboardActivity.class));
+                    }
+                    else{
+                        //showErrorLoading(response.body().getMessage());
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<AppoinmentCompleteResponse> call, @NonNull Throwable t) {
+
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"AppoinmentCompleteResponseflr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    private AppoinmentCompleteRequest appoinmentCompleteRequest(String id) {
+        /*
+         * _id : 5fc639ea72fc42044bfa1683
+         * completed_at : 23-10-2000 10 : 00 AM
+         * appoinment_status : Completed
+         */
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
+
+        AppoinmentCompleteRequest appoinmentCompleteRequest = new AppoinmentCompleteRequest();
+        appoinmentCompleteRequest.set_id(id);
+        appoinmentCompleteRequest.setCompleted_at(currentDateandTime);
+        appoinmentCompleteRequest.setAppoinment_status("Completed");
+        Log.w(TAG,"appoinmentCompleteRequest"+ "--->" + new Gson().toJson(appoinmentCompleteRequest));
+        return appoinmentCompleteRequest;
     }
 }

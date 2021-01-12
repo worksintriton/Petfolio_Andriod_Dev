@@ -20,18 +20,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.adapter.PetCompletedAppointmentAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.interfaces.AddReviewListener;
 import com.petfolio.infinitus.requestpojo.AddReviewRequest;
-import com.petfolio.infinitus.requestpojo.PetLoverAppointmentRequest;
 import com.petfolio.infinitus.responsepojo.AddReviewResponse;
 import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
@@ -115,96 +112,19 @@ public class FragmentPetCompletedOrders extends Fragment implements View.OnClick
       
 
         if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-            petCompletedAppointmentResponseCall();
         }
         return view;
     }
 
 
 
-    private void petCompletedAppointmentResponseCall() {
-        avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();
-        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<PetNewAppointmentResponse> call = ApiService.petCompletedAppointmentResponseCall(RestUtils.getContentType(),petLoverAppointmentRequest());
-        Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
-        call.enqueue(new Callback<PetNewAppointmentResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<PetNewAppointmentResponse> call, @NonNull Response<PetNewAppointmentResponse> response) {
-                avi_indicator.smoothToHide();
-                Log.w(TAG,"petCompletedAppointmentResponseCall"+ "--->" + new Gson().toJson(response.body()));
-
-
-                if (response.body() != null) {
-
-                    if(200 == response.body().getCode()){
-                        completedAppointmentResponseList = response.body().getData();
-                        Log.w(TAG,"Size"+completedAppointmentResponseList.size());
-                        Log.w(TAG,"completedAppointmentResponseList : "+new Gson().toJson(completedAppointmentResponseList));
-                        if(response.body().getData().isEmpty()){
-                            txt_no_records.setVisibility(View.VISIBLE);
-                            txt_no_records.setText("No completed appointments");
-                            rv_completedappointment.setVisibility(View.GONE);
-                            btn_load_more.setVisibility(View.GONE);
-                            btn_filter.setVisibility(View.GONE);
-                        }else{
-                            txt_no_records.setVisibility(View.GONE);
-                            rv_completedappointment.setVisibility(View.VISIBLE);
-                            if(completedAppointmentResponseList.size() > 3){
-                                btn_load_more.setVisibility(View.VISIBLE);
-
-                            }else{
-                                btn_load_more.setVisibility(View.GONE);
-
-                            }
-                            setView();
-                        }
-
-                    }
-
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<PetNewAppointmentResponse> call, @NonNull Throwable t) {
-                avi_indicator.smoothToHide();
-
-                Log.w(TAG,"PetNewAppointmentResponse"+"--->" + t.getMessage());
-            }
-        });
-
-    }
-    private PetLoverAppointmentRequest petLoverAppointmentRequest() {
-        PetLoverAppointmentRequest petLoverAppointmentRequest = new PetLoverAppointmentRequest();
-        petLoverAppointmentRequest.setUser_id(userid);
-        Log.w(TAG,"petLoverAppointmentRequest"+ "--->" + new Gson().toJson(petLoverAppointmentRequest));
-        return petLoverAppointmentRequest;
-    }
-    private void setView() {
-        rv_completedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv_completedappointment.setItemAnimator(new DefaultItemAnimator());
-        int size = 3;
-        PetCompletedAppointmentAdapter petCompletedAppointmentAdapter = new PetCompletedAppointmentAdapter(getContext(), completedAppointmentResponseList, rv_completedappointment,size,this);
-        rv_completedappointment.setAdapter(petCompletedAppointmentAdapter);
-
-    }
-    private void setViewLoadMore() {
-        rv_completedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv_completedappointment.setItemAnimator(new DefaultItemAnimator());
-        int size = completedAppointmentResponseList.size();
-        PetCompletedAppointmentAdapter petCompletedAppointmentAdapter = new PetCompletedAppointmentAdapter(getContext(), completedAppointmentResponseList, rv_completedappointment,size,this);
-        rv_completedappointment.setAdapter(petCompletedAppointmentAdapter);
-
-    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_load_more:
-                setViewLoadMore();
+
                 break;
         }
     }
@@ -336,7 +256,7 @@ public class FragmentPetCompletedOrders extends Fragment implements View.OnClick
                 public void onClick(View view) {
                    dialog.dismiss();
                     if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-                        petCompletedAppointmentResponseCall();
+
                     }
 
 

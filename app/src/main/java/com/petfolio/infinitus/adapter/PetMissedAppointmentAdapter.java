@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.responsepojo.PetAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
 
 import java.util.List;
@@ -23,14 +24,14 @@ import java.util.List;
 public class PetMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private  String TAG = "PetMissedAppointmentAdapter";
-    private List<PetNewAppointmentResponse.DataBean> missedAppointmentResponseList;
+    private List<PetAppointmentResponse.DataBean> missedAppointmentResponseList;
     private Context context;
 
-    PetNewAppointmentResponse.DataBean currentItem;
+    PetAppointmentResponse.DataBean currentItem;
     int size;
 
 
-    public PetMissedAppointmentAdapter(Context context, List<PetNewAppointmentResponse.DataBean> missedAppointmentResponseList, RecyclerView inbox_list,int size) {
+    public PetMissedAppointmentAdapter(Context context, List<PetAppointmentResponse.DataBean> missedAppointmentResponseList, RecyclerView inbox_list,int size) {
         this.missedAppointmentResponseList = missedAppointmentResponseList;
         this.context = context;
         this.size = size;
@@ -55,27 +56,35 @@ public class PetMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
     @SuppressLint("SetTextI18n")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
-        Log.w(TAG,"Pet name-->"+missedAppointmentResponseList.get(position).getPet_id().getPet_name());
+        Log.w(TAG,"Pet name-->"+missedAppointmentResponseList.get(position).getPet_name());
 
         currentItem = missedAppointmentResponseList.get(position);
 
 
-        holder.txt_petname.setText(missedAppointmentResponseList.get(position).getDoc_business_info().get(0).getClinic_name());
-        holder.txt_pettype.setText(missedAppointmentResponseList.get(position).getPet_id().getPet_name());
+        holder.txt_pettype.setText(missedAppointmentResponseList.get(position).getPet_name());
         holder.txt_missed_date.setText("Missed on:"+" "+missedAppointmentResponseList.get(position).getMissed_at());
 
-        if(missedAppointmentResponseList.get(position).getAppointment_types() != null){
-            holder.txt_type.setText(missedAppointmentResponseList.get(position).getAppointment_types());
+
+
+        if(missedAppointmentResponseList.get(position).getAppointment_for() != null && missedAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("Doctor") ){
+            holder.txt_type.setText(missedAppointmentResponseList.get(position).getAppointment_for());
+            holder.txt_petname.setText(missedAppointmentResponseList.get(position).getClinic_name());
+
+
+        }else if(missedAppointmentResponseList.get(position).getAppointment_for() != null && missedAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("SP") ){
+            holder.txt_type.setText(missedAppointmentResponseList.get(position).getAppointment_for());
+            holder.txt_petname.setText(missedAppointmentResponseList.get(position).getService_provider_name());
+
         }
-        if(missedAppointmentResponseList.get(position).getService_amount() != null){
-            holder.txt_service_cost.setText(missedAppointmentResponseList.get(position).getService_amount());
+        if(missedAppointmentResponseList.get(position).getCost() != null){
+            holder.txt_service_cost.setText("\u20B9 "+missedAppointmentResponseList.get(position).getCost());
         }
 
 
-        if (missedAppointmentResponseList.get(position).getDoc_business_info().get(0).getClinic_pic().get(0).getClinic_pic() != null && !missedAppointmentResponseList.get(position).getDoc_business_info().get(0).getClinic_pic().get(0).getClinic_pic().isEmpty()) {
+        if (missedAppointmentResponseList.get(position).getPhoto() != null && !missedAppointmentResponseList.get(position).getPhoto().isEmpty()) {
 
             Glide.with(context)
-                    .load(missedAppointmentResponseList.get(position).getDoc_business_info().get(0).getClinic_pic().get(0).getClinic_pic())
+                    .load(missedAppointmentResponseList.get(position).getPhoto())
                     .into(holder.img_pet_imge);
 
         }

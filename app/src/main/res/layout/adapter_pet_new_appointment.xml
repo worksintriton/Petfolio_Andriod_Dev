@@ -25,11 +25,9 @@
                 android:id="@+id/img_emergency_appointment"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_alignParentRight="true"
                 android:layout_gravity="end"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
                 android:src="@drawable/emergency_call"
                 tools:ignore="ContentDescription"
                 android:layout_alignParentEnd="true" />
@@ -82,14 +80,16 @@
 
                         <TextView
                             android:id="@+id/txt_clinicnamelabel"
-                            android:layout_width="80dp"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:fontFamily="@font/futuramediumbt"
                             android:maxLines="1"
                             android:text="@string/clinic_name"
                             android:textColor="@color/new_txt_color"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:visibility="gone"
+                            />
 
                         <TextView
                             android:id="@+id/textView6"
@@ -98,14 +98,14 @@
                             android:fontFamily="@font/futuramediumbt"
                             android:text="@string/colon1"
                             android:textColor="@color/new_txt_color"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:visibility="gone"/>
 
                         <TextView
                             android:id="@+id/txt_clinicname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginLeft="5dp"
+                            android:layout_marginEnd="5dp"
                             android:ellipsize="end"
                             android:fontFamily="@font/futuramediumbt"
                             android:maxLines="1"
@@ -122,7 +122,7 @@
 
                         <TextView
                             android:id="@+id/txt_petnamelabel"
-                            android:layout_width="80dp"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:fontFamily="@font/futuramediumbt"
@@ -147,7 +147,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:layout_marginLeft="5dp"
+                            android:layout_marginEnd="5dp"
                             android:ellipsize="end"
                             android:fontFamily="@font/futuramediumbt"
                             android:maxLines="1"
@@ -165,7 +165,7 @@
 
                         <TextView
                             android:id="@+id/txt_lbl_type"
-                            android:layout_width="80dp"
+                            android:layout_width="100dp"
                             android:layout_height="16dp"
                             android:ellipsize="end"
                             android:fontFamily="@font/futuramediumbt"
@@ -189,7 +189,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:layout_marginLeft="5dp"
+                            android:layout_marginEnd="5dp"
                             android:ellipsize="end"
                             android:fontFamily="@font/futuramediumbt"
                             android:maxLines="1"
@@ -207,7 +207,7 @@
 
                         <TextView
                             android:id="@+id/txt_service_costlabel"
-                            android:layout_width="80dp"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:fontFamily="@font/futuramediumbt"
@@ -229,7 +229,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:layout_marginLeft="5dp"
+                            android:layout_marginEnd="5dp"
                             android:ellipsize="end"
                             android:fontFamily="@font/futuramediumbt"
                             android:maxLines="1"
@@ -282,7 +282,7 @@
                     android:text="@string/completed_on_date"
                     android:textColor="@color/new_green_btn"
                     android:textSize="12sp"
-                    android:layout_marginLeft="10dp" />
+                    android:layout_marginEnd="10dp" />
 
             </RelativeLayout>
 

@@ -85,6 +85,7 @@ import com.petfolio.infinitus.responsepojo.LocationUpdateResponse;
 import com.petfolio.infinitus.responsepojo.LoginResponse;
 import com.petfolio.infinitus.responsepojo.PetAddImageResponse;
 import com.petfolio.infinitus.responsepojo.PetAppointmentCreateResponse;
+import com.petfolio.infinitus.responsepojo.PetAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.PetDeleteResponse;
 import com.petfolio.infinitus.responsepojo.PetDetailsResponse;
 import com.petfolio.infinitus.responsepojo.PetDoctorAvailableTimeResponse;
@@ -196,17 +197,24 @@ public interface RestApiInterface {
     @POST("appointments/mobile/create")
     Call<PetAppointmentCreateResponse>petAppointmentCreateResponseCall(@Header("Content-Type") String type, @Body PetAppointmentCreateRequest petAppointmentCreateRequest);
 
+
+
+    /*Pet Current Appointment*/
+    @POST("appointments/mobile/plove_getlist/newapp1")
+    Call<PetAppointmentResponse>petAppointmentResponseCall(@Header("Content-Type") String type, @Body PetLoverAppointmentRequest petLoverAppointmentRequest);
+
+
     /*Pet Current Appointment*/
     @POST("appointments/mobile/plove_getlist/newapp")
     Call<PetNewAppointmentResponse>petNewAppointmentResponseCall(@Header("Content-Type") String type, @Body PetLoverAppointmentRequest petLoverAppointmentRequest);
 
     /*Pet Completed Appointment*/
-    @POST("appointments/mobile/plove_getlist/comapp")
-    Call<PetNewAppointmentResponse>petCompletedAppointmentResponseCall(@Header("Content-Type") String type, @Body PetLoverAppointmentRequest petLoverAppointmentRequest);
+    @POST("appointments/mobile/plove_getlist/comapp1")
+    Call<PetAppointmentResponse>petCompletedAppointmentResponseCall(@Header("Content-Type") String type, @Body PetLoverAppointmentRequest petLoverAppointmentRequest);
 
     /*Pet Cancelled Appointment*/
-    @POST("appointments/mobile/plove_getlist/missapp")
-    Call<PetNewAppointmentResponse>petMissedAppointmentResponseCall(@Header("Content-Type") String type, @Body PetLoverAppointmentRequest petLoverAppointmentRequest);
+    @POST("appointments/mobile/plove_getlist/missapp1")
+    Call<PetAppointmentResponse>petMissedAppointmentResponseCall(@Header("Content-Type") String type, @Body PetLoverAppointmentRequest petLoverAppointmentRequest);
 
 
     /*Listing Location by ID*/
@@ -387,7 +395,7 @@ public interface RestApiInterface {
     @POST("sp_available_time/get_time_Details")
     Call<DoctorMyCalendarAvlTimesResponse>spMyCalendarAvlTimesResponseCall(@Header("Content-Type") String type, @Body DoctorMyCalendarAvlTimesRequest doctorMyCalendarAvlTimesRequest);
 
-    /*doctor my calendar update*/
+    /*sp my calendar update*/
     @POST("sp_available_time/update_doc_date")
     Call<DoctorMyCalendarUpdateDocDateResponse>spMyCalendarUpdateDocDateResponseCall(@Header("Content-Type") String type, @Body DoctorMyCalendarUpdateDocDateRequest doctorMyCalendarUpdateDocDateRequest);
 
@@ -423,6 +431,14 @@ public interface RestApiInterface {
     /*SP Missed Appointment*/
     @POST("sp_appointments/mobile/sp_getlist/missapp")
     Call<SPAppointmentResponse>spMissedAppointmentResponseCall(@Header("Content-Type") String type, @Body SPAppointmentRequest spAppointmentRequest);
+
+    /*Update Appointment Status complete*/
+    @POST("sp_appointments/edit")
+    Call<AppoinmentCompleteResponse>spappoinmentCompleteResponseCall(@Header("Content-Type") String type, @Body AppoinmentCompleteRequest appoinmentCompleteRequest );
+
+    /*Update Appointment Status cancel*/
+    @POST("sp_appointments/edit")
+    Call<AppoinmentCancelledResponse>spappoinmentCancelledResponseCall(@Header("Content-Type") String type, @Body AppoinmentCancelledRequest appoinmentCancelledRequest );
 
 
 

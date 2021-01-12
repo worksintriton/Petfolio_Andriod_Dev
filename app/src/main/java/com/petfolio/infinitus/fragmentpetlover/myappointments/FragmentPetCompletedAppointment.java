@@ -34,6 +34,7 @@ import com.petfolio.infinitus.interfaces.AddReviewListener;
 import com.petfolio.infinitus.requestpojo.AddReviewRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverAppointmentRequest;
 import com.petfolio.infinitus.responsepojo.AddReviewResponse;
+import com.petfolio.infinitus.responsepojo.PetAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -75,7 +76,7 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
     String type = "",name = "",doctorid = "";
     private SharedPreferences preferences;
     private Context mContext;
-    private List<PetNewAppointmentResponse.DataBean> completedAppointmentResponseList;
+    private List<PetAppointmentResponse.DataBean> completedAppointmentResponseList;
     private String userid;
     private String userrate;
     private AlertDialog.Builder alertDialogBuilder;
@@ -127,14 +128,14 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<PetNewAppointmentResponse> call = ApiService.petCompletedAppointmentResponseCall(RestUtils.getContentType(),petLoverAppointmentRequest());
+        Call<PetAppointmentResponse> call = ApiService.petCompletedAppointmentResponseCall(RestUtils.getContentType(),petLoverAppointmentRequest());
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
-        call.enqueue(new Callback<PetNewAppointmentResponse>() {
+        call.enqueue(new Callback<PetAppointmentResponse>() {
             @Override
-            public void onResponse(@NonNull Call<PetNewAppointmentResponse> call, @NonNull Response<PetNewAppointmentResponse> response) {
+            public void onResponse(@NonNull Call<PetAppointmentResponse> call, @NonNull Response<PetAppointmentResponse> response) {
                 avi_indicator.smoothToHide();
-                Log.w(TAG,"petCompletedAppointmentResponseCall"+ "--->" + new Gson().toJson(response.body()));
+                Log.w(TAG,"PetAppointmentResponse"+ "--->" + new Gson().toJson(response.body()));
 
 
                 if (response.body() != null) {
@@ -170,7 +171,7 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
             }
 
             @Override
-            public void onFailure(@NonNull Call<PetNewAppointmentResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<PetAppointmentResponse> call, @NonNull Throwable t) {
                 avi_indicator.smoothToHide();
 
                 Log.w(TAG,"PetNewAppointmentResponse"+"--->" + t.getMessage());

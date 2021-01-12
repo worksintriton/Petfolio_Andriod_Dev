@@ -68,7 +68,8 @@
                         android:text="@string/clinic_name"
                         android:textColor="@color/new_txt_color"
                         android:textSize="14sp"
-                        android:textStyle="normal" />
+                        android:textStyle="normal"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:id="@+id/textView4"
@@ -77,7 +78,8 @@
                         android:text="@string/colon1"
                         android:textColor="@color/new_txt_color"
                         android:textSize="14sp"
-                        android:textStyle="normal" />
+                        android:textStyle="normal"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:id="@+id/txt_petname"
@@ -102,7 +104,7 @@
 
                     <TextView
                         android:id="@+id/txt_pettypelabel"
-                        android:layout_width="80dp"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
@@ -141,7 +143,7 @@
 
                     <TextView
                         android:id="@+id/txt_lbl_type"
-                        android:layout_width="80dp"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
@@ -165,7 +167,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:layout_marginLeft="5dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
@@ -183,7 +184,7 @@
 
                     <TextView
                         android:id="@+id/txt_service_costlabel"
-                        android:layout_width="80dp"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"

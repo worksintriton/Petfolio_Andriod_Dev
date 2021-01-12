@@ -32,7 +32,9 @@ import com.petfolio.infinitus.petlover.PetMyappointmentsActivity;
 import com.petfolio.infinitus.requestpojo.AppoinmentCancelledRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverAppointmentRequest;
 import com.petfolio.infinitus.responsepojo.AppoinmentCancelledResponse;
+import com.petfolio.infinitus.responsepojo.PetAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
+import com.petfolio.infinitus.serviceprovider.ServiceProviderDashboardActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -71,7 +73,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
     String type = "",name = "",userid = "";
     private SharedPreferences preferences;
     private Context mContext;
-    private List<PetNewAppointmentResponse.DataBean> newAppointmentResponseList;
+    private List<PetAppointmentResponse.DataBean> newAppointmentResponseList;
     private Dialog dialog;
 
 
@@ -113,12 +115,12 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<PetNewAppointmentResponse> call = ApiService.petNewAppointmentResponseCall(RestUtils.getContentType(),petLoverAppointmentRequest());
+        Call<PetAppointmentResponse> call = ApiService.petAppointmentResponseCall(RestUtils.getContentType(),petLoverAppointmentRequest());
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
-        call.enqueue(new Callback<PetNewAppointmentResponse>() {
+        call.enqueue(new Callback<PetAppointmentResponse>() {
             @Override
-            public void onResponse(@NonNull Call<PetNewAppointmentResponse> call, @NonNull Response<PetNewAppointmentResponse> response) {
+            public void onResponse(@NonNull Call<PetAppointmentResponse> call, @NonNull Response<PetAppointmentResponse> response) {
                avi_indicator.smoothToHide();
                 Log.w(TAG,"PetNewAppointmentResponse"+ "--->" + new Gson().toJson(response.body()));
 
@@ -153,7 +155,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
             }
 
             @Override
-            public void onFailure(@NonNull Call<PetNewAppointmentResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<PetAppointmentResponse> call, @NonNull Throwable t) {
                 avi_indicator.smoothToHide();
 
                 Log.w(TAG,"PetNewAppointmentResponse"+"--->" + t.getMessage());
@@ -185,13 +187,13 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
     }
 
     @Override
-    public void onAppointmentCancel(String id) {
+    public void onAppointmentCancel(String id,String appointmenttype) {
         if(id != null){
-            showStatusAlert(id);
+            showStatusAlert(id,appointmenttype);
         }
     }
 
-    private void showStatusAlert(String id) {
+    private void showStatusAlert(String id,String appointmenttype) {
         try {
             dialog = new Dialog(mContext);
             dialog.setContentView(R.layout.alert_approve_reject_layout);
@@ -206,7 +208,12 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
                 @Override
                 public void onClick(View view) {
                     dialog.dismiss();
-                    appoinmentCancelledResponseCall(id);
+                    if(appointmenttype != null && appointmenttype.equalsIgnoreCase("Doctor")){
+                        appoinmentCancelledResponseCall(id);
+                    } else if(appointmenttype != null && appointmenttype.equalsIgnoreCase("SP")){
+                        spappoinmentCancelledResponseCall(id);
+                    }
+
 
 
                 }
@@ -233,6 +240,17 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
 
 
     }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_load_more:
+                setViewLoadMore();
+                break;
+        }
+    }
+
     private void appoinmentCancelledResponseCall(String id) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -250,7 +268,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                       startActivity(new Intent(mContext, PetMyappointmentsActivity.class));
+                        startActivity(new Intent(mContext, PetMyappointmentsActivity.class));
 
 
 
@@ -274,6 +292,49 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
         });
 
     }
+
+    private void spappoinmentCancelledResponseCall(String id) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<AppoinmentCancelledResponse> call = apiInterface.spappoinmentCancelledResponseCall(RestUtils.getContentType(), appoinmentCancelledRequest(id));
+        Log.w(TAG,"spappoinmentCancelledResponseCall url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<AppoinmentCancelledResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<AppoinmentCancelledResponse> call, @NonNull Response<AppoinmentCancelledResponse> response) {
+
+                Log.w(TAG,"appoinmentCancelledResponseCall"+ "--->" + new Gson().toJson(response.body()));
+
+                avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        startActivity(new Intent(mContext, PetMyappointmentsActivity.class));
+
+
+
+
+
+                    }
+                    else{
+                        //showErrorLoading(response.body().getMessage());
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<AppoinmentCancelledResponse> call, @NonNull Throwable t) {
+
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"appoinmentCancelledResponseCall flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+
     private AppoinmentCancelledRequest appoinmentCancelledRequest(String id) {
 
         /*
@@ -296,12 +357,4 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
         return appoinmentCancelledRequest;
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btn_load_more:
-                setViewLoadMore();
-                break;
-        }
-    }
 }

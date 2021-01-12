@@ -172,6 +172,7 @@
     <string name="prescriptionmsg">Note: Pls use the + button to submit the entered details.</string>
 
     <string name="cancelappointment">Are you sure you want to cancel this appoinment?</string>
+    <string name="completeappointment">Are you sure you want to complete this appoinment?</string>
 
 
     <string name="profile">Profile</string>
@@ -294,7 +295,7 @@
 
     <string name="review_added">Review Added</string>
     <string name="back">Back</string>
-    <string name="type">Type</string>
+    <string name="type">Appointment Type</string>
 
     <string name="business">Business</string>
 
