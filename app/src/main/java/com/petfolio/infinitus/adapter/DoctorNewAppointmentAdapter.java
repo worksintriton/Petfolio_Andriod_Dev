@@ -75,8 +75,8 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
         if(newAppointmentResponseList.get(position).getAppointment_types() != null){
             holder.txt_type.setText(newAppointmentResponseList.get(position).getAppointment_types());
         }
-        if(newAppointmentResponseList.get(position).getService_amount() != null){
-            holder.txt_service_cost.setText("\u20B9 "+newAppointmentResponseList.get(position).getService_amount());
+        if(newAppointmentResponseList.get(position).getAmount() != null){
+            holder.txt_service_cost.setText("\u20B9 "+newAppointmentResponseList.get(position).getAmount());
         }
 
         if(newAppointmentResponseList.get(position).getBooking_date_time() != null){

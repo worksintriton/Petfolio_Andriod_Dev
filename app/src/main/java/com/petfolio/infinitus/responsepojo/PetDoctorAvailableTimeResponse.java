@@ -7,7 +7,7 @@ public class PetDoctorAvailableTimeResponse {
     /**
      * Status : Success
      * Message : Doctor Available
-     * Data : [{"Comm_type_chat":"No","Comm_type_video":"No","Doctor_email_id":"","Doctor_ava_Date":"31-11-2020","Doctor_name":"","Times":[{"time":"01:00 AM"},{"time":"02:00 AM"},{"time":"03:00 AM"}]}]
+     * Data : [{"Comm_type_chat":"No","Comm_type_video":"No","Doctor_email_id":"","Doctor_ava_Date":"13-01-2021","Doctor_name":"","Times":[{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"}]}]
      * Code : 200
      */
 
@@ -61,9 +61,9 @@ public class PetDoctorAvailableTimeResponse {
          * Comm_type_chat : No
          * Comm_type_video : No
          * Doctor_email_id :
-         * Doctor_ava_Date : 31-11-2020
+         * Doctor_ava_Date : 13-01-2021
          * Doctor_name :
-         * Times : [{"time":"01:00 AM"},{"time":"02:00 AM"},{"time":"03:00 AM"}]
+         * Times : [{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"},{"time":"12:00 AM","book_status":true,"status":"Available"}]
          */
 
         private String Comm_type_chat;
@@ -135,10 +135,14 @@ public class PetDoctorAvailableTimeResponse {
 
         public static class TimesBean  {
             /**
-             * time : 01:00 AM
+             * time : 12:00 AM
+             * book_status : true
+             * status : Available
              */
 
             private String time;
+            private boolean book_status;
+            private String status;
 
 
             public String getTime() {
@@ -147,6 +151,26 @@ public class PetDoctorAvailableTimeResponse {
 
             public void setTime(String time) {
                 this.time = time;
+
+            }
+
+
+            public boolean isBook_status() {
+                return book_status;
+            }
+
+            public void setBook_status(boolean book_status) {
+                this.book_status = book_status;
+
+            }
+
+
+            public String getStatus() {
+                return status;
+            }
+
+            public void setStatus(String status) {
+                this.status = status;
 
             }
         }

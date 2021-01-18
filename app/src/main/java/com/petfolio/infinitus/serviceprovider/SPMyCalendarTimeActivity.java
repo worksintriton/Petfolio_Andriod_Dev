@@ -247,7 +247,7 @@ public class SPMyCalendarTimeActivity extends AppCompatActivity implements OnIte
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
-                        startActivity(new Intent(SPMyCalendarTimeActivity.this, DoctorDashboardActivity.class));
+                        startActivity(new Intent(SPMyCalendarTimeActivity.this, ServiceProviderDashboardActivity.class));
 
                     }else{
                         Toasty.error(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();

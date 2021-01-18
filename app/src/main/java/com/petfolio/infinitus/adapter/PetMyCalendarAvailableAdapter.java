@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +21,8 @@ import com.petfolio.infinitus.responsepojo.PetDoctorAvailableTimeResponse;
 
 
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 
 public class PetMyCalendarAvailableAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -74,16 +77,25 @@ public class PetMyCalendarAvailableAdapter extends  RecyclerView.Adapter<Recycle
 
         }
 
-        holder.txt_days.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCallback.onItemSelectedTime(timesBeanList.get(position).getTime());
-                selectedPosition=position;
-                notifyDataSetChanged();
+            holder.txt_days.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(timesBeanList.get(position).isBook_status()) {
+                        mCallback.onItemSelectedTime(timesBeanList.get(position).getTime());
+                        selectedPosition = position;
+                        notifyDataSetChanged();
+                    }else{
+                        Toasty.warning(context, "Slot Not Available", Toast.LENGTH_SHORT, true).show();
+
+                    }
 
 
-            }
-        });
+                }
+            });
+
+
+
+
 
         if(selectedPosition==position)
             holder.txt_days.setBackgroundResource(R.drawable.button_blue_rounded_corner);
@@ -91,7 +103,10 @@ public class PetMyCalendarAvailableAdapter extends  RecyclerView.Adapter<Recycle
             holder.txt_days.setBackgroundResource(R.drawable.button_rounded_corner);
 
 
+        if(!timesBeanList.get(position).isBook_status()){
+            holder.txt_days.setBackgroundResource(R.drawable.button_gray_rounded_corner);
 
+        }
 
 
 

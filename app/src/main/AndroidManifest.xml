@@ -47,7 +47,6 @@
         tools:ignore="AllowBackup,UnusedAttribute"
         tools:replace="android:theme">
 
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -82,9 +81,7 @@
             android:name=".activity.ChooseUserTypeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
-
-        <!-- Pet Lover -->
+            android:windowSoftInputMode="adjustPan" /> <!-- Pet Lover -->
         <activity
             android:name=".petlover.AddYourPetActivity"
             android:screenOrientation="portrait"
@@ -190,18 +187,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
-        <activity android:name=".petlover.SelectedServiceActivity"
+        <activity
+            android:name=".petlover.SelectedServiceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
-        <activity android:name=".petlover.PetServiceAppointment_Doctor_Date_Time_Activity"
+        <activity
+            android:name=".petlover.PetServiceAppointment_Doctor_Date_Time_Activity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
-
         <activity
             android:name=".activity.location.ManageAddressActivity"
             android:screenOrientation="portrait"
@@ -301,22 +296,17 @@
             android:name=".doctor.EditDoctorBusinessInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
-
-
-        <!-- Service Provider -->
-
-       <!-- <activity
+            android:windowSoftInputMode="adjustPan" /> <!-- Service Provider -->
+        <activity
             android:name=".serviceprovider.ServiceProviderRegisterFormActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />-->
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".serviceprovider.SPMyCalendarNewUserActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".serviceprovider.SPEditProfileActivity"
             android:screenOrientation="portrait"
@@ -352,6 +342,18 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".serviceprovider.SPManageServiceActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity android:name=".serviceprovider.SPSettingsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+
+
 
         <!-- Vendor -->
         <activity

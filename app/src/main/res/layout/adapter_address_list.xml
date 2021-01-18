@@ -12,7 +12,8 @@
         android:id="@+id/iv_default_location"
         android:layout_width="10dp"
         android:layout_height="10dp"
-        android:background="@drawable/circledot" />
+        android:background="@drawable/circledot"
+        tools:ignore="ContentDescription" />
 
 
     <TextView
@@ -20,7 +21,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:ellipsize="end"
         android:fontFamily="@font/futuramediumbt"
@@ -32,12 +32,12 @@
 
     <ImageView
         android:id="@+id/img_settings"
-        tools:ignore="ContentDescription"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="23dp"
+        android:layout_height="14dp"
         android:layout_alignParentEnd="true"
+        android:layout_marginEnd="11dp"
         android:src="@drawable/options"
-        android:layout_alignParentRight="true" />
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/txt_location_nickname"
@@ -45,7 +45,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txt_location_title"
         android:layout_alignStart="@id/txt_location_title"
-        android:layout_alignLeft="@id/txt_location_title"
         android:layout_marginTop="10dp"
         android:ellipsize="end"
         android:fontFamily="@font/futuramediumbt"
@@ -61,7 +60,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txt_location_nickname"
         android:layout_alignStart="@id/txt_location_nickname"
-        android:layout_alignLeft="@id/txt_location_nickname"
         android:layout_marginTop="10dp"
         android:ellipsize="end"
         android:fontFamily="@font/futuramediumbt"
@@ -70,7 +68,6 @@
         android:text="@string/address_info"
         android:textColor="@color/new_txt_color"
         android:textSize="14sp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp" />
+        android:layout_marginEnd="20dp" />
 
 </RelativeLayout>

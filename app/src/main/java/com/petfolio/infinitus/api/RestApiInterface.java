@@ -186,7 +186,7 @@ public interface RestApiInterface {
     Call<PetDetailsResponse>petDetailsResponseByUserIdCall(@Header("Content-Type") String type, @Body PetDetailsRequest petDetailsRequest  );
 
     /*Pet Doctor available timeslot*/
-    @POST("new_doctortime/get_doc_new")
+    @POST("new_doctortime/get_doc_new1")
     Call<PetDoctorAvailableTimeResponse>petDoctorAvailableTimeResponseCall(@Header("Content-Type") String type, @Body PetDoctorAvailableTimeRequest petDoctorAvailableTimeRequest   );
 
     /*Appointment check */
@@ -196,8 +196,6 @@ public interface RestApiInterface {
     /*Pet Appointment Create*/
     @POST("appointments/mobile/create")
     Call<PetAppointmentCreateResponse>petAppointmentCreateResponseCall(@Header("Content-Type") String type, @Body PetAppointmentCreateRequest petAppointmentCreateRequest);
-
-
 
     /*Pet Current Appointment*/
     @POST("appointments/mobile/plove_getlist/newapp1")
