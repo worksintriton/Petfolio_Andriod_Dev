@@ -154,6 +154,10 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
         btn_change.setOnClickListener(this);
         btn_savethislocation.setOnClickListener(this);
 
+        edt_cityname.setEnabled(false);
+        edt_pincode.setEnabled(false);
+        edt_location.setEnabled(false);
+
 
 
 

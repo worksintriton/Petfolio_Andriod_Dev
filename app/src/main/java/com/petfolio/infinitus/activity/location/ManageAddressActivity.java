@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.ManageAddressListAdapter;
@@ -30,6 +32,7 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.interfaces.LocationDefaultListener;
 import com.petfolio.infinitus.interfaces.LocationDeleteListener;
+import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinitus.petlover.PetLoverProfileScreenActivity;
 import com.petfolio.infinitus.requestpojo.LocationDeleteRequest;
 import com.petfolio.infinitus.requestpojo.LocationListAddressRequest;
@@ -56,7 +59,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ManageAddressActivity extends AppCompatActivity implements View.OnClickListener, LocationDeleteListener, LocationDefaultListener {
+public class ManageAddressActivity extends AppCompatActivity implements View.OnClickListener, LocationDeleteListener, LocationDefaultListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "ManageAddressActivity" ;
     @SuppressLint("NonConstantResourceId")
@@ -83,6 +86,10 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
     @BindView(R.id.ll_add_newaddress)
     LinearLayout ll_add_newaddress;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.bottom_navigation_view)
+    BottomNavigationView bottom_navigation_view;
+
 
     private String userid;
     private List<LocationListAddressResponse.DataBean> addressList;
@@ -100,6 +107,9 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
         img_back.setOnClickListener(this);
         ll_add_newaddress.setOnClickListener(this);
 
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+
+
         SessionManager  session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
@@ -107,6 +117,8 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
         if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
            locationListAddressResponseCall();
         }
+
+
 
 
     }
@@ -421,5 +433,38 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
         }catch (Exception ignored){
 
         }
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.home:
+                callDirections("1");
+                break;
+            case R.id.shop:
+                callDirections("2");
+                break;
+            case R.id.services:
+                callDirections("3");
+                break;
+            case R.id.care:
+                callDirections("4");
+                break;
+            case R.id.community:
+                callDirections("5");
+                break;
+
+            default:
+                return  false;
+        }
+        return true;
+    }
+    public void callDirections(String tag){
+        Intent intent = new Intent(getApplicationContext(), PetLoverDashboardActivity.class);
+        intent.putExtra("tag",tag);
+        startActivity(intent);
+        finish();
     }
 }

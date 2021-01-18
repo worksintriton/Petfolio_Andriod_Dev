@@ -2,6 +2,8 @@ package com.petfolio.infinitus.petlover;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +16,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -22,6 +25,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
@@ -29,11 +34,10 @@ import com.petfolio.infinitus.activity.location.ManageAddressActivity;
 import com.petfolio.infinitus.adapter.ManagePetListAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+
 import com.petfolio.infinitus.interfaces.PetDeleteListener;
-import com.petfolio.infinitus.requestpojo.LocationDeleteRequest;
 import com.petfolio.infinitus.requestpojo.PetDeleteRequest;
 import com.petfolio.infinitus.requestpojo.PetListRequest;
-import com.petfolio.infinitus.responsepojo.LocationDeleteResponse;
 import com.petfolio.infinitus.responsepojo.PetDeleteResponse;
 import com.petfolio.infinitus.responsepojo.PetListResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
@@ -53,7 +57,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PetLoverProfileScreenActivity extends AppCompatActivity implements View.OnClickListener, PetDeleteListener {
+public class PetLoverProfileScreenActivity extends AppCompatActivity implements View.OnClickListener, PetDeleteListener, BottomNavigationView.OnNavigationItemSelectedListener {
     private  String TAG = "PetLoverProfileScreenActivity";
 
     @SuppressLint("NonConstantResourceId")
@@ -100,11 +104,29 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
     @BindView(R.id.ll_add)
     LinearLayout ll_add;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.bottom_navigation_view)
+    BottomNavigationView bottom_navigation_view;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_edit_profile)
+    TextView txt_edit_profile;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_profile)
+    ImageView img_profile;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_edit_image)
+    TextView txt_edit_image;
+
+
 
     private SessionManager session;
     String name,emailid,phoneNo,userid;
     private List<PetListResponse.DataBean> petList;
     private Dialog dialog;
+    private String profileimage;
 
 
     @Override
@@ -124,11 +146,27 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
         emailid = user.get(SessionManager.KEY_EMAIL_ID);
         phoneNo = user.get(SessionManager.KEY_MOBILE);
         userid = user.get(SessionManager.KEY_ID);
+        profileimage = user.get(SessionManager.KEY_PROFILE_IMAGE);
+        Log.w(TAG,"profileimage"+ "--->" + profileimage);
+
+
 
 
         txt_usrname.setText(name);
         txt_mail.setText(emailid);
         txt_phn_num.setText(phoneNo);
+
+        if(profileimage != null && !profileimage.isEmpty()){
+            Glide.with(PetLoverProfileScreenActivity.this)
+                    .load(profileimage)
+                    .into(img_profile);
+        }else{
+            Glide.with(PetLoverProfileScreenActivity.this)
+                    .load(R.drawable.upload)
+                    .into(img_profile);
+
+        }
+
 
 
 
@@ -143,6 +181,11 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
         txt_change_password.setOnClickListener(this);
         txt_logout.setOnClickListener(this);
         ll_add.setOnClickListener(this);
+        txt_edit_profile.setOnClickListener(this);
+        txt_edit_image.setOnClickListener(this);
+
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+
 
     }
 
@@ -153,6 +196,7 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
         finish();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -169,6 +213,12 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
                 break; 
                 case R.id.ll_add:
                     gotoAddYourPet();
+                break;
+            case R.id.txt_edit_profile:
+                startActivity(new Intent(getApplicationContext(), PetLoverEditProfileActivity.class));
+                break;
+            case R.id.txt_edit_image:
+                startActivity(new Intent(getApplicationContext(), PetLoverEditProfileImageActivity.class));
                 break;
         }
     }
@@ -386,4 +436,40 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
         Log.w(TAG,"petDeleteRequest"+ "--->" + new Gson().toJson(petDeleteRequest));
         return petDeleteRequest;
     }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.home:
+                callDirections("1");
+                break;
+            case R.id.shop:
+                callDirections("2");
+                break;
+            case R.id.services:
+                callDirections("3");
+                break;
+            case R.id.care:
+                callDirections("4");
+                break;
+            case R.id.community:
+                callDirections("5");
+                break;
+
+            default:
+                return  false;
+        }
+        return true;
+    }
+    public void callDirections(String tag){
+        Intent intent = new Intent(getApplicationContext(), PetLoverDashboardActivity.class);
+        intent.putExtra("tag",tag);
+        startActivity(intent);
+        finish();
+    }
+
+
+
 }

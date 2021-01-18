@@ -531,6 +531,12 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
          * nearby : 0
          * Review_count : 5
          */
+
+        Log.w(TAG,"specialization "+ specialization);
+
+        if(specialization == null){
+            specialization = "";
+        }
         FilterDoctorRequest filterDoctorRequest = new FilterDoctorRequest();
         filterDoctorRequest.setUser_id(userid);
         filterDoctorRequest.setSpecialization(specialization);
