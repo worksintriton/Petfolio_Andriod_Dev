@@ -24,8 +24,10 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.appUtils.NumericKeyBoardTransformationMethod;
+import com.petfolio.infinitus.requestpojo.EmailOTPRequest;
 import com.petfolio.infinitus.requestpojo.SignupRequest;
 import com.petfolio.infinitus.requestpojo.UserStatusUpdateRequest;
+import com.petfolio.infinitus.responsepojo.EmailOTPResponse;
 import com.petfolio.infinitus.responsepojo.SignupResponse;
 import com.petfolio.infinitus.responsepojo.UserStatusUpdateResponse;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -81,6 +83,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @BindView(R.id.btn_continue)
     Button btn_continue;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.btn_verify_email)
+    Button btn_verify_email;
+
     private final String TAG = "SignUpActivity";
 
     private String UserType;
@@ -93,7 +99,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.RECEIVE_SMS,
             "check"};
+    private String verified;
+    private boolean user_email_verification;
+    private String firstname,lastname,useremail;
 
+
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,16 +117,37 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         img_back.setOnClickListener(this);
         btn_changeusertype.setOnClickListener(this);
         btn_continue.setOnClickListener(this);
+        btn_verify_email.setOnClickListener(this);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             UserType = extras.getString("UserType");
             UserTypeValue = extras.getInt("UserTypeValue");
+            verified = extras.getString("verified");
+            firstname = extras.getString("firstname");
+            lastname = extras.getString("lastname");
+            useremail = extras.getString("useremail");
         }else{
             UserType = "Pet lover";
             UserTypeValue = 1;
         }
         txt_usertypes.setText(UserType);
+        if(verified != null && verified.equalsIgnoreCase("verified")){
+            btn_verify_email.setText("Verified Email");
+            user_email_verification = true;
+
+        }else{
+            user_email_verification = false;
+        }
+
+        Log.w(TAG,"firstname : "+firstname+" lastname : "+lastname+" useremail : "+useremail+" user_email_verification : "+user_email_verification);
+        if(firstname != null){
+            edt_firstname.setText(firstname);
+        }if(lastname != null){
+            edt_lastname.setText(lastname);
+        }if(useremail != null){
+            edt_email.setText(useremail);
+        }
 
 
     }
@@ -129,6 +161,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.img_back:
                  onBackPressed();
+                break;
+
+                case R.id.btn_verify_email:
+                    ValidEmailValidator();
                 break;
 
                 case R.id.btn_changeusertype:
@@ -214,6 +250,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         signupRequest.setUser_type(UserTypeValue);
         signupRequest.setDate_of_reg(currentDateandTime);
         signupRequest.setMobile_type("Android");
+        signupRequest.setUser_email_verification(user_email_verification);
         Log.w(TAG,"signupRequest "+ new Gson().toJson(signupRequest));
         return signupRequest;
     }
@@ -291,6 +328,58 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         return userStatusUpdateRequest;
     }
 
+
+    private void emailOTPResponseCall(String emailid) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<EmailOTPResponse> call = apiInterface.emailOTPResponseCall(RestUtils.getContentType(), emailOTPRequest(emailid));
+        Log.w(TAG,"EmailOTPResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<EmailOTPResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<EmailOTPResponse> call, @NonNull Response<EmailOTPResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"EmailOTPResponse" + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+
+                    if (200 == response.body().getCode()) {
+                        Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
+                        Intent intent = new Intent(SignUpActivity.this,VerifyEmailOtpActivity.class);
+                        intent.putExtra("useremail",response.body().getData().getEmail_id());
+                        intent.putExtra("otp",response.body().getData().getOtp());
+                        intent.putExtra("firstname",edt_firstname.getText().toString());
+                        intent.putExtra("lastname",edt_lastname.getText().toString());
+                        startActivity(intent);
+
+
+                    } else {
+                        showErrorLoading(response.body().getMessage());
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<EmailOTPResponse> call,@NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.e("Email OTP", "--->" + t.getMessage());
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+    private EmailOTPRequest emailOTPRequest(String emailid) {
+        /*
+         * user_email : mohammedimthi2395@gmail.com
+         */
+        EmailOTPRequest emailOTPRequest = new EmailOTPRequest();
+        emailOTPRequest.setUser_email(emailid);
+        Log.w(TAG,"EmailOTPRequest "+ new Gson().toJson(emailOTPRequest));
+        return emailOTPRequest;
+    }
+
     public void showErrorLoading(String errormesage){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage(errormesage);
@@ -353,7 +442,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             edt_phone.requestFocus();
             can_proceed = false;
         }else if(!emailAddress.matches(emailPattern)){
-            edt_email.setError("Please enter correct E_mail address");
+            edt_email.setError("Please enter correct Email address");
             edt_email.requestFocus();
             can_proceed = false;
         }
@@ -366,6 +455,32 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
 
         }
+
+    }
+    public void ValidEmailValidator() {
+        boolean can_proceed = true;
+        int moblength = edt_phone.getText().toString().trim().length();
+        int firstnamelength = edt_firstname.getText().toString().trim().length();
+        int lastnamelength = edt_firstname.getText().toString().trim().length();
+        String emailAddress = edt_email.getText().toString().trim();
+        String emailPattern = "^[_A-Za-z0-9-+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,4})$";
+
+
+          if (edt_email.getText().toString().trim().equals("")) {
+              edt_email.setError("Please enter the email");
+              edt_email.requestFocus();
+            can_proceed = false;
+        }else if(!emailAddress.matches(emailPattern)){
+            edt_email.setError("Please enter correct Email address");
+            edt_email.requestFocus();
+            can_proceed = false;
+        }
+
+          if (can_proceed) {
+              if (new ConnectionDetector(SignUpActivity.this).isNetworkAvailable(SignUpActivity.this)) {
+              emailOTPResponseCall(emailAddress);
+              }
+          }
 
     }
 

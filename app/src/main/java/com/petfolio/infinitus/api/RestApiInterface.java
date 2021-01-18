@@ -18,6 +18,7 @@ import com.petfolio.infinitus.requestpojo.DoctorMyCalendarUpdateDocDateRequest;
 import com.petfolio.infinitus.requestpojo.DoctorNewAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.DoctorSearchRequest;
 import com.petfolio.infinitus.requestpojo.DoctorUpdateProfileImageRequest;
+import com.petfolio.infinitus.requestpojo.EmailOTPRequest;
 import com.petfolio.infinitus.requestpojo.FBTokenUpdateRequest;
 import com.petfolio.infinitus.requestpojo.FilterDoctorRequest;
 import com.petfolio.infinitus.requestpojo.HolidayDeleteRequest;
@@ -72,6 +73,7 @@ import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.DoctorSearchResponse;
 import com.petfolio.infinitus.responsepojo.DoctorUpdateProfileImageResponse;
 import com.petfolio.infinitus.responsepojo.DropDownListResponse;
+import com.petfolio.infinitus.responsepojo.EmailOTPResponse;
 import com.petfolio.infinitus.responsepojo.FBTokenUpdateResponse;
 import com.petfolio.infinitus.responsepojo.FileUploadResponse;
 import com.petfolio.infinitus.responsepojo.FilterDoctorResponse;
@@ -128,6 +130,10 @@ public interface RestApiInterface {
     /*Signup create*/
     @POST("userdetails/create")
     Call<SignupResponse> signupResponseCall(@Header("Content-Type") String type, @Body SignupRequest signupRequest);
+
+    /*Signup create*/
+    @POST("userdetails/send/emailotp")
+    Call<EmailOTPResponse> emailOTPResponseCall(@Header("Content-Type") String type, @Body EmailOTPRequest emailOTPRequest);
 
 
     /*Profile update*/

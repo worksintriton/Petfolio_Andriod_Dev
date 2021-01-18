@@ -211,7 +211,6 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         String formattedDate = df.format(c);
 
         if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
-
             petDoctorAvailableTimeResponseCall(formattedDate);
         }
 

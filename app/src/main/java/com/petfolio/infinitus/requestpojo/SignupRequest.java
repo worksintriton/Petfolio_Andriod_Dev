@@ -9,6 +9,7 @@ public class SignupRequest {
      * user_phone : 987987989
      * user_type : 1
      * date_of_reg : 23/10/2019 12:12:00
+     * user_email_verification :true
      */
 
     private String first_name;
@@ -18,6 +19,15 @@ public class SignupRequest {
     private int user_type;
     private String date_of_reg;
     private String mobile_type;
+    private boolean user_email_verification ;
+
+    public boolean isUser_email_verification() {
+        return user_email_verification;
+    }
+
+    public void setUser_email_verification(boolean user_email_verification) {
+        this.user_email_verification = user_email_verification;
+    }
 
     public String getMobile_type() {
         return mobile_type;
