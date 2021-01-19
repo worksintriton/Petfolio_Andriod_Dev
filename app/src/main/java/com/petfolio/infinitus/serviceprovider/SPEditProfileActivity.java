@@ -21,7 +21,10 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
+import com.petfolio.infinitus.doctor.DoctorVerifyEmailOtpActivity;
+import com.petfolio.infinitus.requestpojo.EmailOTPRequest;
 import com.petfolio.infinitus.requestpojo.ProfileUpdateRequest;
+import com.petfolio.infinitus.responsepojo.EmailOTPResponse;
 import com.petfolio.infinitus.responsepojo.ProfileUpdateResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -64,6 +67,10 @@ public class SPEditProfileActivity extends AppCompatActivity implements View.OnC
     EditText edt_email;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.btn_verify_email)
+    Button btn_verify_email;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_phone)
     TextView txt_phone;
 
@@ -74,6 +81,10 @@ public class SPEditProfileActivity extends AppCompatActivity implements View.OnC
     private String firstname,lastname,useremail,phonenumber,userid,usertype,userstatus;
     private Dialog alertDialog;
     private String profileimage;
+
+    private String verifyemailstatus;
+    private boolean user_email_verification;
+    private String verified = "notverified";
 
 
     @Override
@@ -95,6 +106,15 @@ public class SPEditProfileActivity extends AppCompatActivity implements View.OnC
         usertype = user.get(SessionManager.KEY_TYPE);
         userstatus = user.get(SessionManager.KEY_PROFILE_STATUS);
         profileimage = user.get(SessionManager.KEY_PROFILE_IMAGE);
+        verifyemailstatus = user.get(SessionManager.KEY_VERIFY_EMAIL_STATUS);
+
+        Log.w(TAG,"verifyemailstatus : "+verifyemailstatus);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            verified = extras.getString("verified");
+
+        }
 
         if(firstname != null){
             edt_firstname.setText(firstname);
@@ -106,8 +126,22 @@ public class SPEditProfileActivity extends AppCompatActivity implements View.OnC
             txt_phone.setText(phonenumber);
         }
 
+        if(verifyemailstatus != null  && verifyemailstatus.equalsIgnoreCase("true") || verified != null && verified.equalsIgnoreCase("verified")){
+            btn_verify_email.setText("Verified Email");
+            user_email_verification = true;
+            edt_email.setEnabled(false);
+            btn_verify_email.setEnabled(false);
+
+        }
+        else{
+            user_email_verification = false;
+            edt_email.setEnabled(true);
+            btn_verify_email.setEnabled(true);
+        }
+
         btn_save_changes.setOnClickListener(this);
         img_back.setOnClickListener(this);
+        btn_verify_email.setOnClickListener(this);
 
 
 
@@ -127,18 +161,21 @@ public class SPEditProfileActivity extends AppCompatActivity implements View.OnC
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
         Call<ProfileUpdateResponse> call = apiInterface.profileUpdateResponseCall(RestUtils.getContentType(), profileUpdateRequest());
-        Log.w(TAG,"SignupResponse url  :%s"+" "+ call.request().url().toString());
+        Log.w(TAG,"profileUpdateResponseCall url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<ProfileUpdateResponse>() {
             @Override
             public void onResponse(@NonNull Call<ProfileUpdateResponse> call, @NonNull Response<ProfileUpdateResponse> response) {
                 avi_indicator.smoothToHide();
-                Log.w(TAG,"SignupResponse" + new Gson().toJson(response.body()));
+                Log.w(TAG,"profileUpdateResponseCall" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
 
                     if (200 == response.body().getCode()) {
 
                        Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
+                        if(response.body().getData().isUser_email_verification()){
+                            verifyemailstatus = "true";
+                        }
 
                         SessionManager sessionManager = new SessionManager(getApplicationContext());
                         sessionManager.setIsLogin(true);
@@ -150,11 +187,13 @@ public class SPEditProfileActivity extends AppCompatActivity implements View.OnC
                                 txt_phone.getText().toString(),
                                 String.valueOf(usertype),
                                 userstatus,
-                                profileimage
+                                profileimage,
+                                verifyemailstatus
 
                         );
-                        Intent intent = new Intent(getApplicationContext(), DoctorDashboardActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class);
                         startActivity(intent);
+                        finish();
 
 
                     } else {
@@ -180,6 +219,7 @@ public class SPEditProfileActivity extends AppCompatActivity implements View.OnC
          * first_name : Sam
          * last_name : san
          * user_email : santhoshvsk94@gmail.com
+         * user_email_verification
          */
 
 
@@ -188,6 +228,7 @@ public class SPEditProfileActivity extends AppCompatActivity implements View.OnC
         profileUpdateRequest.setLast_name(edt_lastname.getText().toString().trim());
         profileUpdateRequest.setUser_email(edt_email.getText().toString());
         profileUpdateRequest.setUser_id(userid);
+        profileUpdateRequest.setUser_email_verification(user_email_verification);
         Log.w(TAG,"profileUpdateRequest "+ new Gson().toJson(profileUpdateRequest));
         return profileUpdateRequest;
     }
@@ -270,6 +311,83 @@ public class SPEditProfileActivity extends AppCompatActivity implements View.OnC
             case R.id.btn_save_changes:
                 updateProfileValidator();
                 break;
+
+            case R.id.btn_verify_email:
+                ValidEmailValidator();
+                break;
         }
+    }
+
+    public void ValidEmailValidator() {
+        boolean can_proceed = true;
+        String emailAddress = edt_email.getText().toString().trim();
+        String emailPattern = "^[_A-Za-z0-9-+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,4})$";
+
+        if (edt_email.getText().toString().trim().equals("")) {
+            edt_email.setError("Please enter the email");
+            edt_email.requestFocus();
+            can_proceed = false;
+        }else if(!emailAddress.matches(emailPattern)){
+            edt_email.setError("Please enter correct Email address");
+            edt_email.requestFocus();
+            can_proceed = false;
+        }
+
+        if (can_proceed) {
+            if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                emailOTPResponseCall(emailAddress);
+            }
+        }
+
+    }
+    private void emailOTPResponseCall(String emailid) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<EmailOTPResponse> call = apiInterface.emailOTPResponseCall(RestUtils.getContentType(), emailOTPRequest(emailid));
+        Log.w(TAG,"EmailOTPResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<EmailOTPResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<EmailOTPResponse> call, @NonNull Response<EmailOTPResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"EmailOTPResponse" + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+
+                    if (200 == response.body().getCode()) {
+                        Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
+                        Intent intent = new Intent(getApplicationContext(), SPVerifyEmailOtpActivity.class);
+                        intent.putExtra("useremail",response.body().getData().getEmail_id());
+                        intent.putExtra("otp",response.body().getData().getOtp());
+                        intent.putExtra("firstname",edt_firstname.getText().toString());
+                        intent.putExtra("lastname",edt_lastname.getText().toString());
+                        startActivity(intent);
+
+
+                    } else {
+                        showErrorLoading(response.body().getMessage());
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<EmailOTPResponse> call,@NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.e("Email OTP", "--->" + t.getMessage());
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+    private EmailOTPRequest emailOTPRequest(String emailid) {
+        /*
+         * user_email : mohammedimthi2395@gmail.com
+         */
+        EmailOTPRequest emailOTPRequest = new EmailOTPRequest();
+        emailOTPRequest.setUser_email(emailid);
+        Log.w(TAG,"EmailOTPRequest "+ new Gson().toJson(emailOTPRequest));
+        return emailOTPRequest;
     }
 }

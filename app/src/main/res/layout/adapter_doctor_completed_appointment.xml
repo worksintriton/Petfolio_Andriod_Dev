@@ -12,11 +12,9 @@
         app:cardCornerRadius="10dp"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true">
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_pet"
                 android:layout_width="80dp"
@@ -44,13 +42,11 @@
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
-
             <LinearLayout
                 android:id="@+id/ly_petname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/cv_pet"
-                android:layout_toRightOf="@id/cv_pet"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -85,7 +81,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:layout_marginLeft="5dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
@@ -125,7 +120,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:layout_marginLeft="5dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
@@ -166,7 +160,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:layout_marginLeft="5dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
@@ -206,7 +199,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:layout_marginLeft="5dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
@@ -217,15 +209,12 @@
                 </LinearLayout>
 
             </LinearLayout>
-
-
             <TextView
                 android:id="@+id/txt_completed_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ly_petname"
                 android:layout_alignStart="@id/cv_pet"
-                android:layout_alignLeft="@id/cv_pet"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:ellipsize="end"
@@ -234,8 +223,28 @@
                 android:text="@string/completed_on_date"
                 android:textColor="@color/new_green_btn"
                 android:textSize="12sp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_completed_date"
+                android:gravity="end" >
+                <ImageView
+                    android:id="@+id/img_prescriptiondetails"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/medical_prescription"
+                    android:layout_marginEnd="10dp"
+                    android:contentDescription="@string/image"
+                    android:scaleType="fitXY"
+                    android:layout_marginBottom="5dp"
+                    />
+            </RelativeLayout>
+
+
+
 
         </RelativeLayout>
+
 
     </androidx.cardview.widget.CardView>
 

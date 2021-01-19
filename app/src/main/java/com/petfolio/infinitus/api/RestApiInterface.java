@@ -39,6 +39,7 @@ import com.petfolio.infinitus.requestpojo.PetListRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverDashboardRequest;
 import com.petfolio.infinitus.requestpojo.PrescriptionCreateRequest;
+import com.petfolio.infinitus.requestpojo.PrescriptionDetailsRequest;
 import com.petfolio.infinitus.requestpojo.ProfileUpdateRequest;
 import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
 import com.petfolio.infinitus.requestpojo.SPAppointmentRequest;
@@ -157,7 +158,6 @@ public interface RestApiInterface {
     Call<FBTokenUpdateResponse>fBTokenUpdateResponseCall(@Header("Content-Type") String type, @Body FBTokenUpdateRequest fbTokenUpdateRequest);
 
     /*Pet Lover*/
-
     /*dropdown list*/
     @GET("petdetails/mobile/dropdownslist")
     Call<DropDownListResponse> dropDownListResponseCall(@Header("Content-Type") String type);
@@ -347,6 +347,10 @@ public interface RestApiInterface {
     /*Prescriptoin Create*/
     @POST("prescription/create")
     Call<PrescriptionCreateResponse>prescriptionCreateRequestCall(@Header("Content-Type") String type, @Body PrescriptionCreateRequest prescriptionCreateRequest);
+
+    /*Prescriptoin Details*/
+    @POST("prescription/fetch_by_appointment_id")
+    Call<PrescriptionCreateResponse>prescriptionDetailsResponseCall(@Header("Content-Type") String type, @Body PrescriptionDetailsRequest prescriptionDetailsRequest);
 
     /*Update Appointment Status complete*/
     @POST("appointments/edit")

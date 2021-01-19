@@ -7,13 +7,22 @@ public class ProfileUpdateRequest {
      * first_name : Sam
      * last_name : san
      * user_email : santhoshvsk94@gmail.com
+     * user_email_verification
      */
 
     private String user_id;
     private String first_name;
     private String last_name;
     private String user_email;
+    private boolean user_email_verification;
 
+    public boolean isUser_email_verification() {
+        return user_email_verification;
+    }
+
+    public void setUser_email_verification(boolean user_email_verification) {
+        this.user_email_verification = user_email_verification;
+    }
 
     public String getUser_id() {
         return user_id;

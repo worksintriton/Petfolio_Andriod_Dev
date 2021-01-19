@@ -2,6 +2,7 @@ package com.petfolio.infinitus.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.petfolio.infinitus.R;
 
+import com.petfolio.infinitus.doctor.DoctorPrescriptionDetailsActivity;
 import com.petfolio.infinitus.interfaces.AddReviewListener;
 import com.petfolio.infinitus.responsepojo.PetAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
@@ -94,6 +96,19 @@ public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
             }
         });
 
+        holder.img_prescriptiondetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(completedAppointmentResponseList.get(position).get_id() != null) {
+                    Intent i = new Intent(context, DoctorPrescriptionDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("id", completedAppointmentResponseList.get(position).get_id());
+                    context.startActivity(i);
+                }
+
+            }
+        });
+
+
 
 
 
@@ -148,7 +163,7 @@ public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_petname,txt_pettype,txt_type,txt_completed_date,txt_service_cost;
-        public ImageView img_pet_imge;
+        public ImageView img_pet_imge,img_prescriptiondetails;
         public Button btn_cancel,btn_complete,btn_add_review;
 
 
@@ -164,6 +179,7 @@ public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
             btn_complete = itemView.findViewById(R.id.btn_complete);
             txt_service_cost = itemView.findViewById(R.id.txt_service_cost);
             btn_add_review = itemView.findViewById(R.id.btn_add_review);
+            img_prescriptiondetails = itemView.findViewById(R.id.img_prescriptiondetails);
 
 
 

@@ -2,6 +2,7 @@ package com.petfolio.infinitus.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.doctor.DoctorPrescriptionDetailsActivity;
+import com.petfolio.infinitus.doctor.PrescriptionActivity;
 import com.petfolio.infinitus.responsepojo.DoctorCompletedAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
 
@@ -82,6 +85,17 @@ public class DoctorCompletedAppointmentAdapter extends  RecyclerView.Adapter<Rec
 
         }
 
+        holder.img_prescriptiondetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(completedAppointmentResponseList.get(position).get_id() != null) {
+                    Intent i = new Intent(context, DoctorPrescriptionDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("id", completedAppointmentResponseList.get(position).get_id());
+                    context.startActivity(i);
+                }
+
+            }
+        });
 
 
 
@@ -96,7 +110,9 @@ public class DoctorCompletedAppointmentAdapter extends  RecyclerView.Adapter<Rec
 
 
 
-        }
+
+
+    }
 
 
     @Override
@@ -112,7 +128,7 @@ public class DoctorCompletedAppointmentAdapter extends  RecyclerView.Adapter<Rec
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_petname,txt_pettype,txt_type,txt_service_cost,txt_completed_date;
-        public ImageView img_pet_imge;
+        public ImageView img_pet_imge,img_prescriptiondetails;
         public Button btn_cancel,btn_complete;
 
 
@@ -127,6 +143,7 @@ public class DoctorCompletedAppointmentAdapter extends  RecyclerView.Adapter<Rec
             txt_completed_date = itemView.findViewById(R.id.txt_completed_date);
             btn_cancel = itemView.findViewById(R.id.btn_cancel);
             btn_complete = itemView.findViewById(R.id.btn_complete);
+            img_prescriptiondetails = itemView.findViewById(R.id.img_prescriptiondetails);
 
 
 

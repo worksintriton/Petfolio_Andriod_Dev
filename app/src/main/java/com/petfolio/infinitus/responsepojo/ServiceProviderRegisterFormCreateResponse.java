@@ -231,9 +231,20 @@ public class ServiceProviderRegisterFormCreateResponse {
 
         public static class BusServiceListBean  {
             /**
+             * amount
              * bus_service_list : Service - 1
              * time_slots : 15 mins
              */
+
+            private Integer amount;
+
+            public Integer getAmount() {
+                return amount;
+            }
+
+            public void setAmount(Integer amount) {
+                this.amount = amount;
+            }
 
             private String bus_service_list;
             private String time_slots;

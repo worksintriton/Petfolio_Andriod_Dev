@@ -94,25 +94,6 @@ public class SPServiceListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
                 isChbxChecked = spServiceList.get(position).isChbxChecked();
             //}
         }
-      /*  if(bus_service_list != null && bus_service_list.size() > 0) {
-            for(int i=0; i<bus_service_list.size();i++){
-                if(bus_service_list.get(i).getAmount() != null){
-                    holder.txt_amount.setText(bus_service_list.get(i).getAmount() + "");
-                }  */
-        /*if(bus_service_list.get(i).getTime_slots() != null){
-                    holder.txt_timeslottype.setText(bus_service_list.get(i).getTime_slots());
-                }*//*
-            }
-           *//* if(bus_service_list.get(position).getAmount() != null){
-                holder.txt_amount.setText(bus_service_list.get(position).getAmount() + "");
-            }
-            holder.txt_timeslottype.setText(bus_service_list.get(position).getTime_slots());
-            if(spServiceList.get(position).isChbxChecked()){
-                holder.checkbox_service_type.setChecked(true);
-            }*//*
-
-        }*/
-
 
         holder.checkbox_service_type.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

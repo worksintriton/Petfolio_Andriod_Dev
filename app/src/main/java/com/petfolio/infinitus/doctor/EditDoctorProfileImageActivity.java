@@ -109,6 +109,8 @@ public class EditDoctorProfileImageActivity extends AppCompatActivity implements
     private String userid;
     private String firstname,lastname,useremail;
     private String phonenumber,usertype,userstatus,profileimage;
+    private String verifyemailstatus;
+
 
 
 
@@ -138,6 +140,7 @@ public class EditDoctorProfileImageActivity extends AppCompatActivity implements
         usertype = user.get(SessionManager.KEY_TYPE);
         userstatus = user.get(SessionManager.KEY_PROFILE_STATUS);
         profileimage = user.get(SessionManager.KEY_PROFILE_IMAGE);
+        verifyemailstatus = user.get(SessionManager.KEY_VERIFY_EMAIL_STATUS);
 
 
 
@@ -559,7 +562,8 @@ public class EditDoctorProfileImageActivity extends AppCompatActivity implements
                                 phonenumber,
                                 String.valueOf(usertype),
                                 userstatus,
-                                profileimage
+                                profileimage,
+                                verifyemailstatus
 
                         );
                        onBackPressed();

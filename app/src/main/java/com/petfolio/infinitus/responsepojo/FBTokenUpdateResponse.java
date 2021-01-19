@@ -89,6 +89,15 @@ public class FBTokenUpdateResponse {
         private String mobile_type;
         private String profile_img;
         private int __v;
+        private boolean user_email_verification;
+
+        public boolean isUser_email_verification() {
+            return user_email_verification;
+        }
+
+        public void setUser_email_verification(boolean user_email_verification) {
+            this.user_email_verification = user_email_verification;
+        }
 
         public String getProfile_img() {
             return profile_img;

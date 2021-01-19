@@ -69,7 +69,6 @@ public class PrescriptionActivity extends AppCompatActivity {
     private String Doctor_Name = "";
     private String Doctor_Image = "";
     private String Doctor_ID = "";
-    private String Appointment_ID = "";
     private String Treatment_Done_by = "";
     private String Patient_Name = "";
     private String Patient_Image = "";
@@ -294,6 +293,7 @@ public class PrescriptionActivity extends AppCompatActivity {
          * user_id : 5ef2c092c006bb0ed174c771
          * Prescription_data : [{"Quantity":"3","Tablet_name":"dolo","consumption":"twice"}]
          * Treatment_Done_by : Self
+         * Appointment_ID
          */
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
@@ -303,11 +303,12 @@ public class PrescriptionActivity extends AppCompatActivity {
         prescriptionCreateRequest.setDate(currentDateandTime);
         prescriptionCreateRequest.setDoctor_Comments(etdoctorcomments.getText().toString().trim());
         prescriptionCreateRequest.setPDF_format("");
-        prescriptionCreateRequest.setPrescription_type("");
+        prescriptionCreateRequest.setPrescription_type("PDF");
         prescriptionCreateRequest.setPrescription_img("");
         prescriptionCreateRequest.setUser_id(userid);
         prescriptionCreateRequest.setPrescription_data(prescriptionDataList);
         prescriptionCreateRequest.setTreatment_Done_by(Treatment_Done_by);
+        prescriptionCreateRequest.setAppointment_ID(appoinmentid);
         Log.w(TAG,"prescriptionCreateRequest"+ "--->" + new Gson().toJson(prescriptionCreateRequest));
         return prescriptionCreateRequest;
     }

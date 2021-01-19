@@ -98,6 +98,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
     private String userid;
     private String token = "";
     private String firstname,lastname,useremail;
+    private String verifyemailstatus = "false";
 
 
     @Override
@@ -376,6 +377,9 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
+                        if(response.body().getData().isUser_email_verification()){
+                            verifyemailstatus = "true";
+                        }
 
                         SessionManager sessionManager = new SessionManager(VerifyOtpActivity.this);
                         sessionManager.setIsLogin(true);
@@ -387,7 +391,8 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                                 phonenumber,
                                 String.valueOf(usertype),
                                 userstatus,
-                                response.body().getData().getProfile_img()
+                                response.body().getData().getProfile_img(),
+                                verifyemailstatus
 
                         );
 

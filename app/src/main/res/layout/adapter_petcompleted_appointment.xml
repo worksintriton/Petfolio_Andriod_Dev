@@ -249,6 +249,22 @@
                 android:text="@string/completed_on_date"
                 android:textColor="@color/new_green_btn"
                 android:textSize="12sp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_completed_date"
+                android:gravity="end" >
+                <ImageView
+                    android:id="@+id/img_prescriptiondetails"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/medical_prescription"
+                    android:layout_marginEnd="10dp"
+                    android:contentDescription="@string/image"
+                    android:scaleType="fitXY"
+                    android:layout_marginBottom="5dp"
+                    />
+            </RelativeLayout>
 
         </RelativeLayout>
 

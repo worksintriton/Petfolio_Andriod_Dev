@@ -206,6 +206,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".petlover.PetVerifyEmailOtpActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.location.ManageAddressActivity"
             android:screenOrientation="portrait"
@@ -281,6 +287,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".doctor.DoctorVerifyEmailOtpActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".doctor.PrescriptionActivity"
             android:screenOrientation="portrait"
@@ -305,9 +317,23 @@
             android:name=".doctor.EditDoctorBusinessInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
-            android:windowSoftInputMode="adjustPan" /> <!-- Service Provider -->
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".doctor.DoctorPrescriptionDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- Service Provider -->
+
         <activity
             android:name=".serviceprovider.ServiceProviderRegisterFormActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".serviceprovider.SPVerifyEmailOtpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />

@@ -1,5 +1,6 @@
 package com.petfolio.infinitus.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,7 +42,7 @@ public class SPServiceListEditAdapter extends  RecyclerView.Adapter<RecyclerView
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_specialization_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_edit_sp_service_list, parent, false);
         return new ViewHolderOne(view);
     }
 
@@ -52,20 +53,19 @@ public class SPServiceListEditAdapter extends  RecyclerView.Adapter<RecyclerView
 
     }
 
+    @SuppressLint("SetTextI18n")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
-
-        currentItem = spServiceList.get(position);
-
-
-
-        holder.txt_spectypes.setText(currentItem.getService_list());
+            currentItem = spServiceList.get(position);
+            holder.txt_servicename.setText(spServiceList.get(position).getService_list());
 
 
-
+            Log.w(TAG,"spServiceListEdit : "+new Gson().toJson(spServiceListEdit));
 
         for(int i=0;i<spServiceListEdit.size();i++){
-            if(null!=spServiceListEdit && null!=currentItem.getService_list() && spServiceListEdit.get(i).getBus_service_list().equalsIgnoreCase(currentItem.getService_list().trim())){
-                holder.chx_spectypes.setChecked(true);
+            if(null != currentItem.getService_list() && spServiceListEdit.get(i).getBus_service_list().equalsIgnoreCase(currentItem.getService_list().trim())){
+                holder.checkbox_service_type.setChecked(true);
+                holder.txt_timeslottype.setText(spServiceListEdit.get(i).getTime_slots());
+                holder.txt_amount.setText(spServiceListEdit.get(i).getAmount()+"");
                 Log.w(TAG,"ServiceEdit");
 
 
@@ -75,13 +75,13 @@ public class SPServiceListEditAdapter extends  RecyclerView.Adapter<RecyclerView
 
 
 
-        holder.chx_spectypes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        holder.checkbox_service_type.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 String chservice = spServiceList.get(position).getService_list();
 
                 if(isChecked){
-                    if (holder.chx_spectypes.isChecked()) {
+                    if (holder.checkbox_service_type.isChecked()) {
                         spServiceChckedListener.onItemSPServiceCheck(position,chservice);
                     }
 
@@ -115,19 +115,21 @@ public class SPServiceListEditAdapter extends  RecyclerView.Adapter<RecyclerView
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
 
-        public TextView txt_spectypes;
-        public CheckBox chx_spectypes;
+        public TextView txt_servicename;
+        public CheckBox checkbox_service_type;
+        public TextView txt_amount,txt_timeslottype;
 
 
         public ViewHolderOne(View itemView) {
             super(itemView);
-
-            txt_spectypes = itemView.findViewById(R.id.spec_name);
-
-            chx_spectypes = itemView.findViewById(R.id.checkbox_specialization_type);
+            txt_servicename = itemView.findViewById(R.id.txt_servicename);
+            checkbox_service_type = itemView.findViewById(R.id.checkbox_service_type);
+            txt_timeslottype = itemView.findViewById(R.id.txt_timeslottype);
+            txt_amount = itemView.findViewById(R.id.txt_amount);
 
 
         }
+
 
     }
 

@@ -15,6 +15,7 @@ public class PrescriptionCreateRequest{
 	 * user_id : 5ef2c092c006bb0ed174c771
 	 * Prescription_data : [{"Quantity":"3","Tablet_name":"dolo","consumption":"twice"}]
 	 * Treatment_Done_by : Self
+	 * Appointment_ID
 	 */
 
 	private String doctor_id;
@@ -26,7 +27,15 @@ public class PrescriptionCreateRequest{
 	private String user_id;
 	private String Treatment_Done_by;
 	private List<PrescriptionDataBean> Prescription_data;
+	private String Appointment_ID;
 
+	public String getAppointment_ID() {
+		return Appointment_ID;
+	}
+
+	public void setAppointment_ID(String appointment_ID) {
+		Appointment_ID = appointment_ID;
+	}
 
 	public String getDoctor_id() {
 		return doctor_id;

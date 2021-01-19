@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_new"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -21,7 +22,6 @@
             android:src="@drawable/emergency_call"
             android:layout_gravity="end"
             android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
             android:contentDescription="@string/image" />
 
@@ -61,7 +61,6 @@
                 android:id="@+id/ly_petname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/cv_pet"
                 android:orientation="vertical"
                 android:layout_toEndOf="@id/cv_pet">
 
@@ -97,7 +96,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:layout_marginLeft="5dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
@@ -137,7 +135,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:layout_marginLeft="5dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
@@ -178,7 +175,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:layout_marginLeft="5dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
@@ -218,7 +214,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:layout_marginLeft="5dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
@@ -252,7 +247,8 @@
                     android:text="@string/cancel"
                     android:textAllCaps="false"
                     android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    tools:ignore="ButtonStyle" />
 
                 <Button
                     android:id="@+id/btn_complete"
@@ -260,13 +256,13 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
                     android:background="@drawable/new_rounded_corner_btn"
                     android:fontFamily="@font/futuramediumbt"
                     android:text="@string/complete"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    tools:ignore="ButtonStyle" />
 
 
             </LinearLayout>
@@ -284,8 +280,7 @@
                 android:maxLines="1"
                 android:text="@string/completed_on_date"
                 android:textColor="@color/new_green_btn"
-                android:textSize="12sp"
-                android:layout_marginLeft="10dp" />
+                android:textSize="12sp" />
 
         </RelativeLayout>
 

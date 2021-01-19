@@ -135,9 +135,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         if(verified != null && verified.equalsIgnoreCase("verified")){
             btn_verify_email.setText("Verified Email");
             user_email_verification = true;
+            edt_email.setEnabled(false);
+            btn_verify_email.setEnabled(false);
 
-        }else{
+        }
+        else{
             user_email_verification = false;
+            edt_email.setEnabled(true);
+            btn_verify_email.setEnabled(true);
         }
 
         Log.w(TAG,"firstname : "+firstname+" lastname : "+lastname+" useremail : "+useremail+" user_email_verification : "+user_email_verification);
@@ -350,6 +355,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         intent.putExtra("otp",response.body().getData().getOtp());
                         intent.putExtra("firstname",edt_firstname.getText().toString());
                         intent.putExtra("lastname",edt_lastname.getText().toString());
+                        intent.putExtra("UserType",UserType);
+                        intent.putExtra("UserTypeValue",UserTypeValue);
                         startActivity(intent);
 
 
@@ -459,14 +466,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
     public void ValidEmailValidator() {
         boolean can_proceed = true;
-        int moblength = edt_phone.getText().toString().trim().length();
-        int firstnamelength = edt_firstname.getText().toString().trim().length();
-        int lastnamelength = edt_firstname.getText().toString().trim().length();
         String emailAddress = edt_email.getText().toString().trim();
         String emailPattern = "^[_A-Za-z0-9-+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,4})$";
 
-
-          if (edt_email.getText().toString().trim().equals("")) {
+        if (edt_email.getText().toString().trim().equals("")) {
               edt_email.setError("Please enter the email");
               edt_email.requestFocus();
             can_proceed = false;

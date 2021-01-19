@@ -1,4 +1,4 @@
-package com.petfolio.infinitus.activity;
+package com.petfolio.infinitus.serviceprovider;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -18,33 +18,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.crashlytics.FirebaseCrashlytics;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.appUtils.ApplicationData;
 import com.petfolio.infinitus.appUtils.NumericKeyBoardTransformationMethod;
-import com.petfolio.infinitus.doctor.DoctorBusinessInfoActivity;
-import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
-import com.petfolio.infinitus.petlover.AddYourPetActivity;
-import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
-import com.petfolio.infinitus.receiver.SmsBroadcastListener;
+import com.petfolio.infinitus.doctor.DoctorEditProfileActivity;
 import com.petfolio.infinitus.requestpojo.EmailOTPRequest;
-import com.petfolio.infinitus.requestpojo.FBTokenUpdateRequest;
-import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
 import com.petfolio.infinitus.responsepojo.EmailOTPResponse;
-import com.petfolio.infinitus.responsepojo.FBTokenUpdateResponse;
-import com.petfolio.infinitus.responsepojo.ResendOTPResponse;
-import com.petfolio.infinitus.serviceprovider.ServiceProviderDashboardActivity;
-import com.petfolio.infinitus.serviceprovider.ServiceProviderRegisterFormActivity;
-import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
-import com.petfolio.infinitus.vendor.VenderRegisterFormActivity;
-import com.petfolio.infinitus.vendor.VendorDashboardActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.concurrent.TimeUnit;
@@ -56,7 +40,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VerifyEmailOtpActivity extends AppCompatActivity implements View.OnClickListener {
+public class SPVerifyEmailOtpActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private final String TAG = "SPVerifyEmailOtpActivity";
+
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
     ImageView img_back;
@@ -89,7 +76,7 @@ public class VerifyEmailOtpActivity extends AppCompatActivity implements View.On
     @BindView(R.id.llresendotp)
     LinearLayout llresendotp;
 
-    private final String TAG = "VerifyOtpActivity";
+
     private CountDownTimer timer;
 
     private ApplicationData applicationData;
@@ -106,11 +93,9 @@ public class VerifyEmailOtpActivity extends AppCompatActivity implements View.On
     private String userid;
     private String token = "";
     private String firstname,lastname,useremail;
-    private String UserType;
-    private int UserTypeValue;
 
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "LongLogTag"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,8 +112,6 @@ public class VerifyEmailOtpActivity extends AppCompatActivity implements View.On
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             otp = extras.getInt("otp");
-            UserType = extras.getString("UserType");
-            UserTypeValue = extras.getInt("UserTypeValue");
 
             userid = extras.getString("userid");
             userstatus = extras.getString("userstatus");
@@ -136,7 +119,7 @@ public class VerifyEmailOtpActivity extends AppCompatActivity implements View.On
             lastname = extras.getString("lastname");
             useremail = extras.getString("useremail");
             fromactivity = extras.getString("fromactivity");
-            Log.w(TAG,"Bundle "+" phonenumber : "+phonenumber+" otp :"+otp+" UserType : "+UserType+" userstatus : "+userstatus+ " userid : "+userid);
+            Log.w(TAG,"Bundle "+" phonenumber : "+phonenumber+" otp :"+otp+" userstatus : "+userstatus+ " userid : "+userid);
         }
 
         img_back.setOnClickListener(this);
@@ -188,7 +171,7 @@ public class VerifyEmailOtpActivity extends AppCompatActivity implements View.On
                 break;
 
                 case R.id.txt_resend:
-                    if (new ConnectionDetector(VerifyEmailOtpActivity.this).isNetworkAvailable(VerifyEmailOtpActivity.this)) {
+                    if (new ConnectionDetector(SPVerifyEmailOtpActivity.this).isNetworkAvailable(SPVerifyEmailOtpActivity.this)) {
                         if(useremail != null){
                             resendOtpResponseCall();
                         }
@@ -220,13 +203,11 @@ public class VerifyEmailOtpActivity extends AppCompatActivity implements View.On
          }
 
          if (can_proceed) {
-             Intent intent = new Intent(VerifyEmailOtpActivity.this,SignUpActivity.class);
+             Intent intent = new Intent(SPVerifyEmailOtpActivity.this, SPEditProfileActivity.class);
              intent.putExtra("verified","verified");
              intent.putExtra("useremail",useremail);
              intent.putExtra("firstname",firstname);
              intent.putExtra("lastname",lastname);
-             intent.putExtra("UserType",UserType);
-             intent.putExtra("UserTypeValue",UserTypeValue);
              startActivity(intent);
 
 
@@ -249,6 +230,7 @@ public class VerifyEmailOtpActivity extends AppCompatActivity implements View.On
         finish();
     }
 
+    @SuppressLint("LongLogTag")
     private void resendOtpResponseCall() {
         llresendotp.setVisibility(View.GONE);
         avi_indicator.setVisibility(View.VISIBLE);

@@ -110,8 +110,7 @@ public class PetLoverEditProfileImageActivity extends AppCompatActivity implemen
     private String userid;
     private String firstname,lastname,useremail;
     private String phonenumber,usertype,userstatus,profileimage;
-
-
+    private String verifyemailstatus;
 
 
     @Override
@@ -139,6 +138,7 @@ public class PetLoverEditProfileImageActivity extends AppCompatActivity implemen
         usertype = user.get(SessionManager.KEY_TYPE);
         userstatus = user.get(SessionManager.KEY_PROFILE_STATUS);
         profileimage = user.get(SessionManager.KEY_PROFILE_IMAGE);
+        verifyemailstatus = user.get(SessionManager.KEY_VERIFY_EMAIL_STATUS);
 
 
 
@@ -558,7 +558,8 @@ public class PetLoverEditProfileImageActivity extends AppCompatActivity implemen
                                 phonenumber,
                                 String.valueOf(usertype),
                                 userstatus,
-                                profileimage
+                                profileimage,
+                                verifyemailstatus
 
                         );
                         onBackPressed();

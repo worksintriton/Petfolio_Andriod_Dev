@@ -191,6 +191,10 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
             txt_address.setText(AddressLine);
             edt_pincode.setText(postalCode);
 
+            edt_cityname.setEnabled(false);
+            edt_location.setEnabled(false);
+            edt_pincode.setEnabled(false);
+
 
 
 
