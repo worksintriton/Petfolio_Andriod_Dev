@@ -668,11 +668,8 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
         call.enqueue(new Callback<PetAddImageResponse>() {
             @Override
             public void onResponse(@NonNull Call<PetAddImageResponse> call, @NonNull Response<PetAddImageResponse> response) {
-
                 Log.w(TAG,"PetAddImageResponse"+ "--->" + new Gson().toJson(response.body()));
-
                 avi_indicator.smoothToHide();
-
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         Intent intent = new Intent(getApplicationContext(),EditYourPetImageActivity.class);

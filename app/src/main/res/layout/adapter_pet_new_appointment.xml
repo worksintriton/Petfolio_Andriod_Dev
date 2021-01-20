@@ -20,17 +20,34 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:layout_marginTop="5dp">
+                <ImageView
+                    android:id="@+id/img_emergency_appointment"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="20dp"
+                    android:src="@drawable/emergency_call"
+                    tools:ignore="ContentDescription" />
+                <ImageView
+                    android:id="@+id/img_videocall"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_chat"
+                    tools:ignore="ContentDescription" />
 
-            <ImageView
-                android:id="@+id/img_emergency_appointment"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="end"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="10dp"
-                android:src="@drawable/emergency_call"
-                tools:ignore="ContentDescription"
-                android:layout_alignParentEnd="true" />
+            </LinearLayout>
+
+
 
             <RelativeLayout
                 android:id="@+id/rl_appointmentroot"

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,9 +21,12 @@ import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.doctor.PrescriptionActivity;
 import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
+import com.petfolio.infinitus.petlover.VideoCallPetLoverActivity;
 import com.petfolio.infinitus.responsepojo.PetAppointmentResponse;
 
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 
 public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -129,10 +133,24 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
             }
         });
 
+        holder.img_videocall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                    Intent i = new Intent(context, VideoCallPetLoverActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("id",newAppointmentResponseList.get(position).get_id());
+                    Log.w(TAG,"ID-->"+newAppointmentResponseList.get(position).get_id());
+                    context.startActivity(i);
+
+
+            }
+        });
 
 
 
-        }
+
+
+    }
 
     @Override
     public int getItemCount() {
@@ -147,7 +165,7 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_clinicname,txt_petname,txt_type,txt_service_cost,txt_bookedon;
-        public ImageView img_clinic_imge,img_emergency_appointment;
+        public ImageView img_clinic_imge,img_emergency_appointment,img_videocall;
         public Button btn_cancel;
 
 
@@ -163,6 +181,8 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
             btn_cancel = itemView.findViewById(R.id.btn_cancel);
             img_emergency_appointment = itemView.findViewById(R.id.img_emergency_appointment);
             img_emergency_appointment.setVisibility(View.GONE);
+            img_videocall = itemView.findViewById(R.id.img_videocall);
+
 
 
         }

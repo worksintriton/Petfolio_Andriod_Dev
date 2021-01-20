@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.petfolio.infinitus"
-        minSdkVersion 19
+        minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -47,7 +47,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'org.jetbrains:annotations:16.0.1'
     implementation 'org.jetbrains:annotations:16.0.1'
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
@@ -87,9 +87,9 @@ dependencies {
 
 
 
-    implementation 'com.google.firebase:firebase-messaging:21.0.0'
-    implementation 'com.google.firebase:firebase-core:18.0.0'
-    implementation 'com.google.firebase:firebase-auth:20.0.1'
+    implementation 'com.google.firebase:firebase-messaging:21.0.1'
+    implementation 'com.google.firebase:firebase-core:18.0.1'
+    implementation 'com.google.firebase:firebase-auth:20.0.2'
 
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:26.1.1')
@@ -104,6 +104,13 @@ dependencies {
 
     /*Payment gateway razorpay*/
     implementation 'com.razorpay:checkout:1.5.16'
+
+    /*Jitsi Video Call*/
+   // implementation ('org.jitsi.react:jitsi-meet-sdk:2.11.0') { transitive = true }
+    implementation ('org.jitsi.react:jitsi-meet-sdk:2.+') { transitive = true }
+
+
+
 
 
 
