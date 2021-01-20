@@ -181,13 +181,12 @@ public class FragmentDoctorNewAppointment extends Fragment implements OnAppointm
 
     }
     private DoctorNewAppointmentRequest doctorNewAppointmentRequest() {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String currentDateandTime = simpleDateFormat.format(new Date());
 
         DoctorNewAppointmentRequest doctorNewAppointmentRequest = new DoctorNewAppointmentRequest();
-
         doctorNewAppointmentRequest.setDoctor_id(doctorid);
-
-
-
+        doctorNewAppointmentRequest.setCurrent_time(currentDateandTime);
         Log.w(TAG,"doctorNewAppointmentRequest"+ "--->" + new Gson().toJson(doctorNewAppointmentRequest));
         return doctorNewAppointmentRequest;
     }

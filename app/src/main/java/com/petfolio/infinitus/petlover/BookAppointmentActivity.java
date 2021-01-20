@@ -66,6 +66,8 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -1138,10 +1140,35 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
          */
         List<PetAppointmentCreateRequest.DocAttchedBean> doc_attched = new ArrayList<>();
 
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentDateandTime = simpleDateFormat.format(new Date());
         /*String currenttime = currentDateandTime.substring(currentDateandTime.indexOf(' ') + 1);
         String currentdate =  currentDateandTime.substring(0, currentDateandTime.indexOf(' '));*/
+
+        @SuppressLint("SimpleDateFormat") DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy");
+        @SuppressLint("SimpleDateFormat") DateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        Date date = null;
+        try {
+            date = inputFormat.parse(Doctor_ava_Date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String outputDateStr = outputFormat.format(date);
+        String outputTimeStr = null;
+
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat h_mm_a   = new SimpleDateFormat("hh:mm aa");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat hh_mm_ss = new SimpleDateFormat("HH:mm:ss");
+
+        try {
+            Date d1 = h_mm_a.parse(selectedTimeSlot);
+             outputTimeStr =hh_mm_ss.format(d1);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String displaydateandtime = outputDateStr+" "+outputTimeStr;
+
 
         PetAppointmentCreateRequest petAppointmentCreateRequest = new PetAppointmentCreateRequest();
         petAppointmentCreateRequest.setDoctor_id(doctorid);
@@ -1158,7 +1185,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         petAppointmentCreateRequest.setDoc_rate(0);
         petAppointmentCreateRequest.setUser_feedback("");
         petAppointmentCreateRequest.setUser_rate(0);
-        petAppointmentCreateRequest.setDisplay_date(currentDateandTime);
+        petAppointmentCreateRequest.setDisplay_date(displaydateandtime);
         petAppointmentCreateRequest.setServer_date_time("");
         petAppointmentCreateRequest.setPayment_id(Payment_id);
         petAppointmentCreateRequest.setPayment_method("Online");

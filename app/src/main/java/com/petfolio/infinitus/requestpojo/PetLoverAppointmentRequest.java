@@ -7,7 +7,15 @@ public class PetLoverAppointmentRequest {
      */
 
     private String user_id;
+    private String current_time;
 
+    public String getCurrent_time() {
+        return current_time;
+    }
+
+    public void setCurrent_time(String current_time) {
+        this.current_time = current_time;
+    }
 
     public String getUser_id() {
         return user_id;

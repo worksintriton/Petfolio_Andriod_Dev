@@ -1,5 +1,6 @@
 package com.petfolio.infinitus.fragmentpetlover.myappointments;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -41,6 +42,8 @@ import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -180,8 +183,12 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
 
     }
     private PetLoverAppointmentRequest petLoverAppointmentRequest() {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String currentDateandTime = simpleDateFormat.format(new Date());
+
         PetLoverAppointmentRequest petLoverAppointmentRequest = new PetLoverAppointmentRequest();
         petLoverAppointmentRequest.setUser_id(userid);
+        petLoverAppointmentRequest.setCurrent_time(currentDateandTime);
         Log.w(TAG,"petLoverAppointmentRequest"+ "--->" + new Gson().toJson(petLoverAppointmentRequest));
         return petLoverAppointmentRequest;
     }

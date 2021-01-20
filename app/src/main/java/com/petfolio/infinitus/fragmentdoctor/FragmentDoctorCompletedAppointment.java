@@ -32,6 +32,8 @@ import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -171,13 +173,11 @@ public class FragmentDoctorCompletedAppointment extends Fragment implements View
 
     }
     private DoctorNewAppointmentRequest doctorNewAppointmentRequest() {
-
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String currentDateandTime = simpleDateFormat.format(new Date());
         DoctorNewAppointmentRequest doctorNewAppointmentRequest = new DoctorNewAppointmentRequest();
-
         doctorNewAppointmentRequest.setDoctor_id(doctorid);
-
-
-
+        doctorNewAppointmentRequest.setCurrent_time(currentDateandTime);
         Log.w(TAG,"doctorNewAppointmentRequest"+ "--->" + new Gson().toJson(doctorNewAppointmentRequest));
         return doctorNewAppointmentRequest;
     }

@@ -4,6 +4,15 @@ public class DoctorNewAppointmentRequest {
 
 
     private String doctor_id;
+    private String current_time;
+
+    public String getCurrent_time() {
+        return current_time;
+    }
+
+    public void setCurrent_time(String current_time) {
+        this.current_time = current_time;
+    }
 
     public String getDoctor_id ()
     {
