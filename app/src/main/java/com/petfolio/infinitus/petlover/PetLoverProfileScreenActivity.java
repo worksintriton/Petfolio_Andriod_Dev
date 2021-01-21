@@ -127,6 +127,8 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
     private List<PetListResponse.DataBean> petList;
     private Dialog dialog;
     private String profileimage;
+    private String fromactivity;
+    private String doctorid,doctorname,distance;
 
 
     @Override
@@ -186,14 +188,32 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
 
         bottom_navigation_view.setOnNavigationItemSelectedListener(this);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            fromactivity = extras.getString("fromactivity");
+            doctorid = extras.getString("doctorid");
+            doctorname = extras.getString("doctorname");
+            distance = extras.getString("distance");
+            Log.w(TAG,"fromactivity : "+fromactivity);
+        }
+
 
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(),PetLoverDashboardActivity.class));
-        finish();
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorClinicDetailsActivity")){
+            Intent intent = new Intent(getApplicationContext(),DoctorClinicDetailsActivity.class);
+            intent.putExtra("doctorid",doctorid);
+            intent.putExtra("doctorname",doctorname);
+            intent.putExtra("distance",distance);
+            startActivity(intent);
+        }else{
+            startActivity(new Intent(getApplicationContext(),PetLoverDashboardActivity.class));
+            finish();
+        }
+
     }
 
     @SuppressLint("NonConstantResourceId")

@@ -159,7 +159,7 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
     RecyclerView rvproducts;
 
     @SuppressLint("NonConstantResourceId")
-   @BindView(R.id.txt_doctor_norecord)
+    @BindView(R.id.txt_doctor_norecord)
     TextView txt_doctor_norecord;
 
 
@@ -313,7 +313,7 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
 
                 }
                 break;
-                case R.id.txt_seemore_puppy_love:
+            case R.id.txt_seemore_puppy_love:
                 if(puppyProductsDetailsBeanList.size()>0){
                     rvpuppy_love.setVisibility(View.VISIBLE);
                     txt_puppy_love.setVisibility(View.VISIBLE);
@@ -457,7 +457,7 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
                         }
 
                         if(response.body().getData().getSOS() != null){
-                         APIClient.sosList = response.body().getData().getSOS();
+                            APIClient.sosList = response.body().getData().getSOS();
                         }
 
 
@@ -625,7 +625,7 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
                     dialog.dismiss();
                     startActivity(new Intent(mContext, PickUpLocationDenyActivity.class));
 
-                   // showLocationDenyAlert();
+                    // showLocationDenyAlert();
 
 
                 }
@@ -739,28 +739,28 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
 
     private void getLatandLong() {
         try {
-                if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
-                } else {
-                    GPSTracker gps = new GPSTracker(mContext);
-                    // Check if GPS enabled
-                    if (gps.canGetLocation()) {
-                        latitude = gps.getLatitude();
-                        longitude = gps.getLongitude();
-                        getCompleteAddressString(latitude,longitude);
+            } else {
+                GPSTracker gps = new GPSTracker(mContext);
+                // Check if GPS enabled
+                if (gps.canGetLocation()) {
+                    latitude = gps.getLatitude();
+                    longitude = gps.getLongitude();
+                    getCompleteAddressString(latitude,longitude);
 
-                        Log.w(TAG, "getLatandLong--->" + "latitude" + " " + latitude + "longitude" + " " + longitude);
-
-
-                        if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
-                            petLoverDashboardResponseCall(0,0,0);
-                        }
+                    Log.w(TAG, "getLatandLong--->" + "latitude" + " " + latitude + "longitude" + " " + longitude);
 
 
-
+                    if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
+                        petLoverDashboardResponseCall(0,0,0);
                     }
+
+
+
                 }
+            }
 
 
 

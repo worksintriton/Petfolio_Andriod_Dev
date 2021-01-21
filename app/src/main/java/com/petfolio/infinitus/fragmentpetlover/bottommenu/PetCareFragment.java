@@ -159,9 +159,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     private GoogleApiClient googleApiClient;
     Location mLastLocation;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    private GoogleMap mMap;
-    private GPSTracker gpsTracker;
-    private SupportMapFragment mapFragment;
+
     private List<DoctorSearchResponse.DataBean> doctorDetailsResponseList;
     private Dialog alertDialog;
     private String searchString = "";
@@ -192,7 +190,6 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
         ButterKnife.bind(this, view);
         mContext = getActivity();
 
-        gpsTracker = new GPSTracker(mContext);
 
 
         avi_indicator.setVisibility(View.GONE);

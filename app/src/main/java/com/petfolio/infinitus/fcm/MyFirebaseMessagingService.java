@@ -127,9 +127,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      * @param messageBody FCM message body received.
      */
     private void sendNotification(String title, String messageBody) {
-
-
-       SessionManager session = new SessionManager(getApplicationContext());
+        SessionManager session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
         String type = user.get(SessionManager.KEY_TYPE);
         assert type != null;

@@ -25,7 +25,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/new_rounded_corner_btn"
-        app:elevation="8dp"
+        app:elevation="20dp"
         app:itemBackground="@drawable/selected_state"
         app:itemIconSize="20dp"
         app:itemIconTint="@color/selector"

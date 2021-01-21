@@ -170,15 +170,6 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
         });
 
 
-       /* if (!image_url.isEmpty()) {
-            Glide.with(this)
-                    .load(image_url)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true)
-                    .error(R.drawable.logo_white)
-                    .into(nav_header_imageView);
-        }*/
-
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
@@ -237,6 +228,9 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
         tvWelcomeName.setText("Home " );
 
         ImageView img_sos = toolbar.findViewById(R.id.img_sos);
+        ImageView img_notification = toolbar.findViewById(R.id.img_notification);
+        ImageView img_cart = toolbar.findViewById(R.id.img_cart);
+        ImageView img_profile = toolbar.findViewById(R.id.img_profile);
 
         img_sos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -244,6 +238,14 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
                 Log.w(TAG,"SOSLIST"+new Gson().toJson(APIClient.sosList));
                 showSOSAlert(APIClient.sosList);
 
+            }
+        });
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               Intent intent = new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class);
+               intent.putExtra("fromactivity",TAG);
+               startActivity(intent);
             }
         });
 

@@ -1,23 +1,19 @@
-package com.petfolio.infinitus.petlover;
+package com.petfolio.infinitus.doctor;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.facebook.react.modules.core.PermissionListener;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
-
 
 import org.jitsi.meet.sdk.JitsiMeet;
 import org.jitsi.meet.sdk.JitsiMeetActivity;
@@ -33,13 +29,12 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import es.dmoral.toasty.Toasty;
 
 
-public class VideoCallPetLoverActivity extends AppCompatActivity implements JitsiMeetActivityInterface, JitsiMeetViewListener {
+public class VideoCallDoctorActivity extends AppCompatActivity implements JitsiMeetActivityInterface, JitsiMeetViewListener {
 
 
-    private String TAG = "VideoCallPetLoverActivity";
+    private String TAG = "VideoCallDoctorActivity";
 
 
 
@@ -60,7 +55,7 @@ public class VideoCallPetLoverActivity extends AppCompatActivity implements Jits
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_video_call_petlover);
+        setContentView(R.layout.activity_video_call_doctor);
         ButterKnife.bind(this);
 
         session = new SessionManager(getApplicationContext());
@@ -72,14 +67,6 @@ public class VideoCallPetLoverActivity extends AppCompatActivity implements Jits
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             appointmentid = extras.getString("id");
-            doctorname = extras.getString("doctorname");
-            doctorimage = extras.getString("doctorimage");
-            doctoremailid = extras.getString("doctoremailid");
-            doctorid = extras.getString("doctorid");
-            patientname = extras.getString("patientname");
-            patientimage = extras.getString("patientimage");
-            patientemailid = extras.getString("patientemailid");
-            patientid = extras.getString("patientid");
             Log.w(TAG,"appointmentid :"+" "+appointmentid);
 
         }
@@ -98,6 +85,9 @@ public class VideoCallPetLoverActivity extends AppCompatActivity implements Jits
         btn_closeconversation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),PrescriptionActivity.class);
+                i.putExtra("id",appointmentid);
+                startActivity(i);
                 finish();
             }
         });

@@ -40,6 +40,7 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
     private OnAppointmentCancel onAppointmentCancel;
 
     private int size;
+    private String communicationtype;
 
     public PetNewAppointmentAdapter(Context context, List<PetAppointmentResponse.DataBean> newAppointmentResponseList, RecyclerView inbox_list,int size,OnAppointmentCancel onAppointmentCancel) {
         this.newAppointmentResponseList = newAppointmentResponseList;
@@ -70,6 +71,8 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
         Log.w(TAG,"Pet name-->"+newAppointmentResponseList.get(position).getPet_name());
 
         currentItem = newAppointmentResponseList.get(position);
+        communicationtype = newAppointmentResponseList.get(position).getCommunication_type();
+       Log.w(TAG,"Communicationtype : "+ newAppointmentResponseList.get(position).getCommunication_type());
         holder.txt_petname.setText(newAppointmentResponseList.get(position).getPet_name());
 
         if(newAppointmentResponseList.get(position).getAppointment_for() != null && newAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("Doctor") ){
@@ -77,7 +80,8 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
             holder.txt_clinicname.setText(newAppointmentResponseList.get(position).getClinic_name());
 
 
-        }else if(newAppointmentResponseList.get(position).getAppointment_for() != null && newAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("SP") ){
+        }
+        else if(newAppointmentResponseList.get(position).getAppointment_for() != null && newAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("SP") ){
             holder.txt_type.setText(newAppointmentResponseList.get(position).getAppointment_for());
             holder.txt_clinicname.setText(newAppointmentResponseList.get(position).getService_provider_name());
 
@@ -92,6 +96,14 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
 
         }
 
+        if(communicationtype != null){
+             if(communicationtype.equalsIgnoreCase("Online")){
+                 holder.img_videocall.setVisibility(View.VISIBLE);
+             }else{
+                 holder.img_videocall.setVisibility(View.GONE);
+             }
+        }
+
 
         if(newAppointmentResponseList.get(position).getAppointment_type() != null && newAppointmentResponseList.get(position).getAppointment_type().equalsIgnoreCase("Emergency")){
         holder.img_emergency_appointment.setVisibility(View.VISIBLE);
@@ -99,14 +111,6 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
             holder.img_emergency_appointment.setVisibility(View.GONE);
 
         }
-
-
-
-
-
-
-
-
 
         if (newAppointmentResponseList.get(position).getPhoto() != null && !newAppointmentResponseList.get(position).getPhoto().isEmpty()) {
 
@@ -122,12 +126,9 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
 
             }
 
-
-
-
         holder.btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { Intent i = new Intent(context, PrescriptionActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            public void onClick(View v) {
                 onAppointmentCancel.onAppointmentCancel(newAppointmentResponseList.get(position).get_id(),newAppointmentResponseList.get(position).getAppointment_for());
 
             }

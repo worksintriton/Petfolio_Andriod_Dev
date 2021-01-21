@@ -25,10 +25,8 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
                 android:src="@drawable/back"
                 tools:ignore="ContentDescription" />
 
@@ -37,40 +35,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
                 android:gravity="end">
 
                 <ImageView
+                    android:id="@+id/img_sos"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
                     android:src="@drawable/ic_sos"
                     tools:ignore="ContentDescription" />
 
                 <ImageView
+                    android:id="@+id/img_notification"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
                     android:src="@drawable/ic_notifications"
                     tools:ignore="ContentDescription" />
 
                 <ImageView
+                    android:id="@+id/img_cart"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
                     android:src="@drawable/ic_bag"
                     tools:ignore="ContentDescription" />
 
                 <ImageView
+                    android:id="@+id/img_profile"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
                     android:src="@drawable/ic_user"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
@@ -211,7 +207,6 @@
                         android:layout_width="50dp"
                         android:layout_height="24dp"
                         android:layout_marginStart="5dp"
-                        android:layout_marginLeft="5dp"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/light_orange_background">
 
@@ -220,7 +215,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:layout_marginLeft="5dp"
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="5dp"
                             android:drawablePadding="5dp"
@@ -239,7 +233,6 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginStart="10dp"
-                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
                         android:src="@drawable/forward"
                         tools:ignore="ContentDescription" />
@@ -299,8 +292,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="20dp"
         android:orientation="vertical">
 
@@ -325,9 +318,10 @@
             android:id="@+id/bottom_navigation_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/new_rounded_corner_btn"
-            android:theme="@style/Widget.BottomNavigationView"
-            app:elevation="8dp"
+            app:elevation="20dp"
             app:itemBackground="@drawable/selected_state"
             app:itemIconSize="20dp"
             app:itemIconTint="@color/selector"

@@ -294,6 +294,7 @@
     <string name="below_average">Below Average</string>
     <string name="poor">Poor</string>
     <string name="communication_type">Communication Offline</string>
+    <string name="communicationtype">Communication Type</string>
 
     <string name="review_added">Review Added</string>
     <string name="back">Back</string>
@@ -361,6 +362,7 @@
     <string name="service_provider_name">Service provider name</string>
     <string name="selected_service">Selected service</string>
     <string name="notification_settings">Notification settings</string>
+    <string name="video">Video</string>
 
 
 </resources>

@@ -165,6 +165,18 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     @BindView(R.id.img_back)
     ImageView img_back;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rg_communicationtype)
+    RadioGroup rg_communicationtype;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.radioButton_online)
+    RadioButton radioButton_online;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.radioButton_visit)
+    RadioButton radioButton_visit;
+
     private List<PetTypeListResponse.DataBean.UsertypedataBean> usertypedataBeanList;
     private String strPetType;
     private String strPetBreedType;
@@ -206,7 +218,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     private String communicationtype;
 
     HashMap<String, String> hashMap_selectyourpet = new HashMap<>();
-
+    private String selectedCommunicationtype = "";
 
 
     @Override
@@ -236,7 +248,31 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
 
 
-            Log.w(TAG,"Bundle "+" doctorid : "+doctorid+" selectedTimeSlot : "+selectedTimeSlot);
+            Log.w(TAG,"Bundle "+" doctorid : "+doctorid+" selectedTimeSlot : "+selectedTimeSlot+"communicationtype : "+communicationtype);
+        }
+        radioButton_online.setVisibility(View.GONE);
+        radioButton_visit.setVisibility(View.GONE);
+
+        if(communicationtype != null){
+            if(communicationtype.equalsIgnoreCase("Online Or Visit")){
+                radioButton_online.setVisibility(View.VISIBLE);
+                radioButton_visit.setVisibility(View.VISIBLE);
+
+
+            }else if(communicationtype.equalsIgnoreCase("Online")){
+                radioButton_online.setVisibility(View.VISIBLE);
+                radioButton_online.setChecked(true);
+                radioButton_online.setClickable(false);
+                selectedCommunicationtype = communicationtype;
+
+            }else if(communicationtype.equalsIgnoreCase("Visit")){
+                radioButton_visit.setVisibility(View.VISIBLE);
+                radioButton_visit.setChecked(true);
+                radioButton_visit.setClickable(false);
+                selectedCommunicationtype = communicationtype;
+
+
+            }
         }
 
         SessionManager sessionManager = new SessionManager(getApplicationContext());
@@ -387,6 +423,8 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                     }else if (edt_comment.getText().toString().trim().equals("")) {
                         edt_comment.setError("Please enter comment");
                         edt_comment.requestFocus();
+                    }else if (selectedCommunicationtype != null && selectedCommunicationtype.isEmpty()) {
+                        showErrorLoading("Please select communication type");
                     }else{
 
                           startPayment();
@@ -416,6 +454,8 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                              }else if (edt_comment.getText().toString().trim().equals("")) {
                                  edt_comment.setError("Please enter comment");
                                  edt_comment.requestFocus();
+                             }else if (selectedCommunicationtype != null && selectedCommunicationtype.isEmpty()) {
+                                 showErrorLoading("Please select communication type");
                              }else {
                                  if (new ConnectionDetector(BookAppointmentActivity.this).isNetworkAvailable(BookAppointmentActivity.this)) {
                                         addYourPetResponseCall();
@@ -440,6 +480,16 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
             RadioButton radioButton = rg_appointmenttype.findViewById(radioButtonID);
             selectedAppointmentType = (String) radioButton.getText();
             Log.w(TAG, "selectedAppointmentType : " + selectedAppointmentType);
+            communicationtype = selectedAppointmentType;
+
+
+        });
+
+        rg_communicationtype.setOnCheckedChangeListener((group, checkedId) -> {
+            int radioButtonID = rg_communicationtype.getCheckedRadioButtonId();
+            RadioButton radioButton = rg_communicationtype.findViewById(radioButtonID);
+            selectedCommunicationtype = (String) radioButton.getText();
+            Log.w(TAG,"selectedCommunicationtype" + rg_communicationtype);
 
 
         });
@@ -1175,7 +1225,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         petAppointmentCreateRequest.setBooking_date(Doctor_ava_Date);
         petAppointmentCreateRequest.setBooking_time(selectedTimeSlot);
         petAppointmentCreateRequest.setBooking_date_time(Doctor_ava_Date+" "+selectedTimeSlot);
-        petAppointmentCreateRequest.setCommunication_type(communicationtype);
+        petAppointmentCreateRequest.setCommunication_type(selectedCommunicationtype);
         petAppointmentCreateRequest.setVideo_id("");
         petAppointmentCreateRequest.setUser_id(userid);
         petAppointmentCreateRequest.setPet_id(petId);

@@ -2,15 +2,27 @@ package com.petfolio.infinitus.petlover;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,11 +31,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.adapter.PetLoverSOSAdapter;
 import com.petfolio.infinitus.adapter.ViewPagerClinicDetailsAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.interfaces.SoSCallListener;
 import com.petfolio.infinitus.requestpojo.DoctorDetailsRequest;
 import com.petfolio.infinitus.responsepojo.DoctorDetailsResponse;
+import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -38,7 +53,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DoctorClinicDetailsActivity extends AppCompatActivity {
+public class DoctorClinicDetailsActivity extends AppCompatActivity implements View.OnClickListener, SoSCallListener {
 
     private static  String TAG = "DoctorClinicDetailsActivity";
 
@@ -99,6 +114,23 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
     BottomNavigationView bottom_navigation_view;
 
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_sos)
+    ImageView img_sos;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_notification)
+    ImageView img_notification;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_cart)
+    ImageView img_cart;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_profile)
+    ImageView img_profile;
+
+
 
     int currentPage = 0;
     Timer timer;
@@ -118,6 +150,9 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
     private int amount;
     private String communicationtype;
     private String active_tag;
+    private Dialog dialog;
+    private static final int REQUEST_PHONE_CALL =1 ;
+    private String sosPhonenumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,24 +176,12 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
             Log.w(TAG,"Bundle "+" doctorid : "+doctorid+ "fromactivity : "+fromactivity);
         }
 
-        btn_book_now.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DoctorClinicDetailsActivity.this,PetAppointment_Doctor_Date_Time_Activity.class);
-                intent.putExtra("doctorid",doctorid);
-                intent.putExtra("fromactivity",fromactivity);
-                intent.putExtra("amount",amount);
-                intent.putExtra("communicationtype",communicationtype);
-                startActivity(intent);
-            }
-        });
-
-        img_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        btn_book_now.setOnClickListener(this);
+        img_back.setOnClickListener(this);
+        img_sos.setOnClickListener(this);
+        img_notification.setOnClickListener(this);
+        img_cart.setOnClickListener(this);
+        img_profile.setOnClickListener(this);
 
 
 
@@ -366,4 +389,120 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_book_now:
+                goto_PetAppointment_Doctor_Date_Time_Activity();
+                break;
+            case R.id.img_back:
+                onBackPressed();
+                break;
+            case R.id.img_sos:
+                goto_SOS();
+                break;
+            case R.id.img_profile:
+                goto_Profile();
+                break;
+        }
+
+    }
+
+    private void goto_Profile() {
+        Intent intent = new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class);
+        intent.putExtra("fromactivity",TAG);
+        intent.putExtra("doctorid",doctorid);
+        intent.putExtra("doctorname",doctorname);
+        intent.putExtra("distance",distance);
+        startActivity(intent);
+    }
+
+    private void goto_SOS() {
+        showSOSAlert(APIClient.sosList);
+    }
+
+    private  void goto_PetAppointment_Doctor_Date_Time_Activity(){
+        Intent intent = new Intent(DoctorClinicDetailsActivity.this,PetAppointment_Doctor_Date_Time_Activity.class);
+        intent.putExtra("doctorid",doctorid);
+        intent.putExtra("fromactivity",fromactivity);
+        intent.putExtra("amount",amount);
+        intent.putExtra("communicationtype",communicationtype);
+        startActivity(intent);
+    }
+
+    private void showSOSAlert(List<PetLoverDashboardResponse.DataBean.SOSBean> sosList) {
+
+        try {
+
+            dialog = new Dialog(DoctorClinicDetailsActivity.this);
+            dialog.setContentView(R.layout.sos_popup_layout);
+            RecyclerView rv_sosnumbers = (RecyclerView)dialog.findViewById(R.id.rv_sosnumbers);
+            Button btn_call = (Button)dialog.findViewById(R.id.btn_call);
+            TextView txt_no_records = (TextView)dialog.findViewById(R.id.txt_no_records);
+            ImageView img_close = (ImageView)dialog.findViewById(R.id.img_close);
+            img_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            if(sosList != null && sosList.size()>0){
+                rv_sosnumbers.setVisibility(View.VISIBLE);
+                btn_call.setVisibility(View.VISIBLE);
+                txt_no_records.setVisibility(View.GONE);
+                rv_sosnumbers.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                rv_sosnumbers.setItemAnimator(new DefaultItemAnimator());
+                PetLoverSOSAdapter petLoverSOSAdapter = new PetLoverSOSAdapter(getApplicationContext(), sosList,this);
+                rv_sosnumbers.setAdapter(petLoverSOSAdapter);
+            }else{
+                rv_sosnumbers.setVisibility(View.GONE);
+                btn_call.setVisibility(View.GONE);
+                txt_no_records.setVisibility(View.VISIBLE);
+                txt_no_records.setText("No phone numbers");
+
+            }
+
+            btn_call.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(DoctorClinicDetailsActivity.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
+                    }
+                    else
+                    {
+                        gotoPhone();
+                    }
+
+                }
+            });
+
+
+
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+    private void gotoPhone() {
+        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + sosPhonenumber));
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        startActivity(intent);
+    }
+    @Override
+    public void soSCallListener(long phonenumber) {
+        if(phonenumber != 0){
+            sosPhonenumber = String.valueOf(phonenumber);
+        }
+
+    }
 }

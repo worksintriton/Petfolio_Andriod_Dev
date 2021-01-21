@@ -59,7 +59,7 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="25dp"
                     android:layout_marginEnd="10dp"
                     app:cardCornerRadius="10dp"
                     app:cardPreventCornerOverlap="false"
@@ -92,7 +92,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="25dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -126,7 +126,7 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/futuramediumbt"
                             android:maxLines="1"
-                            android:text="@string/clinic_name"
+                            android:text="adgasdgagasdgdsagdsagdsagdasgdsagaasdgdsgadgadsgdsa"
                             android:textColor="@color/new_txt_color"
                             android:textSize="14sp" />
                     </LinearLayout>

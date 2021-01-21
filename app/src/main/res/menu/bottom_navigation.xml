@@ -32,7 +32,8 @@
         android:enabled="true"
         android:id="@+id/community"
         android:icon="@drawable/ic_market"
-        android:title="@string/community"/>
+        android:title="@string/community"
+        />
 
 
 

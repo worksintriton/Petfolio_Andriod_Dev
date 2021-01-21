@@ -73,6 +73,10 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
     TextView txt_no_records;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_currentlocation)
+    TextView txt_currentlocation;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
     ImageView img_back;
 

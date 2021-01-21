@@ -55,7 +55,7 @@ public class PrescriptionActivity extends AppCompatActivity {
     Button btnSubmit;
     LinearLayout ll_headername;
 
-    String TAG = "PrescriptionChatActivity";
+    String TAG = "PrescriptionActivity";
 
     AVLoadingIndicatorView avi_indicator;
     AlertDialog.Builder alertDialogBuilder;
@@ -94,7 +94,7 @@ public class PrescriptionActivity extends AppCompatActivity {
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
         Doctor_Name = user.get(SessionManager.KEY_FIRST_NAME);
-        Doctor_ID = user.get(SessionManager.KEY_ID);
+        userid = user.get(SessionManager.KEY_ID);
 
         avi_indicator = findViewById(R.id.avi_indicator);
         avi_indicator.setVisibility(View.GONE);
@@ -102,12 +102,8 @@ public class PrescriptionActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-
             appoinmentid = extras.getString("id");
-            userid = extras.getString("userid");
-
-
-            Log.w(TAG,"userid :"+" "+userid);
+            Log.w(TAG,"userid :"+" "+appoinmentid);
 
         }
 

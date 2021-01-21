@@ -75,6 +75,7 @@ public class PetAppointmentResponse {
          * missed_at :
          * completed_at :
          * status : Incomplete
+         * communication_type
          */
 
         private String _id;
@@ -99,6 +100,15 @@ public class PetAppointmentResponse {
         private String status;
         private String user_rate;
         private String user_feedback;
+        private String communication_type;
+
+        public String getCommunication_type() {
+            return communication_type;
+        }
+
+        public void setCommunication_type(String communication_type) {
+            this.communication_type = communication_type;
+        }
 
         public String getUser_feedback() {
             return user_feedback;

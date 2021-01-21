@@ -15,27 +15,45 @@
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true">
 
-        <ImageView
-            android:id="@+id/img_emergency_appointment"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:src="@drawable/emergency_call"
-            android:layout_gravity="end"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="5dp"
-            android:contentDescription="@string/image" />
 
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:layout_marginTop="5dp">
+                <ImageView
+                    android:id="@+id/img_emergency_appointment"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="20dp"
+                    android:src="@drawable/emergency_call"
+                    tools:ignore="ContentDescription" />
+                <ImageView
+                    android:id="@+id/img_videocall"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_chat"
+                    tools:ignore="ContentDescription" />
+
+            </LinearLayout>
+
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_pet"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
                 app:cardCornerRadius="10dp"
                 app:cardPreventCornerOverlap="false"
@@ -52,7 +70,8 @@
                         android:layout_centerInParent="true"
                         android:contentDescription="@string/image"
                         android:scaleType="fitXY"
-                        app:srcCompat="@drawable/image_thumbnail" />
+                        app:srcCompat="@drawable/image_thumbnail"
+                        />
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
@@ -62,7 +81,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_toEndOf="@id/cv_pet">
+                android:layout_toEndOf="@id/cv_pet"
+                android:layout_marginTop="15dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"

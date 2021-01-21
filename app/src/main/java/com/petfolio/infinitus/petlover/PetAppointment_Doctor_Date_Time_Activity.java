@@ -582,6 +582,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
                         intent.putExtra("communicationtype",communicationtype);
                         intent.putExtra("fromto",fromto);
                         startActivity(intent);
+                        Log.w(TAG,"communicationtype : "+communicationtype);
 
                      /*  // startPayment();
                         if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {

@@ -21,7 +21,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.doctor.PrescriptionActivity;
+import com.petfolio.infinitus.doctor.VideoCallDoctorActivity;
 import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
+import com.petfolio.infinitus.petlover.VideoCallPetLoverActivity;
 import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
 
 import java.util.List;
@@ -37,7 +39,7 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
 
     private OnAppointmentCancel onAppointmentCancel;
     private int size;
-
+    private String communicationtype;
 
 
     public DoctorNewAppointmentAdapter(Context context, List<DoctorNewAppointmentResponse.DataBean> newAppointmentResponseList, RecyclerView inbox_list,int size,OnAppointmentCancel onAppointmentCancel) {
@@ -70,6 +72,8 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
         Log.w(TAG,"Pet name-->"+newAppointmentResponseList.get(position).getPet_id().getPet_name());
 
         currentItem = newAppointmentResponseList.get(position);
+        communicationtype = newAppointmentResponseList.get(position).getCommunication_type();
+
         holder.txt_petname.setText(newAppointmentResponseList.get(position).getPet_id().getPet_name());
         holder.txt_pettype.setText(newAppointmentResponseList.get(position).getPet_id().getPet_type());
         if(newAppointmentResponseList.get(position).getAppointment_types() != null){
@@ -105,6 +109,14 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
 
         }
 
+        if(communicationtype != null){
+            if(communicationtype.equalsIgnoreCase("Online")){
+                holder.img_videocall.setVisibility(View.VISIBLE);
+            }else{
+                holder.img_videocall.setVisibility(View.GONE);
+            }
+        }
+
 
         holder.btn_complete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,11 +135,31 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
 
         holder.btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { Intent i = new Intent(context, PrescriptionActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            public void onClick(View v) {
                 onAppointmentCancel.onAppointmentCancel(newAppointmentResponseList.get(position).get_id(),newAppointmentResponseList.get(position).getAppointment_types());
 
             }
         });
+
+        holder.img_videocall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(context, VideoCallDoctorActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("id",newAppointmentResponseList.get(position).get_id());
+                i.putExtra("petname",newAppointmentResponseList.get(position).getPet_id().getPet_name());
+                i.putExtra("pettype",newAppointmentResponseList.get(position).getPet_id().getPet_type());
+                i.putExtra("id",newAppointmentResponseList.get(position).get_id());
+                i.putExtra("userid",newAppointmentResponseList.get(position).getUser_id().get_id());
+                i.putExtra("allergies",newAppointmentResponseList.get(position).getAllergies());
+                i.putExtra("probleminfo",newAppointmentResponseList.get(position).getProblem_info());
+                Log.w(TAG,"ID-->"+newAppointmentResponseList.get(position).get_id());
+                context.startActivity(i);
+
+
+            }
+        });
+
 
 
 
@@ -167,7 +199,7 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_petname,txt_pettype,txt_type,txt_service_cost,txt_bookedon;
-        public ImageView img_pet_imge,img_emergency_appointment;
+        public ImageView img_pet_imge,img_emergency_appointment,img_videocall;
         public Button btn_cancel,btn_complete;
         public LinearLayout ll_new;
 
@@ -186,6 +218,8 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
             ll_new = itemView.findViewById(R.id.ll_new);
             img_emergency_appointment = itemView.findViewById(R.id.img_emergency_appointment);
             img_emergency_appointment.setVisibility(View.GONE);
+            img_videocall = itemView.findViewById(R.id.img_videocall);
+
 
 
 
