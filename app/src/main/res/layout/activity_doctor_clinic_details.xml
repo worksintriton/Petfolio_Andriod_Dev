@@ -294,7 +294,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:orientation="vertical">
 
 
@@ -304,7 +304,6 @@
             android:layout_height="29dp"
             android:layout_gravity="center"
             android:layout_marginStart="80dp"
-            android:layout_marginTop="20dp"
             android:layout_marginEnd="80dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/new_rounded_corner_btn"

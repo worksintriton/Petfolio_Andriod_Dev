@@ -417,11 +417,9 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
         intent.putExtra("distance",distance);
         startActivity(intent);
     }
-
     private void goto_SOS() {
         showSOSAlert(APIClient.sosList);
     }
-
     private  void goto_PetAppointment_Doctor_Date_Time_Activity(){
         Intent intent = new Intent(DoctorClinicDetailsActivity.this,PetAppointment_Doctor_Date_Time_Activity.class);
         intent.putExtra("doctorid",doctorid);
@@ -430,7 +428,6 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
         intent.putExtra("communicationtype",communicationtype);
         startActivity(intent);
     }
-
     private void showSOSAlert(List<PetLoverDashboardResponse.DataBean.SOSBean> sosList) {
 
         try {

@@ -8,6 +8,8 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -128,15 +130,45 @@ public class PetLoverEditProfileActivity extends AppCompatActivity implements Vi
         if(verifyemailstatus != null  && verifyemailstatus.equalsIgnoreCase("true") || verified != null && verified.equalsIgnoreCase("verified")){
             btn_verify_email.setText("Verified Email");
             user_email_verification = true;
-            edt_email.setEnabled(false);
             btn_verify_email.setEnabled(false);
 
         }
         else{
             user_email_verification = false;
-            edt_email.setEnabled(true);
             btn_verify_email.setEnabled(true);
         }
+
+        edt_email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String email = s.toString();
+                Log.w(TAG,"afterTextChanged email : "+email+" useremail : "+useremail);
+
+                if(!email.equalsIgnoreCase(useremail)){
+                    btn_verify_email.setText("Verify Email");
+                    user_email_verification = false;
+                    btn_verify_email.setEnabled(true);
+                }else{
+                    btn_verify_email.setText("Verified Email");
+                    user_email_verification = true;
+                    btn_verify_email.setEnabled(false);
+                }
+
+
+            }
+        });
+
+
 
 
 
@@ -220,6 +252,7 @@ public class PetLoverEditProfileActivity extends AppCompatActivity implements Vi
          * first_name : Sam
          * last_name : san
          * user_email : santhoshvsk94@gmail.com
+         * user_email_verification : true
          */
 
 

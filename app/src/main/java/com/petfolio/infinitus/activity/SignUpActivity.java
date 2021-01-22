@@ -243,6 +243,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
          * user_phone : 987987989
          * user_type : 1
          * date_of_reg : 23/10/2019 12:12:00
+         * user_email_verification :true
+         * mobile_type : "Android"
+         * user_email_verification: true
          */
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());

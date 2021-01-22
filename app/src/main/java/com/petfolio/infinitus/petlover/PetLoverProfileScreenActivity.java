@@ -2,18 +2,23 @@ package com.petfolio.infinitus.petlover;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -32,14 +37,17 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
 import com.petfolio.infinitus.activity.location.ManageAddressActivity;
 import com.petfolio.infinitus.adapter.ManagePetListAdapter;
+import com.petfolio.infinitus.adapter.PetLoverSOSAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 
 import com.petfolio.infinitus.interfaces.PetDeleteListener;
+import com.petfolio.infinitus.interfaces.SoSCallListener;
 import com.petfolio.infinitus.requestpojo.PetDeleteRequest;
 import com.petfolio.infinitus.requestpojo.PetListRequest;
 import com.petfolio.infinitus.responsepojo.PetDeleteResponse;
 import com.petfolio.infinitus.responsepojo.PetListResponse;
+import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -57,7 +65,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PetLoverProfileScreenActivity extends AppCompatActivity implements View.OnClickListener, PetDeleteListener, BottomNavigationView.OnNavigationItemSelectedListener {
+public class PetLoverProfileScreenActivity extends AppCompatActivity implements View.OnClickListener, PetDeleteListener, BottomNavigationView.OnNavigationItemSelectedListener, SoSCallListener {
     private  String TAG = "PetLoverProfileScreenActivity";
 
     @SuppressLint("NonConstantResourceId")
@@ -120,6 +128,22 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
     @BindView(R.id.txt_edit_image)
     TextView txt_edit_image;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_sos)
+    ImageView img_sos;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_notification)
+    ImageView img_notification;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_cart)
+    ImageView img_cart;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_profile1)
+    ImageView img_profile1;
+
 
 
     private SessionManager session;
@@ -129,6 +153,14 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
     private String profileimage;
     private String fromactivity;
     private String doctorid,doctorname,distance;
+
+    private String catid;
+    private String spid;
+    private String from;
+
+    private static final int REQUEST_PHONE_CALL =1 ;
+    private String sosPhonenumber;
+    private String active_tag;
 
 
     @Override
@@ -186,16 +218,43 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
         txt_edit_profile.setOnClickListener(this);
         txt_edit_image.setOnClickListener(this);
 
-        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+        img_sos.setOnClickListener(this);
+        img_notification.setOnClickListener(this);
+        img_cart.setOnClickListener(this);
+        img_profile1.setOnClickListener(this);
+
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             fromactivity = extras.getString("fromactivity");
+            active_tag = extras.getString("active_tag");
+            /*DoctorClinicDetailsActivity*/
             doctorid = extras.getString("doctorid");
             doctorname = extras.getString("doctorname");
             distance = extras.getString("distance");
-            Log.w(TAG,"fromactivity : "+fromactivity);
+            Log.w(TAG,"fromactivity : "+fromactivity+" active_tag : "+active_tag);
+
+            /*SelectedServiceActivity*/
+            catid = extras.getString("catid");
+            from = extras.getString("from");
+
+            /*Service_Details_Activity*/
+            spid = extras.getString("spid");
+            catid = extras.getString("catid");
+            from = extras.getString("from");
         }
+
+        if(active_tag != null){
+            if(active_tag.equalsIgnoreCase("3")) {
+                bottom_navigation_view.setSelectedItemId(R.id.services);
+            }else if(active_tag.equalsIgnoreCase("4")) {
+                bottom_navigation_view.setSelectedItemId(R.id.care);
+            }
+
+        }
+
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+
 
 
     }
@@ -209,10 +268,27 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
             intent.putExtra("doctorname",doctorname);
             intent.putExtra("distance",distance);
             startActivity(intent);
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("SelectedServiceActivity")){
+            Intent intent = new Intent(getApplicationContext(),SelectedServiceActivity.class);
+            intent.putExtra("catid",catid);
+            intent.putExtra("from",from);
+            startActivity(intent);
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("Service_Details_Activity")){
+            Intent intent = new Intent(getApplicationContext(),Service_Details_Activity.class);
+            intent.putExtra("spid",spid);
+            intent.putExtra("catid",catid);
+            intent.putExtra("from",from);
+            startActivity(intent);
+        }
+        else if(active_tag != null){
+            callDirections(active_tag);
         }else{
-            startActivity(new Intent(getApplicationContext(),PetLoverDashboardActivity.class));
+            Intent intent = new Intent(getApplicationContext(), PetLoverDashboardActivity.class);
+            startActivity(intent);
             finish();
         }
+
+
 
     }
 
@@ -239,6 +315,9 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
                 break;
             case R.id.txt_edit_image:
                 startActivity(new Intent(getApplicationContext(), PetLoverEditProfileImageActivity.class));
+                break;
+            case R.id.img_sos:
+                goto_SOS();
                 break;
         }
     }
@@ -488,6 +567,84 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
         intent.putExtra("tag",tag);
         startActivity(intent);
         finish();
+    }
+
+    private void goto_SOS() {
+        showSOSAlert(APIClient.sosList);
+    }
+    private void showSOSAlert(List<PetLoverDashboardResponse.DataBean.SOSBean> sosList) {
+
+        try {
+
+            dialog = new Dialog(PetLoverProfileScreenActivity.this);
+            dialog.setContentView(R.layout.sos_popup_layout);
+            RecyclerView rv_sosnumbers = (RecyclerView)dialog.findViewById(R.id.rv_sosnumbers);
+            Button btn_call = (Button)dialog.findViewById(R.id.btn_call);
+            TextView txt_no_records = (TextView)dialog.findViewById(R.id.txt_no_records);
+            ImageView img_close = (ImageView)dialog.findViewById(R.id.img_close);
+            img_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            if(sosList != null && sosList.size()>0){
+                rv_sosnumbers.setVisibility(View.VISIBLE);
+                btn_call.setVisibility(View.VISIBLE);
+                txt_no_records.setVisibility(View.GONE);
+                rv_sosnumbers.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                rv_sosnumbers.setItemAnimator(new DefaultItemAnimator());
+                PetLoverSOSAdapter petLoverSOSAdapter = new PetLoverSOSAdapter(getApplicationContext(), sosList,this);
+                rv_sosnumbers.setAdapter(petLoverSOSAdapter);
+            }else{
+                rv_sosnumbers.setVisibility(View.GONE);
+                btn_call.setVisibility(View.GONE);
+                txt_no_records.setVisibility(View.VISIBLE);
+                txt_no_records.setText("No phone numbers");
+
+            }
+
+            btn_call.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(PetLoverProfileScreenActivity.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
+                    }
+                    else
+                    {
+                        gotoPhone();
+                    }
+
+                }
+            });
+
+
+
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+    private void gotoPhone() {
+        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + sosPhonenumber));
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        startActivity(intent);
+    }
+    @Override
+    public void soSCallListener(long phonenumber) {
+        if(phonenumber != 0){
+            sosPhonenumber = String.valueOf(phonenumber);
+        }
+
     }
 
 

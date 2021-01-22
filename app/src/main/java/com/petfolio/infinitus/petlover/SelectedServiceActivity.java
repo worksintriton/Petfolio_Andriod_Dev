@@ -2,28 +2,43 @@ package com.petfolio.infinitus.petlover;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.DoctorNewAppointmentAdapter;
+import com.petfolio.infinitus.adapter.PetLoverSOSAdapter;
 import com.petfolio.infinitus.adapter.SelectedServiceProviderAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.interfaces.SoSCallListener;
 import com.petfolio.infinitus.requestpojo.ProfileUpdateRequest;
 import com.petfolio.infinitus.requestpojo.SPSpecificServiceDetailsRequest;
+import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 import com.petfolio.infinitus.responsepojo.ProfileUpdateResponse;
 import com.petfolio.infinitus.responsepojo.SPSpecificServiceDetailsResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
@@ -41,7 +56,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SelectedServiceActivity extends AppCompatActivity implements View.OnClickListener {
+public class SelectedServiceActivity extends AppCompatActivity implements View.OnClickListener, SoSCallListener {
 
 
     private String TAG = "SelectedServiceActivity";
@@ -80,6 +95,29 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
     @BindView(R.id.img_back)
     ImageView img_back;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_sos)
+    ImageView img_sos;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_notification)
+    ImageView img_notification;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_cart)
+    ImageView img_cart;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_profile)
+    ImageView img_profile;
+
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.bottom_navigation_view)
+    BottomNavigationView bottom_navigation_view;
+
+    private String active_tag;
+
 
 
 
@@ -89,6 +127,10 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
     private String userid;
     private String catid;
     private String from;
+    private Dialog dialog;
+    private static final int REQUEST_PHONE_CALL =1 ;
+    private String sosPhonenumber;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +141,6 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
         Log.w(TAG,"onCreate");
         avi_indicator.setVisibility(View.GONE);
 
-        img_back.setOnClickListener(this);
 
 
         SessionManager session = new SessionManager(getApplicationContext());
@@ -112,6 +153,10 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
             from = extras.getString("from");
         }
 
+        if(PetLoverDashboardActivity.cityName != null){
+            txt_currentlocation.setText(PetLoverDashboardActivity.cityName);
+        }
+
         Log.w(TAG," userid : "+userid+ " catid : "+catid+" from : "+from);
 
        if(catid != null && userid != null) {
@@ -119,7 +164,46 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
                SPSpecificServiceDetailsResponseCall();
            }
        }
+        bottom_navigation_view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.home:
+                      
+                        active_tag = "1";
+                        callDirections(active_tag);
+                        break;
+                    case R.id.shop:
+                        active_tag = "2";
+                        callDirections(active_tag);
+                        break;
 
+
+                    case R.id.services:
+                        active_tag = "3";
+                        callDirections(active_tag);
+                        break;
+                    case R.id.care:
+                        active_tag = "4";
+                        callDirections(active_tag);
+                        break;
+                    case R.id.community:
+                        active_tag = "5";
+                        callDirections(active_tag);
+                        break;
+
+                }
+                return true;
+            }
+
+        });
+
+        img_back.setOnClickListener(this);
+        img_sos.setOnClickListener(this);
+        img_notification.setOnClickListener(this);
+        img_cart.setOnClickListener(this);
+        img_profile.setOnClickListener(this);
     }
 
 
@@ -208,6 +292,12 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
             case R.id.img_back:
                 onBackPressed();
                 break;
+            case R.id.img_sos:
+                goto_SOS();
+                break;
+            case R.id.img_profile:
+                goto_Profile();
+                break;
         }
     }
 
@@ -229,5 +319,91 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
         intent.putExtra("tag",tag);
         startActivity(intent);
         finish();
+    }
+
+    private void goto_Profile() {
+        Intent intent = new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class);
+        intent.putExtra("fromactivity",TAG);
+        intent.putExtra("catid",catid);
+        intent.putExtra("from",from);
+        startActivity(intent);
+    }
+
+    private void goto_SOS() {
+        showSOSAlert(APIClient.sosList);
+    }
+    private void showSOSAlert(List<PetLoverDashboardResponse.DataBean.SOSBean> sosList) {
+
+        try {
+
+            dialog = new Dialog(SelectedServiceActivity.this);
+            dialog.setContentView(R.layout.sos_popup_layout);
+            RecyclerView rv_sosnumbers = (RecyclerView)dialog.findViewById(R.id.rv_sosnumbers);
+            Button btn_call = (Button)dialog.findViewById(R.id.btn_call);
+            TextView txt_no_records = (TextView)dialog.findViewById(R.id.txt_no_records);
+            ImageView img_close = (ImageView)dialog.findViewById(R.id.img_close);
+            img_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            if(sosList != null && sosList.size()>0){
+                rv_sosnumbers.setVisibility(View.VISIBLE);
+                btn_call.setVisibility(View.VISIBLE);
+                txt_no_records.setVisibility(View.GONE);
+                rv_sosnumbers.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                rv_sosnumbers.setItemAnimator(new DefaultItemAnimator());
+                PetLoverSOSAdapter petLoverSOSAdapter = new PetLoverSOSAdapter(getApplicationContext(), sosList,this);
+                rv_sosnumbers.setAdapter(petLoverSOSAdapter);
+            }else{
+                rv_sosnumbers.setVisibility(View.GONE);
+                btn_call.setVisibility(View.GONE);
+                txt_no_records.setVisibility(View.VISIBLE);
+                txt_no_records.setText("No phone numbers");
+
+            }
+
+            btn_call.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(SelectedServiceActivity.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
+                    }
+                    else
+                    {
+                        gotoPhone();
+                    }
+
+                }
+            });
+
+
+
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+    private void gotoPhone() {
+        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + sosPhonenumber));
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        startActivity(intent);
+    }
+    @Override
+    public void soSCallListener(long phonenumber) {
+        if(phonenumber != 0){
+            sosPhonenumber = String.valueOf(phonenumber);
+        }
+
     }
 }

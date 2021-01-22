@@ -2,16 +2,25 @@ package com.petfolio.infinitus.petlover;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,6 +35,7 @@ import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -38,6 +48,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
@@ -46,16 +68,21 @@ import com.petfolio.infinitus.adapter.PetLoverSOSAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.interfaces.SoSCallListener;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
+import com.petfolio.infinitus.service.GPSTracker;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
+import com.petfolio.infinitus.utils.ConnectionDetector;
 
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class PetLoverNavigationDrawer extends AppCompatActivity implements View.OnClickListener, SoSCallListener {
+public class PetLoverNavigationDrawer extends AppCompatActivity implements View.OnClickListener,
+        SoSCallListener {
 
 
     private String TAG ="PetLoverNavigationDrawer";
@@ -75,7 +102,7 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
     //SessionManager session;
     String name, image_url, phoneNo;
 
-     public TextView tvWelcomeName;
+     public TextView toolbar_title;
      Button btnNotificationPatient;
 
      public Menu menu;
@@ -96,6 +123,10 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
     private static final int REQUEST_PHONE_CALL =1 ;
     private String sosPhonenumber;
+    private Location mLastLocation;
+    private GoogleApiClient googleApiClient;
+    private static final int REQUEST_CHECK_SETTINGS_GPS = 0x1;
+
 
 
     @SuppressLint("InflateParams")
@@ -223,9 +254,8 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
         drawerImg = toolbar.findViewById(R.id.img_menu);
 
 
-        tvWelcomeName = toolbar.findViewById(R.id.toolbar_title);
-
-        tvWelcomeName.setText("Home " );
+        toolbar_title = toolbar.findViewById(R.id.toolbar_title);
+        toolbar_title.setText("Home " );
 
         ImageView img_sos = toolbar.findViewById(R.id.img_sos);
         ImageView img_notification = toolbar.findViewById(R.id.img_notification);
@@ -243,8 +273,13 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
         img_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                Intent intent = new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class);
                intent.putExtra("fromactivity",TAG);
+                if(PetLoverDashboardActivity.active_tag != null){
+                    intent.putExtra("active_tag",PetLoverDashboardActivity.active_tag);
+
+                }
                startActivity(intent);
             }
         });
@@ -446,4 +481,6 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
             sosPhonenumber = String.valueOf(phonenumber);
         }
     }
+
+
 }

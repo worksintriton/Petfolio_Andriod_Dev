@@ -95,7 +95,7 @@ public class PetVerifyEmailOtpActivity extends AppCompatActivity implements View
     private String firstname,lastname,useremail;
 
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "LongLogTag"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -230,6 +230,7 @@ public class PetVerifyEmailOtpActivity extends AppCompatActivity implements View
         finish();
     }
 
+    @SuppressLint("LongLogTag")
     private void resendOtpResponseCall() {
         llresendotp.setVisibility(View.GONE);
         avi_indicator.setVisibility(View.VISIBLE);
@@ -239,6 +240,7 @@ public class PetVerifyEmailOtpActivity extends AppCompatActivity implements View
         Log.w(TAG,"ResendOTPResponse url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<EmailOTPResponse>() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onResponse(@NonNull Call<EmailOTPResponse> call, @NonNull Response<EmailOTPResponse> response) {
                   avi_indicator.smoothToHide();
@@ -258,6 +260,7 @@ public class PetVerifyEmailOtpActivity extends AppCompatActivity implements View
 
             }
 
+            @SuppressLint("LogNotTimber")
             @Override
             public void onFailure(@NonNull Call<EmailOTPResponse> call,@NonNull Throwable t) {
                 avi_indicator.smoothToHide();

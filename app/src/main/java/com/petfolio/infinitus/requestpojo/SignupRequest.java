@@ -10,6 +10,8 @@ public class SignupRequest {
      * user_type : 1
      * date_of_reg : 23/10/2019 12:12:00
      * user_email_verification :true
+     * mobile_type : "Android"
+     * user_email_verification: true
      */
 
     private String first_name;

@@ -92,10 +92,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class PetHomeFragment extends Fragment implements Serializable, OnMapReadyCallback,
-        GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,
-        LocationListener,View.OnClickListener  {
+public class PetHomeFragment extends Fragment implements Serializable,
+        OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener, LocationListener,
+        View.OnClickListener  {
 
 
     private String TAG = "PetHomeFragment";
@@ -145,7 +145,6 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
     TextView txt_seemore_services;
 
 
-
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_products)
     TextView txt_products;
@@ -178,6 +177,11 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_no_puppy_love)
     TextView txt_no_puppy_love;
+
+
+
+
+
 
 
     private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.BannerDetailsBean> listHomeBannerResponse;
@@ -481,6 +485,34 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
         });
 
     }
+    private PetLoverDashboardRequest petLoverDashboardRequest(int doctor, int service, int product) {
+        /*
+         * Doctor : 0
+         * Product : 0
+         * address : Unnamed Road, Tamil Nadu 621006, India
+         * lat : 11.055715
+         * lon : 78.632249
+         * service : 0
+         * user_id : 5fd227ac80791a71361baad3
+         * user_type : 1
+         */
+
+
+        PetLoverDashboardRequest petLoverDashboardRequest = new PetLoverDashboardRequest();
+        petLoverDashboardRequest.setUser_id(userid);
+        petLoverDashboardRequest.setLat(latitude);
+        petLoverDashboardRequest.setLongX(longitude);
+        petLoverDashboardRequest.setUser_type(1);
+        petLoverDashboardRequest.setAddress(AddressLine);
+        petLoverDashboardRequest.setDoctor(doctor);
+        petLoverDashboardRequest.setProduct(product);
+        petLoverDashboardRequest.setService(service);
+
+
+        Log.w(TAG,"petLoverDashboardRequest"+ new Gson().toJson(petLoverDashboardRequest));
+        return petLoverDashboardRequest;
+    }
+
 
     private void setViewProducts(List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ProductsDetailsBean> productDetailsResponseList) {
         rvproducts.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
@@ -498,7 +530,6 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
         PetLoverDashboardProductsAdapter petLoverProductsAdapter = new PetLoverDashboardProductsAdapter(mContext, productDetailsResponseList, rvproducts, size);
         rvproducts.setAdapter(petLoverProductsAdapter);
     }
-
     private void setViewPuppyLove(List<PetLoverDashboardResponse.DataBean.DashboarddataBean.PuppyProductsDetailsBean> puppyProductsDetailsBeanList) {
         rvpuppy_love.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         rvpuppy_love.setMotionEventSplittingEnabled(false);
@@ -515,7 +546,6 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
         PetLoverDashboardPubbyLoveAdapter petLoverDashboardPubbyLoveAdapter = new PetLoverDashboardPubbyLoveAdapter(mContext, puppyProductsDetailsBeanList, rvpuppy_love, size);
         rvpuppy_love.setAdapter(petLoverDashboardPubbyLoveAdapter);
     }
-
     private void setViewServices(List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ServiceDetailsBean> serviceDetailsResponseList) {
         rvservice.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         rvservice.setMotionEventSplittingEnabled(false);
@@ -533,7 +563,6 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
         rvservice.setAdapter(petLoverServicesAdapter);
         petLoverServicesAdapter.notifyDataSetChanged();
     }
-
     private void setViewDoctors(List<PetLoverDashboardResponse.DataBean.DashboarddataBean.DoctorDetailsBean> doctorDetailsResponseList) {
         rvdoctors.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         rvdoctors.setMotionEventSplittingEnabled(false);
@@ -542,7 +571,6 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
         PetLoverDoctorAdapter petLoverDoctorAdapter = new PetLoverDoctorAdapter(mContext, doctorDetailsResponseList, rvdoctors, size);
         rvdoctors.setAdapter(petLoverDoctorAdapter);
     }
-
     private void setViewDoctorsSeeMore() {
         rvdoctors.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         rvdoctors.setMotionEventSplittingEnabled(false);
@@ -581,33 +609,6 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
 
     }
 
-    private PetLoverDashboardRequest petLoverDashboardRequest(int doctor, int service, int product) {
-        /*
-         * Doctor : 0
-         * Product : 0
-         * address : Unnamed Road, Tamil Nadu 621006, India
-         * lat : 11.055715
-         * lon : 78.632249
-         * service : 0
-         * user_id : 5fd227ac80791a71361baad3
-         * user_type : 1
-         */
-
-
-        PetLoverDashboardRequest petLoverDashboardRequest = new PetLoverDashboardRequest();
-        petLoverDashboardRequest.setUser_id(userid);
-        petLoverDashboardRequest.setLat(latitude);
-        petLoverDashboardRequest.setLongX(longitude);
-        petLoverDashboardRequest.setUser_type(1);
-        petLoverDashboardRequest.setAddress(AddressLine);
-        petLoverDashboardRequest.setDoctor(doctor);
-        petLoverDashboardRequest.setProduct(product);
-        petLoverDashboardRequest.setService(service);
-
-
-        Log.w(TAG,"petLoverDashboardRequest"+ new Gson().toJson(petLoverDashboardRequest));
-        return petLoverDashboardRequest;
-    }
 
 
     private void showLocationAlert() {
@@ -698,28 +699,8 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
         }
     }
 
-    public boolean checkLocationPermission() {
-        if (ContextCompat.checkSelfPermission(mContext,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(Objects.requireNonNull(getActivity()),
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-                ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_LOCATION);
-            } else {
-                ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_LOCATION);
-            }
-            return false;
-        } else {
-            return true;
-        }
-    }
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NotNull String[] permissions, @NotNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NotNull String @NotNull [] permissions, @NotNull int @NotNull [] grantResults) {
         if (requestCode == MY_PERMISSIONS_REQUEST_LOCATION) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -734,13 +715,10 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
             }
         }
     }
-
-
-
     private void getLatandLong() {
         try {
             if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
             } else {
                 GPSTracker gps = new GPSTracker(mContext);
@@ -748,14 +726,16 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
                 if (gps.canGetLocation()) {
                     latitude = gps.getLatitude();
                     longitude = gps.getLongitude();
-                    getCompleteAddressString(latitude,longitude);
 
-                    Log.w(TAG, "getLatandLong--->" + "latitude" + " " + latitude + "longitude" + " " + longitude);
+                    if(latitude != 0 && longitude != 0){
+                        getCompleteAddressString(latitude,longitude);
+                        Log.w(TAG, "getLatandLong--->" + "latitude" + " " + latitude + "longitude" + " " + longitude);
 
-
-                    if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
-                        petLoverDashboardResponseCall(0,0,0);
+                        if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
+                            petLoverDashboardResponseCall(0,0,0);
+                        }
                     }
+
 
 
 
@@ -769,16 +749,18 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
             e.printStackTrace();
         }
     }
-
-
     @SuppressLint("LongLogTag")
     private void getCompleteAddressString(double LATITUDE, double LONGITUDE) {
 
         Geocoder geocoder = new Geocoder(mContext, Locale.getDefault());
+
         try {
             List<Address> addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1);
             if (addresses != null) {
                 Address returnedAddress = addresses.get(0);
+                String cityName = addresses.get(0).getAddressLine(0);
+                Log.w(TAG,"getCompleteAddressString cityName : "+cityName);
+
                 StringBuilder strReturnedAddress = new StringBuilder("");
 
                 for (int i = 0; i <= returnedAddress.getMaxAddressLineIndex(); i++) {
@@ -794,7 +776,6 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
             Log.w("My Current loction address", "Canont get Address!");
         }
     }
-
     private void googleApiConnected() {
 
         googleApiClient = new GoogleApiClient.Builder(Objects.requireNonNull(mContext)).
@@ -871,7 +852,7 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
             if (Build.VERSION.SDK_INT >= 23 && (ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) &&
                     (ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
 
-                ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 5);
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 5);
 
             } else {
 
@@ -880,7 +861,6 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
         }
     }
     public void getMyLocation() {
-
         if (googleApiClient != null) {
 
             if (googleApiClient.isConnected()) {
@@ -916,31 +896,28 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
                             // You can initialize location requests here.
                             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
 
-                            getCompleteAddressString(latitude,longitude);
 
 
 
-                            if(mContext != null) {
-                                if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
-
-                                    petLoverDashboardResponseCall(0, 0, 0);
 
 
-                                }
-                            }
 
                             Handler handler = new Handler();
                             int delay = 1000; //milliseconds
 
                             handler.postDelayed(new Runnable() {
-                                @SuppressLint("LongLogTag")
+                                @SuppressLint({"LongLogTag", "LogNotTimber"})
                                 public void run() {
                                     //do something
                                     Log.w(TAG, "getMyLocation-->");
-
-                                    //parkingListResponseCall(checkinhours,checkouthours,requestCheckinDate,requestCheckoutDate, selectedVehicleTypeId);
-
-
+                                    if(mContext != null) {
+                                        if(latitude != 0 && longitude != 0) {
+                                            getCompleteAddressString(latitude,longitude);
+                                            if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
+                                                petLoverDashboardResponseCall(0, 0, 0);
+                                            }
+                                        }
+                                    }
                                 }
                             }, delay);
 
@@ -990,8 +967,10 @@ public class PetHomeFragment extends Fragment implements Serializable, OnMapRead
     }
     public void hideLoadingDoctornotavl() {
         try {
-            if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
-                petLoverDashboardResponseCall(1, 0, 0);
+            if(latitude != 0 && longitude != 0) {
+                if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
+                    petLoverDashboardResponseCall(1, 0, 0);
+                }
             }
 
             alertDialog.dismiss();
