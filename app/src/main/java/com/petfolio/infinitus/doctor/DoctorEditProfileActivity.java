@@ -131,16 +131,13 @@ public class DoctorEditProfileActivity extends AppCompatActivity implements View
         if(verifyemailstatus != null  && verifyemailstatus.equalsIgnoreCase("true") || verified != null && verified.equalsIgnoreCase("verified")){
             btn_verify_email.setText("Verified Email");
             user_email_verification = true;
-            edt_email.setEnabled(false);
             btn_verify_email.setEnabled(false);
 
         }
         else{
             user_email_verification = false;
-            edt_email.setEnabled(true);
             btn_verify_email.setEnabled(true);
         }
-
         edt_email.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

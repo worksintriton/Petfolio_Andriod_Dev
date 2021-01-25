@@ -79,7 +79,6 @@ public class SPServiceListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
         }
         Log.w(TAG,"spServiceList : "+new Gson().toJson(spServiceList));
         if(spServiceList != null && spServiceList.size() > 0) {
-            /*for (int i = 0; i < spServiceList.size(); i++) {*/
                 if (spServiceList.get(position).getAmount() != null) {
                     holder.txt_amount.setText(spServiceList.get(position).getAmount() + "");
                 }if (spServiceList.get(position).getTime_slots() != null) {
@@ -92,7 +91,7 @@ public class SPServiceListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
                 }
                 isValueAdded = spServiceList.get(position).isValueAdded();
                 isChbxChecked = spServiceList.get(position).isChbxChecked();
-            //}
+
         }
 
         holder.checkbox_service_type.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

@@ -89,6 +89,33 @@ public class ServiceProviderRegisterFormCreateResponse {
         private List<BusServiceGallBean> bus_service_gall;
         private List<BusCertifBean> bus_certif;
 
+        private String sp_loc;
+        private double sp_lat;
+        private double sp_long;
+
+        public String getSp_loc() {
+            return sp_loc;
+        }
+
+        public void setSp_loc(String sp_loc) {
+            this.sp_loc = sp_loc;
+        }
+
+        public double getSp_lat() {
+            return sp_lat;
+        }
+
+        public void setSp_lat(double sp_lat) {
+            this.sp_lat = sp_lat;
+        }
+
+        public double getSp_long() {
+            return sp_long;
+        }
+
+        public void setSp_long(double sp_long) {
+            this.sp_long = sp_long;
+        }
 
         public String get_id() {
             return _id;

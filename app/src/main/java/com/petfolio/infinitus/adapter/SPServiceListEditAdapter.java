@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.interfaces.SPServiceChckedListener;
+import com.petfolio.infinitus.interfaces.SPServiceCheckedListener;
 import com.petfolio.infinitus.responsepojo.SPServiceListResponse;
 import com.petfolio.infinitus.responsepojo.ServiceProviderRegisterFormCreateResponse;
 
@@ -29,14 +30,22 @@ public class SPServiceListEditAdapter extends  RecyclerView.Adapter<RecyclerView
     private List<SPServiceListResponse.DataBean.ServiceListBean> spServiceList;
     private List<ServiceProviderRegisterFormCreateResponse.DataBean.BusServiceListBean> spServiceListEdit;
     SPServiceListResponse.DataBean.ServiceListBean currentItem;
-    private SPServiceChckedListener spServiceChckedListener;
+    private SPServiceCheckedListener spServiceCheckedListener;
+
+    private String chservice;
+    private String strTimeslot;
+    private boolean isChbxChecked;
+    private Integer amount;
+    private boolean isValueAdded = false;
 
 
-    public SPServiceListEditAdapter(Context context, List<SPServiceListResponse.DataBean.ServiceListBean> spServiceList,List<ServiceProviderRegisterFormCreateResponse.DataBean.BusServiceListBean> spServiceListEdit, SPServiceChckedListener spServiceChckedListener) {
+
+    public SPServiceListEditAdapter(Context context, List<SPServiceListResponse.DataBean.ServiceListBean> spServiceList,List<ServiceProviderRegisterFormCreateResponse.DataBean.BusServiceListBean> spServiceListEdit, SPServiceCheckedListener spServiceCheckedListener,String strTimeslot) {
         this.spServiceList = spServiceList;
         this.spServiceListEdit = spServiceListEdit;
         this.mcontext = context;
-        this.spServiceChckedListener = spServiceChckedListener;
+        this.spServiceCheckedListener = spServiceCheckedListener;
+        this.strTimeslot = strTimeslot;
     }
 
     @NonNull
@@ -55,44 +64,78 @@ public class SPServiceListEditAdapter extends  RecyclerView.Adapter<RecyclerView
 
     @SuppressLint("SetTextI18n")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
-            currentItem = spServiceList.get(position);
-            holder.txt_servicename.setText(spServiceList.get(position).getService_list());
-
-
-            Log.w(TAG,"spServiceListEdit : "+new Gson().toJson(spServiceListEdit));
-
-        for(int i=0;i<spServiceListEdit.size();i++){
-            if(null != currentItem.getService_list() && spServiceListEdit.get(i).getBus_service_list().equalsIgnoreCase(currentItem.getService_list().trim())){
-                holder.checkbox_service_type.setChecked(true);
-                holder.txt_timeslottype.setText(spServiceListEdit.get(i).getTime_slots());
-                holder.txt_amount.setText(spServiceListEdit.get(i).getAmount()+"");
-                Log.w(TAG,"ServiceEdit");
-
-
+        currentItem = spServiceList.get(position);
+        holder.txt_servicename.setText(currentItem.getService_list());
+        if(strTimeslot != null){
+            holder.txt_timeslottype.setText(strTimeslot);
+        }
+        Log.w(TAG,"spServiceList : "+new Gson().toJson(spServiceList));
+        if(spServiceList != null && spServiceList.size() > 0) {
+            if (spServiceList.get(position).getAmount() != null) {
+                holder.txt_amount.setText(spServiceList.get(position).getAmount() + "");
+            }if (spServiceList.get(position).getTime_slots() != null) {
+                holder.txt_timeslottype.setText(spServiceList.get(position).getTime_slots());
             }
+            if(spServiceList.get(position).isChbxChecked()){
+                holder.checkbox_service_type.setChecked(true);
+            }else{
+                holder.checkbox_service_type.setChecked(false);
+            }
+            isValueAdded = spServiceList.get(position).isValueAdded();
+            isChbxChecked = spServiceList.get(position).isChbxChecked();
 
         }
-
-
 
         holder.checkbox_service_type.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                String chservice = spServiceList.get(position).getService_list();
+                Log.w(TAG,"onCheckedChanged spServiceList : "+new Gson().toJson(spServiceList));
 
-                if(isChecked){
-                    if (holder.checkbox_service_type.isChecked()) {
-                        spServiceChckedListener.onItemSPServiceCheck(position,chservice);
+                chservice = spServiceList.get(position).getService_list();
+                spServiceList.get(position).setBus_service_list(chservice);
+                spServiceList.get(position).setTime_slots(strTimeslot);
+                spServiceList.get(position).setAmount(amount);
+
+                isChbxChecked =  isChecked;
+                isValueAdded = spServiceList.get(position).isValueAdded();
+
+                Log.w(TAG,"setOnCheckedChangeListener : "+" isChbxChecked : "+isChbxChecked+" isValueAdded : "+isValueAdded);
+
+               /* for(int i=0;i<spServiceListEdit.size();i++){
+                    if(null != currentItem.getService_list() && spServiceListEdit.get(i).getBus_service_list().equalsIgnoreCase(currentItem.getService_list().trim())){
+                        holder.checkbox_service_type.setChecked(true);
+                        holder.txt_timeslottype.setText(spServiceListEdit.get(i).getTime_slots());
+                        holder.txt_amount.setText(spServiceListEdit.get(i).getAmount()+"");
+                        Log.w(TAG,"ServiceEdit");
+
+
                     }
 
-                }else{
+                }*/
 
-                    spServiceChckedListener.onItemSPServiceUnCheck(position,chservice);
+                if(isChecked && !isValueAdded){
+                    if (holder.checkbox_service_type.isChecked()) {
+                        spServiceCheckedListener.onItemSPServiceCheck(position,chservice,isChbxChecked);
+                        holder.txt_timeslottype.setText(spServiceList.get(position).getTime_slots());
+
+                    }
+
+                }
+                else{
+                    spServiceCheckedListener.onItemSPServiceUnCheck(position,chservice,isChbxChecked);
+                    if(strTimeslot != null){
+                        holder.txt_timeslottype.setText(strTimeslot);
+                    }
+                    holder.txt_amount.setText("");
 
                 }
 
             }
         });
+
+
+
+
 
 
 
