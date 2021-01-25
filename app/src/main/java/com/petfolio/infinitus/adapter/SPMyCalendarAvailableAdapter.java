@@ -21,6 +21,7 @@ import com.petfolio.infinitus.doctor.DoctorMyCalendarTimeActivity;
 import com.petfolio.infinitus.interfaces.OnItemClickSpecialization;
 import com.petfolio.infinitus.responsepojo.DoctorMyCalendarAvlDaysResponse;
 import com.petfolio.infinitus.serviceprovider.SPMyCalendarActivity;
+import com.petfolio.infinitus.serviceprovider.SPMyCalendarTimeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,7 +106,7 @@ public class SPMyCalendarAvailableAdapter extends  RecyclerView.Adapter<Recycler
         holder.img_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, DoctorMyCalendarTimeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent i = new Intent(context, SPMyCalendarTimeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                  ArrayList<String> dateList = new ArrayList<>();
                 dateList.add(dataBeanList.get(position).getTitle());
                 i.putExtra("dateList",dateList);

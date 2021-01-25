@@ -57,7 +57,6 @@ import com.petfolio.infinitus.requestpojo.DoctorSearchRequest;
 import com.petfolio.infinitus.requestpojo.FilterDoctorRequest;
 import com.petfolio.infinitus.responsepojo.DoctorSearchResponse;
 import com.petfolio.infinitus.responsepojo.FilterDoctorResponse;
-import com.petfolio.infinitus.service.GPSTracker;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -423,7 +422,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
 
-            if (ActivityCompat.shouldShowRequestPermissionRationale(Objects.requireNonNull(getActivity()),
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
                 ActivityCompat.requestPermissions(getActivity(),
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
@@ -467,6 +466,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
         Log.w(TAG,"filterDoctorResponseCall url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<FilterDoctorResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<FilterDoctorResponse> call, @NonNull Response<FilterDoctorResponse> response) {
                 avi_indicator.smoothToHide();
@@ -506,11 +506,11 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
             }
 
-            @SuppressLint("LongLogTag")
+            @SuppressLint({"LongLogTag", "LogNotTimber"})
             @Override
             public void onFailure(@NonNull Call<FilterDoctorResponse> call,@NonNull Throwable t) {
                 avi_indicator.smoothToHide();
-                Log.e("FilterDoctorResponse", "--->" + t.getMessage());
+                Log.w(TAG,"FilterDoctorResponse flr"+ t.getMessage());
             }
         });
 

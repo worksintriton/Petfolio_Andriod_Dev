@@ -80,7 +80,16 @@ public class FilterDoctorResponse {
         private String doctor_img;
         private String clinic_loc;
         private String communication_type;
-        private int distance;
+        private String distance;
+
+        public String getDistance() {
+            return distance;
+        }
+
+        public void setDistance(String distance) {
+            this.distance = distance;
+        }
+
         private double star_count;
         private int review_count;
         private List<SpecializationBean> specialization;
@@ -165,14 +174,6 @@ public class FilterDoctorResponse {
         }
 
 
-        public int getDistance() {
-            return distance;
-        }
-
-        public void setDistance(int distance) {
-            this.distance = distance;
-
-        }
 
 
         public double getStar_count() {

@@ -26,7 +26,7 @@
             app:tabPaddingEnd="0dp"
             app:tabPaddingStart="0dp"
             app:tabRippleColor="@null"
-            app:tabSelectedTextColor="@color/light_green_color"
+            app:tabSelectedTextColor="@color/white"
             app:tabTextColor="@color/green_color">
 
 
