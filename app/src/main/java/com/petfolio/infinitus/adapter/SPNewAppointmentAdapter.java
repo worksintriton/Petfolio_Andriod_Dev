@@ -2,7 +2,6 @@ package com.petfolio.infinitus.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.doctor.PrescriptionActivity;
 import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
 import com.petfolio.infinitus.interfaces.OnAppointmentComplete;
-import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.SPAppointmentResponse;
 
 import java.util.List;

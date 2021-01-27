@@ -13,6 +13,16 @@ public class SPSpecificServiceDetailsResponse {
 
     private String Status;
     private String Message;
+    private String alert_msg;
+
+    public String getAlert_msg() {
+        return alert_msg;
+    }
+
+    public void setAlert_msg(String alert_msg) {
+        this.alert_msg = alert_msg;
+    }
+
     private DataBean Data;
     private int Code;
 
@@ -151,7 +161,16 @@ public class SPSpecificServiceDetailsResponse {
             private int service_price;
             private int service_offer;
             private String service_place;
-            private int distance;
+            private double distance;
+
+            public double getDistance() {
+                return distance;
+            }
+
+            public void setDistance(double distance) {
+                this.distance = distance;
+            }
+
             private int rating_count;
             private int comments_count;
 
@@ -210,13 +229,7 @@ public class SPSpecificServiceDetailsResponse {
 
             }
 
-            public int getDistance() {
-                return distance;
-            }
 
-            public void setDistance(int distance) {
-                this.distance = distance;
-            }
 
             public int getRating_count() {
                 return rating_count;

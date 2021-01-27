@@ -25,21 +25,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.adapter.DoctorNewAppointmentAdapter;
 import com.petfolio.infinitus.adapter.SPNewAppointmentAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
-import com.petfolio.infinitus.doctor.PrescriptionActivity;
+
 import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
 import com.petfolio.infinitus.interfaces.OnAppointmentComplete;
 import com.petfolio.infinitus.requestpojo.AppoinmentCancelledRequest;
 import com.petfolio.infinitus.requestpojo.AppoinmentCompleteRequest;
-import com.petfolio.infinitus.requestpojo.DoctorNewAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.SPAppointmentRequest;
 import com.petfolio.infinitus.responsepojo.AppoinmentCancelledResponse;
 import com.petfolio.infinitus.responsepojo.AppoinmentCompleteResponse;
-import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.SPAppointmentResponse;
 import com.petfolio.infinitus.serviceprovider.ServiceProviderDashboardActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;

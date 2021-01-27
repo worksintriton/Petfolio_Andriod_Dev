@@ -1,12 +1,16 @@
 package com.petfolio.infinitus.doctor;
 
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -69,6 +73,7 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
     RecyclerView rv_prescriptiondetails;
     TextView  txt_no_records;
     private List<PrescriptionCreateResponse.DataBean.PrescriptionDataBean> prescriptionDataList;
+    private String pdfUrl;
 
 
     @Override
@@ -138,7 +143,9 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
                         }
                       if(response.body().getData().getPrescription_data() != null){
                           prescriptionDataList = response.body().getData().getPrescription_data();
-                          if(prescriptionDataList.size()>0){
+                          pdfUrl = response.body().getData().getPDF_format();
+
+                          /*if(prescriptionDataList.size()>0){
                               rv_prescriptiondetails.setVisibility(View.VISIBLE);
                               txt_no_records.setVisibility(View.GONE);
                               setView();
@@ -146,6 +153,18 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
                               rv_prescriptiondetails.setVisibility(View.GONE);
                               txt_no_records.setVisibility(View.VISIBLE);
 
+                          }*/
+
+                          try
+                          {
+                              Intent intentUrl = new Intent(Intent.ACTION_VIEW);
+                              intentUrl.setDataAndType(Uri.parse(pdfUrl), "application/pdf");
+                              intentUrl.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                              startActivity(intentUrl);
+                          }
+                          catch (ActivityNotFoundException e)
+                          {
+                              Toast.makeText(DoctorPrescriptionDetailsActivity.this, "No PDF Viewer Installed", Toast.LENGTH_LONG).show();
                           }
                       }
 

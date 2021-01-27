@@ -1,6 +1,7 @@
 package com.petfolio.infinitus.petlover;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,17 +32,15 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.adapter.DoctorNewAppointmentAdapter;
 import com.petfolio.infinitus.adapter.PetLoverSOSAdapter;
 import com.petfolio.infinitus.adapter.SelectedServiceProviderAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.interfaces.SoSCallListener;
-import com.petfolio.infinitus.requestpojo.ProfileUpdateRequest;
 import com.petfolio.infinitus.requestpojo.SPSpecificServiceDetailsRequest;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
-import com.petfolio.infinitus.responsepojo.ProfileUpdateResponse;
 import com.petfolio.infinitus.responsepojo.SPSpecificServiceDetailsResponse;
+import com.petfolio.infinitus.serviceprovider.SPFiltersActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -51,7 +51,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -116,12 +115,11 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
     @BindView(R.id.bottom_navigation_view)
     BottomNavigationView bottom_navigation_view;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_filters)
+    RelativeLayout rl_filters;
+
     private String active_tag;
-
-
-
-
-
 
     private List<SPSpecificServiceDetailsResponse.DataBean.ServiceProviderBean> serviceProviderList;
     private String userid;
@@ -131,7 +129,19 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
     private static final int REQUEST_PHONE_CALL =1 ;
     private String sosPhonenumber;
 
+    private Dialog alertDialog;
 
+    private String selectedprice;
+    private int distance = 0;
+    private int reviewcount = 0;
+    private int Count_value_start = 0;
+    private int Count_value_end = 0;
+    private String fromactivity;
+
+
+
+
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,6 +161,12 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
         if (extras != null) {
             catid = extras.getString("catid");
             from = extras.getString("from");
+            fromactivity = extras.getString("fromactivity");
+            reviewcount = extras.getInt("reviewcount");
+            Count_value_start = extras.getInt("Count_value_start");
+            Count_value_end = extras.getInt("Count_value_end");
+            distance = extras.getInt("distance");
+            selectedprice = extras.getString("selectedprice");
         }
 
         if(PetLoverDashboardActivity.cityName != null){
@@ -159,11 +175,19 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
 
         Log.w(TAG," userid : "+userid+ " catid : "+catid+" from : "+from);
 
-       if(catid != null && userid != null) {
-           if (new ConnectionDetector(SelectedServiceActivity.this).isNetworkAvailable(SelectedServiceActivity.this)) {
-               SPSpecificServiceDetailsResponseCall();
-           }
-       }
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("SPFiltersActivity")) {
+            if (new ConnectionDetector(SelectedServiceActivity.this).isNetworkAvailable(SelectedServiceActivity.this)) {
+                SPSpecificServiceDetailsResponseCall(distance,reviewcount,Count_value_start,Count_value_end);
+            }
+        }else{
+            if(catid != null && userid != null) {
+                if (new ConnectionDetector(SelectedServiceActivity.this).isNetworkAvailable(SelectedServiceActivity.this)) {
+                    SPSpecificServiceDetailsResponseCall(distance,reviewcount,Count_value_start,Count_value_end);
+                }
+            }
+        }
+
+
         bottom_navigation_view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
@@ -204,14 +228,15 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
         img_notification.setOnClickListener(this);
         img_cart.setOnClickListener(this);
         img_profile.setOnClickListener(this);
+        rl_filters.setOnClickListener(this);
     }
 
 
-    private void SPSpecificServiceDetailsResponseCall() {
+    private void SPSpecificServiceDetailsResponseCall(int distance, int reviewcount, int count_value_start, int count_value_end) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-        Call<SPSpecificServiceDetailsResponse> call = apiInterface.SPSpecificServiceDetailsResponseCall(RestUtils.getContentType(), spSpecificServiceDetailsRequest());
+        Call<SPSpecificServiceDetailsResponse> call = apiInterface.SPSpecificServiceDetailsResponseCall(RestUtils.getContentType(), spSpecificServiceDetailsRequest(distance,reviewcount,count_value_start,count_value_end));
         Log.w(TAG,"SPSpecificServiceDetailsResponseCall url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<SPSpecificServiceDetailsResponse>() {
@@ -223,6 +248,7 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
                 if (response.body() != null) {
 
                     if (200 == response.body().getCode()) {
+                        txt_no_records.setVisibility(View.GONE);
                         if (response.body().getData() != null) {
                             if (response.body().getData().getService_Details().getImage_path() != null) {
                                 Glide.with(SelectedServiceActivity.this)
@@ -240,14 +266,34 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
                             catid = response.body().getData().getService_Details().get_id();
                             Log.w(TAG,"catid : "+catid);
                             serviceProviderList = response.body().getData().getService_provider();
+
                             if(serviceProviderList != null && serviceProviderList.size()>0){
                                 txt_totalproviders.setText(serviceProviderList.size()+" Providers");
                                 setViewListedSP(serviceProviderList);
+                            }else{
+                                showAlertSPNotAvlLoading(response.body().getAlert_msg());
+
+
                             }
 
 
 
 
+                        }
+                    }else{
+                        txt_no_records.setVisibility(View.VISIBLE);
+                        if (response.body().getData().getService_Details().getImage_path() != null) {
+                            Glide.with(SelectedServiceActivity.this)
+                                    .load(response.body().getData().getService_Details().getImage_path())
+                                    .into(img_selectedserviceimage);
+                        } else {
+                            Glide.with(SelectedServiceActivity.this)
+                                    .load(R.drawable.image_thumbnail)
+                                    .into(img_selectedserviceimage);
+
+                        }
+                        if(response.body().getData().getService_Details().getTitle() != null){
+                            txt_selected_service.setText(response.body().getData().getService_Details().getTitle());
                         }
                     }
                 }
@@ -264,15 +310,22 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
         });
 
     }
-    private SPSpecificServiceDetailsRequest spSpecificServiceDetailsRequest() {
+    private SPSpecificServiceDetailsRequest spSpecificServiceDetailsRequest(int distance, int reviewcount, int count_value_start, int count_value_end) {
         /*
-         * user_id : 5fd778437aa4cc1c6a1e5632
          * cata_id : 5fe185d61996f651f5133693
+         * distance : 0
+         * user_id : 5ffe70d5b699b42563933d90
+         * Count_value_start : 0
+         * Count_value_end : 500
+         * review_count : 3
          */
-
         SPSpecificServiceDetailsRequest spSpecificServiceDetailsRequest = new SPSpecificServiceDetailsRequest();
-        spSpecificServiceDetailsRequest.setUser_id(userid);
         spSpecificServiceDetailsRequest.setCata_id(catid);
+        spSpecificServiceDetailsRequest.setDistance(distance);
+        spSpecificServiceDetailsRequest.setUser_id(userid);
+        spSpecificServiceDetailsRequest.setCount_value_start(count_value_start);
+        spSpecificServiceDetailsRequest.setCount_value_end(count_value_end);
+        spSpecificServiceDetailsRequest.setReview_count(reviewcount);
         Log.w(TAG,"spSpecificServiceDetailsRequest "+ new Gson().toJson(spSpecificServiceDetailsRequest));
         return spSpecificServiceDetailsRequest;
     }
@@ -298,7 +351,19 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
             case R.id.img_profile:
                 goto_Profile();
                 break;
+                case R.id.rl_filters:
+                goto_SPFilter();
+                break;
         }
+    }
+
+    private void goto_SPFilter() {
+        Intent intent = new Intent(getApplicationContext(), SPFiltersActivity.class);
+        intent.putExtra("distance",distance);
+        intent.putExtra("catid",catid);
+        intent.putExtra("selectedprice",selectedprice);
+        intent.putExtra("reviewcount",reviewcount);
+        startActivity(intent);
     }
 
     @Override
@@ -405,5 +470,30 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
             sosPhonenumber = String.valueOf(phonenumber);
         }
 
+    }
+
+    public void showAlertSPNotAvlLoading(String errormesage){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SelectedServiceActivity.this);
+        alertDialogBuilder.setMessage(errormesage);
+        alertDialogBuilder.setPositiveButton("ok",
+                (arg0, arg1) -> hideLoadingSPnotavl());
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+    public void hideLoadingSPnotavl() {
+        try {
+                distance = 1;
+
+                if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                    SPSpecificServiceDetailsResponseCall(distance, reviewcount, Count_value_start, Count_value_end);
+                }
+
+
+            alertDialog.dismiss();
+
+        } catch (Exception ignored) {
+
+        }
     }
 }

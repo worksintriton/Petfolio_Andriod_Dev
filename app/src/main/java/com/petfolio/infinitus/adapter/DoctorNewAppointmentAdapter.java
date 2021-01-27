@@ -118,6 +118,8 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
         }
 
 
+
+
         holder.btn_complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,6 +130,8 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
                 i.putExtra("userid",newAppointmentResponseList.get(position).getUser_id().get_id());
                 i.putExtra("allergies",newAppointmentResponseList.get(position).getAllergies());
                 i.putExtra("probleminfo",newAppointmentResponseList.get(position).getProblem_info());
+                i.putExtra("doctorid",newAppointmentResponseList.get(position).getDoctor_id().get_id());
+
                 context.startActivity(i);
 
             }

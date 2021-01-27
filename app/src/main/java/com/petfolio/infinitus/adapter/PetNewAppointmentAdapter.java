@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.doctor.PrescriptionActivity;
 import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
 import com.petfolio.infinitus.petlover.VideoCallPetLoverActivity;
 import com.petfolio.infinitus.responsepojo.PetAppointmentResponse;

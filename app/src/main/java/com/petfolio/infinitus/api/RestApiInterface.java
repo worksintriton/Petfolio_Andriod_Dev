@@ -104,6 +104,7 @@ import com.petfolio.infinitus.responsepojo.SPAvailableTimeResponse;
 import com.petfolio.infinitus.responsepojo.SPCheckStatusResponse;
 import com.petfolio.infinitus.responsepojo.SPCreateAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.SPDetailsRepsonse;
+import com.petfolio.infinitus.responsepojo.SPFilterPriceListResponse;
 import com.petfolio.infinitus.responsepojo.SPServiceListResponse;
 import com.petfolio.infinitus.responsepojo.SPSpecificServiceDetailsResponse;
 import com.petfolio.infinitus.responsepojo.ServiceCatResponse;
@@ -378,6 +379,10 @@ public interface RestApiInterface {
     @GET("service_provider/sp_dropdown")
     Call<SPServiceListResponse> SPServiceListResponseCall(@Header("Content-Type") String type);
 
+    /*service provider filter price list*/
+    @GET("service_provider/filter_price_list")
+    Call<SPFilterPriceListResponse> SPFilterPriceListResponseCall(@Header("Content-Type") String type);
+
     /*Service provider register form create*/
     @POST("service_provider/create")
     Call<ServiceProviderRegisterFormCreateResponse>serviceProviderRegisterFormCreateResponseCall(@Header("Content-Type") String type, @Body ServiceProviderRegisterFormCreateRequest serviceProviderRegisterFormCreateRequest);
@@ -420,13 +425,9 @@ public interface RestApiInterface {
     @POST("sp_holiday/delete")
     Call<HolidayDeleteResponse>spHolidayDeleteResponseCall(@Header("Content-Type") String type, @Body HolidayDeleteRequest holidayDeleteRequest  );
 
-
-
     /*SP Create Appointment*/
     @POST(" sp_appointments/mobile/create")
     Call<SPCreateAppointmentResponse>SPCreateAppointmentResponseCall(@Header("Content-Type") String type, @Body SPCreateAppointmentRequest spCreateAppointmentRequest);
-
-
 
     /*SP New Appointment*/
     @POST("sp_appointments/mobile/sp_getlist/newapp")

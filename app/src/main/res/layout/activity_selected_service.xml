@@ -190,7 +190,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/new_rounded_corner_btn"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:padding="5dp">
 
 
                             <EditText
@@ -202,10 +203,10 @@
                                 android:fontFamily="@font/futuramediumbt"
                                 android:hint="@string/sort_by"
                                 android:inputType="none"
-                                android:padding="5dp"
                                 android:textColorHint="@color/white"
-                                android:textSize="14sp"
-                                tools:ignore="Autofill,LabelFor" />
+                                android:textSize="12sp"
+                                tools:ignore="Autofill,LabelFor"
+                                android:layout_marginStart="5dp"/>
 
                             <ImageView
                                 android:id="@+id/img_sort"
@@ -240,8 +241,10 @@
                                 android:hint="@string/filters"
                                 android:inputType="none"
                                 android:textColorHint="@color/new_txt_color"
-                                android:textSize="14sp"
-                                tools:ignore="Autofill,LabelFor" />
+                                android:textSize="12sp"
+                                tools:ignore="Autofill,LabelFor"
+                                android:layout_marginStart="5dp"
+                               />
 
                             <ImageView
                                 android:id="@+id/img_filter"
