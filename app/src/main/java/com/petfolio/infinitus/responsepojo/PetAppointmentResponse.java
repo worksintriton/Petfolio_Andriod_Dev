@@ -101,6 +101,15 @@ public class PetAppointmentResponse {
         private String user_rate;
         private String user_feedback;
         private String communication_type;
+        private String start_appointment_status;
+
+        public String getStart_appointment_status() {
+            return start_appointment_status;
+        }
+
+        public void setStart_appointment_status(String start_appointment_status) {
+            this.start_appointment_status = start_appointment_status;
+        }
 
         public String getCommunication_type() {
             return communication_type;

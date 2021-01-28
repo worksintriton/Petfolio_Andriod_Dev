@@ -332,22 +332,6 @@ public class PrescriptionActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Toasty.warning(getApplicationContext(), "This action is disabled in this screen..", Toast.LENGTH_SHORT, true).show();
-
-        /*super.onBackPressed();
-        Intent intent = new Intent(PrescriptionChatActivity.this,DoctorChatDetailsActivity.class);
-        intent.putExtra("id", Appointment_ID);
-        intent.putExtra("doctorname", Doctor_Name);
-        intent.putExtra("doctorimage", Doctor_Image);
-        intent.putExtra("doctoremailid", Doctor_Email_id);
-        intent.putExtra("doctorid", Doctor_ID);
-        intent.putExtra("patientname", Patient_Name);
-        intent.putExtra("patientemailid", Patient_Email_id);
-        intent.putExtra("patientid", Patient_ID);
-        intent.putExtra("Bookingfor", Treatment_Done_by);
-        intent.putExtra("Familyid", Family_ID);
-        intent.putExtra("Familyname", Family_Name);
-        startActivity(intent);
-        finish();*/
     }
 
 

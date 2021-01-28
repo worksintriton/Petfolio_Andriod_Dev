@@ -127,7 +127,18 @@
         android:layout_marginBottom="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp">
-
+        <Button
+            android:id="@+id/btn_petownernoshow"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_capsule"
+            android:fontFamily="@font/futuramediumbt"
+            android:text="Pet owner no show"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            />
         <Button
             android:layout_marginStart="20dp"
             android:id="@+id/btn_closeconversation"
@@ -138,7 +149,16 @@
             android:text="Close conversation"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:textStyle="bold"/>
     </LinearLayout>
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:indicatorColor="@color/green"
+        app:indicatorName="LineSpinFadeLoaderIndicator" />
+
 
 </RelativeLayout>

@@ -357,7 +357,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
         appoinmentCancelledRequest.set_id(id);
         appoinmentCancelledRequest.setMissed_at(currentDateandTime);
         appoinmentCancelledRequest.setDoc_feedback("");
-        appoinmentCancelledRequest.setAppoinment_status("Missed");
+        appoinmentCancelledRequest.setAppoinment_status("Petowner Cancelled appointment");
         Log.w(TAG,"appoinmentCancelledRequest"+ "--->" + new Gson().toJson(appoinmentCancelledRequest));
         return appoinmentCancelledRequest;
     }

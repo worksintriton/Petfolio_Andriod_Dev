@@ -60,8 +60,6 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
 
     private String TAG = "SelectedServiceActivity";
 
-
-
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;

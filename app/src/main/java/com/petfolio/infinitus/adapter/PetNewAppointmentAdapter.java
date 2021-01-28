@@ -136,11 +136,15 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
         holder.img_videocall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Log.w(TAG,"Start_appointment_status : "+newAppointmentResponseList.get(position).getStart_appointment_status());
+                if(newAppointmentResponseList.get(position).getStart_appointment_status() != null && newAppointmentResponseList.get(position).getStart_appointment_status().equalsIgnoreCase("Not Started")){
+                    Toasty.warning(context,"Doctor is yet to start the Appointment. Please wait for the doctor to initiate the Appointment", Toast.LENGTH_SHORT, true).show();
+                }else {
                     Intent i = new Intent(context, VideoCallPetLoverActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra("id",newAppointmentResponseList.get(position).get_id());
-                    Log.w(TAG,"ID-->"+newAppointmentResponseList.get(position).get_id());
+                    i.putExtra("id", newAppointmentResponseList.get(position).get_id());
+                    Log.w(TAG, "ID-->" + newAppointmentResponseList.get(position).get_id());
                     context.startActivity(i);
+                }
 
 
             }

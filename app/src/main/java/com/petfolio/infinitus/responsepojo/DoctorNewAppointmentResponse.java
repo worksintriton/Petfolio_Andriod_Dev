@@ -127,6 +127,7 @@ public class DoctorNewAppointmentResponse {
     private List<DocBusinessInfoBean> doc_business_info;
 
 
+
     public String get_id() {
       return _id;
     }

@@ -191,7 +191,7 @@ public class FragmentDoctorNewAppointment extends Fragment implements OnAppointm
         rv_newappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_newappointment.setItemAnimator(new DefaultItemAnimator());
         int size = 3;
-        DoctorNewAppointmentAdapter doctorNewAppointmentAdapter = new DoctorNewAppointmentAdapter(getContext(), newAppointmentResponseList, rv_newappointment,size,this);
+        DoctorNewAppointmentAdapter doctorNewAppointmentAdapter = new DoctorNewAppointmentAdapter(getContext(), newAppointmentResponseList, rv_newappointment,size,this,avi_indicator);
         rv_newappointment.setAdapter(doctorNewAppointmentAdapter);
 
     }
@@ -199,7 +199,7 @@ public class FragmentDoctorNewAppointment extends Fragment implements OnAppointm
         rv_newappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_newappointment.setItemAnimator(new DefaultItemAnimator());
         int size = newAppointmentResponseList.size();
-        DoctorNewAppointmentAdapter doctorNewAppointmentAdapter = new DoctorNewAppointmentAdapter(getContext(), newAppointmentResponseList, rv_newappointment,size,this);
+        DoctorNewAppointmentAdapter doctorNewAppointmentAdapter = new DoctorNewAppointmentAdapter(getContext(), newAppointmentResponseList, rv_newappointment,size,this,avi_indicator);
         rv_newappointment.setAdapter(doctorNewAppointmentAdapter);
 
     }
@@ -314,7 +314,7 @@ public class FragmentDoctorNewAppointment extends Fragment implements OnAppointm
         appoinmentCancelledRequest.set_id(id);
         appoinmentCancelledRequest.setMissed_at(currentDateandTime);
         appoinmentCancelledRequest.setDoc_feedback("");
-        appoinmentCancelledRequest.setAppoinment_status("Missed");
+        appoinmentCancelledRequest.setAppoinment_status("Doctor Cancelled appointment");
         Log.w(TAG,"appoinmentCancelledRequest"+ "--->" + new Gson().toJson(appoinmentCancelledRequest));
         return appoinmentCancelledRequest;
     }

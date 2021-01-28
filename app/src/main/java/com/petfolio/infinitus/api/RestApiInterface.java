@@ -3,6 +3,7 @@ package com.petfolio.infinitus.api;
 import com.petfolio.infinitus.requestpojo.AddReviewRequest;
 import com.petfolio.infinitus.requestpojo.AddYourPetRequest;
 import com.petfolio.infinitus.requestpojo.AppoinmentCancelledRequest;
+import com.petfolio.infinitus.requestpojo.AppoinmentCloseRequest;
 import com.petfolio.infinitus.requestpojo.AppoinmentCompleteRequest;
 import com.petfolio.infinitus.requestpojo.AppointmentCheckRequest;
 import com.petfolio.infinitus.requestpojo.BreedTypeRequest;
@@ -17,6 +18,7 @@ import com.petfolio.infinitus.requestpojo.DoctorMyCalendarAvlTimesRequest;
 import com.petfolio.infinitus.requestpojo.DoctorMyCalendarUpdateDocDateRequest;
 import com.petfolio.infinitus.requestpojo.DoctorNewAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.DoctorSearchRequest;
+import com.petfolio.infinitus.requestpojo.DoctorStartAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.DoctorUpdateProfileImageRequest;
 import com.petfolio.infinitus.requestpojo.EmailOTPRequest;
 import com.petfolio.infinitus.requestpojo.FBTokenUpdateRequest;
@@ -38,6 +40,7 @@ import com.petfolio.infinitus.requestpojo.PetEditRequest;
 import com.petfolio.infinitus.requestpojo.PetListRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverDashboardRequest;
+import com.petfolio.infinitus.requestpojo.PetNoShowRequest;
 import com.petfolio.infinitus.requestpojo.PrescriptionCreateRequest;
 import com.petfolio.infinitus.requestpojo.PrescriptionDetailsRequest;
 import com.petfolio.infinitus.requestpojo.ProfileUpdateRequest;
@@ -59,6 +62,7 @@ import com.petfolio.infinitus.responsepojo.AddYourPetResponse;
 import com.petfolio.infinitus.responsepojo.AppoinmentCancelledResponse;
 import com.petfolio.infinitus.responsepojo.AppoinmentCompleteResponse;
 import com.petfolio.infinitus.responsepojo.AppointmentCheckResponse;
+import com.petfolio.infinitus.responsepojo.AppointmentsUpdateResponse;
 import com.petfolio.infinitus.responsepojo.BreedTypeResponse;
 import com.petfolio.infinitus.responsepojo.CreateHolidayResponse;
 import com.petfolio.infinitus.responsepojo.DocBusInfoUploadResponse;
@@ -360,6 +364,18 @@ public interface RestApiInterface {
     /*Update Appointment Status cancel*/
     @POST("appointments/edit")
     Call<AppoinmentCancelledResponse>appoinmentCancelledResponseCall(@Header("Content-Type") String type, @Body AppoinmentCancelledRequest appoinmentCancelledRequest );
+
+    /*doctor appointment close conversation*/
+    @POST("appointments/edit")
+    Call<AppointmentsUpdateResponse>appoinmentcloseconversationResponseCall(@Header("Content-Type") String type, @Body AppoinmentCloseRequest appoinmentCloseRequest );
+
+    /*doctor appointment pet no show*/
+    @POST("appointments/edit")
+    Call<AppointmentsUpdateResponse>appoinmentpetnoResponseCall(@Header("Content-Type") String type, @Body PetNoShowRequest petNoShowRequest );
+
+   /*doctor appointment start appointment*/
+    @POST("appointments/edit")
+    Call<AppointmentsUpdateResponse>doctorStartAppointmentResponseCall(@Header("Content-Type") String type, @Body DoctorStartAppointmentRequest doctorStartAppointmentRequest );
 
 
     /*Doctor Name and specialization search*/

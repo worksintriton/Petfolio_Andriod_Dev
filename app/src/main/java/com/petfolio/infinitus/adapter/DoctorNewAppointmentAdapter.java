@@ -1,6 +1,7 @@
 package com.petfolio.infinitus.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 
 import android.content.Intent;
@@ -19,14 +20,28 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
 import com.petfolio.infinitus.doctor.PrescriptionActivity;
 import com.petfolio.infinitus.doctor.VideoCallDoctorActivity;
 import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
+import com.petfolio.infinitus.interfaces.StartAppointmentListener;
 import com.petfolio.infinitus.petlover.VideoCallPetLoverActivity;
+import com.petfolio.infinitus.requestpojo.DoctorStartAppointmentRequest;
+import com.petfolio.infinitus.requestpojo.PetNoShowRequest;
+import com.petfolio.infinitus.responsepojo.AppointmentsUpdateResponse;
 import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
+import com.petfolio.infinitus.utils.RestUtils;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -38,15 +53,18 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
     DoctorNewAppointmentResponse.DataBean currentItem;
 
     private OnAppointmentCancel onAppointmentCancel;
+    private StartAppointmentListener startAppointmentListener;
     private int size;
     private String communicationtype;
+    AVLoadingIndicatorView avi_indicator;
 
 
-    public DoctorNewAppointmentAdapter(Context context, List<DoctorNewAppointmentResponse.DataBean> newAppointmentResponseList, RecyclerView inbox_list,int size,OnAppointmentCancel onAppointmentCancel) {
+    public DoctorNewAppointmentAdapter(Context context, List<DoctorNewAppointmentResponse.DataBean> newAppointmentResponseList, RecyclerView inbox_list,int size,OnAppointmentCancel onAppointmentCancel, AVLoadingIndicatorView avi_indicator) {
         this.newAppointmentResponseList = newAppointmentResponseList;
         this.context = context;
         this.size = size;
         this.onAppointmentCancel = onAppointmentCancel;
+        this.avi_indicator = avi_indicator;
 
 
 
@@ -148,17 +166,20 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
         holder.img_videocall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent i = new Intent(context, VideoCallDoctorActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("id",newAppointmentResponseList.get(position).get_id());
-                i.putExtra("petname",newAppointmentResponseList.get(position).getPet_id().getPet_name());
-                i.putExtra("pettype",newAppointmentResponseList.get(position).getPet_id().getPet_type());
-                i.putExtra("id",newAppointmentResponseList.get(position).get_id());
-                i.putExtra("userid",newAppointmentResponseList.get(position).getUser_id().get_id());
-                i.putExtra("allergies",newAppointmentResponseList.get(position).getAllergies());
-                i.putExtra("probleminfo",newAppointmentResponseList.get(position).getProblem_info());
-                Log.w(TAG,"ID-->"+newAppointmentResponseList.get(position).get_id());
-                context.startActivity(i);
+                Log.w(TAG,"Start_appointment_status : "+newAppointmentResponseList.get(position).getStart_appointment_status());
+                if(newAppointmentResponseList.get(position).getStart_appointment_status() != null && newAppointmentResponseList.get(position).getStart_appointment_status().equalsIgnoreCase("Not Started")){
+                    doctorStartAppointmentResponseCall(newAppointmentResponseList.get(position).get_id(),position);
+                }else {
+                    Intent i = new Intent(context, VideoCallDoctorActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("id", newAppointmentResponseList.get(position).get_id());
+                    i.putExtra("petname", newAppointmentResponseList.get(position).getPet_id().getPet_name());
+                    i.putExtra("pettype", newAppointmentResponseList.get(position).getPet_id().getPet_type());
+                    i.putExtra("userid", newAppointmentResponseList.get(position).getUser_id().get_id());
+                    i.putExtra("allergies", newAppointmentResponseList.get(position).getAllergies());
+                    i.putExtra("probleminfo", newAppointmentResponseList.get(position).getProblem_info());
+                    Log.w(TAG, "ID-->" + newAppointmentResponseList.get(position).get_id());
+                    context.startActivity(i);
+                }
 
 
             }
@@ -175,32 +196,15 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
             holder.ivmessgaechat.setVisibility(View.GONE);
         }
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @Override
     public int getItemCount() {
         return Math.min(newAppointmentResponseList.size(), size);
 
     }
-
-
     @Override
     public int getItemViewType(int position) {
         return position;
     }
-
     static class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_petname,txt_pettype,txt_type,txt_service_cost,txt_bookedon;
         public ImageView img_pet_imge,img_emergency_appointment,img_videocall;
@@ -234,11 +238,58 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
 
     }
 
+    private void doctorStartAppointmentResponseCall(String id, int position) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<AppointmentsUpdateResponse> call = apiInterface.doctorStartAppointmentResponseCall(RestUtils.getContentType(), doctorStartAppointmentRequest(id));
+        Log.w(TAG,"startAppointmentResponseCall url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<AppointmentsUpdateResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<AppointmentsUpdateResponse> call, @NonNull Response<AppointmentsUpdateResponse> response) {
+
+                Log.w(TAG,"startAppointmentResponseCall"+ "--->" + new Gson().toJson(response.body()));
+
+                avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        Intent i = new Intent(context, VideoCallDoctorActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.putExtra("id", newAppointmentResponseList.get(position).get_id());
+                        i.putExtra("petname", newAppointmentResponseList.get(position).getPet_id().getPet_name());
+                        i.putExtra("pettype", newAppointmentResponseList.get(position).getPet_id().getPet_type());
+                        i.putExtra("userid", newAppointmentResponseList.get(position).getUser_id().get_id());
+                        i.putExtra("allergies", newAppointmentResponseList.get(position).getAllergies());
+                        i.putExtra("probleminfo", newAppointmentResponseList.get(position).getProblem_info());
+                        Log.w(TAG, "ID-->" + newAppointmentResponseList.get(position).get_id());
+                        context.startActivity(i);
+
+                    }
+
+                }
 
 
+            }
 
+            @Override
+            public void onFailure(@NonNull Call<AppointmentsUpdateResponse> call, @NonNull Throwable t) {
 
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"startAppointmentResponseCall flr"+"--->" + t.getMessage());
+            }
+        });
 
-
-
+    }
+    private DoctorStartAppointmentRequest doctorStartAppointmentRequest(String id) {
+        /*
+         * _id : 5fc639ea72fc42044bfa1683
+         * appoinment_status : In-Progress
+         */
+        DoctorStartAppointmentRequest doctorStartAppointmentRequest = new DoctorStartAppointmentRequest();
+        doctorStartAppointmentRequest.set_id(id);
+        doctorStartAppointmentRequest.setStart_appointment_status("In-Progress");
+        Log.w(TAG,"doctorStartAppointmentRequest"+ "--->" + new Gson().toJson(doctorStartAppointmentRequest));
+        return doctorStartAppointmentRequest;
+    }
 }

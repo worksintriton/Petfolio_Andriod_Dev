@@ -50,8 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/footerView"
-        android:layout_below="@+id/headerView"
-        android:visibility="gone">
+        android:layout_below="@+id/headerView">
 
         <LinearLayout
             android:id="@+id/content"
@@ -286,8 +285,7 @@
         android:orientation="vertical"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
-        android:layout_marginBottom="10dp"
-        android:visibility="gone">
+        android:layout_marginBottom="10dp">
 
         <Button
             android:id="@+id/btnsubmit"
