@@ -243,12 +243,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
             amount = extras.getInt("amount");
             communicationtype = extras.getString("communicationtype");
-
-
-
-
-
-            Log.w(TAG,"Bundle "+" doctorid : "+doctorid+" selectedTimeSlot : "+selectedTimeSlot+"communicationtype : "+communicationtype);
+            Log.w(TAG,"Bundle "+" doctorid : "+doctorid+" selectedTimeSlot : "+selectedTimeSlot+"communicationtype : "+communicationtype+" amount : "+amount);
         }
         radioButton_online.setVisibility(View.GONE);
         radioButton_visit.setVisibility(View.GONE);
@@ -1043,6 +1038,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
         Intent intent = new Intent(getApplicationContext(),PetAppointment_Doctor_Date_Time_Activity.class);
         intent.putExtra("doctorid",doctorid);
+        intent.putExtra("communicationtype",communicationtype);
         intent.putExtra("fromactivity",fromactivity);
         intent.putExtra("fromto",fromto);
         startActivity(intent);

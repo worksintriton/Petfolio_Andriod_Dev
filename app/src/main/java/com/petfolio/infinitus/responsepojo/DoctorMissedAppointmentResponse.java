@@ -130,6 +130,15 @@ public class DoctorMissedAppointmentResponse {
         private String missed_at;
         private int __v;
         private List<DocAttchedBean> doc_attched;
+        private String appoint_patient_st;
+
+        public String getAppoint_patient_st() {
+            return appoint_patient_st;
+        }
+
+        public void setAppoint_patient_st(String appoint_patient_st) {
+            this.appoint_patient_st = appoint_patient_st;
+        }
 
 
         public String get_id() {

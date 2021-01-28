@@ -124,6 +124,7 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
                 intent.putExtra("reviewcount",doctorDetailsResponseList.get(position).getReview_count());
                 intent.putExtra("starcount",doctorDetailsResponseList.get(position).getStar_count());
                 intent.putExtra("distance",doctorDetailsResponseList.get(position).getDistance());
+                intent.putExtra("communicationtype",doctorDetailsResponseList.get(position).getCommunication_type());
                 intent.putExtra("fromactivity", "PetCareFragment");
                 intent.putExtra("fromto", "direct");
                 Log.w(TAG,"doctorid :"+doctorDetailsResponseList.get(position).getUser_id());

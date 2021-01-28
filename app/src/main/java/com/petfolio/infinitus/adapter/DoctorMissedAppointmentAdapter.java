@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -82,8 +83,28 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
 
         }
 
+        if(missedAppointmentResponseList.get(position).getAppoint_patient_st() != null && missedAppointmentResponseList.get(position).getAppoint_patient_st().equalsIgnoreCase("Petowner Cancelled appointment")){
+            holder.ll_appointmentstatus.setVisibility(View.VISIBLE);
+            holder.txt_appointment_status.setText("Not available");
+        }
+        else if(missedAppointmentResponseList.get(position).getAppoint_patient_st() != null && missedAppointmentResponseList.get(position).getAppoint_patient_st().equalsIgnoreCase("Doctor Cancelled appointment")){
 
-       }
+        }else if(missedAppointmentResponseList.get(position).getAppoint_patient_st() != null && missedAppointmentResponseList.get(position).getAppoint_patient_st().equalsIgnoreCase("Doctor missed appointment")){
+            holder.ll_appointmentstatus.setVisibility(View.VISIBLE);
+            holder.txt_appointment_status.setText("Not available");
+        }else if(missedAppointmentResponseList.get(position).getAppoint_patient_st() != null && missedAppointmentResponseList.get(position).getAppoint_patient_st().equalsIgnoreCase("Petowner Not Available")){
+            holder.ll_appointmentstatus.setVisibility(View.VISIBLE);
+            holder.txt_appointment_status.setText("No show");
+        }
+
+        if(missedAppointmentResponseList.get(position).getAppoinment_status() != null && missedAppointmentResponseList.get(position).getAppoinment_status().equalsIgnoreCase("no show")){
+            holder.ll_appointmentstatus.setVisibility(View.VISIBLE);
+            holder.txt_appointment_status.setText("No show");
+        }
+
+
+
+    }
 
 
     @Override
@@ -98,9 +119,10 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
     }
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_petname,txt_pettype,txt_type,txt_service_cost,txt_missed_date;
+        public TextView txt_petname,txt_pettype,txt_type,txt_service_cost,txt_missed_date,txt_appointment_status;
         public ImageView img_pet_imge;
         public Button btn_cancel,btn_complete;
+        public LinearLayout ll_appointmentstatus;
 
 
 
@@ -114,6 +136,9 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
             txt_missed_date = itemView.findViewById(R.id.txt_missed_date);
             btn_cancel = itemView.findViewById(R.id.btn_cancel);
             btn_complete = itemView.findViewById(R.id.btn_complete);
+            txt_appointment_status = itemView.findViewById(R.id.txt_appointment_status);
+            ll_appointmentstatus = itemView.findViewById(R.id.ll_appointmentstatus);
+            ll_appointmentstatus.setVisibility(View.GONE);
 
 
 

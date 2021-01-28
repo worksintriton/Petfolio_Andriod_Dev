@@ -363,6 +363,7 @@
     <string name="selected_service">Selected service</string>
     <string name="notification_settings">Notification settings</string>
     <string name="video">Video</string>
+    <string name="status">Status</string>
 
 
 </resources>

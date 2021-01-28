@@ -191,7 +191,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
             amount = extras.getInt("amount");
             communicationtype = extras.getString("communicationtype");
 
-            Log.w(TAG,"petid-->"+petid+ "allergies : "+allergies+"  probleminfo : "+probleminfo+" selectedAppointmentType : "+selectedAppointmentType);
+            Log.w(TAG,"petid-->"+petid+ "allergies : "+allergies+"  probleminfo : "+probleminfo+" selectedAppointmentType : "+selectedAppointmentType+" communicationtype : "+communicationtype);
 
 
 

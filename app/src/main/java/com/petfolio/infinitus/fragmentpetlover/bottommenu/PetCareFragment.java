@@ -114,15 +114,6 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     @BindView(R.id.txt_no_records)
     TextView txt_no_records;
 
-
-
-
-
-
-
-
-
-
     Dialog dialog;
     private String userid;
 

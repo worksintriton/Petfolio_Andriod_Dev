@@ -7,13 +7,22 @@ public class AppoinmentCancelledRequest {
      * missed_at : 23-10-2000 10 : 00 AM
      * doc_feedback : One Emergenecy work i am cancelling this appointment
      * appoinment_status : Missed
+     * appoint_patient_st:Doctor Cancelled appointment
      */
 
     private String _id;
     private String missed_at;
     private String doc_feedback;
     private String appoinment_status;
+    private String  appoint_patient_st;
 
+    public String getAppoint_patient_st() {
+        return appoint_patient_st;
+    }
+
+    public void setAppoint_patient_st(String appoint_patient_st) {
+        this.appoint_patient_st = appoint_patient_st;
+    }
 
     public String get_id() {
         return _id;

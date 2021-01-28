@@ -328,8 +328,6 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
         Log.w(TAG,"addReviewRequest"+ "--->" + new Gson().toJson(addReviewRequest));
         return addReviewRequest;
     }
-
-
     private void showAddReviewSuccess() {
         try {
 
@@ -362,7 +360,6 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
 
 
     }
-
     public void showErrorLoading(String errormesage){
         alertDialogBuilder = new AlertDialog.Builder(mContext);
         alertDialogBuilder.setMessage(errormesage);

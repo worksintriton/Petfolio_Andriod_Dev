@@ -304,6 +304,7 @@ public class FragmentDoctorNewAppointment extends Fragment implements OnAppointm
          * missed_at : 23-10-2000 10 : 00 AM
          * doc_feedback : One Emergenecy work i am cancelling this appointment
          * appoinment_status : Missed
+         * appoint_patient_st:Doctor Cancelled appointment
          */
 
 
@@ -314,7 +315,8 @@ public class FragmentDoctorNewAppointment extends Fragment implements OnAppointm
         appoinmentCancelledRequest.set_id(id);
         appoinmentCancelledRequest.setMissed_at(currentDateandTime);
         appoinmentCancelledRequest.setDoc_feedback("");
-        appoinmentCancelledRequest.setAppoinment_status("Doctor Cancelled appointment");
+        appoinmentCancelledRequest.setAppoinment_status("Missed");
+        appoinmentCancelledRequest.setAppoint_patient_st("Doctor Cancelled appointment");
         Log.w(TAG,"appoinmentCancelledRequest"+ "--->" + new Gson().toJson(appoinmentCancelledRequest));
         return appoinmentCancelledRequest;
     }
