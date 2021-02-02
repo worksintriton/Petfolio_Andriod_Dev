@@ -3,6 +3,7 @@ package com.petfolio.infinitus.petlover;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -174,6 +175,7 @@ public class FiltersActivity extends AppCompatActivity implements View.OnClickLi
         finish();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -186,6 +188,7 @@ public class FiltersActivity extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.btn_clear:
+                clearRadioChecked();
                 break;
 
             case R.id.rb_four_star:

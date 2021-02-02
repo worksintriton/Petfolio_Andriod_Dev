@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_new"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cdvw_newappointment"
         android:layout_width="match_parent"
@@ -69,7 +71,7 @@
                         android:textColor="@color/new_txt_color"
                         android:textSize="14sp"
                         android:textStyle="normal"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/textView4"
@@ -79,7 +81,7 @@
                         android:textColor="@color/new_txt_color"
                         android:textSize="14sp"
                         android:textStyle="normal"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/txt_petname"
@@ -217,23 +219,6 @@
             </LinearLayout>
 
 
-            <Button
-                android:id="@+id/btn_add_review"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="end"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/new_rounded_corner_btn"
-                android:fontFamily="@font/futuramediumbt"
-                android:text="@string/add_review"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-
             <TextView
                 android:id="@+id/txt_completed_date"
                 android:layout_width="wrap_content"
@@ -249,21 +234,54 @@
                 android:text="@string/completed_on_date"
                 android:textColor="@color/new_green_btn"
                 android:textSize="12sp" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txt_completed_date"
-                android:gravity="end" >
-                <ImageView
-                    android:id="@+id/img_prescriptiondetails"
-                    android:layout_width="30dp"
+                android:gravity="end">
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/img_prescriptiondetails"-->
+<!--                    android:layout_width="30dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_marginEnd="10dp"-->
+<!--                    android:layout_marginBottom="5dp"-->
+<!--                    android:contentDescription="@string/image"-->
+<!--                    android:scaleType="fitXY"-->
+<!--                    android:src="@drawable/medical_prescription" />-->
+
+                <Button
+                    android:id="@+id/btn_add_review"
+                    android:layout_width="80dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/medical_prescription"
-                    android:layout_marginEnd="10dp"
-                    android:contentDescription="@string/image"
-                    android:scaleType="fitXY"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/new_rounded_corner_btn"
+                    android:fontFamily="@font/futuramediumbt"
+                    android:text="@string/add_review"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/btn_prescriptiondetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_toEndOf="@+id/btn_add_review"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
                     android:layout_marginBottom="5dp"
-                    />
+                    android:background="@drawable/new_rounded_corner_btn"
+                    android:fontFamily="@font/futuramediumbt"
+                    android:padding="5dp"
+                    android:text="View Prescription"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
             </RelativeLayout>
 
         </RelativeLayout>

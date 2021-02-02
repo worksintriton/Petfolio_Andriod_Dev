@@ -364,6 +364,7 @@
     <string name="notification_settings">Notification settings</string>
     <string name="video">Video</string>
     <string name="status">Status</string>
+    <string name="view_prescription">view prescription</string>
 
 
 </resources>

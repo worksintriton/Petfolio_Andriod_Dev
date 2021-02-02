@@ -2,6 +2,8 @@ package com.petfolio.infinitus.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.doctor.DoctorMissedAppointmentDetailsActivity;
 import com.petfolio.infinitus.responsepojo.DoctorMissedAppointmentResponse;
 
 import java.util.List;
@@ -102,6 +105,26 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
             holder.txt_appointment_status.setText("No show");
         }
 
+        holder.ll_new.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context, DoctorMissedAppointmentDetailsActivity.class);
+
+                //Create the bundle
+                Bundle bundle = new Bundle();
+
+                Log.w("appointment_id",missedAppointmentResponseList.get(position).get_id());
+
+                //Add your data from getFactualResults method to bundle
+                bundle.putString("appointment_id",missedAppointmentResponseList.get(position).get_id());
+
+                //Add the bundle to the intent
+                intent.putExtras(bundle);
+
+                context.startActivity(intent);
+            }
+        });
 
 
     }
@@ -123,7 +146,7 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
         public ImageView img_pet_imge;
         public Button btn_cancel,btn_complete;
         public LinearLayout ll_appointmentstatus;
-
+        LinearLayout ll_new;
 
 
         public ViewHolderOne(View itemView) {
@@ -139,7 +162,7 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
             txt_appointment_status = itemView.findViewById(R.id.txt_appointment_status);
             ll_appointmentstatus = itemView.findViewById(R.id.ll_appointmentstatus);
             ll_appointmentstatus.setVisibility(View.GONE);
-
+            ll_new = itemView.findViewById(R.id.ll_new);
 
 
         }

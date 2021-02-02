@@ -357,7 +357,6 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
 
     }
 
-
     private void fBTokenUpdateResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -460,4 +459,6 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
 
         return fbTokenUpdateRequest;
     }
+
+
 }

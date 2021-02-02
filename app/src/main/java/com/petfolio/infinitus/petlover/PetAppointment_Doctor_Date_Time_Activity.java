@@ -193,21 +193,13 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
             Log.w(TAG,"petid-->"+petid+ "allergies : "+allergies+"  probleminfo : "+probleminfo+" selectedAppointmentType : "+selectedAppointmentType+" communicationtype : "+communicationtype);
 
-
-
-
-
-
-
-
-
         }
 
 
         Date c = Calendar.getInstance().getTime();
         System.out.println("Current time => " + c);
 
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         String formattedDate = df.format(c);
 
         if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
@@ -254,44 +246,6 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
             }
         });
 
-
-
-
-      /*  calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-
-                String strdayOfMonth = "";
-                String strMonth = "";
-                int month1 =(month + 1);
-                if(dayOfMonth == 9 || dayOfMonth <9){
-                    strdayOfMonth = "0"+dayOfMonth;
-                    Log.w(TAG,"Selected dayOfMonth-->"+strdayOfMonth);
-                }else{
-                    strdayOfMonth = String.valueOf(dayOfMonth);
-                }
-
-                if(month1 == 9 || month1 <9){
-                    strMonth = "0"+month1;
-                    Log.w(TAG,"Selected month1-->"+strMonth);
-                }else{
-                    strMonth = String.valueOf(month1);
-                }
-                //String Date = dayOfMonth + "-" + (month + 1) + "-" + year;
-
-                String Date = strdayOfMonth + "-" + strMonth + "-" + year;
-                Log.w(TAG,"Selected Date-->"+Date);
-
-                if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
-
-                    petDoctorAvailableTimeResponseCall(formattedDate);
-                }
-
-
-
-            }
-        });*/
-
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -303,8 +257,10 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         datePickerTimeline.setDateTextColor(Color.parseColor("#009675"));
         datePickerTimeline.setDayTextColor(Color.parseColor("#009675"));
         datePickerTimeline.setMonthTextColor(Color.parseColor("#009675"));
+
       // Set a date Selected Listener
         datePickerTimeline.setOnDateSelectedListener(new OnDateSelectedListener() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onDateSelected(int year, int month, int dayOfMonth, int dayOfWeek) {
                 // Do Something
@@ -346,9 +302,6 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         Date[] dates = {Calendar.getInstance().getTime()};
         datePickerTimeline.deactivateDates(dates);*/
 
-
-
-
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -356,9 +309,6 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
             }
         });
-
-
-
 
     }
     private void petDoctorAvailableTimeResponseCall(String Date) {

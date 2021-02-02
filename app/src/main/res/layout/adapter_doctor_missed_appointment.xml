@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_new"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cdvw_newappointment"
@@ -215,12 +216,13 @@
                         android:textSize="12sp" />
 
                 </LinearLayout>
+
                 <LinearLayout
+                    android:id="@+id/ll_appointmentstatus"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="5dp"
-                    android:orientation="horizontal"
-                    android:id="@+id/ll_appointmentstatus">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/txt_appointment_status_lbl"

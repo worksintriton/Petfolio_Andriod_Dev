@@ -40,6 +40,7 @@ import com.petfolio.infinitus.requestpojo.PetEditRequest;
 import com.petfolio.infinitus.requestpojo.PetListRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverDashboardRequest;
+import com.petfolio.infinitus.requestpojo.PetNewAppointmentDetailsRequest;
 import com.petfolio.infinitus.requestpojo.PetNoShowRequest;
 import com.petfolio.infinitus.requestpojo.PrescriptionCreateRequest;
 import com.petfolio.infinitus.requestpojo.PrescriptionDetailsRequest;
@@ -98,6 +99,7 @@ import com.petfolio.infinitus.responsepojo.PetDetailsResponse;
 import com.petfolio.infinitus.responsepojo.PetDoctorAvailableTimeResponse;
 import com.petfolio.infinitus.responsepojo.PetListResponse;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
+import com.petfolio.infinitus.responsepojo.PetNewAppointmentDetailsResponse;
 import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.PetTypeListResponse;
 import com.petfolio.infinitus.responsepojo.PrescriptionCreateResponse;
@@ -478,7 +480,8 @@ public interface RestApiInterface {
     @POST("product_vendor/check_status")
     Call<SPCheckStatusResponse>VendorCheckStatusResponseCall(@Header("Content-Type") String type, @Body SPCheckStatusRequest spCheckStatusRequest );
 
-
-
+    /*Pet New Appointment Details*/
+    @POST("appointments/mobile/fetch_appointment_id")
+    Call<PetNewAppointmentDetailsResponse> petNewAppointDetailResponseCall(@Header("Content-Type") String type, @Body PetNewAppointmentDetailsRequest petNewAppointmentDetailsRequest);
 
 }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
+import com.petfolio.infinitus.petlover.PetNewAppointmentDetailsActivity;
 import com.petfolio.infinitus.petlover.VideoCallPetLoverActivity;
 import com.petfolio.infinitus.responsepojo.PetAppointmentResponse;
 
@@ -150,8 +152,31 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
             }
         });
 
+        if(!newAppointmentResponseList.get(position).getClinic_name().equals("")){
+
+            holder.ll_new.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent(context, PetNewAppointmentDetailsActivity.class);
+
+                    //Create the bundle
+                    Bundle bundle = new Bundle();
+
+                    Log.w("appointment_id",newAppointmentResponseList.get(position).get_id());
+
+                    //Add your data from getFactualResults method to bundle
+                    bundle.putString("appointment_id",newAppointmentResponseList.get(position).get_id());
+
+                    //Add the bundle to the intent
+                    intent.putExtras(bundle);
+
+                    context.startActivity(intent);
+                }
+            });
 
 
+        }
 
 
     }
@@ -171,7 +196,7 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
         public TextView txt_clinicname,txt_petname,txt_type,txt_service_cost,txt_bookedon;
         public ImageView img_clinic_imge,img_emergency_appointment,img_videocall;
         public Button btn_cancel;
-
+        LinearLayout ll_new;
 
 
         public ViewHolderOne(View itemView) {
@@ -186,7 +211,7 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
             img_emergency_appointment = itemView.findViewById(R.id.img_emergency_appointment);
             img_emergency_appointment.setVisibility(View.GONE);
             img_videocall = itemView.findViewById(R.id.img_videocall);
-
+            ll_new = itemView.findViewById(R.id.ll_new);
 
 
         }

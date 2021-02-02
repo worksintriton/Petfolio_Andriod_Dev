@@ -6,6 +6,7 @@ import android.content.Context;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,10 +26,12 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
+import com.petfolio.infinitus.doctor.DoctorNewAppointmentDetailsActivity;
 import com.petfolio.infinitus.doctor.PrescriptionActivity;
 import com.petfolio.infinitus.doctor.VideoCallDoctorActivity;
 import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
 import com.petfolio.infinitus.interfaces.StartAppointmentListener;
+import com.petfolio.infinitus.petlover.PetNewAppointmentDetailsActivity;
 import com.petfolio.infinitus.petlover.VideoCallPetLoverActivity;
 import com.petfolio.infinitus.requestpojo.DoctorStartAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.PetNoShowRequest;
@@ -187,6 +190,30 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
 
 
 
+            holder.ll_new.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent(context, DoctorNewAppointmentDetailsActivity.class);
+
+                    //Create the bundle
+                    Bundle bundle = new Bundle();
+
+                    Log.w("appointment_id",newAppointmentResponseList.get(position).get_id());
+
+                    //Add your data from getFactualResults method to bundle
+                    bundle.putString("appointment_id",newAppointmentResponseList.get(position).get_id());
+
+                    //Add the bundle to the intent
+                    intent.putExtras(bundle);
+
+                    context.startActivity(intent);
+                }
+            });
+
+
+
+
 
     }
 
@@ -227,7 +254,7 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
             img_emergency_appointment = itemView.findViewById(R.id.img_emergency_appointment);
             img_emergency_appointment.setVisibility(View.GONE);
             img_videocall = itemView.findViewById(R.id.img_videocall);
-
+            ll_new = itemView.findViewById(R.id.ll_new);
 
 
 
