@@ -34,41 +34,51 @@ import retrofit2.Response;
 public class FiltersActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "FiltersActivity" ;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_no_records)
     TextView txt_no_records;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
     ImageView img_back;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
     private List<DropDownListResponse.DataBean.SpecialzationBean> petSpecilaziationList;
 
-
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rg_specialization)
     RadioGroup rg_specialization;
 
 
 
-
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_clear)
     Button btn_clear;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_apply)
     Button btn_apply;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rg_review)
     RadioGroup rg_review;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rb_four_star)
     RadioButton rb_four_star;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rb_three_star)
     RadioButton rb_three_star;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rb_two_star)
     RadioButton rb_two_star;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rb_one_star)
     RadioButton rb_one_star;
 
@@ -78,6 +88,7 @@ public class FiltersActivity extends AppCompatActivity implements View.OnClickLi
     private int reviewcount;
 
 
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,16 +112,22 @@ public class FiltersActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         rg_specialization.setOnCheckedChangeListener((group, checkedId) -> {
-            int radioButtonID = rg_specialization.getCheckedRadioButtonId();
-            RadioButton radioButton = rg_specialization.findViewById(radioButtonID);
-            specialization = (String) radioButton.getText();
-            Log.w(TAG,"selectedspecialization : " + specialization);
+            if(rg_specialization != null) {
+                int radioButtonID = rg_specialization.getCheckedRadioButtonId();
+                RadioButton radioButton = rg_specialization.findViewById(radioButtonID);
+                if (radioButton != null) {
+                    specialization = (String) radioButton.getText();
+                    Log.w(TAG, "selectedspecialization : " + specialization);
+                }
+            }
+
 
 
         });
 
 
     }
+    @SuppressLint("LogNotTimber")
     public void dropDownListResponseCall(){
 
         avi_indicator.setVisibility(View.VISIBLE);
@@ -121,6 +138,7 @@ public class FiltersActivity extends AppCompatActivity implements View.OnClickLi
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<DropDownListResponse>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(@NonNull Call<DropDownListResponse> call, @NonNull Response<DropDownListResponse> response) {
                 avi_indicator.smoothToHide();
@@ -189,6 +207,7 @@ public class FiltersActivity extends AppCompatActivity implements View.OnClickLi
 
             case R.id.btn_clear:
                 clearRadioChecked();
+                rg_specialization.clearCheck();
                 break;
 
             case R.id.rb_four_star:

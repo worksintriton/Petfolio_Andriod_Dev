@@ -7,14 +7,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:gravity="center"
+        android:layout_margin="20dp">
 
         <ImageView
             android:id="@+id/logo"
-            android:src="@drawable/sliderimg"
+            android:src="@drawable/app_logo"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"/>
+            android:layout_height="300dp"
+            android:scaleType="fitXY"
+            />
 
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

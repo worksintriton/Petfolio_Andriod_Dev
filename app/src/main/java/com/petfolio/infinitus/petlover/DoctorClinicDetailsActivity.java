@@ -260,6 +260,7 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
                         reviewcount  = response.body().getData().getReview_count();
                         starcount =  response.body().getData().getStar_count();
                         amount =  response.body().getData().getAmount();
+                        Log.w(TAG,"amount : "+amount);
                         communicationtype =  response.body().getData().getCommunication_type();
 
                         ClinicLocationname = response.body().getData().getClinic_loc();

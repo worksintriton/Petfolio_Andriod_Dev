@@ -209,7 +209,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     private String petimage;
     private String fromactivity;
     private String fromto;
-    private String Payment_id;
+    private String Payment_id = "";
 
     private String Doctor_ava_Date = "";
     private String selectedTimeSlot = "";
@@ -242,6 +242,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
             selectedTimeSlot = extras.getString("selectedTimeSlot");
 
             amount = extras.getInt("amount");
+            Log.w(TAG,"amount : "+amount);
             communicationtype = extras.getString("communicationtype");
             Log.w(TAG,"Bundle "+" doctorid : "+doctorid+" selectedTimeSlot : "+selectedTimeSlot+"communicationtype : "+communicationtype+" amount : "+amount);
         }
@@ -422,7 +423,16 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                         showErrorLoading("Please select communication type");
                     }else{
 
-                          startPayment();
+
+                          if(amount != 0){
+                              startPayment();
+                          }else {
+                               if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                                       petAppointmentCreateResponseCall();
+                                 }
+
+                          }
+
 
 
                        /* Intent intent = new Intent(BookAppointmentActivity.this, PetAppointment_Doctor_Date_Time_Activity.class);
@@ -932,16 +942,14 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                         Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
                         petId = response.body().getData().get_id();
 
-                        startPayment();
-                        /*Intent intent = new Intent(BookAppointmentActivity.this, PetAppointment_Doctor_Date_Time_Activity.class);
-                        intent.putExtra("petid",response.body().getData().get_id());
-                        intent.putExtra("doctorid",doctorid);
-                        intent.putExtra("allergies",edt_allergies.getText().toString());
-                        intent.putExtra("probleminfo",edt_comment.getText().toString());
-                        intent.putExtra("selectedAppointmentType",selectedAppointmentType);
-                        Log.w(TAG,"selectedAppointmentType : "+selectedAppointmentType);
-                        startActivity(intent);
-*/
+                        if(amount != 0){
+                            startPayment();
+                        }else {
+                            if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                                petAppointmentCreateResponseCall();
+                            }
+
+                        }
                     } else {
                         showErrorLoading(response.body().getMessage());
                     }

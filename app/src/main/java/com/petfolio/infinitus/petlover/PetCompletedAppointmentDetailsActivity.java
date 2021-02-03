@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -90,7 +91,11 @@ public class PetCompletedAppointmentDetailsActivity extends AppCompatActivity im
 
     TextView txt_address;
 
+
     String appointment_id;
+
+    LinearLayout ll_petlastvacinateddate;
+    TextView txt_petlastvaccinatedage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +150,10 @@ public class PetCompletedAppointmentDetailsActivity extends AppCompatActivity im
 
 
         txt_vaccinated =findViewById(R.id.txt_vaccinated);
+
+        ll_petlastvacinateddate = findViewById(R.id.ll_petlastvacinateddate);
+        ll_petlastvacinateddate.setVisibility(View.GONE);
+        txt_petlastvaccinatedage = findViewById(R.id.txt_petlastvaccinatedage);
 
 
         txt_order_date=findViewById(R.id.txt_order_date);
@@ -220,10 +229,13 @@ public class PetCompletedAppointmentDetailsActivity extends AppCompatActivity im
 
                         if(response.body().getData().getPet_id().isVaccinated()){
                             vaccinated= "Yes";
-                        }
+                            ll_petlastvacinateddate.setVisibility(View.VISIBLE);
+                            if(response.body().getData().getPet_id().getLast_vaccination_date() != null){
+                                txt_petlastvaccinatedage.setText(response.body().getData().getPet_id().getLast_vaccination_date());
+                            }
 
-                        else {
-
+                        }else {
+                            ll_petlastvacinateddate.setVisibility(View.GONE);
                             vaccinated="No" ;
                         }
 
@@ -264,6 +276,7 @@ public class PetCompletedAppointmentDetailsActivity extends AppCompatActivity im
     }
 
 
+    @SuppressLint("LongLogTag")
     private PetNewAppointmentDetailsRequest petNewAppointmentDetailsRequest() {
         PetNewAppointmentDetailsRequest petNewAppointmentDetailsRequest = new PetNewAppointmentDetailsRequest();
         petNewAppointmentDetailsRequest.setApppointment_id(appointment_id);

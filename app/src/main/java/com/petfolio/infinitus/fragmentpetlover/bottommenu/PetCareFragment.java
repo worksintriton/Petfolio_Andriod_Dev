@@ -7,8 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+
 
 import android.location.Location;
 
@@ -21,11 +20,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
+
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,12 +38,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
+
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.activity.location.PickUpLocationAllowActivity;
-import com.petfolio.infinitus.activity.location.PickUpLocationDenyActivity;
+
 import com.petfolio.infinitus.adapter.PetLoverDoctorFilterAdapter;
 import com.petfolio.infinitus.adapter.PetLoverNearByDoctorAdapter;
 
@@ -67,7 +62,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 import java.util.Timer;
 
 import butterknife.BindView;

@@ -132,18 +132,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             UserTypeValue = 1;
         }
         txt_usertypes.setText(UserType);
-        if(verified != null && verified.equalsIgnoreCase("verified")){
-            btn_verify_email.setText("Verified Email");
-            user_email_verification = true;
-            edt_email.setEnabled(false);
-            btn_verify_email.setEnabled(false);
 
-        }
-        else{
-            user_email_verification = false;
-            edt_email.setEnabled(true);
-            btn_verify_email.setEnabled(true);
-        }
 
         Log.w(TAG,"firstname : "+firstname+" lastname : "+lastname+" useremail : "+useremail+" user_email_verification : "+user_email_verification);
         if(firstname != null){

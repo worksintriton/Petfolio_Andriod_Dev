@@ -139,7 +139,7 @@ public interface RestApiInterface {
     @POST("userdetails/create")
     Call<SignupResponse> signupResponseCall(@Header("Content-Type") String type, @Body SignupRequest signupRequest);
 
-    /*Signup create*/
+    /*Email OTP */
     @POST("userdetails/send/emailotp")
     Call<EmailOTPResponse> emailOTPResponseCall(@Header("Content-Type") String type, @Body EmailOTPRequest emailOTPRequest);
 

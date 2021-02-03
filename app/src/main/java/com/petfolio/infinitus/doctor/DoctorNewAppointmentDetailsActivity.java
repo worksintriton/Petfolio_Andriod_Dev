@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,7 +48,7 @@ import retrofit2.Response;
 
 public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
 
-    private static final String TAG = "DrNewAppDetailsAct";
+    private static final String TAG = "DoctorNewAppointmentDetailsActivity";
 
 
     AVLoadingIndicatorView avi_indicator;
@@ -116,6 +117,10 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
     String userid, allergies,problem_info,pet_name,pet_type,doctorid;
 
     private Dialog dialog;
+
+    LinearLayout ll_petlastvacinateddate;
+    TextView txt_petlastvaccinatedage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -169,6 +174,10 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
 
         txt_vaccinated =findViewById(R.id.txt_vaccinated);
 
+        ll_petlastvacinateddate = findViewById(R.id.ll_petlastvacinateddate);
+        ll_petlastvacinateddate.setVisibility(View.GONE);
+        txt_petlastvaccinatedage = findViewById(R.id.txt_petlastvaccinatedage);
+
 
         txt_order_date=findViewById(R.id.txt_order_date);
 
@@ -199,6 +208,7 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("LongLogTag")
     private void petNewAppointmentResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -249,10 +259,13 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
 
                         if(response.body().getData().getPet_id().isVaccinated()){
                             vaccinated= "Yes";
-                        }
+                            ll_petlastvacinateddate.setVisibility(View.VISIBLE);
+                            if(response.body().getData().getPet_id().getLast_vaccination_date() != null){
+                                txt_petlastvaccinatedage.setText(response.body().getData().getPet_id().getLast_vaccination_date());
+                            }
 
-                        else {
-
+                        }else {
+                            ll_petlastvacinateddate.setVisibility(View.GONE);
                             vaccinated="No" ;
                         }
 
@@ -292,6 +305,7 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
     }
 
 
+    @SuppressLint("LongLogTag")
     private PetNewAppointmentDetailsRequest petNewAppointmentDetailsRequest() {
 
         PetNewAppointmentDetailsRequest petNewAppointmentDetailsRequest = new PetNewAppointmentDetailsRequest();
@@ -410,6 +424,7 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
         });
 
         btn_accept.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(DoctorNewAppointmentDetailsActivity.this, PrescriptionActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -427,6 +442,7 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
         });
 
     img_videocall.setOnClickListener(new View.OnClickListener() {
+         @SuppressLint("LongLogTag")
          @Override
          public void onClick(View v) {
 
@@ -505,6 +521,7 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("LongLogTag")
     private void doctorStartAppointmentResponseCall(String id) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -513,6 +530,7 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
         Log.w(TAG,"startAppointmentResponseCall url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<AppointmentsUpdateResponse>() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onResponse(@NonNull Call<AppointmentsUpdateResponse> call, @NonNull Response<AppointmentsUpdateResponse> response) {
 
@@ -593,6 +611,7 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
 
             }
 
+            @SuppressLint("LongLogTag")
             @Override
             public void onFailure(@NonNull Call<AppoinmentCancelledResponse> call, @NonNull Throwable t) {
 
@@ -603,6 +622,7 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("LongLogTag")
     private AppoinmentCancelledRequest appoinmentCancelledRequest(String id) {
 
         /*

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -93,6 +94,9 @@ public class DoctorMissedAppointmentDetailsActivity extends AppCompatActivity {
 
     String start_appointment_status;
 
+    LinearLayout ll_petlastvacinateddate;
+    TextView txt_petlastvaccinatedage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,6 +149,9 @@ public class DoctorMissedAppointmentDetailsActivity extends AppCompatActivity {
 
 
         txt_vaccinated =findViewById(R.id.txt_vaccinated);
+        ll_petlastvacinateddate = findViewById(R.id.ll_petlastvacinateddate);
+        ll_petlastvacinateddate.setVisibility(View.GONE);
+        txt_petlastvaccinatedage = findViewById(R.id.txt_petlastvaccinatedage);
 
 
         txt_order_date=findViewById(R.id.txt_order_date);
@@ -218,10 +225,13 @@ public class DoctorMissedAppointmentDetailsActivity extends AppCompatActivity {
 
                         if(response.body().getData().getPet_id().isVaccinated()){
                             vaccinated= "Yes";
-                        }
+                            ll_petlastvacinateddate.setVisibility(View.VISIBLE);
+                            if(response.body().getData().getPet_id().getLast_vaccination_date() != null){
+                                txt_petlastvaccinatedage.setText(response.body().getData().getPet_id().getLast_vaccination_date());
+                            }
 
-                        else {
-
+                        }else {
+                            ll_petlastvacinateddate.setVisibility(View.GONE);
                             vaccinated="No" ;
                         }
 
