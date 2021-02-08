@@ -2,12 +2,14 @@ package com.petfolio.infinitus.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.responsepojo.DoctorMissedAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.SPAppointmentResponse;
+import com.petfolio.infinitus.serviceprovider.SPAppointmentDetailsActivity;
 
 import java.util.List;
 
@@ -83,9 +86,20 @@ public class SPMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerVi
                     .into(holder.img_pet_imge);
 
         }
+        holder.ll_new.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, SPAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("appointment_id",missedAppointmentResponseList.get(position).get_id());
+                i.putExtra("fromactivity",TAG);
+                context.startActivity(i);
+
+            }
+        });
 
 
-       }
+
+    }
 
 
     @Override
@@ -103,6 +117,8 @@ public class SPMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerVi
         public TextView txt_petname,txt_pettype,txt_type,txt_service_cost,txt_missed_date,txt_lbl_type;
         public ImageView img_pet_imge;
         public Button btn_cancel,btn_complete;
+        public LinearLayout ll_new;
+
 
         public ViewHolderOne(View itemView) {
             super(itemView);
@@ -115,6 +131,8 @@ public class SPMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerVi
             txt_missed_date = itemView.findViewById(R.id.txt_missed_date);
             btn_cancel = itemView.findViewById(R.id.btn_cancel);
             btn_complete = itemView.findViewById(R.id.btn_complete);
+            ll_new = itemView.findViewById(R.id.ll_new);
+
 
 
 

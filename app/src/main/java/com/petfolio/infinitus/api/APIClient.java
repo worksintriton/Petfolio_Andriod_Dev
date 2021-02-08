@@ -19,10 +19,14 @@ public class APIClient {
     private static OkHttpClient client;
 
 
-   public static String BASE_LIVE_URL = "http://52.25.163.13:3000/api/";
-    public static String IMAGE_BASE_URL = "http://52.25.163.13:3000/";
-   // public static String BASE_DEV_URL = "http://54.212.108.156:3000/api/";
-   //public static String IMAGE_BASE_URL = "http://54.212.108.156:3000/";
+    /*live*/
+ /* public static String BASE_URL = "http://52.25.163.13:3000/api/";
+  public static String IMAGE_BASE_URL = "http://52.25.163.13:3000/";
+*/
+    /*dev*/
+
+    public static String BASE_URL = "http://54.212.108.156:3000/api/";
+   public static String IMAGE_BASE_URL = "http://54.212.108.156:3000/";
 
 
 
@@ -37,7 +41,7 @@ public class APIClient {
                 .cache(null)
                 .build();
                 retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_LIVE_URL)
+                .baseUrl(BASE_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)

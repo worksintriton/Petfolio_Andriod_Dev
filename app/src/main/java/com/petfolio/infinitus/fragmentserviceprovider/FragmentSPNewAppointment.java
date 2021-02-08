@@ -371,7 +371,6 @@ public class FragmentSPNewAppointment extends Fragment implements OnAppointmentC
 
 
     }
-
     private void appoinmentCompleteResponseCall(String id) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();

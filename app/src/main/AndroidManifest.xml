@@ -65,6 +65,12 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
 
+        <activity
+            android:name=".petlover.PetSPNewAppointmentDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -411,6 +417,12 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".serviceprovider.SPFiltersActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".serviceprovider.SPAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />

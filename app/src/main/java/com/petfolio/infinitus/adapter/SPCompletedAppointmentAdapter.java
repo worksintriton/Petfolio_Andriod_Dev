@@ -2,11 +2,13 @@ package com.petfolio.infinitus.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.responsepojo.SPAppointmentResponse;
+import com.petfolio.infinitus.serviceprovider.SPAppointmentDetailsActivity;
 
 import java.util.List;
 
@@ -79,6 +82,16 @@ public class SPCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycle
 
         }
 
+        holder.ll_new.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, SPAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("appointment_id",completedAppointmentResponseList.get(position).get_id());
+                i.putExtra("fromactivity",TAG);
+                context.startActivity(i);
+
+            }
+        });
 
 
 
@@ -93,7 +106,9 @@ public class SPCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycle
 
 
 
-        }
+
+
+    }
 
 
     @Override
@@ -110,7 +125,8 @@ public class SPCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycle
     static class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_petname,txt_pettype,txt_type,txt_service_cost,txt_completed_date,txt_lbl_type;
         public ImageView img_pet_imge;
-        public Button btn_cancel,btn_complete;
+        public Button btn_cancel,btn_complete,btn_prescriptiondetails;
+        public LinearLayout ll_new;
 
         public ViewHolderOne(View itemView) {
             super(itemView);
@@ -123,6 +139,10 @@ public class SPCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycle
             txt_completed_date = itemView.findViewById(R.id.txt_completed_date);
             btn_cancel = itemView.findViewById(R.id.btn_cancel);
             btn_complete = itemView.findViewById(R.id.btn_complete);
+            btn_prescriptiondetails = itemView.findViewById(R.id.btn_prescriptiondetails);
+            btn_prescriptiondetails.setVisibility(View.GONE);
+            ll_new = itemView.findViewById(R.id.ll_new);
+
 
 
 

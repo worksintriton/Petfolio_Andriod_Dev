@@ -79,6 +79,20 @@ public class NotificationGetlistResponse {
         private int __v;
 
 
+        public DataBean(String _id, String user_id, String notify_title, String notify_descri, String notify_img, String notify_time, String date_and_time) {
+            this._id = _id;
+            this.user_id = user_id;
+            this.notify_title = notify_title;
+            this.notify_descri = notify_descri;
+            this.notify_img = notify_img;
+            this.notify_time = notify_time;
+            this.date_and_time = date_and_time;
+        }
+
+
+
+
+
         public String get_id() {
             return _id;
         }

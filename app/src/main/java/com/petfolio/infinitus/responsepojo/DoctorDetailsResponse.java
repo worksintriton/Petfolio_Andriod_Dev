@@ -94,6 +94,16 @@ public class DoctorDetailsResponse {
         private String date_and_time;
         private String descri;
         private int star_count;
+        private int doctor_exp;
+
+        public int getDoctor_exp() {
+            return doctor_exp;
+        }
+
+        public void setDoctor_exp(int doctor_exp) {
+            this.doctor_exp = doctor_exp;
+        }
+
         private String distance;
 
         public String getDistance() {

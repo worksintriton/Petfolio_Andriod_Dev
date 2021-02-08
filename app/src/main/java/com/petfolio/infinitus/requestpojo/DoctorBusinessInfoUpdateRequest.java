@@ -34,6 +34,15 @@ public class DoctorBusinessInfoUpdateRequest {
     private String clinic_loc;
     private double clinic_lat;
     private double clinic_long;
+    private int doctor_exp;
+
+    public int getDoctor_exp() {
+        return doctor_exp;
+    }
+
+    public void setDoctor_exp(int doctor_exp) {
+        this.doctor_exp = doctor_exp;
+    }
 
 
     public boolean isProfile_status() {

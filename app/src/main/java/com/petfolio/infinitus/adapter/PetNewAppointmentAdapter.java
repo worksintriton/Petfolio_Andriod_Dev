@@ -21,7 +21,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
+import com.petfolio.infinitus.petlover.EditYourPetProfileInfoActivity;
 import com.petfolio.infinitus.petlover.PetNewAppointmentDetailsActivity;
+import com.petfolio.infinitus.petlover.PetSPNewAppointmentDetailsActivity;
 import com.petfolio.infinitus.petlover.VideoCallPetLoverActivity;
 import com.petfolio.infinitus.responsepojo.PetAppointmentResponse;
 
@@ -75,16 +77,30 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
         communicationtype = newAppointmentResponseList.get(position).getCommunication_type();
        Log.w(TAG,"Communicationtype : "+ newAppointmentResponseList.get(position).getCommunication_type());
         holder.txt_petname.setText(newAppointmentResponseList.get(position).getPet_name());
+        if(communicationtype != null){
+            if(communicationtype.equalsIgnoreCase("Online")){
+                holder.img_videocall.setVisibility(View.VISIBLE);
+            }else{
+                holder.img_videocall.setVisibility(View.GONE);
+            }
+        }
 
         if(newAppointmentResponseList.get(position).getAppointment_for() != null && newAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("Doctor") ){
             holder.txt_type.setText(newAppointmentResponseList.get(position).getAppointment_for());
             holder.txt_clinicname.setText(newAppointmentResponseList.get(position).getClinic_name());
-
+            holder.txt_lbl_doctorname.setText("Doctor Name");
+            holder.txt_doctorname.setText(newAppointmentResponseList.get(position).getDoctor_name());
 
         }
         else if(newAppointmentResponseList.get(position).getAppointment_for() != null && newAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("SP") ){
             holder.txt_type.setText(newAppointmentResponseList.get(position).getAppointment_for());
             holder.txt_clinicname.setText(newAppointmentResponseList.get(position).getService_provider_name());
+            holder.img_videocall.setVisibility(View.GONE);
+            holder.img_emergency_appointment.setVisibility(View.GONE);
+            holder.txt_lbl_doctorname.setText("Service Name");
+            holder.txt_doctorname.setText(newAppointmentResponseList.get(position).getService_name());
+
+
 
         }
 
@@ -97,13 +113,7 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
 
         }
 
-        if(communicationtype != null){
-             if(communicationtype.equalsIgnoreCase("Online")){
-                 holder.img_videocall.setVisibility(View.VISIBLE);
-             }else{
-                 holder.img_videocall.setVisibility(View.GONE);
-             }
-        }
+
 
 
         if(newAppointmentResponseList.get(position).getAppointment_type() != null && newAppointmentResponseList.get(position).getAppointment_type().equalsIgnoreCase("Emergency")){
@@ -152,31 +162,23 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
             }
         });
 
-        if(!newAppointmentResponseList.get(position).getClinic_name().equals("")){
 
-            holder.ll_new.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
-                    Intent intent = new Intent(context, PetNewAppointmentDetailsActivity.class);
-
-                    //Create the bundle
-                    Bundle bundle = new Bundle();
-
-                    Log.w("appointment_id",newAppointmentResponseList.get(position).get_id());
-
-                    //Add your data from getFactualResults method to bundle
-                    bundle.putString("appointment_id",newAppointmentResponseList.get(position).get_id());
-
-                    //Add the bundle to the intent
-                    intent.putExtras(bundle);
-
-                    context.startActivity(intent);
+        holder.ll_new.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(newAppointmentResponseList.get(position).getAppointment_for() != null && newAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("Doctor") ) {
+                    Intent i = new Intent(context, PetNewAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("appointment_id",newAppointmentResponseList.get(position).get_id());
+                    context.startActivity(i);
+                }else if(newAppointmentResponseList.get(position).getAppointment_for() != null && newAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("SP") ) {
+                    Intent i = new Intent(context, PetSPNewAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("appointment_id",newAppointmentResponseList.get(position).get_id());
+                    i.putExtra("fromactivity",TAG);
+                    context.startActivity(i);
                 }
-            });
-
-
-        }
+            }
+        });
 
 
     }
@@ -193,7 +195,7 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
     }
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_clinicname,txt_petname,txt_type,txt_service_cost,txt_bookedon;
+        public TextView txt_clinicname,txt_petname,txt_type,txt_service_cost,txt_bookedon,txt_lbl_doctorname,txt_doctorname;
         public ImageView img_clinic_imge,img_emergency_appointment,img_videocall;
         public Button btn_cancel;
         LinearLayout ll_new;
@@ -212,6 +214,8 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
             img_emergency_appointment.setVisibility(View.GONE);
             img_videocall = itemView.findViewById(R.id.img_videocall);
             ll_new = itemView.findViewById(R.id.ll_new);
+            txt_lbl_doctorname = itemView.findViewById(R.id.txt_lbl_doctorname);
+            txt_doctorname = itemView.findViewById(R.id.txt_doctorname);
 
 
         }

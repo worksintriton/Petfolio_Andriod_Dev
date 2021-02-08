@@ -1,15 +1,13 @@
 package com.petfolio.infinitus.activity;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
-import android.content.Intent;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,18 +22,17 @@ import com.petfolio.infinitus.adapter.NotificationDashboardAdapter;
 
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.requestpojo.CreateHolidayRequest;
 import com.petfolio.infinitus.requestpojo.NotificationGetlistRequest;
-import com.petfolio.infinitus.responsepojo.CreateHolidayResponse;
 import com.petfolio.infinitus.responsepojo.NotificationGetlistResponse;
-import com.petfolio.infinitus.serviceprovider.SP_Holiday_Activity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -65,7 +62,7 @@ public class NotificationActivity extends AppCompatActivity {
     ImageView img_back;
 
 
-    NotificationDashboardAdapter notificationDashboardAdapter;
+    //NotificationDashboardAdapter notificationDashboardAdapter;
     private SharedPreferences preferences;
 
     NotificationGetlistResponse notificationGetlistResponse;
@@ -76,6 +73,9 @@ public class NotificationActivity extends AppCompatActivity {
     SessionManager session;
     String type = "",name = "",userid = "";
     private List<NotificationGetlistResponse.DataBean> notificationGetlistResponseList;
+
+    HashMap<String ,List<NotificationGetlistResponse.DataBean>> stringListHashMap = new LinkedHashMap<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,11 +134,16 @@ public class NotificationActivity extends AppCompatActivity {
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
+                        List<NotificationGetlistResponse.DataBean> expandableListTitle = new ArrayList<>();
+
                         if(response.body().getData() != null && response.body().getData().size()>0){
                             notificationGetlistResponseList = response.body().getData();
                             tvNorecords.setVisibility(View.GONE);
                             rvnotifiaction.setVisibility(View.VISIBLE);
-                           setView();
+                            setView();
+
+
+
                         }else{
                             rvnotifiaction.setVisibility(View.GONE);
                             tvNorecords.setVisibility(View.VISIBLE);
@@ -176,25 +181,19 @@ public class NotificationActivity extends AppCompatActivity {
 
 
 
-    private void setView() {
-        rvnotifiaction.setLayoutManager(new LinearLayoutManager(this));
-        rvnotifiaction.setItemAnimator(new DefaultItemAnimator());
-        notificationDashboardAdapter = new NotificationDashboardAdapter(getApplicationContext(), notificationGetlistResponseList);
-        rvnotifiaction.setAdapter(notificationDashboardAdapter);
-
-
-
-
-
-
-
-
-    }
 
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    private void setView() {
+        rvnotifiaction.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        rvnotifiaction.setItemAnimator(new DefaultItemAnimator());
+        NotificationDashboardAdapter notificationDashboardAdapter = new NotificationDashboardAdapter(getApplicationContext(), notificationGetlistResponseList);
+        rvnotifiaction.setAdapter(notificationDashboardAdapter);
+
     }
 }

@@ -6,6 +6,7 @@ import com.petfolio.infinitus.requestpojo.AppoinmentCancelledRequest;
 import com.petfolio.infinitus.requestpojo.AppoinmentCloseRequest;
 import com.petfolio.infinitus.requestpojo.AppoinmentCompleteRequest;
 import com.petfolio.infinitus.requestpojo.AppointmentCheckRequest;
+import com.petfolio.infinitus.requestpojo.AppointmentDetailsRequest;
 import com.petfolio.infinitus.requestpojo.BreedTypeRequest;
 import com.petfolio.infinitus.requestpojo.CreateHolidayRequest;
 import com.petfolio.infinitus.requestpojo.DocBusInfoUploadRequest;
@@ -107,6 +108,7 @@ import com.petfolio.infinitus.responsepojo.PetTypeListResponse;
 import com.petfolio.infinitus.responsepojo.PrescriptionCreateResponse;
 import com.petfolio.infinitus.responsepojo.ProfileUpdateResponse;
 import com.petfolio.infinitus.responsepojo.ResendOTPResponse;
+import com.petfolio.infinitus.responsepojo.SPAppointmentDetailsResponse;
 import com.petfolio.infinitus.responsepojo.SPAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.SPAvailableTimeResponse;
 import com.petfolio.infinitus.responsepojo.SPCheckStatusResponse;
@@ -485,6 +487,10 @@ public interface RestApiInterface {
     /*Pet New Appointment Details*/
     @POST("appointments/mobile/fetch_appointment_id")
     Call<PetNewAppointmentDetailsResponse> petNewAppointDetailResponseCall(@Header("Content-Type") String type, @Body PetNewAppointmentDetailsRequest petNewAppointmentDetailsRequest);
+
+   /* SP Appointment Details*/
+    @POST("sp_appointments/mobile/fetch_appointment_id")
+    Call<SPAppointmentDetailsResponse> spAppointmentDetailsResponse(@Header("Content-Type") String type, @Body AppointmentDetailsRequest appointmentDetailsRequest);
 
 
     /*notifications list*/

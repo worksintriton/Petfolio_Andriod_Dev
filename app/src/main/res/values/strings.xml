@@ -198,7 +198,7 @@
     <string name="pet_details">Pet Details</string>
     <string name="pet_name_details">Pet Name :</string>
     <string name="pet_type_details">Pet Type :</string>
-    <string name="breed">breed :</string>
+    <string name="breed">Breed :</string>
     <string name="gender">Gender : </string>
     <string name="colour">Colour : </string>
     <string name="weight">Weight : </string>

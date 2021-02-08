@@ -2,6 +2,7 @@ package com.petfolio.infinitus.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,10 @@ import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
 import com.petfolio.infinitus.interfaces.OnAppointmentComplete;
+import com.petfolio.infinitus.petlover.PetNewAppointmentDetailsActivity;
+import com.petfolio.infinitus.petlover.PetSPNewAppointmentDetailsActivity;
 import com.petfolio.infinitus.responsepojo.SPAppointmentResponse;
+import com.petfolio.infinitus.serviceprovider.SPAppointmentDetailsActivity;
 
 import java.util.List;
 
@@ -122,6 +126,18 @@ public class SPNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.
             }
         });
 
+        holder.ll_new.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    Intent i = new Intent(context, SPAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("appointment_id",newAppointmentResponseList.get(position).get_id());
+                    i.putExtra("fromactivity",TAG);
+                    context.startActivity(i);
+
+            }
+        });
+
+
 
 
     }
@@ -141,7 +157,7 @@ public class SPNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_petname,txt_pettype,txt_type,txt_service_cost,txt_bookedon,txt_lbl_type;
-        public ImageView img_pet_imge,img_emergency_appointment;
+        public ImageView img_pet_imge,img_emergency_appointment,img_videocall;
         public Button btn_cancel,btn_complete;
         public LinearLayout ll_new;
 
@@ -160,7 +176,9 @@ public class SPNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.
             btn_complete = itemView.findViewById(R.id.btn_complete);
             ll_new = itemView.findViewById(R.id.ll_new);
             img_emergency_appointment = itemView.findViewById(R.id.img_emergency_appointment);
+            img_videocall = itemView.findViewById(R.id.img_videocall);
             img_emergency_appointment.setVisibility(View.GONE);
+            img_videocall.setVisibility(View.GONE);
 
 
 

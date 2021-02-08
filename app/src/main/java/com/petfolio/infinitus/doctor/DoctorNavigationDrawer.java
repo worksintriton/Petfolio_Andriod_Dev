@@ -31,6 +31,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
+import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.petlover.PetLoverEditProfileActivity;
 import com.petfolio.infinitus.petlover.PetLoverProfileScreenActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
@@ -215,6 +216,19 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
         setSupportActionBar(toolbar);
         drawerImg = toolbar.findViewById(R.id.img_menu);
        // header_title = (TextView) toolbar.findViewById(R.id.header_title);
+
+        ImageView img_notification = toolbar.findViewById(R.id.img_notification);
+        ImageView img_cart = toolbar.findViewById(R.id.img_cart);
+        ImageView img_profile = toolbar.findViewById(R.id.img_profile);
+
+        img_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+
+            }
+        });
+
 
 
 

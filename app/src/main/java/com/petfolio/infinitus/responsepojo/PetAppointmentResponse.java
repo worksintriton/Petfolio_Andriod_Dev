@@ -76,6 +76,7 @@ public class PetAppointmentResponse {
          * completed_at :
          * status : Incomplete
          * communication_type
+         * doctor_name
          */
 
         private String _id;
@@ -103,6 +104,15 @@ public class PetAppointmentResponse {
         private String communication_type;
         private String start_appointment_status;
         private String appoint_patient_st;
+        private String doctor_name;
+
+        public String getDoctor_name() {
+            return doctor_name;
+        }
+
+        public void setDoctor_name(String doctor_name) {
+            this.doctor_name = doctor_name;
+        }
 
         public String getAppoint_patient_st() {
             return appoint_patient_st;

@@ -387,7 +387,6 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
             }
         });
     }
-
     public void drawerMethod() {
 
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -398,7 +397,6 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
         }
 
     }
-
     public void setContentView(int layoutId) {
 
         Log.e("BaseOncreate", "setContentView");

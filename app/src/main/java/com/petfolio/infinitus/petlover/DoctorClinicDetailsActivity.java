@@ -279,8 +279,11 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
                         communicationtype =  response.body().getData().getCommunication_type();
 
                         ClinicLocationname = response.body().getData().getClinic_loc();
+                        int Doctor_exp = response.body().getData().getDoctor_exp();
 
-                        txt_dr_experience.setText("Years");
+                        if(Doctor_exp != 0) {
+                            txt_dr_experience.setText(Doctor_exp+" Years");
+                        }
 
 
                        if(response.body().getData().getAmount() != 0){

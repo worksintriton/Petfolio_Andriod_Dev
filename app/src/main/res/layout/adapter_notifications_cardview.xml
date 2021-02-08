@@ -31,15 +31,17 @@
                 <ImageView
                     android:layout_margin="10dp"
                     android:id="@+id/img_notify_imge"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:contentDescription="@string/image"
                     android:scaleType="fitXY"
                     app:srcCompat="@drawable/image_thumbnail"
                     />
-
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
                     <TextView
-                        android:layout_marginStart="20dp"
                         android:id="@+id/txt_message"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -53,6 +55,20 @@
                         android:ellipsize="end"
 
                         />
+                    <TextView
+                        android:id="@+id/txt_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:text="Date"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="12sp"
+                        android:maxLines="1"/>
+                </LinearLayout>
+
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -69,18 +85,8 @@
                 </RelativeLayout>
                 </LinearLayout>
 
-            <TextView
-                android:id="@+id/txt_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
-                android:fontFamily="@font/futuramediumbt"
-                android:gravity="end"
-                android:text="Date"
-                android:textColor="@color/dark_gray"
-                android:textSize="12sp" />
+
+
 
 
 

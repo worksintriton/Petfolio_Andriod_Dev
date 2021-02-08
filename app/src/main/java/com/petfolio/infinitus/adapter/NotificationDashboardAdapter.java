@@ -63,7 +63,7 @@ public class NotificationDashboardAdapter extends  RecyclerView.Adapter<Recycler
 
     }
 
-    private void initLayoutOne(ViewHolderOne holder, final int position) {
+  private void initLayoutOne(ViewHolderOne holder, final int position) {
         currentItem = notificationGetlistResponseList.get(position);
         holder.txt_message.setText(currentItem.getNotify_title());
         holder.txt_date.setText(currentItem.getDate_and_time());
@@ -103,15 +103,7 @@ public class NotificationDashboardAdapter extends  RecyclerView.Adapter<Recycler
 
    }
 
-
-
-
-
-
-
-
-
-    @Override
+   @Override
     public int getItemCount() {
         
         return notificationGetlistResponseList.size();
@@ -122,7 +114,6 @@ public class NotificationDashboardAdapter extends  RecyclerView.Adapter<Recycler
     public int getItemViewType(int position) {
         return position;
     }
-
     class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_message,txt_date;
         public LinearLayout ll_root;
