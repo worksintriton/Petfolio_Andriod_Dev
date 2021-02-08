@@ -366,6 +366,8 @@
     <string name="video">Video</string>
     <string name="status">Status</string>
     <string name="view_prescription">view prescription</string>
+    <string name="consultation_fees">Consultation Fees</string>
+    <string name="notification">Notification</string>
 
 
 </resources>

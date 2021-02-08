@@ -104,13 +104,27 @@
 
             <TextView
                 android:id="@+id/txt_drname"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/doctor_name"
                 android:textColor="@color/new_txt_color"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+            <TextView
+                android:id="@+id/txt_dr_eduname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/futuramediumbt"
+                android:text="@string/education"
+                android:textColor="@color/new_txt_color"
+                android:textSize="14sp"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cdvw"
@@ -263,14 +277,53 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/futuramediumbt"
+                android:text="@string/experience"
+                android:textColor="@color/new_txt_color"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txt_dr_experience"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/futuramediumbt"
+                android:text="@string/experience"
+                android:textColor="@color/new_sec_txt_color"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/futuramediumbt"
+                android:text="@string/consultation_fees"
+                android:textColor="@color/new_txt_color"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txt_dr_consultationfees"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/futuramediumbt"
+                android:text="@string/consultation_fees"
+                android:textColor="@color/new_sec_txt_color"
+                android:textSize="14sp" />
+
+            <TextView
                 android:id="@+id/txt_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/desc"
-                android:textColor="@color/new_txt_color"
-                android:textSize="16sp" />
+                android:textColor="@color/new_sec_txt_color"
+                android:textSize="16sp"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/txt_dr_desc"
@@ -280,7 +333,10 @@
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/desc_dummy"
                 android:textColor="@color/new_txt_color"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:visibility="gone"/>
+
+
 
 
         </LinearLayout>

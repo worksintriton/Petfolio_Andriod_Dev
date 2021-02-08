@@ -382,8 +382,10 @@ public class PetHomeFragment extends Fragment implements Serializable,
                             Log.w(TAG, "doctorDetailsResponseList Size" + doctorDetailsResponseList.size());
                             if (doctorDetailsResponseList != null && doctorDetailsResponseList.size()>0) {
                                 rvdoctors.setVisibility(View.VISIBLE);
+                                txt_doctor_norecord.setVisibility(View.GONE);
                                 txt_doctors.setVisibility(View.VISIBLE);
                                 setViewDoctors(doctorDetailsResponseList);
+
 
                             } else {
                                 rvdoctors.setVisibility(View.GONE);

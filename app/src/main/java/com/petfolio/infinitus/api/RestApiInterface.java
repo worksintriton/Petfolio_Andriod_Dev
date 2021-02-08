@@ -31,6 +31,7 @@ import com.petfolio.infinitus.requestpojo.LocationListAddressRequest;
 import com.petfolio.infinitus.requestpojo.LocationStatusChangeRequest;
 import com.petfolio.infinitus.requestpojo.LocationUpdateRequest;
 import com.petfolio.infinitus.requestpojo.LoginRequest;
+import com.petfolio.infinitus.requestpojo.NotificationGetlistRequest;
 import com.petfolio.infinitus.requestpojo.PetAddImageRequest;
 import com.petfolio.infinitus.requestpojo.PetAppointmentCreateRequest;
 import com.petfolio.infinitus.requestpojo.PetDeleteRequest;
@@ -91,6 +92,7 @@ import com.petfolio.infinitus.responsepojo.LocationListAddressResponse;
 import com.petfolio.infinitus.responsepojo.LocationStatusChangeResponse;
 import com.petfolio.infinitus.responsepojo.LocationUpdateResponse;
 import com.petfolio.infinitus.responsepojo.LoginResponse;
+import com.petfolio.infinitus.responsepojo.NotificationGetlistResponse;
 import com.petfolio.infinitus.responsepojo.PetAddImageResponse;
 import com.petfolio.infinitus.responsepojo.PetAppointmentCreateResponse;
 import com.petfolio.infinitus.responsepojo.PetAppointmentResponse;
@@ -483,5 +485,10 @@ public interface RestApiInterface {
     /*Pet New Appointment Details*/
     @POST("appointments/mobile/fetch_appointment_id")
     Call<PetNewAppointmentDetailsResponse> petNewAppointDetailResponseCall(@Header("Content-Type") String type, @Body PetNewAppointmentDetailsRequest petNewAppointmentDetailsRequest);
+
+
+    /*notifications list*/
+    @POST("notification/mobile/getlist_id")
+    Call<NotificationGetlistResponse> notificationGetlistResponseCall(@Header("Content-Type") String type, @Body NotificationGetlistRequest notificationGetlistRequest);
 
 }

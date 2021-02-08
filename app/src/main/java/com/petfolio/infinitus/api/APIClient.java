@@ -20,9 +20,11 @@ public class APIClient {
 
 
    public static String BASE_LIVE_URL = "http://52.25.163.13:3000/api/";
-    public static String BASE_DEV_URL = "http://54.212.108.156:3000/api/";
     public static String IMAGE_BASE_URL = "http://52.25.163.13:3000/";
-    //public static String IMAGE_BASE_URL = "http://54.212.108.156:3000/";
+   // public static String BASE_DEV_URL = "http://54.212.108.156:3000/api/";
+   //public static String IMAGE_BASE_URL = "http://54.212.108.156:3000/";
+
+
 
     public static List<PetLoverDashboardResponse.DataBean.SOSBean> sosList;
 
@@ -35,7 +37,7 @@ public class APIClient {
                 .cache(null)
                 .build();
                 retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_DEV_URL)
+                .baseUrl(BASE_LIVE_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)

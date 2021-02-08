@@ -316,11 +316,21 @@ public class DocBusInfoUploadRequest {
         private String company;
         private String from;
         private String to;
+        private int yearsofexperience;
 
-        public ExperienceDetailsBean(String company, String from, String to) {
+        public int getYearsofexperience() {
+            return yearsofexperience;
+        }
+
+        public void setYearsofexperience(int yearsofexperience) {
+            this.yearsofexperience = yearsofexperience;
+        }
+
+        public ExperienceDetailsBean(String company, String from, String to, int yearsofexperience) {
             this.company = company;
             this.from = from;
             this.to = to;
+            this.yearsofexperience = yearsofexperience;
         }
 
         public String getCompany() {

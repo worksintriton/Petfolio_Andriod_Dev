@@ -263,12 +263,21 @@ public class DoctorBusinessInfoUpdateRequest {
          * company : triton it slotuions
          * from : 22-10-2020
          * to : 22-10-2021
+         * yearsofexperience
          */
 
         private String company;
         private String from;
         private String to;
+        private int yearsofexperience;
 
+        public int getYearsofexperience() {
+            return yearsofexperience;
+        }
+
+        public void setYearsofexperience(int yearsofexperience) {
+            this.yearsofexperience = yearsofexperience;
+        }
 
         public String getCompany() {
             return company;

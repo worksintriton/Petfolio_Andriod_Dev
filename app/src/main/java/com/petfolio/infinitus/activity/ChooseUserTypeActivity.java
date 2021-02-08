@@ -170,7 +170,10 @@ public class ChooseUserTypeActivity extends AppCompatActivity implements UserTyp
                 onBackPressed();
                 break;
             case R.id.btn_change:
-                gotoSignup();
+                /*if(UserTypeValue ==1 || UserTypeValue == 4){
+                    gotoSignup();
+                }*/
+               gotoSignup();
                 break;
         }
     }

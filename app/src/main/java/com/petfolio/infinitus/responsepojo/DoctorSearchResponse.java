@@ -66,6 +66,7 @@ public class DoctorSearchResponse {
          * star_count : 2.5
          * review_count : 234
          * communication_type : Online
+         *
          */
 
         private String _id;
@@ -78,6 +79,16 @@ public class DoctorSearchResponse {
         private String distance;
         private double star_count;
         private int review_count;
+        private int amount;
+
+        public int getAmount() {
+            return amount;
+        }
+
+        public void setAmount(int amount) {
+            this.amount = amount;
+        }
+
         private String communication_type;
         private List<SpecializationBean> specialization;
 

@@ -419,12 +419,21 @@ public class DoctorDetailsByUserIdResponse {
              * company : MBBS
              * from : 2014
              * to : 2018
+             * yearsofexperience
              */
 
             private String company;
             private String from;
             private String to;
+            private int yearsofexperience;
 
+            public int getYearsofexperience() {
+                return yearsofexperience;
+            }
+
+            public void setYearsofexperience(int yearsofexperience) {
+                this.yearsofexperience = yearsofexperience;
+            }
 
             public String getCompany() {
                 return company;

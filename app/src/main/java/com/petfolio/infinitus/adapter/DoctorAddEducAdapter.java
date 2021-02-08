@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.requestpojo.DocBusInfoUploadRequest;
+import com.petfolio.infinitus.requestpojo.DoctorBusinessInfoUpdateRequest;
 import com.petfolio.infinitus.responsepojo.DoctorDetailsByUserIdResponse;
 
 import java.util.List;
@@ -21,10 +22,12 @@ public class DoctorAddEducAdapter extends RecyclerView.Adapter<DoctorAddEducAdap
     Context context;
     List<DoctorDetailsByUserIdResponse.DataBean.EducationDetailsBean> education_detailsList;
     View view;
+    private List<DoctorBusinessInfoUpdateRequest.EducationDetailsBean> education_details;
 
-    public DoctorAddEducAdapter(Context context, List<DoctorDetailsByUserIdResponse.DataBean.EducationDetailsBean> education_detailsList) {
+    public DoctorAddEducAdapter(Context context, List<DoctorDetailsByUserIdResponse.DataBean.EducationDetailsBean> education_detailsList,List<DoctorBusinessInfoUpdateRequest.EducationDetailsBean> education_details) {
         this.context = context;
         this.education_detailsList = education_detailsList;
+        this.education_details = education_details;
 
     }
 
@@ -48,6 +51,7 @@ public class DoctorAddEducAdapter extends RecyclerView.Adapter<DoctorAddEducAdap
 
         holder.removeImg.setOnClickListener(view -> {
             education_detailsList.remove(position);
+            education_details.remove(position);
             notifyDataSetChanged();
         });
 
