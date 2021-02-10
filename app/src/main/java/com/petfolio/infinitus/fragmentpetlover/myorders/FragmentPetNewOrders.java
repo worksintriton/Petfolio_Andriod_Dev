@@ -24,7 +24,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.adapter.PetNewAppointmentAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
@@ -185,7 +184,7 @@ public class FragmentPetNewOrders extends Fragment implements OnAppointmentCance
     }
 
     @Override
-    public void onAppointmentCancel(String id,String appointmenttype) {
+    public void onAppointmentCancel(String id,String appointmenttype,String userid, String doctorid,String appointmentid,String spid) {
         if(id != null){
             showStatusAlert(id);
         }

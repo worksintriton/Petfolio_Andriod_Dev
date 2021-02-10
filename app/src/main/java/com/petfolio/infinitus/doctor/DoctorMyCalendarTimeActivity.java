@@ -138,6 +138,7 @@ public class DoctorMyCalendarTimeActivity extends AppCompatActivity implements O
                              timingBean = new DoctorMyCalendarUpdateDocDateRequest.TimingBean();
                             timingBean.setTime(dataBeanList.get(i).getTime());
                             timingBean.setStatus(dataBeanList.get(i).isStatus());
+                            timingBean.setFormat(dataBeanList.get(i).getFormat());
                             timingBeanList.add(timingBean);
 
                         }

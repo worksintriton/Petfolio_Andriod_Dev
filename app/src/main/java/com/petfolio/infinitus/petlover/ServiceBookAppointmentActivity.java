@@ -44,11 +44,14 @@ import com.petfolio.infinitus.appUtils.FileUtil;
 import com.petfolio.infinitus.requestpojo.AddYourPetRequest;
 import com.petfolio.infinitus.requestpojo.BreedTypeRequest;
 import com.petfolio.infinitus.requestpojo.DocBusInfoUploadRequest;
+import com.petfolio.infinitus.requestpojo.NotificationSendRequest;
 import com.petfolio.infinitus.requestpojo.PetDetailsRequest;
 import com.petfolio.infinitus.requestpojo.SPCreateAppointmentRequest;
+import com.petfolio.infinitus.requestpojo.SPNotificationSendRequest;
 import com.petfolio.infinitus.responsepojo.AddYourPetResponse;
 import com.petfolio.infinitus.responsepojo.BreedTypeResponse;
 import com.petfolio.infinitus.responsepojo.FileUploadResponse;
+import com.petfolio.infinitus.responsepojo.NotificationSendResponse;
 import com.petfolio.infinitus.responsepojo.PetDetailsResponse;
 import com.petfolio.infinitus.responsepojo.PetTypeListResponse;
 import com.petfolio.infinitus.responsepojo.SPCreateAppointmentResponse;
@@ -103,8 +106,8 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
     Spinner sprpetbreed;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.btn_continue)
-    Button btn_continue;
+    @BindView(R.id.btn_bookappointment)
+    Button btn_bookappointment;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_pettype)
@@ -292,6 +295,10 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
                     edt_petname.setEnabled(false);
                     edt_petname.setInputType(InputType.TYPE_NULL);
 
+                    edt_petcolor.setVisibility(View.GONE);
+                    edt_petweight.setVisibility(View.GONE);
+                    edt_petage.setVisibility(View.GONE);
+
                     if(petDetailsResponseByUserIdList != null && petDetailsResponseByUserIdList.size()>0) {
                         for(int i = 0;i<petDetailsResponseByUserIdList.size();i++) {
                             if(selectedpetid != null && selectedpetid.equalsIgnoreCase(petDetailsResponseByUserIdList.get(i).get_id())) {
@@ -351,6 +358,10 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
                     txt_pettype.setVisibility(View.GONE);
                     txt_petbreed.setVisibility(View.GONE);
                     img_pet_imge.setVisibility(View.GONE);
+
+                    edt_petcolor.setVisibility(View.VISIBLE);
+                    edt_petweight.setVisibility(View.VISIBLE);
+                    edt_petage.setVisibility(View.VISIBLE);
 
                     edt_petname.setText("");
                     edt_petname.setEnabled(true);
@@ -417,34 +428,30 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
             }
         });
 
-        btn_continue.setOnClickListener(v -> {
+        btn_bookappointment.setOnClickListener(v -> {
             Log.w(TAG,"btn_continue strPetBreedType : "+strPetBreedType);
             if (isSelectYourPet) {
                 if(validdSelectYourPetType()){
-                   /* if (edt_comment.getText().toString().trim().equals("")) {
-                        edt_comment.setError("Please enter comment");
-                        edt_comment.requestFocus();
-                    }*/
-                    startPayment();
+
+                    if(serviceamount != 0) {
+                        startPayment();
+                    } else if(new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                        spCreateAppointmentResponseCall();
+
+                    }
                 }
 
             } else {
                 if( bookAppointmentValidator()){
-                    if (validdSelectPetType()) {
+                    if (new ConnectionDetector(ServiceBookAppointmentActivity.this).isNetworkAvailable(ServiceBookAppointmentActivity.this)) {
+                        addYourPetResponseCall();
+                    }
+                    /*if (validdSelectPetType()) {
                         if(validdSelectPetBreedType()){
 
-                          /*if (edt_comment.getText().toString().trim().equals("")) {
-                                edt_comment.setError("Please enter comment");
-                                edt_comment.requestFocus();
-                            }else {
-
-                            }*/
-                            if (new ConnectionDetector(ServiceBookAppointmentActivity.this).isNetworkAvailable(ServiceBookAppointmentActivity.this)) {
-                                addYourPetResponseCall();
-                            }
                         }
 
-                    }
+                    }*/
 
 
 
@@ -914,17 +921,13 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
                     if (200 == response.body().getCode()) {
                         Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
                         petId = response.body().getData().get_id();
+                        if(serviceamount != 0) {
+                            startPayment();
+                        } else if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                            spCreateAppointmentResponseCall();
 
-                        startPayment();
-                        /*Intent intent = new Intent(BookAppointmentActivity.this, PetAppointment_Doctor_Date_Time_Activity.class);
-                        intent.putExtra("petid",response.body().getData().get_id());
-                        intent.putExtra("doctorid",doctorid);
-                        intent.putExtra("allergies",edt_allergies.getText().toString());
-                        intent.putExtra("probleminfo",edt_comment.getText().toString());
-                        intent.putExtra("selectedAppointmentType",selectedAppointmentType);
-                        Log.w(TAG,"selectedAppointmentType : "+selectedAppointmentType);
-                        startActivity(intent);
-*/
+                        }
+
                     } else {
                         showErrorLoading(response.body().getMessage());
                     }
@@ -1012,7 +1015,12 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
             edt_petname.setError("Please enter pet name");
             edt_petname.requestFocus();
             can_proceed = false;
-        }else if (edt_petcolor.getText().toString().trim().equals("")) {
+        }else if (!validdSelectPetType()) {
+            can_proceed = false;
+        } else if(!validdSelectPetBreedType()){
+            can_proceed = false;
+        }
+        else if (edt_petcolor.getText().toString().trim().equals("")) {
             edt_petcolor.setError("Please enter pet color");
             edt_petcolor.requestFocus();
             can_proceed = false;
@@ -1116,6 +1124,9 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
     @Override
     public void onPaymentError(int code, String response) {
         try {
+            if(new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                spnotificationSendResponseCall();
+            }
             Log.w(TAG,  "Payment failed: " + code + " " + response);
             Toasty.error(getApplicationContext(), "Payment failed. Please try again with another payment method..", Toast.LENGTH_SHORT, true).show();
 
@@ -1255,6 +1266,72 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
 
         }
     }
+
+    @SuppressLint("LongLogTag")
+    private void spnotificationSendResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<NotificationSendResponse> call = ApiService.spnotificationSendResponseCall(RestUtils.getContentType(),spNotificationSendRequest());
+
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<NotificationSendResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<NotificationSendResponse> call, @NonNull Response<NotificationSendResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"notificationSendResponseCall"+ "--->" + new Gson().toJson(response.body()));
+
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+
+
+
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NotificationSendResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+
+                Log.w(TAG,"NotificationSendResponse flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint("LongLogTag")
+    private SPNotificationSendRequest spNotificationSendRequest() {
+
+        /**
+         * status : Payment Failed
+         * date : 23-10-2020 11:00 AM
+         * appointment_UID :
+         * user_id : 601b8ac3204c595ee52582f2
+         * doctor_id :
+         */
+
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+        String currentDateandTime = simpleDateFormat.format(new Date());
+
+        SPNotificationSendRequest spNotificationSendRequest = new SPNotificationSendRequest();
+        spNotificationSendRequest.setStatus("Payment Failed");
+        spNotificationSendRequest.setDate(currentDateandTime);
+        spNotificationSendRequest.setAppointment_UID("");
+        spNotificationSendRequest.setUser_id(userid);
+        spNotificationSendRequest.setSp_id(spid);
+
+
+        Log.w(TAG,"spNotificationSendRequest"+ "--->" + new Gson().toJson(spNotificationSendRequest));
+        return spNotificationSendRequest;
+    }
+
+
 
 
 }

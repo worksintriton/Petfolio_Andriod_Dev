@@ -31,15 +31,19 @@ import com.petfolio.infinitus.petlover.VideoCallPetLoverActivity;
 import com.petfolio.infinitus.requestpojo.AppoinmentCancelledRequest;
 import com.petfolio.infinitus.requestpojo.AppoinmentCompleteRequest;
 import com.petfolio.infinitus.requestpojo.AppointmentDetailsRequest;
+import com.petfolio.infinitus.requestpojo.SPNotificationSendRequest;
 import com.petfolio.infinitus.responsepojo.AppoinmentCancelledResponse;
 import com.petfolio.infinitus.responsepojo.AppoinmentCompleteResponse;
+import com.petfolio.infinitus.responsepojo.NotificationSendResponse;
 import com.petfolio.infinitus.responsepojo.SPAppointmentDetailsResponse;
+import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
@@ -120,6 +124,10 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
     TextView txt_petlastvaccinatedage;
     private String fromactivity;
 
+    private String spid;
+    private String appointmentid;
+    private String userid;
+
     @SuppressLint("LongLogTag")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +136,10 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
 
 
         avi_indicator=findViewById(R.id.avi_indicator);
+
+        SessionManager  session = new SessionManager(getApplicationContext());
+        HashMap<String, String> user = session.getProfileDetails();
+        //userid = user.get(SessionManager.KEY_ID);
 
 
         img_back=findViewById(R.id.img_back);
@@ -247,6 +259,10 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
 
                       //  String usr_image = response.body().getData().getDoctor_id().getProfile_img();
                         String usr_image = "";
+                        spid = response.body().getData().getSp_id().get_id();
+                        appointmentid = response.body().getData().getAppointment_UID();
+                        userid = response.body().getData().getUser_id().get_id();
+
                         usrname = response.body().getData().getSp_business_info().get(0).getBussiness_name();
 
                         String servname = response.body().getData().getService_name();
@@ -338,7 +354,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
     private void setView(String usrname, String usr_image, String servname, String servcost, String pet_name, String pet_image, String pet_type, String breed, String gender, String colour, String weight, String age, String order_date, String orderid, String payment_method, String order_cost, String vaccinated, String addr) {
 
 
-        if(!usr_image.equals("")){
+        if(usr_image != null && !usr_image.equals("")){
 
             Glide.with(SPAppointmentDetailsActivity.this)
                     .load(usr_image)
@@ -347,23 +363,23 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
         }
 
 
-        if(!usrname.equals("")){
+        if(usrname != null && !usrname.equals("")){
 
             txt_usrname.setText(usrname);
         }
 
-        if(!servname.equals("")){
+        if(servname != null && !servname.equals("")){
 
             txt_serv_name.setText(servname);
         }
 
-        if(!servcost.equals("")){
+        if(servcost != null && !servcost.equals("")){
 
             txt_serv_cost.setText(servcost);
         }
 
 
-        if(!pet_image.equals("")){
+        if(pet_image != null && !pet_image.equals("")){
 
             Glide.with(SPAppointmentDetailsActivity.this)
                     .load(pet_image)
@@ -372,65 +388,65 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
 
         }
 
-        if(!pet_name.equals("")){
+        if(pet_name != null && !pet_name.equals("")){
 
             txt_pet_name.setText(pet_name);
         }
 
-        if(!pet_type.equals("")){
+        if(pet_type != null && pet_type.equals("")){
 
             txt_pet_type.setText(pet_type);
         }
 
-        if(!breed.equals("")){
+        if(breed != null && !breed.equals("")){
 
             txt_breed.setText(breed);
         }
 
-        if(!gender.equals("")){
+        if(gender != null && !gender.equals("")){
 
             txt_gender.setText(gender);
         }
 
-        if(!colour.equals("")){
+        if(colour != null && !colour.equals("")){
 
             txt_color.setText(colour);
         }
 
-        if(!weight.equals("")){
+        if(weight != null && !weight.equals("")){
 
             txt_weight.setText(weight);
         }
 
-        if(!age.equals("")){
+        if(age != null && !age.equals("")){
 
             txt_age.setText(age);
         }
 
         txt_vaccinated.setText(vaccinated);
 
-        if(!order_date.equals("")){
+        if(order_date != null && !order_date.equals("")){
 
             txt_order_date.setText(order_date);
         }
 
-        if(!orderid.equals("")){
+        if(orderid != null && !orderid.equals("")){
 
             txt_order_id.setText(orderid);
         }
 
-        if(!payment_method.equals("")) {
+        if(payment_method != null && !payment_method.equals("")) {
 
             txt_payment_method.setText(payment_method);
 
         }
 
-        if(!order_cost.equals("")){
+        if(order_cost != null && !order_cost.equals("")){
             txt_order_cost.setText("\u20B9 "+order_cost);
             txt_serv_cost.setText("\u20B9 "+order_cost);
         }
 
-        if(!addr.equals("")){
+        if(addr != null && !addr.equals("")){
 
             txt_address.setText(addr);
         }
@@ -530,7 +546,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-        Call<AppoinmentCancelledResponse> call = apiInterface.appoinmentCancelledResponseCall(RestUtils.getContentType(), appoinmentCancelledRequest(id));
+        Call<AppoinmentCancelledResponse> call = apiInterface.spappoinmentCancelledResponseCall(RestUtils.getContentType(), appoinmentCancelledRequest(id));
         Log.w(TAG,"appoinmentCancelledResponseCall url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<AppoinmentCancelledResponse>() {
@@ -544,7 +560,11 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        startActivity(new Intent(SPAppointmentDetailsActivity.this, ServiceProviderDashboardActivity.class));
+                        spnotificationSendResponseCall();
+
+
+
+
 
                     }
                     else{
@@ -555,7 +575,6 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
 
             }
 
-            @SuppressLint("LogNotTimber")
             @Override
             public void onFailure(@NonNull Call<AppoinmentCancelledResponse> call, @NonNull Throwable t) {
 
@@ -565,7 +584,6 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
         });
 
     }
-
     @SuppressLint("LongLogTag")
     private AppoinmentCancelledRequest appoinmentCancelledRequest(String id) {
 
@@ -577,14 +595,13 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
          */
 
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
 
         AppoinmentCancelledRequest appoinmentCancelledRequest = new AppoinmentCancelledRequest();
         appoinmentCancelledRequest.set_id(id);
         appoinmentCancelledRequest.setMissed_at(currentDateandTime);
         appoinmentCancelledRequest.setDoc_feedback("");
-        appoinmentCancelledRequest.setAppoint_patient_st("Petowner Cancelled appointment");
         appoinmentCancelledRequest.setAppoinment_status("Missed");
         Log.w(TAG,"appoinmentCancelledRequest"+ "--->" + new Gson().toJson(appoinmentCancelledRequest));
         return appoinmentCancelledRequest;
@@ -681,7 +698,6 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
         Log.w(TAG,"AppoinmentCompleteResponse url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<AppoinmentCompleteResponse>() {
-            @SuppressLint("LongLogTag")
             @Override
             public void onResponse(@NonNull Call<AppoinmentCompleteResponse> call, @NonNull Response<AppoinmentCompleteResponse> response) {
 
@@ -691,7 +707,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        startActivity(new Intent(SPAppointmentDetailsActivity.this, ServiceProviderDashboardActivity.class));
+                        startActivity(new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class));
                     }
                     else{
                         //showErrorLoading(response.body().getMessage());
@@ -727,6 +743,69 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
         appoinmentCompleteRequest.setAppoinment_status("Completed");
         Log.w(TAG,"appoinmentCompleteRequest"+ "--->" + new Gson().toJson(appoinmentCompleteRequest));
         return appoinmentCompleteRequest;
+    }
+
+    @SuppressLint("LongLogTag")
+    private void spnotificationSendResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<NotificationSendResponse> call = ApiService.spnotificationSendResponseCall(RestUtils.getContentType(),spNotificationSendRequest());
+
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<NotificationSendResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<NotificationSendResponse> call, @NonNull Response<NotificationSendResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"notificationSendResponseCall"+ "--->" + new Gson().toJson(response.body()));
+
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        startActivity(new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class));
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NotificationSendResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+
+                Log.w(TAG,"NotificationSendResponse flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint("LongLogTag")
+    private SPNotificationSendRequest spNotificationSendRequest() {
+
+        /*
+         * status : Payment Failed
+         * date : 23-10-2020 11:00 AM
+         * appointment_UID : PET-2923029239123
+         * user_id : 601b8ac3204c595ee52582f2
+         * sp_id : 601ba9c6270cbe79fd900183
+         */
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+        String currentDateandTime = simpleDateFormat.format(new Date());
+
+
+
+        SPNotificationSendRequest spNotificationSendRequest = new SPNotificationSendRequest();
+        spNotificationSendRequest.setStatus("Patient Appointment Cancelled");
+        spNotificationSendRequest.setDate(currentDateandTime);
+        spNotificationSendRequest.setAppointment_UID(appointmentid);
+        spNotificationSendRequest.setUser_id(userid);
+        spNotificationSendRequest.setSp_id(spid);
+
+
+        Log.w(TAG,"spNotificationSendRequest"+ "--->" + new Gson().toJson(spNotificationSendRequest));
+        return spNotificationSendRequest;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.petfolio.infinitus.serviceprovider;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,9 +18,7 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinitus.petlover.SelectedServiceActivity;
-import com.petfolio.infinitus.responsepojo.DropDownListResponse;
 import com.petfolio.infinitus.responsepojo.SPFilterPriceListResponse;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -36,40 +35,50 @@ import retrofit2.Response;
 public class SPFiltersActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "SPFiltersActivity" ;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_no_records)
     TextView txt_no_records;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
     ImageView img_back;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
-
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rg_specialization)
     RadioGroup rg_specialization;
 
 
 
-
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_clear)
     Button btn_clear;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_apply)
     Button btn_apply;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rg_review)
     RadioGroup rg_review;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rb_four_star)
     RadioButton rb_four_star;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rb_three_star)
     RadioButton rb_three_star;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rb_two_star)
     RadioButton rb_two_star;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rb_one_star)
     RadioButton rb_one_star;
 
@@ -85,6 +94,7 @@ public class SPFiltersActivity extends AppCompatActivity implements View.OnClick
 
 
 
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,10 +141,16 @@ public class SPFiltersActivity extends AppCompatActivity implements View.OnClick
         }
 
         rg_specialization.setOnCheckedChangeListener((group, checkedId) -> {
-            int radioButtonID = rg_specialization.getCheckedRadioButtonId();
-            RadioButton radioButton = rg_specialization.findViewById(radioButtonID);
-            selectedprice = (String) radioButton.getText();
-            Log.w(TAG,"selectedprice : " + selectedprice);
+            if(rg_specialization != null) {
+                int radioButtonID = rg_specialization.getCheckedRadioButtonId();
+                RadioButton radioButton = rg_specialization.findViewById(radioButtonID);
+                if (radioButton != null) {
+                    selectedprice = (String) radioButton.getText();
+                    Log.w(TAG, "selectedprice : " + selectedprice);
+                }
+            }
+
+
 
             if(spFilterPriceList != null && spFilterPriceList.size()>0){
                for(int i =0; i<spFilterPriceList.size();i++){
@@ -154,6 +170,7 @@ public class SPFiltersActivity extends AppCompatActivity implements View.OnClick
 
 
     }
+    @SuppressLint("LogNotTimber")
     public void SPFilterPriceListResponseCall(){
 
         avi_indicator.setVisibility(View.VISIBLE);
@@ -164,6 +181,7 @@ public class SPFiltersActivity extends AppCompatActivity implements View.OnClick
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<SPFilterPriceListResponse>() {
+            @SuppressLint({"SetTextI18n", "LogNotTimber"})
             @Override
             public void onResponse(@NonNull Call<SPFilterPriceListResponse> call, @NonNull Response<SPFilterPriceListResponse> response) {
                 avi_indicator.smoothToHide();
@@ -194,6 +212,7 @@ public class SPFiltersActivity extends AppCompatActivity implements View.OnClick
 
             }
 
+            @SuppressLint("LogNotTimber")
             @Override
             public void onFailure(@NonNull Call<SPFilterPriceListResponse> call, @NonNull  Throwable t) {
                 avi_indicator.smoothToHide();
@@ -209,7 +228,7 @@ public class SPFiltersActivity extends AppCompatActivity implements View.OnClick
             rb.setText(spFilterPriceList.get(i).getDisplay_text());
             rg_specialization.addView(rb);
 
-            if(selectedprice != null){
+            if(selectedprice != null && !selectedprice.isEmpty()){
                 if(selectedprice.equalsIgnoreCase(spFilterPriceList.get(i).getDisplay_text())) {
                     ((RadioButton) rg_specialization.getChildAt(i)).setChecked(true);
                 }
@@ -221,12 +240,21 @@ public class SPFiltersActivity extends AppCompatActivity implements View.OnClick
 
     }
 
+    @SuppressLint("LogNotTimber")
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(), SelectedServiceActivity.class);
+        intent.putExtra("distance",distance);
+        intent.putExtra("catid",catid);
+        intent.putExtra("selectedprice",selectedprice);
+        intent.putExtra("reviewcount",reviewcount);
+        startActivity(intent);
+        Log.w(TAG,"selectedprice : "+selectedprice);
         finish();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -239,7 +267,14 @@ public class SPFiltersActivity extends AppCompatActivity implements View.OnClick
                 break;
 
             case R.id.btn_clear:
-                gotoPetCareClear();
+                //  gotoPetCareClear();
+                clearRadioChecked();
+                rg_specialization.clearCheck();
+                reviewcount = 0;
+                selectedprice = "";
+                Count_value_start = 0;
+                Count_value_end = 0;
+
                 break;
 
             case R.id.rb_four_star:
@@ -277,18 +312,6 @@ public class SPFiltersActivity extends AppCompatActivity implements View.OnClick
         intent.putExtra("selectedprice",selectedprice);
         intent.putExtra("Count_value_start",Count_value_start);
         intent.putExtra("Count_value_end",Count_value_end);
-        intent.putExtra("distance",distance);
-        intent.putExtra("catid",catid);
-        intent.putExtra("fromactivity",TAG);
-        startActivity(intent);
-    }
-    private void gotoPetCareClear() {
-        Intent intent = new Intent(getApplicationContext(), SelectedServiceActivity.class);
-        intent.putExtra("tag","3");
-        intent.putExtra("reviewcount",0);
-        intent.putExtra("selectedprice","");
-        intent.putExtra("Count_value_start",0);
-        intent.putExtra("Count_value_end",0);
         intent.putExtra("distance",distance);
         intent.putExtra("catid",catid);
         intent.putExtra("fromactivity",TAG);

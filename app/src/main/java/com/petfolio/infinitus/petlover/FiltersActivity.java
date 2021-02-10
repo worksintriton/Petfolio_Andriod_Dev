@@ -104,6 +104,28 @@ public class FiltersActivity extends AppCompatActivity implements View.OnClickLi
         rb_two_star.setOnClickListener(this);
         rb_one_star.setOnClickListener(this);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+
+            specialization = extras.getString("specialization");
+            reviewcount = extras.getInt("reviewcount");
+            Log.w(TAG,"Bundle : "+" specialization : "+specialization+" reviewcount : "+reviewcount);
+
+            if(reviewcount != 0){
+                if (reviewcount == 1) {
+                    rb_one_star.setChecked(true);
+                }else if (reviewcount == 2) {
+                    rb_two_star.setChecked(true);
+                }else if (reviewcount == 3) {
+                    rb_three_star.setChecked(true);
+                }else if (reviewcount == 4) {
+                    rb_four_star.setChecked(true);
+                }
+
+            }
+
+        }
+
 
 
         if (new ConnectionDetector(FiltersActivity.this).isNetworkAvailable(FiltersActivity.this)) {
@@ -183,7 +205,16 @@ public class FiltersActivity extends AppCompatActivity implements View.OnClickLi
             RadioButton rb = new RadioButton(getApplicationContext());
             rb.setText(petSpecilaziationList.get(i).getSpecialzation());
             rg_specialization.addView(rb);
+
+            if(specialization != null && !specialization.isEmpty()){
+                if(specialization.equalsIgnoreCase(petSpecilaziationList.get(i).getSpecialzation())) {
+                    ((RadioButton) rg_specialization.getChildAt(i)).setChecked(true);
+                }
+            }
+
         }
+
+
 
     }
 
@@ -208,6 +239,8 @@ public class FiltersActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.btn_clear:
                 clearRadioChecked();
                 rg_specialization.clearCheck();
+                specialization = "";
+                reviewcount = 0;
                 break;
 
             case R.id.rb_four_star:

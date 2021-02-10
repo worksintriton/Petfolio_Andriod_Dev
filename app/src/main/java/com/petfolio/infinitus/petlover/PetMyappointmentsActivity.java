@@ -18,20 +18,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.petfolio.infinitus.R;
 
-import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetCareFragment;
-import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetHomeFragment;
-import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetServicesFragment;
+
 import com.petfolio.infinitus.fragmentpetlover.myappointments.FragmentPetMissedAppointment;
 import com.petfolio.infinitus.fragmentpetlover.myappointments.FragmentPetCompletedAppointment;
 import com.petfolio.infinitus.fragmentpetlover.myappointments.FragmentPetNewAppointment;
-import com.wang.avi.AVLoadingIndicatorView;
 
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import java.util.ArrayList;

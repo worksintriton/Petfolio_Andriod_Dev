@@ -293,7 +293,8 @@ public class PetHomeFragment extends Fragment implements Serializable,
 
                 break;
             case R.id.txt_seemore_services:
-                if(serviceDetailsResponseList.size()>0){
+                if(serviceDetailsResponseList != null && serviceDetailsResponseList.size()>0){
+                    Log.w(TAG,"SERVICE SIZE :"+serviceDetailsResponseList.size());
                     rvservice.setVisibility(View.VISIBLE);
                     txt_services.setVisibility(View.VISIBLE);
                     setViewServicesSeeMore();

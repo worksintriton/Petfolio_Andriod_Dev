@@ -422,7 +422,10 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
          * user_id : 1234567890
          * cur_date : 31-11-2020
          * cur_time : 01:00 AM
+         * current_time
          */
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String currentDateandTime = sf.format(new Date());
 
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
         String currentDateandTime24hrs = simpleDateFormat.format(new Date());
@@ -432,6 +435,7 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
         PetDoctorAvailableTimeRequest petDoctorAvailableTimeRequest = new PetDoctorAvailableTimeRequest();
         petDoctorAvailableTimeRequest.setUser_id(spuserid);
         petDoctorAvailableTimeRequest.setDate(Date);
+        petDoctorAvailableTimeRequest.setCurrent_time(currentDateandTime);
         petDoctorAvailableTimeRequest.setCur_time(currenttime);
         petDoctorAvailableTimeRequest.setCur_date(currentdate);
         Log.w(TAG,"spAvailableTimeResponseRequest"+ "--->" + new Gson().toJson(petDoctorAvailableTimeRequest));

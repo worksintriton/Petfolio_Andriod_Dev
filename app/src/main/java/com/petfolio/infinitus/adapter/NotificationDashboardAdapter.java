@@ -65,7 +65,8 @@ public class NotificationDashboardAdapter extends  RecyclerView.Adapter<Recycler
 
   private void initLayoutOne(ViewHolderOne holder, final int position) {
         currentItem = notificationGetlistResponseList.get(position);
-        holder.txt_message.setText(currentItem.getNotify_title());
+        holder.txt_notification_title.setText(currentItem.getNotify_title());
+        holder.txt_message.setText(currentItem.getNotify_descri());
         holder.txt_date.setText(currentItem.getDate_and_time());
         if (currentItem.getNotify_img() != null && !currentItem.getNotify_img().isEmpty()) {
 
@@ -115,7 +116,7 @@ public class NotificationDashboardAdapter extends  RecyclerView.Adapter<Recycler
         return position;
     }
     class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_message,txt_date;
+        public TextView txt_message,txt_date,txt_notification_title;
         public LinearLayout ll_root;
         public ImageView img_notify_imge;
 
@@ -124,6 +125,7 @@ public class NotificationDashboardAdapter extends  RecyclerView.Adapter<Recycler
         public ViewHolderOne(View itemView) {
             super(itemView);
 
+            txt_notification_title = itemView.findViewById(R.id.txt_notification_title);
             txt_message = itemView.findViewById(R.id.txt_message);
             txt_date = itemView.findViewById(R.id.txt_date);
             img_notify_imge = itemView.findViewById(R.id.img_notify_imge);

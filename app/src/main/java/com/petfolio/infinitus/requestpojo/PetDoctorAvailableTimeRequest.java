@@ -7,13 +7,22 @@ public class PetDoctorAvailableTimeRequest {
      * user_id : 1234567890
      * cur_date : 31-11-2020
      * cur_time : 01:00 AM
+     * current_time
      */
 
     private String Date;
     private String user_id;
     private String cur_date;
     private String cur_time;
+    private String current_time;
 
+    public String getCurrent_time() {
+        return current_time;
+    }
+
+    public void setCurrent_time(String current_time) {
+        this.current_time = current_time;
+    }
 
     public String getDate() {
         return Date;

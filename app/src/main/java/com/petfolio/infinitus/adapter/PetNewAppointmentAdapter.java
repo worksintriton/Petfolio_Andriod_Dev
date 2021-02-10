@@ -140,7 +140,7 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
         holder.btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onAppointmentCancel.onAppointmentCancel(newAppointmentResponseList.get(position).get_id(),newAppointmentResponseList.get(position).getAppointment_for());
+                onAppointmentCancel.onAppointmentCancel(newAppointmentResponseList.get(position).get_id(),newAppointmentResponseList.get(position).getAppointment_for(),newAppointmentResponseList.get(position).getUser_id(),newAppointmentResponseList.get(position).getDoctor_id(),newAppointmentResponseList.get(position).getBooking_Id(),newAppointmentResponseList.get(position).getSp_id());
 
             }
         });

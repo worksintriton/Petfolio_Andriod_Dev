@@ -318,7 +318,7 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
     private void setView(String usrname, String usr_image, String servname, String servcost, String pet_name, String pet_image, String pet_type, String breed, String gender, String colour, String weight, String age, String order_date, String orderid, String payment_method, String order_cost, String vaccinated, String addr) {
 
 
-        if(!usr_image.equals("")){
+        if(usr_image != null && !usr_image.equals("")){
 
             Glide.with(DoctorNewAppointmentDetailsActivity.this)
                     .load(usr_image)
@@ -327,23 +327,15 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
         }
 
 
-        if(!usrname.equals("")){
+        if(usrname!= null && usrname.equals("")){
 
             txt_usrname.setText(usrname);
         }
 
-//        if(!servname.equals("")){
-//
-//            txt_serv_name.setText(servname);
-//        }
-
-//        if(!servcost.equals("")){
-//
-//            txt_serv_cost.setText(servcost);
-//        }
 
 
-        if(!pet_image.equals("")){
+
+        if(pet_image != null && !pet_image.equals("")){
 
             Glide.with(DoctorNewAppointmentDetailsActivity.this)
                     .load(pet_image)
@@ -352,60 +344,60 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
 
         }
 
-        if(!pet_name.equals("")){
+        if(pet_name != null && !pet_name.equals("")){
 
             txt_pet_name.setText(pet_name);
         }
 
-        if(!pet_type.equals("")){
+        if(pet_type != null && !pet_type.equals("")){
 
             txt_pet_type.setText(pet_type);
         }
 
-        if(!breed.equals("")){
+        if(breed != null && !breed.equals("")){
 
             txt_breed.setText(breed);
         }
 
-        if(!gender.equals("")){
+        if(gender != null && !gender.equals("")){
 
             txt_gender.setText(gender);
         }
 
-        if(!colour.equals("")){
+        if(colour != null && !colour.equals("")){
 
             txt_color.setText(colour);
         }
 
-        if(!weight.equals("")){
+        if(weight != null && !weight.equals("")){
 
             txt_weight.setText(weight);
         }
 
-        if(!age.equals("")){
+        if(age != null && !age.equals("")){
 
             txt_age.setText(age);
         }
 
         txt_vaccinated.setText(vaccinated);
 
-        if(!order_date.equals("")){
+        if(order_date != null && !order_date.equals("")){
 
             txt_order_date.setText(order_date);
         }
 
-        if(!orderid.equals("")){
+        if(orderid != null && !orderid.equals("")){
 
             txt_order_id.setText(orderid);
         }
 
-        if(!payment_method.equals("")) {
+        if(payment_method != null && !payment_method.equals("")) {
 
             txt_payment_method.setText(payment_method);
 
         }
 
-        if(!order_cost.equals("")){
+        if(order_cost != null && !order_cost.equals("")){
             txt_order_cost.setText("\u20B9 "+order_cost);
             txt_serv_cost.setText("\u20B9 "+order_cost);
         }
@@ -579,6 +571,7 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
         return doctorStartAppointmentRequest;
     }
 
+    @SuppressLint("LongLogTag")
     private void appoinmentCancelledResponseCall(String id) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();

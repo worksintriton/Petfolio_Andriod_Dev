@@ -1,5 +1,7 @@
 package com.petfolio.infinitus.requestpojo;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class DoctorMyCalendarUpdateDocDateRequest {
@@ -46,9 +48,21 @@ public class DoctorMyCalendarUpdateDocDateRequest {
         /**
          * Time : 01:00 AM
          * Status : true
+         * format
          */
 
         private String Time;
+
+        private String format;
+
+        public String getFormat() {
+            return format;
+        }
+
+        public void setFormat(String format) {
+            this.format = format;
+        }
+
         private boolean Status;
 
         public String getTime() {

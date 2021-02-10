@@ -166,6 +166,8 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
             distance = extras.getInt("distance");
             selectedprice = extras.getString("selectedprice");
         }
+        Log.w(TAG,"selectedprice : "+selectedprice);
+
 
         if(PetLoverDashboardActivity.cityName != null){
             txt_currentlocation.setText(PetLoverDashboardActivity.cityName);

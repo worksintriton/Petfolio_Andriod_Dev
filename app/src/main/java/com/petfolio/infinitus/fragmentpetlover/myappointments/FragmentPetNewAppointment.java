@@ -31,8 +31,11 @@ import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
 import com.petfolio.infinitus.petlover.PetMyappointmentsActivity;
 import com.petfolio.infinitus.requestpojo.AppoinmentCancelledRequest;
+import com.petfolio.infinitus.requestpojo.NotificationSendRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverAppointmentRequest;
+import com.petfolio.infinitus.requestpojo.SPNotificationSendRequest;
 import com.petfolio.infinitus.responsepojo.AppoinmentCancelledResponse;
+import com.petfolio.infinitus.responsepojo.NotificationSendResponse;
 import com.petfolio.infinitus.responsepojo.PetAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
 import com.petfolio.infinitus.serviceprovider.ServiceProviderDashboardActivity;
@@ -76,6 +79,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
     private Context mContext;
     private List<PetAppointmentResponse.DataBean> newAppointmentResponseList;
     private Dialog dialog;
+    private String doctorid;
 
 
     public FragmentPetNewAppointment() {
@@ -192,13 +196,13 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
     }
 
     @Override
-    public void onAppointmentCancel(String id,String appointmenttype) {
+    public void onAppointmentCancel(String id,String appointmenttype,String userid, String doctorid,String appointmentid,String spid) {
         if(id != null){
-            showStatusAlert(id,appointmenttype);
+            showStatusAlert(id,appointmenttype,userid,doctorid,appointmentid,spid);
         }
     }
 
-    private void showStatusAlert(String id,String appointmenttype) {
+    private void showStatusAlert(String id,String appointmenttype,String userid, String doctorid,String appointmentid, String spid) {
         try {
             dialog = new Dialog(mContext);
             dialog.setContentView(R.layout.alert_approve_reject_layout);
@@ -214,9 +218,9 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
                 public void onClick(View view) {
                     dialog.dismiss();
                     if(appointmenttype != null && appointmenttype.equalsIgnoreCase("Doctor")){
-                        appoinmentCancelledResponseCall(id);
+                        appoinmentCancelledResponseCall(id,appointmenttype,userid,doctorid,appointmentid);
                     } else if(appointmenttype != null && appointmenttype.equalsIgnoreCase("SP")){
-                        spappoinmentCancelledResponseCall(id);
+                        spappoinmentCancelledResponseCall(id,appointmenttype,userid,doctorid,appointmentid,spid);
                     }
 
 
@@ -256,7 +260,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
         }
     }
 
-    private void appoinmentCancelledResponseCall(String id) {
+    private void appoinmentCancelledResponseCall(String id,String appointmenttype,String userid, String doctorid,String appointmentid) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
@@ -273,12 +277,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        startActivity(new Intent(mContext, PetMyappointmentsActivity.class));
-
-
-
-
-
+                        notificationSendResponseCall(userid,doctorid,appointmentid);
                     }
                     else{
                         //showErrorLoading(response.body().getMessage());
@@ -298,7 +297,8 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
 
     }
 
-    private void spappoinmentCancelledResponseCall(String id) {
+    @SuppressLint("LogNotTimber")
+    private void spappoinmentCancelledResponseCall(String id, String appointmenttype, String userid, String doctorid, String appointmentid, String spid) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
@@ -315,11 +315,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        startActivity(new Intent(mContext, PetMyappointmentsActivity.class));
-
-
-
-
+                        spnotificationSendResponseCall(userid,spid,appointmentid);
 
                     }
                     else{
@@ -350,17 +346,139 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
          */
 
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
 
         AppoinmentCancelledRequest appoinmentCancelledRequest = new AppoinmentCancelledRequest();
         appoinmentCancelledRequest.set_id(id);
         appoinmentCancelledRequest.setMissed_at(currentDateandTime);
         appoinmentCancelledRequest.setDoc_feedback("");
-        appoinmentCancelledRequest.setAppoint_patient_st("Petowner Cancelled appointment");
+        appoinmentCancelledRequest.setAppoint_patient_st("Patient Appointment Cancelled");
         appoinmentCancelledRequest.setAppoinment_status("Missed");
         Log.w(TAG,"appoinmentCancelledRequest"+ "--->" + new Gson().toJson(appoinmentCancelledRequest));
         return appoinmentCancelledRequest;
+    }
+
+    private void notificationSendResponseCall(String userid, String doctorid, String appointmentid) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<NotificationSendResponse> call = ApiService.notificationSendResponseCall(RestUtils.getContentType(),notificationSendRequest(userid,doctorid,appointmentid));
+
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<NotificationSendResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<NotificationSendResponse> call, @NonNull Response<NotificationSendResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"notificationSendResponseCall"+ "--->" + new Gson().toJson(response.body()));
+
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        startActivity(new Intent(mContext, PetMyappointmentsActivity.class));
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NotificationSendResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+
+                Log.w(TAG,"NotificationSendResponse flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    private NotificationSendRequest notificationSendRequest(String userid, String doctorid, String appointmentid) {
+
+        /**
+         * status : Payment Failed
+         * date : 23-10-2020 11:00 AM
+         * appointment_UID :
+         * user_id : 601b8ac3204c595ee52582f2
+         * doctor_id :
+         */
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+        String currentDateandTime = simpleDateFormat.format(new Date());
+
+
+
+        NotificationSendRequest notificationSendRequest = new NotificationSendRequest();
+        notificationSendRequest.setStatus("Patient Appointment Cancelled");
+        notificationSendRequest.setDate(currentDateandTime);
+        notificationSendRequest.setAppointment_UID(appointmentid);
+        notificationSendRequest.setUser_id(userid);
+        notificationSendRequest.setDoctor_id(doctorid);
+
+
+        Log.w(TAG,"notificationSendRequest"+ "--->" + new Gson().toJson(notificationSendRequest));
+        return notificationSendRequest;
+    }
+
+    private void spnotificationSendResponseCall(String userid, String spid, String appointmentid) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<NotificationSendResponse> call = ApiService.spnotificationSendResponseCall(RestUtils.getContentType(),spNotificationSendRequest(userid,spid,appointmentid));
+
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<NotificationSendResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<NotificationSendResponse> call, @NonNull Response<NotificationSendResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"notificationSendResponseCall"+ "--->" + new Gson().toJson(response.body()));
+
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        startActivity(new Intent(mContext, PetMyappointmentsActivity.class));
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NotificationSendResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+
+                Log.w(TAG,"NotificationSendResponse flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    private SPNotificationSendRequest spNotificationSendRequest(String userid, String spid, String appointmentid) {
+
+        /*
+         * status : Payment Failed
+         * date : 23-10-2020 11:00 AM
+         * appointment_UID : PET-2923029239123
+         * user_id : 601b8ac3204c595ee52582f2
+         * sp_id : 601ba9c6270cbe79fd900183
+         */
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+        String currentDateandTime = simpleDateFormat.format(new Date());
+
+
+
+        SPNotificationSendRequest spNotificationSendRequest = new SPNotificationSendRequest();
+        spNotificationSendRequest.setStatus("Patient Appointment Cancelled");
+        spNotificationSendRequest.setDate(currentDateandTime);
+        spNotificationSendRequest.setAppointment_UID(appointmentid);
+        spNotificationSendRequest.setUser_id(userid);
+        spNotificationSendRequest.setSp_id(spid);
+
+
+        Log.w(TAG,"spNotificationSendRequest"+ "--->" + new Gson().toJson(spNotificationSendRequest));
+        return spNotificationSendRequest;
     }
 
 }

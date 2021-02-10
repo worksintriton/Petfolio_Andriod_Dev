@@ -1,10 +1,7 @@
 package com.petfolio.infinitus.activity;
 
 import android.annotation.SuppressLint;
-
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,9 +27,7 @@ import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -62,10 +57,6 @@ public class NotificationActivity extends AppCompatActivity {
     ImageView img_back;
 
 
-    //NotificationDashboardAdapter notificationDashboardAdapter;
-    private SharedPreferences preferences;
-
-    NotificationGetlistResponse notificationGetlistResponse;
 
 
     private String TAG = "NotificationActivity";
@@ -74,9 +65,9 @@ public class NotificationActivity extends AppCompatActivity {
     String type = "",name = "",userid = "";
     private List<NotificationGetlistResponse.DataBean> notificationGetlistResponseList;
 
-    HashMap<String ,List<NotificationGetlistResponse.DataBean>> stringListHashMap = new LinkedHashMap<>();
 
 
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +76,6 @@ public class NotificationActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         avi_indicator.setVisibility(View.GONE);
 
-        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
 
         session = new SessionManager(getApplicationContext());
@@ -98,12 +88,7 @@ public class NotificationActivity extends AppCompatActivity {
         Log.w(TAG,"session--->"+"type :"+type+" "+"name :"+" "+name);
 
 
-        img_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        img_back.setOnClickListener(v -> onBackPressed());
 
 
         if (new ConnectionDetector(NotificationActivity.this).isNetworkAvailable(NotificationActivity.this)) {
@@ -117,6 +102,7 @@ public class NotificationActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("LogNotTimber")
     private void notificationGetlistResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -134,20 +120,16 @@ public class NotificationActivity extends AppCompatActivity {
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        List<NotificationGetlistResponse.DataBean> expandableListTitle = new ArrayList<>();
 
                         if(response.body().getData() != null && response.body().getData().size()>0){
                             notificationGetlistResponseList = response.body().getData();
                             tvNorecords.setVisibility(View.GONE);
                             rvnotifiaction.setVisibility(View.VISIBLE);
                             setView();
-
-
-
                         }else{
                             rvnotifiaction.setVisibility(View.GONE);
                             tvNorecords.setVisibility(View.VISIBLE);
-                            tvNorecords.setText("No new notifications");
+                            tvNorecords.setText("No notifications");
 
                         }
 
@@ -159,6 +141,7 @@ public class NotificationActivity extends AppCompatActivity {
 
             }
 
+            @SuppressLint("LogNotTimber")
             @Override
             public void onFailure(@NonNull Call<NotificationGetlistResponse> call, @NonNull Throwable t) {
                 avi_indicator.smoothToHide();
@@ -168,6 +151,7 @@ public class NotificationActivity extends AppCompatActivity {
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private NotificationGetlistRequest notificationGetlistRequest() {
         /*
          * user_id : 5ee3666a5dfb34019b13c3a2

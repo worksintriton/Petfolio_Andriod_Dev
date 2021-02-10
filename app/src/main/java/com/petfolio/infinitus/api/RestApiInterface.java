@@ -33,6 +33,7 @@ import com.petfolio.infinitus.requestpojo.LocationStatusChangeRequest;
 import com.petfolio.infinitus.requestpojo.LocationUpdateRequest;
 import com.petfolio.infinitus.requestpojo.LoginRequest;
 import com.petfolio.infinitus.requestpojo.NotificationGetlistRequest;
+import com.petfolio.infinitus.requestpojo.NotificationSendRequest;
 import com.petfolio.infinitus.requestpojo.PetAddImageRequest;
 import com.petfolio.infinitus.requestpojo.PetAppointmentCreateRequest;
 import com.petfolio.infinitus.requestpojo.PetDeleteRequest;
@@ -54,6 +55,7 @@ import com.petfolio.infinitus.requestpojo.SPCreateAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.SPDetailsByUserIdRequest;
 import com.petfolio.infinitus.requestpojo.SPDetailsRequest;
 import com.petfolio.infinitus.requestpojo.SPMyCalendarAvlDaysRequest;
+import com.petfolio.infinitus.requestpojo.SPNotificationSendRequest;
 import com.petfolio.infinitus.requestpojo.SPSpecificServiceDetailsRequest;
 import com.petfolio.infinitus.requestpojo.ServiceCatRequest;
 import com.petfolio.infinitus.requestpojo.SignupRequest;
@@ -94,6 +96,7 @@ import com.petfolio.infinitus.responsepojo.LocationStatusChangeResponse;
 import com.petfolio.infinitus.responsepojo.LocationUpdateResponse;
 import com.petfolio.infinitus.responsepojo.LoginResponse;
 import com.petfolio.infinitus.responsepojo.NotificationGetlistResponse;
+import com.petfolio.infinitus.responsepojo.NotificationSendResponse;
 import com.petfolio.infinitus.responsepojo.PetAddImageResponse;
 import com.petfolio.infinitus.responsepojo.PetAppointmentCreateResponse;
 import com.petfolio.infinitus.responsepojo.PetAppointmentResponse;
@@ -496,5 +499,13 @@ public interface RestApiInterface {
     /*notifications list*/
     @POST("notification/mobile/getlist_id")
     Call<NotificationGetlistResponse> notificationGetlistResponseCall(@Header("Content-Type") String type, @Body NotificationGetlistRequest notificationGetlistRequest);
+
+    /*notifications send request*/
+    @POST("notification/mobile/alert/notification")
+    Call<NotificationSendResponse> notificationSendResponseCall(@Header("Content-Type") String type, @Body NotificationSendRequest notificationSendRequest);
+
+    /*notifications spsend request*/
+    @POST("notification/mobile/alert/sp_notification")
+    Call<NotificationSendResponse> spnotificationSendResponseCall(@Header("Content-Type") String type, @Body SPNotificationSendRequest spNotificationSendRequest);
 
 }

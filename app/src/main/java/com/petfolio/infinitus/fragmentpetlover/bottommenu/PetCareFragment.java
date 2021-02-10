@@ -267,6 +267,8 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, FiltersActivity.class);
+                intent.putExtra("specialization",specialization);
+                intent.putExtra("reviewcount",reviewcount);
                 startActivity(intent);
             }
         });

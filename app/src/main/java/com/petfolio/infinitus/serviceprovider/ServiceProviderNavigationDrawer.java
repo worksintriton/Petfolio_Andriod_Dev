@@ -22,6 +22,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
 
+import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.doctor.DoctorEditProfileActivity;
 import com.petfolio.infinitus.doctor.DoctorProfileScreenActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
@@ -201,6 +202,15 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
         tvWelcomeName = toolbar.findViewById(R.id.toolbar_title);
 
         tvWelcomeName.setText("Home");
+
+        ImageView img_notification = toolbar.findViewById(R.id.img_notification);
+        img_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+
+            }
+        });
 
 
         toggleView();

@@ -215,7 +215,7 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
                 startActivity(new Intent(getApplicationContext(), SPEditProfileActivity.class));
                 break;
                 case R.id.txt_edit_image:
-                startActivity(new Intent(getApplicationContext(), EditDoctorProfileImageActivity.class));
+                startActivity(new Intent(getApplicationContext(), SPEditProfileImageActivity.class));
                 break;
                 case R.id.txt_edit_doc_business_info:
                 startActivity(new Intent(getApplicationContext(), ServiceProviderEditFormActivity.class));
