@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,6 +52,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -119,6 +122,29 @@ public class FragmentSPNewAppointment extends Fragment implements OnAppointmentC
         if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
             spNewAppointmentResponseCall();
         }
+
+        final Handler handler = new Handler();
+        Timer timer = new Timer();
+        TimerTask doAsynchronousTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        try {
+                            //your method here
+                            if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
+                                spNewAppointmentResponseCall();
+                            }
+
+                        } catch (Exception e) {
+                        }
+                    }
+                });
+            }
+        };
+        timer.schedule(doAsynchronousTask, 0, 30000);//you can put 30000(30 secs)
+
+
         return view;
     }
 

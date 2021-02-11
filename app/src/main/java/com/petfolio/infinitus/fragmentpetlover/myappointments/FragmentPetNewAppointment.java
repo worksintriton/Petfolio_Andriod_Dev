@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,6 +50,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,15 +63,19 @@ import retrofit2.Response;
 public class FragmentPetNewAppointment extends Fragment implements OnAppointmentCancel, View.OnClickListener {
     private String TAG = "FragmentPetNewAppointment";
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_no_records)
     TextView txt_no_records;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_newappointment)
     RecyclerView rv_newappointment;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_load_more)
     Button btn_load_more;
 
@@ -111,11 +118,32 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
         if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
             petNewAppointmentResponseCall();
         }
+        final Handler handler = new Handler();
+        Timer timer = new Timer();
+        TimerTask doAsynchronousTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        try {
+                            //your method here
+                            if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
+                                petNewAppointmentResponseCall();
+                            }
+
+                        } catch (Exception e) {
+                        }
+                    }
+                });
+            }
+        };
+        timer.schedule(doAsynchronousTask, 0, 30000);//you can put 30000(30 secs)
         return view;
     }
 
 
 
+    @SuppressLint("LogNotTimber")
     private void petNewAppointmentResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -124,6 +152,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<PetAppointmentResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<PetAppointmentResponse> call, @NonNull Response<PetAppointmentResponse> response) {
                avi_indicator.smoothToHide();

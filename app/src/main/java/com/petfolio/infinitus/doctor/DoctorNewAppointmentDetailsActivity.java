@@ -36,6 +36,7 @@ import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -120,11 +121,32 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
 
     LinearLayout ll_petlastvacinateddate;
     TextView txt_petlastvaccinatedage;
+    private String bookedat;
+    private boolean isVaildDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_new_appointment_details);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            appointment_id = extras.getString("appointment_id");
+            bookedat = extras.getString("bookedat");
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
+
+        if(bookedat != null){
+            compareDatesandTime(currentDateandTime,bookedat);
+        }
+        btn_cancel=findViewById(R.id.btn_cancel);
+
+        if(isVaildDate){
+            btn_cancel.setVisibility(View.VISIBLE);
+        }else{
+            btn_cancel.setVisibility(View.GONE);
+        }
 
 
         avi_indicator=findViewById(R.id.avi_indicator);
@@ -145,7 +167,6 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
         txt_serv_cost=findViewById(R.id.txt_serv_cost);
 
 
-        btn_cancel=findViewById(R.id.btn_cancel);
 
 
         img_petimg=findViewById(R.id.img_petimg);
@@ -197,10 +218,7 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
 
         btn_accept = findViewById(R.id.btn_accept);
 
-        Bundle bundle = getIntent().getExtras();
-
-        //Extract the data…
-        appointment_id = bundle.getString("appointment_id");
+        
 
         if (new ConnectionDetector(DoctorNewAppointmentDetailsActivity.this).isNetworkAvailable(DoctorNewAppointmentDetailsActivity.this)) {
             petNewAppointmentResponseCall();
@@ -559,6 +577,7 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("LongLogTag")
     private DoctorStartAppointmentRequest doctorStartAppointmentRequest(String id) {
         /*
          * _id : 5fc639ea72fc42044bfa1683
@@ -607,7 +626,6 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
             @SuppressLint("LongLogTag")
             @Override
             public void onFailure(@NonNull Call<AppoinmentCancelledResponse> call, @NonNull Throwable t) {
-
                 avi_indicator.smoothToHide();
                 Log.w(TAG,"appoinmentCancelledResponseCall flr"+"--->" + t.getMessage());
             }
@@ -644,4 +662,36 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
         super.onBackPressed();
         finish();
     }
+
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
+    private void compareDatesandTime(String currentDateandTime, String bookingDateandTime) {
+        try{
+
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+
+            String str1 = currentDateandTime;
+            Date currentDate = formatter.parse(str1);
+
+            String str2 = bookingDateandTime;
+            Date responseDate = formatter.parse(str2);
+
+            Log.w(TAG,"compareDatesandTime--->"+"responseDate :"+responseDate+" "+"currentDate :"+currentDate);
+
+            if (currentDate.compareTo(responseDate)<0 || responseDate.compareTo(currentDate) == 0)
+            {
+                Log.w(TAG,"date is equal");
+                isVaildDate = true;
+
+            }else{
+                Log.w(TAG,"date is not equal");
+                isVaildDate = false;
+            }
+
+
+
+        }catch (ParseException e1){
+            e1.printStackTrace();
+        }
+    }
+
 }

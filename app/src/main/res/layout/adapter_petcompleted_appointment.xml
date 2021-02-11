@@ -281,26 +281,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txt_completed_date"
-                android:gravity="end">
+                android:gravity="end"
+                android:layout_marginBottom="5dp">
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/img_prescriptiondetails"-->
-<!--                    android:layout_width="30dp"-->
-<!--                    android:layout_height="30dp"-->
-<!--                    android:layout_marginEnd="10dp"-->
-<!--                    android:layout_marginBottom="5dp"-->
-<!--                    android:contentDescription="@string/image"-->
-<!--                    android:scaleType="fitXY"-->
-<!--                    android:src="@drawable/medical_prescription" />-->
 
                 <Button
                     android:id="@+id/btn_add_review"
                     android:layout_width="80dp"
                     android:layout_height="30dp"
                     android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
                     android:background="@drawable/new_rounded_corner_btn"
                     android:fontFamily="@font/futuramediumbt"
                     android:text="@string/add_review"
@@ -314,7 +304,6 @@
                     android:layout_height="30dp"
                     android:layout_toEndOf="@+id/btn_add_review"
                     android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp"
                     android:layout_marginBottom="5dp"
                     android:background="@drawable/new_rounded_corner_btn"
                     android:fontFamily="@font/futuramediumbt"

@@ -23,7 +23,11 @@ import com.petfolio.infinitus.interfaces.OnAppointmentComplete;
 import com.petfolio.infinitus.responsepojo.SPAppointmentResponse;
 import com.petfolio.infinitus.serviceprovider.SPAppointmentDetailsActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 public class SPNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -37,7 +41,7 @@ public class SPNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.
     private OnAppointmentCancel onAppointmentCancel;
     private OnAppointmentComplete onAppointmentComplete;
     private int size;
-
+    private boolean isVaildDate;
 
 
     public SPNewAppointmentAdapter(Context context, List<SPAppointmentResponse.DataBean> newAppointmentResponseList, RecyclerView inbox_list, int size, OnAppointmentCancel onAppointmentCancel,OnAppointmentComplete onAppointmentComplete) {
@@ -117,6 +121,17 @@ public class SPNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.
             }
         });
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
+        String bookingDateandTime = newAppointmentResponseList.get(position).getBooking_date_time();
+        compareDatesandTime(currentDateandTime,bookingDateandTime);
+
+        if(isVaildDate){
+            holder.btn_cancel.setVisibility(View.VISIBLE);
+        }else{
+            holder.btn_cancel.setVisibility(View.GONE);
+        }
+
         holder.btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,6 +145,7 @@ public class SPNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.
             public void onClick(View v) {
                     Intent i = new Intent(context, SPAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.putExtra("appointment_id",newAppointmentResponseList.get(position).get_id());
+                    i.putExtra("bookedat",newAppointmentResponseList.get(position).getBooking_date_time());
                     i.putExtra("fromactivity",TAG);
                     context.startActivity(i);
 
@@ -190,6 +206,36 @@ public class SPNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.
 
 
 
+    @SuppressLint("LogNotTimber")
+    private void compareDatesandTime(String currentDateandTime, String bookingDateandTime) {
+        try{
+
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+
+            String str1 = currentDateandTime;
+            Date currentDate = formatter.parse(str1);
+
+            String str2 = bookingDateandTime;
+            Date responseDate = formatter.parse(str2);
+
+            Log.w(TAG,"compareDatesandTime--->"+"responseDate :"+responseDate+" "+"currentDate :"+currentDate);
+
+            if (currentDate.compareTo(responseDate)<0 || responseDate.compareTo(currentDate) == 0)
+            {
+                Log.w(TAG,"date is equal");
+                isVaildDate = true;
+
+            }else{
+                Log.w(TAG,"date is not equal");
+                isVaildDate = false;
+            }
+
+
+
+        }catch (ParseException e1){
+            e1.printStackTrace();
+        }
+    }
 
 
 

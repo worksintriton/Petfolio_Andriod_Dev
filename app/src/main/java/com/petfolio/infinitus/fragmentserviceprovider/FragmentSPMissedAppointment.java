@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,6 +37,8 @@ import com.wang.avi.AVLoadingIndicatorView;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -108,9 +111,32 @@ public class FragmentSPMissedAppointment extends Fragment implements View.OnClic
 
       
 
-        if (new ConnectionDetector(getActivity()).isNetworkAvailable(Objects.requireNonNull(getActivity()))) {
+        if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
             spMissedAppointmentResponseCall();
         }
+
+        final Handler handler = new Handler();
+        Timer timer = new Timer();
+        TimerTask doAsynchronousTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        try {
+                            //your method here
+                            if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
+                                spMissedAppointmentResponseCall();
+                            }
+
+                        } catch (Exception e) {
+                        }
+                    }
+                });
+            }
+        };
+        timer.schedule(doAsynchronousTask, 0, 30000);//you can put 30000(30 secs)
+
+
         return view;
     }
 

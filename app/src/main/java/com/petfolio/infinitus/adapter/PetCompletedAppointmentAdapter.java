@@ -3,7 +3,6 @@ package com.petfolio.infinitus.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,25 +20,23 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.doctor.DoctorPrescriptionDetailsActivity;
 import com.petfolio.infinitus.interfaces.AddReviewListener;
 import com.petfolio.infinitus.petlover.PetCompletedAppointmentDetailsActivity;
-import com.petfolio.infinitus.petlover.PetNewAppointmentDetailsActivity;
 import com.petfolio.infinitus.petlover.PetSPNewAppointmentDetailsActivity;
 import com.petfolio.infinitus.responsepojo.PetAppointmentResponse;
-import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
 
 import java.util.List;
 
 
 public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private  String TAG = "PetCompletedAppointmentAdapter";
-    private List<PetAppointmentResponse.DataBean> completedAppointmentResponseList;
-    private Context context;
+    private final String TAG = "PetCompletedAppointmentAdapter";
+    private final List<PetAppointmentResponse.DataBean> completedAppointmentResponseList;
+    private final Context context;
 
     int size;
-    private AddReviewListener addReviewListener;
+    private final AddReviewListener addReviewListener;
 
 
-    public PetCompletedAppointmentAdapter(Context context, List<PetAppointmentResponse.DataBean> completedAppointmentResponseList, RecyclerView inbox_list, int size,AddReviewListener addReviewListener) {
+    public PetCompletedAppointmentAdapter(Context context, List<PetAppointmentResponse.DataBean> completedAppointmentResponseList, int size, AddReviewListener addReviewListener) {
         this.completedAppointmentResponseList = completedAppointmentResponseList;
         this.context = context;
         this.size = size;
@@ -62,7 +59,7 @@ public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
 
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "LogNotTimber", "LongLogTag"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
         Log.w(TAG,"Pet name-->"+completedAppointmentResponseList.get(position).getPet_name());
         holder.txt_pettype.setText(completedAppointmentResponseList.get(position).getPet_name());
@@ -99,41 +96,29 @@ public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
 
         }
 
-        holder.btn_add_review.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addReviewListener.addReviewListener(completedAppointmentResponseList.get(position).get_id(),completedAppointmentResponseList.get(position).getUser_rate(),completedAppointmentResponseList.get(position).getUser_feedback());
+        holder.btn_add_review.setOnClickListener(v -> addReviewListener.addReviewListener(completedAppointmentResponseList.get(position).get_id(),completedAppointmentResponseList.get(position).getUser_rate(),completedAppointmentResponseList.get(position).getUser_feedback(),completedAppointmentResponseList.get(position).getAppointment_for()));
 
+        holder.btn__prescriptiondetails.setOnClickListener(v -> {
+            if(completedAppointmentResponseList.get(position).get_id() != null) {
+                Intent i = new Intent(context, DoctorPrescriptionDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("id", completedAppointmentResponseList.get(position).get_id());
+                context.startActivity(i);
             }
-        });
 
-        holder.btn__prescriptiondetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(completedAppointmentResponseList.get(position).get_id() != null) {
-                    Intent i = new Intent(context, DoctorPrescriptionDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra("id", completedAppointmentResponseList.get(position).get_id());
-                    context.startActivity(i);
-                }
-
-            }
         });
 
 
 
-        holder.ll_new.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(completedAppointmentResponseList.get(position).getAppointment_for() != null && completedAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("Doctor") ) {
-                    Intent i = new Intent(context, PetCompletedAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra("appointment_id",completedAppointmentResponseList.get(position).get_id());
-                    context.startActivity(i);
-                }else if(completedAppointmentResponseList.get(position).getAppointment_for() != null && completedAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("SP") ) {
-                    Intent i = new Intent(context, PetSPNewAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra("appointment_id",completedAppointmentResponseList.get(position).get_id());
-                    i.putExtra("fromactivity",TAG);
-                    context.startActivity(i);
-                }
+        holder.ll_new.setOnClickListener(v -> {
+            if(completedAppointmentResponseList.get(position).getAppointment_for() != null && completedAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("Doctor") ) {
+                Intent i = new Intent(context, PetCompletedAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("appointment_id",completedAppointmentResponseList.get(position).get_id());
+                context.startActivity(i);
+            }else if(completedAppointmentResponseList.get(position).getAppointment_for() != null && completedAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("SP") ) {
+                Intent i = new Intent(context, PetSPNewAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("appointment_id",completedAppointmentResponseList.get(position).get_id());
+                i.putExtra("fromactivity",TAG);
+                context.startActivity(i);
             }
         });
 
@@ -155,7 +140,7 @@ public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_petname,txt_pettype,txt_type,txt_completed_date,txt_service_cost,txt_lbl_doctorname,txt_doctorname;
-        public ImageView img_pet_imge,img_prescriptiondetails;
+        public ImageView img_pet_imge;
         public Button btn_cancel,btn_complete,btn_add_review,btn__prescriptiondetails;
         LinearLayout ll_new;
 
@@ -171,7 +156,6 @@ public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
             btn_complete = itemView.findViewById(R.id.btn_complete);
             txt_service_cost = itemView.findViewById(R.id.txt_service_cost);
             btn_add_review = itemView.findViewById(R.id.btn_add_review);
-            //img_prescriptiondetails = itemView.findViewById(R.id.img_prescriptiondetails);
             ll_new = itemView.findViewById(R.id.ll_new);
             btn__prescriptiondetails = itemView.findViewById(R.id.btn_prescriptiondetails);
             txt_lbl_doctorname = itemView.findViewById(R.id.txt_lbl_doctorname);

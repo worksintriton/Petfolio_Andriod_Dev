@@ -130,8 +130,8 @@ public class FragmentPetCompletedOrders extends Fragment implements View.OnClick
     }
 
     @Override
-    public void addReviewListener(String id, String userrate, String userfeedback) {
-        Log.w(TAG,"addReviewListener : "+"id : "+id+" userrate : "+userrate+" userfeedback : "+userfeedback);
+    public void addReviewListener(String id, String userrate, String userfeedback,String appointment_for) {
+        Log.w(TAG,"addReviewListener : "+"id : "+id+" userrate : "+userrate+" userfeedback : "+userfeedback+" appointment_for : "+appointment_for);
         showAddReview(id);
     }
 

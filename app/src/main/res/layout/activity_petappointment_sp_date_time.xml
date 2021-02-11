@@ -29,16 +29,13 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="15dp"
                 android:src="@drawable/back"
-                tools:ignore="ContentDescription"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="15dp" />
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/txt_toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/appointment"
                 android:textColor="@color/black"
@@ -48,41 +45,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp">
-
+                android:layout_marginStart="10dp">
 
                 <ImageView
+                    android:id="@+id/img_sos"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
                     android:src="@drawable/ic_sos"
                     tools:ignore="ContentDescription" />
 
                 <ImageView
+                    android:id="@+id/img_notification"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
                     android:src="@drawable/ic_notifications"
                     tools:ignore="ContentDescription" />
                 <ImageView
+                    android:id="@+id/img_cart"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_bag"
                     tools:ignore="ContentDescription"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"/>
+                    android:layout_marginStart="20dp" />
                 <ImageView
+                    android:id="@+id/img_profile"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_user"
                     tools:ignore="ContentDescription"
                     android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp" />
+                    android:layout_marginEnd="10dp" />
             </LinearLayout>
 
 
@@ -115,7 +109,6 @@
 
             <CalendarView
                 android:id="@+id/calender"
-                android:layout_centerInParent="true"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:visibility="gone">
@@ -126,9 +119,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
                 android:fontFamily="@font/futuramediumbt"
-                android:text="Time"
+                android:text="@string/time"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -139,8 +131,7 @@
                 android:orientation="vertical"
                 android:layout_marginStart="30dp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="30dp">
+                android:layout_marginTop="10dp">
 
 
 
@@ -168,9 +159,9 @@
                 android:id="@+id/tvlbldoctoravailable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:fontFamily="@font/futurabt"
-                android:text="Appointment Type"
+                android:text="@string/appointment_type"
                 android:textColor="@color/color"
                 android:textSize="16sp"
                 android:visibility="gone"/>
@@ -178,8 +169,6 @@
                 android:id="@+id/sub_layer1"
                 android:layout_width="263dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
                 android:visibility="gone">
@@ -190,14 +179,15 @@
                     android:id="@+id/radioGroup_check"
                     android:orientation="horizontal"
                     android:gravity="center_horizontal"
-                    android:checkedButton="1">
+                    android:checkedButton="1"
+                    tools:ignore="UselessParent">
 
                     <CheckBox
                         android:id="@+id/chat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:text="Chat"
+                        android:layout_marginEnd="20dp"
+                        android:text="@string/chat"
                         android:textSize="20sp"
                         android:theme="@style/MyCheckBox"
                         />
@@ -206,23 +196,18 @@
                         android:id="@+id/view"
                         android:layout_width="2dp"
                         android:layout_height="20dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
                         android:layout_marginTop="5dp"
-                        android:layout_marginRight="6dp"
+                        android:layout_marginEnd="6dp"
                         android:background="@color/color" />
 
                     <CheckBox
                         android:id="@+id/video"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginLeft="3dp"
-                        android:text="Video"
+                        android:layout_marginStart="3dp"
+                        android:text="@string/video"
                         android:textSize="20sp"
-                        android:theme="@style/MyCheckBox"
-                        android:layout_alignParentRight="true" />
+                        android:theme="@style/MyCheckBox" />
                 </RadioGroup>
             </RelativeLayout>
 

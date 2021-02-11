@@ -1229,7 +1229,7 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
         spCreateAppointmentRequest.setSp_feedback("");
         spCreateAppointmentRequest.setSp_rate("");
         spCreateAppointmentRequest.setUser_feedback("");
-        spCreateAppointmentRequest.setUser_rate("");
+        spCreateAppointmentRequest.setUser_rate("0");
         spCreateAppointmentRequest.setDisplay_date(currentDateandTime);
         spCreateAppointmentRequest.setServer_date_time("");
         spCreateAppointmentRequest.setPayment_id(Payment_id);

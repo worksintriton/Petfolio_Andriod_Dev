@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +36,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,19 +49,24 @@ import retrofit2.Response;
 public class FragmentPetMissedAppointment extends Fragment implements View.OnClickListener {
     private String TAG = "FragmentPetMissedAppointment";
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_no_records)
     TextView txt_no_records;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_missedappointment)
     RecyclerView rv_missedappointment;
 
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_load_more)
     Button btn_load_more;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_filter)
     Button btn_filter;
 
@@ -106,6 +114,28 @@ public class FragmentPetMissedAppointment extends Fragment implements View.OnCli
         if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
             petMissedAppointmentResponseCall();
         }
+
+        final Handler handler = new Handler();
+        Timer timer = new Timer();
+        TimerTask doAsynchronousTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        try {
+                            //your method here
+                            if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
+                                petMissedAppointmentResponseCall();
+                            }
+
+                        } catch (Exception e) {
+                        }
+                    }
+                });
+            }
+        };
+        timer.schedule(doAsynchronousTask, 0, 30000);//you can put 30000(30 secs)
+
         return view;
     }
 

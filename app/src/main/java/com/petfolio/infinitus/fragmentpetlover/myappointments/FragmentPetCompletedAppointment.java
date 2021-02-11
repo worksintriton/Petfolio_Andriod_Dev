@@ -3,12 +3,10 @@ package com.petfolio.infinitus.fragmentpetlover.myappointments;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +34,6 @@ import com.petfolio.infinitus.requestpojo.AddReviewRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverAppointmentRequest;
 import com.petfolio.infinitus.responsepojo.AddReviewResponse;
 import com.petfolio.infinitus.responsepojo.PetAppointmentResponse;
-import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -46,6 +43,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,20 +54,25 @@ import retrofit2.Response;
 
 
 public class FragmentPetCompletedAppointment extends Fragment implements View.OnClickListener, AddReviewListener {
-    private String TAG = "FragmentPetCompletedAppointment";
+    private final String TAG = "FragmentPetCompletedAppointment";
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_no_records)
     TextView txt_no_records;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_completedappointment)
     RecyclerView rv_completedappointment;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_load_more)
     Button btn_load_more;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_filter)
     Button btn_filter;
 
@@ -76,13 +80,11 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
 
 
     SessionManager session;
-    String type = "",name = "",doctorid = "";
-    private SharedPreferences preferences;
+    String doctorid = "";
     private Context mContext;
     private List<PetAppointmentResponse.DataBean> completedAppointmentResponseList;
     private String userid;
     private String userrate;
-    private AlertDialog.Builder alertDialogBuilder;
     private Dialog alertDialog;
 
 
@@ -90,12 +92,12 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
 
     }
 
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.w(TAG,"onCreateView");
 
-        preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         View view = inflater.inflate(R.layout.fragment_pet_completed_appointment, container, false);
 
         ButterKnife.bind(this, view);
@@ -122,11 +124,32 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
         if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
             petCompletedAppointmentResponseCall();
         }
+
+        final Handler handler = new Handler();
+        Timer timer = new Timer();
+        TimerTask doAsynchronousTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(() -> {
+                    try {
+                        //your method here
+                        if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
+                            petCompletedAppointmentResponseCall();
+                        }
+
+                    } catch (Exception ignored) {
+                    }
+                });
+            }
+        };
+        timer.schedule(doAsynchronousTask, 0, 30000);//you can put 30000(30 secs)
+
         return view;
     }
 
 
 
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
     private void petCompletedAppointmentResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -135,6 +158,7 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<PetAppointmentResponse>() {
+            @SuppressLint({"LongLogTag", "SetTextI18n"})
             @Override
             public void onResponse(@NonNull Call<PetAppointmentResponse> call, @NonNull Response<PetAppointmentResponse> response) {
                 avi_indicator.smoothToHide();
@@ -182,6 +206,7 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
         });
 
     }
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
     private PetLoverAppointmentRequest petLoverAppointmentRequest() {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentDateandTime = simpleDateFormat.format(new Date());
@@ -196,7 +221,7 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
         rv_completedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_completedappointment.setItemAnimator(new DefaultItemAnimator());
         int size = 3;
-        PetCompletedAppointmentAdapter petCompletedAppointmentAdapter = new PetCompletedAppointmentAdapter(getContext(), completedAppointmentResponseList, rv_completedappointment,size,this);
+        PetCompletedAppointmentAdapter petCompletedAppointmentAdapter = new PetCompletedAppointmentAdapter(getContext(), completedAppointmentResponseList, size,this);
         rv_completedappointment.setAdapter(petCompletedAppointmentAdapter);
 
     }
@@ -204,27 +229,28 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
         rv_completedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_completedappointment.setItemAnimator(new DefaultItemAnimator());
         int size = completedAppointmentResponseList.size();
-        PetCompletedAppointmentAdapter petCompletedAppointmentAdapter = new PetCompletedAppointmentAdapter(getContext(), completedAppointmentResponseList, rv_completedappointment,size,this);
+        PetCompletedAppointmentAdapter petCompletedAppointmentAdapter = new PetCompletedAppointmentAdapter(getContext(), completedAppointmentResponseList, size,this);
         rv_completedappointment.setAdapter(petCompletedAppointmentAdapter);
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btn_load_more:
-                setViewLoadMore();
-                break;
+        if (v.getId() == R.id.btn_load_more) {
+            setViewLoadMore();
         }
     }
 
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
     @Override
-    public void addReviewListener(String id, String userrate, String userfeedback) {
-        Log.w(TAG,"addReviewListener : "+"id : "+id+" userrate : "+userrate+" userfeedback : "+userfeedback);
-        showAddReview(id);
+    public void addReviewListener(String id, String userrate, String userfeedback,String appointment_for) {
+        Log.w(TAG,"addReviewListener : "+"id : "+id+" userrate : "+userrate+" userfeedback : "+userfeedback+" appointment_for : "+appointment_for);
+        showAddReview(id,appointment_for);
     }
 
-    private void showAddReview(String id) {
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
+    private void showAddReview(String id,String appointment_for) {
         try {
 
             Dialog dialog = new Dialog(mContext);
@@ -234,28 +260,27 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
             EditText edt_addreview = dialog.findViewById(R.id.edt_addreview);
             Button btn_addreview = dialog.findViewById(R.id.btn_addreview);
 
-            ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-                @Override
-                public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                     userrate = String.valueOf(rating);
-                    Log.w(TAG,"onRatingChanged userrate : "+userrate);
-                }
+            ratingBar.setOnRatingBarChangeListener((ratingBar1, rating, fromUser) -> {
+                 userrate = String.valueOf(rating);
+                Log.w(TAG,"onRatingChanged userrate : "+userrate);
             });
 
-            btn_addreview.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(userrate != null){
-                        dialog.dismiss();
-                    if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-                        addReviewResponseCall(id,edt_addreview.getText().toString(),userrate);
-                    }
-                    }else{
-                        showErrorLoading("Please choose a star.");
-                    }
+            btn_addreview.setOnClickListener(view -> {
+                if(userrate != null){
+                    dialog.dismiss();
+                if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
+                    if(appointment_for != null && appointment_for.equalsIgnoreCase("Doctor")){
+                        addReviewResponseCall(id, edt_addreview.getText().toString(), userrate);
 
-
+                    }else if(appointment_for != null && appointment_for.equalsIgnoreCase("SP")) {
+                        spaddReviewResponseCall(id, edt_addreview.getText().toString(), userrate);
+                    }
                 }
+                }else{
+                    showErrorLoading("Please choose a star.");
+                }
+
+
             });
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
@@ -269,7 +294,8 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
 
     }
 
-    private void addReviewResponseCall(String id,String userfeedback,String userrate) {
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
+    private void addReviewResponseCall(String id, String userfeedback, String userrate) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
@@ -299,6 +325,7 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
 
             }
 
+            @SuppressLint("LongLogTag")
             @Override
             public void onFailure(@NonNull Call<AddReviewResponse> call, @NonNull Throwable t) {
 
@@ -307,9 +334,58 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
             }
         });
 
+    } @SuppressLint({"LogNotTimber", "LongLogTag"})
+    private void spaddReviewResponseCall(String id, String userfeedback, String userrate) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<AddReviewResponse> call = apiInterface.spaddReviewResponseCall(RestUtils.getContentType(), addReviewRequest(id,userfeedback,userrate));
+        Log.w(TAG,"spaddReviewResponseCall url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<AddReviewResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<AddReviewResponse> call, @NonNull Response<AddReviewResponse> response) {
+
+                Log.w(TAG,"spaddReviewResponseCall"+ "--->" + new Gson().toJson(response.body()));
+
+                avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        showAddReviewSuccess();
+
+
+
+                    }
+                    else{
+                        showErrorLoading(response.body().getMessage());
+                    }
+                }
+
+
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onFailure(@NonNull Call<AddReviewResponse> call, @NonNull Throwable t) {
+
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"spaddReviewResponseCall flr"+"--->" + t.getMessage());
+            }
+        });
+
     }
+
+
+
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
     private AddReviewRequest addReviewRequest(String id, String userfeedback, String userrate) {
 
+        /*
+         * _id : 5fd30a701978e618628c966c
+         * user_feedback :
+         * user_rate : 0
+         */
         AddReviewRequest addReviewRequest = new AddReviewRequest();
         addReviewRequest.set_id(id);
         if(userfeedback != null){
@@ -338,16 +414,13 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
             Button btn_back = dialog.findViewById(R.id.btn_back);
 
 
-            btn_back.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                   dialog.dismiss();
-                    if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-                        petCompletedAppointmentResponseCall();
-                    }
-
-
+            btn_back.setOnClickListener(view -> {
+               dialog.dismiss();
+                if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
+                    petCompletedAppointmentResponseCall();
                 }
+
+
             });
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
@@ -361,7 +434,7 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
 
     }
     public void showErrorLoading(String errormesage){
-        alertDialogBuilder = new AlertDialog.Builder(mContext);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext);
         alertDialogBuilder.setMessage(errormesage);
         alertDialogBuilder.setPositiveButton("ok",
                 (arg0, arg1) -> hideLoading());

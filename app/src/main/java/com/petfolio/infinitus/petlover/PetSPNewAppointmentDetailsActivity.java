@@ -39,6 +39,7 @@ import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -110,6 +111,7 @@ public class PetSPNewAppointmentDetailsActivity extends AppCompatActivity implem
     TextView txt_address;
 
     String appointment_id;
+    String bookedat;
 
     ImageView img_videocall;
 
@@ -125,6 +127,7 @@ public class PetSPNewAppointmentDetailsActivity extends AppCompatActivity implem
     private String spid;
     private String appointmentid;
     private String userid;
+    private boolean isVaildDate;
 
     @SuppressLint("LongLogTag")
     @Override
@@ -136,6 +139,36 @@ public class PetSPNewAppointmentDetailsActivity extends AppCompatActivity implem
         SessionManager session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
        // userid = user.get(SessionManager.KEY_ID);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            appointment_id = extras.getString("appointment_id");
+            bookedat = extras.getString("bookedat");
+            fromactivity = extras.getString("fromactivity");
+
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
+
+        if(bookedat != null){
+            compareDatesandTime(currentDateandTime,bookedat);
+        }
+        btn_cancel=findViewById(R.id.btn_cancel);
+
+
+        if(isVaildDate){
+            btn_cancel.setVisibility(View.VISIBLE);
+        }else{
+            btn_cancel.setVisibility(View.GONE);
+        }
+
+
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("PetCompletedAppointmentAdapter") || fromactivity.equalsIgnoreCase("PetMissedAppointmentAdapter")){
+            btn_cancel.setVisibility(View.GONE);
+
+        }
+
+
 
 
 
@@ -154,7 +187,6 @@ public class PetSPNewAppointmentDetailsActivity extends AppCompatActivity implem
         txt_serv_cost=findViewById(R.id.txt_serv_cost);
 
 
-        btn_cancel=findViewById(R.id.btn_cancel);
 
 
         img_petimg=findViewById(R.id.img_petimg);
@@ -204,16 +236,6 @@ public class PetSPNewAppointmentDetailsActivity extends AppCompatActivity implem
 
         img_videocall=findViewById(R.id.img_videocall);
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            appointment_id = extras.getString("appointment_id");
-            fromactivity = extras.getString("fromactivity");
-            Log.w(TAG, "fromactivity : " + fromactivity);
-        }
-        if(fromactivity != null && fromactivity.equalsIgnoreCase("PetCompletedAppointmentAdapter") || fromactivity.equalsIgnoreCase("PetMissedAppointmentAdapter")){
-            btn_cancel.setVisibility(View.GONE);
-
-        }
 
         BottomNavigationView bottom_navigation_view = findViewById(R.id.bottom_navigation_view);
 
@@ -685,4 +707,36 @@ public class PetSPNewAppointmentDetailsActivity extends AppCompatActivity implem
         startActivity(intent);
         finish();
     }
+
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
+    private void compareDatesandTime(String currentDateandTime, String bookingDateandTime) {
+        try{
+
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+
+            String str1 = currentDateandTime;
+            Date currentDate = formatter.parse(str1);
+
+            String str2 = bookingDateandTime;
+            Date responseDate = formatter.parse(str2);
+
+            Log.w(TAG,"compareDatesandTime--->"+"responseDate :"+responseDate+" "+"currentDate :"+currentDate);
+
+            if (currentDate.compareTo(responseDate)<0 || responseDate.compareTo(currentDate) == 0)
+            {
+                Log.w(TAG,"date is equal");
+                isVaildDate = true;
+
+            }else{
+                Log.w(TAG,"date is not equal");
+                isVaildDate = false;
+            }
+
+
+
+        }catch (ParseException e1){
+            e1.printStackTrace();
+        }
+    }
+
 }

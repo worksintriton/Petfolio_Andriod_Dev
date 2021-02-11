@@ -272,6 +272,10 @@ public interface RestApiInterface {
     @POST("appointments/reviews/update")
     Call<AddReviewResponse>addReviewResponseCall(@Header("Content-Type") String type, @Body AddReviewRequest addReviewRequest  );
 
+    /*SP lover review add*/
+    @POST("sp_appointments/reviews/update")
+    Call<AddReviewResponse>spaddReviewResponseCall(@Header("Content-Type") String type, @Body AddReviewRequest addReviewRequest  );
+
 
     /*Specific service*/
     @POST("service_provider/mobile/servicedetails")

@@ -32,6 +32,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.adapter.PetLoverSOSAdapter;
 import com.petfolio.infinitus.adapter.SelectedServiceProviderAdapter;
 import com.petfolio.infinitus.api.APIClient;
@@ -347,6 +348,9 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
                 break;
             case R.id.img_sos:
                 goto_SOS();
+                break;
+            case R.id.img_notification:
+                startActivity(new Intent(SelectedServiceActivity.this, NotificationActivity.class));
                 break;
             case R.id.img_profile:
                 goto_Profile();

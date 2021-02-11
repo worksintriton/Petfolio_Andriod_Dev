@@ -3,8 +3,7 @@ package com.petfolio.infinitus.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,13 +20,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
-import com.petfolio.infinitus.petlover.EditYourPetProfileInfoActivity;
 import com.petfolio.infinitus.petlover.PetNewAppointmentDetailsActivity;
 import com.petfolio.infinitus.petlover.PetSPNewAppointmentDetailsActivity;
 import com.petfolio.infinitus.petlover.VideoCallPetLoverActivity;
 import com.petfolio.infinitus.responsepojo.PetAppointmentResponse;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
 
@@ -44,6 +46,7 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
 
     private int size;
     private String communicationtype;
+    private boolean isVaildDate;
 
     public PetNewAppointmentAdapter(Context context, List<PetAppointmentResponse.DataBean> newAppointmentResponseList, RecyclerView inbox_list,int size,OnAppointmentCancel onAppointmentCancel) {
         this.newAppointmentResponseList = newAppointmentResponseList;
@@ -68,7 +71,7 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
 
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "LogNotTimber"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
         Log.w(TAG,"Pet name-->"+newAppointmentResponseList.get(position).getPet_name());
@@ -137,17 +140,24 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
 
             }
 
-        holder.btn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onAppointmentCancel.onAppointmentCancel(newAppointmentResponseList.get(position).get_id(),newAppointmentResponseList.get(position).getAppointment_for(),newAppointmentResponseList.get(position).getUser_id(),newAppointmentResponseList.get(position).getDoctor_id(),newAppointmentResponseList.get(position).getBooking_Id(),newAppointmentResponseList.get(position).getSp_id());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
+        String bookingDateandTime = newAppointmentResponseList.get(position).getBooked_at();
+        compareDatesandTime(currentDateandTime,bookingDateandTime);
 
-            }
-        });
+        if(isVaildDate){
+            holder.btn_cancel.setVisibility(View.VISIBLE);
+        }else{
+            holder.btn_cancel.setVisibility(View.GONE);
+        }
 
-        holder.img_videocall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if(newAppointmentResponseList.get(position).getStart_appointment_status() != null && !newAppointmentResponseList.get(position).getStart_appointment_status().equalsIgnoreCase("Not Started")) {
+            holder.btn_cancel.setVisibility(View.GONE);
+        }
+
+
+            holder.btn_cancel.setOnClickListener(v -> onAppointmentCancel.onAppointmentCancel(newAppointmentResponseList.get(position).get_id(),newAppointmentResponseList.get(position).getAppointment_for(),newAppointmentResponseList.get(position).getUser_id(),newAppointmentResponseList.get(position).getDoctor_id(),newAppointmentResponseList.get(position).getBooking_Id(),newAppointmentResponseList.get(position).getSp_id()));
+            holder.img_videocall.setOnClickListener(v -> {
                 Log.w(TAG,"Start_appointment_status : "+newAppointmentResponseList.get(position).getStart_appointment_status());
                 if(newAppointmentResponseList.get(position).getStart_appointment_status() != null && newAppointmentResponseList.get(position).getStart_appointment_status().equalsIgnoreCase("Not Started")){
                     Toasty.warning(context,"Doctor is yet to start the Appointment. Please wait for the doctor to initiate the Appointment", Toast.LENGTH_SHORT, true).show();
@@ -159,24 +169,23 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
                 }
 
 
-            }
-        });
+            });
 
 
 
-        holder.ll_new.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(newAppointmentResponseList.get(position).getAppointment_for() != null && newAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("Doctor") ) {
-                    Intent i = new Intent(context, PetNewAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra("appointment_id",newAppointmentResponseList.get(position).get_id());
-                    context.startActivity(i);
-                }else if(newAppointmentResponseList.get(position).getAppointment_for() != null && newAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("SP") ) {
-                    Intent i = new Intent(context, PetSPNewAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra("appointment_id",newAppointmentResponseList.get(position).get_id());
-                    i.putExtra("fromactivity",TAG);
-                    context.startActivity(i);
-                }
+        holder.ll_new.setOnClickListener(v -> {
+            if(newAppointmentResponseList.get(position).getAppointment_for() != null && newAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("Doctor") ) {
+                Intent i = new Intent(context, PetNewAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("appointment_id",newAppointmentResponseList.get(position).get_id());
+                i.putExtra("bookedat",newAppointmentResponseList.get(position).getBooked_at());
+                i.putExtra("startappointmentstatus",newAppointmentResponseList.get(position).getStart_appointment_status());
+                context.startActivity(i);
+            }else if(newAppointmentResponseList.get(position).getAppointment_for() != null && newAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("SP") ) {
+                Intent i = new Intent(context, PetSPNewAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("appointment_id",newAppointmentResponseList.get(position).get_id());
+                i.putExtra("bookedat",newAppointmentResponseList.get(position).getBooked_at());
+                i.putExtra("fromactivity",TAG);
+                context.startActivity(i);
             }
         });
 
@@ -223,6 +232,35 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
 
 
 
+    }
+
+    @SuppressLint("LogNotTimber")
+    private void compareDatesandTime(String currentDateandTime, String bookingDateandTime) {
+        try{
+
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+
+            Date currentDate = formatter.parse(currentDateandTime);
+
+            Date responseDate = formatter.parse(bookingDateandTime);
+
+            Log.w(TAG,"compareDatesandTime--->"+"responseDate :"+responseDate+" "+"currentDate :"+currentDate);
+
+            if (currentDate.compareTo(responseDate)<0 || responseDate.compareTo(currentDate) == 0)
+            {
+                Log.w(TAG,"date is equal");
+                isVaildDate = true;
+
+            }else{
+                Log.w(TAG,"date is not equal");
+                isVaildDate = false;
+            }
+
+
+
+        }catch (ParseException e1){
+            e1.printStackTrace();
+        }
     }
 
 

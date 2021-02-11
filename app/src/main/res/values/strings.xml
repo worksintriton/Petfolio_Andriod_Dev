@@ -154,7 +154,6 @@
     <string name="service_name_pet_name">Service name * Pet Name</string>
     <string name="price">₹ 800</string>
     <string name="cancel_appointment">Cancel appointment</string>
-    <string name="chat">Chat</string>
     <string name="add_review">Add Review</string>
     <string name="all_categories">All categories</string>
     <string name="cancel_appointment_date">Cancelled on 01-Sep 2020</string>
@@ -363,11 +362,13 @@
     <string name="service_provider_name">Service provider name</string>
     <string name="selected_service">Selected service</string>
     <string name="notification_settings">Notification settings</string>
-    <string name="video">Video</string>
     <string name="status">Status</string>
     <string name="view_prescription">view prescription</string>
     <string name="consultation_fees">Consultation Fees</string>
     <string name="notification">Notification</string>
+    <string name="appointment_type">Appointment Type</string>
+    <string name="chat">Chat</string>
+    <string name="video">Video</string>
 
 
 </resources>

@@ -33,6 +33,7 @@ import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -114,11 +115,40 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
 
     LinearLayout ll_petlastvacinateddate;
     TextView txt_petlastvaccinatedage;
+    private String bookedat;
+    private String startappointmentstatus;
+    private boolean isVaildDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_new_appointment_details);
+
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            appointment_id = extras.getString("appointment_id");
+            bookedat = extras.getString("bookedat");
+            startappointmentstatus = extras.getString("startappointmentstatus");
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
+
+        if(bookedat != null){
+            compareDatesandTime(currentDateandTime,bookedat);
+        }
+        btn_cancel=findViewById(R.id.btn_cancel);
+
+
+        if(isVaildDate){
+            btn_cancel.setVisibility(View.VISIBLE);
+        }else{
+            btn_cancel.setVisibility(View.GONE);
+        }
+        if(startappointmentstatus != null && !startappointmentstatus.equalsIgnoreCase("Not Started")) {
+            btn_cancel.setVisibility(View.GONE);
+        }
+
 
 
         avi_indicator=findViewById(R.id.avi_indicator);
@@ -140,7 +170,6 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
         txt_serv_cost=findViewById(R.id.txt_serv_cost);
 
 
-        btn_cancel=findViewById(R.id.btn_cancel);
 
 
         img_petimg=findViewById(R.id.img_petimg);
@@ -190,11 +219,8 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
 
         img_videocall=findViewById(R.id.img_videocall);
 
-        Bundle bundle = getIntent().getExtras();
 
-        //Extract the data…
-        assert bundle != null;
-        appointment_id = bundle.getString("appointment_id");
+
 
         BottomNavigationView bottom_navigation_view = findViewById(R.id.bottom_navigation_view);
 
@@ -209,7 +235,7 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
     }
 
 
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private void petNewAppointmentResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -218,7 +244,7 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
         Log.w(TAG, "url  :%s" + call.request().url().toString());
 
         call.enqueue(new Callback<PetNewAppointmentDetailsResponse>() {
-            @SuppressLint("LongLogTag")
+            @SuppressLint({"LongLogTag", "LogNotTimber"})
             @Override
             public void onResponse(@NonNull Call<PetNewAppointmentDetailsResponse> call, @NonNull Response<PetNewAppointmentDetailsResponse> response) {
                 avi_indicator.smoothToHide();
@@ -230,6 +256,8 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
                     if (200 == response.body().getCode()) {
 
                         String vaccinated , addr = null, usrname = null;
+
+
 
                         String usr_image = response.body().getData().getDoctor_id().getProfile_img();
 
@@ -306,7 +334,7 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
     }
 
 
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private PetNewAppointmentDetailsRequest petNewAppointmentDetailsRequest() {
 
         PetNewAppointmentDetailsRequest petNewAppointmentDetailsRequest = new PetNewAppointmentDetailsRequest();
@@ -315,7 +343,7 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
         return petNewAppointmentDetailsRequest;
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "LongLogTag", "LogNotTimber"})
     private void setView(String usrname, String usr_image, String servname, String servcost, String pet_name, String pet_image, String pet_type, String breed, String gender, String colour, String weight, String age, String order_date, String orderid, String payment_method, String order_cost, String vaccinated, String addr) {
 
 
@@ -417,78 +445,46 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
             txt_address.setText(addr);
         }
 
-        img_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        img_back.setOnClickListener(v -> onBackPressed());
 
-                onBackPressed();
+        img_videocall.setOnClickListener(v -> {
+            Log.w(TAG,"Start_appointment_status : "+start_appointment_status);
+            if(start_appointment_status != null && start_appointment_status.equalsIgnoreCase("Not Started")){
+                Toasty.warning(PetNewAppointmentDetailsActivity.this,"Doctor is yet to start the Appointment. Please wait for the doctor to initiate the Appointment", Toast.LENGTH_SHORT, true).show();
+            }else {
+                Intent i = new Intent(PetNewAppointmentDetailsActivity.this, VideoCallPetLoverActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("id", appointment_id);
+                Log.w(TAG, "ID-->" + appointment_id);
+                startActivity(i);
             }
+
+
         });
 
-        img_videocall.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onClick(View v) {
-                Log.w(TAG,"Start_appointment_status : "+start_appointment_status);
-                if(start_appointment_status != null && start_appointment_status.equalsIgnoreCase("Not Started")){
-                    Toasty.warning(PetNewAppointmentDetailsActivity.this,"Doctor is yet to start the Appointment. Please wait for the doctor to initiate the Appointment", Toast.LENGTH_SHORT, true).show();
-                }else {
-                    Intent i = new Intent(PetNewAppointmentDetailsActivity.this, VideoCallPetLoverActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra("id", appointment_id);
-                    Log.w(TAG, "ID-->" + appointment_id);
-                    startActivity(i);
-                }
-
-
-            }
-        });
-
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                showStatusAlert(appointment_id,"Doctor");
-            }
-        });
+        btn_cancel.setOnClickListener(v -> showStatusAlert(appointment_id));
 
     }
 
-    private void showStatusAlert(String id,String appointmenttype) {
+    @SuppressLint("SetTextI18n")
+    private void showStatusAlert(String id) {
         try {
             dialog = new Dialog(PetNewAppointmentDetailsActivity.this);
             dialog.setContentView(R.layout.alert_approve_reject_layout);
-            TextView tvheader = (TextView)dialog.findViewById(R.id.tvInternetNotConnected);
+            TextView tvheader = dialog.findViewById(R.id.tvInternetNotConnected);
             tvheader.setText(R.string.cancelappointment);
-            Button dialogButtonApprove = (Button) dialog.findViewById(R.id.btnApprove);
+            Button dialogButtonApprove = dialog.findViewById(R.id.btnApprove);
             dialogButtonApprove.setText("Yes");
-            Button dialogButtonRejected = (Button) dialog.findViewById(R.id.btnReject);
+            Button dialogButtonRejected = dialog.findViewById(R.id.btnReject);
             dialogButtonRejected.setText("No");
 
-            dialogButtonApprove.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                    //if(appointmenttype != null && appointmenttype.equalsIgnoreCase("Doctor")){
-                        appoinmentCancelledResponseCall(id);
-                   // } else if(appointmenttype != null && appointmenttype.equalsIgnoreCase("SP")){
-                        //spappoinmentCancelledResponseCall(id);
-                    //}
+            dialogButtonApprove.setOnClickListener(view -> {
+                dialog.dismiss();
+                    appoinmentCancelledResponseCall(id);
 
 
 
-                }
             });
-            dialogButtonRejected.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // Toasty.info(context, "Rejected Successfully", Toast.LENGTH_SHORT, true).show();
-                    dialog.dismiss();
-
-
-
-
-                }
-            });
+            dialogButtonRejected.setOnClickListener(view -> dialog.dismiss());
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
 
@@ -499,7 +495,7 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
 
     }
 
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private void appoinmentCancelledResponseCall(String id) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -508,7 +504,7 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
         Log.w(TAG,"appoinmentCancelledResponseCall url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<AppoinmentCancelledResponse>() {
-            @SuppressLint("LongLogTag")
+            @SuppressLint({"LongLogTag", "LogNotTimber"})
             @Override
             public void onResponse(@NonNull Call<AppoinmentCancelledResponse> call, @NonNull Response<AppoinmentCancelledResponse> response) {
 
@@ -525,9 +521,7 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
 
 
                     }
-                    else{
-                        //showErrorLoading(response.body().getMessage());
-                    }
+
                 }
 
 
@@ -544,7 +538,7 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
 
     }
 
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private AppoinmentCancelledRequest appoinmentCancelledRequest(String id) {
 
         /*
@@ -606,4 +600,34 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
         startActivity(intent);
         finish();
     }
+
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
+    private void compareDatesandTime(String currentDateandTime, String bookingDateandTime) {
+        try{
+
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+
+            Date currentDate = formatter.parse(currentDateandTime);
+
+            Date responseDate = formatter.parse(bookingDateandTime);
+
+            Log.w(TAG,"compareDatesandTime--->"+"responseDate :"+responseDate+" "+"currentDate :"+currentDate);
+
+            if (currentDate.compareTo(responseDate)<0 || responseDate.compareTo(currentDate) == 0)
+            {
+                Log.w(TAG,"date is equal");
+                isVaildDate = true;
+
+            }else{
+                Log.w(TAG,"date is not equal");
+                isVaildDate = false;
+            }
+
+
+
+        }catch (ParseException e1){
+            e1.printStackTrace();
+        }
+    }
+
 }

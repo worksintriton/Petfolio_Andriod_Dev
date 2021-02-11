@@ -35,6 +35,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
+import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.activity.location.ManageAddressActivity;
 import com.petfolio.infinitus.adapter.ManagePetListAdapter;
 import com.petfolio.infinitus.adapter.PetLoverSOSAdapter;
@@ -279,6 +280,12 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
             intent.putExtra("catid",catid);
             intent.putExtra("from",from);
             startActivity(intent);
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetMyappointmentsActivity")){
+            Intent intent = new Intent(getApplicationContext(),PetMyappointmentsActivity.class);
+            startActivity(intent);
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetServiceAppointment_Doctor_Date_Time_Activity")){
+            Intent intent = new Intent(getApplicationContext(),PetServiceAppointment_Doctor_Date_Time_Activity.class);
+            startActivity(intent);
         }
         else if(active_tag != null){
             callDirections(active_tag);
@@ -318,6 +325,9 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
                 break;
             case R.id.img_sos:
                 goto_SOS();
+                break;
+                case R.id.img_notification:
+                    startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
                 break;
         }
     }
