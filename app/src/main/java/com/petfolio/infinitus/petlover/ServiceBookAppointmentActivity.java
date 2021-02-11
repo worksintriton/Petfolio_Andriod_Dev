@@ -1039,8 +1039,6 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
             edt_petage.requestFocus();
             can_proceed = false;
         }
-
-
         return can_proceed;
     }
 

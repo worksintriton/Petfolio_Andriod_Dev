@@ -62,7 +62,7 @@ public class DoctorMyCalendarAvlTimesResponse {
     public static class DataBean  {
         /**
          * Time : 12:00 AM
-         * 24_format : 00:00:00
+         * format : 00:00:00
          * Status : false
          */
 

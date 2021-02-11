@@ -13,20 +13,17 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class APIClient {
 
-
-
     private static Retrofit retrofit = null;
     private static OkHttpClient client;
 
 
     /*live*/
- /* public static String BASE_URL = "http://52.25.163.13:3000/api/";
-  public static String IMAGE_BASE_URL = "http://52.25.163.13:3000/";
-*/
-    /*dev*/
+  /*public static String BASE_URL = "http://52.25.163.13:3000/api/";
+  public static String IMAGE_BASE_URL = "http://52.25.163.13:3000/";*/
 
+     /*dev*/
     public static String BASE_URL = "http://54.212.108.156:3000/api/";
-   public static String IMAGE_BASE_URL = "http://54.212.108.156:3000/";
+    public static String IMAGE_BASE_URL = "http://54.212.108.156:3000/";
 
 
 
