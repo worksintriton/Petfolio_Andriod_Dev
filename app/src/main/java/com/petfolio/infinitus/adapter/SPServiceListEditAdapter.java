@@ -35,7 +35,7 @@ public class SPServiceListEditAdapter extends  RecyclerView.Adapter<RecyclerView
     private String chservice;
     private String strTimeslot;
     private boolean isChbxChecked;
-    private Integer amount;
+    private int amount = 0;
     private boolean isValueAdded = false;
 
 
@@ -71,7 +71,7 @@ public class SPServiceListEditAdapter extends  RecyclerView.Adapter<RecyclerView
         }
         Log.w(TAG,"spServiceList : "+new Gson().toJson(spServiceList));
         if(spServiceList != null && spServiceList.size() > 0) {
-            if (spServiceList.get(position).getAmount() != null) {
+            if (spServiceList.get(position).getAmount() != 0) {
                 holder.txt_amount.setText(spServiceList.get(position).getAmount() + "");
             }if (spServiceList.get(position).getTime_slots() != null) {
                 holder.txt_timeslottype.setText(spServiceList.get(position).getTime_slots());
