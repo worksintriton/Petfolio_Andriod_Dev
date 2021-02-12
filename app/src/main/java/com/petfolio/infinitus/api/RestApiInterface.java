@@ -455,7 +455,7 @@ public interface RestApiInterface {
     Call<HolidayDeleteResponse>spHolidayDeleteResponseCall(@Header("Content-Type") String type, @Body HolidayDeleteRequest holidayDeleteRequest  );
 
     /*SP Create Appointment*/
-    @POST(" sp_appointments/mobile/create")
+    @POST("sp_appointments/mobile/create")
     Call<SPCreateAppointmentResponse>SPCreateAppointmentResponseCall(@Header("Content-Type") String type, @Body SPCreateAppointmentRequest spCreateAppointmentRequest);
 
     /*SP New Appointment*/

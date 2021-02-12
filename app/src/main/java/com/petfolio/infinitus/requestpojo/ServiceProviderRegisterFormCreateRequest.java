@@ -221,14 +221,14 @@ public class ServiceProviderRegisterFormCreateRequest {
 
         private String bus_service_list;
         private String time_slots;
-        private Integer amount;
+        private int amount;
 
 
-        public Integer getAmount() {
+        public int getAmount() {
             return amount;
         }
 
-        public void setAmount(Integer amount) {
+        public void setAmount(int amount) {
             this.amount = amount;
         }
 

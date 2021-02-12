@@ -111,7 +111,7 @@ public class SPServiceListResponse {
             private String service_list;
             private String bus_service_list;
             private String time_slots;
-            private Integer amount;
+            private int amount;
             private boolean isChbxChecked;
             private boolean isValueAdded;
 
@@ -147,11 +147,11 @@ public class SPServiceListResponse {
                 this.time_slots = time_slots;
             }
 
-            public Integer getAmount() {
+            public int getAmount() {
                 return amount;
             }
 
-            public void setAmount(Integer amount) {
+            public void setAmount(int amount) {
                 this.amount = amount;
             }
 

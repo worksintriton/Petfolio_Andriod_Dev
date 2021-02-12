@@ -263,13 +263,13 @@ public class ServiceProviderRegisterFormCreateResponse {
              * time_slots : 15 mins
              */
 
-            private Integer amount;
+            private int amount;
 
-            public Integer getAmount() {
+            public int getAmount() {
                 return amount;
             }
 
-            public void setAmount(Integer amount) {
+            public void setAmount(int amount) {
                 this.amount = amount;
             }
 
