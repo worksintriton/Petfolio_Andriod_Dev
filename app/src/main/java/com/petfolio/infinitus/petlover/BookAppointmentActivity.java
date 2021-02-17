@@ -1199,10 +1199,6 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
          */
         List<PetAppointmentCreateRequest.DocAttchedBean> doc_attched = new ArrayList<>();
 
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
-        String currentDateandTime = simpleDateFormat.format(new Date());
-        /*String currenttime = currentDateandTime.substring(currentDateandTime.indexOf(' ') + 1);
-        String currentdate =  currentDateandTime.substring(0, currentDateandTime.indexOf(' '));*/
 
         @SuppressLint("SimpleDateFormat") DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy");
         @SuppressLint("SimpleDateFormat") DateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");

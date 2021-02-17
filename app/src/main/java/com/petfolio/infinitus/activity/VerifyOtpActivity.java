@@ -39,7 +39,7 @@ import com.petfolio.infinitus.serviceprovider.ServiceProviderRegisterFormActivit
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
-import com.petfolio.infinitus.vendor.VenderRegisterFormActivity;
+import com.petfolio.infinitus.vendor.VendorRegisterFormActivity;
 import com.petfolio.infinitus.vendor.VendorDashboardActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -421,7 +421,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                                     startActivity(new Intent(VerifyOtpActivity.this, ServiceProviderRegisterFormActivity.class));
 
                                 }else if(usertype == 3 ){
-                                    startActivity(new Intent(VerifyOtpActivity.this, VenderRegisterFormActivity.class));
+                                    startActivity(new Intent(VerifyOtpActivity.this, VendorRegisterFormActivity.class));
 
                                 }else if(usertype == 4 ){
                                     startActivity(new Intent(VerifyOtpActivity.this, DoctorBusinessInfoActivity.class));

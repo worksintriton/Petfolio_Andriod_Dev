@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".vendor.VenderRegisterFormActivity">
+    tools:context=".vendor.VendorRegisterFormActivity">
 
 
     <LinearLayout
@@ -80,7 +80,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/rectangle_corner"
-                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     android:fontFamily="@font/futuramediumbt"
                     android:hint="@string/businessemail"
                     android:inputType="textEmailAddress"

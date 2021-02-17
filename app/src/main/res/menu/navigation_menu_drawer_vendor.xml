@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/group1">
+        <item android:id="@+id/nav_item_one"
+            android:icon="@drawable/myorders"
+            android:title="Customer Orders" />
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/group2">
+        <item android:id="@+id/nav_item_two"
+            android:icon="@drawable/ic_shop"
+            android:title="Manage Products" />
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/group3">
+        <item android:id="@+id/nav_item_three"
+            android:icon="@drawable/myorders"
+            android:title="My Orders" />
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/group4">
+        <item android:id="@+id/nav_item_four"
+            android:icon="@drawable/like"
+            android:title="Favourites" />
+    </group>
+
+
+
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/group5">
+        <item android:id="@+id/nav_item_five"
+            android:icon="@drawable/discount"
+            android:title="My Coupons" />
+    </group>
+
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/group6">
+        <item android:id="@+id/nav_item_six"
+            android:icon="@drawable/report"
+            android:title="Reports" />
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/group7">
+        <item android:id="@+id/nav_item_seven"
+            android:icon="@drawable/settings"
+            android:title="Settings" />
+    </group>
+
+
+
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/group8">
+        <item android:id="@+id/nav_item_eight"
+            android:icon="@drawable/logout"
+            android:title="Logout" />
+    </group>
+
+
+
+</menu>

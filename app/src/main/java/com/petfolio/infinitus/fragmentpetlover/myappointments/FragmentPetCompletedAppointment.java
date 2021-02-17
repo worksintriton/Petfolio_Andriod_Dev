@@ -255,7 +255,7 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
 
             Dialog dialog = new Dialog(mContext);
             dialog.setContentView(R.layout.addreview_popup_layout);
-            dialog.setCancelable(false);
+            dialog.setCancelable(true);
             RatingBar ratingBar = dialog.findViewById(R.id.ratingBar);
             EditText edt_addreview = dialog.findViewById(R.id.edt_addreview);
             Button btn_addreview = dialog.findViewById(R.id.btn_addreview);

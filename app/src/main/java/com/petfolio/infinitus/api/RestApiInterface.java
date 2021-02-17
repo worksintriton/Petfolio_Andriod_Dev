@@ -61,6 +61,7 @@ import com.petfolio.infinitus.requestpojo.ServiceCatRequest;
 import com.petfolio.infinitus.requestpojo.SignupRequest;
 import com.petfolio.infinitus.requestpojo.UserStatusUpdateRequest;
 import com.petfolio.infinitus.requestpojo.ServiceProviderRegisterFormCreateRequest;
+import com.petfolio.infinitus.requestpojo.VendorOrderRequest;
 import com.petfolio.infinitus.requestpojo.VendorRegisterFormCreateRequest;
 import com.petfolio.infinitus.responsepojo.AddReviewResponse;
 import com.petfolio.infinitus.responsepojo.AddYourPetResponse;
@@ -121,10 +122,12 @@ import com.petfolio.infinitus.responsepojo.SPFilterPriceListResponse;
 import com.petfolio.infinitus.responsepojo.SPServiceListResponse;
 import com.petfolio.infinitus.responsepojo.SPSpecificServiceDetailsResponse;
 import com.petfolio.infinitus.responsepojo.ServiceCatResponse;
+import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
 import com.petfolio.infinitus.responsepojo.SignupResponse;
 import com.petfolio.infinitus.responsepojo.UserStatusUpdateResponse;
 import com.petfolio.infinitus.responsepojo.UserTypeListResponse;
 import com.petfolio.infinitus.responsepojo.ServiceProviderRegisterFormCreateResponse;
+import com.petfolio.infinitus.responsepojo.VendorOrderResponse;
 import com.petfolio.infinitus.responsepojo.VendorRegisterFormCreateResponse;
 
 import okhttp3.MultipartBody;
@@ -511,5 +514,14 @@ public interface RestApiInterface {
     /*notifications spsend request*/
     @POST("notification/mobile/alert/sp_notification")
     Call<NotificationSendResponse> spnotificationSendResponseCall(@Header("Content-Type") String type, @Body SPNotificationSendRequest spNotificationSendRequest);
+
+
+    /*Vendor Order*/
+    @POST("order_details/getorder_list")
+    Call<VendorOrderResponse>vendorOrderResponseCall(@Header("Content-Type") String type, @Body VendorOrderRequest vendorOrderRequest);
+
+    /*user types list*/
+    @GET("product_details/getproductdetails_list")
+    Call<ShopDashboardResponse> shopDashboardResponseCall(@Header("Content-Type") String type);
 
 }

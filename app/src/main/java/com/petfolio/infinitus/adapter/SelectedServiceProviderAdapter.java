@@ -60,11 +60,11 @@ public class SelectedServiceProviderAdapter extends  RecyclerView.Adapter<Recycl
     @SuppressLint("SetTextI18n")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
-
         currentItem = serviceProviderList.get(position);
+        holder.txt_serv_offer.setVisibility(View.GONE);
         holder.btn_book.setText("View");
         holder.txt_service_providers.setText(serviceProviderList.get(position).getService_provider_name());
-        holder.txt_serv_price.setText(serviceProviderList.get(position).getService_price()+"");
+        holder.txt_serv_price.setText("\u20B9 "+serviceProviderList.get(position).getService_price());
         holder.txt_serv_offer.setText(serviceProviderList.get(position).getService_offer()+"");
         holder.txt_place.setText(serviceProviderList.get(position).getService_place());
         holder.txt_km.setText(serviceProviderList.get(position).getDistance()+" km away");

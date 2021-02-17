@@ -211,7 +211,7 @@
     <string name="payment_method">Payment Method</string>
     <string name="order_cost">Order cost</string>
     <string name="address">Address</string>
-    <string name="order_details">Order Details</string>
+    <string name="order_details">Order Details </string>
     <string name="allergies_pet_details">Allergies :</string>
     <string name="prescription">Prescription</string>
     <string name="before_given_prescription_details">Before given Prescription Details</string>
@@ -303,7 +303,7 @@
     <string name="business">Business</string>
 
     <string name="recent_search">Recent search</string>
-    <string name="today_deal">Todays deal</string>
+    <string name="today_deal">Today\'s deal</string>
     <string name="most_searched_products">most searched products</string>
     <string name="community">Community</string>
 
@@ -369,6 +369,14 @@
     <string name="appointment_type">Appointment Type</string>
     <string name="chat">Chat</string>
     <string name="video">Video</string>
+
+    <string name="orderid">Order ID</string>
+    <string name="product_title">Product title</string>
+    <string name="orderon">Order on</string>
+    <string name="deliveredon">Delivered on</string>
+    <string name="cancelledon">Cancelled on</string>
+
+
 
 
 </resources>

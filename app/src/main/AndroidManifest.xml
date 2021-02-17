@@ -435,7 +435,7 @@
 
         <!-- Vendor -->
         <activity
-            android:name=".vendor.VenderRegisterFormActivity"
+            android:name=".vendor.VendorRegisterFormActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />

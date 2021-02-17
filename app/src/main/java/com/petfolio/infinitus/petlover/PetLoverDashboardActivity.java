@@ -52,6 +52,7 @@ import com.petfolio.infinitus.api.API;
 import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetCareFragment;
 import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetHomeFragment;
 import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetServicesFragment;
+import com.petfolio.infinitus.fragmentpetlover.bottommenu.VendorShopFragment;
 import com.petfolio.infinitus.responsepojo.GetAddressResultResponse;
 import com.petfolio.infinitus.service.GPSTracker;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -90,6 +91,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
     final Fragment petHomeFragment = new PetHomeFragment();
     final Fragment petCareFragment = new PetCareFragment();
     final Fragment petServicesFragment = new PetServicesFragment();
+    final Fragment vendorShopFragment = new VendorShopFragment();
 
     public static String active_tag = "1";
 
@@ -141,7 +143,9 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
                 bottom_navigation_view.setSelectedItemId(R.id.home);
                 loadFragment(new PetHomeFragment());
             }else if(tag.equalsIgnoreCase("2")){
+                active = vendorShopFragment;
                 bottom_navigation_view.setSelectedItemId(R.id.shop);
+                loadFragment(new VendorShopFragment());
             }else if(tag.equalsIgnoreCase("3")){
                 active = petServicesFragment;
                 bottom_navigation_view.setSelectedItemId(R.id.services);
@@ -250,6 +254,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
                 break;
                 case R.id.shop:
                     active_tag = "2";
+                    replaceFragment(new VendorShopFragment());
                 break;
                 case R.id.services:
                     active_tag = "3";
@@ -257,17 +262,18 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
                     break;
                 case R.id.care:
                     active_tag = "4";
-                replaceFragment(new PetCareFragment());
-                break;
+                    replaceFragment(new PetCareFragment());
+                    break;
             case R.id.community:
-                active_tag = "5";
-                break;
+                    active_tag = "5";
+                    break;
 
             default:
                 return  false;
         }
         return true;
     }
+    @SuppressLint("LogNotTimber")
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

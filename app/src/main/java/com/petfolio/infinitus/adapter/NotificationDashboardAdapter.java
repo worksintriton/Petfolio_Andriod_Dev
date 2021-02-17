@@ -37,11 +37,11 @@ public class NotificationDashboardAdapter extends  RecyclerView.Adapter<Recycler
   private List<NotificationGetlistResponse.DataBean> notificationGetlistResponseList;
    
 
-    SessionManager session;
+    private int currentSelectedPosition = RecyclerView.NO_POSITION;
 
 
 
-   public NotificationDashboardAdapter(Context context, List<NotificationGetlistResponse.DataBean> notificationGetlistResponseList) {
+    public NotificationDashboardAdapter(Context context, List<NotificationGetlistResponse.DataBean> notificationGetlistResponseList) {
         this.notificationGetlistResponseList = notificationGetlistResponseList;
         this.context = context;
 
@@ -67,6 +67,7 @@ public class NotificationDashboardAdapter extends  RecyclerView.Adapter<Recycler
         currentItem = notificationGetlistResponseList.get(position);
         holder.txt_notification_title.setText(currentItem.getNotify_title());
         holder.txt_message.setText(currentItem.getNotify_descri());
+        holder.txt_message_details.setText(currentItem.getNotify_descri());
         holder.txt_date.setText(currentItem.getDate_and_time());
         if (currentItem.getNotify_img() != null && !currentItem.getNotify_img().isEmpty()) {
 
@@ -86,6 +87,12 @@ public class NotificationDashboardAdapter extends  RecyclerView.Adapter<Recycler
             @Override
             public void onClick(View v) {
 
+                currentSelectedPosition = position;
+                notifyDataSetChanged();
+
+
+
+
                 /*Intent intent = new Intent(context, DoctorClinicDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("doctorid",doctorDetailsResponseList.get(position).getUser_id());
                 intent.putExtra("doctorname",doctorDetailsResponseList.get(position).getDoctor_name());
@@ -102,6 +109,16 @@ public class NotificationDashboardAdapter extends  RecyclerView.Adapter<Recycler
 
         });
 
+      if (currentSelectedPosition == position) {
+          holder.txt_message_details.setVisibility(View.VISIBLE);
+          holder.txt_message.setVisibility(View.GONE);
+
+
+      } else {
+          holder.txt_message.setVisibility(View.VISIBLE);
+          holder.txt_message_details.setVisibility(View.GONE);
+      }
+
    }
 
    @Override
@@ -116,7 +133,7 @@ public class NotificationDashboardAdapter extends  RecyclerView.Adapter<Recycler
         return position;
     }
     class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_message,txt_date,txt_notification_title;
+        public TextView txt_message,txt_date,txt_notification_title,txt_message_details;
         public LinearLayout ll_root;
         public ImageView img_notify_imge;
 
@@ -127,9 +144,11 @@ public class NotificationDashboardAdapter extends  RecyclerView.Adapter<Recycler
 
             txt_notification_title = itemView.findViewById(R.id.txt_notification_title);
             txt_message = itemView.findViewById(R.id.txt_message);
+            txt_message_details = itemView.findViewById(R.id.txt_message_details);
             txt_date = itemView.findViewById(R.id.txt_date);
             img_notify_imge = itemView.findViewById(R.id.img_notify_imge);
             ll_root = itemView.findViewById(R.id.ll_root);
+            txt_message_details.setVisibility(View.GONE);
 
         }
 

@@ -67,6 +67,8 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -1210,12 +1212,35 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
          * missed_at :
          * mobile_type : Admin
          */
+
+
+
+        @SuppressLint("SimpleDateFormat") DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy");
+        @SuppressLint("SimpleDateFormat") DateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        Date date = null;
+        try {
+            date = inputFormat.parse(SP_ava_Date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String outputDateStr = outputFormat.format(date);
+        String outputTimeStr = null;
+
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat h_mm_a   = new SimpleDateFormat("hh:mm aa");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat hh_mm_ss = new SimpleDateFormat("HH:mm:ss");
+
+        try {
+            Date d1 = h_mm_a.parse(selectedTimeSlot);
+            outputTimeStr =hh_mm_ss.format(d1);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String displaydateandtime = outputDateStr+" "+outputTimeStr;
+
         List<SPCreateAppointmentRequest.SpAttchedBean> sp_attched = new ArrayList<>();
 
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
-        String currentDateandTime = simpleDateFormat.format(new Date());
-        /*String currenttime = currentDateandTime.substring(currentDateandTime.indexOf(' ') + 1);
-        String currentdate =  currentDateandTime.substring(0, currentDateandTime.indexOf(' '));*/
 
         SPCreateAppointmentRequest spCreateAppointmentRequest = new SPCreateAppointmentRequest();
         spCreateAppointmentRequest.setSp_id(spuserid);
@@ -1230,7 +1255,7 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
         spCreateAppointmentRequest.setSp_rate("");
         spCreateAppointmentRequest.setUser_feedback("");
         spCreateAppointmentRequest.setUser_rate("0");
-        spCreateAppointmentRequest.setDisplay_date(currentDateandTime);
+        spCreateAppointmentRequest.setDisplay_date(displaydateandtime);
         spCreateAppointmentRequest.setServer_date_time("");
         spCreateAppointmentRequest.setPayment_id(Payment_id);
         spCreateAppointmentRequest.setPayment_method("Online");
