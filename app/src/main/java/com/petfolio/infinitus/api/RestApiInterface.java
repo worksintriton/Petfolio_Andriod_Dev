@@ -515,7 +515,6 @@ public interface RestApiInterface {
     @POST("notification/mobile/alert/sp_notification")
     Call<NotificationSendResponse> spnotificationSendResponseCall(@Header("Content-Type") String type, @Body SPNotificationSendRequest spNotificationSendRequest);
 
-
     /*Vendor Order*/
     @POST("order_details/getorder_list")
     Call<VendorOrderResponse>vendorOrderResponseCall(@Header("Content-Type") String type, @Body VendorOrderRequest vendorOrderRequest);

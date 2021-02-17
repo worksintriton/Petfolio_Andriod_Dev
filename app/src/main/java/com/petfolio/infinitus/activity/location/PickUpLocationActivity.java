@@ -199,15 +199,15 @@ public class PickUpLocationActivity extends FragmentActivity implements OnMapRea
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LatLng CHENNAI_LATLNG = new LatLng(13.067439, 80.237617);
+       // LatLng CHENNAI_LATLNG = new LatLng(13.067439, 80.237617);
 
         mMap = googleMap;
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
+       /* mMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
                 .target(CHENNAI_LATLNG)
                 .zoom(18)
                 .bearing(0)
                 .tilt(45)
-                .build()));
+                .build()));*/
 
 
 
@@ -374,7 +374,7 @@ public class PickUpLocationActivity extends FragmentActivity implements OnMapRea
         }
         //Showing Current Location Marker on Map
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        Log.w(TAG,"latLng--->"+latLng);
+        Log.w(TAG,"onLocationChanged latLng--->"+latLng);
 
         strlatlng  = String.valueOf(latLng);
 

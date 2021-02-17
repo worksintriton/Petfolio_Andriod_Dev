@@ -624,6 +624,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
         appoinmentCancelledRequest.setMissed_at(currentDateandTime);
         appoinmentCancelledRequest.setDoc_feedback("");
         appoinmentCancelledRequest.setAppoinment_status("Missed");
+        appoinmentCancelledRequest.setAppoint_patient_st("Doctor Cancelled appointment");
         Log.w(TAG,"appoinmentCancelledRequest"+ "--->" + new Gson().toJson(appoinmentCancelledRequest));
         return appoinmentCancelledRequest;
     }

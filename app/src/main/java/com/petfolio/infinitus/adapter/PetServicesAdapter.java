@@ -8,14 +8,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.petfolio.infinitus.R;
 
 import com.petfolio.infinitus.petlover.SelectedServiceActivity;
@@ -33,6 +38,10 @@ public class PetServicesAdapter extends  RecyclerView.Adapter<RecyclerView.ViewH
     private List<ServiceCatResponse.DataBean> serviceCatList;
     ServiceCatResponse.DataBean currentItem;
 
+    private static final int TYPE_FULL = 0;
+    private static final int TYPE_HALF = 1;
+    private static final int TYPE_QUARTER = 2;
+
     public PetServicesAdapter(Context context, List<ServiceCatResponse.DataBean> serviceCatList) {
         this.serviceCatList = serviceCatList;
         this.context = context;
@@ -43,8 +52,12 @@ public class PetServicesAdapter extends  RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_petloversplist, parent, false);
+
         return new ViewHolderOne(view);
+
     }
+
+
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
@@ -58,12 +71,88 @@ public class PetServicesAdapter extends  RecyclerView.Adapter<RecyclerView.ViewH
           currentItem = serviceCatList.get(position);
           Log.w(TAG,"Size : "+serviceCatList.size()+" "+" Images : "+serviceCatList.get(position).getImage());
           if (currentItem.getImage() != null && !currentItem.getImage().isEmpty()) {
-              Glide.with(context)
-                    .load(currentItem.getImage())
-                    //.load(R.drawable.logo)
-                    .into(holder.img_petservice);
 
-        }
+
+
+              int pos = position % 2 ;
+
+              Log.w(TAG,"position "+pos);
+
+              if(position==0){
+//
+//                  RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+//                  lp.setMargins(0, 0, 0, 20);
+//                  holder.img_petservice.setLayoutParams(lp);
+
+                  Glide.with(context)
+                          .load(currentItem.getImage())
+                          .centerCrop()
+                         .apply(new RequestOptions().override(150, 250))
+                          //.load(R.drawable.logo)
+                          .into(holder.img_petservice);
+
+
+              }
+
+              else if(position==1){
+
+//                  RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+//                  lp.setMargins(0, 20, 0, 0);
+//                  holder.img_petservice.setLayoutParams(lp);
+
+                  Glide.with(context)
+                          .load(currentItem.getImage())
+                          .centerCrop()
+                          .apply(new RequestOptions().override(150, 270))
+                          //.load(R.drawable.logo)
+                          .into(holder.img_petservice);
+
+
+              }
+
+              else {
+
+                  if(pos==0){
+
+//                      RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+//                      lp.setMargins(0, 0, 0, 20);
+//                      holder.img_petservice.setLayoutParams(lp);
+                      Glide.with(context)
+                              .load(currentItem.getImage())
+                              .centerCrop()
+                              .apply(new RequestOptions().override(150, 270))
+                              //.load(R.drawable.logo)
+                              .into(holder.img_petservice);
+
+
+                  }
+
+                  else {
+
+/*
+                      RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                      lp.setMargins(0, 20, 0, 0);
+                      holder.img_petservice.setLayoutParams(lp);
+*/
+
+                      Glide.with(context)
+                              .load(currentItem.getImage())
+                              .centerCrop()
+                              .apply(new RequestOptions().override(150, 250))
+                              //.load(R.drawable.logo)
+                              .into(holder.img_petservice);
+
+
+                  }
+
+
+              }
+
+
+
+
+
+          }
           else{
             Glide.with(context)
                     .load(R.drawable.services)
