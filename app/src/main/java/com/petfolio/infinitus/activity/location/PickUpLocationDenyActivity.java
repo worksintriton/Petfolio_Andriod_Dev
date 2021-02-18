@@ -437,8 +437,8 @@ public class PickUpLocationDenyActivity extends FragmentActivity implements OnMa
 
             mMap.clear();
             //  mMap.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getName().toString()));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
+          //  mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+          //  mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
             MarkerOptions  markerOptions = new MarkerOptions().position(Objects.requireNonNull(latLng)).title(CityName);
             markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin));
             mMap.addMarker(markerOptions);
@@ -448,7 +448,7 @@ public class PickUpLocationDenyActivity extends FragmentActivity implements OnMa
 
 
 
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(12.0f));
+       // mMap.animateCamera(CameraUpdateFactory.zoomTo(12.0f));
 
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);

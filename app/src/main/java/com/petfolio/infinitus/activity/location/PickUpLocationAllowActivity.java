@@ -442,9 +442,9 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
 
         }
 
-        mCurrLocationMarker = mMap.addMarker(markerOptions);
+      /*  mCurrLocationMarker = mMap.addMarker(markerOptions);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(12.0f));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(12.0f));*/
 
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);

@@ -11,6 +11,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -27,8 +28,11 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -112,6 +116,8 @@ public class PickUpLocationActivity extends FragmentActivity implements OnMapRea
 
 
 
+    private FusedLocationProviderClient mFusedLocationClient;
+    private LocationCallback locationCallback;
 
     private String fromactivity;
 
@@ -197,25 +203,12 @@ public class PickUpLocationActivity extends FragmentActivity implements OnMapRea
 
 
 
+    @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
-       // LatLng CHENNAI_LATLNG = new LatLng(13.067439, 80.237617);
 
         mMap = googleMap;
-       /* mMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
-                .target(CHENNAI_LATLNG)
-                .zoom(18)
-                .bearing(0)
-                .tilt(45)
-                .build()));*/
 
-
-
-      /*  //  mMap = googleMap;
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-       // mMap.getUiSettings().setZoomControlsEnabled(true);
-       // mMap.getUiSettings().setZoomGesturesEnabled(true);
-       mMap.getUiSettings().setCompassEnabled(true);*/
 
 
 
@@ -224,6 +217,32 @@ public class PickUpLocationActivity extends FragmentActivity implements OnMapRea
         mMap.getUiSettings().isZoomControlsEnabled();
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(PickUpLocationActivity.this);
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(10 * 1000);
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+
+                if (locationResult.getLastLocation() != null) {
+
+                    latitude = locationResult.getLastLocation().getLatitude();
+                    longitude = locationResult.getLastLocation().getLongitude();
+
+                    Log.e("status","checking MapReady---> " + latitude);
+                    Log.e("status","checking MapReady lng---> " + longitude);
+
+                    LatLng sourcePoint = new LatLng(latitude, longitude);
+                    googleMap.addMarker(new MarkerOptions().position(sourcePoint).icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin)));
+                    mFusedLocationClient.removeLocationUpdates(locationCallback);
+                }
+            }
+        };
+        mFusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+
+
 
         //Initialize Google Play Services
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -272,9 +291,10 @@ public class PickUpLocationActivity extends FragmentActivity implements OnMapRea
             mMap.clear();
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
-            MarkerOptions markerOptions = new MarkerOptions().position(Objects.requireNonNull(latLng)).title("");
-            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin));
-            mMap.addMarker(markerOptions);
+            MarkerOptions markerOptions1 = new MarkerOptions().position(Objects.requireNonNull(latLng)).title("");
+            markerOptions1.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin));
+            mMap.addMarker(markerOptions1);
+
         });
 
 
@@ -287,6 +307,7 @@ public class PickUpLocationActivity extends FragmentActivity implements OnMapRea
                 .build();
         mGoogleApiClient.connect();
     }
+
     @Override
     public void onConnected(Bundle bundle) {
         mLocationRequest = new LocationRequest();
@@ -367,11 +388,8 @@ public class PickUpLocationActivity extends FragmentActivity implements OnMapRea
     public void onLocationChanged(Location location) {
         Log.w(TAG,"onLocationChanged-->");
 
-
         mLastLocation = location;
-        if (mCurrLocationMarker != null) {
-            mCurrLocationMarker.remove();
-        }
+        if (mCurrLocationMarker != null) { mCurrLocationMarker.remove(); }
         //Showing Current Location Marker on Map
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         Log.w(TAG,"onLocationChanged latLng--->"+latLng);
@@ -381,6 +399,9 @@ public class PickUpLocationActivity extends FragmentActivity implements OnMapRea
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin));
+
+        Log.e("status","checking OnLocation---> " + location.getLatitude());
+        Log.e("status","checking OnLocation lng---> " + location.getLongitude());
 
 
         LocationManager locationManager = (LocationManager)
@@ -414,10 +435,10 @@ public class PickUpLocationActivity extends FragmentActivity implements OnMapRea
             if(placesearchactivity != null && placesearchactivity.equalsIgnoreCase("placesearchactivity")){
                 if(latitude != 0 && longitude != 0){
                     latLng = new LatLng(latitude,longitude);
-                    Log.w(TAG,"onLocationChanged BundleData if-->"+"Call getAddressResultResponse");
-                    Log.w(TAG,"onLocationChanged BundleData for searched places :"+"lat :"+lat+" "+"lon :"+lon);
+                   // Log.w(TAG,"onLocationChanged BundleData if-->"+"Call getAddressResultResponse");
+                    //Log.w(TAG,"onLocationChanged BundleData for searched places :"+"lat :"+lat+" "+"lon :"+lon);
                     strlatlng = String.valueOf(latLng);
-                    Log.w(TAG,"onLocationChanged BundleData"+strlatlng);
+                    //Log.w(TAG,"onLocationChanged BundleData"+strlatlng);
                     getAddressResultResponse(latLng);
                 }
             }else {
@@ -444,22 +465,14 @@ public class PickUpLocationActivity extends FragmentActivity implements OnMapRea
                         getAddressResultResponse(latLng);
 
                     }
-
-
                 }
             }
-
-
-
-
-
-
         }
 
         //   markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        mCurrLocationMarker = mMap.addMarker(markerOptions);
+        /*mCurrLocationMarker = mMap.addMarker(markerOptions);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(12.0f));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(16.0f));*/
 
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
@@ -609,7 +622,7 @@ public class PickUpLocationActivity extends FragmentActivity implements OnMapRea
     }
 
     private void getAddressResultResponse(LatLng latLng) {
-        Log.w(TAG,"GetAddressResultResponse-->"+latLng);
+       // Log.w(TAG,"GetAddressResultResponse-->"+latLng);
         //avi_indicator.setVisibility(View.VISIBLE);
         // avi_indicator.smoothToShow();
         Retrofit retrofit = new Retrofit.Builder()
@@ -619,12 +632,12 @@ public class PickUpLocationActivity extends FragmentActivity implements OnMapRea
 
         API service = retrofit.create(API.class);
         String strlatlng = String.valueOf(latLng);
-        Log.w(TAG,"getAddressResultResponse strlatlng-->"+strlatlng);
+      //  Log.w(TAG,"getAddressResultResponse strlatlng-->"+strlatlng);
         String newString = strlatlng.replace("lat/lng:", "");
-        Log.w(TAG,"getAddressResultResponse latlng=="+newString);
+       // Log.w(TAG,"getAddressResultResponse latlng=="+newString);
 
         String latlngs = newString.trim().replaceAll("\\(", "").replaceAll("\\)","").trim();
-        Log.w(TAG,"getAddressResultResponse latlngs=="+latlngs);
+       //Log.w(TAG,"getAddressResultResponse latlngs=="+latlngs);
 
 
 
@@ -673,12 +686,12 @@ public class PickUpLocationActivity extends FragmentActivity implements OnMapRea
                     if(addressComponentsBeanList != null) {
                         if (addressComponentsBeanList.size() > 0) {
                             for (int i = 0; i < addressComponentsBeanList.size(); i++) {
-                                Log.w(TAG, "addressComponentsBeanList size : " + addressComponentsBeanList.size());
+                                //Log.w(TAG, "addressComponentsBeanList size : " + addressComponentsBeanList.size());
 
                                 for (int j = 0; j < addressComponentsBeanList.get(i).getTypes().size(); j++) {
-                                    Log.w(TAG, "getTypes size : " + addressComponentsBeanList.get(i).getTypes().size());
+                                    //Log.w(TAG, "getTypes size : " + addressComponentsBeanList.get(i).getTypes().size());
 
-                                    Log.w(TAG, "TYPES-->" + addressComponentsBeanList.get(i).getTypes());
+                                   // Log.w(TAG, "TYPES-->" + addressComponentsBeanList.get(i).getTypes());
                                     List<String> typesList = addressComponentsBeanList.get(i).getTypes();
 
                                     if (typesList.contains("postal_code")) {
