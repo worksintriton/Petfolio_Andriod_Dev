@@ -4,7 +4,7 @@ public class AddYourPetRequest {
 
     /**
      * user_id : 5fb36ca169f71e30a0ffd3f7
-     * pet_img : http://mysalveo.com/api/uploads/images.jpeg
+     * pet_img : ""
      * pet_name : POP
      * pet_type : Dog
      * pet_breed : breed 1

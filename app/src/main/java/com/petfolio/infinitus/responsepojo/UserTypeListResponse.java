@@ -7,7 +7,7 @@ public class UserTypeListResponse {
     /**
      * Status : Success
      * Message : User type Details
-     * Data : {"usertypedata":[{"_id":"5fad517c625e495678343783","user_type_title":"Pet Lover","user_type_value":1,"user_type_img":"http://mysalveo.com/api/uploads/images.jpeg","date_and_time":"23/10/2019 12:12:00","__v":0},{"_id":"5fad5186625e495678343784","user_type_title":"Service Provider","user_type_value":2,"user_type_img":"http://mysalveo.com/api/uploads/images.jpeg","date_and_time":"23/10/2019 12:12:00","__v":0},{"_id":"5fad518d625e495678343785","user_type_title":"Vendor","user_type_value":3,"user_type_img":"http://mysalveo.com/api/uploads/images.jpeg","date_and_time":"23/10/2019 12:12:00","__v":0},{"_id":"5fad5197625e495678343786","user_type_title":"Doctor","user_type_value":4,"user_type_img":"http://mysalveo.com/api/uploads/images.jpeg","date_and_time":"23/10/2019 12:12:00","__v":0}]}
+     * Data : {"usertypedata":[{"_id":"5fad517c625e495678343783","user_type_title":"Pet Lover","user_type_value":1,"user_type_img":"","date_and_time":"23/10/2019 12:12:00","__v":0},{"_id":"5fad5186625e495678343784","user_type_title":"Service Provider","user_type_value":2,"user_type_img":"","date_and_time":"23/10/2019 12:12:00","__v":0},{"_id":"5fad518d625e495678343785","user_type_title":"Vendor","user_type_value":3,"user_type_img":"","date_and_time":"23/10/2019 12:12:00","__v":0},{"_id":"5fad5197625e495678343786","user_type_title":"Doctor","user_type_value":4,"user_type_img":"","date_and_time":"23/10/2019 12:12:00","__v":0}]}
      * Code : 200
      */
 
@@ -64,7 +64,7 @@ public class UserTypeListResponse {
              * _id : 5fad517c625e495678343783
              * user_type_title : Pet Lover
              * user_type_value : 1
-             * user_type_img : http://mysalveo.com/api/uploads/images.jpeg
+             * user_type_img :
              * date_and_time : 23/10/2019 12:12:00
              * __v : 0
              */

@@ -163,6 +163,7 @@ public class FragmentVendorDashboard extends Fragment  {
 
 
 
+    @SuppressLint("LogNotTimber")
     private void VendorCheckStatusResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -180,39 +181,41 @@ public class FragmentVendorDashboard extends Fragment  {
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        if(!response.body().getData().isProfile_status()){
-                            Intent intent = new Intent(mContext, VendorRegisterFormActivity.class);
-                            intent.putExtra("fromactivity",TAG);
-                            startActivity(intent);
-                        }else{
-                            String profileVerificationStatus = response.body().getData().getProfile_verification_status();
-                            if( profileVerificationStatus != null && profileVerificationStatus.equalsIgnoreCase("Not verified")){
-                                showProfileStatus(response.body().getMessage());
+                        if(response.body().getData() != null){
+                            if(!response.body().getData().isProfile_status()){
+                                Intent intent = new Intent(mContext, VendorRegisterFormActivity.class);
+                                intent.putExtra("fromactivity",TAG);
+                                startActivity(intent);
+                            }
+                            else{
+                                String profileVerificationStatus = response.body().getData().getProfile_verification_status();
+                                if( profileVerificationStatus != null && profileVerificationStatus.equalsIgnoreCase("Not verified")){
+                                    showProfileStatus(response.body().getMessage());
 
-                            }else if( profileVerificationStatus != null && profileVerificationStatus.equalsIgnoreCase("profile updated")){
-                                if(!session.isProfileUpdate()){
-                                    showProfileUpdateStatus(response.body().getMessage());
+                                }else if( profileVerificationStatus != null && profileVerificationStatus.equalsIgnoreCase("profile updated")){
+                                    if(!session.isProfileUpdate()){
+                                        showProfileUpdateStatus(response.body().getMessage());
+
+                                    }
+
+                                }else{
+                                    isDoctorStatus = true;
+                                    Log.w(TAG,"isDoctorStatus else : "+isDoctorStatus);
+
+                                    if(isDoctorStatus){
+                                        setupViewPager(viewPager);
+                                        tablayout.setupWithViewPager(viewPager);
+                                    }
 
                                 }
 
-                            }else{
-                                isDoctorStatus = true;
-                                Log.w(TAG,"isDoctorStatus else : "+isDoctorStatus);
-
-                                if(isDoctorStatus){
-                                    setupViewPager(viewPager);
-                                    tablayout.setupWithViewPager(viewPager);
-                                }
 
                             }
-
 
                         }
 
                     }
-                    else{
-                        //showErrorLoading(response.body().getMessage());
-                    }
+
                 }
 
 

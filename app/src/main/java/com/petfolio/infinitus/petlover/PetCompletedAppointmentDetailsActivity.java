@@ -184,7 +184,7 @@ public class PetCompletedAppointmentDetailsActivity extends AppCompatActivity im
         }
     }
 
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private void petNewAppointmentResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -203,62 +203,64 @@ public class PetCompletedAppointmentDetailsActivity extends AppCompatActivity im
 
                     if (200 == response.body().getCode()) {
 
-                        String vaccinated , addr = null, usrname = null;
+                        String vaccinated, addr = null, usrname = null;
+                        if (response.body().getData() != null) {
 
-                        String usr_image = response.body().getData().getDoctor_id().getProfile_img();
+                            String usr_image = response.body().getData().getDoctor_id().getProfile_img();
 
-                        String servname = response.body().getData().getService_name();
+                            String servname = response.body().getData().getService_name();
 
-                        String servcost= response.body().getData().getService_amount();
+                            String servcost = response.body().getData().getService_amount();
 
-                        String pet_name = response.body().getData().getPet_id().getPet_name();
+                            String pet_name = response.body().getData().getPet_id().getPet_name();
 
-                        String pet_image  = response.body().getData().getPet_id().getPet_img();
+                            String pet_image = response.body().getData().getPet_id().getPet_img();
 
-                        String pet_type = response.body().getData().getPet_id().getPet_type();
+                            String pet_type = response.body().getData().getPet_id().getPet_type();
 
-                        String breed = response.body().getData().getPet_id().getPet_breed();
+                            String breed = response.body().getData().getPet_id().getPet_breed();
 
-                        String gender= response.body().getData().getPet_id().getPet_gender();
+                            String gender = response.body().getData().getPet_id().getPet_gender();
 
-                        String colour= response.body().getData().getPet_id().getPet_color();
+                            String colour = response.body().getData().getPet_id().getPet_color();
 
-                        String weight= String.valueOf(response.body().getData().getPet_id().getPet_weight());
+                            String weight = String.valueOf(response.body().getData().getPet_id().getPet_weight());
 
-                        String age= String.valueOf(response.body().getData().getPet_id().getPet_age());
+                            String age = String.valueOf(response.body().getData().getPet_id().getPet_age());
 
-                        if(response.body().getData().getPet_id().isVaccinated()){
-                            vaccinated= "Yes";
-                            ll_petlastvacinateddate.setVisibility(View.VISIBLE);
-                            if(response.body().getData().getPet_id().getLast_vaccination_date() != null){
-                                txt_petlastvaccinatedage.setText(response.body().getData().getPet_id().getLast_vaccination_date());
+                            if (response.body().getData().getPet_id().isVaccinated()) {
+                                vaccinated = "Yes";
+                                ll_petlastvacinateddate.setVisibility(View.VISIBLE);
+                                if (response.body().getData().getPet_id().getLast_vaccination_date() != null) {
+                                    txt_petlastvaccinatedage.setText(response.body().getData().getPet_id().getLast_vaccination_date());
+                                }
+
+                            } else {
+                                ll_petlastvacinateddate.setVisibility(View.GONE);
+                                vaccinated = "No";
                             }
 
-                        }else {
-                            ll_petlastvacinateddate.setVisibility(View.GONE);
-                            vaccinated="No" ;
+                            String order_date = response.body().getData().getBooking_date();
+
+                            String orderid = response.body().getData().getAppointment_UID();
+
+                            String payment_method = response.body().getData().getPayment_method();
+
+                            String order_cost = response.body().getData().getAmount();
+
+                            List<PetNewAppointmentDetailsResponse.DataBean.DocBusinessInfoBean> Address = response.body().getData().getDoc_business_info();
+
+                            for (int i = 0; i < Address.size(); i++) {
+
+                                addr = Address.get(i).getClinic_loc();
+
+                                usrname = Address.get(i).getDr_name();
+                            }
+
+                            setView(usrname, usr_image, servname, servcost, pet_name, pet_image, pet_type, breed
+
+                                    , gender, colour, weight, age, order_date, orderid, payment_method, order_cost, vaccinated, addr);
                         }
-
-                        String order_date= response.body().getData().getBooking_date();
-
-                        String orderid= response.body().getData().getAppointment_UID();
-
-                        String payment_method= response.body().getData().getPayment_method();
-
-                        String order_cost= response.body().getData().getAmount();
-
-                        List<PetNewAppointmentDetailsResponse.DataBean.DocBusinessInfoBean> Address= response.body().getData().getDoc_business_info();
-
-                        for(int i =0; i<Address.size(); i++){
-
-                            addr = Address.get(i).getClinic_loc();
-
-                            usrname = Address.get(i).getDr_name();
-                        }
-
-                        setView(usrname , usr_image , servname , servcost , pet_name , pet_image , pet_type , breed
-
-                                , gender, colour , weight , age , order_date , orderid , payment_method , order_cost, vaccinated , addr);
                     }
 
 
@@ -276,7 +278,7 @@ public class PetCompletedAppointmentDetailsActivity extends AppCompatActivity im
     }
 
 
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private PetNewAppointmentDetailsRequest petNewAppointmentDetailsRequest() {
         PetNewAppointmentDetailsRequest petNewAppointmentDetailsRequest = new PetNewAppointmentDetailsRequest();
         petNewAppointmentDetailsRequest.setApppointment_id(appointment_id);
@@ -289,9 +291,13 @@ public class PetCompletedAppointmentDetailsActivity extends AppCompatActivity im
 
 
         if(usr_image != null && !usr_image.equals("")){
-
             Glide.with(PetCompletedAppointmentDetailsActivity.this)
                     .load(usr_image)
+                    .into(img_user);
+
+        }else{
+            Glide.with(PetCompletedAppointmentDetailsActivity.this)
+                    .load(APIClient.PROFILE_IMAGE_URL)
                     .into(img_user);
 
         }

@@ -1,4 +1,5 @@
 package com.petfolio.infinitus.adapter;
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import android.util.Log;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.interfaces.UserTypeSelectListener;
 import com.petfolio.infinitus.responsepojo.UserTypeListResponse;
 
@@ -61,26 +63,28 @@ public class UserTypesListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
 
     }
 
+    @SuppressLint("LogNotTimber")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
         currentItem = usertypedataBeanList.get(position);
         Log.w(TAG,"userTypeValue : "+userTypeValue);
 
+        if(currentItem.getUser_type_title() != null){
+            holder.txt_usertypes.setText(currentItem.getUser_type_title());
 
-
-        holder.txt_usertypes.setText(currentItem.getUser_type_title());
+        }
         if (currentItem.getUser_type_img() != null && !currentItem.getUser_type_img().isEmpty()) {
-
-                Glide.with(context)
+            Glide.with(context)
                         .load(currentItem.getUser_type_img())
                         .into(holder.img_userimages);
 
             }
         else{
                 Glide.with(context)
-                        .load(R.mipmap.ic_launcher)
+                        .load(APIClient.PROFILE_IMAGE_URL)
                         .into(holder.img_userimages);
 
             }
+
         holder.ll_usertypes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,14 +93,12 @@ public class UserTypesListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
                     usertypedataBeanList.get(i).setSelected(false);
 
                 }
-
-
                 usertypedataBeanList.get(position).setSelected(true);
-
                 notifyDataSetChanged();
+                if(usertypedataBeanList.get(position).getUser_type_title() != null && usertypedataBeanList.get(position).getUser_type_value() != 0){
+                    userTypeSelectListener.userTypeSelectListener(usertypedataBeanList.get(position).getUser_type_title(),usertypedataBeanList.get(position).getUser_type_value());
 
-                userTypeSelectListener.userTypeSelectListener(usertypedataBeanList.get(position).getUser_type_title(),usertypedataBeanList.get(position).getUser_type_value());
-
+                }
             }
         });
 

@@ -191,7 +191,9 @@ public class SPFiltersActivity extends AppCompatActivity implements View.OnClick
                     if(200 == response.body().getCode()){
                         Log.w(TAG,"DropDownListResponse" + new Gson().toJson(response.body()));
 
-                        spFilterPriceList = response.body().getData();
+                        if(response.body().getData() != null) {
+                            spFilterPriceList = response.body().getData();
+                        }
 
 
                         Log.w(TAG,"spFilterPriceList : "+new Gson().toJson(spFilterPriceList));

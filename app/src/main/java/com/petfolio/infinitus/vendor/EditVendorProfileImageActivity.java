@@ -606,7 +606,12 @@ public class EditVendorProfileImageActivity extends AppCompatActivity implements
     private DoctorUpdateProfileImageRequest doctorUpdateProfileImageRequest() {
         DoctorUpdateProfileImageRequest  doctorUpdateProfileImageRequest = new DoctorUpdateProfileImageRequest();
         doctorUpdateProfileImageRequest.setUser_id(userid);
-        doctorUpdateProfileImageRequest.setProfile_img(profileimage);
+        if(profileimage != null && !profileimage.isEmpty()) {
+            doctorUpdateProfileImageRequest.setProfile_img(profileimage);
+        }else{
+            doctorUpdateProfileImageRequest.setProfile_img(APIClient.PROFILE_IMAGE_URL);
+
+        }
         Log.w(TAG,"VendorUpdateProfileImageRequest"+ "--->" + new Gson().toJson(doctorUpdateProfileImageRequest));
         return doctorUpdateProfileImageRequest;
     }

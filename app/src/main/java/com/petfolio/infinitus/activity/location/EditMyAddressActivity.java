@@ -145,7 +145,7 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
 
     String LocationType = "Home";
     private String pincode;
-    private boolean defaultstatus;
+    private boolean defaultstatus = true;
     private String locationnickname;
     private String id;
 
@@ -251,6 +251,7 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
 
 
         }
+
 
         rglocationtype.setOnCheckedChangeListener((group, checkedId) -> {
             int radioButtonID = rglocationtype.getCheckedRadioButtonId();

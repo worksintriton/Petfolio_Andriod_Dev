@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.petlover.SelectedServiceActivity;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 
@@ -64,7 +65,9 @@ public class PetLoverServicesAdapter extends  RecyclerView.Adapter<RecyclerView.
     @SuppressLint("SetTextI18n")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
           currentItem = serviceDetailsResponseList.get(position);
-          holder.txt_petlover_servicesname.setText(currentItem.getService_title());
+          if(currentItem.getService_title() != null) {
+              holder.txt_petlover_servicesname.setText(currentItem.getService_title());
+          }
           if (currentItem.getService_icon() != null && !currentItem.getService_icon().isEmpty()) {
 
             Glide.with(context)
@@ -75,7 +78,7 @@ public class PetLoverServicesAdapter extends  RecyclerView.Adapter<RecyclerView.
            }
           else{
             Glide.with(context)
-                    .load(R.drawable.services)
+                    .load(APIClient.PROFILE_IMAGE_URL)
                     .into(holder.cv_serviceimage);
 
         }
@@ -84,10 +87,11 @@ public class PetLoverServicesAdapter extends  RecyclerView.Adapter<RecyclerView.
         holder.rl_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(context, SelectedServiceActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("catid",serviceDetailsResponseList.get(position).get_id());
-                context.startActivity(intent);
+                if(serviceDetailsResponseList.get(position).get_id() != null) {
+                    Intent intent = new Intent(context, SelectedServiceActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("catid", serviceDetailsResponseList.get(position).get_id());
+                    context.startActivity(intent);
+                }
                 }
 
 

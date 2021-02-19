@@ -62,22 +62,35 @@ public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
     @SuppressLint({"SetTextI18n", "LogNotTimber", "LongLogTag"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
         Log.w(TAG,"Pet name-->"+completedAppointmentResponseList.get(position).getPet_name());
-        holder.txt_pettype.setText(completedAppointmentResponseList.get(position).getPet_name());
-        holder.txt_completed_date.setText("Completed on:"+" "+completedAppointmentResponseList.get(position).getCompleted_at());
+        if(completedAppointmentResponseList.get(position).getPet_name() != null){
+            holder.txt_pettype.setText(completedAppointmentResponseList.get(position).getPet_name());
 
+        }
+        if(completedAppointmentResponseList.get(position).getCompleted_at() != null) {
+            holder.txt_completed_date.setText("Completed on:" + " " + completedAppointmentResponseList.get(position).getCompleted_at());
+
+        }
 
         if(completedAppointmentResponseList.get(position).getAppointment_for() != null && completedAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("Doctor") ){
             holder.txt_type.setText(completedAppointmentResponseList.get(position).getAppointment_for());
-            holder.txt_petname.setText(completedAppointmentResponseList.get(position).getClinic_name());
+            if(completedAppointmentResponseList.get(position).getClinic_name() != null) {
+                holder.txt_petname.setText(completedAppointmentResponseList.get(position).getClinic_name());
+            }
             holder.txt_lbl_doctorname.setText("Doctor Name");
-            holder.txt_doctorname.setText(completedAppointmentResponseList.get(position).getDoctor_name());
+            if(completedAppointmentResponseList.get(position).getDoctor_name() != null) {
+                holder.txt_doctorname.setText(completedAppointmentResponseList.get(position).getDoctor_name());
+            }
 
 
         }else if(completedAppointmentResponseList.get(position).getAppointment_for() != null && completedAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("SP") ){
             holder.txt_type.setText(completedAppointmentResponseList.get(position).getAppointment_for());
-            holder.txt_petname.setText(completedAppointmentResponseList.get(position).getService_provider_name());
+            if(completedAppointmentResponseList.get(position).getService_provider_name() != null) {
+                holder.txt_petname.setText(completedAppointmentResponseList.get(position).getService_provider_name());
+            }
             holder.txt_lbl_doctorname.setText("Service Name");
-            holder.txt_doctorname.setText(completedAppointmentResponseList.get(position).getService_name());
+            if(completedAppointmentResponseList.get(position).getService_name() != null) {
+                holder.txt_doctorname.setText(completedAppointmentResponseList.get(position).getService_name());
+            }
             holder.btn__prescriptiondetails.setVisibility(View.GONE);
 
 

@@ -302,6 +302,7 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
 
 
 
+    @SuppressLint("LogNotTimber")
     private void doctorDetailsByUserIdResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -319,9 +320,17 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
 
-                        doctorclinicdetailsResponseList  = response.body().getData().getClinic_pic();
-                        clinicname =  response.body().getData().getClinic_name();
-                        doctorname = response.body().getData().getDr_name();
+                        if(response.body().getData().getClinic_pic() != null) {
+                            doctorclinicdetailsResponseList = response.body().getData().getClinic_pic();
+                            Log.w(TAG,"Size"+doctorclinicdetailsResponseList.size());
+                            Log.w(TAG,"doctorclinicdetailsResponseList : "+new Gson().toJson(doctorclinicdetailsResponseList));
+                        }
+                        if(response.body().getData().getClinic_name() != null) {
+                            clinicname = response.body().getData().getClinic_name();
+                        }
+                        if(response.body().getData().getDr_name() != null) {
+                            doctorname = response.body().getData().getDr_name();
+                        }
                         if(response.body().getData().getClinic_loc() != null){
                         txt_clinic_address.setText(response.body().getData().getClinic_loc());
                         }
@@ -329,8 +338,7 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
 
 
 
-                        Log.w(TAG,"Size"+doctorclinicdetailsResponseList.size());
-                        Log.w(TAG,"doctorclinicdetailsResponseList : "+new Gson().toJson(doctorclinicdetailsResponseList));
+
 
                         if(doctorclinicdetailsResponseList != null && doctorclinicdetailsResponseList.size()>0){
 
@@ -362,8 +370,6 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
 
                         }
 
-                    }else{
-
                     }
 
 
@@ -379,6 +385,7 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private DoctorDetailsByUserIdRequest doctorDetailsByUserIdRequest() {
         DoctorDetailsByUserIdRequest doctorDetailsByUserIdRequest = new DoctorDetailsByUserIdRequest();
         doctorDetailsByUserIdRequest.setUser_id(userid);

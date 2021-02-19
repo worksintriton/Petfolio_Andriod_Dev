@@ -184,6 +184,7 @@ public class VendorEditProfileActivity extends AppCompatActivity implements View
         finish();
     }
 
+    @SuppressLint("LogNotTimber")
     private void profileUpdateResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -192,6 +193,7 @@ public class VendorEditProfileActivity extends AppCompatActivity implements View
         Log.w(TAG,"profileUpdateResponseCall url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<ProfileUpdateResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<ProfileUpdateResponse> call, @NonNull Response<ProfileUpdateResponse> response) {
                 avi_indicator.smoothToHide();
@@ -201,8 +203,10 @@ public class VendorEditProfileActivity extends AppCompatActivity implements View
                     if (200 == response.body().getCode()) {
 
                        Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
-                        if(response.body().getData().isUser_email_verification()){
-                            verifyemailstatus = "true";
+                        if(response.body().getData() != null) {
+                            if (response.body().getData().isUser_email_verification()) {
+                                verifyemailstatus = "true";
+                            }
                         }
 
                         SessionManager sessionManager = new SessionManager(getApplicationContext());
@@ -384,12 +388,14 @@ public class VendorEditProfileActivity extends AppCompatActivity implements View
 
                     if (200 == response.body().getCode()) {
                         Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
-                        Intent intent = new Intent(getApplicationContext(), SPVerifyEmailOtpActivity.class);
-                        intent.putExtra("useremail",response.body().getData().getEmail_id());
-                        intent.putExtra("otp",response.body().getData().getOtp());
-                        intent.putExtra("firstname",edt_firstname.getText().toString());
-                        intent.putExtra("lastname",edt_lastname.getText().toString());
-                        startActivity(intent);
+                        if(response.body().getData() != null) {
+                            Intent intent = new Intent(getApplicationContext(), VendorVerifyEmailOtpActivity.class);
+                            intent.putExtra("useremail", response.body().getData().getEmail_id());
+                            intent.putExtra("otp", response.body().getData().getOtp());
+                            intent.putExtra("firstname", edt_firstname.getText().toString());
+                            intent.putExtra("lastname", edt_lastname.getText().toString());
+                            startActivity(intent);
+                        }
 
 
                     } else {

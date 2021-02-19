@@ -30,10 +30,10 @@ import androidx.core.content.ContextCompat;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.api.API;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.appUtils.FileUtil;
-import com.petfolio.infinitus.doctor.DoctorProfileScreenActivity;
 import com.petfolio.infinitus.requestpojo.DoctorUpdateProfileImageRequest;
 import com.petfolio.infinitus.responsepojo.DoctorUpdateProfileImageResponse;
 import com.petfolio.infinitus.responsepojo.FileUploadResponse;
@@ -48,6 +48,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -159,7 +160,7 @@ public class PetLoverEditProfileImageActivity extends AppCompatActivity implemen
 
             case R.id.img_pet_imge:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    checkMultiplePermissions(REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS, PetLoverEditProfileImageActivity.this);
+                    checkMultiplePermissions(PetLoverEditProfileImageActivity.this);
                 }else{
                     choosePetLoverImage();
 
@@ -174,7 +175,7 @@ public class PetLoverEditProfileImageActivity extends AppCompatActivity implemen
 
     private void gotoUplodPetLoverImage() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkMultiplePermissions(REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS, PetLoverEditProfileImageActivity.this);
+            checkMultiplePermissions(PetLoverEditProfileImageActivity.this);
         }else{
             choosePetLoverImage();
 
@@ -248,6 +249,7 @@ public class PetLoverEditProfileImageActivity extends AppCompatActivity implemen
     }
 
 
+    @SuppressLint("LogNotTimber")
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -259,7 +261,7 @@ public class PetLoverEditProfileImageActivity extends AppCompatActivity implemen
 
             if(requestCode == SELECT_CLINIC_CAMERA)
             {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                Bitmap photo = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
 
                 File file = new File(getFilesDir(), "Petfolio1" + ".jpg");
 
@@ -468,11 +470,11 @@ public class PetLoverEditProfileImageActivity extends AppCompatActivity implemen
 
     //check for camera and storage access permissions
     @TargetApi(Build.VERSION_CODES.M)
-    private void checkMultiplePermissions(int permissionCode, Context context) {
+    private void checkMultiplePermissions(Context context) {
 
         String[] PERMISSIONS = {CAMERA_PERMISSION, READ_EXTERNAL_STORAGE_PERMISSION, WRITE_EXTERNAL_STORAGE_PERMISSION};
         if (!hasPermissions(context, PERMISSIONS)) {
-            ActivityCompat.requestPermissions((Activity) context, PERMISSIONS, permissionCode);
+            ActivityCompat.requestPermissions((Activity) context, PERMISSIONS, 1);
         } else {
             choosePetLoverImage();
             // Open your camera here.
@@ -585,7 +587,12 @@ public class PetLoverEditProfileImageActivity extends AppCompatActivity implemen
     private DoctorUpdateProfileImageRequest doctorUpdateProfileImageRequest() {
         DoctorUpdateProfileImageRequest  doctorUpdateProfileImageRequest = new DoctorUpdateProfileImageRequest();
         doctorUpdateProfileImageRequest.setUser_id(userid);
-        doctorUpdateProfileImageRequest.setProfile_img(profileimage);
+        if(profileimage != null && !profileimage.isEmpty()) {
+            doctorUpdateProfileImageRequest.setProfile_img(profileimage);
+        }else{
+            doctorUpdateProfileImageRequest.setProfile_img(APIClient.PROFILE_IMAGE_URL);
+
+        }
         Log.w(TAG,"doctorUpdateProfileImageRequest"+ "--->" + new Gson().toJson(doctorUpdateProfileImageRequest));
         return doctorUpdateProfileImageRequest;
     }

@@ -164,6 +164,7 @@ public class FragmentSPDashboard extends Fragment  {
 
 
 
+    @SuppressLint("LogNotTimber")
     private void SPCheckStatusResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -172,6 +173,7 @@ public class FragmentSPDashboard extends Fragment  {
         Log.w(TAG,"SPCheckStatusResponse url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<SPCheckStatusResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<SPCheckStatusResponse> call, @NonNull Response<SPCheckStatusResponse> response) {
 
@@ -181,43 +183,45 @@ public class FragmentSPDashboard extends Fragment  {
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        if(!response.body().getData().isProfile_status()){
-                            Intent intent = new Intent(mContext, ServiceProviderRegisterFormActivity.class);
-                            intent.putExtra("fromactivity",TAG);
-                            startActivity(intent);
-                        }else if(!response.body().getData().isCalender_status()){
-                            Intent intent = new Intent(mContext, SPMyCalendarNewUserActivity.class);
-                            intent.putExtra("fromactivity",TAG);
-                            startActivity(intent);
-                        }else{
-                            String profileVerificationStatus = response.body().getData().getProfile_verification_status();
-                            if( profileVerificationStatus != null && profileVerificationStatus.equalsIgnoreCase("Not verified")){
-                                showProfileStatus(response.body().getMessage());
+                        if(response.body().getData() != null) {
+                            if (!response.body().getData().isProfile_status()) {
+                                Intent intent = new Intent(mContext, ServiceProviderRegisterFormActivity.class);
+                                intent.putExtra("fromactivity", TAG);
+                                startActivity(intent);
+                            }
+                            else if (!response.body().getData().isCalender_status()) {
+                                Intent intent = new Intent(mContext, SPMyCalendarNewUserActivity.class);
+                                intent.putExtra("fromactivity", TAG);
+                                startActivity(intent);
+                            }
+                            else {
+                                String profileVerificationStatus = response.body().getData().getProfile_verification_status();
+                                if (profileVerificationStatus != null && profileVerificationStatus.equalsIgnoreCase("Not verified")) {
+                                    showProfileStatus(response.body().getMessage());
 
-                            }else if( profileVerificationStatus != null && profileVerificationStatus.equalsIgnoreCase("profile updated")){
-                                if(!session.isProfileUpdate()){
-                                    showProfileUpdateStatus(response.body().getMessage());
+                                } else if (profileVerificationStatus != null && profileVerificationStatus.equalsIgnoreCase("profile updated")) {
+                                    if (!session.isProfileUpdate()) {
+                                        showProfileUpdateStatus(response.body().getMessage());
+
+                                    }
+
+                                } else {
+                                    isDoctorStatus = true;
+                                    Log.w(TAG, "isDoctorStatus else : " + isDoctorStatus);
+
+                                    if (isDoctorStatus) {
+                                        setupViewPager(viewPager);
+                                        tablayout.setupWithViewPager(viewPager);
+                                    }
 
                                 }
 
-                            }else{
-                                isDoctorStatus = true;
-                                Log.w(TAG,"isDoctorStatus else : "+isDoctorStatus);
-
-                                if(isDoctorStatus){
-                                    setupViewPager(viewPager);
-                                    tablayout.setupWithViewPager(viewPager);
-                                }
 
                             }
-
-
                         }
 
                     }
-                    else{
-                        //showErrorLoading(response.body().getMessage());
-                    }
+
                 }
 
 
@@ -232,6 +236,7 @@ public class FragmentSPDashboard extends Fragment  {
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private SPCheckStatusRequest spCheckStatusRequest() {
         SPCheckStatusRequest spCheckStatusRequest = new SPCheckStatusRequest();
         spCheckStatusRequest.setUser_id(userid);

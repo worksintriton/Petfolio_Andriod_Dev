@@ -293,7 +293,9 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
 
         if (can_proceed) {
             if (new ConnectionDetector(AddMyAddressActivity.this).isNetworkAvailable(AddMyAddressActivity.this)) {
-                locationAddResponseCall();
+                if(latitude != 0 && longtitude !=0) {
+                    locationAddResponseCall();
+                }
                 }
 
 
@@ -301,6 +303,7 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
 
         }
 
+    @SuppressLint("LogNotTimber")
     public void locationAddResponseCall(){
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -310,6 +313,7 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
         Log.w(TAG,"url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<LocationAddResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NotNull Call<LocationAddResponse> call, @NotNull Response<LocationAddResponse> response) {
                 avi_indicator.smoothToHide();

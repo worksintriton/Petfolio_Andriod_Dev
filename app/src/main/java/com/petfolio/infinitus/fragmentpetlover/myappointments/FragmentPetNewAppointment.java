@@ -152,7 +152,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<PetAppointmentResponse>() {
-            @SuppressLint("LogNotTimber")
+            @SuppressLint({"LogNotTimber", "SetTextI18n"})
             @Override
             public void onResponse(@NonNull Call<PetAppointmentResponse> call, @NonNull Response<PetAppointmentResponse> response) {
                avi_indicator.smoothToHide();
@@ -162,10 +162,13 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
                if (response.body() != null) {
 
                    if(200 == response.body().getCode()){
-                       newAppointmentResponseList = response.body().getData();
-                       Log.w(TAG,"Size"+newAppointmentResponseList.size());
-                       Log.w(TAG,"newAppointmentResponseList : "+new Gson().toJson(newAppointmentResponseList));
-                       if(response.body().getData().isEmpty()){
+                       if(response.body().getData() != null){
+                           newAppointmentResponseList = response.body().getData();
+                           Log.w(TAG,"Size"+newAppointmentResponseList.size());
+                           Log.w(TAG,"newAppointmentResponseList : "+new Gson().toJson(newAppointmentResponseList));
+                       }
+
+                       if(response.body().getData() != null && response.body().getData().isEmpty()){
                            txt_no_records.setVisibility(View.VISIBLE);
                            txt_no_records.setText("No new appointments");
                            rv_newappointment.setVisibility(View.GONE);
@@ -197,6 +200,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private PetLoverAppointmentRequest petLoverAppointmentRequest() {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentDateandTime = simpleDateFormat.format(new Date());
@@ -365,12 +369,14 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
 
     }
 
+    @SuppressLint("LogNotTimber")
     private AppoinmentCancelledRequest appoinmentCancelledRequest(String id) {
 
         /*
          * _id : 5fc639ea72fc42044bfa1683
          * missed_at : 23-10-2000 10 : 00 AM
-         * doc_feedback : One Emergenecy work i am cancelling this appointment
+         * doc_feedback :
+         * appoint_patient_st:Patient Appointment Cancelled
          * appoinment_status : Missed
          */
 
@@ -423,6 +429,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private NotificationSendRequest notificationSendRequest(String userid, String doctorid, String appointmentid) {
 
         /**

@@ -1,6 +1,7 @@
 package com.petfolio.infinitus.petlover;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -528,6 +529,7 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
     }
 
 
+    @SuppressLint("LogNotTimber")
     private void PetAddImageResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -536,6 +538,7 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
         Log.w(TAG,"PetAddImageResponse url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<PetAddImageResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<PetAddImageResponse> call, @NonNull Response<PetAddImageResponse> response) {
 
@@ -547,9 +550,7 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
                     if(response.body().getCode() == 200){
                         gotoPetLoverProfileScreenActivity();
                     }
-                    else{
-                        //showErrorLoading(response.body().getMessage());
-                    }
+
                 }
 
 
@@ -564,10 +565,15 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private PetAddImageRequest petAddImageRequest() {
         PetAddImageRequest petAddImageRequest = new PetAddImageRequest();
         petAddImageRequest.set_id(petid);
-        petAddImageRequest.setPet_img(ServerUrlImagePath);
+        if(ServerUrlImagePath != null) {
+            petAddImageRequest.setPet_img(ServerUrlImagePath);
+        }else{
+            petAddImageRequest.setPet_img(APIClient.PROFILE_IMAGE_URL);
+        }
         Log.w(TAG,"petAddImageRequest"+ "--->" + new Gson().toJson(petAddImageRequest));
         return petAddImageRequest;
     }

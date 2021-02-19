@@ -116,7 +116,7 @@ public class DoctorMyCalendarActivity extends AppCompatActivity implements OnIte
         });
         }
 
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private void doctorMyCalendarAvlDaysResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -134,21 +134,24 @@ public class DoctorMyCalendarActivity extends AppCompatActivity implements OnIte
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        dataBeanList = response.body().getData();
-
-                        for(int i=0;i<dataBeanList.size();i++){
-                            boolean isStatus = dataBeanList.get(i).isStatus();
-                            if(isStatus){
-                                btn_next.setVisibility(View.GONE);
-                            }else{
-                                btn_next.setVisibility(View.VISIBLE);
-                                break;
-                            }
+                        if(response.body().getData() != null ) {
+                            dataBeanList = response.body().getData();
                         }
 
-                        if(dataBeanList.size()>0){
+                        if(dataBeanList != null && dataBeanList.size()>0) {
+                            for (int i = 0; i < dataBeanList.size(); i++) {
+                                boolean isStatus = dataBeanList.get(i).isStatus();
+                                if (isStatus) {
+                                    btn_next.setVisibility(View.GONE);
+                                } else {
+                                    btn_next.setVisibility(View.VISIBLE);
+                                    break;
+                                }
+                            }
                             setViewAvlDays();
                         }
+
+
 
                     }
 
@@ -169,8 +172,9 @@ public class DoctorMyCalendarActivity extends AppCompatActivity implements OnIte
     }
     @SuppressLint("LongLogTag")
     private DoctorMyCalendarAvlDaysRequest doctorMyCalendarAvlDaysRequest() {
+
         /*
-         * Doctor_email_id : mohammedimthi23956@gmail.com
+         * user_id : 1234567890
          * Doctor_name : mohammed6
          * types : 1
          */

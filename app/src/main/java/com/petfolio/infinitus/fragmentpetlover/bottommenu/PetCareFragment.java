@@ -303,6 +303,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     }
 
 
+    @SuppressLint("LogNotTimber")
     private void doctorSearchResponseCall(String searchString, int communication_type) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -311,6 +312,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
         Log.w(TAG,"DoctorSearchResponse url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<DoctorSearchResponse>() {
+            @SuppressLint({"LogNotTimber", "SetTextI18n"})
             @Override
             public void onResponse(@NonNull Call<DoctorSearchResponse> call, @NonNull Response<DoctorSearchResponse> response) {
                 avi_indicator.smoothToHide();
@@ -445,6 +447,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
 
 
+    @SuppressLint("LogNotTimber")
     private void filterDoctorResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -453,7 +456,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
         Log.w(TAG,"filterDoctorResponseCall url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<FilterDoctorResponse>() {
-            @SuppressLint("LogNotTimber")
+            @SuppressLint({"LogNotTimber", "SetTextI18n"})
             @Override
             public void onResponse(@NonNull Call<FilterDoctorResponse> call, @NonNull Response<FilterDoctorResponse> response) {
                 avi_indicator.smoothToHide();
@@ -508,6 +511,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
         PetLoverDoctorFilterAdapter petLoverDoctorFilterAdapter = new PetLoverDoctorFilterAdapter(mContext, doctorFilterDetailsResponseList);
         rv_nearbydoctors.setAdapter(petLoverDoctorFilterAdapter);
     }
+    @SuppressLint("LogNotTimber")
     private FilterDoctorRequest filterDoctorRequest() {
         /*
          * user_id : 5fd841a67aa4cc1c6a1e5636

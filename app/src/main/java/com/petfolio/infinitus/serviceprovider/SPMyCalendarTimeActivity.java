@@ -114,7 +114,7 @@ public class SPMyCalendarTimeActivity extends AppCompatActivity implements OnIte
             spMyCalendarAvlTimesResponseCall();
         }
     }
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private void spMyCalendarAvlTimesResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -132,21 +132,26 @@ public class SPMyCalendarTimeActivity extends AppCompatActivity implements OnIte
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        dataBeanList = response.body().getData();
-                        DoctorMyCalendarUpdateDocDateRequest.TimingBean  timingBean = null;
-                        for(int i = 0;i<dataBeanList.size();i++) {
-                             timingBean = new DoctorMyCalendarUpdateDocDateRequest.TimingBean();
-                            timingBean.setTime(dataBeanList.get(i).getTime());
-                            timingBean.setStatus(dataBeanList.get(i).isStatus());
-                            timingBean.setFormat(dataBeanList.get(i).getFormat());
-                            timingBeanList.add(timingBean);
+                        if(response.body().getData() != null) {
+                            dataBeanList = response.body().getData();
+                        }
+                        if(dataBeanList != null && dataBeanList.size()>0) {
+                            DoctorMyCalendarUpdateDocDateRequest.TimingBean timingBean = null;
+                            for (int i = 0; i < dataBeanList.size(); i++) {
+                                timingBean = new DoctorMyCalendarUpdateDocDateRequest.TimingBean();
+                                timingBean.setTime(dataBeanList.get(i).getTime());
+                                timingBean.setStatus(dataBeanList.get(i).isStatus());
+                                timingBean.setFormat(dataBeanList.get(i).getFormat());
+                                timingBeanList.add(timingBean);
 
+                            }
+                            if(dataBeanList.size()>0){
+                                setViewAvlTimes();
+                            }
                         }
 
 
-                        if(dataBeanList.size()>0){
-                            setViewAvlTimes();
-                        }
+
 
                     }
 
@@ -229,7 +234,7 @@ public class SPMyCalendarTimeActivity extends AppCompatActivity implements OnIte
     }
 
 
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private void spMyCalendarUpdateDocDateResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();

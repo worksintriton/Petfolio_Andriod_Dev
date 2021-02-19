@@ -64,10 +64,13 @@ public class SPMyCalendarAvailableNewUserAdapter extends  RecyclerView.Adapter<R
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
         currentItem = dataBeanList.get(position);
-        for (int i = 0; i < dataBeanList.size(); i++) {
+        if(dataBeanList != null && dataBeanList.size()>0) {
+            for (int i = 0; i < dataBeanList.size(); i++) {
+                if(dataBeanList.get(position).getTitle() != null) {
+                    holder.txt_days.setText(dataBeanList.get(position).getTitle());
+                }
 
-            holder.txt_days.setText(dataBeanList.get(position).getTitle());
-
+            }
         }
         if(dataBeanList.get(position).isStatus()){
             holder.ch_days.setClickable(false);

@@ -8,7 +8,7 @@ public class NotificationGetlistResponse {
     /**
      * Status : Success
      * Message : Notification List
-     * Data : [{"_id":"5fb8ce5f3d17401d9a8e7f70","user_id":"5fb8b160e0ba3b0e6268dd2e","notify_title":"Testins","notify_descri":"Testins","notify_img":"http://mysalveo.com/api/uploads/images.jpeg","notify_time":"","date_and_time":"23-10-2029 11:00 AM","__v":0},{"_id":"5fb8ce713d17401d9a8e7f71","user_id":"5fb8b160e0ba3b0e6268dd2e","notify_title":"Testins","notify_descri":"Testins","notify_img":"http://mysalveo.com/api/uploads/images.jpeg","notify_time":"","date_and_time":"23-10-2029 11:00 AM","__v":0},{"_id":"5fb8ce723d17401d9a8e7f72","user_id":"5fb8b160e0ba3b0e6268dd2e","notify_title":"Testins","notify_descri":"Testins","notify_img":"http://mysalveo.com/api/uploads/images.jpeg","notify_time":"","date_and_time":"23-10-2029 11:00 AM","__v":0},{"_id":"5fb8ce733d17401d9a8e7f73","user_id":"5fb8b160e0ba3b0e6268dd2e","notify_title":"Testins","notify_descri":"Testins","notify_img":"http://mysalveo.com/api/uploads/images.jpeg","notify_time":"","date_and_time":"23-10-2029 11:00 AM","__v":0},{"_id":"5fb8ce743d17401d9a8e7f74","user_id":"5fb8b160e0ba3b0e6268dd2e","notify_title":"Testins","notify_descri":"Testins","notify_img":"http://mysalveo.com/api/uploads/images.jpeg","notify_time":"","date_and_time":"23-10-2029 11:00 AM","__v":0}]
+     * Data : [{"_id":"5fb8ce5f3d17401d9a8e7f70","user_id":"5fb8b160e0ba3b0e6268dd2e","notify_title":"Testins","notify_descri":"Testins","notify_img":"","notify_time":"","date_and_time":"23-10-2029 11:00 AM","__v":0},{"_id":"5fb8ce713d17401d9a8e7f71","user_id":"5fb8b160e0ba3b0e6268dd2e","notify_title":"Testins","notify_descri":"Testins","notify_img":"","notify_time":"","date_and_time":"23-10-2029 11:00 AM","__v":0},{"_id":"5fb8ce723d17401d9a8e7f72","user_id":"5fb8b160e0ba3b0e6268dd2e","notify_title":"Testins","notify_descri":"Testins","notify_img":"","notify_time":"","date_and_time":"23-10-2029 11:00 AM","__v":0},{"_id":"5fb8ce733d17401d9a8e7f73","user_id":"5fb8b160e0ba3b0e6268dd2e","notify_title":"Testins","notify_descri":"Testins","notify_img":"","notify_time":"","date_and_time":"23-10-2029 11:00 AM","__v":0},{"_id":"5fb8ce743d17401d9a8e7f74","user_id":"5fb8b160e0ba3b0e6268dd2e","notify_title":"Testins","notify_descri":"Testins","notify_img":"","notify_time":"","date_and_time":"23-10-2029 11:00 AM","__v":0}]
      * Code : 200
      */
 
@@ -63,7 +63,7 @@ public class NotificationGetlistResponse {
          * user_id : 5fb8b160e0ba3b0e6268dd2e
          * notify_title : Testins
          * notify_descri : Testins
-         * notify_img : http://mysalveo.com/api/uploads/images.jpeg
+         * notify_img :
          * notify_time :
          * date_and_time : 23-10-2029 11:00 AM
          * __v : 0

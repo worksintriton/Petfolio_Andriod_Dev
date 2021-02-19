@@ -7,7 +7,7 @@ public class PetDetailsResponse {
     /**
      * Status : Success
      * Message : pet details List
-     * Data : [{"_id":"5fc0dd023164eb4782ff7602","user_id":"5fc0a53496ce26431e9f3a81","pet_img":"http://mysalveo.com/api/uploads/images.jpeg","pet_name":"POP","pet_type":"Dog","pet_breed":"breed 1","pet_gender":"Male","pet_color":"white","pet_weight":120,"pet_age":20,"vaccinated":true,"last_vaccination_date":"23-10-1996","default_status":true,"date_and_time":"27-11-1996 12:09 AM","__v":0},{"_id":"5fc0dd153164eb4782ff7603","user_id":"5fc0a53496ce26431e9f3a81","pet_img":"http://mysalveo.com/api/uploads/images.jpeg","pet_name":"POP","pet_type":"Dog","pet_breed":"breed 1","pet_gender":"Male","pet_color":"white","pet_weight":120,"pet_age":20,"vaccinated":true,"last_vaccination_date":"23-10-1996","default_status":true,"date_and_time":"26-11-2020 12:09 AM","__v":0}]
+     * Data : [{"_id":"5fc0dd023164eb4782ff7602","user_id":"5fc0a53496ce26431e9f3a81","pet_img":"","pet_name":"POP","pet_type":"Dog","pet_breed":"breed 1","pet_gender":"Male","pet_color":"white","pet_weight":120,"pet_age":20,"vaccinated":true,"last_vaccination_date":"23-10-1996","default_status":true,"date_and_time":"27-11-1996 12:09 AM","__v":0},{"_id":"5fc0dd153164eb4782ff7603","user_id":"5fc0a53496ce26431e9f3a81","pet_img":"","pet_name":"POP","pet_type":"Dog","pet_breed":"breed 1","pet_gender":"Male","pet_color":"white","pet_weight":120,"pet_age":20,"vaccinated":true,"last_vaccination_date":"23-10-1996","default_status":true,"date_and_time":"26-11-2020 12:09 AM","__v":0}]
      * Code : 200
      */
 
@@ -60,7 +60,7 @@ public class PetDetailsResponse {
         /**
          * _id : 5fc0dd023164eb4782ff7602
          * user_id : 5fc0a53496ce26431e9f3a81
-         * pet_img : http://mysalveo.com/api/uploads/images.jpeg
+         * pet_img :
          * pet_name : POP
          * pet_type : Dog
          * pet_breed : breed 1

@@ -116,6 +116,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
+    @SuppressLint("LogNotTimber")
     private void loginResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -124,6 +125,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Log.w(TAG,"ResendOTPResponse url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<LoginResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                 avi_indicator.smoothToHide();
@@ -133,19 +135,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
 
+                        if(response.body().getData().getUser_details() != null) {
+                            Intent intent = new Intent(LoginActivity.this, VerifyOtpActivity.class);
+                            intent.putExtra("phonemumber", response.body().getData().getUser_details().getUser_phone());
+                            intent.putExtra("otp", response.body().getData().getUser_details().getOtp());
+                            intent.putExtra("userstatus", response.body().getData().getUser_details().getUser_status());
+                            intent.putExtra("usertype", response.body().getData().getUser_details().getUser_type());
+                            intent.putExtra("userid", response.body().getData().getUser_details().get_id());
 
-                        Intent intent = new Intent(LoginActivity.this,VerifyOtpActivity.class);
-                        intent.putExtra("phonemumber",response.body().getData().getUser_details().getUser_phone());
-                        intent.putExtra("otp",response.body().getData().getUser_details().getOtp());
-                        intent.putExtra("userstatus",response.body().getData().getUser_details().getUser_status());
-                        intent.putExtra("usertype",response.body().getData().getUser_details().getUser_type());
-                        intent.putExtra("userid",response.body().getData().getUser_details().get_id());
-
-                        intent.putExtra("firstname", response.body().getData().getUser_details().getFirst_name());
-                        intent.putExtra("lastname",response.body().getData().getUser_details().getLast_name());
-                        intent.putExtra("useremail", response.body().getData().getUser_details().getUser_email());
-                        intent.putExtra("fromactivity",TAG);
-                        startActivity(intent);
+                            intent.putExtra("firstname", response.body().getData().getUser_details().getFirst_name());
+                            intent.putExtra("lastname", response.body().getData().getUser_details().getLast_name());
+                            intent.putExtra("useremail", response.body().getData().getUser_details().getUser_email());
+                            intent.putExtra("fromactivity", TAG);
+                            startActivity(intent);
+                        }
 
                     } else {
                         showErrorLoading(response.body().getMessage());
@@ -164,6 +167,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private LoginRequest loginRequest() {
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setUser_phone(edt_emailorphone.getText().toString());

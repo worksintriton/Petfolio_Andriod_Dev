@@ -40,7 +40,7 @@ public class SPMyCalendarAvailableAdapter extends  RecyclerView.Adapter<Recycler
 
     Dialog dialog;
     private OnItemClickSpecialization mCallback;
-
+    private String chspecialization;
 
 
     public SPMyCalendarAvailableAdapter(Context context, List<DoctorMyCalendarAvlDaysResponse.DataBean> dataBeanList, RecyclerView inbox_list, SPMyCalendarActivity spMyCalendarActivity) {
@@ -86,7 +86,9 @@ public class SPMyCalendarAvailableAdapter extends  RecyclerView.Adapter<Recycler
         holder.ch_days.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                String chspecialization = dataBeanList.get(position).getTitle();
+                if(dataBeanList.get(position).getTitle() != null) {
+                     chspecialization = dataBeanList.get(position).getTitle();
+                }
 
                 if(isChecked){
                     if (holder.ch_days.isChecked()) {

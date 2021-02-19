@@ -221,6 +221,7 @@ public class PetServicesFragment extends Fragment implements Serializable, View.
     }
 
 
+    @SuppressLint("LogNotTimber")
     private void ServiceCatResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -269,6 +270,7 @@ public class PetServicesFragment extends Fragment implements Serializable, View.
 
     }
 
+    @SuppressLint("LogNotTimber")
     private ServiceCatRequest serviceCatRequest() {
         /*
          * user_id : 5fd778437aa4cc1c6a1e5632

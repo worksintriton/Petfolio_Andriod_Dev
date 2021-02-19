@@ -42,7 +42,7 @@ public class DoctorMyCalendarAvailableAdapter extends  RecyclerView.Adapter<Recy
 
     Dialog dialog;
     private OnItemClickSpecialization mCallback;
-
+    private String chspecialization;
 
 
     public DoctorMyCalendarAvailableAdapter(Context context, List<DoctorMyCalendarAvlDaysResponse.DataBean> dataBeanList, RecyclerView inbox_list, DoctorMyCalendarActivity doctorMyCalendarActivity) {
@@ -88,7 +88,9 @@ public class DoctorMyCalendarAvailableAdapter extends  RecyclerView.Adapter<Recy
         holder.ch_days.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                String chspecialization = dataBeanList.get(position).getTitle();
+                if(dataBeanList.get(position).getTitle() != null) {
+                     chspecialization = dataBeanList.get(position).getTitle();
+                }
 
                 if(isChecked){
                     if (holder.ch_days.isChecked()) {

@@ -101,17 +101,7 @@ public class SPServiceListEditAdapter extends  RecyclerView.Adapter<RecyclerView
 
                 Log.w(TAG,"setOnCheckedChangeListener : "+" isChbxChecked : "+isChbxChecked+" isValueAdded : "+isValueAdded);
 
-               /* for(int i=0;i<spServiceListEdit.size();i++){
-                    if(null != currentItem.getService_list() && spServiceListEdit.get(i).getBus_service_list().equalsIgnoreCase(currentItem.getService_list().trim())){
-                        holder.checkbox_service_type.setChecked(true);
-                        holder.txt_timeslottype.setText(spServiceListEdit.get(i).getTime_slots());
-                        holder.txt_amount.setText(spServiceListEdit.get(i).getAmount()+"");
-                        Log.w(TAG,"ServiceEdit");
 
-
-                    }
-
-                }*/
 
                 if(isChecked && !isValueAdded){
                     if (holder.checkbox_service_type.isChecked()) {

@@ -167,8 +167,7 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-
-                        if(response.body().getData().isEmpty()){
+                        if(response.body().getData() != null && response.body().getData().isEmpty()){
                             txt_no_records.setVisibility(View.VISIBLE);
                             txt_no_records.setText("No new address");
                             rv_adddress_list.setVisibility(View.GONE);
@@ -178,7 +177,9 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
                             txt_no_records.setVisibility(View.GONE);
                             rv_adddress_list.setVisibility(View.VISIBLE);
                             txt_savedaddress.setVisibility(View.VISIBLE);
-                            addressList = response.body().getData();
+                            if(response.body().getData() != null) {
+                                addressList = response.body().getData();
+                            }
                             txt_savedaddress.setText(addressList.size()+" Saved Address");
                             setView();
                         }
@@ -264,7 +265,8 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
 
 
     }
-    private void locationDeleteResponseCall( String locationid) {
+    @SuppressLint("LogNotTimber")
+    private void locationDeleteResponseCall(String locationid) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
 
@@ -274,6 +276,7 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
         Log.w(TAG,"url  :%s"+call.request().url().toString());
 
         call.enqueue(new Callback<LocationDeleteResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NotNull Call<LocationDeleteResponse> call, @NotNull Response<LocationDeleteResponse> response) {
                 avi_indicator.smoothToHide();
@@ -303,6 +306,7 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private LocationDeleteRequest locationDeleteRequest(String locationid) {
 
         /*
@@ -359,6 +363,7 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
 
 
     }
+    @SuppressLint("LogNotTimber")
     private void locationStatusChangeResponseCall(String locationid, String userid) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -368,6 +373,7 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
         Log.w(TAG,"url  :%s"+call.request().url().toString());
 
         call.enqueue(new Callback<LocationStatusChangeResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NotNull Call<LocationStatusChangeResponse> call, @NotNull Response<LocationStatusChangeResponse> response) {
                 Log.w(TAG,"LocationStatusChangeResponse"+ "--->" + new Gson().toJson(response.body()));
@@ -398,7 +404,8 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
         });
 
     }
-    private LocationStatusChangeRequest locationStatusChangeRequest(String locationid,String userid) {
+    @SuppressLint("LogNotTimber")
+    private LocationStatusChangeRequest locationStatusChangeRequest(String locationid, String userid) {
 
         /*
          * _id : 5fcf2d2a57c8326d894e4d7e

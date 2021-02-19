@@ -1,5 +1,6 @@
 package com.petfolio.infinitus.serviceprovider;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -149,6 +150,7 @@ public class SP_Holiday_Activity extends AppCompatActivity implements OnItemDele
 
     }
 
+    @SuppressLint("LogNotTimber")
     private void holidayListResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -157,6 +159,7 @@ public class SP_Holiday_Activity extends AppCompatActivity implements OnItemDele
         Log.w(TAG,"url  :%s"+call.request().url().toString());
 
         call.enqueue(new Callback<HolidayListResponse>() {
+            @SuppressLint({"LogNotTimber", "SetTextI18n"})
             @Override
             public void onResponse(@NonNull Call<HolidayListResponse> call, @NonNull Response<HolidayListResponse> response) {
                 avi_indicator.smoothToHide();
@@ -166,28 +169,26 @@ public class SP_Holiday_Activity extends AppCompatActivity implements OnItemDele
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                             Log.w(TAG,"PatientGetpaylistResponse" + "--->" + new Gson().toJson(response.body()));
-                            holidayListResponseList = response.body().getData();
-                            Log.w(TAG,"Size%s"+ holidayListResponseList.size());
-                            if(response.body().getData().isEmpty()){
-                                tvNorecords.setVisibility(View.VISIBLE);
-                                tvNorecords.setText("No holidays");
-                                rv_listofholidays.setVisibility(View.GONE);
-                            }else{
-                                tvNorecords.setVisibility(View.GONE);
-                                rv_listofholidays.setVisibility(View.VISIBLE);
-                                setView();
-                            }
+                           if(response.body().getData() != null){
+                               holidayListResponseList = response.body().getData();
+                               Log.w(TAG,"Size%s"+ holidayListResponseList.size());
+                               if(response.body().getData().isEmpty()){
+                                   tvNorecords.setVisibility(View.VISIBLE);
+                                   tvNorecords.setText("No holidays");
+                                   rv_listofholidays.setVisibility(View.GONE);
+                               }else{
+                                   tvNorecords.setVisibility(View.GONE);
+                                   rv_listofholidays.setVisibility(View.VISIBLE);
+                                   setView();
+                               }
+
+                           }
 
 
 
-                        /*Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
-                            startActivity(new Intent(getApplicationContext(), Doctor_Holiday_Activity.class));
-                            finish();*/
+
                     }
-                    else{
-                        //proced_appoinment.setVisibility(View.GONE);
-                        //showErrorLoading(response.body().getMessage());
-                    }
+
                 }
 
 
@@ -244,6 +245,7 @@ public class SP_Holiday_Activity extends AppCompatActivity implements OnItemDele
     }
 
 
+    @SuppressLint("LogNotTimber")
     private void createHolidayResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -252,6 +254,7 @@ public class SP_Holiday_Activity extends AppCompatActivity implements OnItemDele
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<CreateHolidayResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<CreateHolidayResponse> call, @NonNull Response<CreateHolidayResponse> response) {
                 avi_indicator.smoothToHide();
@@ -283,8 +286,9 @@ public class SP_Holiday_Activity extends AppCompatActivity implements OnItemDele
 
     }
     private CreateHolidayRequest createHolidayRequest() {
+
         /*
-         * Email_id : mohammedimthi2395@gmail.com
+         * user_id : 1234567890
          * Date : 23-10-2020
          */
         CreateHolidayRequest createHolidayRequest = new CreateHolidayRequest();
@@ -419,6 +423,7 @@ public class SP_Holiday_Activity extends AppCompatActivity implements OnItemDele
 
 
     }
+    @SuppressLint("LogNotTimber")
     private void holidayDeleteResponseCall(final ProgressDialog dialog, String dateid) {
         dialog.show();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
@@ -427,6 +432,7 @@ public class SP_Holiday_Activity extends AppCompatActivity implements OnItemDele
         Log.w(TAG,"url  :%s"+call.request().url().toString());
 
         call.enqueue(new Callback<HolidayDeleteResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NotNull Call<HolidayDeleteResponse> call, @NotNull Response<HolidayDeleteResponse> response) {
                 dialog.dismiss();

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
 import com.petfolio.infinitus.interfaces.OnAppointmentComplete;
 
@@ -75,8 +76,12 @@ public class SPNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.
         Log.w(TAG,"Pet name-->"+newAppointmentResponseList.get(position).getPet_id().getPet_name());
 
         currentItem = newAppointmentResponseList.get(position);
-        holder.txt_petname.setText(newAppointmentResponseList.get(position).getPet_id().getPet_name());
-        holder.txt_pettype.setText(newAppointmentResponseList.get(position).getPet_id().getPet_type());
+        if(newAppointmentResponseList.get(position).getPet_id().getPet_name() != null) {
+            holder.txt_petname.setText(newAppointmentResponseList.get(position).getPet_id().getPet_name());
+        }
+        if(newAppointmentResponseList.get(position).getPet_id().getPet_type() != null) {
+            holder.txt_pettype.setText(newAppointmentResponseList.get(position).getPet_id().getPet_type());
+        }
         holder.txt_lbl_type.setText("Service Name");
         if(newAppointmentResponseList.get(position).getService_name() != null){
             holder.txt_type.setText(newAppointmentResponseList.get(position).getService_name());
@@ -99,7 +104,7 @@ public class SPNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.
             }
            else{
                 Glide.with(context)
-                        .load(R.drawable.image_thumbnail)
+                        .load(APIClient.PROFILE_IMAGE_URL)
                         .into(holder.img_pet_imge);
 
             }

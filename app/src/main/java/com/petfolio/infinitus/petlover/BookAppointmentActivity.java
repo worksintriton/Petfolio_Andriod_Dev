@@ -504,6 +504,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
     }
 
+    @SuppressLint("LogNotTimber")
     public void petTypeListResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -513,6 +514,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         Log.w(TAG, "url  :%s" + call.request().url().toString());
 
         call.enqueue(new Callback<PetTypeListResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<PetTypeListResponse> call, @NonNull Response<PetTypeListResponse> response) {
                 avi_indicator.smoothToHide();
@@ -522,7 +524,9 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                     if (200 == response.body().getCode()) {
                         Log.w(TAG, "PetTypeListResponse" + new Gson().toJson(response.body()));
 
-                        usertypedataBeanList = response.body().getData().getUsertypedata();
+                        if(response.body().getData().getUsertypedata() != null) {
+                            usertypedataBeanList = response.body().getData().getUsertypedata();
+                        }
                         if (usertypedataBeanList != null && usertypedataBeanList.size() > 0) {
                             setPetType(usertypedataBeanList);
                         }
@@ -561,6 +565,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
         }
     }
+    @SuppressLint("LogNotTimber")
     private void breedTypeResponseByPetIdCall(String petTypeId) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -569,6 +574,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         Log.w(TAG, "url  :%s" + call.request().url().toString());
 
         call.enqueue(new Callback<BreedTypeResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<BreedTypeResponse> call, @NonNull Response<BreedTypeResponse> response) {
                 avi_indicator.smoothToHide();
@@ -577,9 +583,11 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
-                        breedTypedataBeanList = response.body().getData();
-                        if (breedTypedataBeanList != null && breedTypedataBeanList.size() > 0) {
-                            setBreedType(breedTypedataBeanList);
+                        if(response.body().getData() != null) {
+                            breedTypedataBeanList = response.body().getData();
+                            if (breedTypedataBeanList != null && breedTypedataBeanList.size() > 0) {
+                                setBreedType(breedTypedataBeanList);
+                            }
                         }
 
                     }
@@ -626,6 +634,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     }
 
 
+    @SuppressLint("LogNotTimber")
     private void petDetailsResponseByUserIdCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -634,19 +643,23 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         Log.w(TAG, "url  :%s" + call.request().url().toString());
 
         call.enqueue(new Callback<PetDetailsResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<PetDetailsResponse> call, @NonNull Response<PetDetailsResponse> response) {
                 avi_indicator.smoothToHide();
                 Log.w(TAG, "PetDetailsResponse" + "--->" + new Gson().toJson(response.body()));
 
-                if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-
-                    petTypeListResponseCall();
-                }
 
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
-                        petDetailsResponseByUserIdList = response.body().getData();
+                        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+
+                            petTypeListResponseCall();
+                        }
+                        if(response.body().getData() != null) {
+
+                            petDetailsResponseByUserIdList = response.body().getData();
+                        }
                         if (petDetailsResponseByUserIdList != null && petDetailsResponseByUserIdList.size() > 0) {
                             setSelectYourPetType(petDetailsResponseByUserIdList);
                         }
@@ -989,9 +1002,16 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
 
+
+
         AddYourPetRequest addYourPetRequest = new AddYourPetRequest();
         addYourPetRequest.setUser_id(userid);
-        addYourPetRequest.setPet_img(uploadimagepath);
+        if(uploadimagepath != null && !uploadimagepath.isEmpty()){
+            addYourPetRequest.setPet_img(uploadimagepath);
+        }else{
+            addYourPetRequest.setPet_img(APIClient.PROFILE_IMAGE_URL);
+
+        }
         addYourPetRequest.setPet_name(edt_petname.getText().toString());
         addYourPetRequest.setPet_type(strPetType);
         addYourPetRequest.setPet_breed(strPetBreedType);
@@ -1125,6 +1145,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     }
 
 
+    @SuppressLint("LogNotTimber")
     private void petAppointmentCreateResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -1134,6 +1155,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<PetAppointmentCreateResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<PetAppointmentCreateResponse> call, @NonNull Response<PetAppointmentCreateResponse> response) {
                 avi_indicator.smoothToHide();

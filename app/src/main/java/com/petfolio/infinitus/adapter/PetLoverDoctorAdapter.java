@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.petlover.DoctorClinicDetailsActivity;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 
@@ -72,26 +73,33 @@ public class PetLoverDoctorAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
 
 
           currentItem = doctorDetailsResponseList.get(position);
-          holder.txt_doctors_name.setText(currentItem.getDoctor_name());
+          if(currentItem.getDoctor_name() != null){
+              holder.txt_doctors_name.setText(currentItem.getDoctor_name());
+          }
           List<PetLoverDashboardResponse.DataBean.DashboarddataBean.DoctorDetailsBean.SpecializationBean> specializationBeanList = currentItem.getSpecialization();
 
           for(int i=0;i<specializationBeanList.size();i++){
-              holder.txt_doctors_specialization.setText(specializationBeanList.get(i).getSpecialization());
+              if(specializationBeanList.get(i).getSpecialization() !=  null) {
+                  holder.txt_doctors_specialization.setText(specializationBeanList.get(i).getSpecialization());
+              }
 
           }
-          holder.txt_star_rating.setText( doctorDetailsResponseList.get(position).getStar_count()+"");
-          holder.txt_review_count.setText( doctorDetailsResponseList.get(position).getReview_count()+"");
+          if(doctorDetailsResponseList.get(position).getStar_count() != 0) {
+              holder.txt_star_rating.setText(doctorDetailsResponseList.get(position).getStar_count() + "");
+          }
+          if(doctorDetailsResponseList.get(position).getReview_count() != 0) {
+              holder.txt_review_count.setText(doctorDetailsResponseList.get(position).getReview_count() + "");
+          }
           if (currentItem.getDoctor_img() != null && !currentItem.getDoctor_img().isEmpty()) {
 
             Glide.with(context)
                     .load(currentItem.getDoctor_img())
-                    //.load(R.drawable.logo)
                     .into(holder.img_doctors_image);
 
         }
           else{
             Glide.with(context)
-                    .load(R.drawable.services)
+                    .load(APIClient.PROFILE_IMAGE_URL)
                     .into(holder.img_doctors_image);
 
         }

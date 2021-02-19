@@ -25,6 +25,14 @@ public class APIClient {
     public static String BASE_URL = "http://54.212.108.156:3000/api/";
     public static String IMAGE_BASE_URL = "http://54.212.108.156:3000/";
 
+    /*Banner Image*/
+    public static String BANNER_IMAGE_URL = BASE_URL+"uploads/banner_empty.jpg";
+
+    /* Profile or other Image*/
+    public static String PROFILE_IMAGE_URL = BASE_URL+"uploads/Pic_empty.jpg";
+
+
+
 
 
     public static List<PetLoverDashboardResponse.DataBean.SOSBean> sosList;

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.petlover.DoctorClinicDetailsActivity;
 import com.petfolio.infinitus.responsepojo.NotificationGetlistResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
@@ -65,10 +66,19 @@ public class NotificationDashboardAdapter extends  RecyclerView.Adapter<Recycler
 
   private void initLayoutOne(ViewHolderOne holder, final int position) {
         currentItem = notificationGetlistResponseList.get(position);
-        holder.txt_notification_title.setText(currentItem.getNotify_title());
-        holder.txt_message.setText(currentItem.getNotify_descri());
-        holder.txt_message_details.setText(currentItem.getNotify_descri());
-        holder.txt_date.setText(currentItem.getDate_and_time());
+        if(currentItem.getNotify_title() != null) {
+            holder.txt_notification_title.setText(currentItem.getNotify_title());
+        }
+        if(currentItem.getNotify_descri() != null){
+            holder.txt_message.setText(currentItem.getNotify_descri());
+
+        }
+        if(currentItem.getNotify_descri() != null) {
+            holder.txt_message_details.setText(currentItem.getNotify_descri());
+        }
+        if(currentItem.getDate_and_time() != null) {
+            holder.txt_date.setText(currentItem.getDate_and_time());
+        }
         if (currentItem.getNotify_img() != null && !currentItem.getNotify_img().isEmpty()) {
 
             Glide.with(context)
@@ -79,7 +89,7 @@ public class NotificationDashboardAdapter extends  RecyclerView.Adapter<Recycler
         }
         else{
             Glide.with(context)
-                    .load(R.drawable.app_logo)
+                    .load(APIClient.PROFILE_IMAGE_URL)
                     .into(holder.img_notify_imge);
 
         }
@@ -92,16 +102,6 @@ public class NotificationDashboardAdapter extends  RecyclerView.Adapter<Recycler
 
 
 
-
-                /*Intent intent = new Intent(context, DoctorClinicDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("doctorid",doctorDetailsResponseList.get(position).getUser_id());
-                intent.putExtra("doctorname",doctorDetailsResponseList.get(position).getDoctor_name());
-                intent.putExtra("reviewcount",doctorDetailsResponseList.get(position).getReview_count());
-                intent.putExtra("starcount",doctorDetailsResponseList.get(position).getStar_count());
-                intent.putExtra("distance",doctorDetailsResponseList.get(position).getDistance());
-                intent.putExtra("fromactivity", "PetCareFragment");
-                Log.w(TAG,"doctorid :"+doctorDetailsResponseList.get(position).getUser_id());
-                context.startActivity(intent);*/
             }
 
 

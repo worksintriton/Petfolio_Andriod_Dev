@@ -8,7 +8,7 @@ public class SPDetailsRepsonse {
      * Status : Success
      * Message : SP Details
      * Data : {"bus_service_list":[{"bus_service_list":"SP - 1"}],"bus_spec_list":[{"bus_spec_list":"Specialization - 1"}],"bus_service_gall":[{"bus_service_gall":"http://52.25.163.13:3000/api/uploads/5fe1e675094d0471dabf929522-12-2020 05:58 PMPetfolio1.jpg"}],"bus_certif":[{"bus_certif":"http://52.25.163.13:3000/api/uploads/5fe1e675094d0471dabf929522-12-2020 05:58 PM1606464394712_4893XXXXXXXXXX79_13-11-2020.PDF"}],"_id":"5fe1e6c7094d0471dabf9296","user_id":"5fe1e675094d0471dabf9295","bus_user_name":"Dk","bus_user_email":"iddineshkumar@gmail.com","bussiness_name":"Gromming","bus_user_phone":"9842670816","bus_profile":"http://52.25.163.13:3000/api/uploads/5fe1e675094d0471dabf929522-12-2020 05:58 PM1606464394712_4893XXXXXXXXXX79_13-11-2020.PDF","bus_proof":"http://52.25.163.13:3000/api/uploads/5fe1e675094d0471dabf929522-12-2020 05:58 PM1606464394712_4893XXXXXXXXXX79_13-11-2020.PDF","date_and_time":"23/12/2020 07:22 PM","mobile_type":"Android","profile_status":true,"profile_verification_status":"Verified","sp_loc":"Unnamed Road, Tamil Nadu 621006, India","sp_lat":11.0557284,"sp_long":78.6326037,"delete_status":false,"updatedAt":"2020-12-24T04:17:10.260Z","createdAt":"2020-12-22T12:29:59.324Z","__v":0,"distance":0,"rating":0,"comments":0}
-     * Details : {"image_path":"SP - 6","title":"http://mysalveo.com/api/uploads/images.jpeg","count":0}
+     * Details : {"image_path":"SP - 6","title":"","count":0}
      * Code : 200
      */
 
@@ -444,7 +444,7 @@ public class SPDetailsRepsonse {
     public static class DetailsBean  {
         /**
          * image_path : SP - 6
-         * title : http://mysalveo.com/api/uploads/images.jpeg
+         * title :
          * count : 0
          *"amount": 200,
          * "time": "15 mins"

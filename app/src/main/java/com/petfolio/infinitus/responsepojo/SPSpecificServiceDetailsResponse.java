@@ -7,7 +7,7 @@ public class SPSpecificServiceDetailsResponse {
     /**
      * Status : Success
      * Message : Service Provider List
-     * Data : {"Service_Details":{"image_path":"SP - 6","title":"http://mysalveo.com/api/uploads/images.jpeg","count":0},"Service_provider":[{"_id":"1234QWERTYUIOP","image":"http://mysalveo.com/api/uploads/images.jpeg","service_provider_name":"Mohammed","service_price":100,"service_offer":23,"service_place":"Chennai","distance":2,"rating_count":5,"comments_count":12},{"_id":"1234QWERTYUIOP","image":"http://mysalveo.com/api/uploads/images.jpeg","service_provider_name":"Mohammed","service_price":100,"service_offer":23,"service_place":"Chennai","distance":2,"rating_count":5,"comments_count":12},{"_id":"1234QWERTYUIOP","image":"http://mysalveo.com/api/uploads/images.jpeg","service_provider_name":"Mohammed","service_price":100,"service_offer":23,"service_place":"Chennai","distance":2,"rating_count":5,"comments_count":12},{"_id":"1234QWERTYUIOP","image":"http://mysalveo.com/api/uploads/images.jpeg","service_provider_name":"Mohammed","service_price":100,"service_offer":23,"service_place":"Chennai","distance":2,"rating_count":5,"comments_count":12}]}
+     * Data : {"Service_Details":{"image_path":"SP - 6","title":"","count":0},"Service_provider":[{"_id":"1234QWERTYUIOP","image":"","service_provider_name":"Mohammed","service_price":100,"service_offer":23,"service_place":"Chennai","distance":2,"rating_count":5,"comments_count":12},{"_id":"1234QWERTYUIOP","image":"","service_provider_name":"Mohammed","service_price":100,"service_offer":23,"service_place":"Chennai","distance":2,"rating_count":5,"comments_count":12},{"_id":"1234QWERTYUIOP","image":"","service_provider_name":"Mohammed","service_price":100,"service_offer":23,"service_place":"Chennai","distance":2,"rating_count":5,"comments_count":12},{"_id":"1234QWERTYUIOP","image":"","service_provider_name":"Mohammed","service_price":100,"service_offer":23,"service_place":"Chennai","distance":2,"rating_count":5,"comments_count":12}]}
      * Code : 200
      */
 
@@ -65,7 +65,7 @@ public class SPSpecificServiceDetailsResponse {
 
     public static class DataBean {
         /**
-         * Service_Details : {"image_path":"SP - 6","title":"http://mysalveo.com/api/uploads/images.jpeg","count":0}
+         * Service_Details : {"image_path":"SP - 6","title":"","count":0}
          * Service_provider : [{"_id":"1234QWERTYUIOP","image":"http://mysalveo.com/api/uploads/images.jpeg","service_provider_name":"Mohammed","service_price":100,"service_offer":23,"service_place":"Chennai","distance":2,"rating_count":5,"comments_count":12},{"_id":"1234QWERTYUIOP","image":"http://mysalveo.com/api/uploads/images.jpeg","service_provider_name":"Mohammed","service_price":100,"service_offer":23,"service_place":"Chennai","distance":2,"rating_count":5,"comments_count":12},{"_id":"1234QWERTYUIOP","image":"http://mysalveo.com/api/uploads/images.jpeg","service_provider_name":"Mohammed","service_price":100,"service_offer":23,"service_place":"Chennai","distance":2,"rating_count":5,"comments_count":12},{"_id":"1234QWERTYUIOP","image":"http://mysalveo.com/api/uploads/images.jpeg","service_provider_name":"Mohammed","service_price":100,"service_offer":23,"service_place":"Chennai","distance":2,"rating_count":5,"comments_count":12}]
          */
 

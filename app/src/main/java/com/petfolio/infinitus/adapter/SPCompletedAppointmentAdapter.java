@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.responsepojo.SPAppointmentResponse;
 import com.petfolio.infinitus.serviceprovider.SPAppointmentDetailsActivity;
 
@@ -55,10 +56,15 @@ public class SPCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycle
     @SuppressLint("SetTextI18n")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
-
-        holder.txt_petname.setText(completedAppointmentResponseList.get(position).getPet_id().getPet_name());
-        holder.txt_pettype.setText(completedAppointmentResponseList.get(position).getPet_id().getPet_type());
-        holder.txt_completed_date.setText("Completed on:"+" "+completedAppointmentResponseList.get(position).getCompleted_at());
+        if(completedAppointmentResponseList.get(position).getPet_id().getPet_name() != null){
+            holder.txt_petname.setText(completedAppointmentResponseList.get(position).getPet_id().getPet_name());
+        }
+        if(completedAppointmentResponseList.get(position).getPet_id().getPet_type() != null) {
+            holder.txt_pettype.setText(completedAppointmentResponseList.get(position).getPet_id().getPet_type());
+        }
+        if(completedAppointmentResponseList.get(position).getCompleted_at() != null) {
+            holder.txt_completed_date.setText("Completed on:" + " " + completedAppointmentResponseList.get(position).getCompleted_at());
+        }
 
         holder.txt_lbl_type.setText("Service Name");
         if(completedAppointmentResponseList.get(position).getService_name() != null){
@@ -77,7 +83,7 @@ public class SPCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycle
         }
         else{
             Glide.with(context)
-                    .load(R.drawable.image_thumbnail)
+                    .load(APIClient.PROFILE_IMAGE_URL)
                     .into(holder.img_pet_imge);
 
         }

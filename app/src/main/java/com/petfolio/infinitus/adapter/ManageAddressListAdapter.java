@@ -78,9 +78,15 @@ public class ManageAddressListAdapter extends  RecyclerView.Adapter<RecyclerView
     @SuppressLint("SetTextI18n")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
         currentItem = locationListResponseList.get(position);
-        holder.txt_location_title.setText(locationListResponseList.get(position).getLocation_title());
-        holder.txt_location_nickname.setText(locationListResponseList.get(position).getLocation_nickname());
-        holder.txt_address.setText(locationListResponseList.get(position).getLocation_address());
+        if(locationListResponseList.get(position).getLocation_title() != null) {
+            holder.txt_location_title.setText(locationListResponseList.get(position).getLocation_title());
+        }
+        if(locationListResponseList.get(position).getLocation_nickname() != null) {
+            holder.txt_location_nickname.setText(locationListResponseList.get(position).getLocation_nickname());
+        }
+        if(locationListResponseList.get(position).getLocation_address() != null) {
+            holder.txt_address.setText(locationListResponseList.get(position).getLocation_address());
+        }
 
         holder.img_settings.setOnClickListener(new View.OnClickListener() {
 

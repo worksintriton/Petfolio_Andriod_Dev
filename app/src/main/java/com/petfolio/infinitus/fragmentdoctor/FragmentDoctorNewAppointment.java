@@ -152,6 +152,7 @@ public class FragmentDoctorNewAppointment extends Fragment implements OnAppointm
 
 
 
+    @SuppressLint("LogNotTimber")
     private void doctorNewAppointmentResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -160,6 +161,7 @@ public class FragmentDoctorNewAppointment extends Fragment implements OnAppointm
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<DoctorNewAppointmentResponse>() {
+            @SuppressLint({"LogNotTimber", "SetTextI18n"})
             @Override
             public void onResponse(@NonNull Call<DoctorNewAppointmentResponse> call, @NonNull Response<DoctorNewAppointmentResponse> response) {
                avi_indicator.smoothToHide();
@@ -169,10 +171,14 @@ public class FragmentDoctorNewAppointment extends Fragment implements OnAppointm
                if (response.body() != null) {
 
                    if(200 == response.body().getCode()){
-                       newAppointmentResponseList = response.body().getData();
-                       Log.w(TAG,"Size"+newAppointmentResponseList.size());
-                       Log.w(TAG,"newAppointmentResponseList : "+new Gson().toJson(newAppointmentResponseList));
-                       if(response.body().getData().isEmpty()){
+                       if(response.body().getData() != null){
+                           newAppointmentResponseList = response.body().getData();
+                           Log.w(TAG,"Size"+newAppointmentResponseList.size());
+                           Log.w(TAG,"newAppointmentResponseList : "+new Gson().toJson(newAppointmentResponseList));
+
+                       }
+
+                       if(response.body().getData() != null && response.body().getData().isEmpty()){
                            txt_no_records.setVisibility(View.VISIBLE);
                            txt_no_records.setText("No new appointments");
                            rv_newappointment.setVisibility(View.GONE);
@@ -356,6 +362,7 @@ public class FragmentDoctorNewAppointment extends Fragment implements OnAppointm
         }
     }
 
+    @SuppressLint("LogNotTimber")
     private void notificationSendResponseCall(String userid, String doctorid, String appointmentid) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -365,6 +372,7 @@ public class FragmentDoctorNewAppointment extends Fragment implements OnAppointm
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<NotificationSendResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<NotificationSendResponse> call, @NonNull Response<NotificationSendResponse> response) {
                 avi_indicator.smoothToHide();
@@ -393,7 +401,7 @@ public class FragmentDoctorNewAppointment extends Fragment implements OnAppointm
     }
     private NotificationSendRequest notificationSendRequest(String userid, String doctorid, String appointmentid) {
 
-        /**
+        /*
          * status : Payment Failed
          * date : 23-10-2020 11:00 AM
          * appointment_UID :

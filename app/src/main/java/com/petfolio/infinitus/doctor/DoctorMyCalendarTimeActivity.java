@@ -114,7 +114,7 @@ public class DoctorMyCalendarTimeActivity extends AppCompatActivity implements O
             doctorMyCalendarAvlTimesResponseCall();
         }
     }
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private void doctorMyCalendarAvlTimesResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -123,7 +123,7 @@ public class DoctorMyCalendarTimeActivity extends AppCompatActivity implements O
         Log.w(TAG,"url  :%s"+" "+call.request().url().toString());
 
         call.enqueue(new Callback<DoctorMyCalendarAvlTimesResponse>() {
-            @SuppressLint("LongLogTag")
+            @SuppressLint({"LongLogTag", "LogNotTimber"})
             @Override
             public void onResponse(@NonNull Call<DoctorMyCalendarAvlTimesResponse> call, @NonNull Response<DoctorMyCalendarAvlTimesResponse> response) {
                 avi_indicator.smoothToHide();
@@ -132,19 +132,25 @@ public class DoctorMyCalendarTimeActivity extends AppCompatActivity implements O
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        dataBeanList = response.body().getData();
-                        DoctorMyCalendarUpdateDocDateRequest.TimingBean  timingBean = null;
-                        for(int i = 0;i<dataBeanList.size();i++) {
-                             timingBean = new DoctorMyCalendarUpdateDocDateRequest.TimingBean();
-                            timingBean.setTime(dataBeanList.get(i).getTime());
-                            timingBean.setStatus(dataBeanList.get(i).isStatus());
-                            timingBean.setFormat(dataBeanList.get(i).getFormat());
-                            timingBeanList.add(timingBean);
+                        if(response.body().getData() != null){
+                            dataBeanList = response.body().getData();
+                            if(dataBeanList != null && dataBeanList.size()>0) {
+                                DoctorMyCalendarUpdateDocDateRequest.TimingBean timingBean = null;
+                                for (int i = 0; i < dataBeanList.size(); i++) {
+                                    timingBean = new DoctorMyCalendarUpdateDocDateRequest.TimingBean();
+                                    timingBean.setTime(dataBeanList.get(i).getTime());
+                                    timingBean.setStatus(dataBeanList.get(i).isStatus());
+                                    timingBean.setFormat(dataBeanList.get(i).getFormat());
+                                    timingBeanList.add(timingBean);
 
+                                }
+                            }
                         }
 
 
-                        if(dataBeanList.size()>0){
+
+
+                        if(dataBeanList != null && dataBeanList.size()>0){
                             setViewAvlTimes();
                         }
 
@@ -166,10 +172,10 @@ public class DoctorMyCalendarTimeActivity extends AppCompatActivity implements O
 
     }
 
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private DoctorMyCalendarAvlTimesRequest doctorMyCalendarAvlTimesRequest() {
         /*
-         * Doctor_email_id : mohammedimthi23956@gmail.com
+         * User_id : mohammedimthi23956@gmail.com
          * Day :
          */
         DoctorMyCalendarAvlTimesRequest doctorMyCalendarAvlTimesRequest = new DoctorMyCalendarAvlTimesRequest();
@@ -229,7 +235,7 @@ public class DoctorMyCalendarTimeActivity extends AppCompatActivity implements O
     }
 
 
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private void doctorMyCalendarUpdateDocDateResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -270,7 +276,7 @@ public class DoctorMyCalendarTimeActivity extends AppCompatActivity implements O
         });
 
     }
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private DoctorMyCalendarUpdateDocDateRequest doctorMyCalendarUpdateDocDateRequest() {
         /*
          * user_id : 123123131313123123123123

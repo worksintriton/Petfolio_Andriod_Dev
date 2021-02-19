@@ -51,7 +51,7 @@ public class SPMyCalendarActivity extends AppCompatActivity implements OnItemCli
 
     private ArrayList<String> dateList = new ArrayList<>();
     private SessionManager session;
-    String doctorname = "",doctoremailid = "";
+    String username = "",doctoremailid = "";
     Button btn_next;
     private String userid;
     AVLoadingIndicatorView avi_indicator;
@@ -68,7 +68,7 @@ public class SPMyCalendarActivity extends AppCompatActivity implements OnItemCli
 
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
-        doctorname = user.get(SessionManager.KEY_FIRST_NAME);
+        username = user.get(SessionManager.KEY_FIRST_NAME);
         doctoremailid = user.get(SessionManager.KEY_EMAIL_ID);
         userid = user.get(SessionManager.KEY_ID);
 
@@ -133,20 +133,26 @@ public class SPMyCalendarActivity extends AppCompatActivity implements OnItemCli
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        dataBeanList = response.body().getData();
-
-                        for(int i=0;i<dataBeanList.size();i++){
-                            boolean isStatus = dataBeanList.get(i).isStatus();
-                            if(isStatus){
-                                btn_next.setVisibility(View.GONE);
-                            }else{
-                                btn_next.setVisibility(View.VISIBLE);
-                                break;
+                        if(response.body().getData() != null) {
+                            dataBeanList = response.body().getData();
+                            if(dataBeanList != null && dataBeanList.size()>0){
+                                for (int i = 0; i < dataBeanList.size(); i++) {
+                                    boolean isStatus = dataBeanList.get(i).isStatus();
+                                    if (isStatus) {
+                                        btn_next.setVisibility(View.GONE);
+                                    } else {
+                                        btn_next.setVisibility(View.VISIBLE);
+                                        break;
+                                    }
+                                }
+                                if (dataBeanList.size() > 0) {
+                                    setViewAvlDays();
+                                }
                             }
-                        }
 
-                        if(dataBeanList.size()>0){
-                            setViewAvlDays();
+
+
+
                         }
 
                     }
@@ -166,7 +172,7 @@ public class SPMyCalendarActivity extends AppCompatActivity implements OnItemCli
         });
 
     }
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private SPMyCalendarAvlDaysRequest spMyCalendarAvlDaysRequest() {
         /*
          * sp_name : imthi
@@ -175,7 +181,7 @@ public class SPMyCalendarActivity extends AppCompatActivity implements OnItemCli
          */
         SPMyCalendarAvlDaysRequest spMyCalendarAvlDaysRequest = new SPMyCalendarAvlDaysRequest();
         spMyCalendarAvlDaysRequest.setUser_id(userid);
-        spMyCalendarAvlDaysRequest.setSp_name(doctorname);
+        spMyCalendarAvlDaysRequest.setSp_name(username);
         spMyCalendarAvlDaysRequest.setTypes(1);
         Log.w(TAG,"spMyCalendarAvlDaysRequest"+ "--->" + new Gson().toJson(spMyCalendarAvlDaysRequest));
         return spMyCalendarAvlDaysRequest;

@@ -62,9 +62,12 @@ public class SPHolidayListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
         currentItem = holidayListResponseList.get(position);
-        holder.txt_holidaydate.setText(currentItem.getDate());
+        if(currentItem.getDate() != null) {
+            holder.txt_holidaydate.setText(currentItem.getDate());
+        }
 
         holder.txt_holidaydelete.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onClick(View v) {
                 onItemDeleteHoliday.onItemdeletedate(holidayListResponseList.get(position).get_id());

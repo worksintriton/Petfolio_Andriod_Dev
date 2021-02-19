@@ -17,10 +17,10 @@ public class DocBusInfoUploadRequest {
      * experience_details : [{"company":"triton it slotuions","from":"22-10-2020","to":"22-10-2021"},{"company":"triton it slotuions","from":"22-10-2020","to":"22-10-2021"},{"company":"triton it slotuions","from":"22-10-2020","to":"22-10-2021"}]
      * specialization : [{"specialization":"Spec - 1"},{"specialization":"Spec - 1"},{"specialization":"Spec - 1"}]
      * pet_handled : [{"pet_handled":"Pet - 1"},{"pet_handled":"Pet - 1"}]
-     * clinic_pic : [{"clinic_pic":"http://mysalveo.com/api/uploads/images.jpeg"},{"clinic_pic":"http://mysalveo.com/api/uploads/images.jpeg"}]
-     * certificate_pic : [{"certificate_pic":"http://mysalveo.com/api/uploads/images.jpeg"},{"certificate_pic":"http://mysalveo.com/api/uploads/images.jpeg"}]
-     * govt_id_pic : [{"govt_id_pic":"http://mysalveo.com/api/uploads/images.jpeg"},{"govt_id_pic":"http://mysalveo.com/api/uploads/images.jpeg"}]
-     * photo_id_pic : [{"photo_id_pic":"http://mysalveo.com/api/uploads/images.jpeg"},{"photo_id_pic":"http://mysalveo.com/api/uploads/images.jpeg"}]
+     * clinic_pic : [{"clinic_pic":""},{"clinic_pic":""}]
+     * certificate_pic : [{"certificate_pic":""},{"certificate_pic":""}]
+     * govt_id_pic : [{"govt_id_pic":""},{"govt_id_pic":""}]
+     * photo_id_pic : [{"photo_id_pic":""},{"photo_id_pic":""}]
      * profile_status : 0
      * profile_verification_status : Not verified
      * date_and_time : 23-10-2020 11:10 AM
@@ -90,22 +90,22 @@ public class DocBusInfoUploadRequest {
 
     private List<PetHandledBean> pet_handled;
     /**
-     * clinic_pic : http://mysalveo.com/api/uploads/images.jpeg
+     * clinic_pic :
      */
 
     private List<ClinicPicBean> clinic_pic;
     /**
-     * certificate_pic : http://mysalveo.com/api/uploads/images.jpeg
+     * certificate_pic :
      */
 
     private List<CertificatePicBean> certificate_pic;
     /**
-     * govt_id_pic : http://mysalveo.com/api/uploads/images.jpeg
+     * govt_id_pic :
      */
 
     private List<GovtIdPicBean> govt_id_pic;
     /**
-     * photo_id_pic : http://mysalveo.com/api/uploads/images.jpeg
+     * photo_id_pic :
      */
 
     private List<PhotoIdPicBean> photo_id_pic;

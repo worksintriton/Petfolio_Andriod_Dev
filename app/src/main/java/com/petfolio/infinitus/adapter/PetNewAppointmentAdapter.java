@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
 import com.petfolio.infinitus.petlover.PetNewAppointmentDetailsActivity;
 import com.petfolio.infinitus.petlover.PetSPNewAppointmentDetailsActivity;
@@ -79,7 +80,9 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
         currentItem = newAppointmentResponseList.get(position);
         communicationtype = newAppointmentResponseList.get(position).getCommunication_type();
        Log.w(TAG,"Communicationtype : "+ newAppointmentResponseList.get(position).getCommunication_type());
-        holder.txt_petname.setText(newAppointmentResponseList.get(position).getPet_name());
+       if(newAppointmentResponseList.get(position).getPet_name() != null) {
+           holder.txt_petname.setText(newAppointmentResponseList.get(position).getPet_name());
+       }
         if(communicationtype != null){
             if(communicationtype.equalsIgnoreCase("Online")){
                 holder.img_videocall.setVisibility(View.VISIBLE);
@@ -90,18 +93,26 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
 
         if(newAppointmentResponseList.get(position).getAppointment_for() != null && newAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("Doctor") ){
             holder.txt_type.setText(newAppointmentResponseList.get(position).getAppointment_for());
-            holder.txt_clinicname.setText(newAppointmentResponseList.get(position).getClinic_name());
+            if(newAppointmentResponseList.get(position).getClinic_name() != null) {
+                holder.txt_clinicname.setText(newAppointmentResponseList.get(position).getClinic_name());
+            }
             holder.txt_lbl_doctorname.setText("Doctor Name");
-            holder.txt_doctorname.setText(newAppointmentResponseList.get(position).getDoctor_name());
+            if(newAppointmentResponseList.get(position).getDoctor_name() != null) {
+                holder.txt_doctorname.setText(newAppointmentResponseList.get(position).getDoctor_name());
+            }
 
         }
         else if(newAppointmentResponseList.get(position).getAppointment_for() != null && newAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("SP") ){
             holder.txt_type.setText(newAppointmentResponseList.get(position).getAppointment_for());
-            holder.txt_clinicname.setText(newAppointmentResponseList.get(position).getService_provider_name());
+            if(newAppointmentResponseList.get(position).getService_provider_name() != null) {
+                holder.txt_clinicname.setText(newAppointmentResponseList.get(position).getService_provider_name());
+            }
             holder.img_videocall.setVisibility(View.GONE);
             holder.img_emergency_appointment.setVisibility(View.GONE);
             holder.txt_lbl_doctorname.setText("Service Name");
-            holder.txt_doctorname.setText(newAppointmentResponseList.get(position).getService_name());
+            if(newAppointmentResponseList.get(position).getService_name() != null) {
+                holder.txt_doctorname.setText(newAppointmentResponseList.get(position).getService_name());
+            }
 
 
 
@@ -135,7 +146,7 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
             }
            else{
                 Glide.with(context)
-                        .load(R.drawable.image_thumbnail)
+                        .load(APIClient.PROFILE_IMAGE_URL)
                         .into(holder.img_clinic_imge);
 
             }

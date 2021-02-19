@@ -4,7 +4,7 @@ public class DoctorUpdateProfileImageRequest {
 
     /**
      * user_id : 5fce1ae2928d5f5634501b2d
-     * profile_img : http://mysalveo.com/api/uploads/images.jpeg
+     * profile_img :""
      */
 
     private String user_id;

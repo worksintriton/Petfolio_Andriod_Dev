@@ -138,6 +138,7 @@ public class FragmentSPCompletedAppointment extends Fragment implements View.OnC
 
 
 
+    @SuppressLint("LogNotTimber")
     private void spCompletedAppointmentResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -146,6 +147,7 @@ public class FragmentSPCompletedAppointment extends Fragment implements View.OnC
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<SPAppointmentResponse>() {
+            @SuppressLint({"LogNotTimber", "SetTextI18n"})
             @Override
             public void onResponse(@NonNull Call<SPAppointmentResponse> call, @NonNull Response<SPAppointmentResponse> response) {
                avi_indicator.smoothToHide();
@@ -155,27 +157,31 @@ public class FragmentSPCompletedAppointment extends Fragment implements View.OnC
                if (response.body() != null) {
 
                    if(200 == response.body().getCode()){
-                       completedAppointmentResponseList = response.body().getData();
-                       Log.w(TAG,"Size"+completedAppointmentResponseList.size());
-                       Log.w(TAG,"spCompletedAppointmentResponseCall : "+new Gson().toJson(completedAppointmentResponseList));
-                       if(response.body().getData().isEmpty()){
-                           txt_no_records.setVisibility(View.VISIBLE);
-                           txt_no_records.setText("No completed appointments");
-                           rv_completedappointment.setVisibility(View.GONE);
-                           btn_load_more.setVisibility(View.GONE);
-                           btn_filter.setVisibility(View.GONE);
-                       }else{
-                           txt_no_records.setVisibility(View.GONE);
-                           rv_completedappointment.setVisibility(View.VISIBLE);
-                           Log.w(TAG,"Size : "+completedAppointmentResponseList.size());
-                           if(completedAppointmentResponseList.size() > 3){
-                               btn_load_more.setVisibility(View.VISIBLE);
-                           }else{
+                       if(response.body().getData() != null){
+                           completedAppointmentResponseList = response.body().getData();
+                           Log.w(TAG,"Size"+completedAppointmentResponseList.size());
+                           Log.w(TAG,"spCompletedAppointmentResponseCall : "+new Gson().toJson(completedAppointmentResponseList));
+                           if(response.body().getData().isEmpty()){
+                               txt_no_records.setVisibility(View.VISIBLE);
+                               txt_no_records.setText("No completed appointments");
+                               rv_completedappointment.setVisibility(View.GONE);
                                btn_load_more.setVisibility(View.GONE);
-
+                               btn_filter.setVisibility(View.GONE);
                            }
-                           setView();
+                           else{
+                               txt_no_records.setVisibility(View.GONE);
+                               rv_completedappointment.setVisibility(View.VISIBLE);
+                               Log.w(TAG,"Size : "+completedAppointmentResponseList.size());
+                               if(completedAppointmentResponseList.size() > 3){
+                                   btn_load_more.setVisibility(View.VISIBLE);
+                               }else{
+                                   btn_load_more.setVisibility(View.GONE);
+
+                               }
+                               setView();
+                           }
                        }
+
 
                    }
 
@@ -193,6 +199,7 @@ public class FragmentSPCompletedAppointment extends Fragment implements View.OnC
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private SPAppointmentRequest spAppointmentRequest() {
         SPAppointmentRequest spAppointmentRequest = new SPAppointmentRequest();
         spAppointmentRequest.setSp_id(userid);

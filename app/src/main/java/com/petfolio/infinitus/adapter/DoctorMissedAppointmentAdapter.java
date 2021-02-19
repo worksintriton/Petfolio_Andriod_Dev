@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.doctor.DoctorMissedAppointmentDetailsActivity;
 import com.petfolio.infinitus.responsepojo.DoctorMissedAppointmentResponse;
 
@@ -62,9 +63,13 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
         Log.w(TAG,"Pet name-->"+missedAppointmentResponseList.get(position).getPet_id().getPet_name());
 
         currentItem = missedAppointmentResponseList.get(position);
-        holder.txt_petname.setText(missedAppointmentResponseList.get(position).getPet_id().getPet_name());
-        holder.txt_pettype.setText(missedAppointmentResponseList.get(position).getPet_id().getPet_type());
-        holder.txt_missed_date.setText("Missed on:"+" "+missedAppointmentResponseList.get(position).getMissed_at());
+        if(missedAppointmentResponseList.get(position).getPet_id().getPet_name() != null){
+        holder.txt_petname.setText(missedAppointmentResponseList.get(position).getPet_id().getPet_name());}
+        if(missedAppointmentResponseList.get(position).getPet_id().getPet_type() != null) {
+            holder.txt_pettype.setText(missedAppointmentResponseList.get(position).getPet_id().getPet_type());
+        }
+        if(missedAppointmentResponseList.get(position).getMissed_at() != null ){
+        holder.txt_missed_date.setText("Missed on:"+" "+missedAppointmentResponseList.get(position).getMissed_at());}
 
         if(missedAppointmentResponseList.get(position).getAppointment_types() != null){
             holder.txt_type.setText(missedAppointmentResponseList.get(position).getAppointment_types());
@@ -81,7 +86,7 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
         }
         else{
             Glide.with(context)
-                    .load(R.drawable.image_thumbnail)
+                    .load(APIClient.PROFILE_IMAGE_URL)
                     .into(holder.img_pet_imge);
 
         }
@@ -90,9 +95,7 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
             holder.ll_appointmentstatus.setVisibility(View.VISIBLE);
             holder.txt_appointment_status.setText("Not available");
         }
-        else if(missedAppointmentResponseList.get(position).getAppoint_patient_st() != null && missedAppointmentResponseList.get(position).getAppoint_patient_st().equalsIgnoreCase("Doctor Cancelled appointment")){
-
-        }else if(missedAppointmentResponseList.get(position).getAppoint_patient_st() != null && missedAppointmentResponseList.get(position).getAppoint_patient_st().equalsIgnoreCase("Doctor missed appointment")){
+        else if(missedAppointmentResponseList.get(position).getAppoint_patient_st() != null && missedAppointmentResponseList.get(position).getAppoint_patient_st().equalsIgnoreCase("Doctor missed appointment")){
             holder.ll_appointmentstatus.setVisibility(View.VISIBLE);
             holder.txt_appointment_status.setText("Not available");
         }else if(missedAppointmentResponseList.get(position).getAppoint_patient_st() != null && missedAppointmentResponseList.get(position).getAppoint_patient_st().equalsIgnoreCase("Petowner Not Available")){

@@ -103,8 +103,7 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
     private String SP_email_id ="";
     private String SP_ava_Date = "";
     private String selectedTimeSlot = "";
-    private String Comm_type_chat = "";
-    private String Comm_type_video = "";
+
 
     SessionManager session;
 
@@ -352,6 +351,7 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
 
 
 
+    @SuppressLint("LogNotTimber")
     private void spAvailableTimeResponseCall(String Date) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -361,6 +361,7 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
         Log.w(TAG,"spAvailableTimeResponseCall url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<SPAvailableTimeResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<SPAvailableTimeResponse> call, @NonNull Response<SPAvailableTimeResponse> response) {
                 avi_indicator.smoothToHide();
@@ -369,23 +370,23 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        spDateAvailabilityResponseList = response.body().getData();
-                        timesBeanList = response.body().getData().get(0).getTimes();
+                        if(response.body().getData() != null) {
+                            spDateAvailabilityResponseList = response.body().getData();
+                        }
+                        if(response.body().getData().get(0).getTimes() != null) {
+                            timesBeanList = response.body().getData().get(0).getTimes();
+                        }
                         Log.w(TAG,"Size"+spDateAvailabilityResponseList.size());
                         if(!response.body().getData().isEmpty()){
                             SP_name = response.body().getData().get(0).getSp_name();
                             SP_email_id = response.body().getData().get(0).getSp_email_id();
                             SP_ava_Date = response.body().getData().get(0).getSp_ava_Date();
-                            Comm_type_chat = response.body().getData().get(0).getComm_type_chat();
-                            Comm_type_video = response.body().getData().get(0).getComm_type_video();
+
                             Log.w(TAG,"doctorDateAvailabilityResponseCall SP_ava_Date: "+SP_ava_Date);
                             sub_layer1.setVisibility(View.VISIBLE);
                             btn_bookappointment.setVisibility(View.VISIBLE);
-                            List<PetDoctorAvailableTimeResponse.DataBean.TimesBean>timeBeanList = new ArrayList<>();
 
-                            if(spDateAvailabilityResponseList.size()>0) {
-
-
+                            if(spDateAvailabilityResponseList != null && spDateAvailabilityResponseList.size()>0) {
                                 setViewAvlDays();
 
                             }
@@ -396,10 +397,6 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
                             video.setVisibility(View.GONE);
                             view.setVisibility(View.GONE);
                             tvlblavailabletime.setVisibility(View.VISIBLE);
-                            //tvlbldoctoravailable.setVisibility(View.VISIBLE);
-                            Comm_type_chat = response.body().getData().get(0).getComm_type_chat();
-                            Comm_type_video = response.body().getData().get(0).getComm_type_video();
-                            Log.w(TAG,"doctorDateAvailabilityResponseCall11 Comm_type_chat : "+Comm_type_chat+" Comm_type_video : "+Comm_type_video);
 
                             String  doctorChatAvailable = response.body().getData().get(0).getComm_type_chat();
                             String doctorVideoAvailable = response.body().getData().get(0).getComm_type_video();
@@ -453,6 +450,7 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private PetDoctorAvailableTimeRequest petDoctorAvailableTimeRequest(String Date) {
 
         /*

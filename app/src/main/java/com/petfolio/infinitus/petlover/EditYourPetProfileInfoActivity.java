@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -361,7 +362,9 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
                         Log.w(TAG,"DropDownListResponse" + new Gson().toJson(response.body()));
-                        genderTypeList = response.body().getData().getGender();
+                        if(response.body().getData().getGender() != null) {
+                            genderTypeList = response.body().getData().getGender();
+                        }
                         if(genderTypeList != null && genderTypeList.size()>0){
                             setPetGenderType(genderTypeList);
                         }
@@ -535,7 +538,9 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
                     if(200 == response.body().getCode()){
                         Log.w(TAG,"PetTypeListResponse" + new Gson().toJson(response.body()));
                         dropDownListResponseCall();
-                        usertypedataBeanList = response.body().getData().getUsertypedata();
+                        if(response.body().getData().getUsertypedata() != null) {
+                            usertypedataBeanList = response.body().getData().getUsertypedata();
+                        }
                         if(usertypedataBeanList != null && usertypedataBeanList.size()>0){
                             setPetType(usertypedataBeanList);
                         }
@@ -587,6 +592,7 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("LogNotTimber")
     private void breedTypeResponseByPetIdCall(String petTypeId) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -595,6 +601,7 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<BreedTypeResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<BreedTypeResponse> call, @NonNull Response<BreedTypeResponse> response) {
                 avi_indicator.smoothToHide();
@@ -603,7 +610,9 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
 
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
-                        breedTypedataBeanList = response.body().getData();
+                        if(response.body().getData() != null) {
+                            breedTypedataBeanList = response.body().getData();
+                        }
                         if(breedTypedataBeanList != null && breedTypedataBeanList.size()>0){
                             setBreedType(breedTypedataBeanList);
                         }
@@ -722,7 +731,13 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
         PetEditRequest petEditRequest = new PetEditRequest();
         petEditRequest.set_id(petid);
         petEditRequest.setUser_id(userid);
-        petEditRequest.setPet_img(petimage);
+        if(petimage != null){
+            petEditRequest.setPet_img(petimage);
+
+        }else{
+            petEditRequest.setPet_img(APIClient.PROFILE_IMAGE_URL);
+
+        }
         petEditRequest.setPet_name(edt_petname.getText().toString());
         petEditRequest.setPet_type(strPetType);
         petEditRequest.setPet_breed(strPetBreedType);

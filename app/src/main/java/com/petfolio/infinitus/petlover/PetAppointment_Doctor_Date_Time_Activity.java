@@ -101,12 +101,10 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
 
     private String _id = "";
-    private String Doctor_name ="";
-    private String Doctor_email_id ="";
+
     private String Doctor_ava_Date = "";
     private String selectedTimeSlot = "";
-    private String Comm_type_chat = "";
-    private String Comm_type_video = "";
+
 
     SessionManager session;
 
@@ -312,6 +310,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private void petDoctorAvailableTimeResponseCall(String Date) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -321,6 +320,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<PetDoctorAvailableTimeResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<PetDoctorAvailableTimeResponse> call, @NonNull Response<PetDoctorAvailableTimeResponse> response) {
                 avi_indicator.smoothToHide();
@@ -329,16 +329,20 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        doctorDateAvailabilityResponseList = response.body().getData();
-                        timesBeanList = response.body().getData().get(0).getTimes();
+                        if(response.body().getData() != null){
+                            doctorDateAvailabilityResponseList = response.body().getData();
+
+                        }
+                        if (response.body().getData() != null && response.body().getData().get(0).getTimes() != null) {
+                            timesBeanList = response.body().getData().get(0).getTimes();
+                        }
                         Log.w(TAG,"Size"+doctorDateAvailabilityResponseList.size());
-                        if(!response.body().getData().isEmpty()){
-                            Doctor_name = response.body().getData().get(0).getDoctor_name();
-                            Doctor_email_id = response.body().getData().get(0).getDoctor_email_id();
-                            Doctor_ava_Date = response.body().getData().get(0).getDoctor_ava_Date();
-                            Comm_type_chat = response.body().getData().get(0).getComm_type_chat();
-                            Comm_type_video = response.body().getData().get(0).getComm_type_video();
-                            Log.w(TAG,"doctorDateAvailabilityResponseCall Comm_type_chat : "+Comm_type_chat+" Comm_type_video : "+Comm_type_video);
+                        if(response.body().getData() != null && !response.body().getData().isEmpty()){
+
+                            if(response.body().getData().get(0).getDoctor_ava_Date() != null){
+                                Doctor_ava_Date = response.body().getData().get(0).getDoctor_ava_Date();
+                            }
+
                             sub_layer1.setVisibility(View.VISIBLE);
                             btn_bookappointment.setVisibility(View.VISIBLE);
                             List<PetDoctorAvailableTimeResponse.DataBean.TimesBean>timeBeanList = new ArrayList<>();
@@ -356,10 +360,6 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
                             video.setVisibility(View.GONE);
                             view.setVisibility(View.GONE);
                             tvlblavailabletime.setVisibility(View.VISIBLE);
-                            //tvlbldoctoravailable.setVisibility(View.VISIBLE);
-                            Comm_type_chat = response.body().getData().get(0).getComm_type_chat();
-                            Comm_type_video = response.body().getData().get(0).getComm_type_video();
-                            Log.w(TAG,"doctorDateAvailabilityResponseCall11 Comm_type_chat : "+Comm_type_chat+" Comm_type_video : "+Comm_type_video);
 
                             String  doctorChatAvailable = response.body().getData().get(0).getComm_type_chat();
                             String doctorVideoAvailable = response.body().getData().get(0).getComm_type_video();
@@ -413,6 +413,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private PetDoctorAvailableTimeRequest petDoctorAvailableTimeRequest(String Date) {
 
         /*
@@ -513,6 +514,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
     }
 
 
+    @SuppressLint("LogNotTimber")
     private void appointmentCheckResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -521,6 +523,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<AppointmentCheckResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<AppointmentCheckResponse> call, @NonNull Response<AppointmentCheckResponse> response) {
                 avi_indicator.smoothToHide();
@@ -540,10 +543,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
                         startActivity(intent);
                         Log.w(TAG,"communicationtype : "+communicationtype);
 
-                     /*  // startPayment();
-                        if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
-                            petAppointmentCreateResponseCall();
-                        }*/
+
 
                     }else{
                         showErrorLoading(response.body().getMessage());
@@ -563,6 +563,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private AppointmentCheckRequest appointmentCheckRequest() {
         /*
          * Booking_Date : 02-12-2020

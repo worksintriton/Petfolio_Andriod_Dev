@@ -146,6 +146,7 @@ public class FragmentDoctorMissedAppointment extends Fragment implements View.On
 
 
 
+    @SuppressLint("LogNotTimber")
     private void doctorMissedAppointmentResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -154,6 +155,7 @@ public class FragmentDoctorMissedAppointment extends Fragment implements View.On
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<DoctorMissedAppointmentResponse>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(@NonNull Call<DoctorMissedAppointmentResponse> call, @NonNull Response<DoctorMissedAppointmentResponse> response) {
                avi_indicator.smoothToHide();
@@ -162,10 +164,12 @@ public class FragmentDoctorMissedAppointment extends Fragment implements View.On
 
                if (response.body() != null) {
                    if(200 == response.body().getCode()){
-                       missedAppointmentResponseList = response.body().getData();
-                       Log.w(TAG,"Size"+missedAppointmentResponseList.size());
-                       Log.w(TAG,"missedAppointmentResponseList : "+new Gson().toJson(missedAppointmentResponseList));
-                       if(response.body().getData().isEmpty()){
+                       if(response.body().getData() != null) {
+                           missedAppointmentResponseList = response.body().getData();
+                           Log.w(TAG, "Size" + missedAppointmentResponseList.size());
+                           Log.w(TAG, "missedAppointmentResponseList : " + new Gson().toJson(missedAppointmentResponseList));
+                       }
+                       if(response.body().getData() != null && response.body().getData().isEmpty()){
                            txt_no_records.setVisibility(View.VISIBLE);
                            txt_no_records.setText("No missed appointments");
                            rv_missedappointment.setVisibility(View.GONE);
@@ -181,8 +185,6 @@ public class FragmentDoctorMissedAppointment extends Fragment implements View.On
                            }
                            setView();
                        }
-                   }else{
-
                    }
 
 
@@ -198,6 +200,7 @@ public class FragmentDoctorMissedAppointment extends Fragment implements View.On
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private DoctorNewAppointmentRequest doctorNewAppointmentRequest() {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentDateandTime = simpleDateFormat.format(new Date());

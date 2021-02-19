@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -99,9 +101,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.RECEIVE_SMS,
             "check"};
-    private String verified;
     private boolean user_email_verification;
     private String firstname,lastname,useremail;
+    private String verified;
 
 
     @SuppressLint("SetTextI18n")
@@ -111,7 +113,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_sign_up);
         ButterKnife.bind(this);
         avi_indicator.setVisibility(View.GONE);
-
         edt_phone.setTransformationMethod(new NumericKeyBoardTransformationMethod());
 
         img_back.setOnClickListener(this);
@@ -131,8 +132,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             UserType = "Pet lover";
             UserTypeValue = 1;
         }
-        txt_usertypes.setText(UserType);
 
+        if(UserType != null){
+            txt_usertypes.setText(UserType);
+
+        }
 
         Log.w(TAG,"firstname : "+firstname+" lastname : "+lastname+" useremail : "+useremail+" user_email_verification : "+user_email_verification);
         if(firstname != null){
@@ -142,6 +146,49 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }if(useremail != null){
             edt_email.setText(useremail);
         }
+
+        if(verified != null && verified.equalsIgnoreCase("verified")){
+            btn_verify_email.setText("Verified Email");
+            user_email_verification = true;
+            btn_verify_email.setEnabled(false);
+
+        }
+        else{
+            user_email_verification = false;
+            btn_verify_email.setEnabled(true);
+        }
+
+        edt_email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String email = s.toString();
+                Log.w(TAG,"afterTextChanged email : "+email+" useremail : "+useremail);
+
+                if(!email.equalsIgnoreCase(useremail)){
+                    btn_verify_email.setText("Verify Email");
+                    user_email_verification = false;
+                    btn_verify_email.setEnabled(true);
+                }else{
+                    btn_verify_email.setText("Verified Email");
+                    user_email_verification = true;
+                    btn_verify_email.setEnabled(false);
+                }
+
+
+            }
+        });
+
+
 
 
     }
@@ -179,6 +226,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         finish();
     }
 
+    @SuppressLint("LogNotTimber")
     private void signupResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -187,6 +235,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         Log.w(TAG,"SignupResponse url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<SignupResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<SignupResponse> call, @NonNull Response<SignupResponse> response) {
                   avi_indicator.smoothToHide();
@@ -197,14 +246,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         if(response.body().getData().getUser_details().get_id() != null){
                             userStatusUpdateResponseCall(response.body().getData().getUser_details().get_id() );
                         }
-                       /* Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
-                        Intent intent = new Intent(SignUpActivity.this,VerifyOtpActivity.class);
-                        intent.putExtra("phonemumber",response.body().getData().getUser_details().getUser_phone());
-                        intent.putExtra("otp",response.body().getData().getUser_details().getOtp());
-                        intent.putExtra("usertype",response.body().getData().getUser_details().getUser_type());
-                        intent.putExtra("userstatus","Incomplete");
-                        Log.w(TAG,"signupResponseCall "+" userphone : "+response.body().getData().getUser_details().getUser_phone()+" usertype : "+response.body().getData().getUser_details().getUser_type());
-                        startActivity(intent);*/
+
 
 
                     } else {
@@ -253,6 +295,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
+    @SuppressLint("LogNotTimber")
     private void userStatusUpdateResponseCall(String id) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -261,6 +304,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         Log.w(TAG,"SignupResponse url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<UserStatusUpdateResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<UserStatusUpdateResponse> call, @NonNull Response<UserStatusUpdateResponse> response) {
                 avi_indicator.smoothToHide();
@@ -269,30 +313,20 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
                     if (200 == response.body().getCode()) {
 
-                      /*  SessionManager sessionManager = new SessionManager(SignUpActivity.this);
-                        //sessionManager.logoutUser();
-                        //sessionManager.setIsLogin(true);
-                        sessionManager.createLoginSession(
-                                response.body().getData().get_id(),
-                                response.body().getData().getFirst_name(),
-                                response.body().getData().getLast_name(),
-                                response.body().getData().getUser_email(),
-                                response.body().getData().getUser_phone(),
-                                String.valueOf(response.body().getData().getUser_type()),
-                                response.body().getData().getUser_status()
-                        );*/
-
                         Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
-                        Intent intent = new Intent(SignUpActivity.this,VerifyOtpActivity.class);
-                        intent.putExtra("phonemumber",response.body().getData().getUser_phone());
-                        intent.putExtra("otp",response.body().getData().getOtp());
-                        intent.putExtra("usertype",response.body().getData().getUser_type());
-                        intent.putExtra("userid",response.body().getData().get_id());
-                        intent.putExtra("userstatus","Incomplete");
-                        intent.putExtra("firstname", response.body().getData().getFirst_name());
-                        intent.putExtra("lastname",response.body().getData().getLast_name());
-                        intent.putExtra("useremail", response.body().getData().getUser_email());
-                        startActivity(intent);
+
+                        if(response.body().getData() != null) {
+                            Intent intent = new Intent(SignUpActivity.this, VerifyOtpActivity.class);
+                            intent.putExtra("phonemumber", response.body().getData().getUser_phone());
+                            intent.putExtra("otp", response.body().getData().getOtp());
+                            intent.putExtra("usertype", response.body().getData().getUser_type());
+                            intent.putExtra("userid", response.body().getData().get_id());
+                            intent.putExtra("userstatus", "Incomplete");
+                            intent.putExtra("firstname", response.body().getData().getFirst_name());
+                            intent.putExtra("lastname", response.body().getData().getLast_name());
+                            intent.putExtra("useremail", response.body().getData().getUser_email());
+                            startActivity(intent);
+                        }
 
 
                     } else {
@@ -326,6 +360,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
+    @SuppressLint("LogNotTimber")
     private void emailOTPResponseCall(String emailid) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -334,6 +369,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         Log.w(TAG,"EmailOTPResponse url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<EmailOTPResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<EmailOTPResponse> call, @NonNull Response<EmailOTPResponse> response) {
                 avi_indicator.smoothToHide();
@@ -342,14 +378,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
                     if (200 == response.body().getCode()) {
                         Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
-                        Intent intent = new Intent(SignUpActivity.this,VerifyEmailOtpActivity.class);
-                        intent.putExtra("useremail",response.body().getData().getEmail_id());
-                        intent.putExtra("otp",response.body().getData().getOtp());
-                        intent.putExtra("firstname",edt_firstname.getText().toString());
-                        intent.putExtra("lastname",edt_lastname.getText().toString());
-                        intent.putExtra("UserType",UserType);
-                        intent.putExtra("UserTypeValue",UserTypeValue);
-                        startActivity(intent);
+                        if(response.body().getData() != null) {
+                            Intent intent = new Intent(SignUpActivity.this, VerifyEmailOtpActivity.class);
+                            intent.putExtra("useremail", response.body().getData().getEmail_id());
+                            intent.putExtra("otp", response.body().getData().getOtp());
+                            intent.putExtra("firstname", edt_firstname.getText().toString());
+                            intent.putExtra("lastname", edt_lastname.getText().toString());
+                            intent.putExtra("UserType", UserType);
+                            intent.putExtra("UserTypeValue", UserTypeValue);
+                            startActivity(intent);
+                        }
 
 
                     } else {

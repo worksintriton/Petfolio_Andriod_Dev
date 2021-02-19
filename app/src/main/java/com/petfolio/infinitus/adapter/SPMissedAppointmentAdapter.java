@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.responsepojo.DoctorMissedAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.SPAppointmentResponse;
 import com.petfolio.infinitus.serviceprovider.SPAppointmentDetailsActivity;
@@ -62,9 +63,15 @@ public class SPMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerVi
         Log.w(TAG,"Pet name-->"+missedAppointmentResponseList.get(position).getPet_id().getPet_name());
 
         currentItem = missedAppointmentResponseList.get(position);
-        holder.txt_petname.setText(missedAppointmentResponseList.get(position).getPet_id().getPet_name());
-        holder.txt_pettype.setText(missedAppointmentResponseList.get(position).getPet_id().getPet_type());
-        holder.txt_missed_date.setText("Missed on:"+" "+missedAppointmentResponseList.get(position).getMissed_at());
+        if(missedAppointmentResponseList.get(position).getPet_id().getPet_name() != null) {
+            holder.txt_petname.setText(missedAppointmentResponseList.get(position).getPet_id().getPet_name());
+        }
+        if(missedAppointmentResponseList.get(position).getPet_id().getPet_type() != null) {
+            holder.txt_pettype.setText(missedAppointmentResponseList.get(position).getPet_id().getPet_type());
+        }
+        if(missedAppointmentResponseList.get(position).getMissed_at() != null) {
+            holder.txt_missed_date.setText("Missed on:" + " " + missedAppointmentResponseList.get(position).getMissed_at());
+        }
 
         holder.txt_lbl_type.setText("Service Name");
         if(missedAppointmentResponseList.get(position).getService_name() != null){
@@ -82,7 +89,7 @@ public class SPMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerVi
         }
         else{
             Glide.with(context)
-                    .load(R.drawable.image_thumbnail)
+                    .load(APIClient.PROFILE_IMAGE_URL)
                     .into(holder.img_pet_imge);
 
         }

@@ -66,11 +66,15 @@ public class PetServiceMyCalendarAvailableAdapter extends  RecyclerView.Adapter<
 
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
-       // currentItem = dataBeanList.get(position);
-        for (int i = 0; i < timesBeanList.size(); i++) {
-            holder.txt_days.setText(timesBeanList.get(position).getTime());
-            Log.w(TAG,"Times : "+timesBeanList.get(position).getTime());
+        if(timesBeanList != null && timesBeanList.size()>0) {
+            // currentItem = dataBeanList.get(position);
+            for (int i = 0; i < timesBeanList.size(); i++) {
+                if(timesBeanList.get(position).getTime() != null ) {
+                    holder.txt_days.setText(timesBeanList.get(position).getTime());
+                    Log.w(TAG, "Times : " + timesBeanList.get(position).getTime());
+                }
 
+            }
         }
 
         holder.txt_days.setOnClickListener(new View.OnClickListener() {

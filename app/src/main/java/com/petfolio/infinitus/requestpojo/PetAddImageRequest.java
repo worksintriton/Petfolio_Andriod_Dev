@@ -4,7 +4,7 @@ public class PetAddImageRequest {
 
     /**
      * _id : 5fce1ae2928d5f5634501b2d
-     * pet_img : http://mysalveo.com/api/uploads/images.jpeg
+     * pet_img :""
      */
 
     private String _id;

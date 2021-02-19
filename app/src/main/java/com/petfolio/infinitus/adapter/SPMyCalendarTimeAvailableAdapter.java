@@ -66,10 +66,13 @@ public class SPMyCalendarTimeAvailableAdapter extends  RecyclerView.Adapter<Recy
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
         currentItem = dataBeanList.get(position);
-        for (int i = 0; i < dataBeanList.size(); i++) {
+        if(dataBeanList != null && dataBeanList.size()>0) {
+            for (int i = 0; i < dataBeanList.size(); i++) {
+                if (dataBeanList.get(position).getTime() != null) {
+                    holder.txt_days.setText(dataBeanList.get(position).getTime());
+                }
 
-            holder.txt_days.setText(dataBeanList.get(position).getTime());
-
+            }
         }
         if(dataBeanList.get(position).isStatus()){
             holder.ch_days.setChecked(true);

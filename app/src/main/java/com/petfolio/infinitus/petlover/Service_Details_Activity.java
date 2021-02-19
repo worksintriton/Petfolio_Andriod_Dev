@@ -160,6 +160,13 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
     private Dialog dialog;
     private static final int REQUEST_PHONE_CALL =1 ;
     private String sosPhonenumber;
+    private String serviceprovidingcompanyname = "";
+    private String spprovidername = "";
+    private int ratingcount;
+    private int comments;
+    private int distance;
+    private String location;
+    private String selectedServiceImagepath;
 
 
     @Override
@@ -281,6 +288,7 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
         startActivity(intent);
         finish();
     }
+    @SuppressLint("LogNotTimber")
     private void SPDetailsRepsonseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -289,7 +297,7 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
         Log.w(TAG,"SPDetailsRepsonseCall url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<SPDetailsRepsonse>() {
-            @SuppressLint("SetTextI18n")
+            @SuppressLint({"SetTextI18n", "LogNotTimber"})
             @Override
             public void onResponse(@NonNull Call<SPDetailsRepsonse> call, @NonNull Response<SPDetailsRepsonse> response) {
                 avi_indicator.smoothToHide();
@@ -297,18 +305,42 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
                 if (response.body() != null) {
 
                     if (200 == response.body().getCode()) {
-                       spServiceGalleryResponseList  = response.body().getData().getBus_service_gall();
-                        String serviceprovidingcompanyname =  response.body().getData().getBussiness_name();
-                        String spprovidername = response.body().getData().getBus_user_name();
-                        int ratingcount  = response.body().getData().getRating();
-                        int comments =  response.body().getData().getComments();
-                        int distance =  response.body().getData().getDistance();
-                        String location =  response.body().getData().getSp_loc();
-                        String selectedServiceImagepath =  response.body().getDetails().getImage_path();
-                         selectedServiceTitle =  response.body().getDetails().getTitle();
-                         serviceamount =  response.body().getDetails().getAmount();
-                         servicetime =  response.body().getDetails().getTime();
-                         spuserid = response.body().getData().getUser_id();
+                        if(response.body().getData().getBus_service_gall() != null) {
+                            spServiceGalleryResponseList = response.body().getData().getBus_service_gall();
+                        }
+                        if(response.body().getData().getBussiness_name() != null) {
+                             serviceprovidingcompanyname = response.body().getData().getBussiness_name();
+                        }
+                        if(response.body().getData().getBus_user_name() != null) {
+                            spprovidername = response.body().getData().getBus_user_name();
+                        }
+                        if(response.body().getData().getRating() != 0) {
+                             ratingcount = response.body().getData().getRating();
+                        }
+                        if(response.body().getData().getComments() != 0) {
+                             comments = response.body().getData().getComments();
+                        }
+                        if(response.body().getData().getDistance() != 0) {
+                             distance = response.body().getData().getDistance();
+                        }
+                        if( response.body().getData().getSp_loc() != null) {
+                             location = response.body().getData().getSp_loc();
+                        }
+                        if(response.body().getDetails().getImage_path() != null) {
+                            selectedServiceImagepath = response.body().getDetails().getImage_path();
+                        }
+                        if(response.body().getDetails().getTitle() != null) {
+                            selectedServiceTitle = response.body().getDetails().getTitle();
+                        }
+                        if(response.body().getDetails().getAmount() != 0) {
+                            serviceamount = response.body().getDetails().getAmount();
+                        }
+                        if(response.body().getDetails().getTime() != null) {
+                            servicetime = response.body().getDetails().getTime();
+                        }
+                        if(response.body().getData().getUser_id() != null) {
+                            spuserid = response.body().getData().getUser_id();
+                        }
 
                         if(serviceprovidingcompanyname != null && !serviceprovidingcompanyname.isEmpty()){
                             txt_sp_companyname.setText(serviceprovidingcompanyname);
@@ -350,7 +382,7 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
                         }
                         else{
                             Glide.with(getApplicationContext())
-                                    .load(R.drawable.services)
+                                    .load(APIClient.PROFILE_IMAGE_URL)
                                     .into(img_selectedserviceimage);
 
                         }
@@ -400,6 +432,7 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
         }, DELAY_MS, PERIOD_MS);
 
     }
+    @SuppressLint("LogNotTimber")
     private SPDetailsRequest spDetailsRequest() {
         /*
          * user_id : 5fd778437aa4cc1c6a1e5632

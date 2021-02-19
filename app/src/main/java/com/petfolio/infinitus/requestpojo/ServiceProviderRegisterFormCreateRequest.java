@@ -18,10 +18,10 @@ public class ServiceProviderRegisterFormCreateRequest {
      * bus_user_phone : 9876543210
      * bus_service_list : [{"bus_service_list":"Service - 1","time_slots":"15 mins"},{"bus_service_list":"Service - 2","time_slots":"15 mins"},{"bus_service_list":"Service - 3","time_slots":"15 mins"}]
      * bus_spec_list : [{"bus_spec_list":"Spec -1"},{"bus_spec_list":"Spec -1"},{"bus_spec_list":"Spec -1"}]
-     * bus_service_gall : [{"bus_service_gall":"http://mysalveo.com/api/uploads/images.jpeg"},{"bus_service_gall":"http://mysalveo.com/api/uploads/images.jpeg"},{"bus_service_gall":"http://mysalveo.com/api/uploads/images.jpeg"}]
-     * bus_profile : http://mysalveo.com/api/uploads/images.jpeg
-     * bus_proof : http://mysalveo.com/api/uploads/images.jpeg
-     * bus_certif : [{"bus_certif":"http://mysalveo.com/api/uploads/images.jpeg"},{"bus_certif":"http://mysalveo.com/api/uploads/images.jpeg"},{"bus_certif":"http://mysalveo.com/api/uploads/images.jpeg"}]
+     * bus_service_gall : [{"bus_service_gall":""},{"bus_service_gall":""},{"bus_service_gall":""}]
+     * bus_profile :
+     * bus_proof :
+     * bus_certif : [{"bus_certif":""},{"bus_certif":""},{"bus_certif":""}]
      * date_and_time : 23-10-2020 12:00 AM
      * mobile_type : Admin
      */
@@ -270,7 +270,7 @@ public class ServiceProviderRegisterFormCreateRequest {
 
     public static class BusServiceGallBean  {
         /**
-         * bus_service_gall : http://mysalveo.com/api/uploads/images.jpeg
+         * bus_service_gall :
          */
 
         private String bus_service_gall;
@@ -286,7 +286,7 @@ public class ServiceProviderRegisterFormCreateRequest {
 
     public static class BusCertifBean  {
         /**
-         * bus_certif : http://mysalveo.com/api/uploads/images.jpeg
+         * bus_certif :
          */
 
         private String bus_certif;

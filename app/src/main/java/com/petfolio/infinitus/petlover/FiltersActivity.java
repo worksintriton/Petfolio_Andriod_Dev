@@ -169,8 +169,9 @@ public class FiltersActivity extends AppCompatActivity implements View.OnClickLi
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
                         Log.w(TAG,"DropDownListResponse" + new Gson().toJson(response.body()));
-
-                        petSpecilaziationList = response.body().getData().getSpecialzation();
+                        if(response.body().getData().getSpecialzation() != null) {
+                            petSpecilaziationList = response.body().getData().getSpecialzation();
+                        }
 
 
                         Log.w(TAG,"petSpecilaziationList : "+new Gson().toJson(petSpecilaziationList));

@@ -142,6 +142,7 @@ public class FragmentSPMissedAppointment extends Fragment implements View.OnClic
 
 
 
+    @SuppressLint("LogNotTimber")
     private void spMissedAppointmentResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -150,6 +151,7 @@ public class FragmentSPMissedAppointment extends Fragment implements View.OnClic
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<SPAppointmentResponse>() {
+            @SuppressLint({"LogNotTimber", "SetTextI18n"})
             @Override
             public void onResponse(@NonNull Call<SPAppointmentResponse> call, @NonNull Response<SPAppointmentResponse> response) {
                avi_indicator.smoothToHide();
@@ -158,26 +160,28 @@ public class FragmentSPMissedAppointment extends Fragment implements View.OnClic
 
                if (response.body() != null) {
                    if(200 == response.body().getCode()){
-                       missedAppointmentResponseList = response.body().getData();
-                       Log.w(TAG,"Size"+missedAppointmentResponseList.size());
-                       Log.w(TAG,"spMissedAppointmentResponseCall : "+new Gson().toJson(missedAppointmentResponseList));
-                       if(response.body().getData().isEmpty()){
-                           txt_no_records.setVisibility(View.VISIBLE);
-                           txt_no_records.setText("No missed appointments");
-                           rv_missedappointment.setVisibility(View.GONE);
-                           btn_load_more.setVisibility(View.GONE);
-                           btn_filter.setVisibility(View.GONE);
-                       }else{
-                           txt_no_records.setVisibility(View.GONE);
-                           rv_missedappointment.setVisibility(View.VISIBLE);
-                           if(missedAppointmentResponseList.size()>3){
-                               btn_load_more.setVisibility(View.VISIBLE);
-                           }else{
+                       if(response.body().getData() != null){
+                           missedAppointmentResponseList = response.body().getData();
+                           Log.w(TAG,"Size"+missedAppointmentResponseList.size());
+                           Log.w(TAG,"spMissedAppointmentResponseCall : "+new Gson().toJson(missedAppointmentResponseList));
+                           if(response.body().getData().isEmpty()){
+                               txt_no_records.setVisibility(View.VISIBLE);
+                               txt_no_records.setText("No missed appointments");
+                               rv_missedappointment.setVisibility(View.GONE);
                                btn_load_more.setVisibility(View.GONE);
+                               btn_filter.setVisibility(View.GONE);
                            }
-                           setView();
+                           else{
+                               txt_no_records.setVisibility(View.GONE);
+                               rv_missedappointment.setVisibility(View.VISIBLE);
+                               if(missedAppointmentResponseList.size()>3){
+                                   btn_load_more.setVisibility(View.VISIBLE);
+                               }else{
+                                   btn_load_more.setVisibility(View.GONE);
+                               }
+                               setView();
+                           }
                        }
-                   }else{
 
                    }
 
@@ -194,6 +198,7 @@ public class FragmentSPMissedAppointment extends Fragment implements View.OnClic
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private SPAppointmentRequest spAppointmentRequest() {
         SPAppointmentRequest spAppointmentRequest = new SPAppointmentRequest();
         spAppointmentRequest.setSp_id(userid);

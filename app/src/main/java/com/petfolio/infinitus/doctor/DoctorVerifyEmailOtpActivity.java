@@ -249,7 +249,10 @@ public class DoctorVerifyEmailOtpActivity extends AppCompatActivity implements V
                         edt_otp.setText("");
                         startTimer();
                         Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
-                        otp = response.body().getData().getOtp();
+                       if(response.body().getData().getOtp() != 0){
+                           otp = response.body().getData().getOtp();
+                       }
+
 
                     } else {
                         showErrorLoading(response.body().getMessage());

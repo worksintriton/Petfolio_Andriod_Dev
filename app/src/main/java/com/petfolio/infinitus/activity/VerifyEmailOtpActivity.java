@@ -232,6 +232,7 @@ public class VerifyEmailOtpActivity extends AppCompatActivity implements View.On
         finish();
     }
 
+    @SuppressLint("LogNotTimber")
     private void resendOtpResponseCall() {
         llresendotp.setVisibility(View.GONE);
         avi_indicator.setVisibility(View.VISIBLE);
@@ -250,7 +251,10 @@ public class VerifyEmailOtpActivity extends AppCompatActivity implements View.On
                         edt_otp.setText("");
                         startTimer();
                         Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
-                        otp = response.body().getData().getOtp();
+                        if(response.body().getData().getOtp() !=0){
+                            otp = response.body().getData().getOtp();
+                        }
+
 
                     } else {
                         showErrorLoading(response.body().getMessage());
@@ -269,6 +273,7 @@ public class VerifyEmailOtpActivity extends AppCompatActivity implements View.On
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private EmailOTPRequest emailOTPRequest() {
         /*
          * user_email : mohammedimthi2395@gmail.com

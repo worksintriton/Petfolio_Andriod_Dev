@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.petlover.PetCompletedAppointmentDetailsActivity;
 import com.petfolio.infinitus.petlover.PetMissedAppointmentDetailsActivity;
 import com.petfolio.infinitus.petlover.PetSPNewAppointmentDetailsActivity;
@@ -59,7 +60,7 @@ public class PetMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
 
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "LogNotTimber"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
         Log.w(TAG,"Pet name-->"+missedAppointmentResponseList.get(position).getPet_name());
@@ -67,24 +68,36 @@ public class PetMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
         currentItem = missedAppointmentResponseList.get(position);
 
 
-        holder.txt_pettype.setText(missedAppointmentResponseList.get(position).getPet_name());
-        holder.txt_missed_date.setText("Missed on:"+" "+missedAppointmentResponseList.get(position).getMissed_at());
+        if(missedAppointmentResponseList.get(position).getPet_name() != null) {
+            holder.txt_pettype.setText(missedAppointmentResponseList.get(position).getPet_name());
+        }
+        if(missedAppointmentResponseList.get(position).getMissed_at() != null) {
+            holder.txt_missed_date.setText("Missed on:" + " " + missedAppointmentResponseList.get(position).getMissed_at());
 
+        }
 
 
         if(missedAppointmentResponseList.get(position).getAppointment_for() != null && missedAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("Doctor") ){
             holder.txt_type.setText(missedAppointmentResponseList.get(position).getAppointment_for());
-            holder.txt_petname.setText(missedAppointmentResponseList.get(position).getClinic_name());
+            if(missedAppointmentResponseList.get(position).getClinic_name() != null) {
+                holder.txt_petname.setText(missedAppointmentResponseList.get(position).getClinic_name());
+            }
             holder.txt_lbl_doctorname.setText("Doctor Name");
-            holder.txt_doctorname.setText(missedAppointmentResponseList.get(position).getDoctor_name());
+            if(missedAppointmentResponseList.get(position).getDoctor_name() != null) {
+                holder.txt_doctorname.setText(missedAppointmentResponseList.get(position).getDoctor_name());
+            }
 
 
 
         }else if(missedAppointmentResponseList.get(position).getAppointment_for() != null && missedAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("SP") ){
             holder.txt_type.setText(missedAppointmentResponseList.get(position).getAppointment_for());
-            holder.txt_petname.setText(missedAppointmentResponseList.get(position).getService_provider_name());
+            if(missedAppointmentResponseList.get(position).getService_provider_name() != null) {
+                holder.txt_petname.setText(missedAppointmentResponseList.get(position).getService_provider_name());
+            }
             holder.txt_lbl_doctorname.setText("Service Name");
-            holder.txt_doctorname.setText(missedAppointmentResponseList.get(position).getService_name());
+            if(missedAppointmentResponseList.get(position).getService_name() != null) {
+                holder.txt_doctorname.setText(missedAppointmentResponseList.get(position).getService_name());
+            }
 
 
 
@@ -103,7 +116,7 @@ public class PetMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
         }
         else{
             Glide.with(context)
-                    .load(R.drawable.image_thumbnail)
+                    .load(APIClient.PROFILE_IMAGE_URL)
                     .into(holder.img_pet_imge);
 
         }

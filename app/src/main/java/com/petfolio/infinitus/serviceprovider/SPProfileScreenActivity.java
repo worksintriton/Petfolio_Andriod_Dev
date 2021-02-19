@@ -279,6 +279,7 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
 
 
 
+    @SuppressLint("LogNotTimber")
     private void spDetailsReponseByUserIdCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -295,8 +296,12 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
 
                if (response.body() != null) {
                     if(200 == response.body().getCode()){
-                        servieGalleryResponseList  = response.body().getData().getBus_service_gall();
-                        clinicname =  response.body().getData().getBussiness_name();
+                        if(response.body().getData().getBus_service_gall() != null) {
+                            servieGalleryResponseList = response.body().getData().getBus_service_gall();
+                        }
+                        if(response.body().getData().getBussiness_name() != null) {
+                            clinicname = response.body().getData().getBussiness_name();
+                        }
 
 
 
@@ -331,8 +336,6 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
 
                         }
 
-                    }else{
-
                     }
 
 
@@ -348,7 +351,7 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
         });
 
     }
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private SPDetailsByUserIdRequest spDetailsByUserIdRequest() {
         /* user_id : 5fc61b82b750da703e48da78 */
         SPDetailsByUserIdRequest spDetailsByUserIdRequest = new SPDetailsByUserIdRequest();

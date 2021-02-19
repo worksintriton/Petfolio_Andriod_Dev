@@ -17,10 +17,10 @@ public class DoctorBusinessInfoUpdateRequest {
      * experience_details : [{"company":"triton it slotuions","from":"22-10-2020","to":"22-10-2021"},{"company":"triton it slotuions","from":"22-10-2020","to":"22-10-2021"},{"company":"triton it slotuions","from":"22-10-2020","to":"22-10-2021"}]
      * specialization : [{"specialization":"Spec - 1"},{"specialization":"Spec - 1"},{"specialization":"Spec - 1"}]
      * pet_handled : [{"pet_handled":"Pet - 1"},{"pet_handled":"Pet - 1"}]
-     * clinic_pic : http://mysalveo.com/api/uploads/images.jpeg
-     * certificate_pic : [{"certificate_pic":"http://mysalveo.com/api/uploads/images.jpeg"},{"certificate_pic":"http://mysalveo.com/api/uploads/images.jpeg"}]
-     * govt_id_pic : [{"govt_id_pic":"http://mysalveo.com/api/uploads/images.jpeg"},{"govt_id_pic":"http://mysalveo.com/api/uploads/images.jpeg"}]
-     * photo_id_pic : [{"photo_id_pic":"http://mysalveo.com/api/uploads/images.jpeg"},{"photo_id_pic":"http://mysalveo.com/api/uploads/images.jpeg"}]
+     * clinic_pic :
+     * certificate_pic : [{"certificate_pic":""},{"certificate_pic":""}]
+     * govt_id_pic : [{"govt_id_pic":""},{"govt_id_pic":""}]
+     * photo_id_pic : [{"photo_id_pic":""},{"photo_id_pic":""}]
      * profile_status : 0
      * profile_verification_status : Not verified
      * date_and_time : 23-10-2020 11:10 AM
@@ -31,6 +31,34 @@ public class DoctorBusinessInfoUpdateRequest {
     private String dr_title;
     private String dr_name;
     private String clinic_name;
+    private String mobile_type;
+    private String communication_type;
+    private int consultancy_fees;
+
+    public String getMobile_type() {
+        return mobile_type;
+    }
+
+    public void setMobile_type(String mobile_type) {
+        this.mobile_type = mobile_type;
+    }
+
+    public int getConsultancy_fees() {
+        return consultancy_fees;
+    }
+
+    public void setConsultancy_fees(int consultancy_fees) {
+        this.consultancy_fees = consultancy_fees;
+    }
+
+    public String getCommunication_type() {
+        return communication_type;
+    }
+
+    public void setCommunication_type(String communication_type) {
+        this.communication_type = communication_type;
+    }
+
     private String clinic_loc;
     private double clinic_lat;
     private double clinic_long;
@@ -356,7 +384,7 @@ public class DoctorBusinessInfoUpdateRequest {
 
     public static class CertificatePicBean  {
         /**
-         * certificate_pic : http://mysalveo.com/api/uploads/images.jpeg
+         * certificate_pic :
          */
 
         private String certificate_pic;
@@ -374,7 +402,7 @@ public class DoctorBusinessInfoUpdateRequest {
 
     public static class GovtIdPicBean {
         /**
-         * govt_id_pic : http://mysalveo.com/api/uploads/images.jpeg
+         * govt_id_pic :
          */
 
         private String govt_id_pic;
@@ -392,7 +420,7 @@ public class DoctorBusinessInfoUpdateRequest {
 
     public static class PhotoIdPicBean {
         /**
-         * photo_id_pic : http://mysalveo.com/api/uploads/images.jpeg
+         * photo_id_pic :
          */
 
         private String photo_id_pic;

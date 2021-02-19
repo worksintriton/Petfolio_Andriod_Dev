@@ -13,6 +13,7 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.responsepojo.DoctorDetailsByUserIdResponse;
 import com.petfolio.infinitus.responsepojo.DoctorDetailsResponse;
 
@@ -59,18 +60,22 @@ public class ViewPagerDoctorClinicDetailsAdapter extends PagerAdapter {
 
 
 
-
         try {
             String imageURL = doctorclinicdetailsResponseList.get(position).getClinic_pic();
+            if(imageURL != null && !imageURL.isEmpty()){
+                Glide.with(context)
+                        .load(imageURL)
+                        .into(imageView);
+            }else{
+                Glide.with(context)
+                        .load(APIClient.BANNER_IMAGE_URL)
+                        .into(imageView);
+
+            }
 
 
-            Glide.with(context)
-                    .load(imageURL)
-                    .into(imageView);
-
-        } catch (NumberFormatException nfe) {
+        } catch (Exception e) {
             // Handle the condition when str is not a number.
-            Log.i("nummmberfromae", "" + nfe);
         }
 
 

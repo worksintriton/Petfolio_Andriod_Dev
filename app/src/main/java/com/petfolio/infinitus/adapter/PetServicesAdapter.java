@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.petfolio.infinitus.R;
 
+import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.petlover.SelectedServiceActivity;
 import com.petfolio.infinitus.responsepojo.ServiceCatResponse;
 
@@ -37,10 +38,6 @@ public class PetServicesAdapter extends  RecyclerView.Adapter<RecyclerView.ViewH
 
     private List<ServiceCatResponse.DataBean> serviceCatList;
     ServiceCatResponse.DataBean currentItem;
-
-    private static final int TYPE_FULL = 0;
-    private static final int TYPE_HALF = 1;
-    private static final int TYPE_QUARTER = 2;
 
     public PetServicesAdapter(Context context, List<ServiceCatResponse.DataBean> serviceCatList) {
         this.serviceCatList = serviceCatList;
@@ -79,33 +76,43 @@ public class PetServicesAdapter extends  RecyclerView.Adapter<RecyclerView.ViewH
               Log.w(TAG,"position "+pos);
 
               if(position==0){
-//
-//                  RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-//                  lp.setMargins(0, 0, 0, 20);
-//                  holder.img_petservice.setLayoutParams(lp);
+                  if(currentItem.getImage() != null && !currentItem.getImage().isEmpty()) {
+                      Glide.with(context)
+                              .load(currentItem.getImage())
+                              .centerCrop()
+                              .apply(new RequestOptions().override(150, 250))
+                              //.load(R.drawable.logo)
+                              .into(holder.img_petservice);
+                  }else{
+                      Glide.with(context)
+                              .load(APIClient.PROFILE_IMAGE_URL)
+                              .centerCrop()
+                              .apply(new RequestOptions().override(150, 250))
+                              //.load(R.drawable.logo)
+                              .into(holder.img_petservice);
 
-                  Glide.with(context)
-                          .load(currentItem.getImage())
-                          .centerCrop()
-                         .apply(new RequestOptions().override(150, 250))
-                          //.load(R.drawable.logo)
-                          .into(holder.img_petservice);
+                  }
 
 
               }
 
               else if(position==1){
+                  if(currentItem.getImage() != null && !currentItem.getImage().isEmpty()) {
 
-//                  RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-//                  lp.setMargins(0, 20, 0, 0);
-//                  holder.img_petservice.setLayoutParams(lp);
-
-                  Glide.with(context)
-                          .load(currentItem.getImage())
-                          .centerCrop()
-                          .apply(new RequestOptions().override(150, 270))
-                          //.load(R.drawable.logo)
-                          .into(holder.img_petservice);
+                      Glide.with(context)
+                              .load(currentItem.getImage())
+                              .centerCrop()
+                              .apply(new RequestOptions().override(150, 270))
+                              //.load(R.drawable.logo)
+                              .into(holder.img_petservice);
+                  }else{
+                      Glide.with(context)
+                              .load(APIClient.PROFILE_IMAGE_URL)
+                              .centerCrop()
+                              .apply(new RequestOptions().override(150, 270))
+                              //.load(R.drawable.logo)
+                              .into(holder.img_petservice);
+                  }
 
 
               }
@@ -113,34 +120,43 @@ public class PetServicesAdapter extends  RecyclerView.Adapter<RecyclerView.ViewH
               else {
 
                   if(pos==0){
+                      if(currentItem.getImage() != null && !currentItem.getImage().isEmpty()) {
 
-//                      RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-//                      lp.setMargins(0, 0, 0, 20);
-//                      holder.img_petservice.setLayoutParams(lp);
-                      Glide.with(context)
-                              .load(currentItem.getImage())
-                              .centerCrop()
-                              .apply(new RequestOptions().override(150, 270))
-                              //.load(R.drawable.logo)
-                              .into(holder.img_petservice);
+                          Glide.with(context)
+                                  .load(currentItem.getImage())
+                                  .centerCrop()
+                                  .apply(new RequestOptions().override(150, 270))
+                                  //.load(R.drawable.logo)
+                                  .into(holder.img_petservice);
+                      }else {
+
+                          Glide.with(context)
+                                  .load(APIClient.PROFILE_IMAGE_URL)
+                                  .centerCrop()
+                                  .apply(new RequestOptions().override(150, 270))
+                                  //.load(R.drawable.logo)
+                                  .into(holder.img_petservice);
+                      }
 
 
                   }
 
                   else {
+                      if(currentItem.getImage() != null && !currentItem.getImage().isEmpty()) {
 
-/*
-                      RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                      lp.setMargins(0, 20, 0, 0);
-                      holder.img_petservice.setLayoutParams(lp);
-*/
 
-                      Glide.with(context)
-                              .load(currentItem.getImage())
-                              .centerCrop()
-                              .apply(new RequestOptions().override(150, 250))
-                              //.load(R.drawable.logo)
-                              .into(holder.img_petservice);
+                          Glide.with(context)
+                                  .load(currentItem.getImage())
+                                  .centerCrop()
+                                  .apply(new RequestOptions().override(150, 260))
+                                  .into(holder.img_petservice);
+                      }else{
+                          Glide.with(context)
+                                  .load(APIClient.PROFILE_IMAGE_URL)
+                                  .centerCrop()
+                                  .apply(new RequestOptions().override(150, 260))
+                                  .into(holder.img_petservice);
+                      }
 
 
                   }

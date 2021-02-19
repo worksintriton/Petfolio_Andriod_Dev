@@ -344,6 +344,7 @@ public class PetHomeFragment extends Fragment implements Serializable,
 
 
 
+    @SuppressLint("LogNotTimber")
     private void petLoverDashboardResponseCall(int doctor, int service, int product) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -352,6 +353,7 @@ public class PetHomeFragment extends Fragment implements Serializable,
         Log.w(TAG,"PetLoverDashboardResponse url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<PetLoverDashboardResponse>() {
+            @SuppressLint({"LogNotTimber", "SetTextI18n"})
             @Override
             public void onResponse(@NonNull Call<PetLoverDashboardResponse> call, @NonNull Response<PetLoverDashboardResponse> response) {
                 avi_indicator.smoothToHide();
@@ -367,16 +369,14 @@ public class PetHomeFragment extends Fragment implements Serializable,
                         txt_puppy_love.setVisibility(View.VISIBLE);
                         txt_seemore_puppy_love.setVisibility(View.VISIBLE);
 
-                        if (response.body().getData().getDashboarddata() != null) {
+                        if (response.body().getData().getDashboarddata().getBanner_details() != null && response.body().getData().getDashboarddata().getBanner_details().size()>0) {
                             listHomeBannerResponse = response.body().getData().getDashboarddata().getBanner_details();
                             for (int i = 0; i < listHomeBannerResponse.size(); i++) {
                                 listHomeBannerResponse.get(i).getImg_path();
                                 Log.w(TAG, "RES" + " " + listHomeBannerResponse.get(i).getImg_path());
                             }
+                            viewpageData(listHomeBannerResponse);
 
-                            if (listHomeBannerResponse != null) {
-                                viewpageData(listHomeBannerResponse);
-                            }
                         }
                         if (response.body().getData().getDashboarddata().getDoctor_details() != null) {
                             doctorDetailsResponseList = response.body().getData().getDashboarddata().getDoctor_details();
@@ -395,7 +395,7 @@ public class PetHomeFragment extends Fragment implements Serializable,
                                 if(response.body().getData().getMessages() != null){
                                     for(int i= 0;i< response.body().getData().getMessages().size();i++){
                                         title =  response.body().getData().getMessages().get(i).getTitle();
-                                        if(title.equalsIgnoreCase("Doctor")){
+                                        if(title != null && title.equalsIgnoreCase("Doctor")){
                                             doctornotavlmsg =  response.body().getData().getMessages().get(i).getMessage();
                                             break;
 
@@ -457,13 +457,12 @@ public class PetHomeFragment extends Fragment implements Serializable,
                             }
 
                         }
-                        if(response.body().getData().getLocationDetails() != null){
-                            if(response.body().getData().getLocationDetails().isEmpty()){
+                        if(response.body().getData().getLocationDetails() != null && response.body().getData().getLocationDetails().isEmpty()){
                                 showLocationAlert();
-                            }
+
                         }
 
-                        if(response.body().getData().getSOS() != null){
+                        if(response.body().getData().getSOS() != null && response.body().getData().getSOS().size()>0){
                             APIClient.sosList = response.body().getData().getSOS();
                         }
 
@@ -478,7 +477,7 @@ public class PetHomeFragment extends Fragment implements Serializable,
 
             }
 
-            @SuppressLint("LongLogTag")
+            @SuppressLint({"LongLogTag", "LogNotTimber"})
             @Override
             public void onFailure(@NonNull Call<PetLoverDashboardResponse> call,@NonNull Throwable t) {
                 avi_indicator.smoothToHide();

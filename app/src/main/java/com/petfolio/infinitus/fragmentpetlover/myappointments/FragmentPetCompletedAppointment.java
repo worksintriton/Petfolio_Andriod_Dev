@@ -168,10 +168,12 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
                 if (response.body() != null) {
 
                     if(200 == response.body().getCode()){
-                        completedAppointmentResponseList = response.body().getData();
+                        if(response.body().getData() != null) {
+                            completedAppointmentResponseList = response.body().getData();
+                        }
                         Log.w(TAG,"Size"+completedAppointmentResponseList.size());
                         Log.w(TAG,"completedAppointmentResponseList : "+new Gson().toJson(completedAppointmentResponseList));
-                        if(response.body().getData().isEmpty()){
+                        if(response.body().getData() != null && response.body().getData().isEmpty()){
                             txt_no_records.setVisibility(View.VISIBLE);
                             txt_no_records.setText("No completed appointments");
                             rv_completedappointment.setVisibility(View.GONE);

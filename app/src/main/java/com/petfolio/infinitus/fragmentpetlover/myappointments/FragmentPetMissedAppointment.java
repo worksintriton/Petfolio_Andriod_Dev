@@ -149,6 +149,7 @@ public class FragmentPetMissedAppointment extends Fragment implements View.OnCli
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<PetAppointmentResponse>() {
+            @SuppressLint({"SetTextI18n", "LogNotTimber"})
             @Override
             public void onResponse(@NonNull Call<PetAppointmentResponse> call, @NonNull Response<PetAppointmentResponse> response) {
                 avi_indicator.smoothToHide();
@@ -158,10 +159,12 @@ public class FragmentPetMissedAppointment extends Fragment implements View.OnCli
                 if (response.body() != null) {
 
                     if(200 == response.body().getCode()){
-                        missedAppointmentResponseList = response.body().getData();
-                        Log.w(TAG,"Size"+missedAppointmentResponseList.size());
-                        Log.w(TAG,"missedAppointmentResponseList : "+new Gson().toJson(missedAppointmentResponseList));
-                        if(response.body().getData().isEmpty()){
+                        if(response.body().getData() != null) {
+                            missedAppointmentResponseList = response.body().getData();
+                            Log.w(TAG, "Size" + missedAppointmentResponseList.size());
+                            Log.w(TAG, "missedAppointmentResponseList : " + new Gson().toJson(missedAppointmentResponseList));
+                        }
+                        if(response.body().getData() != null && response.body().getData().isEmpty()){
                             txt_no_records.setVisibility(View.VISIBLE);
                             txt_no_records.setText("No missed appointments");
                             rv_missedappointment.setVisibility(View.GONE);

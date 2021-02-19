@@ -1,4 +1,4 @@
-package com.petfolio.infinitus.serviceprovider;
+package com.petfolio.infinitus.vendor;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -24,9 +24,9 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.appUtils.ApplicationData;
 import com.petfolio.infinitus.appUtils.NumericKeyBoardTransformationMethod;
-import com.petfolio.infinitus.doctor.DoctorEditProfileActivity;
 import com.petfolio.infinitus.requestpojo.EmailOTPRequest;
 import com.petfolio.infinitus.responsepojo.EmailOTPResponse;
+import com.petfolio.infinitus.serviceprovider.SPEditProfileActivity;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -40,7 +40,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SPVerifyEmailOtpActivity extends AppCompatActivity implements View.OnClickListener {
+public class VendorVerifyEmailOtpActivity extends AppCompatActivity implements View.OnClickListener {
 
     private final String TAG = "SPVerifyEmailOtpActivity";
 
@@ -105,7 +105,7 @@ public class SPVerifyEmailOtpActivity extends AppCompatActivity implements View.
         ButterKnife.bind(this);
         edt_otp.setTransformationMethod(new NumericKeyBoardTransformationMethod());
 
-        
+
         avi_indicator.setVisibility(View.GONE);
         txt_getotp.setText("You will get a OTP via Email");
 
@@ -171,7 +171,7 @@ public class SPVerifyEmailOtpActivity extends AppCompatActivity implements View.
                 break;
 
                 case R.id.txt_resend:
-                    if (new ConnectionDetector(SPVerifyEmailOtpActivity.this).isNetworkAvailable(SPVerifyEmailOtpActivity.this)) {
+                    if (new ConnectionDetector(VendorVerifyEmailOtpActivity.this).isNetworkAvailable(VendorVerifyEmailOtpActivity.this)) {
                         if(useremail != null){
                             resendOtpResponseCall();
                         }
@@ -203,7 +203,7 @@ public class SPVerifyEmailOtpActivity extends AppCompatActivity implements View.
          }
 
          if (can_proceed) {
-             Intent intent = new Intent(SPVerifyEmailOtpActivity.this, SPEditProfileActivity.class);
+             Intent intent = new Intent(VendorVerifyEmailOtpActivity.this, SPEditProfileActivity.class);
              intent.putExtra("verified","verified");
              intent.putExtra("useremail",useremail);
              intent.putExtra("firstname",firstname);

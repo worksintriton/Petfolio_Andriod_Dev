@@ -27,44 +27,59 @@
                 android:adjustViewBounds="true"
                 android:src="@drawable/backgm"
                 tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/img_background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:src="@color/black"
+                android:alpha="0.4"
+                tools:ignore="ContentDescription" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/txt_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="30dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/futuramediumbt"
+                    android:maxLines="1"
+                    android:text="@string/my_dogs"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_sub_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/futuramediumbt"
+                    android:maxLines="1"
+                    android:text="@string/trainer"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="40dp"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#ffffff" />
+            </LinearLayout>
+
         </androidx.cardview.widget.CardView>
-
-        <TextView
-            android:id="@+id/txt_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="30dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/futuramediumbt"
-            android:maxLines="1"
-            android:text="@string/my_dogs"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <View
-            android:id="@+id/view"
-            android:layout_width="40dp"
-            android:layout_height="2dp"
-            android:layout_below="@+id/txt_title"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:background="#ffffff" />
-
-        <TextView
-            android:id="@+id/txt_sub_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/view"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/futuramediumbt"
-            android:maxLines="1"
-            android:text="@string/trainer"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
 
 
     </RelativeLayout>

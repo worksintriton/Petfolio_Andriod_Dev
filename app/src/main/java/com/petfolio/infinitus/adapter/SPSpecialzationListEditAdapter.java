@@ -1,5 +1,6 @@
 package com.petfolio.infinitus.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,19 +52,25 @@ public class SPSpecialzationListEditAdapter extends  RecyclerView.Adapter<Recycl
 
     }
 
+    @SuppressLint("LogNotTimber")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
         currentItem = spSpecialzationList.get(position);
-        holder.txt_spectypes.setText(currentItem.getSpecialization());
+        if(currentItem.getSpecialization() != null){
+            holder.txt_spectypes.setText(currentItem.getSpecialization());
 
+        }
 
-        for(int i=0;i<spSpecialzationListEdit.size();i++){
-            if(null!=spSpecialzationListEdit && null!=currentItem.getSpecialization() && spSpecialzationListEdit.get(i).getBus_spec_list().equalsIgnoreCase(currentItem.getSpecialization().trim())){
-                holder.chx_spectypes.setChecked(true);
-                Log.w(TAG,"ServiceEdit");
+        if(spSpecialzationListEdit != null && spSpecialzationListEdit.size()>0) {
+
+            for (int i = 0; i < spSpecialzationListEdit.size(); i++) {
+                if (null != currentItem.getSpecialization() && spSpecialzationListEdit.get(i).getBus_spec_list() != null && spSpecialzationListEdit.get(i).getBus_spec_list().equalsIgnoreCase(currentItem.getSpecialization().trim())) {
+                    holder.chx_spectypes.setChecked(true);
+                    Log.w(TAG, "ServiceEdit");
+
+                }
 
             }
-
         }
 
 

@@ -7,7 +7,7 @@ public class ServiceCatResponse {
     /**
      * Status : Success
      * Message : Service Cat List
-     * Data : [{"_id":"5fe185d61996f651f5133693","image":"http://mysalveo.com/api/uploads/images.jpeg","title":"SP - 6","sub_title":"SP - 6"},{"_id":"5fe185df1996f651f5133694","image":"http://mysalveo.com/api/uploads/images.jpeg","title":"SP - 1","sub_title":"SP - 1"},{"_id":"5fe185e11996f651f5133695","image":"http://mysalveo.com/api/uploads/images.jpeg","title":"SP - 2","sub_title":"SP - 2"},{"_id":"5fe185e31996f651f5133696","image":"http://mysalveo.com/api/uploads/images.jpeg","title":"SP - 3","sub_title":"SP - 3"},{"_id":"5fe185f21996f651f5133698","image":"http://mysalveo.com/api/uploads/images.jpeg","title":"SP - 5","sub_title":"SP - 5"},{"_id":"5fe1888df456ec58d343b83e","image":"http://mysalveo.com/api/uploads/images.jpeg","title":"SP - 5","sub_title":"SP - 5"},{"_id":"5fe18898f456ec58d343b83f","image":"http://mysalveo.com/api/uploads/images.jpeg","title":"SP - 5","sub_title":"SP - 5"},{"_id":"5fe188ba02be5b58f85fa9a0","image":"http://mysalveo.com/api/uploads/images.jpeg","title":"SP - 5","sub_title":"SP - 5"}]
+     * Data : [{"_id":"5fe185d61996f651f5133693","image":"","title":"SP - 6","sub_title":"SP - 6"},{"_id":"5fe185df1996f651f5133694","image":"","title":"SP - 1","sub_title":"SP - 1"},{"_id":"5fe185e11996f651f5133695","image":"","title":"SP - 2","sub_title":"SP - 2"},{"_id":"5fe185e31996f651f5133696","image":"","title":"SP - 3","sub_title":"SP - 3"},{"_id":"5fe185f21996f651f5133698","image":"","title":"SP - 5","sub_title":"SP - 5"},{"_id":"5fe1888df456ec58d343b83e","image":"","title":"SP - 5","sub_title":"SP - 5"},{"_id":"5fe18898f456ec58d343b83f","image":"","title":"SP - 5","sub_title":"SP - 5"},{"_id":"5fe188ba02be5b58f85fa9a0","image":"","title":"SP - 5","sub_title":"SP - 5"}]
      * Code : 200
      */
 
@@ -57,7 +57,7 @@ public class ServiceCatResponse {
     public static class DataBean {
         /**
          * _id : 5fe185d61996f651f5133693
-         * image : http://mysalveo.com/api/uploads/images.jpeg
+         * image :
          * title : SP - 6
          * sub_title : SP - 6
          */

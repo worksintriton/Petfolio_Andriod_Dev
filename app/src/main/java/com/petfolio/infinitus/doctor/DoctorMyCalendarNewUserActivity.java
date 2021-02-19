@@ -134,21 +134,24 @@ public class DoctorMyCalendarNewUserActivity extends AppCompatActivity implement
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        dataBeanList = response.body().getData();
-
-                        for(int i=0;i<dataBeanList.size();i++){
-                            boolean isStatus = dataBeanList.get(i).isStatus();
-                            if(isStatus){
-                                btn_next.setVisibility(View.GONE);
-                            }else{
-                                btn_next.setVisibility(View.VISIBLE);
-                                break;
-                            }
+                        if(response.body().getData() != null) {
+                            dataBeanList = response.body().getData();
                         }
 
-                        if(dataBeanList.size()>0){
+                        if(dataBeanList != null && dataBeanList.size()>0) {
+                            for (int i = 0; i < dataBeanList.size(); i++) {
+                                boolean isStatus = dataBeanList.get(i).isStatus();
+                                if (isStatus) {
+                                    btn_next.setVisibility(View.GONE);
+                                } else {
+                                    btn_next.setVisibility(View.VISIBLE);
+                                    break;
+                                }
+                            }
                             setViewAvlDays();
                         }
+
+
 
                     }
 

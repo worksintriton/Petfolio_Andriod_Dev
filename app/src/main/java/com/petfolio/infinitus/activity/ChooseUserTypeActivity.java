@@ -86,6 +86,7 @@ public class ChooseUserTypeActivity extends AppCompatActivity implements UserTyp
 
     }
 
+    @SuppressLint("LogNotTimber")
     public void userTypeListResponseCall(int userTypeValue){
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -95,6 +96,7 @@ public class ChooseUserTypeActivity extends AppCompatActivity implements UserTyp
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<UserTypeListResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<UserTypeListResponse> call, @NonNull Response<UserTypeListResponse> response) {
                 avi_indicator.smoothToHide();
@@ -104,7 +106,11 @@ public class ChooseUserTypeActivity extends AppCompatActivity implements UserTyp
                     if(200 == response.body().getCode()){
                         Log.w(TAG,"UserTypeListResponse" + new Gson().toJson(response.body()));
 
-                        usertypedataBeanList = response.body().getData().getUsertypedata();
+                        if(response.body().getData().getUsertypedata() != null){
+                            usertypedataBeanList = response.body().getData().getUsertypedata();
+                        }
+
+
                         if(usertypedataBeanList != null && usertypedataBeanList.size()>0){
                             setView(userTypeValue);
                         }
@@ -133,6 +139,7 @@ public class ChooseUserTypeActivity extends AppCompatActivity implements UserTyp
 
     }
 
+    @SuppressLint("LogNotTimber")
     private void setView(int userTypeValue) {
         for(int i=0; i<usertypedataBeanList.size();i++){
             if(userTypeValue == usertypedataBeanList.get(i).getUser_type_value()){

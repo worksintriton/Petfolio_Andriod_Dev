@@ -73,7 +73,9 @@ public class SPServiceListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
         currentItem = spServiceList.get(position);
-        holder.txt_servicename.setText(currentItem.getService_list());
+        if(currentItem.getService_list() != null ) {
+            holder.txt_servicename.setText(currentItem.getService_list());
+        }
         if(strTimeslot != null){
             holder.txt_timeslottype.setText(strTimeslot);
         }

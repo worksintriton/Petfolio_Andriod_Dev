@@ -166,6 +166,7 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
     private static final int REQUEST_PHONE_CALL =1 ;
     private String sosPhonenumber;
     private String education = "";
+    private int Doctor_exp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -267,28 +268,30 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
 
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
-
-                        doctorclinicdetailsResponseList  = response.body().getData().getClinic_pic();
-                        clinicname =  response.body().getData().getClinic_name();
-                        doctorname = response.body().getData().getDr_name();
-                        reviewcount  = response.body().getData().getReview_count();
-                        starcount =  response.body().getData().getStar_count();
-                        amount =  response.body().getData().getAmount();
-
-                        Log.w(TAG,"amount : "+amount);
-                        communicationtype =  response.body().getData().getCommunication_type();
-
-                        ClinicLocationname = response.body().getData().getClinic_loc();
-                        int Doctor_exp = response.body().getData().getDoctor_exp();
+                        if(response.body().getData().getClinic_pic() != null) {
+                            doctorclinicdetailsResponseList = response.body().getData().getClinic_pic();
+                        }
+                        if(response.body().getData() != null) {
+                            clinicname = response.body().getData().getClinic_name();
+                            doctorname = response.body().getData().getDr_name();
+                            reviewcount = response.body().getData().getReview_count();
+                            starcount = response.body().getData().getStar_count();
+                            amount = response.body().getData().getAmount();
+                            Log.w(TAG, "amount : " + amount);
+                            communicationtype = response.body().getData().getCommunication_type();
+                            ClinicLocationname = response.body().getData().getClinic_loc();
+                             Doctor_exp = response.body().getData().getDoctor_exp();
+                            if(response.body().getData().getAmount() != 0){
+                                txt_dr_consultationfees.setText("\u20B9 "+response.body().getData().getAmount());
+                            }
+                        }
 
                         if(Doctor_exp != 0) {
                             txt_dr_experience.setText(Doctor_exp+" Years");
                         }
 
 
-                       if(response.body().getData().getAmount() != 0){
-                           txt_dr_consultationfees.setText("\u20B9 "+response.body().getData().getAmount());
-                       }
+
 
 
                         if(clinicname != null){
@@ -351,8 +354,6 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
 
                        }
 
-                    }else{
-
                     }
 
 
@@ -368,6 +369,7 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private DoctorDetailsRequest doctorDetailsRequest() {
         DoctorDetailsRequest doctorDetailsRequest = new DoctorDetailsRequest();
         doctorDetailsRequest.setUser_id(doctorid);

@@ -46,7 +46,6 @@ public class AddImageListAdapter extends RecyclerView.Adapter<AddImageListAdapte
         Log.w(TAG,"ImagePic : "+ClinicPicBean.getClinic_pic());
 
         if (ClinicPicBean.getClinic_pic()!= null) {
-
             Glide.with(context)
                     .load(ClinicPicBean.getClinic_pic())
                     .into(holder.certificate_pics_1);

@@ -535,6 +535,7 @@ public class EditDoctorProfileImageActivity extends AppCompatActivity implements
     }
 
 
+    @SuppressLint("LogNotTimber")
     private void DoctorUpdateProfileImageResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -543,6 +544,7 @@ public class EditDoctorProfileImageActivity extends AppCompatActivity implements
         Log.w(TAG,"DoctorUpdateProfileImageResponse url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<DoctorUpdateProfileImageResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<DoctorUpdateProfileImageResponse> call, @NonNull Response<DoctorUpdateProfileImageResponse> response) {
 
@@ -567,11 +569,8 @@ public class EditDoctorProfileImageActivity extends AppCompatActivity implements
 
                         );
                        onBackPressed();
-                        //gotoDoctorProfileScreenActivity();
                     }
-                    else{
-                        //showErrorLoading(response.body().getMessage());
-                    }
+
                 }
 
 
@@ -589,7 +588,13 @@ public class EditDoctorProfileImageActivity extends AppCompatActivity implements
     private DoctorUpdateProfileImageRequest doctorUpdateProfileImageRequest() {
         DoctorUpdateProfileImageRequest  doctorUpdateProfileImageRequest = new DoctorUpdateProfileImageRequest();
         doctorUpdateProfileImageRequest.setUser_id(userid);
+        if(profileimage != null && !profileimage.isEmpty()){
         doctorUpdateProfileImageRequest.setProfile_img(profileimage);
+        }else{
+            doctorUpdateProfileImageRequest.setProfile_img(APIClient.PROFILE_IMAGE_URL);
+
+        }
+
         Log.w(TAG,"doctorUpdateProfileImageRequest"+ "--->" + new Gson().toJson(doctorUpdateProfileImageRequest));
         return doctorUpdateProfileImageRequest;
     }

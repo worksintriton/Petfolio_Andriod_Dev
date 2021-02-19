@@ -143,6 +143,7 @@ public class FragmentDoctorCompletedAppointment extends Fragment implements View
 
 
 
+    @SuppressLint("LogNotTimber")
     private void doctorCompletedAppointmentResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -151,6 +152,7 @@ public class FragmentDoctorCompletedAppointment extends Fragment implements View
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<DoctorCompletedAppointmentResponse>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(@NonNull Call<DoctorCompletedAppointmentResponse> call, @NonNull Response<DoctorCompletedAppointmentResponse> response) {
                avi_indicator.smoothToHide();
@@ -160,10 +162,12 @@ public class FragmentDoctorCompletedAppointment extends Fragment implements View
                if (response.body() != null) {
 
                    if(200 == response.body().getCode()){
-                       completedAppointmentResponseList = response.body().getData();
-                       Log.w(TAG,"Size"+completedAppointmentResponseList.size());
-                       Log.w(TAG,"completedAppointmentResponseList : "+new Gson().toJson(completedAppointmentResponseList));
-                       if(response.body().getData().isEmpty()){
+                       if(response.body().getData() != null) {
+                           completedAppointmentResponseList = response.body().getData();
+                           Log.w(TAG, "Size" + completedAppointmentResponseList.size());
+                           Log.w(TAG, "completedAppointmentResponseList : " + new Gson().toJson(completedAppointmentResponseList));
+                       }
+                       if(response.body().getData() != null && response.body().getData().isEmpty()){
                            txt_no_records.setVisibility(View.VISIBLE);
                            txt_no_records.setText("No completed appointments");
                            rv_completedappointment.setVisibility(View.GONE);
@@ -198,6 +202,7 @@ public class FragmentDoctorCompletedAppointment extends Fragment implements View
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private DoctorNewAppointmentRequest doctorNewAppointmentRequest() {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentDateandTime = simpleDateFormat.format(new Date());

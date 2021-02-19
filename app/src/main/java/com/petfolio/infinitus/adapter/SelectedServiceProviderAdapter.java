@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.petlover.Service_Details_Activity;
 import com.petfolio.infinitus.responsepojo.SPSpecificServiceDetailsResponse;
 
@@ -63,13 +64,27 @@ public class SelectedServiceProviderAdapter extends  RecyclerView.Adapter<Recycl
         currentItem = serviceProviderList.get(position);
         holder.txt_serv_offer.setVisibility(View.GONE);
         holder.btn_book.setText("View");
-        holder.txt_service_providers.setText(serviceProviderList.get(position).getService_provider_name());
-        holder.txt_serv_price.setText("\u20B9 "+serviceProviderList.get(position).getService_price());
-        holder.txt_serv_offer.setText(serviceProviderList.get(position).getService_offer()+"");
-        holder.txt_place.setText(serviceProviderList.get(position).getService_place());
-        holder.txt_km.setText(serviceProviderList.get(position).getDistance()+" km away");
-        holder.txt_star_rating.setText(serviceProviderList.get(position).getRating_count()+"");
-        holder.txt_review_count.setText(serviceProviderList.get(position).getComments_count()+"");
+        if (serviceProviderList.get(position).getService_provider_name() != null) {
+            holder.txt_service_providers.setText(serviceProviderList.get(position).getService_provider_name());
+        }
+        if(serviceProviderList.get(position).getService_price() != 0) {
+            holder.txt_serv_price.setText("\u20B9 " + serviceProviderList.get(position).getService_price());
+        }
+        if(serviceProviderList.get(position).getService_offer() != 0) {
+            holder.txt_serv_offer.setText(serviceProviderList.get(position).getService_offer() + "");
+        }
+        if(serviceProviderList.get(position).getService_place() != null) {
+            holder.txt_place.setText(serviceProviderList.get(position).getService_place());
+        }
+        if(serviceProviderList.get(position).getDistance() != 0) {
+            holder.txt_km.setText(serviceProviderList.get(position).getDistance() + " km away");
+        }
+        if(serviceProviderList.get(position).getRating_count() != 0) {
+            holder.txt_star_rating.setText(serviceProviderList.get(position).getRating_count() + "");
+        }
+        if(serviceProviderList.get(position).getComments_count() != 0) {
+            holder.txt_review_count.setText(serviceProviderList.get(position).getComments_count() + "");
+        }
 
 
 
@@ -82,7 +97,7 @@ public class SelectedServiceProviderAdapter extends  RecyclerView.Adapter<Recycl
             }
            else{
                 Glide.with(context)
-                        .load(R.drawable.image_thumbnail)
+                        .load(APIClient.PROFILE_IMAGE_URL)
                         .into(holder.img_service);
 
             }

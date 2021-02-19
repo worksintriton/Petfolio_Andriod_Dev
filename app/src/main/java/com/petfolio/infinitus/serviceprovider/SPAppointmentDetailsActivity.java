@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,6 +28,7 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinitus.petlover.PetMyappointmentsActivity;
+import com.petfolio.infinitus.petlover.PetSPNewAppointmentDetailsActivity;
 import com.petfolio.infinitus.petlover.VideoCallPetLoverActivity;
 import com.petfolio.infinitus.requestpojo.AppoinmentCancelledRequest;
 import com.petfolio.infinitus.requestpojo.AppoinmentCompleteRequest;
@@ -256,7 +258,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
     }
 
 
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private void spAppointmentDetailsResponse() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -265,7 +267,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
         Log.w(TAG, "url  :%s" + call.request().url().toString());
 
         call.enqueue(new Callback<SPAppointmentDetailsResponse>() {
-            @SuppressLint("LongLogTag")
+            @SuppressLint({"LongLogTag", "LogNotTimber"})
             @Override
             public void onResponse(@NonNull Call<SPAppointmentDetailsResponse> call, @NonNull Response<SPAppointmentDetailsResponse> response) {
                 avi_indicator.smoothToHide();
@@ -276,75 +278,68 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
 
                     if (200 == response.body().getCode()) {
 
-                        String vaccinated , addr = null, usrname = null;
+                        String vaccinated, addr = null, usrname = null;
 
-                      //  String usr_image = response.body().getData().getDoctor_id().getProfile_img();
+                        //  String usr_image = response.body().getData().getDoctor_id().getProfile_img();
                         String usr_image = "";
-                        spid = response.body().getData().getSp_id().get_id();
-                        appointmentid = response.body().getData().getAppointment_UID();
-                        userid = response.body().getData().getUser_id().get_id();
+                        if (response.body().getData() != null) {
+                            spid = response.body().getData().getSp_id().get_id();
+                            appointmentid = response.body().getData().getAppointment_UID();
+                            userid = response.body().getData().getUser_id().get_id();
 
-                        usrname = response.body().getData().getSp_business_info().get(0).getBussiness_name();
+                            usrname = response.body().getData().getSp_business_info().get(0).getBussiness_name();
 
-                        String servname = response.body().getData().getService_name();
+                            String servname = response.body().getData().getService_name();
 
-                        String servcost= response.body().getData().getService_amount();
+                            String servcost = response.body().getData().getService_amount();
 
-                        String pet_name = response.body().getData().getPet_id().getPet_name();
+                            String pet_name = response.body().getData().getPet_id().getPet_name();
 
-                        String pet_image  = response.body().getData().getPet_id().getPet_img();
+                            String pet_image = response.body().getData().getPet_id().getPet_img();
 
-                        String pet_type = response.body().getData().getPet_id().getPet_type();
+                            String pet_type = response.body().getData().getPet_id().getPet_type();
 
-                        String breed = response.body().getData().getPet_id().getPet_breed();
+                            String breed = response.body().getData().getPet_id().getPet_breed();
 
-                        String gender= response.body().getData().getPet_id().getPet_gender();
+                            String gender = response.body().getData().getPet_id().getPet_gender();
 
-                        String colour= response.body().getData().getPet_id().getPet_color();
+                            String colour = response.body().getData().getPet_id().getPet_color();
 
-                        String weight= String.valueOf(response.body().getData().getPet_id().getPet_weight());
+                            String weight = String.valueOf(response.body().getData().getPet_id().getPet_weight());
 
-                        String age= String.valueOf(response.body().getData().getPet_id().getPet_age());
+                            String age = String.valueOf(response.body().getData().getPet_id().getPet_age());
 
-                        if(response.body().getData().getPet_id().isVaccinated()){
-                            vaccinated= "Yes";
-                            ll_petlastvacinateddate.setVisibility(View.VISIBLE);
-                            if(response.body().getData().getPet_id().getLast_vaccination_date() != null){
-                                txt_petlastvaccinatedage.setText(response.body().getData().getPet_id().getLast_vaccination_date());
+                            if (response.body().getData().getPet_id().isVaccinated()) {
+                                vaccinated = "Yes";
+                                ll_petlastvacinateddate.setVisibility(View.VISIBLE);
+                                if (response.body().getData().getPet_id().getLast_vaccination_date() != null) {
+                                    txt_petlastvaccinatedage.setText(response.body().getData().getPet_id().getLast_vaccination_date());
+                                }
+
+                            } else {
+                                ll_petlastvacinateddate.setVisibility(View.GONE);
+                                vaccinated = "No";
                             }
 
-                        }else {
-                            ll_petlastvacinateddate.setVisibility(View.GONE);
-                            vaccinated="No" ;
+                            String order_date = response.body().getData().getBooking_date();
+
+                            String orderid = response.body().getData().getAppointment_UID();
+
+                            String payment_method = response.body().getData().getPayment_method();
+
+                            String order_cost = response.body().getData().getService_amount();
+
+                            addr = response.body().getData().getSp_business_info().get(0).getSp_loc();
+
+
+                            appoinment_status = response.body().getData().getAppoinment_status();
+
+                            start_appointment_status = response.body().getData().getStart_appointment_status();
+
+                            setView(usrname, usr_image, servname, servcost, pet_name, pet_image, pet_type, breed
+
+                                    , gender, colour, weight, age, order_date, orderid, payment_method, order_cost, vaccinated, addr);
                         }
-
-                        String order_date= response.body().getData().getBooking_date();
-
-                        String orderid= response.body().getData().getAppointment_UID();
-
-                        String payment_method= response.body().getData().getPayment_method();
-
-                        String order_cost= response.body().getData().getService_amount();
-
-                        addr = response.body().getData().getSp_business_info().get(0).getSp_loc();
-
-
-                        /*List<PetNewAppointmentDetailsResponse.DataBean.DocBusinessInfoBean> Address= response.body().getData().getDoc_business_info();
-
-                        for(int i =0; i<Address.size(); i++){
-
-                            addr = Address.get(i).getClinic_loc();
-
-                            usrname = Address.get(i).getDr_name();
-                        }
-*/
-                        appoinment_status = response.body().getData().getAppoinment_status();
-
-                        start_appointment_status = response.body().getData().getStart_appointment_status();
-
-                        setView(usrname , usr_image , servname , servcost , pet_name , pet_image , pet_type , breed
-
-                                , gender, colour , weight , age , order_date , orderid , payment_method , order_cost, vaccinated , addr);
                     }
 
 
@@ -362,7 +357,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
     }
 
 
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private AppointmentDetailsRequest appointmentDetailsRequest() {
 
         AppointmentDetailsRequest appointmentDetailsRequest = new AppointmentDetailsRequest();
@@ -381,6 +376,10 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
                     .load(usr_image)
                     .into(img_user);
 
+        }else{
+            Glide.with(SPAppointmentDetailsActivity.this)
+                    .load(APIClient.PROFILE_IMAGE_URL)
+                    .into(img_user);
         }
 
 
@@ -711,7 +710,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
 
 
     }
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private void appoinmentCompleteResponseCall(String id) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -720,6 +719,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
         Log.w(TAG,"AppoinmentCompleteResponse url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<AppoinmentCompleteResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<AppoinmentCompleteResponse> call, @NonNull Response<AppoinmentCompleteResponse> response) {
 
@@ -731,9 +731,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
                     if(response.body().getCode() == 200){
                         startActivity(new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class));
                     }
-                    else{
-                        //showErrorLoading(response.body().getMessage());
-                    }
+
                 }
 
 

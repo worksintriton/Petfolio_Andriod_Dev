@@ -599,7 +599,12 @@ public class SPEditProfileImageActivity extends AppCompatActivity implements Vie
     private DoctorUpdateProfileImageRequest doctorUpdateProfileImageRequest() {
         DoctorUpdateProfileImageRequest  doctorUpdateProfileImageRequest = new DoctorUpdateProfileImageRequest();
         doctorUpdateProfileImageRequest.setUser_id(userid);
+        if(profileimage != null && !profileimage.isEmpty()){
         doctorUpdateProfileImageRequest.setProfile_img(profileimage);
+        }else{
+            doctorUpdateProfileImageRequest.setProfile_img(APIClient.PROFILE_IMAGE_URL);
+
+        }
         Log.w(TAG,"doctorUpdateProfileImageRequest"+ "--->" + new Gson().toJson(doctorUpdateProfileImageRequest));
         return doctorUpdateProfileImageRequest;
     }

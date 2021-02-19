@@ -2,6 +2,7 @@ package com.petfolio.infinitus.doctor;
 
 import android.animation.LayoutTransition;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -238,6 +239,7 @@ public class PrescriptionActivity extends AppCompatActivity {
     }
 
 
+    @SuppressLint("LogNotTimber")
     private void prescriptionCreateRequestCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -246,6 +248,7 @@ public class PrescriptionActivity extends AppCompatActivity {
         Log.w(TAG,"url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<PrescriptionCreateResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<PrescriptionCreateResponse> call, @NonNull Response<PrescriptionCreateResponse> response) {
                 avi_indicator.smoothToHide();
@@ -276,6 +279,7 @@ public class PrescriptionActivity extends AppCompatActivity {
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private PrescriptionCreateRequest prescriptionCreateRequest() {
         /*
          * doctor_id : 5ef3472a4b9bd73eb1cff539
@@ -359,9 +363,7 @@ public class PrescriptionActivity extends AppCompatActivity {
 
 
                     }
-                    else{
-                        //showErrorLoading(response.body().getMessage());
-                    }
+
                 }
 
 

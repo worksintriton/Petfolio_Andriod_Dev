@@ -13,10 +13,10 @@ public class VendorRegisterFormCreateRequest {
      * bussiness : Mohammed
      * bussiness_phone : 9876543210
      * business_reg : Resdf
-     * bussiness_gallery : [{"bussiness_gallery":"http://mysalveo.com/api/uploads/images.jpeg"},{"bussiness_gallery":"http://mysalveo.com/api/uploads/images.jpeg"}]
-     * photo_id_proof : http://mysalveo.com/api/uploads/images.jpeg
-     * govt_id_proof : http://mysalveo.com/api/uploads/images.jpeg
-     * certifi : [{"certifi":"http://mysalveo.com/api/uploads/images.jpeg"},{"certifi":"http://mysalveo.com/api/uploads/images.jpeg"}]
+     * bussiness_gallery : [{"bussiness_gallery":""},{"bussiness_gallery":""}]
+     * photo_id_proof :
+     * govt_id_proof :
+     * certifi : [{"certifi":""},{"certifi":""}]
      * date_and_time : 23-10-2020 12:00 AM
      * mobile_type : Admin
      * profile_status : true
@@ -234,7 +234,7 @@ public class VendorRegisterFormCreateRequest {
 
     public static class BussinessGalleryBean {
         /**
-         * bussiness_gallery : http://mysalveo.com/api/uploads/images.jpeg
+         * bussiness_gallery :
          */
 
         private String bussiness_gallery;
@@ -252,7 +252,7 @@ public class VendorRegisterFormCreateRequest {
 
     public static class CertifiBean{
         /**
-         * certifi : http://mysalveo.com/api/uploads/images.jpeg
+         * certifi :
          */
 
         private String certifi;

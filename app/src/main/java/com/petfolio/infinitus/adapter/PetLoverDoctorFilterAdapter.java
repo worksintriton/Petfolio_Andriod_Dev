@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.petlover.BookAppointmentActivity;
 import com.petfolio.infinitus.petlover.DoctorClinicDetailsActivity;
 import com.petfolio.infinitus.responsepojo.DoctorSearchResponse;
@@ -69,17 +70,30 @@ public class PetLoverDoctorFilterAdapter extends  RecyclerView.Adapter<RecyclerV
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
           currentItem = doctorFilterDetailsResponseList.get(position);
-          holder.txt_doctors_name.setText(currentItem.getDoctor_name());
-          holder.txt_place.setText(currentItem.getClinic_loc());
-          holder.txt_km.setText(currentItem.getDistance()+"km away");
-          List<FilterDoctorResponse.DataBean.SpecializationBean> specializationBeanList = currentItem.getSpecialization();
-
-          for(int i=0;i<specializationBeanList.size();i++){
-              holder.txt_doctors_specialization.setText(specializationBeanList.get(i).getSpecialization());
-
+          if(currentItem.getDoctor_name() != null) {
+              holder.txt_doctors_name.setText(currentItem.getDoctor_name());
           }
-          holder.txt_star_rating.setText( doctorFilterDetailsResponseList.get(position).getStar_count()+"");
-          holder.txt_review_count.setText( doctorFilterDetailsResponseList.get(position).getReview_count()+"");
+          if(currentItem.getClinic_loc() != null) {
+              holder.txt_place.setText(currentItem.getClinic_loc());
+          }
+          if(currentItem.getDistance() != null) {
+              holder.txt_km.setText(currentItem.getDistance() + "km away");
+          }
+          if(currentItem.getSpecialization() != null && currentItem.getSpecialization().size()>0) {
+              List<FilterDoctorResponse.DataBean.SpecializationBean> specializationBeanList = currentItem.getSpecialization();
+              for (int i = 0; i < specializationBeanList.size(); i++) {
+                  if(specializationBeanList.get(i).getSpecialization() != null) {
+                      holder.txt_doctors_specialization.setText(specializationBeanList.get(i).getSpecialization());
+                  }
+
+              }
+          }
+          if(doctorFilterDetailsResponseList.get(position).getStar_count() != 0) {
+              holder.txt_star_rating.setText(doctorFilterDetailsResponseList.get(position).getStar_count() + "");
+          }
+          if(doctorFilterDetailsResponseList.get(position).getReview_count() != 0) {
+              holder.txt_review_count.setText(doctorFilterDetailsResponseList.get(position).getReview_count() + "");
+          }
           if (currentItem.getDoctor_img() != null && !currentItem.getDoctor_img().isEmpty()) {
 
             Glide.with(context)
@@ -90,7 +104,7 @@ public class PetLoverDoctorFilterAdapter extends  RecyclerView.Adapter<RecyclerV
         }
           else{
             Glide.with(context)
-                    .load(R.drawable.services)
+                    .load(APIClient.PROFILE_IMAGE_URL)
                     .into(holder.img_doctors_image);
 
         }
