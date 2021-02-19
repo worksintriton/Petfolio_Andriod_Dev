@@ -7,12 +7,12 @@
 
     <RelativeLayout
         android:id="@+id/rl_root"
-        android:layout_width="65dp"
+        android:layout_width="75dp"
         android:layout_height="75dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/cv_serviceimage"
-            android:layout_width="65dp"
+            android:layout_width="75dp"
             android:layout_height="75dp"
             android:layout_gravity="center"
             android:src="@drawable/services" />
@@ -34,7 +34,7 @@
         android:maxLines="1"
         android:text="@string/sub_services"
         android:textColor="@color/new_txt_color"
-        android:textSize="14sp" />
+        android:textSize="10sp" />
 
 
 </LinearLayout>

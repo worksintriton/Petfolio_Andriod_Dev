@@ -54,7 +54,8 @@
                     android:layout_height="24dp"
                     android:layout_marginStart="20dp"
                     android:src="@drawable/ic_sos"
-                    tools:ignore="ContentDescription" />
+                    tools:ignore="ContentDescription"
+                    android:visibility="gone"/>
 
                 <ImageView
                     android:layout_width="24dp"
@@ -294,117 +295,28 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/futuramediumbt"
                     android:maxLines="1"
-                    android:text="@string/clinic_name"
+                    android:text="@string/business_name"
                     android:textColor="@color/new_txt_color"
                     android:textSize="16sp" />
-                <LinearLayout
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
+                    android:fontFamily="@font/futuramediumbt"
+                    android:maxLines="1"
+                    android:text="@string/businessemail"
+                    android:textColor="@color/new_txt_color"
+                    android:textSize="16sp" />
 
-                    <TextView
-                        android:layout_width="80dp"
-                        android:layout_height="16dp"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/futuramediumbt"
-                        android:maxLines="1"
-                        android:text="@string/specialization"
-                        android:textColor="@color/new_txt_color"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/colon"
-                        android:textColor="@color/new_sec_txt_color"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/txt_dr_specialization"
-                        android:layout_width="wrap_content"
-                        android:layout_height="16dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginLeft="5dp"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/futuramediumbt"
-                        android:maxLines="1"
-                        android:text="@string/specialization"
-                        android:textColor="@color/new_sec_txt_color"
-                        android:textSize="12sp" />
-                </LinearLayout>
-                <LinearLayout
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
+                    android:fontFamily="@font/futuramediumbt"
+                    android:maxLines="1"
+                    android:text="@string/phone"
+                    android:textColor="@color/new_txt_color"
+                    android:textSize="16sp" />
 
-                    <TextView
-                        android:layout_width="80dp"
-                        android:layout_height="16dp"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/futuramediumbt"
-                        android:maxLines="1"
-                        android:text="@string/pets_handled"
-                        android:textColor="@color/new_txt_color"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/colon"
-                        android:textColor="@color/new_sec_txt_color"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/txt_pets_handled"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginLeft="5dp"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/futuramediumbt"
-                        android:maxLines="1"
-                        android:text="@string/pets_handled"
-                        android:textColor="@color/new_sec_txt_color"
-                        android:textSize="12sp"
-                        tools:ignore="RtlHardcoded" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="80dp"
-                        android:layout_height="16dp"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/futuramediumbt"
-                        android:maxLines="1"
-                        android:text="@string/clinic_address"
-                        android:textColor="@color/new_txt_color"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/colon"
-                        android:textColor="@color/new_sec_txt_color"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/txt_clinic_address"
-                        android:layout_width="wrap_content"
-                        android:layout_height="16dp"
-                        android:layout_marginStart="5dp"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/futuramediumbt"
-                        android:maxLines="2"
-                        android:text="@string/clinic_address"
-                        android:textColor="@color/new_sec_txt_color"
-                        android:textSize="12sp" />
-                </LinearLayout>
             </LinearLayout>
 
 
@@ -458,15 +370,16 @@
                     tools:ignore="ContentDescription" />
 
                 <TextView
-                    android:id="@+id/txt_manage_service"
+                    android:id="@+id/txt_manage_products"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/futuramediumbt"
-                    android:text="@string/manage_services"
+                    android:text="Manage Products"
                     android:textColor="@color/new_txt_color"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:ignore="HardcodedText" />
 
             </LinearLayout>
 
@@ -538,20 +451,23 @@
         android:layout_marginBottom="10dp">
 
 
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation_view"
-            android:layout_width="wrap_content"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/new_rounded_corner_btn"
             app:elevation="8dp"
             app:itemBackground="@drawable/selected_state"
+            app:itemIconSize="20dp"
             app:itemIconTint="@color/selector"
             app:itemTextColor="@color/selector"
             app:labelVisibilityMode="labeled"
-            app:menu="@menu/doctor_bottom_navigation" />
+            app:menu="@menu/vendor_bottom_navigation" />
 
 
     </LinearLayout>

@@ -21,6 +21,7 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
 import com.petfolio.infinitus.petlover.PetNewAppointmentDetailsActivity;
 import com.petfolio.infinitus.petlover.PetSPNewAppointmentDetailsActivity;
+import com.petfolio.infinitus.petlover.ProductDetailsActivity;
 import com.petfolio.infinitus.petlover.VideoCallPetLoverActivity;
 import com.petfolio.infinitus.responsepojo.PetAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
@@ -114,6 +115,16 @@ public class PetShopTodayDealsAdapter extends  RecyclerView.Adapter<RecyclerView
                         .into(holder.img_products_image);
 
             }
+
+        holder.ll_root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("productid",today_special.get(position).get_id());
+                context.startActivity(intent);
+            }
+        });
+
 
 
 

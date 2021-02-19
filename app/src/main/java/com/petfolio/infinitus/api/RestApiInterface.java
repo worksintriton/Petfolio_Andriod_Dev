@@ -124,6 +124,7 @@ import com.petfolio.infinitus.responsepojo.SPSpecificServiceDetailsResponse;
 import com.petfolio.infinitus.responsepojo.ServiceCatResponse;
 import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
 import com.petfolio.infinitus.responsepojo.SignupResponse;
+import com.petfolio.infinitus.responsepojo.SplashScreenResponse;
 import com.petfolio.infinitus.responsepojo.UserStatusUpdateResponse;
 import com.petfolio.infinitus.responsepojo.UserTypeListResponse;
 import com.petfolio.infinitus.responsepojo.ServiceProviderRegisterFormCreateResponse;
@@ -140,6 +141,11 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 
 public interface RestApiInterface {
+
+    /*splash screen list*/
+    @GET("splashscreen/getlist")
+    Call<SplashScreenResponse> splashScreenResponseCall(@Header("Content-Type") String type);
+
 
     /*user types list*/
     @GET("usertype/mobile/getlist")
@@ -519,7 +525,7 @@ public interface RestApiInterface {
     @POST("order_details/getorder_list")
     Call<VendorOrderResponse>vendorOrderResponseCall(@Header("Content-Type") String type, @Body VendorOrderRequest vendorOrderRequest);
 
-    /*user types list*/
+    /*shop dashboard list*/
     @GET("product_details/getproductdetails_list")
     Call<ShopDashboardResponse> shopDashboardResponseCall(@Header("Content-Type") String type);
 

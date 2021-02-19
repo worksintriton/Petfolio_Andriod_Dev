@@ -72,6 +72,7 @@ import com.petfolio.infinitus.fragmentserviceprovider.FragmentSPCompletedAppoint
 import com.petfolio.infinitus.fragmentserviceprovider.FragmentSPDashboard;
 import com.petfolio.infinitus.fragmentserviceprovider.FragmentSPMissedAppointment;
 import com.petfolio.infinitus.fragmentserviceprovider.FragmentSPNewAppointment;
+import com.petfolio.infinitus.petlover.ListOfProductsActivity;
 import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
@@ -152,8 +153,8 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
     Button btn_all_categories;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.txt_recent_search)
-    TextView txt_recent_search;
+    @BindView(R.id.txt_lbl_todaydeal)
+    TextView txt_lbl_todaydeal;
 
 
 
@@ -170,6 +171,11 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_productdetails)
     RecyclerView rv_productdetails;
+
+
+   @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_seemore_todaydeals)
+    TextView txt_seemore_todaydeals;
 
 
 
@@ -214,6 +220,13 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
         if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
              shopDashboardResponseCall();
         }
+
+        txt_seemore_todaydeals.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mContext, ListOfProductsActivity.class));
+            }
+        });
 
 
             return view;
@@ -306,12 +319,25 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
                             }
                         }
                         if(response.body().getData().getToday_Special() != null && response.body().getData().getToday_Special().size()>0){
+                            txt_lbl_todaydeal.setVisibility(View.VISIBLE);
+                            txt_seemore_todaydeals.setVisibility(View.VISIBLE);
+                            rv_today_deal.setVisibility(View.VISIBLE);
                             setView(response.body().getData().getToday_Special());
 
+                        }else{
+                            txt_lbl_todaydeal.setVisibility(View.GONE);
+                            txt_seemore_todaydeals.setVisibility(View.GONE);
+                            rv_today_deal.setVisibility(View.GONE);
                         }
                         if(response.body().getData().getProduct_details() != null && response.body().getData().getProduct_details().size()>0){
                             for(int i=0;i<response.body().getData().getProduct_details().size();i++){
                                 productList = response.body().getData().getProduct_details().get(i).getProduct_list();
+                                if(response.body().getData().getProduct_details().get(i).getProduct_list() != null && response.body().getData().getProduct_details().get(i).getProduct_list().size()>0){
+                                    rv_productdetails.setVisibility(View.VISIBLE);
+                                }else{
+                                    rv_productdetails.setVisibility(View.GONE);
+                                }
+
                             }
                             setViewProductDetails(response.body().getData().getProduct_details(),productList);
 

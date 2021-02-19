@@ -17,27 +17,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.petlover.ProductDetailsActivity;
+import com.petfolio.infinitus.petlover.SelectedServiceActivity;
 import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
 
 import java.util.List;
 
 
-public class PetShopProductDetailsImageAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class PetShopTodayDealsSeeMoreAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private  String TAG = "PetShopProductDetailsImageAdapter";
+    private  String TAG = "PetShopTodayDealsSeeMoreAdapter";
     private Context context;
 
-    List<ShopDashboardResponse.DataBean.ProductDetailsBean.ProductListBean> productList;
+    List<ShopDashboardResponse.DataBean.TodaySpecialBean> today_special;
 
-    ShopDashboardResponse.DataBean.ProductDetailsBean.ProductListBean currentItem;
-
-
+    ShopDashboardResponse.DataBean.TodaySpecialBean currentItem;
 
 
-    public PetShopProductDetailsImageAdapter(Context context,List<ShopDashboardResponse.DataBean.ProductDetailsBean.ProductListBean> productList) {
+
+
+    public PetShopTodayDealsSeeMoreAdapter(Context context, List<ShopDashboardResponse.DataBean.TodaySpecialBean> today_special) {
+        this.today_special = today_special;
         this.context = context;
-        this.productList = productList;
-
 
 
 
@@ -46,25 +46,27 @@ public class PetShopProductDetailsImageAdapter extends  RecyclerView.Adapter<Rec
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_shop_productdetails_image, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_shop_todaysdeal_seemore, parent, false);
         return new ViewHolderOne(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         initLayoutOne((ViewHolderOne) holder, position);
+
+
     }
 
     @SuppressLint({"SetTextI18n", "LogNotTimber"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
-        ShopDashboardResponse.DataBean.ProductDetailsBean.ProductListBean productListBean = productList.get(position);
-        holder.txt_products_title.setText(productListBean.getProduct_title());
-        if(productListBean.getProduct_price() != 0){
-            holder.txt_products_price.setText("\u20B9 "+productListBean.getProduct_price());
+        currentItem = today_special.get(position);
+        holder.txt_products_title.setText(today_special.get(position).getProduct_title());
+        if(today_special.get(position).getProduct_price() != 0){
+            holder.txt_products_price.setText("\u20B9 "+today_special.get(position).getProduct_price());
             }
 
-        if(productListBean.isProduct_fav()){
+        if(today_special.get(position).isProduct_fav()){
             holder.img_like.setVisibility(View.VISIBLE);
             holder.img_dislike.setVisibility(View.GONE);
 
@@ -77,17 +79,21 @@ public class PetShopProductDetailsImageAdapter extends  RecyclerView.Adapter<Rec
 
         }
 
-        if(productListBean.getProduct_discount() != 0){
+        Log.w(TAG,"discount : "+today_special.get(position).getProduct_discount());
+
+
+        if(today_special.get(position).getProduct_discount() != 0){
             holder.txt_products_offer.setVisibility(View.VISIBLE);
-            holder.txt_products_offer.setText(productListBean.getProduct_discount()+" % off");
+            holder.txt_products_offer.setText(today_special.get(position).getProduct_discount()+" % off");
         }else{
             holder.txt_products_offer.setVisibility(View.GONE);
+
         }
 
-        if (productListBean.getProduct_img() != null && !productListBean.getProduct_img() .isEmpty()) {
+        if (today_special.get(position).getProduct_img() != null && !today_special.get(position).getProduct_img().isEmpty()) {
 
                 Glide.with(context)
-                        .load(productListBean.getProduct_img())
+                        .load(today_special.get(position).getProduct_img())
                         .into(holder.img_products_image);
 
             }
@@ -98,14 +104,14 @@ public class PetShopProductDetailsImageAdapter extends  RecyclerView.Adapter<Rec
 
             }
 
-        holder.ll_root.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                //intent.putExtra("productid",today_special.get(position).get_id());
-                context.startActivity(intent);
-            }
-        });
+           holder.ll_root.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                   intent.putExtra("productid",today_special.get(position).get_id());
+                   context.startActivity(intent);
+               }
+           });
 
 
 
@@ -114,9 +120,7 @@ public class PetShopProductDetailsImageAdapter extends  RecyclerView.Adapter<Rec
 
     @Override
     public int getItemCount() {
-        Log.e("status","size"+ productList.size());
-        return productList.size();
-
+        return today_special.size();
     }
 
 

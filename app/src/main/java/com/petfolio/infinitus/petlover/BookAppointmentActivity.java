@@ -1172,6 +1172,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private PetAppointmentCreateRequest petAppointmentCreateRequest() {
 
         /*
@@ -1225,6 +1226,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         String displaydateandtime = outputDateStr+" "+outputTimeStr;
 
 
+
         PetAppointmentCreateRequest petAppointmentCreateRequest = new PetAppointmentCreateRequest();
         petAppointmentCreateRequest.setDoctor_id(doctorid);
         petAppointmentCreateRequest.setBooking_date(Doctor_ava_Date);
@@ -1232,6 +1234,13 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         petAppointmentCreateRequest.setBooking_date_time(Doctor_ava_Date+" "+selectedTimeSlot);
         petAppointmentCreateRequest.setCommunication_type(selectedCommunicationtype);
         petAppointmentCreateRequest.setVideo_id("");
+        if(userid != null){
+            petAppointmentCreateRequest.setUser_id(userid);
+
+        }else{
+            petAppointmentCreateRequest.setUser_id("");
+
+        }
         petAppointmentCreateRequest.setUser_id(userid);
         petAppointmentCreateRequest.setPet_id(petId);
         petAppointmentCreateRequest.setProblem_info(edt_comment.getText().toString());

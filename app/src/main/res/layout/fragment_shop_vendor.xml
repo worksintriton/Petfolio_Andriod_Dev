@@ -5,9 +5,6 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-
-    <include layout="@layout/content_home" />
-
     <ScrollView
         android:id="@+id/scrollablContent"
         android:layout_width="match_parent"
@@ -51,7 +48,6 @@
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
@@ -88,7 +84,6 @@
                     android:id="@+id/scrollView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/linear"
                     android:layout_marginTop="@dimen/small_margin_value">
 
                     <LinearLayout
@@ -154,7 +149,7 @@
                         android:layout_marginTop="10dp">
 
                         <TextView
-                            android:id="@+id/txt_recent_search"
+                            android:id="@+id/txt_lbl_todaydeal"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/futuramediumbt"
@@ -162,6 +157,18 @@
                             android:textColor="@color/new_txt_color"
                             android:textSize="16sp"
                             android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/txt_seemore_todaydeals"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:drawablePadding="10dp"
+                            android:fontFamily="@font/futuramediumbt"
+                            android:gravity="end"
+                            android:text="@string/see_more"
+                            android:textColor="@color/missed_red_color"
+                            android:textSize="16sp" />
 
 
 
@@ -209,28 +216,6 @@
 
     </ScrollView>
 
-    <LinearLayout
-        android:id="@+id/footerView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        android:visibility="gone">
-        <FrameLayout
-            android:id="@+id/frame_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:animateLayoutChanges="true"
-            android:visibility="gone">
-
-        </FrameLayout>
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/green"
-            app:menu="@menu/buttom_navigation_items"/>
-    </LinearLayout>
 
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/avi_indicator"
@@ -251,6 +236,7 @@
             android:layout_height="310dp"
             />
     </RelativeLayout>
+
 
 
 

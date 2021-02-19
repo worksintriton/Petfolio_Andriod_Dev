@@ -138,7 +138,7 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
         llheader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // startActivity(new Intent(getApplicationContext(), DoctorProfileScreenActivity.class));
+                startActivity(new Intent(getApplicationContext(), VendorProfileScreenActivity.class));
             }
         });
 
@@ -146,7 +146,7 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
         nav_header_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(getApplicationContext(), DoctorEditProfileActivity.class));
+                startActivity(new Intent(getApplicationContext(), VendorEditProfileActivity.class));
             }
         });
 

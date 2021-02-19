@@ -27,10 +27,8 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
                 android:src="@drawable/back"
                 tools:ignore="ContentDescription" />
 
@@ -39,7 +37,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/product_details"
                 android:textColor="@color/black"
@@ -49,14 +46,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp">
+                android:layout_marginStart="10dp">
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
                     android:src="@drawable/ic_sos"
                     tools:ignore="ContentDescription" />
 
@@ -64,7 +59,6 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
                     android:src="@drawable/ic_notifications"
                     tools:ignore="ContentDescription" />
                 <ImageView
@@ -72,17 +66,14 @@
                     android:layout_height="24dp"
                     android:src="@drawable/ic_bag"
                     tools:ignore="ContentDescription"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"/>
+                    android:layout_marginStart="20dp" />
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_user"
                     tools:ignore="ContentDescription"
                     android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp" />
+                    android:layout_marginEnd="10dp" />
             </LinearLayout>
 
 
@@ -108,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:ellipsize="end"
-                    android:fontFamily="@font/futurabookfont"
+                    android:fontFamily="@font/futuramediumbt"
                     android:maxLines="1"
                     android:padding="2dp"
                     android:text="@string/producttitle"
@@ -140,7 +131,6 @@
                     android:layout_width="50dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/light_orange_background">
 
@@ -149,7 +139,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:layout_marginLeft="5dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
                         android:drawablePadding="5dp"
@@ -168,7 +157,6 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
                     android:src="@drawable/forward"
                     tools:ignore="ContentDescription" />
@@ -249,7 +237,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:ellipsize="end"
-                        android:fontFamily="@font/futurabookfont"
+                        android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
                         android:padding="2dp"
                         android:text="@string/totalamount"
@@ -263,12 +251,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:layout_weight="0.10"
-                    android:gravity="end">
+                    android:gravity="end"
+                    tools:ignore="UseCompoundDrawables">
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginStart="10dp"
-                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
                         android:src="@drawable/ic_discount"
                         tools:ignore="ContentDescription" />
@@ -279,7 +267,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:fontFamily="@font/futurabookfont"
+                        android:fontFamily="@font/futuramediumbt"
                         android:padding="2dp"
                         android:text="@string/percentage_discount"
                         android:textColor="@color/black"
@@ -296,7 +284,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:ellipsize="end"
-                android:fontFamily="@font/futurabookfont"
+                android:fontFamily="@font/futuramediumbt"
                 android:maxLines="1"
                 android:padding="2dp"
                 android:text="@string/product_quantity"
@@ -361,10 +349,68 @@
 
     <LinearLayout
         android:id="@+id/footerView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        tools:ignore="UselessParent"
+        android:layout_marginEnd="20dp"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_minus"
+            android:layout_marginStart="50dp"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/_6"
+            android:fontFamily="@font/futuramediumbt"
+            android:textColor="@color/new_txt_color"
+            android:textSize="18sp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+
+
+            />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_plus"
+            tools:ignore="ContentDescription" />
+
+        <Button
+            android:id="@+id/btn_continue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/new_rounded_corner_btn"
+            android:fontFamily="@font/futuramediumbt"
+            android:text="Add to cart"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            tools:ignore="HardcodedText"
+            android:layout_marginStart="20dp"
+            android:padding="10dp"/>
     </LinearLayout>
+    </LinearLayout>
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:indicatorColor="@color/new_light_green"
+        app:indicatorName="LineSpinFadeLoaderIndicator" />
 
 </RelativeLayout>
