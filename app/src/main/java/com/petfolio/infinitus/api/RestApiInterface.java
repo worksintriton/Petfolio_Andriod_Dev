@@ -23,6 +23,7 @@ import com.petfolio.infinitus.requestpojo.DoctorStartAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.DoctorUpdateProfileImageRequest;
 import com.petfolio.infinitus.requestpojo.EmailOTPRequest;
 import com.petfolio.infinitus.requestpojo.FBTokenUpdateRequest;
+import com.petfolio.infinitus.requestpojo.FetctProductByCatRequest;
 import com.petfolio.infinitus.requestpojo.FilterDoctorRequest;
 import com.petfolio.infinitus.requestpojo.HolidayDeleteRequest;
 import com.petfolio.infinitus.requestpojo.HolidayListRequest;
@@ -87,6 +88,7 @@ import com.petfolio.infinitus.responsepojo.DoctorUpdateProfileImageResponse;
 import com.petfolio.infinitus.responsepojo.DropDownListResponse;
 import com.petfolio.infinitus.responsepojo.EmailOTPResponse;
 import com.petfolio.infinitus.responsepojo.FBTokenUpdateResponse;
+import com.petfolio.infinitus.responsepojo.FetctProductByCatResponse;
 import com.petfolio.infinitus.responsepojo.FileUploadResponse;
 import com.petfolio.infinitus.responsepojo.FilterDoctorResponse;
 import com.petfolio.infinitus.responsepojo.HolidayDeleteResponse;
@@ -529,5 +531,9 @@ public interface RestApiInterface {
     /*shop dashboard list*/
     @POST("product_details/getproductdetails_list")
     Call<ShopDashboardResponse> shopDashboardResponseCall(@Header("Content-Type") String type,@Body ShopDashboardRequest ShopDashboardRequest);
+
+    /*View the Product's by cat id*/
+    @POST("product_details/fetch_product_by_cat")
+    Call<FetctProductByCatResponse> fetctProductByCatResponseCall(@Header("Content-Type") String type, @Body FetctProductByCatRequest fetctProductByCatRequest);
 
 }
