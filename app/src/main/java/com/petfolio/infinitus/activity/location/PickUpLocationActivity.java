@@ -120,8 +120,10 @@ public class PickUpLocationActivity extends FragmentActivity implements OnMapRea
     private LocationCallback locationCallback;
 
     private String fromactivity;
+    private String placesearchactivity;
 
 
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,7 +136,8 @@ public class PickUpLocationActivity extends FragmentActivity implements OnMapRea
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             fromactivity = extras.getString("fromactivity");
-            Log.w(TAG,"fromactivity if : "+fromactivity);
+            placesearchactivity = extras.getString("placesearchactivity");
+            Log.w(TAG,"fromactivity if : "+fromactivity+"placesearchactivity : "+placesearchactivity);
 
         }else{
             fromactivity  = TAG;
@@ -348,13 +351,16 @@ public class PickUpLocationActivity extends FragmentActivity implements OnMapRea
 
         });
         mMap.setOnCameraIdleListener(() -> {
-            // mMap.clear();
-            imgLocationPinUp.setVisibility(View.GONE);
-            double CameraLat = mMap.getCameraPosition().target.latitude;
-            double CameraLong = mMap.getCameraPosition().target.longitude;
-            Log.w(TAG,"setOnCameraIdleListener--->"+"CameraLat :"+CameraLat+" "+"CameraLong :"+CameraLong);
+            if(placesearchactivity != null && placesearchactivity.equalsIgnoreCase("placesearchactivity")){
 
-            getChangeLocationBackground(CameraLat,CameraLong);
+            }else {
+                // mMap.clear();
+                imgLocationPinUp.setVisibility(View.GONE);
+                double CameraLat = mMap.getCameraPosition().target.latitude;
+                double CameraLong = mMap.getCameraPosition().target.longitude;
+                Log.w(TAG, "setOnCameraIdleListener--->" + "CameraLat :" + CameraLat + " " + "CameraLong :" + CameraLong);
+                getChangeLocationBackground(CameraLat, CameraLong);
+            }
 
         });
 

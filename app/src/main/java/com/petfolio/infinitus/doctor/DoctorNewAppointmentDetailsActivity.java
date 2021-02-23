@@ -235,6 +235,7 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
         Log.w(TAG, "url  :%s" + call.request().url().toString());
 
         call.enqueue(new Callback<PetNewAppointmentDetailsResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<PetNewAppointmentDetailsResponse> call, @NonNull Response<PetNewAppointmentDetailsResponse> response) {
                 avi_indicator.smoothToHide();
@@ -245,7 +246,7 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
 
                     if (200 == response.body().getCode()) {
 
-                        String vaccinated, addr = null, usrname = null;
+                        String vaccinated, addr = null, usrname;
                         if (response.body().getData() != null) {
 
                             String usr_image = response.body().getData().getUser_id().getProfile_img();
@@ -297,6 +298,7 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
                             String order_cost = response.body().getData().getAmount();
 
                             usrname = response.body().getData().getUser_id().getFirst_name();
+                            Log.w(TAG,"usrname: "+usrname);
 
                             appoinment_status = response.body().getData().getAppoinment_status();
 
@@ -350,8 +352,7 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
         }
 
 
-        if(usrname!= null && usrname.equals("")){
-
+        if(usrname!= null && !usrname.isEmpty()){
             txt_usrname.setText(usrname);
         }
 

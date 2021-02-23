@@ -20,11 +20,14 @@ import com.petfolio.infinitus.adapter.PetShopTodayDealsAdapter;
 import com.petfolio.infinitus.adapter.PetShopTodayDealsSeeMoreAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.requestpojo.ShopDashboardRequest;
 import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
+import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -54,7 +57,7 @@ public class ListOfProductsActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
     ImageView img_back;
-
+    private String userid;
 
 
     @Override
@@ -63,6 +66,11 @@ public class ListOfProductsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_of_products);
         ButterKnife.bind(this);
         avi_indicator.setVisibility(View.GONE);
+
+        SessionManager sessionManager = new SessionManager(getApplicationContext());
+        HashMap<String, String> user = sessionManager.getProfileDetails();
+        userid = user.get(SessionManager.KEY_ID);
+        Log.w(TAG,"customerid-->"+ userid);
 
         if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
             shopDashboardResponseCall();
@@ -86,8 +94,9 @@ public class ListOfProductsActivity extends AppCompatActivity {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         //Creating an object of our api interface
-        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-        Call<ShopDashboardResponse> call = apiInterface.shopDashboardResponseCall(RestUtils.getContentType());
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<ShopDashboardResponse> call = ApiService.shopDashboardResponseCall(RestUtils.getContentType(),shopDashboardRequest());
+
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<ShopDashboardResponse>() {
@@ -131,6 +140,16 @@ public class ListOfProductsActivity extends AppCompatActivity {
             }
         });
 
+    }
+    private ShopDashboardRequest shopDashboardRequest() {
+        /*
+         * user_id : 6025040ee15519672cd0dc02
+
+         */
+        ShopDashboardRequest shopDashboardRequest = new ShopDashboardRequest();
+        shopDashboardRequest.setUser_id(userid);
+        Log.w(TAG,"shopDashboardRequest"+ "--->" + new Gson().toJson(shopDashboardRequest));
+        return shopDashboardRequest;
     }
 
     private void setView(List<ShopDashboardResponse.DataBean.TodaySpecialBean> today_special) {

@@ -15,15 +15,17 @@
         android:layout_height="match_parent"
         android:elevation="10dp"
         app:cardCornerRadius="8dp"
-        tools:ignore="UnusedAttribute">
+        tools:ignore="UnusedAttribute"
+        android:layout_marginEnd="10dp">
 
         <ImageView
             android:id="@+id/img_products_image"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="120dp"
             android:contentDescription="@string/image"
             android:scaleType="fitXY"
-            android:src="@drawable/services" />
+            android:src="@drawable/services"
+           />
 
 
 

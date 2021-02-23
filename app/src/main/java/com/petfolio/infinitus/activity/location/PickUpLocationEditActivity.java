@@ -103,6 +103,7 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
     private String fromactivity;
     private String id,userid,locationnickname,LocationType;
     private boolean defaultstatus;
+    private String placesearchactivity;
 
 
     @Override
@@ -117,6 +118,7 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             fromactivity = extras.getString("fromactivity");
+
             Log.w(TAG,"fromactivity if : "+fromactivity);
             id = extras.getString("id");
             userid = extras.getString("userid");
@@ -125,6 +127,10 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
             defaultstatus = extras.getBoolean("defaultstatus");
             latitude = extras.getDouble("lat");
             longitude = extras.getDouble("lon");
+
+            placesearchactivity = extras.getString("placesearchactivity");
+            Log.w(TAG,"fromactivity if : "+fromactivity+"placesearchactivity : "+placesearchactivity);
+
 
         }else{
             fromactivity  = TAG;
@@ -337,14 +343,16 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
 
         });
         mMap.setOnCameraIdleListener(() -> {
-            // mMap.clear();
-            imgLocationPinUp.setVisibility(View.GONE);
-            LatLng center = mMap.getCameraPosition().target;
-            double CameraLat = mMap.getCameraPosition().target.latitude;
-            double CameraLong = mMap.getCameraPosition().target.longitude;
-            Log.w(TAG,"setOnCameraIdleListener--->"+"CameraLat :"+CameraLat+" "+"CameraLong :"+CameraLong);
+            if(placesearchactivity != null && placesearchactivity.equalsIgnoreCase("placesearchactivity")){
 
-            getChangeLocationBackground(CameraLat,CameraLong);
+            }else {
+                // mMap.clear();
+                imgLocationPinUp.setVisibility(View.GONE);
+                double CameraLat = mMap.getCameraPosition().target.latitude;
+                double CameraLong = mMap.getCameraPosition().target.longitude;
+                Log.w(TAG, "setOnCameraIdleListener--->" + "CameraLat :" + CameraLat + " " + "CameraLong :" + CameraLong);
+                getChangeLocationBackground(CameraLat, CameraLong);
+            }
 
         });
 

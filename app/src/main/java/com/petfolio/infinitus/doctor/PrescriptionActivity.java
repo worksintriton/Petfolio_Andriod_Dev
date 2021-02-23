@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.appUtils.NumericKeyBoardTransformationMethod;
 import com.petfolio.infinitus.requestpojo.AppoinmentCompleteRequest;
 import com.petfolio.infinitus.requestpojo.DoctorCheckStatusRequest;
 import com.petfolio.infinitus.requestpojo.PrescriptionCreateRequest;
@@ -115,6 +116,10 @@ public class PrescriptionActivity extends AppCompatActivity {
         etquantity = findViewById(R.id.et_quanity);
         etconsumption = findViewById(R.id.et_consumption);
         etdoctorcomments = findViewById(R.id.etdoctorcomments);
+
+        etquantity.setTransformationMethod(new NumericKeyBoardTransformationMethod());
+        etconsumption.setTransformationMethod(new NumericKeyBoardTransformationMethod());
+
 
         buttonAdd = findViewById(R.id.add);
         ll_headername = findViewById(R.id.ll_headername);

@@ -20,12 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.activity.location.EditMyAddressActivity;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.interfaces.PetDeleteListener;
 import com.petfolio.infinitus.petlover.AddYourPetOldUserActivity;
 import com.petfolio.infinitus.petlover.EditYourPetProfileInfoActivity;
-import com.petfolio.infinitus.responsepojo.LocationListAddressResponse;
 import com.petfolio.infinitus.responsepojo.PetListResponse;
 
 import java.util.List;

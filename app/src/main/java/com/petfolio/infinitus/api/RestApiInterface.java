@@ -58,6 +58,7 @@ import com.petfolio.infinitus.requestpojo.SPMyCalendarAvlDaysRequest;
 import com.petfolio.infinitus.requestpojo.SPNotificationSendRequest;
 import com.petfolio.infinitus.requestpojo.SPSpecificServiceDetailsRequest;
 import com.petfolio.infinitus.requestpojo.ServiceCatRequest;
+import com.petfolio.infinitus.requestpojo.ShopDashboardRequest;
 import com.petfolio.infinitus.requestpojo.SignupRequest;
 import com.petfolio.infinitus.requestpojo.UserStatusUpdateRequest;
 import com.petfolio.infinitus.requestpojo.ServiceProviderRegisterFormCreateRequest;
@@ -526,7 +527,7 @@ public interface RestApiInterface {
     Call<VendorOrderResponse>vendorOrderResponseCall(@Header("Content-Type") String type, @Body VendorOrderRequest vendorOrderRequest);
 
     /*shop dashboard list*/
-    @GET("product_details/getproductdetails_list")
-    Call<ShopDashboardResponse> shopDashboardResponseCall(@Header("Content-Type") String type);
+    @POST("product_details/getproductdetails_list")
+    Call<ShopDashboardResponse> shopDashboardResponseCall(@Header("Content-Type") String type,@Body ShopDashboardRequest ShopDashboardRequest);
 
 }

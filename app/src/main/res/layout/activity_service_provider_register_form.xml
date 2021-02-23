@@ -16,7 +16,6 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:contentDescription="@string/image"
             android:src="@drawable/back" />
@@ -67,7 +66,9 @@
                 android:padding="15dp"
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp"
-                tools:ignore="Autofill,LabelFor" />
+                tools:ignore="Autofill,LabelFor"
+                android:maxLines="1"
+                android:maxLength="25"/>
 
 
             <!--Add your service-->

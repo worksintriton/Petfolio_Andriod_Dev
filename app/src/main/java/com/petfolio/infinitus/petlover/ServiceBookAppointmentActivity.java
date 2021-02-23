@@ -12,6 +12,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -41,6 +42,7 @@ import com.petfolio.infinitus.adapter.AddImageListAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.appUtils.FileUtil;
+import com.petfolio.infinitus.appUtils.NumericKeyBoardTransformationMethod;
 import com.petfolio.infinitus.requestpojo.AddYourPetRequest;
 import com.petfolio.infinitus.requestpojo.BreedTypeRequest;
 import com.petfolio.infinitus.requestpojo.DocBusInfoUploadRequest;
@@ -243,6 +245,9 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
         txt_petbreed.setVisibility(View.GONE);
         img_pet_imge.setVisibility(View.GONE);
         rv_upload_pet_images.setVisibility(View.GONE);
+
+        edt_petage.setTransformationMethod(new NumericKeyBoardTransformationMethod());
+
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -1291,11 +1296,21 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+        alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                Intent intent = new Intent(getApplicationContext(), PetLoverDashboardActivity.class);
+                startActivity(intent);
+                finish();
+                alertDialog.dismiss();
+            }
+        });
     }
     public void hideLoadingSuccess() {
         try {
             Intent intent = new Intent(getApplicationContext(), PetLoverDashboardActivity.class);
             startActivity(intent);
+            finish();
             alertDialog.dismiss();
 
         } catch (Exception ignored) {

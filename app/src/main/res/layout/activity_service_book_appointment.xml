@@ -150,7 +150,8 @@
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp"
                 tools:ignore="Autofill,LabelFor"
-                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                android:maxLines="1"
+                android:maxLength="25"
                 />
 
             <TextView
@@ -238,7 +239,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/rectangle_corner"
-                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                android:digits="@string/characters"
                 android:fontFamily="@font/futuramediumbt"
                 android:hint="@string/pet_color"
                 android:inputType="text"
@@ -274,7 +275,7 @@
                 android:background="@drawable/rectangle_corner"
                 android:fontFamily="@font/futuramediumbt"
                 android:hint="@string/pet_age"
-                android:inputType="number"
+                android:inputType="numberPassword"
                 android:maxLength="2"
                 android:padding="15dp"
                 android:textColor="@color/green"

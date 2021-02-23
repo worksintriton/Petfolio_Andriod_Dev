@@ -288,6 +288,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
                             userid = response.body().getData().getUser_id().get_id();
 
                             usrname = response.body().getData().getSp_business_info().get(0).getBussiness_name();
+                            Log.w(TAG,"usrname : "+usrname);
 
                             String servname = response.body().getData().getService_name();
 
@@ -383,7 +384,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
         }
 
 
-        if(usrname != null && !usrname.equals("")){
+        if(usrname != null && !usrname.isEmpty()){
 
             txt_usrname.setText(usrname);
         }

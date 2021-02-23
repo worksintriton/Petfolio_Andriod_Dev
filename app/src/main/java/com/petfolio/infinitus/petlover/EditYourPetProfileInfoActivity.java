@@ -32,6 +32,7 @@ import com.petfolio.infinitus.activity.LoginActivity;
 import com.petfolio.infinitus.activity.location.EditMyAddressActivity;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.appUtils.NumericKeyBoardTransformationMethod;
 import com.petfolio.infinitus.requestpojo.BreedTypeRequest;
 import com.petfolio.infinitus.requestpojo.PetAddImageRequest;
 import com.petfolio.infinitus.requestpojo.PetEditRequest;
@@ -69,55 +70,69 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
     private int petweight,petage;
 
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rgvaccinated)
     RadioGroup rgvaccinated;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.radioButton_Yes)
     RadioButton radioButton_Yes;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.radioButton_No)
     RadioButton radioButton_No;
+
     private String selectedRadioButton;
 
-
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
     ImageView img_back;
 
-
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_petname)
     EditText edt_petname;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.sprpettype)
     Spinner sprpettype;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.sprpetbreed)
     Spinner sprpetbreed;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.sprpetgender)
     Spinner sprpetgender;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_petcolor)
     EditText edt_petcolor;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_petweight)
     EditText edt_petweight;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_petage)
     EditText edt_petage;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rlpetlastvaccinatedagedate)
     RelativeLayout rlpetlastvaccinatedagedate;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.llpetlastvaccinatedagedate)
     LinearLayout llpetlastvaccinatedagedate;
 
-
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_petlastvaccinatedage)
     TextView txt_petlastvaccinatedage;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_save_changes)
     Button btn_save_changes;
 
@@ -127,7 +142,6 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
     private String strPetType;
     private String strPetBreedType;
     private String strPetGenderType;
-    private String strPetColorType;
 
     private int year, month, day;
     String SelectedLastVaccinateddate = "";
@@ -140,10 +154,10 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
 
     HashMap<String, String> hashMap_PetTypeid = new HashMap<>();
     private String petTypeId;
-    private List<PetDetailsResponse.DataBean> petDetailsResponseByUserIdList;
     private List<BreedTypeResponse.DataBean> breedTypedataBeanList;
 
 
+    @SuppressLint({"LogNotTimber", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,6 +168,9 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
         userid = user.get(SessionManager.KEY_ID);
         Log.w(TAG,"userid--->"+userid);
         avi_indicator.setVisibility(View.GONE);
+
+        edt_petage.setTransformationMethod(new NumericKeyBoardTransformationMethod());
+
 
 
         Bundle extras = getIntent().getExtras();

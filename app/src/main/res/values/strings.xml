@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">PetFolio</string>
     <string name="verify_otp">Verify OTP</string>
     <string name="emailorphonenumber">Phone Number</string>
@@ -9,6 +9,8 @@
     <string name="last_name">Last Name</string>
     <string name="email">Email</string>
     <string name="phone">Phone</string>
+    <string name="characters">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+
     <string name="usertypes">usertypes</string>
     <string name="verification">Verification</string>
     <string name="dontreceiveotp">Don\'t receive OTP ?</string>
@@ -380,6 +382,10 @@
     <string name="advancedsearch"><u>Advanced Search</u></string>
     <string name="_6">6</string>
     <string name="edit_business">Edit Business</string>
+    <string name="verify_email">Verify Email</string>
+    <string name="amount">Amount</string>
+    <string name="service_amount">Service Amount</string>
+    <string name="visit">Visit</string>
 
 
 </resources>

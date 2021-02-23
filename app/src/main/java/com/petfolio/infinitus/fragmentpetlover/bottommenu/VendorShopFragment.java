@@ -75,9 +75,12 @@ import com.petfolio.infinitus.fragmentserviceprovider.FragmentSPNewAppointment;
 import com.petfolio.infinitus.petlover.ListOfProductsActivity;
 import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 
+import com.petfolio.infinitus.requestpojo.ShopDashboardRequest;
+import com.petfolio.infinitus.requestpojo.VendorOrderRequest;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
 import com.petfolio.infinitus.responsepojo.UserTypeListResponse;
+import com.petfolio.infinitus.responsepojo.VendorOrderResponse;
 import com.petfolio.infinitus.service.GPSTracker;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -110,23 +113,6 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000;
 
-    String token = "";
-    String type ="";
-
-    double latitude, longitude;
-
-    private Handler handler = new Handler();
-    Runnable runnable;
-
-
-
-
-
-
-
-
-    Dialog dialog;
-    private String userid;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
@@ -189,6 +175,7 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
     private Dialog alertDialog;
     private List<ShopDashboardResponse.DataBean.BannerDetailsBean> listHomeBannerResponse;
     private List<ShopDashboardResponse.DataBean.ProductDetailsBean.ProductListBean> productList;
+    private String userid;
 
 
     public VendorShopFragment() {
@@ -203,7 +190,7 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
 
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "LogNotTimber"})
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.w(TAG,"onCreateView-->");
@@ -214,19 +201,14 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
 
         SessionManager sessionManager = new SessionManager(mContext);
         HashMap<String, String> user = sessionManager.getProfileDetails();
-        userid = user.get(SessionManager.KEY_ID);
-        Log.w(TAG,"customerid-->"+userid);
+         userid = user.get(SessionManager.KEY_ID);
+        Log.w(TAG,"customerid-->"+ userid);
 
-        if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
+        if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
              shopDashboardResponseCall();
         }
 
-        txt_seemore_todaydeals.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(mContext, ListOfProductsActivity.class));
-            }
-        });
+        txt_seemore_todaydeals.setOnClickListener(v -> startActivity(new Intent(mContext, ListOfProductsActivity.class)));
 
 
             return view;
@@ -293,8 +275,9 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         //Creating an object of our api interface
-        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-        Call<ShopDashboardResponse> call = apiInterface.shopDashboardResponseCall(RestUtils.getContentType());
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<ShopDashboardResponse> call = ApiService.shopDashboardResponseCall(RestUtils.getContentType(),shopDashboardRequest());
+
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<ShopDashboardResponse>() {
@@ -369,6 +352,18 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
         });
 
     }
+    @SuppressLint("LogNotTimber")
+    private ShopDashboardRequest shopDashboardRequest() {
+        /*
+         * user_id : 6025040ee15519672cd0dc02
+
+         */
+        ShopDashboardRequest shopDashboardRequest = new ShopDashboardRequest();
+        shopDashboardRequest.setUser_id(userid);
+        Log.w(TAG,"shopDashboardRequest"+ "--->" + new Gson().toJson(shopDashboardRequest));
+        return shopDashboardRequest;
+    }
+
 
     private void setViewProductDetails(List<ShopDashboardResponse.DataBean.ProductDetailsBean> product_details, List<ShopDashboardResponse.DataBean.ProductDetailsBean.ProductListBean> productList) {
         rv_productdetails.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));

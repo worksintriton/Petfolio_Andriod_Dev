@@ -12,6 +12,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -1130,6 +1131,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
             Log.w(TAG, "Exception in onPaymentSuccess", e);
         }
     }
+    @SuppressLint("LogNotTimber")
     @Override
     public void onPaymentError(int code, String response) {
         try {
@@ -1289,16 +1291,23 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         alertDialogBuilder.setMessage(errormesage);
         alertDialogBuilder.setPositiveButton("ok",
                 (arg0, arg1) -> hideLoadingSuccess());
-
-
-
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+        alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                Intent intent = new Intent(getApplicationContext(), PetLoverDashboardActivity.class);
+                startActivity(intent);
+                finish();
+                alertDialog.dismiss();
+            }
+        });
     }
     public void hideLoadingSuccess() {
         try {
             Intent intent = new Intent(getApplicationContext(), PetLoverDashboardActivity.class);
             startActivity(intent);
+            finish();
             alertDialog.dismiss();
 
         } catch (Exception ignored) {

@@ -364,7 +364,7 @@ public class PetSPNewAppointmentDetailsActivity extends AppCompatActivity implem
     private void setView(String usrname, String usr_image, String servname, String servcost, String pet_name, String pet_image, String pet_type, String breed, String gender, String colour, String weight, String age, String order_date, String orderid, String payment_method, String order_cost, String vaccinated, String addr) {
 
 
-        if(usr_image != null && !usr_image.equals("")){
+        if(usr_image != null && !usr_image.isEmpty()){
             Glide.with(PetSPNewAppointmentDetailsActivity.this)
                     .load(usr_image)
                     .into(img_user);
@@ -376,23 +376,23 @@ public class PetSPNewAppointmentDetailsActivity extends AppCompatActivity implem
         }
 
 
-        if(usrname!= null && usrname.equals("")){
+        if(usrname!= null && !usrname.isEmpty()){
 
             txt_usrname.setText(usrname);
         }
 
-        if(servname != null && !servname.equals("")){
+        if(servname != null && !servname.isEmpty()){
 
             txt_serv_name.setText(servname);
         }
 
-        if(servcost != null && !servcost.equals("")){
+        if(servcost != null && !servcost.isEmpty()){
 
             txt_serv_cost.setText(servcost);
         }
 
 
-        if(pet_image != null && !pet_image.equals("")){
+        if(pet_image != null && !pet_image.isEmpty()){
 
             Glide.with(PetSPNewAppointmentDetailsActivity.this)
                     .load(pet_image)
@@ -401,65 +401,65 @@ public class PetSPNewAppointmentDetailsActivity extends AppCompatActivity implem
 
         }
 
-        if(pet_name != null && !pet_name.equals("")){
+        if(pet_name != null && !pet_name.isEmpty()){
 
             txt_pet_name.setText(pet_name);
         }
 
-        if(pet_type != null && !pet_type.equals("")){
+        if(pet_type != null && !pet_type.isEmpty()){
 
             txt_pet_type.setText(pet_type);
         }
 
-        if(breed != null && !breed.equals("")){
+        if(breed != null && !breed.isEmpty()){
 
             txt_breed.setText(breed);
         }
 
-        if(gender != null && !gender.equals("")){
+        if(gender != null && !gender.isEmpty()){
 
             txt_gender.setText(gender);
         }
 
-        if(colour != null && !colour.equals("")){
+        if(colour != null && !colour.isEmpty()){
 
             txt_color.setText(colour);
         }
 
-        if(weight != null && !weight.equals("")){
+        if(weight != null && !weight.isEmpty()){
 
             txt_weight.setText(weight);
         }
 
-        if(age != null && !age.equals("")){
+        if(age != null && !age.isEmpty()){
 
             txt_age.setText(age);
         }
 
         txt_vaccinated.setText(vaccinated);
 
-        if(order_date != null && !order_date.equals("")){
+        if(order_date != null && !order_date.isEmpty()){
 
             txt_order_date.setText(order_date);
         }
 
-        if(orderid != null && !orderid.equals("")){
+        if(orderid != null && !orderid.isEmpty()){
 
             txt_order_id.setText(orderid);
         }
 
-        if(payment_method != null && !payment_method.equals("")) {
+        if(payment_method != null && !payment_method.isEmpty()) {
 
             txt_payment_method.setText(payment_method);
 
         }
 
-        if(order_cost != null && !order_cost.equals("")){
+        if(order_cost != null && !order_cost.isEmpty()){
             txt_order_cost.setText("\u20B9 "+order_cost);
             txt_serv_cost.setText("\u20B9 "+order_cost);
         }
 
-        if(addr != null && !addr.equals("")){
+        if(addr != null && !addr.isEmpty()){
 
             txt_address.setText(addr);
         }

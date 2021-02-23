@@ -236,6 +236,7 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
 
         String key = API.MAP_KEY;
         service.getaddressResults(PlacesName, key).enqueue(new Callback<AddressResultsResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NotNull Call<AddressResultsResponse> call, @NotNull Response<AddressResultsResponse> response) {
                 avi_indicator.smoothToHide();

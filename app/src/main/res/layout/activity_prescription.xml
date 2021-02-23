@@ -84,14 +84,15 @@
                     android:hint="@string/enter_comments"
                     android:inputType="textMultiLine"
                     android:textSize="14sp"
-                    android:maxLines="10"
+                    android:maxLines="4"
                     tools:ignore="Autofill,LabelFor,TextFields"
-                    android:minLines="6"
-                    android:lines="8"
+                    android:minLines="4"
+                    android:lines="4"
                     android:gravity="top|start"
                     android:background="@drawable/textview_bg_white"
                     android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginLeft="10dp"
+                    android:maxLength="150"/>
 
 
 
@@ -236,8 +237,8 @@
                     android:layout_weight="1"
                     android:inputType="text"
                     android:background="@drawable/edittext_bg_rect"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
+                    android:maxLength="25"
                     tools:ignore="Autofill,LabelFor,TextFields"/>
 
                 <EditText
@@ -245,11 +246,11 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="numberPassword"
                     android:background="@drawable/edittext_bg_rect"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
-                    tools:ignore="Autofill,LabelFor,TextFields"/>
+                    tools:ignore="Autofill,LabelFor,TextFields"
+                    android:maxLength="2"/>
 
 
                 <EditText
@@ -257,14 +258,13 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
+                    android:inputType="numberPassword"
                     android:background="@drawable/edittext_bg_rect"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
-                    tools:ignore="Autofill,LabelFor,TextFields"/>
+                    tools:ignore="Autofill,LabelFor,TextFields"
+                    android:maxLength="2"/>
 
                 <Button
-                    android:layout_marginLeft="10dp"
                     android:id="@+id/add"
                     android:layout_width="30dp"
                     android:layout_height="30dp"

@@ -31,6 +31,7 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.appUtils.NumericKeyBoardTransformationMethod;
 import com.petfolio.infinitus.requestpojo.AddYourPetRequest;
 import com.petfolio.infinitus.requestpojo.BreedTypeRequest;
 import com.petfolio.infinitus.responsepojo.AddYourPetResponse;
@@ -136,6 +137,8 @@ public class AddYourPetActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_your_pet);
         ButterKnife.bind(this);
         avi_indicator.setVisibility(View.GONE);
+        edt_petage.setTransformationMethod(new NumericKeyBoardTransformationMethod());
+
 
         SessionManager sessionManager = new SessionManager(AddYourPetActivity.this);
         HashMap<String, String> user = sessionManager.getProfileDetails();

@@ -170,7 +170,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/rectangle_corner"
-                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                         android:fontFamily="@font/futuramediumbt"
                         android:hint="@string/coupon_applied"
                         android:inputType="text"
