@@ -29,14 +29,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/backarrow"
+                android:layout_toEndOf="@+id/backarrow"
                 android:fontFamily="@font/futuramediumbt"
-                android:text="My Calendar"
+                android:text="@string/my_calendar"
                 android:layout_marginTop="22dp"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_marginStart="10dp"
+                android:textColor="@color/new_txt_color"
+                android:textSize="@dimen/big_txt_size"  />
 
         </RelativeLayout>
 
@@ -60,12 +59,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/futuramediumbt"
-                android:text="Available Times"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:text="@string/available_times"
+                android:textColor="@color/new_txt_color"
+                android:textSize="@dimen/big_txt_size"  />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

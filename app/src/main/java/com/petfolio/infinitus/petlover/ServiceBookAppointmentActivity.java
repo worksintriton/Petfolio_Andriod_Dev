@@ -22,6 +22,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
@@ -247,6 +248,8 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
         rv_upload_pet_images.setVisibility(View.GONE);
 
         edt_petage.setTransformationMethod(new NumericKeyBoardTransformationMethod());
+        edt_petweight.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,2)});
+
 
 
         Bundle extras = getIntent().getExtras();

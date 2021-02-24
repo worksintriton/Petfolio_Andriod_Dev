@@ -106,7 +106,6 @@
 
     <string name="my_orders">My orders</string>
     <string name="my_appointments">My Appointments</string>
-    <string name="my_calendar">My Calendar</string>
     <string name="manage_services">Manage Services</string>
     <string name="favourites">Favourites</string>
     <string name="my_coupons">My Coupons</string>
@@ -331,7 +330,6 @@
     <string name="upload_photos">Upload photos</string>
     <string name="chooose_upload"><![CDATA[Chooose & upload]]></string>
 
-    <string name="time">Time</string>
     <string name="food_type">Food type</string>
     <string name="appointment_booked">Appointment Booked</string>
     <string name="my_dogs">My Dog</string>
@@ -368,9 +366,7 @@
     <string name="view_prescription">view prescription</string>
     <string name="consultation_fees">Consultation Fees</string>
     <string name="notification">Notification</string>
-    <string name="appointment_type">Appointment Type</string>
-    <string name="chat">Chat</string>
-    <string name="video">Video</string>
+
 
     <string name="orderid">Order ID</string>
     <string name="product_title">Product title</string>
@@ -382,10 +378,19 @@
     <string name="advancedsearch"><u>Advanced Search</u></string>
     <string name="_6">6</string>
     <string name="edit_business">Edit Business</string>
-    <string name="verify_email">Verify Email</string>
+    <string name="verify_email">Verify email</string>
     <string name="amount">Amount</string>
     <string name="service_amount">Service Amount</string>
     <string name="visit">Visit</string>
+    <string name="time">Time</string>
+    <string name="appointment_type">Appointment Type</string>
+    <string name="chat">Chat</string>
+    <string name="video">Video</string>
+    <string name="selected_dates">Selected dates</string>
+    <string name="add_holiday">Add Holiday</string>
+    <string name="my_calendar">My Calendar</string>
+    <string name="available_days">Available days</string>
+    <string name="available_times">Available Times</string>
 
 
 </resources>

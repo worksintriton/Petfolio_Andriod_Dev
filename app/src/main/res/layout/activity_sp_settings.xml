@@ -37,8 +37,8 @@
                 android:layout_marginStart="5dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/settings"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textColor="@color/new_txt_color"
+                android:textSize="@dimen/big_txt_size"  />
 
 
             <LinearLayout

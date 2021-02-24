@@ -394,18 +394,19 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
 
-                        if(response.body().getData() != null && response.body().getData().isEmpty()){
-                            txt_no_records.setVisibility(View.VISIBLE);
-                            txt_no_records.setText("No new pets");
-                            ll_add.setVisibility(View.VISIBLE);
-                            rv_pet.setVisibility(View.GONE);
-                        }
-                        else{
+                        if(response.body().getData() != null && response.body().getData().size()>0){
                             txt_no_records.setVisibility(View.GONE);
                             rv_pet.setVisibility(View.VISIBLE);
                             ll_add.setVisibility(View.GONE);
                             petList = response.body().getData();
                             setView();
+
+                        }
+                        else{
+                            txt_no_records.setVisibility(View.VISIBLE);
+                            txt_no_records.setText("No new pets");
+                            ll_add.setVisibility(View.VISIBLE);
+                            rv_pet.setVisibility(View.GONE);
                         }
 
 

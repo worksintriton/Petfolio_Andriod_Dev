@@ -30,7 +30,7 @@
             android:fontFamily="@font/futuramediumbt"
             android:text="@string/edit_pet_info"
             android:textColor="@color/new_txt_color"
-            android:textSize="20sp" />
+            android:textSize="@dimen/big_txt_size"  />
 
 
     </LinearLayout>
@@ -168,7 +168,8 @@
                 android:fontFamily="@font/futuramediumbt"
                 android:hint="@string/pet_weight"
                 android:inputType="numberDecimal"
-                android:maxLength="5"
+                android:maxLength="6"
+                android:maxLines="1"
                 android:padding="15dp"
                 android:textColor="@color/green"
                 android:textColorHint="@color/dark_gray"

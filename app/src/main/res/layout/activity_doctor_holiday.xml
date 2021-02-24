@@ -22,20 +22,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="21dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
                 android:background="@drawable/ic_baseline_arrow_back_ios_24"
                 tools:ignore="ContentDescription" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/backarrow"
+                android:layout_toEndOf="@+id/backarrow"
                 android:fontFamily="@font/futuramediumbt"
-                android:text="Add Holiday"
+                android:text="@string/add_holiday"
                 android:layout_marginTop="22dp"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_marginStart="10dp"
+                android:textColor="@color/new_txt_color"
+                android:textSize="@dimen/big_txt_size"  />
 
         </RelativeLayout>
 
@@ -87,12 +85,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/futuramediumbt"
-                android:text="Selected dates"
+                android:text="@string/selected_dates"
                 android:layout_marginTop="22dp"
-                android:layout_marginLeft="10dp"
-                android:textColor="@android:color/black"
-                android:textSize="18dp"
-                android:textStyle="bold"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/new_txt_color"
+                android:textSize="@dimen/big_txt_size"
                 />
 
 

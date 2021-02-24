@@ -438,14 +438,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
 
 
-                       /* Intent intent = new Intent(BookAppointmentActivity.this, PetAppointment_Doctor_Date_Time_Activity.class);
-                        intent.putExtra("petid",petId);
-                        intent.putExtra("doctorid",doctorid);
-                        intent.putExtra("allergies",edt_allergies.getText().toString());
-                        intent.putExtra("probleminfo",edt_comment.getText().toString());
-                        intent.putExtra("selectedAppointmentType",selectedAppointmentType);
-                        Log.w(TAG,"selectedAppointmentType : "+selectedAppointmentType);
-                        startActivity(intent);*/
+
 
                     }
 

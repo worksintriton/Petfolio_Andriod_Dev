@@ -10,6 +10,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -63,48 +64,63 @@ import retrofit2.Response;
 public class AddYourPetActivity extends AppCompatActivity {
     private static final String TAG = "AddYourPetActivity";
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
     ImageView img_back;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_skip)
     TextView txt_skip;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_petname)
     EditText edt_petname;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.sprpettype)
     Spinner sprpettype;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.sprpetbreed)
     Spinner sprpetbreed;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.sprpetgender)
     Spinner sprpetgender;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_petcolor)
     EditText edt_petcolor;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_petweight)
     EditText edt_petweight;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_petage)
     EditText edt_petage;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rgvaccinated)
     RadioGroup rgvaccinated;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rlpetlastvaccinatedagedate)
     RelativeLayout rlpetlastvaccinatedagedate;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.llpetlastvaccinatedagedate)
     LinearLayout llpetlastvaccinatedagedate;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_petlastvaccinatedage)
     TextView txt_petlastvaccinatedage;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_continue)
     Button btn_continue;
 
@@ -138,6 +154,8 @@ public class AddYourPetActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         avi_indicator.setVisibility(View.GONE);
         edt_petage.setTransformationMethod(new NumericKeyBoardTransformationMethod());
+        edt_petweight.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,2)});
+
 
 
         SessionManager sessionManager = new SessionManager(AddYourPetActivity.this);

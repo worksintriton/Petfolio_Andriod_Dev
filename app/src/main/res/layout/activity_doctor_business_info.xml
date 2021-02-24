@@ -29,8 +29,8 @@
             android:fontFamily="@font/futuramediumbt"
             android:padding="2dp"
             android:text="@string/doctor_business_info_title"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textColor="@color/new_txt_color"
+            android:textSize="@dimen/big_txt_size"  />
 
     </LinearLayout>
 

@@ -106,7 +106,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private String verified;
 
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "LogNotTimber"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,7 +129,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             lastname = extras.getString("lastname");
             useremail = extras.getString("useremail");
         }else{
-            UserType = "Pet lover";
+            UserType = "Pet Lover";
             UserTypeValue = 1;
         }
 
@@ -148,7 +148,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         if(verified != null && verified.equalsIgnoreCase("verified")){
-            btn_verify_email.setText("Verified Email");
+            btn_verify_email.setText("Verified email");
             user_email_verification = true;
             btn_verify_email.setEnabled(false);
 
@@ -175,11 +175,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 Log.w(TAG,"afterTextChanged email : "+email+" useremail : "+useremail);
 
                 if(!email.equalsIgnoreCase(useremail)){
-                    btn_verify_email.setText("Verify Email");
+                    btn_verify_email.setText("Verify email");
                     user_email_verification = false;
                     btn_verify_email.setEnabled(true);
                 }else{
-                    btn_verify_email.setText("Verified Email");
+                    btn_verify_email.setText("Verified email");
                     user_email_verification = true;
                     btn_verify_email.setEnabled(false);
                 }

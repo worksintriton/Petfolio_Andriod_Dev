@@ -360,14 +360,6 @@ public class PetHomeFragment extends Fragment implements Serializable,
                 Log.w(TAG,"PetLoverDashboardResponse" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
-                        txt_doctors.setVisibility(View.VISIBLE);
-                        txt_seemore_doctors.setVisibility(View.VISIBLE);
-                        txt_services.setVisibility(View.VISIBLE);
-                        txt_seemore_services.setVisibility(View.VISIBLE);
-                        txt_products.setVisibility(View.VISIBLE);
-                        txt_seemore_products.setVisibility(View.VISIBLE);
-                        txt_puppy_love.setVisibility(View.VISIBLE);
-                        txt_seemore_puppy_love.setVisibility(View.VISIBLE);
 
                         if (response.body().getData().getDashboarddata().getBanner_details() != null && response.body().getData().getDashboarddata().getBanner_details().size()>0) {
                             listHomeBannerResponse = response.body().getData().getDashboarddata().getBanner_details();
@@ -385,13 +377,14 @@ public class PetHomeFragment extends Fragment implements Serializable,
                                 rvdoctors.setVisibility(View.VISIBLE);
                                 txt_doctor_norecord.setVisibility(View.GONE);
                                 txt_doctors.setVisibility(View.VISIBLE);
+                                txt_seemore_doctors.setVisibility(View.VISIBLE);
                                 setViewDoctors(doctorDetailsResponseList);
 
 
-                            } else {
+                            }
+                            else {
                                 rvdoctors.setVisibility(View.GONE);
-                                txt_doctor_norecord.setVisibility(View.VISIBLE);
-                                txt_doctor_norecord.setText("No doctors found");
+                                txt_seemore_doctors.setVisibility(View.GONE);
                                 if(response.body().getData().getMessages() != null){
                                     for(int i= 0;i< response.body().getData().getMessages().size();i++){
                                         title =  response.body().getData().getMessages().get(i).getTitle();
@@ -416,12 +409,14 @@ public class PetHomeFragment extends Fragment implements Serializable,
                             serviceDetailsResponseList = response.body().getData().getDashboarddata().getService_details();
                             Log.w(TAG, "serviceDetailsResponseList Size" + serviceDetailsResponseList.size());
                             if (serviceDetailsResponseList != null && serviceDetailsResponseList.size()>0) {
+                                txt_seemore_services.setVisibility(View.VISIBLE);
                                 rvservice.setVisibility(View.VISIBLE);
                                 txt_services.setVisibility(View.VISIBLE);
                                 setViewServices(serviceDetailsResponseList);
                             } else {
                                 rvservice.setVisibility(View.GONE);
                                 txt_services.setVisibility(View.GONE);
+                                txt_seemore_services.setVisibility(View.GONE);
 
                             }
 
@@ -432,10 +427,12 @@ public class PetHomeFragment extends Fragment implements Serializable,
                             if (productDetailsResponseList != null && productDetailsResponseList.size()>0) {
                                 rvproducts.setVisibility(View.VISIBLE);
                                 txt_products.setVisibility(View.VISIBLE);
+                                txt_seemore_products.setVisibility(View.VISIBLE);
                                 setViewProducts(productDetailsResponseList);
                             } else {
                                 rvproducts.setVisibility(View.GONE);
                                 txt_products.setVisibility(View.GONE);
+                                txt_seemore_products.setVisibility(View.GONE);
 
                             }
 
@@ -446,13 +443,16 @@ public class PetHomeFragment extends Fragment implements Serializable,
                             if (puppyProductsDetailsBeanList != null && puppyProductsDetailsBeanList.size()>0) {
                                 rvpuppy_love.setVisibility(View.VISIBLE);
                                 txt_puppy_love.setVisibility(View.VISIBLE);
+                                txt_seemore_puppy_love.setVisibility(View.VISIBLE);
                                 txt_no_puppy_love.setVisibility(View.GONE);
                                 setViewPuppyLove(puppyProductsDetailsBeanList);
                             } else {
                                 rvpuppy_love.setVisibility(View.GONE);
                                 txt_puppy_love.setVisibility(View.GONE);
-                                txt_no_puppy_love.setVisibility(View.VISIBLE);
-                                txt_no_puppy_love.setText("No Puppies found");
+                                txt_seemore_puppy_love.setVisibility(View.GONE);
+
+                               /* txt_no_puppy_love.setVisibility(View.VISIBLE);
+                                txt_no_puppy_love.setText("No Puppies found");*/
 
                             }
 

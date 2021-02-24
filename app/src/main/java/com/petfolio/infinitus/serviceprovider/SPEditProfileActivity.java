@@ -129,7 +129,7 @@ public class SPEditProfileActivity extends AppCompatActivity implements View.OnC
         }
 
         if(verifyemailstatus != null  && verifyemailstatus.equalsIgnoreCase("true") || verified != null && verified.equalsIgnoreCase("verified")){
-            btn_verify_email.setText("Verified Email");
+            btn_verify_email.setText("Verified email");
             user_email_verification = true;
             btn_verify_email.setEnabled(false);
 
@@ -149,17 +149,18 @@ public class SPEditProfileActivity extends AppCompatActivity implements View.OnC
 
             }
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void afterTextChanged(Editable s) {
                 String email = s.toString();
                 Log.w(TAG,"afterTextChanged email : "+email+" useremail : "+useremail);
 
                 if(!email.equalsIgnoreCase(useremail)){
-                    btn_verify_email.setText("Verify Email");
+                    btn_verify_email.setText("Verify email");
                     user_email_verification = false;
                     btn_verify_email.setEnabled(true);
                 }else{
-                    btn_verify_email.setText("Verified Email");
+                    btn_verify_email.setText("Verified email");
                     user_email_verification = true;
                     btn_verify_email.setEnabled(false);
                 }

@@ -75,7 +75,7 @@ public class ChooseUserTypeActivity extends AppCompatActivity implements UserTyp
         if (extras != null) {
             UserType = extras.getString("UserType");
             UserTypeValue = extras.getInt("UserTypeValue");
-            Log.w(TAG,"UserTypeValue : "+UserTypeValue);
+            Log.w(TAG,"UserType : "+UserType +"UserTypeValue : "+UserTypeValue);
         }
 
 
@@ -155,6 +155,7 @@ public class ChooseUserTypeActivity extends AppCompatActivity implements UserTyp
     }
 
 
+    @SuppressLint("LogNotTimber")
     @Override
     public void userTypeSelectListener(String usertype, int usertypevalue) {
         UserType = usertype;
@@ -189,6 +190,8 @@ public class ChooseUserTypeActivity extends AppCompatActivity implements UserTyp
         Intent intent = new Intent(ChooseUserTypeActivity.this,SignUpActivity.class);
         intent.putExtra("UserType",UserType);
         intent.putExtra("UserTypeValue",UserTypeValue);
+        Log.w(TAG,"gotoSignup UserType : "+UserType +"UserTypeValue : "+UserTypeValue);
+
         startActivity(intent);
         finish();
     }

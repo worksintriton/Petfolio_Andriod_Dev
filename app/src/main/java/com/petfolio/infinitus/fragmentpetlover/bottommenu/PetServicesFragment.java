@@ -109,6 +109,10 @@ public class PetServicesFragment extends Fragment implements Serializable, View.
     @BindView(R.id.rv_popular_services)
     RecyclerView rv_popular_services;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_no_records)
+    TextView txt_no_records;
+
 
 
 
@@ -230,6 +234,7 @@ public class PetServicesFragment extends Fragment implements Serializable, View.
         Log.w(TAG,"ServiceCatResponseCall url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<ServiceCatResponse>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(@NonNull Call<ServiceCatResponse> call, @NonNull Response<ServiceCatResponse> response) {
                 avi_indicator.smoothToHide();
@@ -241,7 +246,15 @@ public class PetServicesFragment extends Fragment implements Serializable, View.
                         if (response.body().getData() != null) {
                             serviceCatList = response.body().getData();
                             if(serviceCatList != null && serviceCatList.size()>0){
+                                txt_no_records.setVisibility(View.GONE);
+                                rv_popular_services.setVisibility(View.VISIBLE);
                                 setViewPetServices(serviceCatList);
+                            }else{
+                                txt_no_records.setVisibility(View.VISIBLE);
+                                txt_no_records.setText("No pet service");
+                                rv_popular_services.setVisibility(View.GONE);
+
+
                             }
 
 

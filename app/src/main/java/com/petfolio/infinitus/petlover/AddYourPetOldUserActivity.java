@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -142,6 +143,10 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
         avi_indicator.setVisibility(View.GONE);
 
         edt_petage.setTransformationMethod(new NumericKeyBoardTransformationMethod());
+
+
+        edt_petweight.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,2)});
+
 
         SessionManager sessionManager = new SessionManager(AddYourPetOldUserActivity.this);
         HashMap<String, String> user = sessionManager.getProfileDetails();

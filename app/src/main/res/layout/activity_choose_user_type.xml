@@ -19,7 +19,6 @@
             android:layout_width="25dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
             android:background="@drawable/ic_baseline_arrow_back_ios_24"
             tools:ignore="ContentDescription" />
 
@@ -29,7 +28,7 @@
             android:fontFamily="@font/futuramediumbt"
             android:text="@string/choose_user_type"
             android:textColor="@color/new_txt_color"
-            android:textSize="20sp" />
+            android:textSize="@dimen/big_txt_size"  />
 
 
     </LinearLayout>

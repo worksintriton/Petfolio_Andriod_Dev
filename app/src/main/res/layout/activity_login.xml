@@ -86,7 +86,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/sign_up"
                 android:textColor="@color/new_green_btn"

@@ -1,99 +1,59 @@
 package com.petfolio.infinitus.fragmentpetlover.bottommenu;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentSender;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationManager;
-import android.os.Build;
+
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResult;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
+
 import com.google.android.material.tabs.TabLayout;
 
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.activity.ChooseUserTypeActivity;
-import com.petfolio.infinitus.activity.location.PickUpLocationAllowActivity;
-import com.petfolio.infinitus.activity.location.PickUpLocationDenyActivity;
 
-import com.petfolio.infinitus.adapter.NotificationDashboardAdapter;
 import com.petfolio.infinitus.adapter.PetShopProductDetailsAdapter;
 import com.petfolio.infinitus.adapter.PetShopTodayDealsAdapter;
-import com.petfolio.infinitus.adapter.ViewPagerDashboardAdapter;
 import com.petfolio.infinitus.adapter.ViewPagerShopDashboardAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.fragmentserviceprovider.FragmentSPCompletedAppointment;
-import com.petfolio.infinitus.fragmentserviceprovider.FragmentSPDashboard;
-import com.petfolio.infinitus.fragmentserviceprovider.FragmentSPMissedAppointment;
-import com.petfolio.infinitus.fragmentserviceprovider.FragmentSPNewAppointment;
+
 import com.petfolio.infinitus.petlover.ListOfProductsActivity;
 import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 
 import com.petfolio.infinitus.requestpojo.ShopDashboardRequest;
-import com.petfolio.infinitus.requestpojo.VendorOrderRequest;
-import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
+
 import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
-import com.petfolio.infinitus.responsepojo.UserTypeListResponse;
-import com.petfolio.infinitus.responsepojo.VendorOrderResponse;
-import com.petfolio.infinitus.service.GPSTracker;
+
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
+
 import java.util.Timer;
 import java.util.TimerTask;
 

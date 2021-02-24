@@ -61,6 +61,7 @@ import com.petfolio.infinitus.requestpojo.SPSpecificServiceDetailsRequest;
 import com.petfolio.infinitus.requestpojo.ServiceCatRequest;
 import com.petfolio.infinitus.requestpojo.ShopDashboardRequest;
 import com.petfolio.infinitus.requestpojo.SignupRequest;
+import com.petfolio.infinitus.requestpojo.TodayDealMoreRequest;
 import com.petfolio.infinitus.requestpojo.UserStatusUpdateRequest;
 import com.petfolio.infinitus.requestpojo.ServiceProviderRegisterFormCreateRequest;
 import com.petfolio.infinitus.requestpojo.VendorOrderRequest;
@@ -128,6 +129,7 @@ import com.petfolio.infinitus.responsepojo.ServiceCatResponse;
 import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
 import com.petfolio.infinitus.responsepojo.SignupResponse;
 import com.petfolio.infinitus.responsepojo.SplashScreenResponse;
+import com.petfolio.infinitus.responsepojo.TodayDealMoreResponse;
 import com.petfolio.infinitus.responsepojo.UserStatusUpdateResponse;
 import com.petfolio.infinitus.responsepojo.UserTypeListResponse;
 import com.petfolio.infinitus.responsepojo.ServiceProviderRegisterFormCreateResponse;
@@ -535,5 +537,10 @@ public interface RestApiInterface {
     /*View the Product's by cat id*/
     @POST("product_details/fetch_product_by_cat")
     Call<FetctProductByCatResponse> fetctProductByCatResponseCall(@Header("Content-Type") String type, @Body FetctProductByCatRequest fetctProductByCatRequest);
+
+
+    /*View Todays Deal Products*/
+    @POST("product_details/today_deal")
+    Call<TodayDealMoreResponse> todayDealMoreResponseCall(@Header("Content-Type") String type, @Body TodayDealMoreRequest todayDealMoreRequest);
 
 }

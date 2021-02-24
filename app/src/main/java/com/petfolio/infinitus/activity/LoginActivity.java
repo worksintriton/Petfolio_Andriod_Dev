@@ -37,6 +37,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_loginheader)
     ImageView img_loginheader;
