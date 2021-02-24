@@ -252,18 +252,20 @@
                             android:id="@+id/btn_add_specialization"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
                             android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginBottom="5dp"
                             android:background="@drawable/rounded_curve"
                             android:fontFamily="@font/futuralightbt"
+                            android:gravity="center"
                             android:padding="5dp"
                             android:text="@string/add"
                             android:textAllCaps="false"
                             android:textColor="@color/white"
                             android:textSize="18sp"
-                            android:gravity="center"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_margin="5dp"
                             tools:ignore="RelativeOverlap" />
 
 
@@ -560,22 +562,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="20dp">
 
         <Button
             android:id="@+id/buttonsubmit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
             android:background="@drawable/green_bgm_border"
             android:fontFamily="@font/futuramediumbt"
             android:text="@string/submit"
             android:textAllCaps="false"
-            android:textColor="@color/whiteFive"
-            android:textSize="18sp" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/normal_text_size_for_header"/>
     </LinearLayout>
 
     <com.wang.avi.AVLoadingIndicatorView

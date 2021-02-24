@@ -50,7 +50,7 @@
     <string name="err_msg_type_of_petcolortype">Select the pet color type</string>
     <string name="upload_pet_image">Upload Pet image</string>
     <string name="change_pet_image">Change Pet image</string>
-    <string name="pet_last_vaccinated_age">Pet Last Vaccinated age</string>
+    <string name="pet_last_vaccinated_age">Pet Last Vaccinated Date</string>
     <string name="please_wait">Please Wait</string>
     <string name="log_in">Log in</string>
     <string name="see_more">See more</string>
@@ -246,7 +246,6 @@
     <string name="deletemsg">Are you sure you want to delete this location details?</string>
     <string name="deletepetmsg">Are you sure you want to delete this pet details?</string>
     <string name="locationstatuschange">Are you sure you want to change this location as default address?</string>
-    <string name="save_changes">Save Changes</string>
 
     <string name="turn_on_your">Turn on your</string>
     <string name="location_services">location services</string>
@@ -391,6 +390,7 @@
     <string name="my_calendar">My Calendar</string>
     <string name="available_days">Available days</string>
     <string name="available_times">Available Times</string>
+    <string name="save_changes">Save Changes</string>
 
 
 </resources>

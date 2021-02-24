@@ -441,8 +441,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginBottom="20dp">
 
         <Button
@@ -454,8 +454,7 @@
             android:text="@string/submit"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="18sp"
-            tools:ignore="HardcodedText" />
+            android:textSize="@dimen/normal_text_size_for_header" />
     </LinearLayout>
 
     <com.wang.avi.AVLoadingIndicatorView
