@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.doctor.DoctorAppointmentDetailsActivity;
 import com.petfolio.infinitus.doctor.DoctorCompletedAppointmentDetailsActivity;
 import com.petfolio.infinitus.doctor.DoctorPrescriptionDetailsActivity;
 import com.petfolio.infinitus.responsepojo.DoctorCompletedAppointmentResponse;
@@ -103,40 +104,18 @@ public class DoctorCompletedAppointmentAdapter extends  RecyclerView.Adapter<Rec
             }
         });
 
+
         holder.ll_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i = new Intent(context, DoctorAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("appointment_id",completedAppointmentResponseList.get(position).get_id());
+                i.putExtra("bookedat",completedAppointmentResponseList.get(position).getBooking_date_time());
+                i.putExtra("from",TAG);
+                context.startActivity(i);
 
-                Intent intent = new Intent(context, DoctorCompletedAppointmentDetailsActivity.class);
-
-                //Create the bundle
-                Bundle bundle = new Bundle();
-
-                Log.w("appointment_id",completedAppointmentResponseList.get(position).get_id());
-
-                //Add your data from getFactualResults method to bundle
-                bundle.putString("appointment_id",completedAppointmentResponseList.get(position).get_id());
-
-                //Add the bundle to the intent
-                intent.putExtras(bundle);
-
-                context.startActivity(intent);
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
 

@@ -233,22 +233,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txt_completed_date"
-                android:gravity="end">
+                android:gravity="end"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp">
 
                 <Button
                     android:id="@+id/btn_prescriptiondetails"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="end"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
                     android:background="@drawable/new_rounded_corner_btn"
                     android:fontFamily="@font/futuramediumbt"
-                    android:text="View Prescription"
+                    android:text="@string/view_prescription"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="12sp"

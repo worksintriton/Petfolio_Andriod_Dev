@@ -196,19 +196,23 @@
 
     <string name="accept">Accept</string>
     <string name="pet_details">Pet Details</string>
-    <string name="pet_name_details">Pet Name :</string>
-    <string name="pet_type_details">Pet Type :</string>
-    <string name="breed">Breed :</string>
-    <string name="gender">Gender : </string>
-    <string name="colour">Colour : </string>
-    <string name="weight">Weight : </string>
-    <string name="age">Age :</string>
-    <string name="vaccinated_details">Vaccinated :</string>
-    <string name="petlastvaccinated">Pet Last Vaccinated Date :</string>
+    <string name="pet_name_details">Pet Name</string>
+    <string name="pet_type_details">Pet Type</string>
+    <string name="breed">Breed</string>
+    <string name="gender">Gender</string>
+    <string name="colour">Color</string>
+    <string name="weight">Weight</string>
+    <string name="age">Age</string>
+    <string name="vaccinated_details">Vaccinated</string>
+    <string name="petlastvaccinated">Pet Last Vaccinated Date</string>
+    <string name="lastvaccinateddate">Last Vaccinated Date</string>
 
     <string name="medical_history">See Medical History</string>
+    <string name="appointmentdateandtime">Appointment Date and Time</string>
     <string name="order_date">Order date</string>
+    <string name="bookingdate">Booking Date</string>
     <string name="order">Order #</string>
+    <string name="bookingid">Booking ID</string>
     <string name="payment_method">Payment Method</string>
     <string name="order_cost">Order cost</string>
     <string name="address">Address</string>
@@ -362,8 +366,8 @@
     <string name="selected_service">Selected service</string>
     <string name="notification_settings">Notification settings</string>
     <string name="status">Status</string>
-    <string name="view_prescription">view prescription</string>
-    <string name="consultation_fees">Consultation Fees</string>
+    <string name="view_prescription">View Prescription</string>
+    <string name="consultation_fees">Consultation Fee</string>
     <string name="notification">Notification</string>
 
 

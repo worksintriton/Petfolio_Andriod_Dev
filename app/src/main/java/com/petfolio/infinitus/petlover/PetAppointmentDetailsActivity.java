@@ -26,9 +26,13 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.requestpojo.AppoinmentCancelledRequest;
+import com.petfolio.infinitus.requestpojo.AppointmentDetailsRequest;
 import com.petfolio.infinitus.requestpojo.PetNewAppointmentDetailsRequest;
+import com.petfolio.infinitus.requestpojo.SPNotificationSendRequest;
 import com.petfolio.infinitus.responsepojo.AppoinmentCancelledResponse;
+import com.petfolio.infinitus.responsepojo.NotificationSendResponse;
 import com.petfolio.infinitus.responsepojo.PetNewAppointmentDetailsResponse;
+import com.petfolio.infinitus.responsepojo.SPAppointmentDetailsResponse;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -44,9 +48,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PetNewAppointmentDetailsActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+public class PetAppointmentDetailsActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
-    private static final String TAG = "PetNewAppointmentDetailsActivity";
+    private static final String TAG = "PetAppointmentDetailsActivity";
 
 
     AVLoadingIndicatorView avi_indicator;
@@ -121,12 +125,17 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
 
     TextView txt_appointment_date;
     private String appointmentfor;
+    private String spid;
+    private String appointmentid;
+    private String userid;
+    private String from;
 
 
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pet_new_appointment_details);
+        setContentView(R.layout.activity_petappointment_details);
 
 
         Bundle extras = getIntent().getExtras();
@@ -135,6 +144,11 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
             bookedat = extras.getString("bookedat");
             startappointmentstatus = extras.getString("startappointmentstatus");
             appointmentfor = extras.getString("appointmentfor");
+            from = extras.getString("from");
+
+            Log.w(TAG,"appointmentfor : "+appointmentfor+" from : "+from);
+
+
         }
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
@@ -142,7 +156,35 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
         if(bookedat != null){
             compareDatesandTime(currentDateandTime,bookedat);
         }
+
+        img_videocall=findViewById(R.id.img_videocall);
         btn_cancel=findViewById(R.id.btn_cancel);
+        btn_cancel.setVisibility(View.GONE);
+        img_videocall.setVisibility(View.GONE);
+
+
+        if(from != null){
+            if(from.equalsIgnoreCase("PetNewAppointmentAdapter")){
+                if(appointmentfor != null){
+                    if(appointmentfor.equalsIgnoreCase("Doctor")){
+                        img_videocall.setVisibility(View.VISIBLE);
+                        btn_cancel.setVisibility(View.VISIBLE);
+
+
+                    }
+                }
+
+            }
+            else if(from.equalsIgnoreCase("PetMissedAppointmentAdapter")){
+
+            }else if(from.equalsIgnoreCase("PetCompletedAppointmentAdapter")){
+
+            }
+
+        }
+
+
+
 
 
         if(isVaildDate){
@@ -153,8 +195,6 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
         if(startappointmentstatus != null && !startappointmentstatus.equalsIgnoreCase("Not Started")) {
             btn_cancel.setVisibility(View.GONE);
         }
-
-
 
 
 
@@ -225,7 +265,6 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
         txt_address=findViewById(R.id.txt_address);
 
 
-        img_videocall=findViewById(R.id.img_videocall);
 
 
 
@@ -235,9 +274,24 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
         bottom_navigation_view.setOnNavigationItemSelectedListener(this);
 
 
-        if (new ConnectionDetector(PetNewAppointmentDetailsActivity.this).isNetworkAvailable(PetNewAppointmentDetailsActivity.this)) {
-            petNewAppointmentResponseCall();
+        if(appointmentfor != null){
+            if(appointmentfor.equalsIgnoreCase("Doctor")){
+                if (new ConnectionDetector(PetAppointmentDetailsActivity.this).isNetworkAvailable(PetAppointmentDetailsActivity.this)) {
+                    petNewAppointmentResponseCall();
+                }
+            }
+            else if(appointmentfor.equalsIgnoreCase("SP")){
+                if (new ConnectionDetector(PetAppointmentDetailsActivity.this).isNetworkAvailable(PetAppointmentDetailsActivity.this)) {
+                    spAppointmentDetailsResponse();
+                }
+            }
+
         }
+
+       
+
+       
+
 
 
     }
@@ -327,7 +381,7 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
 
                             start_appointment_status = response.body().getData().getStart_appointment_status();
 
-                            setView(usrname, usr_image, servname, servcost, pet_name, pet_image, pet_type, breed
+                            setView(usrname, usr_image, servname, pet_name, pet_image, pet_type, breed
 
                                     , gender, colour, weight, age, order_date, orderid, payment_method, order_cost, vaccinated, addr);
                         }
@@ -358,16 +412,16 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
     }
 
     @SuppressLint({"SetTextI18n", "LongLogTag", "LogNotTimber"})
-    private void setView(String usrname, String usr_image, String servname, String servcost, String pet_name, String pet_image, String pet_type, String breed, String gender, String colour, String weight, String age, String order_date, String orderid, String payment_method, String order_cost, String vaccinated, String addr) {
+    private void setView(String usrname, String usr_image, String servname, String pet_name, String pet_image, String pet_type, String breed, String gender, String colour, String weight, String age, String order_date, String orderid, String payment_method, String order_cost, String vaccinated, String addr) {
 
 
         if(usr_image != null && !usr_image.isEmpty()){
-            Glide.with(PetNewAppointmentDetailsActivity.this)
+            Glide.with(PetAppointmentDetailsActivity.this)
                     .load(usr_image)
                     .into(img_user);
 
         }else{
-            Glide.with(PetNewAppointmentDetailsActivity.this)
+            Glide.with(PetAppointmentDetailsActivity.this)
                     .load(APIClient.PROFILE_IMAGE_URL)
                     .into(img_user);
         }
@@ -384,11 +438,11 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
         }
 
         if(pet_image != null && !pet_image.isEmpty()){
-            Glide.with(PetNewAppointmentDetailsActivity.this)
+            Glide.with(PetAppointmentDetailsActivity.this)
                     .load(pet_image)
                     .into(img_petimg);
         }else{
-            Glide.with(PetNewAppointmentDetailsActivity.this)
+            Glide.with(PetAppointmentDetailsActivity.this)
                     .load(APIClient.PROFILE_IMAGE_URL)
                     .into(img_petimg);
         }
@@ -462,9 +516,9 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
         img_videocall.setOnClickListener(v -> {
             Log.w(TAG,"Start_appointment_status : "+start_appointment_status);
             if(start_appointment_status != null && start_appointment_status.equalsIgnoreCase("Not Started")){
-                Toasty.warning(PetNewAppointmentDetailsActivity.this,"Doctor is yet to start the Appointment. Please wait for the doctor to initiate the Appointment", Toast.LENGTH_SHORT, true).show();
+                Toasty.warning(PetAppointmentDetailsActivity.this,"Doctor is yet to start the Appointment. Please wait for the doctor to initiate the Appointment", Toast.LENGTH_SHORT, true).show();
             }else {
-                Intent i = new Intent(PetNewAppointmentDetailsActivity.this, VideoCallPetLoverActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent i = new Intent(PetAppointmentDetailsActivity.this, VideoCallPetLoverActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra("id", appointment_id);
                 Log.w(TAG, "ID-->" + appointment_id);
                 startActivity(i);
@@ -473,14 +527,16 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
 
         });
 
-        btn_cancel.setOnClickListener(v -> showStatusAlert(appointment_id));
+        btn_cancel.setOnClickListener(v -> {
+            showStatusAlert(appointment_id,appointmentfor);
+        });
 
     }
 
     @SuppressLint("SetTextI18n")
-    private void showStatusAlert(String id) {
+    private void showStatusAlert(String id, String appointmentfor) {
         try {
-            dialog = new Dialog(PetNewAppointmentDetailsActivity.this);
+            dialog = new Dialog(PetAppointmentDetailsActivity.this);
             dialog.setContentView(R.layout.alert_approve_reject_layout);
             TextView tvheader = dialog.findViewById(R.id.tvInternetNotConnected);
             tvheader.setText(R.string.cancelappointment);
@@ -491,7 +547,14 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
 
             dialogButtonApprove.setOnClickListener(view -> {
                 dialog.dismiss();
-                    appoinmentCancelledResponseCall(id);
+                if(appointmentfor != null) {
+                    if (appointmentfor.equalsIgnoreCase("Doctor")) {
+                        appoinmentCancelledResponseCall(id);
+                    } else if (appointmentfor.equalsIgnoreCase("SP")) {
+                        spappoinmentCancelledResponseCall(id);
+
+                    }
+                }
 
 
 
@@ -526,7 +589,7 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        startActivity(new Intent(PetNewAppointmentDetailsActivity.this, PetMyappointmentsActivity.class));
+                        startActivity(new Intent(PetAppointmentDetailsActivity.this, PetMyappointmentsActivity.class));
 
 
 
@@ -640,6 +703,213 @@ public class PetNewAppointmentDetailsActivity extends AppCompatActivity implemen
         }catch (ParseException e1){
             e1.printStackTrace();
         }
+    }
+
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    private void spAppointmentDetailsResponse() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<SPAppointmentDetailsResponse> call = ApiService.spAppointmentDetailsResponse(RestUtils.getContentType(), appointmentDetailsRequest());
+        Log.w(TAG, "url  :%s" + call.request().url().toString());
+
+        call.enqueue(new Callback<SPAppointmentDetailsResponse>() {
+            @SuppressLint({"LongLogTag", "LogNotTimber"})
+            @Override
+            public void onResponse(@NonNull Call<SPAppointmentDetailsResponse> call, @NonNull Response<SPAppointmentDetailsResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG, "SPAppointmentDetailsResponse" + "--->" + new Gson().toJson(response.body()));
+
+
+                if (response.body() != null) {
+
+                    if (200 == response.body().getCode()) {
+
+                        String vaccinated, addr = null, usrname = null;
+
+                        //  String usr_image = response.body().getData().getDoctor_id().getProfile_img();
+                        String usr_image = "";
+                        if (response.body().getData() != null) {
+
+                            spid = response.body().getData().getSp_id().get_id();
+                            appointmentid = response.body().getData().getAppointment_UID();
+                            userid = response.body().getData().getUser_id().get_id();
+
+                            usrname = response.body().getData().getSp_business_info().get(0).getBussiness_name();
+
+                            String servname = response.body().getData().getService_name();
+
+                            String servcost = response.body().getData().getService_amount();
+
+                            String pet_name = response.body().getData().getPet_id().getPet_name();
+
+                            String pet_image = response.body().getData().getPet_id().getPet_img();
+
+                            String pet_type = response.body().getData().getPet_id().getPet_type();
+
+                            String breed = response.body().getData().getPet_id().getPet_breed();
+
+                            String gender = response.body().getData().getPet_id().getPet_gender();
+
+                            String colour = response.body().getData().getPet_id().getPet_color();
+
+                            String weight = String.valueOf(response.body().getData().getPet_id().getPet_weight());
+
+                            String age = String.valueOf(response.body().getData().getPet_id().getPet_age());
+
+                            if (response.body().getData().getPet_id().isVaccinated()) {
+                                vaccinated = "Yes";
+                                ll_petlastvacinateddate.setVisibility(View.VISIBLE);
+                                if (response.body().getData().getPet_id().getLast_vaccination_date() != null) {
+                                    txt_petlastvaccinatedage.setText(response.body().getData().getPet_id().getLast_vaccination_date());
+                                }
+
+                            } else {
+                                ll_petlastvacinateddate.setVisibility(View.GONE);
+                                vaccinated = "No";
+                            }
+
+                            String order_date = response.body().getData().getBooking_date();
+
+                            String orderid = response.body().getData().getAppointment_UID();
+
+                            String payment_method = response.body().getData().getPayment_method();
+
+                            String order_cost = response.body().getData().getService_amount();
+
+                            addr = response.body().getData().getSp_business_info().get(0).getSp_loc();
+
+
+
+                            appoinment_status = response.body().getData().getAppoinment_status();
+
+                            start_appointment_status = response.body().getData().getStart_appointment_status();
+
+                            setView(usrname, usr_image, servname, pet_name, pet_image, pet_type, breed
+
+                                    , gender, colour, weight, age, order_date, orderid, payment_method, order_cost, vaccinated, addr);
+                        }
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SPAppointmentDetailsResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+
+                Log.w(TAG, "PetNewAppointmentDetailsResponse" + "--->" + t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    private AppointmentDetailsRequest appointmentDetailsRequest() {
+
+        AppointmentDetailsRequest appointmentDetailsRequest = new AppointmentDetailsRequest();
+        appointmentDetailsRequest.setApppointment_id(appointment_id);
+        Log.w(TAG, "appointmentDetailsRequest" + "--->" + new Gson().toJson(appointmentDetailsRequest));
+        return appointmentDetailsRequest;
+    }
+
+    @SuppressLint("LongLogTag")
+    private void spappoinmentCancelledResponseCall(String id) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<AppoinmentCancelledResponse> call = apiInterface.spappoinmentCancelledResponseCall(RestUtils.getContentType(), appoinmentCancelledRequest(id));
+        Log.w(TAG,"appoinmentCancelledResponseCall url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<AppoinmentCancelledResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<AppoinmentCancelledResponse> call, @NonNull Response<AppoinmentCancelledResponse> response) {
+
+                Log.w(TAG,"appoinmentCancelledResponseCall"+ "--->" + new Gson().toJson(response.body()));
+
+                avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        spnotificationSendResponseCall();
+
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<AppoinmentCancelledResponse> call, @NonNull Throwable t) {
+
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"appoinmentCancelledResponseCall flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+
+    @SuppressLint("LongLogTag")
+    private void spnotificationSendResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<NotificationSendResponse> call = ApiService.spnotificationSendResponseCall(RestUtils.getContentType(),spNotificationSendRequest());
+
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<NotificationSendResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<NotificationSendResponse> call, @NonNull Response<NotificationSendResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"notificationSendResponseCall"+ "--->" + new Gson().toJson(response.body()));
+
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        startActivity(new Intent(getApplicationContext(), PetMyappointmentsActivity.class));
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NotificationSendResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+
+                Log.w(TAG,"NotificationSendResponse flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint("LongLogTag")
+    private SPNotificationSendRequest spNotificationSendRequest() {
+
+        /*
+         * status : Payment Failed
+         * date : 23-10-2020 11:00 AM
+         * appointment_UID : PET-2923029239123
+         * user_id : 601b8ac3204c595ee52582f2
+         * sp_id : 601ba9c6270cbe79fd900183
+         */
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+        String currentDateandTime = simpleDateFormat.format(new Date());
+
+
+
+        SPNotificationSendRequest spNotificationSendRequest = new SPNotificationSendRequest();
+        spNotificationSendRequest.setStatus("Patient Appointment Cancelled");
+        spNotificationSendRequest.setDate(currentDateandTime);
+        spNotificationSendRequest.setAppointment_UID(appointmentid);
+        spNotificationSendRequest.setUser_id(userid);
+        spNotificationSendRequest.setSp_id(spid);
+
+
+        Log.w(TAG,"spNotificationSendRequest"+ "--->" + new Gson().toJson(spNotificationSendRequest));
+        return spNotificationSendRequest;
     }
 
 }

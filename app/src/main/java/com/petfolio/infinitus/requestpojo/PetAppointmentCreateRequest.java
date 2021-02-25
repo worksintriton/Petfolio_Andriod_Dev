@@ -52,8 +52,15 @@ public class PetAppointmentCreateRequest {
     private String mobile_type;
     private String service_name;
     private String service_amount;
+    private String date_and_time;
 
+    public String getDate_and_time() {
+        return date_and_time;
+    }
 
+    public void setDate_and_time(String date_and_time) {
+        this.date_and_time = date_and_time;
+    }
 
     public String getService_name() {
         return service_name;

@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.doctor.DoctorAppointmentDetailsActivity;
 import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
 import com.petfolio.infinitus.doctor.DoctorNewAppointmentDetailsActivity;
 import com.petfolio.infinitus.doctor.PrescriptionActivity;
@@ -215,9 +216,10 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
             holder.ll_new.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(context, DoctorNewAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Intent i = new Intent(context, DoctorAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.putExtra("appointment_id",newAppointmentResponseList.get(position).get_id());
                     i.putExtra("bookedat",newAppointmentResponseList.get(position).getBooking_date_time());
+                    i.putExtra("from",TAG);
                     context.startActivity(i);
 
                 }

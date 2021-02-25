@@ -21,8 +21,8 @@ import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
+import com.petfolio.infinitus.petlover.PetAppointmentDetailsActivity;
 import com.petfolio.infinitus.petlover.PetNewAppointmentDetailsActivity;
-import com.petfolio.infinitus.petlover.PetSPNewAppointmentDetailsActivity;
 import com.petfolio.infinitus.petlover.VideoCallPetLoverActivity;
 import com.petfolio.infinitus.responsepojo.PetAppointmentResponse;
 
@@ -164,10 +164,14 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
 
         if(newAppointmentResponseList.get(position).getStart_appointment_status() != null && !newAppointmentResponseList.get(position).getStart_appointment_status().equalsIgnoreCase("Not Started")) {
             holder.btn_cancel.setVisibility(View.GONE);
+        }else{
+            holder.btn_cancel.setVisibility(View.VISIBLE);
         }
 
 
-            holder.btn_cancel.setOnClickListener(v -> onAppointmentCancel.onAppointmentCancel(newAppointmentResponseList.get(position).get_id(),newAppointmentResponseList.get(position).getAppointment_for(),newAppointmentResponseList.get(position).getUser_id(),newAppointmentResponseList.get(position).getDoctor_id(),newAppointmentResponseList.get(position).getBooking_Id(),newAppointmentResponseList.get(position).getSp_id()));
+            holder.btn_cancel.setOnClickListener(v -> {
+                onAppointmentCancel.onAppointmentCancel(newAppointmentResponseList.get(position).get_id(), newAppointmentResponseList.get(position).getAppointment_for(), newAppointmentResponseList.get(position).getUser_id(), newAppointmentResponseList.get(position).getDoctor_id(), newAppointmentResponseList.get(position).getBooking_Id(), newAppointmentResponseList.get(position).getSp_id());
+            });
             holder.img_videocall.setOnClickListener(v -> {
                 Log.w(TAG,"Start_appointment_status : "+newAppointmentResponseList.get(position).getStart_appointment_status());
                 if(newAppointmentResponseList.get(position).getStart_appointment_status() != null && newAppointmentResponseList.get(position).getStart_appointment_status().equalsIgnoreCase("Not Started")){
@@ -185,7 +189,16 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
 
 
         holder.ll_new.setOnClickListener(v -> {
-            if(newAppointmentResponseList.get(position).getAppointment_for() != null && newAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("Doctor") ) {
+
+            Intent i = new Intent(context, PetAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra("appointment_id",newAppointmentResponseList.get(position).get_id());
+            i.putExtra("bookedat",newAppointmentResponseList.get(position).getBooked_at());
+            i.putExtra("startappointmentstatus",newAppointmentResponseList.get(position).getStart_appointment_status());
+            i.putExtra("appointmentfor",newAppointmentResponseList.get(position).getAppointment_for());
+            i.putExtra("from",TAG);
+            context.startActivity(i);
+
+            /*if(newAppointmentResponseList.get(position).getAppointment_for() != null && newAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("Doctor") ) {
                 Intent i = new Intent(context, PetNewAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra("appointment_id",newAppointmentResponseList.get(position).get_id());
                 i.putExtra("bookedat",newAppointmentResponseList.get(position).getBooked_at());
@@ -197,7 +210,7 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
                 i.putExtra("bookedat",newAppointmentResponseList.get(position).getBooked_at());
                 i.putExtra("fromactivity",TAG);
                 context.startActivity(i);
-            }
+            }*/
         });
 
 

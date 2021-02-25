@@ -219,6 +219,20 @@
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="12sp"
+                        tools:ignore="ButtonStyle"
+                       />
+                    <Button
+                        android:id="@+id/btn_prescriptiondetails"
+                        android:layout_width="110dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/new_rounded_corner_btn"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:text="@string/view_prescription"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
                         tools:ignore="ButtonStyle" />
 
 
@@ -588,7 +602,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/txt_order"
+                    android:id="@+id/txt_booking_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"

@@ -16,6 +16,7 @@
             android:layout_height="match_parent"
             app:siShape="@drawable/rounded_rect"
             android:scaleType="fitXY"
+            android:alpha="1"
             />
 
 </androidx.cardview.widget.CardView>

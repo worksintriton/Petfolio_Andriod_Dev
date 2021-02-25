@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:gravity="center"
@@ -63,25 +64,27 @@
                android:gravity="center">
                 <Button
                     android:id="@+id/btnApprove"
-                    android:layout_width="100dp"
-                    android:layout_height="40dp"
+                    android:layout_width="110dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="20dp"
-                    android:background="@drawable/button_capsule_green"
+                    android:background="@drawable/new_rounded_corner_btn"
                     android:text="Yes"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    tools:ignore="HardcodedText" />
                 <Button
                     android:id="@+id/btnReject"
-                    android:layout_width="100dp"
-                    android:layout_height="40dp"
+                    android:layout_width="110dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="20dp"
-                    android:background="@drawable/button_capsule"
+                    android:background="@drawable/orange_background_button"
                     android:text="No"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    tools:ignore="ButtonStyle,HardcodedText" />
             </LinearLayout>
 
 

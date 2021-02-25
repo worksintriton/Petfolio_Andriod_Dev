@@ -72,7 +72,7 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
 
     Button btn_cancel;
 
-    Button btn_accept;
+    Button btn_complete;
 
     ImageView img_petimg;
 
@@ -124,6 +124,8 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
     private String bookedat;
     private boolean isVaildDate;
 
+    TextView txt_appointment_date;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,6 +152,8 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
 
 
         avi_indicator=findViewById(R.id.avi_indicator);
+        txt_appointment_date =findViewById(R.id.txt_appointment_date);
+
 
 
         img_back=findViewById(R.id.img_back);
@@ -216,7 +220,7 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
 
         img_videocall=findViewById(R.id.img_videocall);
 
-        btn_accept = findViewById(R.id.btn_accept);
+        btn_complete = findViewById(R.id.btn_complete);
 
         
 
@@ -226,7 +230,7 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
 
     }
 
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private void petNewAppointmentResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -235,7 +239,7 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
         Log.w(TAG, "url  :%s" + call.request().url().toString());
 
         call.enqueue(new Callback<PetNewAppointmentDetailsResponse>() {
-            @SuppressLint("LogNotTimber")
+            @SuppressLint({"LongLogTag", "LogNotTimber", "SetTextI18n"})
             @Override
             public void onResponse(@NonNull Call<PetNewAppointmentDetailsResponse> call, @NonNull Response<PetNewAppointmentDetailsResponse> response) {
                 avi_indicator.smoothToHide();
@@ -246,20 +250,22 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
 
                     if (200 == response.body().getCode()) {
 
-                        String vaccinated, addr = null, usrname;
+                        String vaccinated, addr = null, usrname = null;
+
+
                         if (response.body().getData() != null) {
 
-                            String usr_image = response.body().getData().getUser_id().getProfile_img();
+                            String usr_image = response.body().getData().getDoctor_id().getProfile_img();
 
                             String servname = response.body().getData().getService_name();
 
                             String servcost = response.body().getData().getService_amount();
 
-                            pet_name = response.body().getData().getPet_id().getPet_name();
+                            String pet_name = response.body().getData().getPet_id().getPet_name();
 
                             String pet_image = response.body().getData().getPet_id().getPet_img();
 
-                            pet_type = response.body().getData().getPet_id().getPet_type();
+                            String pet_type = response.body().getData().getPet_id().getPet_type();
 
                             String breed = response.body().getData().getPet_id().getPet_breed();
 
@@ -271,17 +277,15 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
 
                             String age = String.valueOf(response.body().getData().getPet_id().getPet_age());
 
-                            userid = response.body().getData().getUser_id().get_id();
-
-                            allergies = response.body().getData().getAllergies();
-
-                            problem_info = response.body().getData().getProblem_info();
+                            if(response.body().getData().getBooking_date_time() != null){
+                                txt_appointment_date.setText(response.body().getData().getBooking_date_time());
+                            }
 
                             if (response.body().getData().getPet_id().isVaccinated()) {
                                 vaccinated = "Yes";
                                 ll_petlastvacinateddate.setVisibility(View.VISIBLE);
-                                if (response.body().getData().getPet_id().getLast_vaccination_date() != null) {
-                                    txt_petlastvaccinatedage.setText(response.body().getData().getPet_id().getLast_vaccination_date());
+                                if (response.body().getData().getPet_id().getLast_vaccination_date() != null && !response.body().getData().getPet_id().getLast_vaccination_date().isEmpty()) {
+                                    txt_petlastvaccinatedage.setText(": "+response.body().getData().getPet_id().getLast_vaccination_date());
                                 }
 
                             } else {
@@ -297,14 +301,18 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
 
                             String order_cost = response.body().getData().getAmount();
 
-                            usrname = response.body().getData().getUser_id().getFirst_name();
-                            Log.w(TAG,"usrname: "+usrname);
+                            List<PetNewAppointmentDetailsResponse.DataBean.DocBusinessInfoBean> Address = response.body().getData().getDoc_business_info();
+
+                            for (int i = 0; i < Address.size(); i++) {
+
+                                addr = Address.get(i).getClinic_loc();
+
+                                usrname = Address.get(i).getDr_name();
+                            }
 
                             appoinment_status = response.body().getData().getAppoinment_status();
 
                             start_appointment_status = response.body().getData().getStart_appointment_status();
-
-                            doctorid = response.body().getData().getDoctor_id().get_id();
 
                             setView(usrname, usr_image, servname, servcost, pet_name, pet_image, pet_type, breed
 
@@ -326,7 +334,6 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
 
     }
 
-
     @SuppressLint({"LongLogTag", "LogNotTimber"})
     private PetNewAppointmentDetailsRequest petNewAppointmentDetailsRequest() {
 
@@ -340,7 +347,7 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
     private void setView(String usrname, String usr_image, String servname, String servcost, String pet_name, String pet_image, String pet_type, String breed, String gender, String colour, String weight, String age, String order_date, String orderid, String payment_method, String order_cost, String vaccinated, String addr) {
 
 
-        if(usr_image != null && !usr_image.equals("")){
+        if(usr_image != null && !usr_image.isEmpty()){
             Glide.with(DoctorNewAppointmentDetailsActivity.this)
                     .load(usr_image)
                     .into(img_user);
@@ -359,77 +366,84 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
 
 
 
-        if(pet_image != null && !pet_image.equals("")){
+        if(pet_image != null && !pet_image.isEmpty()){
 
             Glide.with(DoctorNewAppointmentDetailsActivity.this)
                     .load(pet_image)
                     .into(img_petimg);
 
 
+        }else{
+            Glide.with(DoctorNewAppointmentDetailsActivity.this)
+                    .load(APIClient.PROFILE_IMAGE_URL)
+                    .into(img_user);
         }
 
-        if(pet_name != null && !pet_name.equals("")){
 
-            txt_pet_name.setText(pet_name);
+        if(pet_name != null && !pet_name.isEmpty()){
+            txt_pet_name.setText(": "+pet_name);
         }
 
-        if(pet_type != null && !pet_type.equals("")){
+        if(pet_type != null && !pet_type.isEmpty()){
 
-            txt_pet_type.setText(pet_type);
+            txt_pet_type.setText(": "+pet_type);
         }
 
-        if(breed != null && !breed.equals("")){
+        if(breed != null && !breed.isEmpty()){
 
-            txt_breed.setText(breed);
+            txt_breed.setText(": "+breed);
         }
 
-        if(gender != null && !gender.equals("")){
+        if(gender != null && !gender.isEmpty()){
 
-            txt_gender.setText(gender);
+            txt_gender.setText(": "+gender);
         }
 
-        if(colour != null && !colour.equals("")){
+        if(colour != null && !colour.isEmpty()){
 
-            txt_color.setText(colour);
+            txt_color.setText(": "+colour);
         }
 
-        if(weight != null && !weight.equals("")){
+        if(weight != null && !weight.isEmpty()){
 
-            txt_weight.setText(weight);
+            txt_weight.setText(": "+weight);
         }
 
-        if(age != null && !age.equals("")){
+        if(age != null && !age.isEmpty()){
 
-            txt_age.setText(age);
+            txt_age.setText(": "+age);
         }
 
-        txt_vaccinated.setText(vaccinated);
-
-        if(order_date != null && !order_date.equals("")){
-
-            txt_order_date.setText(order_date);
+        if(vaccinated != null && !vaccinated.isEmpty()){
+            txt_vaccinated.setText(": "+vaccinated);
         }
 
-        if(orderid != null && !orderid.equals("")){
+        if(order_date != null && !order_date.isEmpty()){
 
-            txt_order_id.setText(orderid);
+            txt_order_date.setText(": "+order_date);
         }
 
-        if(payment_method != null && !payment_method.equals("")) {
+        if(orderid != null && !orderid.isEmpty()){
 
-            txt_payment_method.setText(payment_method);
+            txt_order_id.setText(": "+orderid);
+        }
+
+        if(payment_method != null && !payment_method.isEmpty()) {
+
+            txt_payment_method.setText(": "+payment_method);
 
         }
 
-        if(order_cost != null && !order_cost.equals("")){
-            txt_order_cost.setText("\u20B9 "+order_cost);
+        if(order_cost != null && !order_cost.isEmpty()){
+            txt_order_cost.setText(": "+"\u20B9 "+order_cost);
             txt_serv_cost.setText("\u20B9 "+order_cost);
         }
 
-//        if(!addr.equals("")){
-//
-//            txt_address.setText(addr);
-//        }
+        if(addr != null && !addr.isEmpty()){
+
+            txt_address.setText(addr);
+        }
+
 
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -439,7 +453,7 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
             }
         });
 
-        btn_accept.setOnClickListener(new View.OnClickListener() {
+        btn_complete.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
@@ -491,7 +505,8 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
 
     }
 
-    private void showStatusAlert(String id,String appointmenttype) {
+    @SuppressLint("SetTextI18n")
+    private void showStatusAlert(String id, String appointmenttype) {
         try {
             dialog = new Dialog(DoctorNewAppointmentDetailsActivity.this);
             dialog.setContentView(R.layout.alert_approve_reject_layout);

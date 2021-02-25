@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.doctor.DoctorAppointmentDetailsActivity;
 import com.petfolio.infinitus.doctor.DoctorMissedAppointmentDetailsActivity;
 import com.petfolio.infinitus.responsepojo.DoctorMissedAppointmentResponse;
 
@@ -27,7 +28,7 @@ import java.util.List;
 
 public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private  String TAG = "DoctorNewAppointmentAdapter";
+    private  String TAG = "DoctorMissedAppointmentAdapter";
     private List<DoctorMissedAppointmentResponse.DataBean> missedAppointmentResponseList;
     private Context context;
     private int size;
@@ -111,21 +112,12 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
         holder.ll_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i = new Intent(context, DoctorAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("appointment_id",missedAppointmentResponseList.get(position).get_id());
+                i.putExtra("bookedat",missedAppointmentResponseList.get(position).getBooking_date_time());
+                i.putExtra("from",TAG);
+                context.startActivity(i);
 
-                Intent intent = new Intent(context, DoctorMissedAppointmentDetailsActivity.class);
-
-                //Create the bundle
-                Bundle bundle = new Bundle();
-
-                Log.w("appointment_id",missedAppointmentResponseList.get(position).get_id());
-
-                //Add your data from getFactualResults method to bundle
-                bundle.putString("appointment_id",missedAppointmentResponseList.get(position).get_id());
-
-                //Add the bundle to the intent
-                intent.putExtras(bundle);
-
-                context.startActivity(intent);
             }
         });
 

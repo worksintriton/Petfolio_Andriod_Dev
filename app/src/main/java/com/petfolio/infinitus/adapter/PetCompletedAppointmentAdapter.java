@@ -19,6 +19,7 @@ import com.petfolio.infinitus.R;
 
 import com.petfolio.infinitus.doctor.DoctorPrescriptionDetailsActivity;
 import com.petfolio.infinitus.interfaces.AddReviewListener;
+import com.petfolio.infinitus.petlover.PetAppointmentDetailsActivity;
 import com.petfolio.infinitus.petlover.PetCompletedAppointmentDetailsActivity;
 import com.petfolio.infinitus.petlover.PetSPNewAppointmentDetailsActivity;
 import com.petfolio.infinitus.responsepojo.PetAppointmentResponse;
@@ -123,7 +124,16 @@ public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
 
 
         holder.ll_new.setOnClickListener(v -> {
-            if(completedAppointmentResponseList.get(position).getAppointment_for() != null && completedAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("Doctor") ) {
+
+            Intent i = new Intent(context, PetAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra("appointment_id",completedAppointmentResponseList.get(position).get_id());
+            i.putExtra("bookedat",completedAppointmentResponseList.get(position).getBooked_at());
+            i.putExtra("startappointmentstatus",completedAppointmentResponseList.get(position).getStart_appointment_status());
+            i.putExtra("appointmentfor",completedAppointmentResponseList.get(position).getAppointment_for());
+            i.putExtra("from",TAG);
+            context.startActivity(i);
+
+           /* if(completedAppointmentResponseList.get(position).getAppointment_for() != null && completedAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("Doctor") ) {
                 Intent i = new Intent(context, PetCompletedAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra("appointment_id",completedAppointmentResponseList.get(position).get_id());
                 context.startActivity(i);
@@ -132,7 +142,7 @@ public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
                 i.putExtra("appointment_id",completedAppointmentResponseList.get(position).get_id());
                 i.putExtra("fromactivity",TAG);
                 context.startActivity(i);
-            }
+            }*/
         });
 
 

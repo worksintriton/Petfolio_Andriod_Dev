@@ -515,7 +515,7 @@ public class PetSPNewAppointmentDetailsActivity extends AppCompatActivity implem
                 @Override
                 public void onClick(View view) {
                     dialog.dismiss();
-                    appoinmentCancelledResponseCall(id);
+                    spappoinmentCancelledResponseCall(id);
 
 
 
@@ -543,7 +543,7 @@ public class PetSPNewAppointmentDetailsActivity extends AppCompatActivity implem
     }
 
     @SuppressLint("LongLogTag")
-    private void appoinmentCancelledResponseCall(String id) {
+    private void spappoinmentCancelledResponseCall(String id) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);

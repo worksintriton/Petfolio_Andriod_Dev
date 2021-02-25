@@ -1276,6 +1276,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         petAppointmentCreateRequest.setMobile_type("Android");
         petAppointmentCreateRequest.setService_name("");
         petAppointmentCreateRequest.setService_amount("");
+        petAppointmentCreateRequest.setDate_and_time(currentDateandTime);
         Log.w(TAG,"petAppointmentCreateRequest"+ "--->" + new Gson().toJson(petAppointmentCreateRequest));
         return petAppointmentCreateRequest;
     }

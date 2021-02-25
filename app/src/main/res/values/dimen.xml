@@ -78,6 +78,7 @@
     <dimen name="height_IV">55dp</dimen>
     <dimen name="width_IV">85dp</dimen>
     <dimen name="width_V">110dp</dimen>
+    <dimen name="width_appoitmentdetails">135dp</dimen>
 
     //drawer
     <dimen name="nav_header_height">160dp</dimen>

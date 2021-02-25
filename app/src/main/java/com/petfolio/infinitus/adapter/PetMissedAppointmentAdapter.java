@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.petlover.PetAppointmentDetailsActivity;
 import com.petfolio.infinitus.petlover.PetCompletedAppointmentDetailsActivity;
 import com.petfolio.infinitus.petlover.PetMissedAppointmentDetailsActivity;
 import com.petfolio.infinitus.petlover.PetSPNewAppointmentDetailsActivity;
@@ -143,7 +144,16 @@ public class PetMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
         holder.ll_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(missedAppointmentResponseList.get(position).getAppointment_for() != null && missedAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("Doctor") ) {
+
+                Intent i = new Intent(context, PetAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("appointment_id",missedAppointmentResponseList.get(position).get_id());
+                i.putExtra("bookedat",missedAppointmentResponseList.get(position).getBooked_at());
+                i.putExtra("startappointmentstatus",missedAppointmentResponseList.get(position).getStart_appointment_status());
+                i.putExtra("appointmentfor",missedAppointmentResponseList.get(position).getAppointment_for());
+                i.putExtra("from",TAG);
+                context.startActivity(i);
+
+                /*if(missedAppointmentResponseList.get(position).getAppointment_for() != null && missedAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("Doctor") ) {
                     Intent i = new Intent(context, PetMissedAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.putExtra("appointment_id",missedAppointmentResponseList.get(position).get_id());
                     context.startActivity(i);
@@ -152,7 +162,7 @@ public class PetMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
                     i.putExtra("appointment_id",missedAppointmentResponseList.get(position).get_id());
                     i.putExtra("fromactivity",TAG);
                     context.startActivity(i);
-                }
+                }*/
             }
         });
 

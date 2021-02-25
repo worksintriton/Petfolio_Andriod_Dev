@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void verifyValidator() {
         boolean can_proceed = true;
         if (edt_emailorphone.getText().toString().trim().equals("")) {
-            edt_emailorphone.setError("Please enter your Email or Phone number");
+            edt_emailorphone.setError("Please enter your phone number");
             edt_emailorphone.requestFocus();
             can_proceed = false;
         }

@@ -279,6 +279,12 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
 
+        <activity
+            android:name=".petlover.PetAppointmentDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
         <!-- Doctor -->
         <activity
             android:name=".doctor.DoctorBusinessInfoActivity"
@@ -349,7 +355,16 @@
             android:name=".doctor.VideoCallDoctorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
-            android:windowSoftInputMode="adjustPan" /> <!-- Service Provider -->
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".doctor.DoctorAppointmentDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+
+
+        <!-- Service Provider -->
         <activity
             android:name=".serviceprovider.ServiceProviderRegisterFormActivity"
             android:screenOrientation="portrait"
