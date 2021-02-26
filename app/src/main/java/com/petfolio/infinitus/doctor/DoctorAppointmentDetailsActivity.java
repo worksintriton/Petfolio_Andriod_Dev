@@ -22,7 +22,6 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.petlover.PetMyappointmentsActivity;
 import com.petfolio.infinitus.requestpojo.AppoinmentCancelledRequest;
 import com.petfolio.infinitus.requestpojo.DoctorStartAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.PetNewAppointmentDetailsRequest;
@@ -38,6 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -300,15 +300,14 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity {
                                 vaccinated = "Yes";
                                 ll_petlastvacinateddate.setVisibility(View.VISIBLE);
                                 if (response.body().getData().getPet_id().getLast_vaccination_date() != null && !response.body().getData().getPet_id().getLast_vaccination_date().isEmpty()) {
-                                    txt_petlastvaccinatedage.setText(": "+response.body().getData().getPet_id().getLast_vaccination_date());
+                                    txt_petlastvaccinatedage.setText(response.body().getData().getPet_id().getLast_vaccination_date());
                                 }
-
                             } else {
                                 ll_petlastvacinateddate.setVisibility(View.GONE);
                                 vaccinated = "No";
                             }
 
-                            String order_date = response.body().getData().getBooking_date();
+                            String order_date = response.body().getData().getDate_and_time();
 
                             String orderid = response.body().getData().getAppointment_UID();
 
@@ -324,11 +323,8 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity {
 
                                 usrname = Address.get(i).getDr_name();
                             }
-
                             appoinment_status = response.body().getData().getAppoinment_status();
-
                             start_appointment_status = response.body().getData().getStart_appointment_status();
-
                             setView(usrname, usr_image, pet_name, pet_image, pet_type, breed
 
                                     , gender, colour, weight, age, order_date, orderid, payment_method, order_cost, vaccinated, addr);
@@ -394,61 +390,61 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity {
 
 
         if(pet_name != null && !pet_name.isEmpty()){
-            txt_pet_name.setText(": "+pet_name);
+            txt_pet_name.setText(pet_name);
         }
 
         if(pet_type != null && !pet_type.isEmpty()){
 
-            txt_pet_type.setText(": "+pet_type);
+            txt_pet_type.setText(pet_type);
         }
 
         if(breed != null && !breed.isEmpty()){
 
-            txt_breed.setText(": "+breed);
+            txt_breed.setText(breed);
         }
 
         if(gender != null && !gender.isEmpty()){
 
-            txt_gender.setText(": "+gender);
+            txt_gender.setText(gender);
         }
 
         if(colour != null && !colour.isEmpty()){
 
-            txt_color.setText(": "+colour);
+            txt_color.setText(colour);
         }
 
         if(weight != null && !weight.isEmpty()){
 
-            txt_weight.setText(": "+weight);
+            txt_weight.setText(weight);
         }
 
         if(age != null && !age.isEmpty()){
 
-            txt_age.setText(": "+age);
+            txt_age.setText(age);
         }
 
         if(vaccinated != null && !vaccinated.isEmpty()){
-            txt_vaccinated.setText(": "+vaccinated);
+            txt_vaccinated.setText(vaccinated);
         }
 
         if(order_date != null && !order_date.isEmpty()){
 
-            txt_order_date.setText(": "+order_date);
+            txt_order_date.setText(order_date);
         }
 
         if(orderid != null && !orderid.isEmpty()){
 
-            txt_booking_id.setText(": "+orderid);
+            txt_booking_id.setText(orderid);
         }
 
         if(payment_method != null && !payment_method.isEmpty()) {
 
-            txt_payment_method.setText(": "+payment_method);
+            txt_payment_method.setText(payment_method);
 
         }
 
         if(order_cost != null && !order_cost.isEmpty()){
-            txt_order_cost.setText(": "+"\u20B9 "+order_cost);
+            txt_order_cost.setText("\u20B9 "+order_cost);
             txt_serv_cost.setText("\u20B9 "+order_cost);
         }
 
@@ -515,7 +511,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity {
                 appoinmentCancelledResponseCall(id);
                });
             dialogButtonRejected.setOnClickListener(view -> dialog.dismiss());
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
 
         } catch (WindowManager.BadTokenException e) {
@@ -604,11 +600,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity {
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        startActivity(new Intent(DoctorAppointmentDetailsActivity.this, PetMyappointmentsActivity.class));
-
-
-
-
+                        startActivity(new Intent(DoctorAppointmentDetailsActivity.this, DoctorDashboardActivity.class));
 
                     }
 
@@ -669,16 +661,19 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity {
 
             Log.w(TAG,"compareDatesandTime--->"+"responseDate :"+responseDate+" "+"currentDate :"+currentDate);
 
-            if (currentDate.compareTo(responseDate)<0 || responseDate.compareTo(currentDate) == 0)
-            {
-                Log.w(TAG,"date is equal");
-                isVaildDate = true;
+            if (currentDate != null) {
+                if (responseDate != null) {
+                    if (currentDate.compareTo(responseDate)<0 || responseDate.compareTo(currentDate) == 0)
+                    {
+                        Log.w(TAG,"date is equal");
+                        isVaildDate = true;
 
-            }else{
-                Log.w(TAG,"date is not equal");
-                isVaildDate = false;
+                    }else{
+                        Log.w(TAG,"date is not equal");
+                        isVaildDate = false;
+                    }
+                }
             }
-
 
 
         }catch (ParseException e1){

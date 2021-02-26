@@ -130,6 +130,8 @@ public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
             i.putExtra("bookedat",completedAppointmentResponseList.get(position).getBooked_at());
             i.putExtra("startappointmentstatus",completedAppointmentResponseList.get(position).getStart_appointment_status());
             i.putExtra("appointmentfor",completedAppointmentResponseList.get(position).getAppointment_for());
+            i.putExtra("userrate",completedAppointmentResponseList.get(position).getUser_rate());
+            i.putExtra("userfeedback", completedAppointmentResponseList.get(position).getUser_feedback());
             i.putExtra("from",TAG);
             context.startActivity(i);
 

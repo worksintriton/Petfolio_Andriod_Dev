@@ -1207,7 +1207,7 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
         });
 
     }
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private SPCreateAppointmentRequest spCreateAppointmentRequest() {
         /*
          * sp_id : 5ff7ef9b1c72093650a13a10
@@ -1286,6 +1286,7 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
         spCreateAppointmentRequest.setCompleted_at("");
         spCreateAppointmentRequest.setMissed_at("");
         spCreateAppointmentRequest.setMobile_type("Android");
+        spCreateAppointmentRequest.setDate_and_time(currentDateandTime);
         Log.w(TAG,"spCreateAppointmentRequest"+ "--->" + new Gson().toJson(spCreateAppointmentRequest));
         return spCreateAppointmentRequest;
     }

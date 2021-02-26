@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,8 +26,6 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
-import com.petfolio.infinitus.petlover.PetMyappointmentsActivity;
-import com.petfolio.infinitus.petlover.PetSPNewAppointmentDetailsActivity;
 import com.petfolio.infinitus.petlover.VideoCallPetLoverActivity;
 import com.petfolio.infinitus.requestpojo.AppoinmentCancelledRequest;
 import com.petfolio.infinitus.requestpojo.AppoinmentCompleteRequest;
@@ -38,7 +35,6 @@ import com.petfolio.infinitus.responsepojo.AppoinmentCancelledResponse;
 import com.petfolio.infinitus.responsepojo.AppoinmentCompleteResponse;
 import com.petfolio.infinitus.responsepojo.NotificationSendResponse;
 import com.petfolio.infinitus.responsepojo.SPAppointmentDetailsResponse;
-import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -46,9 +42,10 @@ import com.wang.avi.AVLoadingIndicatorView;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
-
+import java.util.Objects;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -58,160 +55,136 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
 
     private static final String TAG = "SPAppointmentDetailsActivity";
 
-
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
-
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_back)
     ImageView img_back;
 
-
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_user)
     ImageView img_user;
 
-
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_usrname)
     TextView txt_usrname;
 
-
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_serv_name)
     TextView txt_serv_name;
 
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_serv_cost)
     TextView txt_serv_cost;
 
 
-    Button btn_cancel,btn_complete;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.btn_cancel)
+    Button btn_cancel;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.btn_complete)
+    Button btn_complete;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_petimg)
     ImageView img_petimg;
 
-
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_pet_name)
     TextView txt_pet_name;
 
-
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_pet_type)
     TextView txt_pet_type;
 
-
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_breed)
     TextView txt_breed;
 
-
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_gender)
     TextView txt_gender;
 
-
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_color)
     TextView txt_color;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_weight)
     TextView txt_weight;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_age)
     TextView txt_age;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_vaccinated)
     TextView txt_vaccinated;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_order_date)
     TextView txt_order_date;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_order)
     TextView txt_order_id;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_payment_method)
     TextView txt_payment_method;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_order_cost)
     TextView txt_order_cost;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_address)
     TextView txt_address;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_appointment_date)
+    TextView txt_appointment_date;
 
     String appointment_id;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_videocall)
     ImageView img_videocall;
 
-    String appoinment_status;
 
-    String start_appointment_status;
-
-    private Dialog dialog;
-
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_petlastvacinateddate)
     LinearLayout ll_petlastvacinateddate;
-    TextView txt_petlastvaccinatedage;
-    private String fromactivity;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_petlastvaccinatedage)
+    TextView txt_petlastvaccinatedage;
+
+    private String fromactivity;
     private String spid;
     private String appointmentid;
     private String userid;
     private String bookedat;
     private boolean isVaildDate;
+    String appoinment_status;
+    String start_appointment_status;
+    private Dialog dialog;
 
-    @SuppressLint("LongLogTag")
+
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sp_appointment_details);
+        ButterKnife.bind(this);
 
 
-        avi_indicator=findViewById(R.id.avi_indicator);
-
-        SessionManager  session = new SessionManager(getApplicationContext());
-        HashMap<String, String> user = session.getProfileDetails();
-        //userid = user.get(SessionManager.KEY_ID);
-
-
-        img_back=findViewById(R.id.img_back);
-
-
-        img_user =findViewById(R.id.img_user);
-
-
-        txt_usrname =findViewById(R.id.txt_usrname);
-
-
-        txt_serv_name=findViewById(R.id.txt_serv_name);
-
-
-        txt_serv_cost=findViewById(R.id.txt_serv_cost);
-
-
-        btn_cancel=findViewById(R.id.btn_cancel);
-        btn_complete=findViewById(R.id.btn_complete);
-
-
-        img_petimg=findViewById(R.id.img_petimg);
-
-
-        txt_pet_name=findViewById(R.id.txt_pet_name);
-
-
-        txt_pet_type=findViewById(R.id.txt_pet_type);
-
-
-        txt_breed=findViewById(R.id.txt_breed);
-
-
-        txt_gender=findViewById(R.id.txt_gender);
-
-
-        txt_color=findViewById(R.id.txt_color);
-
-
-        txt_weight=findViewById(R.id.txt_weight);
-
-
-        txt_age=findViewById(R.id.txt_age);
-
-
-        txt_vaccinated =findViewById(R.id.txt_vaccinated);
-        ll_petlastvacinateddate = findViewById(R.id.ll_petlastvacinateddate);
         ll_petlastvacinateddate.setVisibility(View.GONE);
-        txt_petlastvaccinatedage = findViewById(R.id.txt_petlastvaccinatedage);
 
-
-        txt_order_date=findViewById(R.id.txt_order_date);
-
-
-        txt_order_id =findViewById(R.id.txt_order);
-
-
-        txt_payment_method =findViewById(R.id.txt_payment_method);
-
-
-        txt_order_cost=findViewById(R.id.txt_order_cost);
-
-
-        txt_address=findViewById(R.id.txt_address);
-
-
-        img_videocall=findViewById(R.id.img_videocall);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -221,12 +194,14 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
 
             Log.w(TAG, "fromactivity : " + fromactivity);
         }
-        if(fromactivity != null && fromactivity.equalsIgnoreCase("SPCompletedAppointmentAdapter") || fromactivity.equalsIgnoreCase("SPMissedAppointmentAdapter")){
-            btn_cancel.setVisibility(View.GONE);
-            btn_complete.setVisibility(View.GONE);
-        }else{
-            btn_cancel.setVisibility(View.VISIBLE);
-            btn_complete.setVisibility(View.VISIBLE);
+        if (fromactivity != null) {
+            if(fromactivity.equalsIgnoreCase("SPCompletedAppointmentAdapter") || fromactivity.equalsIgnoreCase("SPMissedAppointmentAdapter")){
+                btn_cancel.setVisibility(View.GONE);
+                btn_complete.setVisibility(View.GONE);
+            }else{
+                btn_cancel.setVisibility(View.VISIBLE);
+                btn_complete.setVisibility(View.VISIBLE);
+            }
         }
 
 
@@ -236,7 +211,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
         if(bookedat != null){
             compareDatesandTime(currentDateandTime,bookedat);
         }
-        btn_cancel=findViewById(R.id.btn_cancel);
+
 
 
         if(isVaildDate){
@@ -278,14 +253,17 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
 
                     if (200 == response.body().getCode()) {
 
-                        String vaccinated, addr = null, usrname = null;
+                        String vaccinated, addr, usrname;
 
-                        //  String usr_image = response.body().getData().getDoctor_id().getProfile_img();
                         String usr_image = "";
                         if (response.body().getData() != null) {
                             spid = response.body().getData().getSp_id().get_id();
                             appointmentid = response.body().getData().getAppointment_UID();
                             userid = response.body().getData().getUser_id().get_id();
+
+                            if(response.body().getData().getBooking_date_time() != null){
+                                txt_appointment_date.setText(response.body().getData().getBooking_date_time());
+                            }
 
                             usrname = response.body().getData().getSp_business_info().get(0).getBussiness_name();
                             Log.w(TAG,"usrname : "+usrname);
@@ -322,7 +300,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
                                 vaccinated = "No";
                             }
 
-                            String order_date = response.body().getData().getBooking_date();
+                            String order_date = response.body().getData().getDate_and_time();
 
                             String orderid = response.body().getData().getAppointment_UID();
 
@@ -367,11 +345,11 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
         return appointmentDetailsRequest;
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "LongLogTag", "LogNotTimber"})
     private void setView(String usrname, String usr_image, String servname, String servcost, String pet_name, String pet_image, String pet_type, String breed, String gender, String colour, String weight, String age, String order_date, String orderid, String payment_method, String order_cost, String vaccinated, String addr) {
 
 
-        if(usr_image != null && !usr_image.equals("")){
+        if(usr_image != null && !usr_image.isEmpty()){
 
             Glide.with(SPAppointmentDetailsActivity.this)
                     .load(usr_image)
@@ -389,133 +367,111 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
             txt_usrname.setText(usrname);
         }
 
-        if(servname != null && !servname.equals("")){
+        if(servname != null && !servname.isEmpty()){
 
             txt_serv_name.setText(servname);
         }
 
-        if(servcost != null && !servcost.equals("")){
+        if(servcost != null && !servcost.isEmpty()){
 
             txt_serv_cost.setText(servcost);
         }
 
 
-        if(pet_image != null && !pet_image.equals("")){
-
+        if(pet_image != null && !pet_image.isEmpty()){
             Glide.with(SPAppointmentDetailsActivity.this)
                     .load(pet_image)
                     .into(img_petimg);
-
-
+        }else{
+            Glide.with(SPAppointmentDetailsActivity.this)
+                    .load(APIClient.PROFILE_IMAGE_URL)
+                    .into(img_petimg);
         }
 
-        if(pet_name != null && !pet_name.equals("")){
+        if(pet_name != null && !pet_name.isEmpty()){
 
             txt_pet_name.setText(pet_name);
         }
 
-        if(pet_type != null && pet_type.equals("")){
+        if(pet_type != null && !pet_type.isEmpty()){
 
             txt_pet_type.setText(pet_type);
         }
 
-        if(breed != null && !breed.equals("")){
+        if(breed != null && !breed.isEmpty()){
 
             txt_breed.setText(breed);
         }
 
-        if(gender != null && !gender.equals("")){
+        if(gender != null && !gender.isEmpty()){
 
             txt_gender.setText(gender);
         }
 
-        if(colour != null && !colour.equals("")){
+        if(colour != null && !colour.isEmpty()){
 
             txt_color.setText(colour);
         }
 
-        if(weight != null && !weight.equals("")){
+        if(weight != null && !weight.isEmpty()){
 
             txt_weight.setText(weight);
         }
 
-        if(age != null && !age.equals("")){
+        if(age != null && !age.isEmpty()){
 
             txt_age.setText(age);
         }
 
         txt_vaccinated.setText(vaccinated);
 
-        if(order_date != null && !order_date.equals("")){
-
+        if(order_date != null && !order_date.isEmpty()){
             txt_order_date.setText(order_date);
         }
 
-        if(orderid != null && !orderid.equals("")){
-
+        if(orderid != null && !orderid.isEmpty()){
             txt_order_id.setText(orderid);
         }
 
-        if(payment_method != null && !payment_method.equals("")) {
+        if(payment_method != null && !payment_method.isEmpty()) {
 
             txt_payment_method.setText(payment_method);
 
         }
 
-        if(order_cost != null && !order_cost.equals("")){
+        if(order_cost != null && !order_cost.isEmpty()){
             txt_order_cost.setText("\u20B9 "+order_cost);
             txt_serv_cost.setText("\u20B9 "+order_cost);
         }
 
-        if(addr != null && !addr.equals("")){
+        if(addr != null && !addr.isEmpty()){
 
             txt_address.setText(addr);
         }
 
-        img_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        img_back.setOnClickListener(v -> onBackPressed());
 
-                onBackPressed();
+        img_videocall.setOnClickListener(v -> {
+            Log.w(TAG,"Start_appointment_status : "+start_appointment_status);
+            if(start_appointment_status != null && start_appointment_status.equalsIgnoreCase("Not Started")){
+                Toasty.warning(SPAppointmentDetailsActivity.this,"Doctor is yet to start the Appointment. Please wait for the doctor to initiate the Appointment", Toast.LENGTH_SHORT, true).show();
+            }else {
+                Intent i = new Intent(SPAppointmentDetailsActivity.this, VideoCallPetLoverActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("id", appointment_id);
+                Log.w(TAG, "ID-->" + appointment_id);
+                startActivity(i);
             }
+
+
         });
 
-        img_videocall.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onClick(View v) {
-                Log.w(TAG,"Start_appointment_status : "+start_appointment_status);
-                if(start_appointment_status != null && start_appointment_status.equalsIgnoreCase("Not Started")){
-                    Toasty.warning(SPAppointmentDetailsActivity.this,"Doctor is yet to start the Appointment. Please wait for the doctor to initiate the Appointment", Toast.LENGTH_SHORT, true).show();
-                }else {
-                    Intent i = new Intent(SPAppointmentDetailsActivity.this, VideoCallPetLoverActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra("id", appointment_id);
-                    Log.w(TAG, "ID-->" + appointment_id);
-                    startActivity(i);
-                }
+        btn_cancel.setOnClickListener(v -> showStatusAlert(appointment_id));
 
-
-            }
-        });
-
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                showStatusAlert(appointment_id);
-            }
-        });
-
-        btn_complete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                showStatusAlertCompleteAppointment(appointment_id);
-            }
-        });
+        btn_complete.setOnClickListener(v -> showStatusAlertCompleteAppointment(appointment_id));
 
     }
 
+    @SuppressLint("SetTextI18n")
     private void showStatusAlert(String id) {
         try {
             dialog = new Dialog(SPAppointmentDetailsActivity.this);
@@ -527,32 +483,13 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
             Button dialogButtonRejected = (Button) dialog.findViewById(R.id.btnReject);
             dialogButtonRejected.setText("No");
 
-            dialogButtonApprove.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                    //if(appointmenttype != null && appointmenttype.equalsIgnoreCase("Doctor")){
-                        appoinmentCancelledResponseCall(id);
-                   // } else if(appointmenttype != null && appointmenttype.equalsIgnoreCase("SP")){
-                        //spappoinmentCancelledResponseCall(id);
-                    //}
+            dialogButtonApprove.setOnClickListener(view -> {
+                dialog.dismiss();
+                    appoinmentCancelledResponseCall(id);
 
-
-
-                }
             });
-            dialogButtonRejected.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // Toasty.info(context, "Rejected Successfully", Toast.LENGTH_SHORT, true).show();
-                    dialog.dismiss();
-
-
-
-
-                }
-            });
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialogButtonRejected.setOnClickListener(view -> dialog.dismiss());
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
 
         } catch (WindowManager.BadTokenException e) {
@@ -562,7 +499,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
 
     }
 
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private void appoinmentCancelledResponseCall(String id) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -588,9 +525,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
 
 
                     }
-                    else{
-                        //showErrorLoading(response.body().getMessage());
-                    }
+
                 }
 
 
@@ -605,7 +540,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
         });
 
     }
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private AppoinmentCancelledRequest appoinmentCancelledRequest(String id) {
 
         /*
@@ -667,6 +602,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
         startActivity(intent);
         finish();
     }
+    @SuppressLint("SetTextI18n")
     private void showStatusAlertCompleteAppointment(String id) {
 
         try {
@@ -680,27 +616,14 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
             Button dialogButtonRejected = (Button) dialog.findViewById(R.id.btnReject);
             dialogButtonRejected.setText("No");
 
-            dialogButtonApprove.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                    appoinmentCompleteResponseCall(id);
+            dialogButtonApprove.setOnClickListener(view -> {
+                dialog.dismiss();
+                appoinmentCompleteResponseCall(id);
 
 
-                }
             });
-            dialogButtonRejected.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // Toasty.info(context, "Rejected Successfully", Toast.LENGTH_SHORT, true).show();
-                    dialog.dismiss();
-
-
-
-
-                }
-            });
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialogButtonRejected.setOnClickListener(view -> dialog.dismiss());
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
 
         } catch (WindowManager.BadTokenException e) {
@@ -747,7 +670,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
         });
 
     }
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private AppoinmentCompleteRequest appoinmentCompleteRequest(String id) {
         /*
          * _id : 5fc639ea72fc42044bfa1683
@@ -766,7 +689,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
         return appoinmentCompleteRequest;
     }
 
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private void spnotificationSendResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -776,6 +699,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<NotificationSendResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<NotificationSendResponse> call, @NonNull Response<NotificationSendResponse> response) {
                 avi_indicator.smoothToHide();
@@ -793,6 +717,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
 
             }
 
+            @SuppressLint("LogNotTimber")
             @Override
             public void onFailure(@NonNull Call<NotificationSendResponse> call, @NonNull Throwable t) {
                 avi_indicator.smoothToHide();
@@ -802,7 +727,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
         });
 
     }
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private SPNotificationSendRequest spNotificationSendRequest() {
 
         /*
@@ -835,24 +760,25 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
 
             @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
 
-            String str1 = currentDateandTime;
-            Date currentDate = formatter.parse(str1);
+            Date currentDate = formatter.parse(currentDateandTime);
 
-            String str2 = bookingDateandTime;
-            Date responseDate = formatter.parse(str2);
+            Date responseDate = formatter.parse(bookingDateandTime);
 
             Log.w(TAG,"compareDatesandTime--->"+"responseDate :"+responseDate+" "+"currentDate :"+currentDate);
 
-            if (currentDate.compareTo(responseDate)<0 || responseDate.compareTo(currentDate) == 0)
-            {
-                Log.w(TAG,"date is equal");
-                isVaildDate = true;
+            if (currentDate != null) {
+                if (responseDate != null) {
+                    if (currentDate.compareTo(responseDate)<0 || responseDate.compareTo(currentDate) == 0)
+                    {
+                        Log.w(TAG,"date is equal");
+                        isVaildDate = true;
 
-            }else{
-                Log.w(TAG,"date is not equal");
-                isVaildDate = false;
+                    }else{
+                        Log.w(TAG,"date is not equal");
+                        isVaildDate = false;
+                    }
+                }
             }
-
 
 
         }catch (ParseException e1){

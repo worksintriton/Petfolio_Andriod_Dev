@@ -193,17 +193,6 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/btn_accept"
-                        android:layout_width="110dp"
-                        android:layout_height="35dp"
-                        android:layout_marginEnd="10dp"
-                        android:background="@drawable/green_bgm_border"
-                        android:fontFamily="@font/futuramediumbt"
-                        android:text="@string/accept"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:visibility="gone" />
-                    <Button
                         android:id="@+id/btn_cancel"
                         android:layout_width="110dp"
                         android:layout_height="30dp"
@@ -213,6 +202,48 @@
                         android:background="@drawable/orange_background_button"
                         android:fontFamily="@font/futuramediumbt"
                         android:text="@string/cancel"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        tools:ignore="ButtonStyle" />
+                    <Button
+                        android:id="@+id/btn_accept"
+                        android:layout_width="110dp"
+                        android:layout_height="35dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/green_bgm_border"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:text="@string/accept"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:visibility="gone"
+                        tools:ignore="ButtonStyle" />
+
+
+
+                    <Button
+                        android:id="@+id/btn_add_review"
+                        android:layout_width="110dp"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/new_rounded_corner_btn"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:text="@string/add_review"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        tools:ignore="ButtonStyle" />
+
+                    <Button
+                        android:id="@+id/btn_prescriptiondetails"
+                        android:layout_width="110dp"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/new_rounded_corner_btn"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:padding="5dp"
+                        android:text="@string/view_prescription"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="12sp"
@@ -315,7 +346,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -339,7 +370,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -363,7 +394,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -387,7 +418,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -411,7 +442,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -433,7 +464,7 @@
                     android:id="@+id/txt_weight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -455,7 +486,7 @@
                     android:id="@+id/txt_age"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -477,7 +508,7 @@
                     android:id="@+id/txt_vaccinated"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -502,7 +533,7 @@
                     android:id="@+id/txt_petlastvaccinatedage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -568,11 +599,10 @@
                     android:id="@+id/txt_order_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -591,11 +621,10 @@
                     android:id="@+id/txt_order"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -614,11 +643,10 @@
                     android:id="@+id/txt_payment_method"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -637,18 +665,16 @@
                     android:id="@+id/txt_order_cost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/vertical_dotted_line"
                 android:layerType="software" />
-
             <TextView
                 android:id="@+id/text"
                 android:layout_width="wrap_content"
@@ -658,17 +684,16 @@
                 android:text="@string/address"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
-
             <TextView
                 android:id="@+id/txt_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:drawablePadding="10dp"
                 android:ellipsize="end"
-                android:maxLines="3"
+                android:maxLines="2"
                 android:text="@string/desc_dummy"
-                android:textColor="@color/black"
+                android:textColor="@color/new_sec_txt_color"
                 android:textSize="14sp" />
 
         </LinearLayout>

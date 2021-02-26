@@ -1,6 +1,7 @@
 package com.petfolio.infinitus.doctor;
 
 
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
@@ -54,19 +55,7 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
 
     SessionManager session;
 
-    private String Doctor_Name = "";
-    private String Doctor_Image = "";
-    private String Doctor_ID = "";
-    private String Treatment_Done_by = "";
-    private String Patient_Name = "";
-    private String Patient_Image = "";
-    private String Patient_ID = "";
-    private String Family_ID = "";
-    private String Family_Name = "";
-    private String Family_Image = "";
-    private String Date = "";
-    private String Doctor_Email_id = "";
-    private String Patient_Email_id = "";
+
     private String userid;
     private String appoinmentid;
 
@@ -76,18 +65,19 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
     private String pdfUrl;
 
 
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_prescription_details);
+        Log.w(TAG,"Oncreate");
 
 
 
 
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
-        Doctor_Name = user.get(SessionManager.KEY_FIRST_NAME);
-        Doctor_ID = user.get(SessionManager.KEY_ID);
+
 
         avi_indicator = findViewById(R.id.avi_indicator);
         avi_indicator.setVisibility(View.GONE);

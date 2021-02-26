@@ -100,6 +100,11 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
             if(newAppointmentResponseList.get(position).getDoctor_name() != null) {
                 holder.txt_doctorname.setText(newAppointmentResponseList.get(position).getDoctor_name());
             }
+            if(newAppointmentResponseList.get(position).getStart_appointment_status() != null && !newAppointmentResponseList.get(position).getStart_appointment_status().equalsIgnoreCase("Not Started")) {
+                holder.btn_cancel.setVisibility(View.GONE);
+            }else{
+                holder.btn_cancel.setVisibility(View.VISIBLE);
+            }
 
         }
         else if(newAppointmentResponseList.get(position).getAppointment_for() != null && newAppointmentResponseList.get(position).getAppointment_for().equalsIgnoreCase("SP") ){
@@ -162,11 +167,7 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
             holder.btn_cancel.setVisibility(View.GONE);
         }
 
-        if(newAppointmentResponseList.get(position).getStart_appointment_status() != null && !newAppointmentResponseList.get(position).getStart_appointment_status().equalsIgnoreCase("Not Started")) {
-            holder.btn_cancel.setVisibility(View.GONE);
-        }else{
-            holder.btn_cancel.setVisibility(View.VISIBLE);
-        }
+
 
 
             holder.btn_cancel.setOnClickListener(v -> {

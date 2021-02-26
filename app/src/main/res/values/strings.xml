@@ -210,7 +210,7 @@
     <string name="medical_history">See Medical History</string>
     <string name="appointmentdateandtime">Appointment Date and Time</string>
     <string name="order_date">Order date</string>
-    <string name="bookingdate">Booking Date</string>
+    <string name="bookingdate">Booked At</string>
     <string name="order">Order #</string>
     <string name="bookingid">Booking ID</string>
     <string name="payment_method">Payment Method</string>
