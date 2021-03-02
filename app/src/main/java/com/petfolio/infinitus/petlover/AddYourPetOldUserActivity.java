@@ -63,47 +63,65 @@ import retrofit2.Response;
 
 public class AddYourPetOldUserActivity extends AppCompatActivity {
     private  String TAG = "AddYourPetOldUserActivity";
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
     ImageView img_back;
 
 
-
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_petname)
     EditText edt_petname;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.sprpettype)
     Spinner sprpettype;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.sprpetbreed)
     Spinner sprpetbreed;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.sprpetgender)
     Spinner sprpetgender;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_petcolor)
     EditText edt_petcolor;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_petweight)
     EditText edt_petweight;
 
-    @BindView(R.id.edt_petage)
-    EditText edt_petage;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_petdob)
+    RelativeLayout rl_petdob;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_petdob)
+    TextView txt_petdob;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rgvaccinated)
     RadioGroup rgvaccinated;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rlpetlastvaccinatedagedate)
     RelativeLayout rlpetlastvaccinatedagedate;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.llpetlastvaccinatedagedate)
     LinearLayout llpetlastvaccinatedagedate;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_petlastvaccinatedage)
     TextView txt_petlastvaccinatedage;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_continue)
     Button btn_continue;
 
@@ -118,7 +136,9 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
 
     private int year, month, day;
     String SelectedLastVaccinateddate = "";
+    String SelectedPetDOB = "";
     private static final int DATE_PICKER_ID = 0 ;
+    private static final int PET_DATE_PICKER_ID = 1 ;
     Boolean isvaccinated = true;
     private Dialog alertDialog;
     private String userid;
@@ -135,6 +155,7 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
     private List<BreedTypeResponse.DataBean> breedTypedataBeanList;
 
 
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,7 +163,6 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         avi_indicator.setVisibility(View.GONE);
 
-        edt_petage.setTransformationMethod(new NumericKeyBoardTransformationMethod());
 
 
         edt_petweight.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,2)});
@@ -227,10 +247,16 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
             }
 
         });
-
         rlpetlastvaccinatedagedate.setOnClickListener(v -> SelectDate());
         btn_continue.setOnClickListener(v -> addYourPetValidator());
         img_back.setOnClickListener(v -> onBackPressed());
+
+        rl_petdob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SelectPetDOB();
+            }
+        });
 
 
 
@@ -243,7 +269,7 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
         int petweightlength = edt_petweight.getText().toString().trim().length();
 
         if (Objects.requireNonNull(edt_petname.getText()).toString().trim().equals("") && Objects.requireNonNull(edt_petweight.getText()).toString().trim().equals("") &&
-                Objects.requireNonNull(edt_petage.getText()).toString().trim().equals("")) {
+                Objects.requireNonNull(txt_petdob.getText()).toString().trim().equals("")) {
             Toasty.warning(getApplicationContext(), "Please enter the fields", Toast.LENGTH_SHORT, true).show();
             can_proceed = false;
         } else if (edt_petname.getText().toString().trim().equals("")) {
@@ -265,9 +291,9 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
             edt_petweight.requestFocus();
             can_proceed = false;
         }
-        else if (Objects.requireNonNull(edt_petage.getText()).toString().trim().equals("")) {
-            edt_petage.setError("Please enter pet age");
-            edt_petage.requestFocus();
+        else if (Objects.requireNonNull(txt_petdob.getText()).toString().trim().equals("")) {
+            txt_petdob.setError("Please enter pet date of birth");
+            txt_petdob.requestFocus();
             can_proceed = false;
         } else if (selectedRadioButton.equalsIgnoreCase("Yes") && SelectedLastVaccinateddate.isEmpty()) {
             showErrorLoading("Please select pet last vaccinated age");
@@ -373,21 +399,44 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
         showDialog(DATE_PICKER_ID);
 
     }
+    private void SelectPetDOB() {
+
+        final Calendar c = Calendar.getInstance();
+        year = c.get(Calendar.YEAR);
+        month = c.get(Calendar.MONTH);
+        day = c.get(Calendar.DAY_OF_MONTH);
+
+
+        showDialog(PET_DATE_PICKER_ID);
+
+    }
+    @SuppressLint("LogNotTimber")
     @Override
     protected Dialog onCreateDialog(int id) {
-        if (id == DATE_PICKER_ID) {// open datepicker dialog.
+        Log.w(TAG,"onCreateDialog id : "+id);
+        if (id == DATE_PICKER_ID) {
+            // open datepicker dialog.
             // set date picker for current date
             // add pickerListener listner to date picker
             // return new DatePickerDialog(this, pickerListener, year, month,day);
             DatePickerDialog dialog = new DatePickerDialog(this, pickerListener, year, month, day);
             dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
             return dialog;
+        }else if (id == PET_DATE_PICKER_ID) {
+            // open datepicker dialog.
+            // set date picker for current date
+            // add pickerListener listner to date picker
+            // return new DatePickerDialog(this, pickerListener, year, month,day);
+            DatePickerDialog dialog = new DatePickerDialog(this, petdobpickerListener, year, month, day);
+            dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+            return dialog;
         }
         return null;
     }
-    private DatePickerDialog.OnDateSetListener pickerListener = new DatePickerDialog.OnDateSetListener() {
+    private final DatePickerDialog.OnDateSetListener pickerListener = new DatePickerDialog.OnDateSetListener() {
 
         // when dialog box is closed, below method will be called.
+        @SuppressLint("LogNotTimber")
         @Override
         public void onDateSet(DatePicker view, int selectedYear,
                               int selectedMonth, int selectedDay) {
@@ -422,6 +471,45 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
 
         }
     };
+    private final DatePickerDialog.OnDateSetListener petdobpickerListener = new DatePickerDialog.OnDateSetListener() {
+
+        // when dialog box is closed, below method will be called.
+        @SuppressLint("LogNotTimber")
+        @Override
+        public void onDateSet(DatePicker view, int selectedYear,
+                              int selectedMonth, int selectedDay) {
+
+            year  = selectedYear;
+            month = selectedMonth;
+            day   = selectedDay;
+
+
+
+            String strdayOfMonth;
+            String strMonth;
+            int month1 =(month + 1);
+            if(day == 9 || day <9){
+                strdayOfMonth = "0"+day;
+                Log.w(TAG,"Selected dayOfMonth-->"+strdayOfMonth);
+            }else{
+                strdayOfMonth = String.valueOf(day);
+            }
+
+            if(month1 == 9 || month1 <9){
+                strMonth = "0"+month1;
+                Log.w(TAG,"Selected month1-->"+strMonth);
+            }else{
+                strMonth = String.valueOf(month1);
+            }
+
+            SelectedPetDOB = strdayOfMonth + "-" + strMonth + "-" + year;
+
+            // Show selected date
+            txt_petdob.setText(SelectedPetDOB);
+
+        }
+    };
+
     public boolean validdSelectPetType() {
         if(strPetType.equalsIgnoreCase("Select Pet Type")){
             final AlertDialog alertDialog = new AlertDialog.Builder(AddYourPetOldUserActivity.this).create();
@@ -474,8 +562,6 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
 
         return true;
     }
-
-
     @SuppressLint("LogNotTimber")
     private void addYourPetResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
@@ -544,7 +630,7 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
         addYourPetRequest.setPet_gender(strPetGenderType);
         addYourPetRequest.setPet_color(edt_petcolor.getText().toString());
         addYourPetRequest.setPet_weight(Integer.parseInt(edt_petweight.getText().toString()));
-        addYourPetRequest.setPet_age(Integer.parseInt(edt_petage.getText().toString()));
+        addYourPetRequest.setPet_age(Integer.parseInt(txt_petdob.getText().toString()));
         addYourPetRequest.setVaccinated(isvaccinated);
         addYourPetRequest.setLast_vaccination_date(SelectedLastVaccinateddate);
         addYourPetRequest.setDefault_status(true);
@@ -572,15 +658,12 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
 
         }
     }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(AddYourPetOldUserActivity.this, PetLoverProfileScreenActivity.class));
         finish();
     }
-
-
     @SuppressLint("LogNotTimber")
     public void petTypeListResponseCall(){
         avi_indicator.setVisibility(View.VISIBLE);
@@ -649,7 +732,6 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
 
         }
     }
-
     @SuppressLint("LogNotTimber")
     private void breedTypeResponseByPetIdCall(String petTypeId) {
         avi_indicator.setVisibility(View.VISIBLE);

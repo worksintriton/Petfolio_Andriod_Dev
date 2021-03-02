@@ -37,10 +37,13 @@
     <string name="pet_name">Pet Name</string>
     <string name="pet_gender">Pet Gender</string>
     <string name="pet_color">Pet color</string>
-    <string name="pet_weight">Pet weight</string>
+    <string name="pet_weight">Pet weight (kg)</string>
     <string name="pet_age">Pet age</string>
+    <string name="pet_dob">Pet Date of Birth</string>
     <string name="vaccinated">Vaccinated</string>
     <string name="select_date">Select date</string>
+    <string name="select_vaccinated">Select vaccinated date</string>
+    <string name="select_petdob">Select pet date of birth</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="err_msg_type_of_pettype">Select the pet type</string>
@@ -145,6 +148,7 @@
     <string name="allergies">Allergies</string>
     <string name="upload_pet_current_images">Upload pet current images</string>
     <string name="continues">Continue</string>
+    <string name="next">Next</string>
     <string name="add_comment_here">Add Comment here..</string>
     <string name="book_now">Book Now</string>
 
@@ -395,6 +399,12 @@
     <string name="available_days">Available days</string>
     <string name="available_times">Available Times</string>
     <string name="save_changes">Save Changes</string>
+    <string name="friendly_with_kids_10_year"><![CDATA[Friendly with kids < 10 year]]></string>
+    <string name="friendly_with_kids_greater_10_year"><![CDATA[Friendly with kids > 10 year]]></string>
+    <string name="spec1">Spec1</string>
+
+    <string name="text_with_bullet"> \u2022 Spec1</string>
+
 
 
 </resources>

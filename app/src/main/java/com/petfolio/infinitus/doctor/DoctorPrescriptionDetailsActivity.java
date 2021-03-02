@@ -8,6 +8,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -61,6 +65,8 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
 
     RecyclerView rv_prescriptiondetails;
     TextView  txt_no_records;
+    WebView webView;
+
     private List<PrescriptionCreateResponse.DataBean.PrescriptionDataBean> prescriptionDataList;
     private String pdfUrl;
 
@@ -83,6 +89,7 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
         avi_indicator.setVisibility(View.GONE);
         rv_prescriptiondetails = findViewById(R.id.rv_prescriptiondetails);
         txt_no_records = findViewById(R.id.txt_no_records);
+        webView = findViewById(R.id.webView);
 
 
         Bundle extras = getIntent().getExtras();
@@ -120,6 +127,7 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
         Log.w(TAG,"url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<PrescriptionCreateResponse>() {
+            @SuppressLint({"SetJavaScriptEnabled", "LogNotTimber"})
             @Override
             public void onResponse(@NonNull Call<PrescriptionCreateResponse> call, @NonNull Response<PrescriptionCreateResponse> response) {
                 avi_indicator.smoothToHide();
@@ -147,14 +155,42 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
 
                           try
                           {
-                              Intent intentUrl = new Intent(Intent.ACTION_VIEW);
+                              Log.w(TAG,"pdfUrl : "+pdfUrl);
+                              if(pdfUrl != null) {
+                                  webView.requestFocus();
+                                  webView.getSettings().setJavaScriptEnabled(true);
+
+                                  String url = "https://docs.google.com/viewer?embedded = true&url = "+pdfUrl;
+                                  webView.loadUrl(pdfUrl);
+                                  webView.setWebViewClient(new WebViewClient() {
+                                      @Override
+                                      public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                                          view.loadUrl(url);
+                                          return true;
+                                      }
+                                  });
+                                  webView.setWebChromeClient(new WebChromeClient() {
+                                      public void onProgressChanged(WebView view, int progress) {
+                                          if (progress < 100) {
+
+                                          }
+                                          if (progress == 100) {
+
+                                          }
+                                      }
+                                  });
+
+                              }
+
+
+                             /* Intent intentUrl = new Intent(Intent.ACTION_VIEW);
                               intentUrl.setDataAndType(Uri.parse(pdfUrl), "application/pdf");
                               intentUrl.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                              startActivity(intentUrl);
+                              startActivity(intentUrl);*/
                           }
-                          catch (ActivityNotFoundException e)
+                          catch (Exception e)
                           {
-                              Toast.makeText(DoctorPrescriptionDetailsActivity.this, "No PDF Viewer Installed", Toast.LENGTH_LONG).show();
+                              //Toast.makeText(DoctorPrescriptionDetailsActivity.this, "No PDF Viewer Installed", Toast.LENGTH_LONG).show();
                           }
                       }
 
@@ -168,6 +204,7 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
 
             }
 
+            @SuppressLint("LogNotTimber")
             @Override
             public void onFailure(@NonNull Call<PrescriptionCreateResponse> call, @NonNull Throwable t) {
                 avi_indicator.smoothToHide();
@@ -187,6 +224,14 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
         prescriptionDetailsRequest.setAppointment_ID(appoinmentid);
         Log.w(TAG,"prescriptionDetailsRequest"+ "--->" + new Gson().toJson(prescriptionDetailsRequest));
         return prescriptionDetailsRequest;
+    }
+
+    public class WebViewController extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+        }
     }
 
 
