@@ -68,6 +68,11 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
 
+        <activity android:name=".petlover.PetEditOtherInformationsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
 
         <activity
             android:name=".activity.VerifyOtpActivity"

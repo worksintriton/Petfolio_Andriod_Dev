@@ -128,6 +128,13 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
                     i.putExtra("vaccinatedstatus",petListResponseList.get(position).isVaccinated());
                     i.putExtra("vaccinateddate",petListResponseList.get(position).getLast_vaccination_date());
                     i.putExtra("defaultstatus",petListResponseList.get(position).isDefault_status());
+                    i.putExtra("pet_spayed",petListResponseList.get(position).isPet_spayed());
+                    i.putExtra("pet_purebred",petListResponseList.get(position).isPet_purebred());
+                    i.putExtra("pet_frnd_with_dog",petListResponseList.get(position).isPet_frnd_with_dog());
+                    i.putExtra("pet_frnd_with_cat",petListResponseList.get(position).isPet_frnd_with_cat());
+                    i.putExtra("pet_microchipped",petListResponseList.get(position).isPet_microchipped());
+                    i.putExtra("pet_tick_free",petListResponseList.get(position).isPet_tick_free());
+                    i.putExtra("pet_private_part",petListResponseList.get(position).isPet_private_part());
                     context.startActivity(i);
 
                 } else if(titleName != null && titleName.equalsIgnoreCase("Delete")){

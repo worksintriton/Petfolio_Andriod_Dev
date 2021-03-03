@@ -171,6 +171,16 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
     String SelectedPetDOB = "";
 
 
+    private boolean pet_spayed;
+    private boolean pet_purebred;
+    private boolean pet_frnd_with_dog;
+    private boolean pet_frnd_with_cat;
+    private boolean pet_frnd_with_kit;
+    private boolean pet_microchipped;
+    private boolean pet_tick_free;
+    private boolean pet_private_part;
+
+
 
     @SuppressLint({"LogNotTimber", "SetTextI18n"})
     @Override
@@ -204,6 +214,15 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
             SelectedLastVaccinateddate = extras.getString("vaccinateddate");
             defaultstatus = extras.getBoolean("defaultstatus");
             petdob = extras.getString("petdob");
+
+           pet_spayed = extras.getBoolean("pet_spayed");
+           pet_purebred  = extras.getBoolean("pet_purebred");
+           pet_frnd_with_dog  = extras.getBoolean("pet_frnd_with_dog");
+           pet_frnd_with_cat  = extras.getBoolean("pet_frnd_with_cat");
+           pet_frnd_with_kit  = extras.getBoolean("pet_frnd_with_kit");
+           pet_microchipped  = extras.getBoolean("pet_microchipped");
+           pet_tick_free  = extras.getBoolean("pet_tick_free");
+           pet_private_part  = extras.getBoolean("pet_private_part");
 
             Log.w(TAG,"strPetType : "+strPetType+" strPetBreedType : "+strPetBreedType+" strPetGenderType : "+strPetGenderType);
 
@@ -615,7 +634,7 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(EditYourPetProfileInfoActivity.this, PetLoverProfileScreenActivity.class));
+        //startActivity(new Intent(EditYourPetProfileInfoActivity.this, PetLoverProfileScreenActivity.class));
         finish();
     }
 
@@ -781,11 +800,26 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
                 avi_indicator.smoothToHide();
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        Intent intent = new Intent(getApplicationContext(),EditYourPetImageActivity.class);
+
+                        Intent intent = new Intent(getApplicationContext(),PetEditOtherInformationsActivity.class);
                         intent.putExtra("petid",petid);
                         intent.putExtra("userid",userid);
                         intent.putExtra("petimage",petimage);
+                        intent.putExtra("pet_spayed",pet_spayed);
+                        intent.putExtra("pet_purebred",pet_purebred);
+                        intent.putExtra("pet_frnd_with_dog",pet_frnd_with_dog);
+                        intent.putExtra("pet_frnd_with_cat",pet_frnd_with_cat);
+                        intent.putExtra("pet_frnd_with_kit",pet_frnd_with_kit);
+                        intent.putExtra("pet_microchipped",pet_microchipped);
+                        intent.putExtra("pet_tick_free",pet_tick_free);
+                        intent.putExtra("pet_private_part",pet_private_part);
                         startActivity(intent);
+
+                        /*Intent intent = new Intent(getApplicationContext(),EditYourPetImageActivity.class);
+                        intent.putExtra("petid",petid);
+                        intent.putExtra("userid",userid);
+                        intent.putExtra("petimage",petimage);
+                        startActivity(intent);*/
                     }
                     else{
                         showErrorLoading(response.body().getMessage());
