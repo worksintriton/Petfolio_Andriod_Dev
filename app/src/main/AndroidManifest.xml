@@ -192,6 +192,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".petlover.ListOfProductsSeeMoreActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".petlover.Service_Details_Activity"
             android:screenOrientation="portrait"
@@ -472,7 +478,7 @@
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".petlover.ListOfProductsActivity"
+            android:name=".petlover.PetShopTodayDealsSeeMoreActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />

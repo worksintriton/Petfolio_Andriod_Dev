@@ -28,11 +28,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.activity.LoginActivity;
-import com.petfolio.infinitus.activity.location.ManageAddressActivity;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.appUtils.NumericKeyBoardTransformationMethod;
 import com.petfolio.infinitus.requestpojo.AddYourPetRequest;
 import com.petfolio.infinitus.requestpojo.BreedTypeRequest;
 import com.petfolio.infinitus.responsepojo.AddYourPetResponse;
@@ -153,6 +150,7 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
     private String petTypeId;
     private List<PetDetailsResponse.DataBean> petDetailsResponseByUserIdList;
     private List<BreedTypeResponse.DataBean> breedTypedataBeanList;
+    private String petAgeandMonth = "";
 
 
     @SuppressLint("LogNotTimber")
@@ -268,8 +266,7 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
         int petnamelength = edt_petname.getText().toString().trim().length();
         int petweightlength = edt_petweight.getText().toString().trim().length();
 
-        if (Objects.requireNonNull(edt_petname.getText()).toString().trim().equals("") && Objects.requireNonNull(edt_petweight.getText()).toString().trim().equals("") &&
-                Objects.requireNonNull(txt_petdob.getText()).toString().trim().equals("")) {
+        if (Objects.requireNonNull(edt_petname.getText()).toString().trim().equals("") && Objects.requireNonNull(edt_petweight.getText()).toString().trim().equals("")) {
             Toasty.warning(getApplicationContext(), "Please enter the fields", Toast.LENGTH_SHORT, true).show();
             can_proceed = false;
         } else if (edt_petname.getText().toString().trim().equals("")) {
@@ -291,11 +288,7 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
             edt_petweight.requestFocus();
             can_proceed = false;
         }
-        else if (Objects.requireNonNull(txt_petdob.getText()).toString().trim().equals("")) {
-            txt_petdob.setError("Please enter pet date of birth");
-            txt_petdob.requestFocus();
-            can_proceed = false;
-        } else if (selectedRadioButton.equalsIgnoreCase("Yes") && SelectedLastVaccinateddate.isEmpty()) {
+         else if (selectedRadioButton.equalsIgnoreCase("Yes") && SelectedLastVaccinateddate.isEmpty()) {
             showErrorLoading("Please select pet last vaccinated age");
             can_proceed = false;
         }
@@ -502,6 +495,8 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
                 strMonth = String.valueOf(month1);
             }
 
+            getAge(year,month1,day);
+
             SelectedPetDOB = strdayOfMonth + "-" + strMonth + "-" + year;
 
             // Show selected date
@@ -602,6 +597,7 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private AddYourPetRequest addYourPetRequest() {
         /*
          * user_id : 5fb36ca169f71e30a0ffd3f7
@@ -623,14 +619,14 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
         
         AddYourPetRequest addYourPetRequest = new AddYourPetRequest();
         addYourPetRequest.setUser_id(userid);
-        addYourPetRequest.setPet_img(APIClient.PROFILE_IMAGE_URL);
         addYourPetRequest.setPet_name(edt_petname.getText().toString());
         addYourPetRequest.setPet_type(strPetType);
         addYourPetRequest.setPet_breed(strPetBreedType);
         addYourPetRequest.setPet_gender(strPetGenderType);
         addYourPetRequest.setPet_color(edt_petcolor.getText().toString());
-        addYourPetRequest.setPet_weight(Integer.parseInt(edt_petweight.getText().toString()));
-        addYourPetRequest.setPet_age(Integer.parseInt(txt_petdob.getText().toString()));
+        addYourPetRequest.setPet_weight(Double.parseDouble(edt_petweight.getText().toString()));
+        addYourPetRequest.setPet_age(petAgeandMonth);
+        addYourPetRequest.setPet_dob(txt_petdob.getText().toString());
         addYourPetRequest.setVaccinated(isvaccinated);
         addYourPetRequest.setLast_vaccination_date(SelectedLastVaccinateddate);
         addYourPetRequest.setDefault_status(true);
@@ -799,5 +795,36 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
         breedTypeRequest.setPet_type_id(petTypeId);
         Log.w(TAG,"breedTypeRequest"+ "--->" + new Gson().toJson(breedTypeRequest));
         return breedTypeRequest;
+    }
+
+    private void getAge(int year, int month, int day){
+        Calendar dob = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
+
+        dob.set(year, month, day);
+
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+        int months = dob.get(Calendar.MONTH) - today.get(Calendar.MONTH);
+
+        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)){
+            age--;
+        }
+
+        Integer ageInt = new Integer(age);
+        Integer monthsInt = new Integer(months);
+        String ageS = ageInt.toString();
+        String monthsS = monthsInt.toString();
+
+        if(ageInt != 0){
+            petAgeandMonth = ageS+" Years "+monthsS+" Months";
+        }else{
+            petAgeandMonth = monthsS+" Months";
+
+        }
+
+
+
+        Log.w(TAG,"ageS: "+ageS+" months : "+monthsS);
+
     }
 }

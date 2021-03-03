@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -58,9 +59,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -80,23 +83,30 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class RegisterYourPetActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "RegisterYourPetActivity";
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
     ImageView img_back;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_skip)
     TextView txt_skip;
 
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_pet_imge)
     ImageView img_pet_imge;
 
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_uploadpetimage)
     TextView txt_uploadpetimage;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_continue)
     Button btn_continue;
 
@@ -153,6 +163,7 @@ public class RegisterYourPetActivity extends AppCompatActivity implements View.O
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -560,9 +571,7 @@ public class RegisterYourPetActivity extends AppCompatActivity implements View.O
                     if(response.body().getCode() == 200){
                         gotoPetloverDashboard();
                     }
-                    else{
-                        //showErrorLoading(response.body().getMessage());
-                    }
+
                 }
 
 
@@ -578,9 +587,14 @@ public class RegisterYourPetActivity extends AppCompatActivity implements View.O
 
     }
     private PetAddImageRequest petAddImageRequest() {
+        List<PetAddImageRequest.PetImgBean> pet_img = new ArrayList<>();
+        PetAddImageRequest.PetImgBean petImgBean = new PetAddImageRequest.PetImgBean();
+        petImgBean.setPet_img(ServerUrlImagePath);
+        pet_img.add(petImgBean);
+
         PetAddImageRequest petAddImageRequest = new PetAddImageRequest();
         petAddImageRequest.set_id(petid);
-        petAddImageRequest.setPet_img(ServerUrlImagePath);
+        petAddImageRequest.setPet_img(pet_img);
         Log.w(TAG,"petAddImageRequest"+ "--->" + new Gson().toJson(petAddImageRequest));
         return petAddImageRequest;
     }

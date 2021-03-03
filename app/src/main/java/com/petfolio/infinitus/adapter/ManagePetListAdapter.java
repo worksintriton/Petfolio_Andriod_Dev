@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.interfaces.PetDeleteListener;
@@ -31,15 +32,14 @@ import java.util.List;
 
 public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private  String TAG = "ManagePetListAdapter";
-    private List<PetListResponse.DataBean> petListResponseList  = null;
+    private String TAG = "ManagePetListAdapter";
+    private List<PetListResponse.DataBean> petListResponseList = null;
+    private List<PetListResponse.DataBean.PetImgBean> petImgBeanList = null;
     private Context context;
 
     PetListResponse.DataBean currentItem;
 
     PetDeleteListener petDeleteListener;
-
-
 
 
     public static String id = "";
@@ -66,26 +66,46 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
 
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "LogNotTimber"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
         currentItem = petListResponseList.get(position);
-        if(petListResponseList.get(position).getPet_name() != null) {
+        if (petListResponseList.get(position).getPet_name() != null) {
             holder.txt_pet_name.setText(petListResponseList.get(position).getPet_name());
         }
 
-        if (petListResponseList.get(position).getPet_img() != null && !petListResponseList.get(position).getPet_img().isEmpty()) {
 
-            Glide.with(context)
-                    .load(petListResponseList.get(position).getPet_img())
-                    .into(holder.img_pet_imge);
 
-        }
-        else{
-            Glide.with(context)
-                    .load(APIClient.PROFILE_IMAGE_URL)
-                    .into(holder.img_pet_imge);
+        if (petListResponseList != null && petListResponseList.size() > 0) {
+            Log.w(TAG,"petListResponseList : "+new Gson().toJson(petListResponseList));
+            for (int i = 0; i < petListResponseList.size(); i++) {
+                petImgBeanList = petListResponseList.get(i).getPet_img();
+
+            }
 
         }
+        Log.w(TAG,"petImgBeanList : "+new Gson().toJson(petImgBeanList));
+
+        if (petImgBeanList != null && petImgBeanList.size() > 0) {
+            if (petImgBeanList.get(position).getPet_img() != null && !petImgBeanList.get(position).getPet_img().isEmpty()) {
+                Glide.with(context)
+                        .load(petImgBeanList.get(position).getPet_img())
+                        .into(holder.img_pet_imge);
+
+            } else {
+                Glide.with(context)
+                        .load(APIClient.PROFILE_IMAGE_URL)
+                        .into(holder.img_pet_imge);
+
+            }
+        }
+
+
+
+
+
+
+
+
 
         holder.ll_add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +133,7 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
                             Intent i = new Intent(context, EditYourPetProfileInfoActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             i.putExtra("id",petListResponseList.get(position).get_id());
                             i.putExtra("userid",petListResponseList.get(position).getUser_id());
-                            i.putExtra("petimage",petListResponseList.get(position).getPet_img());
+                            i.putExtra("petimage",petListResponseList.get(position).getPet_img().get(position).getPet_img());
                             i.putExtra("petname",petListResponseList.get(position).getPet_name());
                             i.putExtra("pettype",petListResponseList.get(position).getPet_type());
                             i.putExtra("petbreed",petListResponseList.get(position).getPet_breed());
@@ -171,9 +191,6 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
         public TextView txt_pet_name;
         public ImageView img_pet_imge,img_settings;
         public LinearLayout ll_add;
-
-
-
 
 
         public ViewHolderOne(View itemView) {

@@ -1023,14 +1023,13 @@ public class PetLoverDashboardResponse {
 
             private String _id;
             private String user_id;
-            private String pet_img;
             private String pet_name;
             private String pet_type;
             private String pet_breed;
             private String pet_gender;
             private String pet_color;
-            private int pet_weight;
-            private int pet_age;
+            private double pet_weight;
+            private String pet_age;
             private boolean vaccinated;
             private String last_vaccination_date;
             private boolean default_status;
@@ -1059,18 +1058,6 @@ public class PetLoverDashboardResponse {
                 this.user_id = user_id;
 
             }
-
-
-            public String getPet_img() {
-                return pet_img;
-            }
-
-            public void setPet_img(String pet_img) {
-                this.pet_img = pet_img;
-
-            }
-
-
             public String getPet_name() {
                 return pet_name;
             }
@@ -1119,21 +1106,21 @@ public class PetLoverDashboardResponse {
             }
 
 
-            public int getPet_weight() {
+            public double getPet_weight() {
                 return pet_weight;
             }
 
-            public void setPet_weight(int pet_weight) {
+            public void setPet_weight(double pet_weight) {
                 this.pet_weight = pet_weight;
 
             }
 
 
-            public int getPet_age() {
+            public String getPet_age() {
                 return pet_age;
             }
 
-            public void setPet_age(int pet_age) {
+            public void setPet_age(String pet_age) {
                 this.pet_age = pet_age;
 
             }

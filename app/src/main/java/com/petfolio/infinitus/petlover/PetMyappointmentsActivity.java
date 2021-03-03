@@ -112,12 +112,7 @@ public class PetMyappointmentsActivity extends AppCompatActivity implements Bott
 
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
-        img_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        img_back.setOnClickListener(v -> onBackPressed());
         bottom_navigation_view.setOnNavigationItemSelectedListener(this);
 
         img_sos.setOnClickListener(this);

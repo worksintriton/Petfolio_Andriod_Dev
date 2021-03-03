@@ -17,26 +17,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.petlover.ProductDetailsActivity;
-import com.petfolio.infinitus.petlover.SelectedServiceActivity;
-import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
+import com.petfolio.infinitus.responsepojo.FetctProductByCatResponse;
 import com.petfolio.infinitus.responsepojo.TodayDealMoreResponse;
 
 import java.util.List;
 
 
-public class PetShopTodayDealsSeeMoreAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class PetShopCategorySeeMoreAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private  String TAG = "PetShopTodayDealsSeeMoreAdapter";
+    private  String TAG = "PetShopCategorySeeMoreAdapter";
     private Context context;
 
-    List<TodayDealMoreResponse.DataBean> data;
+    List<FetctProductByCatResponse.DataBean> data;
 
-    TodayDealMoreResponse.DataBean currentItem;
-
-
+    FetctProductByCatResponse.DataBean currentItem;
 
 
-    public PetShopTodayDealsSeeMoreAdapter(Context context, List<TodayDealMoreResponse.DataBean> data) {
+
+
+    public PetShopCategorySeeMoreAdapter(Context context, List<FetctProductByCatResponse.DataBean> data) {
         this.data = data;
         this.context = context;
 

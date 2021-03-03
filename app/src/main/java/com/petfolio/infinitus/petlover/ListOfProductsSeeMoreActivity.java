@@ -1,12 +1,5 @@
 package com.petfolio.infinitus.petlover;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,14 +7,22 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.adapter.PetShopTodayDealsAdapter;
+import com.petfolio.infinitus.adapter.PetShopCategorySeeMoreAdapter;
 import com.petfolio.infinitus.adapter.PetShopTodayDealsSeeMoreAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.requestpojo.ShopDashboardRequest;
-import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
+import com.petfolio.infinitus.requestpojo.FetctProductByCatRequest;
+import com.petfolio.infinitus.requestpojo.TodayDealMoreRequest;
+import com.petfolio.infinitus.responsepojo.FetctProductByCatResponse;
+import com.petfolio.infinitus.responsepojo.TodayDealMoreResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -36,9 +37,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ListOfProductsActivity extends AppCompatActivity {
+public class ListOfProductsSeeMoreActivity extends AppCompatActivity {
 
-    private String TAG = "ListOfProductsActivity";
+    private String TAG = "ListOfProductsSeeMoreActivity";
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
@@ -57,9 +58,11 @@ public class ListOfProductsActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
     ImageView img_back;
-    private String userid;
+    private String cat_id;
+    private int skipcount = 0;
 
 
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,11 +72,16 @@ public class ListOfProductsActivity extends AppCompatActivity {
 
         SessionManager sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getProfileDetails();
-        userid = user.get(SessionManager.KEY_ID);
+        String userid = user.get(SessionManager.KEY_ID);
         Log.w(TAG,"customerid-->"+ userid);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            cat_id = extras.getString("cat_id");
+        }
+
         if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-            shopDashboardResponseCall();
+            fetctProductByCatResponseCall();
         }
 
         img_back.setOnClickListener(new View.OnClickListener() {
@@ -90,18 +98,19 @@ public class ListOfProductsActivity extends AppCompatActivity {
         finish();
     }
 
-    public void shopDashboardResponseCall(){
+    @SuppressLint("LogNotTimber")
+    public void fetctProductByCatResponseCall(){
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         //Creating an object of our api interface
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<ShopDashboardResponse> call = ApiService.shopDashboardResponseCall(RestUtils.getContentType(),shopDashboardRequest());
+        Call<FetctProductByCatResponse> call = ApiService.fetctProductByCatResponseCall(RestUtils.getContentType(),fetctProductByCatRequest());
 
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
-        call.enqueue(new Callback<ShopDashboardResponse>() {
+        call.enqueue(new Callback<FetctProductByCatResponse>() {
             @Override
-            public void onResponse(@NonNull Call<ShopDashboardResponse> call, @NonNull Response<ShopDashboardResponse> response) {
+            public void onResponse(@NonNull Call<FetctProductByCatResponse> call, @NonNull Response<FetctProductByCatResponse> response) {
                 avi_indicator.smoothToHide();
 
 
@@ -109,54 +118,44 @@ public class ListOfProductsActivity extends AppCompatActivity {
                     if(200 == response.body().getCode()){
                         Log.w(TAG,"ShopDashboardResponse" + new Gson().toJson(response.body()));
 
-                        if(response.body().getData().getToday_Special() != null && response.body().getData().getToday_Special().size()>0){
-                            setView(response.body().getData().getToday_Special());
+                        if(response.body().getData()!= null && response.body().getData().size()>0){
+                            setView(response.body().getData());
 
                         }
 
-
-
-
                     }
-
-
-
                 }
-
-
-
-
-
-
-
 
             }
 
 
             @Override
-            public void onFailure(@NonNull Call<ShopDashboardResponse> call,@NonNull  Throwable t) {
+            public void onFailure(@NonNull Call<FetctProductByCatResponse> call,@NonNull  Throwable t) {
                 avi_indicator.smoothToHide();
-                Log.w(TAG,"ShopDashboardResponse flr"+t.getMessage());
+                Log.w(TAG,"FetctProductByCatResponse flr"+t.getMessage());
             }
         });
 
     }
-    private ShopDashboardRequest shopDashboardRequest() {
+    @SuppressLint("LogNotTimber")
+    private FetctProductByCatRequest fetctProductByCatRequest() {
         /*
-         * user_id : 6025040ee15519672cd0dc02
-
+         * cat_id : 5fec14a5ea832e2e73c1fc79
+         * skip_count : 6
          */
-        ShopDashboardRequest shopDashboardRequest = new ShopDashboardRequest();
-        shopDashboardRequest.setUser_id(userid);
-        Log.w(TAG,"shopDashboardRequest"+ "--->" + new Gson().toJson(shopDashboardRequest));
-        return shopDashboardRequest;
+
+        FetctProductByCatRequest fetctProductByCatRequest = new FetctProductByCatRequest();
+        fetctProductByCatRequest.setCat_id(cat_id);
+        fetctProductByCatRequest.setSkip_count(skipcount);
+        Log.w(TAG,"fetctProductByCatRequest"+ "--->" + new Gson().toJson(fetctProductByCatRequest));
+        return fetctProductByCatRequest;
     }
 
-    private void setView(List<ShopDashboardResponse.DataBean.TodaySpecialBean> today_special) {
+    private void setView(List<FetctProductByCatResponse.DataBean> data) {
         rv_today_deal.setLayoutManager(new GridLayoutManager(this, 2));
         rv_today_deal.setItemAnimator(new DefaultItemAnimator());
-        PetShopTodayDealsSeeMoreAdapter petShopTodayDealsSeeMoreAdapter = new PetShopTodayDealsSeeMoreAdapter(getApplicationContext(), today_special);
-        rv_today_deal.setAdapter(petShopTodayDealsSeeMoreAdapter);
+        PetShopCategorySeeMoreAdapter petShopCategorySeeMoreAdapter = new PetShopCategorySeeMoreAdapter(getApplicationContext(), data);
+        rv_today_deal.setAdapter(petShopCategorySeeMoreAdapter);
 
     }
 

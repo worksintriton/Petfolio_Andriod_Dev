@@ -412,9 +412,7 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
 
 
                     }
-                    else{
-                        //showErrorLoading(response.body().getMessage());
-                    }
+
                 }
 
 

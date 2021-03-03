@@ -223,11 +223,22 @@ public class ShopDashboardResponse {
 
         public static class ProductDetailsBean {
             /**
+             * cat_id
              * cat_name : CAT - 1
              * product_list : [{"_id":"1234567890","product_img":"http://54.212.108.156:3000/api/uploads/Pic_empty.jpg","product_title":"Title 1","product_price":200,"product_discount":0,"product_fav":false,"product_rating":4.8,"product_review":232},{"_id":"1234567890","product_img":"http://54.212.108.156:3000/api/uploads/Pic_empty.jpg","product_title":"Title 1","product_price":200,"product_discount":0,"product_fav":false,"product_rating":4.8,"product_review":232},{"_id":"1234567890","product_img":"http://54.212.108.156:3000/api/uploads/Pic_empty.jpg","product_title":"Title 1","product_price":200,"product_discount":0,"product_fav":false,"product_rating":4.8,"product_review":232}]
              */
 
             private String cat_name;
+            private String cat_id;
+
+            public String getCat_id() {
+                return cat_id;
+            }
+
+            public void setCat_id(String cat_id) {
+                this.cat_id = cat_id;
+            }
+
             private List<ProductListBean> product_list;
 
 

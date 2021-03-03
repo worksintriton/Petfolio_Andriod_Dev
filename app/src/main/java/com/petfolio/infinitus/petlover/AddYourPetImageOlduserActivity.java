@@ -46,8 +46,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -66,6 +68,7 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class AddYourPetImageOlduserActivity extends AppCompatActivity implements View.OnClickListener {
     private  String TAG = "AddYourPetImageOlduserActivity";
+
     @BindView(R.id.img_back)
     ImageView img_back;
 
@@ -567,12 +570,24 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
     }
     @SuppressLint("LogNotTimber")
     private PetAddImageRequest petAddImageRequest() {
+        /*
+         * _id : 603e098e2c2b43125f8cb7f8
+         * pet_img : [{"pet_img":"http://54.212.108.156:3000/api/uploads/Pic_empty.jpg"},{"pet_img":"http://54.212.108.156:3000/api/uploads/Pic_empty.jpg"}]
+         */
+
+        List<PetAddImageRequest.PetImgBean> pet_img = new ArrayList<>();
+        PetAddImageRequest.PetImgBean petImgBean = new PetAddImageRequest.PetImgBean();
+
         PetAddImageRequest petAddImageRequest = new PetAddImageRequest();
         petAddImageRequest.set_id(petid);
         if(ServerUrlImagePath != null) {
-            petAddImageRequest.setPet_img(ServerUrlImagePath);
+            petImgBean.setPet_img(ServerUrlImagePath);
+            pet_img.add(petImgBean);
+            petAddImageRequest.setPet_img(pet_img);
         }else{
-            petAddImageRequest.setPet_img(APIClient.PROFILE_IMAGE_URL);
+            petImgBean.setPet_img(APIClient.PROFILE_IMAGE_URL);
+            pet_img.add(petImgBean);
+            petAddImageRequest.setPet_img(pet_img);
         }
         Log.w(TAG,"petAddImageRequest"+ "--->" + new Gson().toJson(petAddImageRequest));
         return petAddImageRequest;

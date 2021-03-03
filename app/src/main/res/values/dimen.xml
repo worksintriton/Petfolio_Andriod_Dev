@@ -18,7 +18,7 @@
     <dimen name="medium_text_size">19sp</dimen>
     <dimen name="big_txt_size">20sp</dimen>
     <dimen name="normal_big_txt_size">25sp</dimen>
-    <dimen name="phase_btn_width">180dp</dimen>
+    <dimen name="phase_btn_width">200dp</dimen>
     <dimen name="profile_height">80dp</dimen>
 
     // This is only for button text size

@@ -46,6 +46,7 @@ import com.petfolio.infinitus.requestpojo.PetLoverAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverDashboardRequest;
 import com.petfolio.infinitus.requestpojo.PetNewAppointmentDetailsRequest;
 import com.petfolio.infinitus.requestpojo.PetNoShowRequest;
+import com.petfolio.infinitus.requestpojo.PetUpdateOtherInformationRequest;
 import com.petfolio.infinitus.requestpojo.PrescriptionCreateRequest;
 import com.petfolio.infinitus.requestpojo.PrescriptionDetailsRequest;
 import com.petfolio.infinitus.requestpojo.ProfileUpdateRequest;
@@ -256,6 +257,10 @@ public interface RestApiInterface {
     /*Pet Details List by User ID*/
     @POST("petdetails/mobile/getlist_id")
     Call<PetListResponse>petListResponseCall(@Header("Content-Type") String type, @Body PetListRequest petListRequest  );
+
+    /*update other information Petdetails Using User id*/
+    @POST("petdetails/edit")
+    Call<PetAddImageResponse>petUpdateOtherInformationResponseCall(@Header("Content-Type") String type, @Body PetUpdateOtherInformationRequest petUpdateOtherInformationRequest  );
 
 
     /*update petimage Petdetails Using User id*/
@@ -534,13 +539,15 @@ public interface RestApiInterface {
     @POST("product_details/getproductdetails_list")
     Call<ShopDashboardResponse> shopDashboardResponseCall(@Header("Content-Type") String type,@Body ShopDashboardRequest ShopDashboardRequest);
 
+    /*View Todays Deal Products*/
+    @POST("product_details/today_deal")
+    Call<TodayDealMoreResponse> todayDealMoreResponseCall(@Header("Content-Type") String type, @Body TodayDealMoreRequest todayDealMoreRequest);
+
+
     /*View the Product's by cat id*/
     @POST("product_details/fetch_product_by_cat")
     Call<FetctProductByCatResponse> fetctProductByCatResponseCall(@Header("Content-Type") String type, @Body FetctProductByCatRequest fetctProductByCatRequest);
 
 
-    /*View Todays Deal Products*/
-    @POST("product_details/today_deal")
-    Call<TodayDealMoreResponse> todayDealMoreResponseCall(@Header("Content-Type") String type, @Body TodayDealMoreRequest todayDealMoreRequest);
 
 }

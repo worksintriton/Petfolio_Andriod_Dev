@@ -37,7 +37,7 @@ import com.petfolio.infinitus.adapter.ViewPagerShopDashboardAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 
-import com.petfolio.infinitus.petlover.ListOfProductsActivity;
+import com.petfolio.infinitus.petlover.PetShopTodayDealsSeeMoreActivity;
 import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 
 import com.petfolio.infinitus.requestpojo.ShopDashboardRequest;
@@ -85,9 +85,6 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tabDots)
     TabLayout tabLayout;
-
-
-
 
 
     @SuppressLint("NonConstantResourceId")
@@ -168,10 +165,17 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
              shopDashboardResponseCall();
         }
 
-        txt_seemore_todaydeals.setOnClickListener(v -> startActivity(new Intent(mContext, ListOfProductsActivity.class)));
+        txt_seemore_todaydeals.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(mContext, PetShopTodayDealsSeeMoreActivity.class);
+                intent.putExtra("from","");
+                startActivity(intent);
+            }
+        });
 
 
-            return view;
+        return view;
     }
 
     @Override
@@ -254,7 +258,6 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
                             listHomeBannerResponse = response.body().getData().getBanner_details();
                             for (int i = 0; i < listHomeBannerResponse.size(); i++) {
                                 listHomeBannerResponse.get(i).getBanner_img();
-                                Log.w(TAG, "RES" + " " + listHomeBannerResponse.get(i).getBanner_img());
                             }
 
                             if (listHomeBannerResponse != null) {
@@ -304,6 +307,7 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
             }
 
 
+            @SuppressLint("LogNotTimber")
             @Override
             public void onFailure(@NonNull Call<ShopDashboardResponse> call,@NonNull  Throwable t) {
                 avi_indicator.smoothToHide();

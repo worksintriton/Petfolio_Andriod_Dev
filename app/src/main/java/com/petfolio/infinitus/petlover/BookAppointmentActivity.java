@@ -209,7 +209,6 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     private String selectedAppointmentType = "Emergency";
     private String petId;
     private String doctorid;
-    private String petimage;
     private String fromactivity;
     private String fromto;
     private String Payment_id = "";
@@ -222,6 +221,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
     HashMap<String, String> hashMap_selectyourpet = new HashMap<>();
     private String selectedCommunicationtype = "";
+    private List<String> petimage;
 
 
     @Override
@@ -1000,19 +1000,19 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
         AddYourPetRequest addYourPetRequest = new AddYourPetRequest();
         addYourPetRequest.setUser_id(userid);
-        if(uploadimagepath != null && !uploadimagepath.isEmpty()){
+        /*if(uploadimagepath != null && !uploadimagepath.isEmpty()){
             addYourPetRequest.setPet_img(uploadimagepath);
         }else{
             addYourPetRequest.setPet_img(APIClient.PROFILE_IMAGE_URL);
 
-        }
+        }*/
         addYourPetRequest.setPet_name(edt_petname.getText().toString());
         addYourPetRequest.setPet_type(strPetType);
         addYourPetRequest.setPet_breed(strPetBreedType);
         addYourPetRequest.setPet_gender("");
         addYourPetRequest.setPet_color("");
         addYourPetRequest.setPet_weight(0);
-        addYourPetRequest.setPet_age(0);
+        addYourPetRequest.setPet_age("");
         addYourPetRequest.setVaccinated(false);
         addYourPetRequest.setLast_vaccination_date("");
         addYourPetRequest.setDefault_status(true);

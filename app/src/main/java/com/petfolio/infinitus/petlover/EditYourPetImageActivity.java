@@ -43,8 +43,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -573,9 +575,13 @@ public class EditYourPetImageActivity extends AppCompatActivity implements View.
 
     }
     private PetAddImageRequest petAddImageRequest() {
+        List<PetAddImageRequest.PetImgBean> pet_img = new ArrayList<>();
+        PetAddImageRequest.PetImgBean petImgBean = new PetAddImageRequest.PetImgBean();
+        petImgBean.setPet_img(petimage);
+        pet_img.add(petImgBean);
         PetAddImageRequest petAddImageRequest = new PetAddImageRequest();
         petAddImageRequest.set_id(petid);
-        petAddImageRequest.setPet_img(petimage);
+        petAddImageRequest.setPet_img(pet_img);
         Log.w(TAG,"petAddImageRequest"+ "--->" + new Gson().toJson(petAddImageRequest));
         return petAddImageRequest;
     }
