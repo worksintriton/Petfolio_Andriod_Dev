@@ -46,9 +46,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
             android:orientation="vertical">
 
             <EditText
@@ -85,7 +86,6 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:src="@drawable/option"
@@ -133,7 +133,6 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:src="@drawable/option"
@@ -146,6 +145,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/rectangle_corner"
+                android:digits="@string/characters"
                 android:fontFamily="@font/futuramediumbt"
                 android:hint="@string/pet_color"
                 android:inputType="text"
@@ -174,21 +174,7 @@
                 android:textSize="14sp"
                 tools:ignore="Autofill,LabelFor,TextFields" />
 
-            <EditText
-                android:id="@+id/edt_petage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/rectangle_corner"
-                android:fontFamily="@font/futuramediumbt"
-                android:hint="@string/pet_age"
-                android:inputType="numberPassword"
-                android:maxLength="2"
-                android:padding="15dp"
-                android:textColor="@color/green"
-                android:textColorHint="@color/dark_gray"
-                android:textSize="14sp"
-                tools:ignore="Autofill,LabelFor,TextFields" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -216,6 +202,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/new_green_btn"
+                        android:checked="true"
                         android:fontFamily="@font/futuramediumbt"
                         android:text="@string/yes"
                         android:textColor="@color/new_txt_color"
@@ -226,7 +213,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:layout_marginLeft="10dp"
                         android:buttonTint="@color/new_green_btn"
                         android:fontFamily="@font/futuramediumbt"
                         android:text="@string/no"
@@ -241,7 +227,7 @@
                 android:id="@+id/llpetlastvaccinatedagedate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginBottom="20dp"
                 android:orientation="vertical">
 
@@ -251,13 +237,13 @@
                     android:fontFamily="@font/futuramediumbt"
                     android:text="@string/pet_last_vaccinated_age"
                     android:textColor="@color/new_txt_color"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:visibility="gone"/>
 
                 <RelativeLayout
                     android:id="@+id/rlpetlastvaccinatedagedate"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="50dp"
                     android:background="@drawable/rectangle_corner"
                     android:padding="15dp">
 
@@ -266,8 +252,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/futuramediumbt"
-                        android:hint="@string/select_date"
-                        android:padding="5dp"
+                        android:hint="@string/select_vaccinated"
                         android:textColor="@color/green"
                         android:textColorHint="@color/dark_gray"
                         android:textSize="16sp" />
@@ -276,7 +261,52 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:src="@drawable/calender"
+                        tools:ignore="ContentDescription" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_petdob"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/futuramediumbt"
+                    android:text="@string/pet_dob"
+                    android:textColor="@color/new_txt_color"
+                    android:textSize="16sp"
+                    android:visibility="gone"/>
+
+                <RelativeLayout
+                    android:id="@+id/rl_petdob"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/rectangle_corner"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:id="@+id/txt_petdob"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:hint="@string/select_petdob"
+                        android:textColor="@color/green"
+                        android:textColorHint="@color/dark_gray"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
                         android:src="@drawable/calender"

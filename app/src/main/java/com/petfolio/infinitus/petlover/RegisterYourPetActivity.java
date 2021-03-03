@@ -7,6 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -35,7 +38,10 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
+import com.petfolio.infinitus.adapter.AddEducAdapter;
 import com.petfolio.infinitus.adapter.AddImageListAdapter;
+import com.petfolio.infinitus.adapter.AddPetImageListAdapter;
+import com.petfolio.infinitus.adapter.PetMissedAppointmentAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 
@@ -110,6 +116,10 @@ public class RegisterYourPetActivity extends AppCompatActivity implements View.O
     @BindView(R.id.btn_continue)
     Button btn_continue;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rc_uploaded_pet_images)
+    RecyclerView rc_uploaded_pet_images;
+
     private String petid;
 
     public final int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 1;
@@ -135,6 +145,8 @@ public class RegisterYourPetActivity extends AppCompatActivity implements View.O
     private MultipartBody.Part filePart;
     private Object userid;
 
+    List<PetAddImageRequest.PetImgBean> pet_img = new ArrayList<>();
+    AddPetImageListAdapter addPetImageListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,12 +164,11 @@ public class RegisterYourPetActivity extends AppCompatActivity implements View.O
 
         SessionManager  session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
-
         userid = user.get(SessionManager.KEY_ID);
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            petid = extras.getString("petid");
+         petid = extras.getString("petid");
+
         }
 
 
@@ -382,14 +393,34 @@ public class RegisterYourPetActivity extends AppCompatActivity implements View.O
 
                         Log.w(TAG, "ServerUrlImagePath " + ServerUrlImagePath);
 
-                        if( response.body().getData() != null){
-                            Glide.with(RegisterYourPetActivity.this)
-                                    .load(ServerUrlImagePath)
-                                    .into(img_pet_imge);
-                        }else{
-                            Glide.with(RegisterYourPetActivity.this)
-                                    .load(R.drawable.image_thumbnail)
-                                    .into(img_pet_imge);
+                        if( response.body().getData() != null)
+                        {
+
+                            if(pet_img.size()>=4){
+
+                                Toasty.warning(RegisterYourPetActivity.this,"Sorry You can't Upload more than 4", Toasty.LENGTH_LONG).show();
+
+                            }
+
+                            else
+                            {
+                                PetAddImageRequest.PetImgBean petImgBean = new PetAddImageRequest.PetImgBean();
+
+                                petImgBean.setPet_img(ServerUrlImagePath);
+
+                                pet_img.add(petImgBean);
+
+                                setView();
+
+                            }
+
+
+
+                        }
+
+                        else
+                        {
+                            Toasty.warning(RegisterYourPetActivity.this,"Failed to Upload", Toasty.LENGTH_LONG).show();
 
                         }
 
@@ -413,6 +444,21 @@ public class RegisterYourPetActivity extends AppCompatActivity implements View.O
 
     }
 
+    private void setView() {
+
+        rc_uploaded_pet_images.setHasFixedSize(true);
+
+        rc_uploaded_pet_images.setNestedScrollingEnabled(false);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(RegisterYourPetActivity.this, LinearLayoutManager.HORIZONTAL, false);
+
+        rc_uploaded_pet_images.setLayoutManager(layoutManager);
+
+        addPetImageListAdapter = new AddPetImageListAdapter(this, pet_img);
+
+        rc_uploaded_pet_images.setAdapter(addPetImageListAdapter);
+
+    }
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -501,7 +547,7 @@ public class RegisterYourPetActivity extends AppCompatActivity implements View.O
         }
     }
     private boolean hasPermissions(Context context, String... permissions) {
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
             for (String permission : permissions) {
                 if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
                     return false;
@@ -587,10 +633,8 @@ public class RegisterYourPetActivity extends AppCompatActivity implements View.O
 
     }
     private PetAddImageRequest petAddImageRequest() {
-        List<PetAddImageRequest.PetImgBean> pet_img = new ArrayList<>();
-        PetAddImageRequest.PetImgBean petImgBean = new PetAddImageRequest.PetImgBean();
-        petImgBean.setPet_img(ServerUrlImagePath);
-        pet_img.add(petImgBean);
+
+
 
         PetAddImageRequest petAddImageRequest = new PetAddImageRequest();
         petAddImageRequest.set_id(petid);

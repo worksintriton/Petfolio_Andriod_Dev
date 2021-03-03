@@ -9,24 +9,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.activity.LoginActivity;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.requestpojo.PetAddImageRequest;
 import com.petfolio.infinitus.requestpojo.PetUpdateOtherInformationRequest;
 import com.petfolio.infinitus.responsepojo.PetAddImageResponse;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -34,7 +29,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PetOtherInformationsActivity extends AppCompatActivity {
-    private String TAG = "PetOtherInformationsActivity";
+    private final String TAG = "PetOtherInformationsActivity";
 
 
     @SuppressLint("NonConstantResourceId")
@@ -114,110 +109,85 @@ public class PetOtherInformationsActivity extends AppCompatActivity {
             fromactivity = extras.getString("fromactivity");
         }
 
-        txt_skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),RegisterYourPetActivity.class);
-                intent.putExtra("petid",petid);
+        txt_skip.setOnClickListener(v -> {
+            if(fromactivity != null && fromactivity.equalsIgnoreCase("AddYourPetOldUserActivity")) {
+                Intent intent = new Intent(getApplicationContext(), AddYourPetImageOlduserActivity.class);
+                intent.putExtra("petid", petid);
+                intent.putExtra("fromactivity",TAG);
+                startActivity(intent);
+            }else{
+                Intent intent = new Intent(getApplicationContext(), RegisterYourPetActivity.class);
+                intent.putExtra("petid", petid);
+                intent.putExtra("fromactivity",TAG);
                 startActivity(intent);
             }
         });
 
-        btn_continue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (new ConnectionDetector(PetOtherInformationsActivity.this).isNetworkAvailable(PetOtherInformationsActivity.this)) {
-                    petUpdateOtherInformationResponseCall();
-                }
+        btn_continue.setOnClickListener(v -> {
+            if (new ConnectionDetector(PetOtherInformationsActivity.this).isNetworkAvailable(PetOtherInformationsActivity.this)) {
+                petUpdateOtherInformationResponseCall();
             }
         });
 
-        rg_spayed.setOnCheckedChangeListener((group, checkedId) -> {
+        img_back.setOnClickListener(v -> onBackPressed());
 
+        rg_spayed.setOnCheckedChangeListener((group, checkedId) -> {
             int radioButtonID = group.getCheckedRadioButtonId();
             View radioButton = group.findViewById(radioButtonID);
             int position = group.indexOfChild(radioButton);
-            if(position == 0){
-                pet_spayed = true;
-            }else{
-                pet_spayed = false;
-            }
+            pet_spayed = position == 0;
 
-            Log.w(TAG,"position : "+position);
 
         });
         rg_purebreed.setOnCheckedChangeListener((group, checkedId) -> {
-
             int radioButtonID = group.getCheckedRadioButtonId();
             View radioButton = group.findViewById(radioButtonID);
             int position = group.indexOfChild(radioButton);
-            if(position == 0){
-                pet_purebred = true;
-            }else{
-                pet_purebred = false;
-            }
+            pet_purebred = position == 0;
 
-            Log.w(TAG,"position : "+position);
+
 
         });
         rg_friendlywithdogs.setOnCheckedChangeListener((group, checkedId) -> {
             int radioButtonID = group.getCheckedRadioButtonId();
             View radioButton = group.findViewById(radioButtonID);
             int position = group.indexOfChild(radioButton);
-            Log.w(TAG,"position : "+position);
-            if(position == 0){
-                pet_frnd_with_dog = true;
-            }else{
-                pet_frnd_with_dog = false;
-            }
+            pet_frnd_with_dog = position == 0;
 
         });
         rg_friendlywithcats.setOnCheckedChangeListener((group, checkedId) -> {
             int radioButtonID = group.getCheckedRadioButtonId();
             View radioButton = group.findViewById(radioButtonID);
             int position = group.indexOfChild(radioButton);
-            Log.w(TAG,"position : "+position);
-            if(position == 0){
-                pet_frnd_with_cat = true;
-            }else{
-                pet_frnd_with_cat = false;
-            }
+            pet_frnd_with_cat = position == 0;
 
         });
         rg_friendlywithkids.setOnCheckedChangeListener((group, checkedId) -> {
             int radioButtonID = group.getCheckedRadioButtonId();
             View radioButton = group.findViewById(radioButtonID);
             int position = group.indexOfChild(radioButton);
-            Log.w(TAG,"position : "+position);
-            if(position == 0){
-                pet_frnd_with_kit = true;
-            }else{
-                pet_frnd_with_kit = false;
-            }
+            pet_frnd_with_kit = position == 0;
+
+        });
+        rg_microchipped.setOnCheckedChangeListener((group, checkedId) -> {
+            int radioButtonID = group.getCheckedRadioButtonId();
+            View radioButton = group.findViewById(radioButtonID);
+            int position = group.indexOfChild(radioButton);
+            pet_microchipped = position == 0;
 
         });
         rg_tickfree.setOnCheckedChangeListener((group, checkedId) -> {
             int radioButtonID = group.getCheckedRadioButtonId();
             View radioButton = group.findViewById(radioButtonID);
             int position = group.indexOfChild(radioButton);
-            Log.w(TAG,"position : "+position);
-            if(position == 0){
-                pet_tick_free = true;
-            }else{
-                pet_tick_free = false;
-            }
+            pet_tick_free = position == 0;
 
         });
         rg_allowscleanprivate.setOnCheckedChangeListener((group, checkedId) -> {
             int radioButtonID = group.getCheckedRadioButtonId();
             View radioButton = group.findViewById(radioButtonID);
             int position = group.indexOfChild(radioButton);
-            Log.w(TAG,"position : "+position);
-            if(position == 0){
-                pet_private_part= true;
-            }else{
-                pet_private_part = false;
-            }
+            pet_private_part= position == 0;
 
         });
 
@@ -226,7 +196,7 @@ public class PetOtherInformationsActivity extends AppCompatActivity {
     }
 
 
-    @SuppressLint("LogNotTimber")
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
     private void petUpdateOtherInformationResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -245,11 +215,22 @@ public class PetOtherInformationsActivity extends AppCompatActivity {
 
                 if (response.body() != null) {
                     if(response.body().getData().get_id() != null) {
-                        Intent intent = new Intent(getApplicationContext(), RegisterYourPetActivity.class);
-                        intent.putExtra("petid", response.body().getData().get_id());
-                        intent.putExtra("fromactivity",TAG);
-                        startActivity(intent);
+                        if(fromactivity != null && fromactivity.equalsIgnoreCase("AddYourPetOldUserActivity")) {
+                            Intent intent = new Intent(getApplicationContext(), AddYourPetImageOlduserActivity.class);
+                            intent.putExtra("petid", response.body().getData().get_id());
+                            intent.putExtra("fromactivity",TAG);
+                            startActivity(intent);
+                        }else{
+                            Intent intent = new Intent(getApplicationContext(), RegisterYourPetActivity.class);
+                            intent.putExtra("petid", response.body().getData().get_id());
+                            intent.putExtra("fromactivity",TAG);
+                            startActivity(intent);
+                        }
+
+
+
                     }
+
 
                 }
 
@@ -266,6 +247,7 @@ public class PetOtherInformationsActivity extends AppCompatActivity {
         });
 
     }
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
     private PetUpdateOtherInformationRequest petUpdateOtherInformationRequest() {
         /*
          * _id : 603e098e2c2b43125f8cb7f8
@@ -287,9 +269,23 @@ public class PetOtherInformationsActivity extends AppCompatActivity {
         petUpdateOtherInformationRequest.setPet_frnd_with_dog(pet_frnd_with_dog);
         petUpdateOtherInformationRequest.setPet_frnd_with_cat(pet_frnd_with_cat);
         petUpdateOtherInformationRequest.setPet_frnd_with_kit(pet_frnd_with_kit);
+        petUpdateOtherInformationRequest.setPet_microchipped(pet_microchipped);
         petUpdateOtherInformationRequest.setPet_tick_free(pet_tick_free);
         petUpdateOtherInformationRequest.setPet_private_part(pet_private_part);
         Log.w(TAG,"petUpdateOtherInformationRequest"+ "--->" + new Gson().toJson(petUpdateOtherInformationRequest));
         return petUpdateOtherInformationRequest;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("AddYourPetOldUserActivity")) {
+            startActivity(new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class));
+            finish();
+        }else{
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+            finish();
+        }
+
     }
 }

@@ -8,7 +8,7 @@ public class PetDetailsResponse {
     /**
      * Status : Success
      * Message : pet details List
-     * Data : [{"pet_img":["http://54.212.108.156:3000/api/uploads/1614247250740.jpeg"],"_id":"60377548757a214c0415b6d3","user_id":"6025040ee15519672cd0dc02","pet_name":"Deenu","pet_type":"Dog","pet_breed":"Golden Retrieve","pet_gender":"Male","pet_color":"White","pet_weight":5,"pet_age":"2","vaccinated":true,"last_vaccination_date":"10-02-2021","default_status":true,"date_and_time":"25-02-2021 03:30 PM","mobile_type":"Android","delete_status":false,"updatedAt":"2021-02-25T10:00:53.541Z","createdAt":"2021-02-25T10:00:40.606Z","__v":0}]
+     * Data : [{"pet_img":[{"pet_img":"http://54.212.108.156:3000/api/uploads/1614686158761.jpeg"}],"_id":"603e27a92c2b43125f8cb803","user_id":"603e27792c2b43125f8cb802","pet_name":"DEENU","pet_type":"Dog","pet_breed":"Irish Setter","pet_gender":"Male","pet_color":"BLACK","pet_weight":20.5,"pet_age":"5 years 1 months","pet_dob":"03-03-2015","pet_spayed":true,"pet_purebred":false,"pet_frnd_with_dog":false,"pet_frnd_with_cat":true,"pet_frnd_with_kit":false,"pet_microchipped":false,"pet_tick_free":false,"pet_private_part":false,"vaccinated":true,"last_vaccination_date":"10-02-2021","default_status":true,"date_and_time":"03-03-2021 01:12 PM","mobile_type":"Android","delete_status":false,"updatedAt":"2021-03-03T07:42:26.605Z","createdAt":"2021-03-02T11:55:21.396Z","__v":0},{"pet_img":[{"pet_img":"http://54.212.108.156:3000/api/uploads/Pic_empty.jpg"}],"_id":"603e3a0b2c2b43125f8cb80a","user_id":"603e27792c2b43125f8cb802","pet_name":"DEEN","pet_type":"Dog","pet_breed":"Beagle","pet_gender":"Female","pet_color":"white","pet_weight":10,"pet_age":"","pet_dob":"","pet_spayed":false,"pet_purebred":false,"pet_frnd_with_dog":false,"pet_frnd_with_cat":false,"pet_frnd_with_kit":false,"pet_microchipped":false,"pet_tick_free":false,"pet_private_part":false,"vaccinated":true,"last_vaccination_date":"02-03-2017","default_status":true,"date_and_time":"02-03-2021 06:43 PM","mobile_type":"Android","delete_status":false,"updatedAt":"2021-03-02T13:13:47.207Z","createdAt":"2021-03-02T13:13:47.207Z","__v":0},{"pet_img":[{"pet_img":"http://54.212.108.156:3000/api/uploads/Pic_empty.jpg"}],"_id":"603f2f3e2c2b43125f8cb80e","user_id":"603e27792c2b43125f8cb802","pet_name":"Toy","pet_type":"Dog","pet_breed":"Brussels Griffon","pet_gender":"Male","pet_color":"White","pet_weight":28,"pet_age":"5 years 1 months","pet_dob":"03-03-2015","pet_spayed":false,"pet_purebred":false,"pet_frnd_with_dog":false,"pet_frnd_with_cat":false,"pet_frnd_with_kit":false,"pet_microchipped":false,"pet_tick_free":false,"pet_private_part":false,"vaccinated":true,"last_vaccination_date":"02-02-2021","default_status":true,"date_and_time":"03-03-2021 12:09 PM","mobile_type":"Android","delete_status":false,"updatedAt":"2021-03-03T06:39:58.231Z","createdAt":"2021-03-03T06:39:58.231Z","__v":0},{"pet_img":[{"pet_img":"http://54.212.108.156:3000/api/uploads/Pic_empty.jpg"}],"_id":"603f31502c2b43125f8cb80f","user_id":"603e27792c2b43125f8cb802","pet_name":"Fog","pet_type":"Dog","pet_breed":"Irish Setter","pet_gender":"Male","pet_color":"white","pet_weight":26,"pet_age":"7 years 1 months","pet_dob":"03-03-2013","pet_spayed":true,"pet_purebred":false,"pet_frnd_with_dog":false,"pet_frnd_with_cat":false,"pet_frnd_with_kit":false,"pet_microchipped":false,"pet_tick_free":false,"pet_private_part":false,"vaccinated":true,"last_vaccination_date":"03-03-2016","default_status":true,"date_and_time":"03-03-2021 12:18 PM","mobile_type":"Android","delete_status":false,"updatedAt":"2021-03-03T06:48:54.031Z","createdAt":"2021-03-03T06:48:48.485Z","__v":0},{"pet_img":[{"pet_img":"http://54.212.108.156:3000/api/uploads/Pic_empty.jpg"}],"_id":"603f35c12c2b43125f8cb814","user_id":"603e27792c2b43125f8cb802","pet_name":"Foof","pet_type":"Dog","pet_breed":"Brussels Griffon","pet_gender":"Male","pet_color":"White","pet_weight":10,"pet_age":"","pet_dob":"","pet_spayed":false,"pet_purebred":false,"pet_frnd_with_dog":false,"pet_frnd_with_cat":false,"pet_frnd_with_kit":false,"pet_microchipped":false,"pet_tick_free":false,"pet_private_part":false,"vaccinated":true,"last_vaccination_date":"03-03-2017","default_status":true,"date_and_time":"03-03-2021 12:37 PM","mobile_type":"Android","delete_status":false,"updatedAt":"2021-03-03T07:07:57.124Z","createdAt":"2021-03-03T07:07:45.584Z","__v":0},{"pet_img":[{"pet_img":"http://54.212.108.156:3000/api/uploads/Pic_empty.jpg"}],"_id":"603f35f62c2b43125f8cb815","user_id":"603e27792c2b43125f8cb802","pet_name":"TEEN","pet_type":"Dog","pet_breed":"Beagle","pet_gender":"Male","pet_color":"white","pet_weight":10,"pet_age":"","pet_dob":"","pet_spayed":false,"pet_purebred":false,"pet_frnd_with_dog":false,"pet_frnd_with_cat":false,"pet_frnd_with_kit":false,"pet_microchipped":false,"pet_tick_free":false,"pet_private_part":false,"vaccinated":true,"last_vaccination_date":"03-03-2015","default_status":true,"date_and_time":"03-03-2021 12:38 PM","mobile_type":"Android","delete_status":false,"updatedAt":"2021-03-03T07:08:38.825Z","createdAt":"2021-03-03T07:08:38.825Z","__v":0}]
      * Code : 200
      */
 
@@ -59,24 +59,33 @@ public class PetDetailsResponse {
 
     public static class DataBean  {
         /**
-         * pet_img : ["http://54.212.108.156:3000/api/uploads/1614247250740.jpeg"]
-         * _id : 60377548757a214c0415b6d3
-         * user_id : 6025040ee15519672cd0dc02
-         * pet_name : Deenu
+         * pet_img : [{"pet_img":"http://54.212.108.156:3000/api/uploads/1614686158761.jpeg"}]
+         * _id : 603e27a92c2b43125f8cb803
+         * user_id : 603e27792c2b43125f8cb802
+         * pet_name : DEENU
          * pet_type : Dog
-         * pet_breed : Golden Retrieve
+         * pet_breed : Irish Setter
          * pet_gender : Male
-         * pet_color : White
-         * pet_weight : 5
-         * pet_age : 2
+         * pet_color : BLACK
+         * pet_weight : 20.5
+         * pet_age : 5 years 1 months
+         * pet_dob : 03-03-2015
+         * pet_spayed : true
+         * pet_purebred : false
+         * pet_frnd_with_dog : false
+         * pet_frnd_with_cat : true
+         * pet_frnd_with_kit : false
+         * pet_microchipped : false
+         * pet_tick_free : false
+         * pet_private_part : false
          * vaccinated : true
          * last_vaccination_date : 10-02-2021
          * default_status : true
-         * date_and_time : 25-02-2021 03:30 PM
+         * date_and_time : 03-03-2021 01:12 PM
          * mobile_type : Android
          * delete_status : false
-         * updatedAt : 2021-02-25T10:00:53.541Z
-         * createdAt : 2021-02-25T10:00:40.606Z
+         * updatedAt : 2021-03-03T07:42:26.605Z
+         * createdAt : 2021-03-02T11:55:21.396Z
          * __v : 0
          */
 
@@ -87,8 +96,17 @@ public class PetDetailsResponse {
         private String pet_breed;
         private String pet_gender;
         private String pet_color;
-        private int pet_weight;
+        private double pet_weight;
         private String pet_age;
+        private String pet_dob;
+        private boolean pet_spayed;
+        private boolean pet_purebred;
+        private boolean pet_frnd_with_dog;
+        private boolean pet_frnd_with_cat;
+        private boolean pet_frnd_with_kit;
+        private boolean pet_microchipped;
+        private boolean pet_tick_free;
+        private boolean pet_private_part;
         private boolean vaccinated;
         private String last_vaccination_date;
         private boolean default_status;
@@ -98,7 +116,7 @@ public class PetDetailsResponse {
         private String updatedAt;
         private String createdAt;
         private int __v;
-        private List<String> pet_img;
+        private List<PetImgBean> pet_img;
 
 
         public String get_id() {
@@ -150,6 +168,7 @@ public class PetDetailsResponse {
 
         }
 
+
         public String getPet_gender() {
             return pet_gender;
         }
@@ -170,11 +189,11 @@ public class PetDetailsResponse {
         }
 
 
-        public int getPet_weight() {
+        public double getPet_weight() {
             return pet_weight;
         }
 
-        public void setPet_weight(int pet_weight) {
+        public void setPet_weight(double pet_weight) {
             this.pet_weight = pet_weight;
 
         }
@@ -186,6 +205,96 @@ public class PetDetailsResponse {
 
         public void setPet_age(String pet_age) {
             this.pet_age = pet_age;
+
+        }
+
+
+        public String getPet_dob() {
+            return pet_dob;
+        }
+
+        public void setPet_dob(String pet_dob) {
+            this.pet_dob = pet_dob;
+
+        }
+
+
+        public boolean isPet_spayed() {
+            return pet_spayed;
+        }
+
+        public void setPet_spayed(boolean pet_spayed) {
+            this.pet_spayed = pet_spayed;
+
+        }
+
+
+        public boolean isPet_purebred() {
+            return pet_purebred;
+        }
+
+        public void setPet_purebred(boolean pet_purebred) {
+            this.pet_purebred = pet_purebred;
+
+        }
+
+
+        public boolean isPet_frnd_with_dog() {
+            return pet_frnd_with_dog;
+        }
+
+        public void setPet_frnd_with_dog(boolean pet_frnd_with_dog) {
+            this.pet_frnd_with_dog = pet_frnd_with_dog;
+
+        }
+
+
+        public boolean isPet_frnd_with_cat() {
+            return pet_frnd_with_cat;
+        }
+
+        public void setPet_frnd_with_cat(boolean pet_frnd_with_cat) {
+            this.pet_frnd_with_cat = pet_frnd_with_cat;
+
+        }
+
+
+        public boolean isPet_frnd_with_kit() {
+            return pet_frnd_with_kit;
+        }
+
+        public void setPet_frnd_with_kit(boolean pet_frnd_with_kit) {
+            this.pet_frnd_with_kit = pet_frnd_with_kit;
+
+        }
+
+
+        public boolean isPet_microchipped() {
+            return pet_microchipped;
+        }
+
+        public void setPet_microchipped(boolean pet_microchipped) {
+            this.pet_microchipped = pet_microchipped;
+
+        }
+
+
+        public boolean isPet_tick_free() {
+            return pet_tick_free;
+        }
+
+        public void setPet_tick_free(boolean pet_tick_free) {
+            this.pet_tick_free = pet_tick_free;
+
+        }
+
+
+        public boolean isPet_private_part() {
+            return pet_private_part;
+        }
+
+        public void setPet_private_part(boolean pet_private_part) {
+            this.pet_private_part = pet_private_part;
 
         }
 
@@ -206,7 +315,6 @@ public class PetDetailsResponse {
 
         public void setLast_vaccination_date(String last_vaccination_date) {
             this.last_vaccination_date = last_vaccination_date;
-
         }
 
 
@@ -216,9 +324,7 @@ public class PetDetailsResponse {
 
         public void setDefault_status(boolean default_status) {
             this.default_status = default_status;
-
         }
-
 
         public String getDate_and_time() {
             return date_and_time;
@@ -226,7 +332,6 @@ public class PetDetailsResponse {
 
         public void setDate_and_time(String date_and_time) {
             this.date_and_time = date_and_time;
-
         }
 
 
@@ -248,7 +353,6 @@ public class PetDetailsResponse {
             this.delete_status = delete_status;
 
         }
-
 
         public String getUpdatedAt() {
             return updatedAt;
@@ -276,16 +380,35 @@ public class PetDetailsResponse {
 
         public void set__v(int __v) {
             this.__v = __v;
+
         }
 
 
-        public List<String> getPet_img() {
+        public List<PetImgBean> getPet_img() {
             return pet_img;
         }
 
-        public void setPet_img(List<String> pet_img) {
+        public void setPet_img(List<PetImgBean> pet_img) {
             this.pet_img = pet_img;
 
+        }
+
+        public static class PetImgBean  {
+            /**
+             * pet_img : http://54.212.108.156:3000/api/uploads/1614686158761.jpeg
+             */
+
+            private String pet_img;
+
+
+            public String getPet_img() {
+                return pet_img;
+            }
+
+            public void setPet_img(String pet_img) {
+                this.pet_img = pet_img;
+
+            }
         }
     }
 }

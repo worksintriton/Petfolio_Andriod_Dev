@@ -16,6 +16,7 @@ public class AddYourPetRequest {
      * date_and_time : 23-10-1996 12:09 AM
      * pet_age : 2 years 2 month
      * pet_dob : 23-10-2012
+     * mobile_type: android
      */
 
     private String user_id;
@@ -31,7 +32,6 @@ public class AddYourPetRequest {
     private String date_and_time;
     private String pet_age;
     private String pet_dob;
-
     private String mobile_type;
 
     public String getMobile_type() {

@@ -313,7 +313,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                                 petType = petDetailsResponseByUserIdList.get(i).getPet_type();
                                 petBreed = petDetailsResponseByUserIdList.get(i).getPet_breed();
                                 petId = petDetailsResponseByUserIdList.get(i).get_id();
-                                petimage = petDetailsResponseByUserIdList.get(i).getPet_img();
+                                //petimage = petDetailsResponseByUserIdList.get(i).getPet_img();
 
                                 Log.w(TAG, "for petType-->" + petType + "  petName : "+petName+" petId : "+petId+" petimage : "+petimage);
 

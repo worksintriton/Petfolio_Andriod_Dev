@@ -797,9 +797,9 @@ public class AddYourPetActivity extends AppCompatActivity {
         String monthsS = monthsInt.toString();
 
         if(ageInt != 0){
-            petAgeandMonth = ageS+" Years "+monthsS+" Months";
+            petAgeandMonth = ageS+" years "+monthsS+" months";
         }else{
-            petAgeandMonth = monthsS+" Months";
+            petAgeandMonth = monthsS+" months";
 
         }
 

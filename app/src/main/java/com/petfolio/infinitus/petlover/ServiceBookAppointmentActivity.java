@@ -225,7 +225,7 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
     private String spuserid;
     private String selectedServiceTitle;
     private String petcolor;
-    private int petweight;
+    private double petweight;
 
     private String servicetime;
     private int serviceamount;
@@ -286,7 +286,7 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
         img_back.setOnClickListener(v -> onBackPressed());
 
         spr_selectyourpettype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @SuppressLint("SetTextI18n")
+            @SuppressLint({"SetTextI18n", "LogNotTimber"})
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int arg2, long arg3) {
                 ((TextView) parent.getChildAt(0)).setTextColor(getResources().getColor(R.color.green));
@@ -315,7 +315,7 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
                                 petType = petDetailsResponseByUserIdList.get(i).getPet_type();
                                 petBreed = petDetailsResponseByUserIdList.get(i).getPet_breed();
                                 petId = petDetailsResponseByUserIdList.get(i).get_id();
-                                petimage = petDetailsResponseByUserIdList.get(i).getPet_img();
+                               // petimage = petDetailsResponseByUserIdList.get(i).getPet_img();
                                 petcolor = petDetailsResponseByUserIdList.get(i).getPet_color();
                                 petweight = petDetailsResponseByUserIdList.get(i).getPet_weight();
                                 petage = petDetailsResponseByUserIdList.get(i).getPet_age();

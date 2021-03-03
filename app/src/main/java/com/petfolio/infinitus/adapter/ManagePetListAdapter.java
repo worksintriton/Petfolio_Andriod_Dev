@@ -3,21 +3,16 @@ package com.petfolio.infinitus.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
@@ -26,16 +21,14 @@ import com.petfolio.infinitus.interfaces.PetDeleteListener;
 import com.petfolio.infinitus.petlover.AddYourPetOldUserActivity;
 import com.petfolio.infinitus.petlover.EditYourPetProfileInfoActivity;
 import com.petfolio.infinitus.responsepojo.PetListResponse;
-
 import java.util.List;
 
 
 public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private String TAG = "ManagePetListAdapter";
-    private List<PetListResponse.DataBean> petListResponseList = null;
-    private List<PetListResponse.DataBean.PetImgBean> petImgBeanList = null;
-    private Context context;
+    private final List<PetListResponse.DataBean> petListResponseList;
+
+    private final Context context;
 
     PetListResponse.DataBean currentItem;
 
@@ -45,7 +38,7 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
     public static String id = "";
 
 
-    public ManagePetListAdapter(Context context, List<PetListResponse.DataBean> petListResponseList, RecyclerView inbox_list, PetDeleteListener petDeleteListener) {
+    public ManagePetListAdapter(Context context, List<PetListResponse.DataBean> petListResponseList, PetDeleteListener petDeleteListener) {
         this.petListResponseList = petListResponseList;
         this.context = context;
         this.petDeleteListener = petDeleteListener;
@@ -76,86 +69,75 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
 
 
         if (petListResponseList != null && petListResponseList.size() > 0) {
+            String TAG = "ManagePetListAdapter";
             Log.w(TAG,"petListResponseList : "+new Gson().toJson(petListResponseList));
+
             for (int i = 0; i < petListResponseList.size(); i++) {
-                petImgBeanList = petListResponseList.get(i).getPet_img();
+                List<PetListResponse.DataBean.PetImgBean>    petImgBeanList = petListResponseList.get(i).getPet_img();
+                Log.w(TAG,"petImgBeanList : "+new Gson().toJson(petImgBeanList));
+                if (petImgBeanList != null && petImgBeanList.size() > 0) {
+
+                    for(int j=0;j<petImgBeanList.size();j++) {
+                        if (petImgBeanList.get(j).getPet_img() != null && !petImgBeanList.get(j).getPet_img().isEmpty()) {
+                            Glide.with(context)
+                                    .load(petImgBeanList.get(j).getPet_img())
+                                    .into(holder.img_pet_imge);
+                        }else {
+                            Glide.with(context)
+                                    .load(APIClient.PROFILE_IMAGE_URL)
+                                    .into(holder.img_pet_imge);
+
+                        }
+
+                    }
+                }
 
             }
+
 
         }
-        Log.w(TAG,"petImgBeanList : "+new Gson().toJson(petImgBeanList));
-
-        if (petImgBeanList != null && petImgBeanList.size() > 0) {
-            if (petImgBeanList.get(position).getPet_img() != null && !petImgBeanList.get(position).getPet_img().isEmpty()) {
-                Glide.with(context)
-                        .load(petImgBeanList.get(position).getPet_img())
-                        .into(holder.img_pet_imge);
-
-            } else {
-                Glide.with(context)
-                        .load(APIClient.PROFILE_IMAGE_URL)
-                        .into(holder.img_pet_imge);
-
-            }
-        }
 
 
-
-
-
-
-
-
-
-        holder.ll_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(context, AddYourPetOldUserActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(i);
-            }
+        holder.ll_add.setOnClickListener(v -> {
+            Intent i = new Intent(context, AddYourPetOldUserActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(i);
         });
 
 
-        holder.img_settings.setOnClickListener(new View.OnClickListener() {
+        holder.img_settings.setOnClickListener(v -> {
+            //Creating the instance of PopupMenu
+            PopupMenu popup = new PopupMenu(context, v);
+            //Inflating the Popup using xml file
+            popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
 
-            @Override
-            public void onClick(View v) {
-                //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(context, v);
-                //Inflating the Popup using xml file
-                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+            //registering popup with OnMenuItemClickListener
+            popup.setOnMenuItemClickListener(item -> {
+                String titleName = String.valueOf(item.getTitle());
+                if(titleName != null && titleName.equalsIgnoreCase("Edit")){
+                    Intent i = new Intent(context, EditYourPetProfileInfoActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("id",petListResponseList.get(position).get_id());
+                    i.putExtra("userid",petListResponseList.get(position).getUser_id());
+                    i.putExtra("petimage",petListResponseList.get(position).getPet_img().get(position).getPet_img());
+                    i.putExtra("petname",petListResponseList.get(position).getPet_name());
+                    i.putExtra("pettype",petListResponseList.get(position).getPet_type());
+                    i.putExtra("petbreed",petListResponseList.get(position).getPet_breed());
+                    i.putExtra("petgender",petListResponseList.get(position).getPet_gender());
+                    i.putExtra("petcolor",petListResponseList.get(position).getPet_color());
+                    i.putExtra("petweight",petListResponseList.get(position).getPet_weight());
+                    i.putExtra("petdob",petListResponseList.get(position).getPet_dob());
+                    i.putExtra("vaccinatedstatus",petListResponseList.get(position).isVaccinated());
+                    i.putExtra("vaccinateddate",petListResponseList.get(position).getLast_vaccination_date());
+                    i.putExtra("defaultstatus",petListResponseList.get(position).isDefault_status());
+                    context.startActivity(i);
 
-                //registering popup with OnMenuItemClickListener
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        String titleName = String.valueOf(item.getTitle());
-                        if(titleName != null && titleName.equalsIgnoreCase("Edit")){
-                            Intent i = new Intent(context, EditYourPetProfileInfoActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            i.putExtra("id",petListResponseList.get(position).get_id());
-                            i.putExtra("userid",petListResponseList.get(position).getUser_id());
-                            i.putExtra("petimage",petListResponseList.get(position).getPet_img().get(position).getPet_img());
-                            i.putExtra("petname",petListResponseList.get(position).getPet_name());
-                            i.putExtra("pettype",petListResponseList.get(position).getPet_type());
-                            i.putExtra("petbreed",petListResponseList.get(position).getPet_breed());
-                            i.putExtra("petgender",petListResponseList.get(position).getPet_gender());
-                            i.putExtra("petcolor",petListResponseList.get(position).getPet_color());
-                            i.putExtra("petweight",petListResponseList.get(position).getPet_weight());
-                            i.putExtra("petage",petListResponseList.get(position).getPet_age());
-                            i.putExtra("vaccinatedstatus",petListResponseList.get(position).isVaccinated());
-                            i.putExtra("vaccinateddate",petListResponseList.get(position).getLast_vaccination_date());
-                            i.putExtra("defaultstatus",petListResponseList.get(position).isDefault_status());
-                            context.startActivity(i);
+                } else if(titleName != null && titleName.equalsIgnoreCase("Delete")){
+                    petDeleteListener.petDeleteListener(petListResponseList.get(position).isDefault_status(),petListResponseList.get(position).get_id());
 
-                        } else if(titleName != null && titleName.equalsIgnoreCase("Delete")){
-                            petDeleteListener.petDeleteListener(petListResponseList.get(position).isDefault_status(),petListResponseList.get(position).get_id());
+                }
+                return true;
+            });
 
-                        }
-                        return true;
-                    }
-                });
-
-                popup.show();//showing popup menu
-            }
+            popup.show();//showing popup menu
         });
         //closing the setOnClickListener method
 
@@ -187,7 +169,7 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
         return position;
     }
 
-    class ViewHolderOne extends RecyclerView.ViewHolder {
+    static class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_pet_name;
         public ImageView img_pet_imge,img_settings;
         public LinearLayout ll_add;

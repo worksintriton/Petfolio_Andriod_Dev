@@ -575,8 +575,9 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
                     if (200 == response.body().getCode()) {
                         Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
                         if(response.body().getData() != null) {
-                            Intent intent = new Intent(AddYourPetOldUserActivity.this, AddYourPetImageOlduserActivity.class);
+                            Intent intent = new Intent(AddYourPetOldUserActivity.this, PetOtherInformationsActivity.class);
                             intent.putExtra("petid", response.body().getData().get_id());
+                            intent.putExtra("fromactivity",TAG);
                             startActivity(intent);
                         }
 
@@ -657,7 +658,7 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(AddYourPetOldUserActivity.this, PetLoverProfileScreenActivity.class));
+       // startActivity(new Intent(AddYourPetOldUserActivity.this, PetLoverProfileScreenActivity.class));
         finish();
     }
     @SuppressLint("LogNotTimber")
@@ -816,9 +817,9 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
         String monthsS = monthsInt.toString();
 
         if(ageInt != 0){
-            petAgeandMonth = ageS+" Years "+monthsS+" Months";
+            petAgeandMonth = ageS+" years "+monthsS+" months";
         }else{
-            petAgeandMonth = monthsS+" Months";
+            petAgeandMonth = monthsS+" months";
 
         }
 

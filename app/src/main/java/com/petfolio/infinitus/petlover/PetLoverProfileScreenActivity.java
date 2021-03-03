@@ -4,8 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -438,7 +436,7 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
 
       //  rv_pet.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rv_pet.setItemAnimator(new DefaultItemAnimator());
-        ManagePetListAdapter managePetListAdapter = new ManagePetListAdapter(getApplicationContext(), petList, rv_pet,this);
+        ManagePetListAdapter managePetListAdapter = new ManagePetListAdapter(getApplicationContext(), petList, this);
         rv_pet.setAdapter(managePetListAdapter);
 
     }
