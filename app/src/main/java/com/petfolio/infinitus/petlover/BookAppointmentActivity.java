@@ -3,10 +3,12 @@ package com.petfolio.infinitus.petlover;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -20,6 +22,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.text.InputType;
@@ -38,9 +41,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.AddImageListAdapter;
+import com.petfolio.infinitus.adapter.ViewPagerClinicDetailsAdapter;
+import com.petfolio.infinitus.adapter.ViewPagerPetlistAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.appUtils.FileUtil;
@@ -52,6 +58,7 @@ import com.petfolio.infinitus.requestpojo.PetAppointmentCreateRequest;
 import com.petfolio.infinitus.requestpojo.PetDetailsRequest;
 import com.petfolio.infinitus.responsepojo.AddYourPetResponse;
 import com.petfolio.infinitus.responsepojo.BreedTypeResponse;
+import com.petfolio.infinitus.responsepojo.DoctorDetailsResponse;
 import com.petfolio.infinitus.responsepojo.FileUploadResponse;
 import com.petfolio.infinitus.responsepojo.NotificationSendResponse;
 import com.petfolio.infinitus.responsepojo.PetAppointmentCreateResponse;
@@ -77,6 +84,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -113,6 +122,10 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     Button btn_continue;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.cdvw)
+    CardView cv_pet_img;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_pettype)
     TextView txt_pettype;
 
@@ -147,6 +160,14 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_pet_imge)
     ImageView img_pet_imge;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.pager)
+    ViewPager viewPager;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tabDots)
+    TabLayout tabLayout;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_lbl_uploadpet)
@@ -204,7 +225,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     MultipartBody.Part filePart;
     String currentDateandTime;
     private String uploadimagepath = "";
-     Dialog alertDialog;
+    Dialog alertDialog;
     private boolean isSelectYourPet;
     private String selectedAppointmentType = "Emergency";
     private String petId;
@@ -221,8 +242,11 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
     HashMap<String, String> hashMap_selectyourpet = new HashMap<>();
     private String selectedCommunicationtype = "";
-    private List<String> petimage;
-
+    private List<PetDetailsResponse.DataBean.PetImgBean> petimage;
+    int currentPage = 0;
+    Timer timer;
+    final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
+    final long PERIOD_MS = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -233,8 +257,9 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
         txt_pettype.setVisibility(View.GONE);
         txt_petbreed.setVisibility(View.GONE);
-        img_pet_imge.setVisibility(View.GONE);
+        cv_pet_img.setVisibility(View.GONE);
         rv_upload_pet_images.setVisibility(View.GONE);
+        img_pet_imge.setVisibility(View.VISIBLE);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -302,7 +327,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                     txt_or.setVisibility(View.GONE);
                     txt_pettype.setVisibility(View.VISIBLE);
                     txt_petbreed.setVisibility(View.VISIBLE);
-                    img_pet_imge.setVisibility(View.VISIBLE);
+                    cv_pet_img.setVisibility(View.VISIBLE);
                     edt_petname.setVisibility(View.GONE);
                     edt_petname.setEnabled(false);
                     edt_petname.setInputType(InputType.TYPE_NULL);
@@ -313,7 +338,19 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                                 petType = petDetailsResponseByUserIdList.get(i).getPet_type();
                                 petBreed = petDetailsResponseByUserIdList.get(i).getPet_breed();
                                 petId = petDetailsResponseByUserIdList.get(i).get_id();
-                                //petimage = petDetailsResponseByUserIdList.get(i).getPet_img();
+                                petimage = petDetailsResponseByUserIdList.get(i).getPet_img();
+                                if(petimage!=null&&petimage.size()>0){
+
+                                    img_pet_imge.setVisibility(View.GONE);
+
+                                    viewpageData(petimage);
+                                }
+
+                                else {
+
+                                    img_pet_imge.setVisibility(View.VISIBLE);
+
+                                }
 
                                 Log.w(TAG, "for petType-->" + petType + "  petName : "+petName+" petId : "+petId+" petimage : "+petimage);
 
@@ -327,16 +364,16 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                     txt_pettype.setText(petType);
                     txt_petbreed.setText(petBreed);
 
-                    if(petimage != null){
-                        Glide.with(BookAppointmentActivity.this)
-                                .load(petimage)
-                                .into(img_pet_imge);
-                    }else{
-                        Glide.with(BookAppointmentActivity.this)
-                                .load(R.drawable.image_thumbnail)
-                                .into(img_pet_imge);
-
-                    }
+//                    if(petimage != null){
+//                        Glide.with(BookAppointmentActivity.this)
+//                                .load(petimage)
+//                                .into(img_pet_imge);
+//                    }else{
+//                        Glide.with(BookAppointmentActivity.this)
+//                                .load(R.drawable.image_thumbnail)
+//                                .into(img_pet_imge);
+//
+//                    }
 
                     rl_pettype.setVisibility(View.GONE);
                     rl_petbreed.setVisibility(View.GONE);
@@ -352,8 +389,8 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
                     txt_pettype.setVisibility(View.GONE);
                     txt_petbreed.setVisibility(View.GONE);
-                    img_pet_imge.setVisibility(View.GONE);
-
+                    cv_pet_img.setVisibility(View.GONE);
+                    img_pet_imge.setVisibility(View.VISIBLE);
                     edt_petname.setText("");
                     edt_petname.setEnabled(true);
                     edt_petname.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
@@ -427,14 +464,14 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                     }else{
 
 
-                          if(amount != 0){
-                              startPayment();
-                          }else {
-                               if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                                       petAppointmentCreateResponseCall();
-                                 }
+                        if(amount != 0){
+                            startPayment();
+                        }else {
+                            if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                                petAppointmentCreateResponseCall();
+                            }
 
-                          }
+                        }
 
 
 
@@ -445,30 +482,30 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                 }
 
             } else {
-               if( bookAppointmentValidator()){
-                     if (validdSelectPetType()) {
-                         if(validdSelectPetBreedType()){
+                if( bookAppointmentValidator()){
+                    if (validdSelectPetType()) {
+                        if(validdSelectPetBreedType()){
 
-                             if (edt_allergies.getText().toString().trim().equals("")) {
-                                 edt_allergies.setError("Please enter allergies");
-                                 edt_allergies.requestFocus();
-                             }else if (edt_comment.getText().toString().trim().equals("")) {
-                                 edt_comment.setError("Please enter comment");
-                                 edt_comment.requestFocus();
-                             }else if (selectedCommunicationtype != null && selectedCommunicationtype.isEmpty()) {
-                                 showErrorLoading("Please select communication type");
-                             }else {
-                                 if (new ConnectionDetector(BookAppointmentActivity.this).isNetworkAvailable(BookAppointmentActivity.this)) {
-                                        addYourPetResponseCall();
-                                 }
-                             }
-                         }
+                            if (edt_allergies.getText().toString().trim().equals("")) {
+                                edt_allergies.setError("Please enter allergies");
+                                edt_allergies.requestFocus();
+                            }else if (edt_comment.getText().toString().trim().equals("")) {
+                                edt_comment.setError("Please enter comment");
+                                edt_comment.requestFocus();
+                            }else if (selectedCommunicationtype != null && selectedCommunicationtype.isEmpty()) {
+                                showErrorLoading("Please select communication type");
+                            }else {
+                                if (new ConnectionDetector(BookAppointmentActivity.this).isNetworkAvailable(BookAppointmentActivity.this)) {
+                                    addYourPetResponseCall();
+                                }
+                            }
+                        }
 
-                   }
+                    }
 
 
 
-               }
+                }
 
             }
 
@@ -495,6 +532,32 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
         });
 
+
+    }
+
+    private void viewpageData(List<PetDetailsResponse.DataBean.PetImgBean> petImgBeanList) {
+        tabLayout.setupWithViewPager(viewPager, true);
+
+        ViewPagerPetlistAdapter viewPagerPetlistAdapter = new ViewPagerPetlistAdapter(getApplicationContext(), petImgBeanList);
+        viewPager.setAdapter(viewPagerPetlistAdapter);
+        /*After setting the adapter use the timer */
+        final Handler handler = new Handler();
+        final Runnable Update =  new Runnable() {
+            public void run() {
+                if (currentPage == petImgBeanList.size()) {
+                    currentPage = 0;
+                }
+                viewPager.setCurrentItem(currentPage++, false);
+            }
+        };
+
+        timer = new Timer(); // This will create a new Thread
+        timer.schedule(new TimerTask() { // task to be scheduled
+            @Override
+            public void run() {
+                handler.post(Update);
+            }
+        }, DELAY_MS, PERIOD_MS);
 
     }
 
@@ -1129,9 +1192,9 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     public void onPaymentError(int code, String response) {
         try {
             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                 notificationSendResponseCall();
+                notificationSendResponseCall();
             }
-                Log.w(TAG,  "Payment failed: " + code + " " + response);
+            Log.w(TAG,  "Payment failed: " + code + " " + response);
             Toasty.error(getApplicationContext(), "Payment failed. Please try again with another payment method..", Toast.LENGTH_SHORT, true).show();
 
         } catch (Exception e) {
@@ -1235,7 +1298,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
         try {
             Date d1 = h_mm_a.parse(selectedTimeSlot);
-             outputTimeStr =hh_mm_ss.format(d1);
+            outputTimeStr =hh_mm_ss.format(d1);
 
         } catch (Exception e) {
             e.printStackTrace();
