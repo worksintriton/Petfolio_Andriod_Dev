@@ -3,10 +3,12 @@ package com.petfolio.infinitus.petlover;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -20,6 +22,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.text.InputFilter;
@@ -37,9 +40,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.AddImageListAdapter;
+import com.petfolio.infinitus.adapter.ViewPagerPetlistAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.appUtils.FileUtil;
@@ -79,6 +84,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -97,6 +104,18 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.cdvw)
+    CardView cv_pet_img;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.pager)
+    ViewPager viewPager;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tabDots)
+    TabLayout tabLayout;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.spr_selectyourpettype)
@@ -153,7 +172,6 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_lbl_uploadpet)
     TextView txt_lbl_uploadpet;
-
 
 
     @SuppressLint("NonConstantResourceId")
@@ -229,9 +247,13 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
 
     private String servicetime;
     private int serviceamount;
-    private List<String> petimage;
     private String petage;
 
+    private List<PetDetailsResponse.DataBean.PetImgBean> petimage;
+    int currentPage = 0;
+    Timer timer;
+    final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
+    final long PERIOD_MS = 3000;
 
     @SuppressLint("LongLogTag")
     @Override
@@ -315,11 +337,26 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
                                 petType = petDetailsResponseByUserIdList.get(i).getPet_type();
                                 petBreed = petDetailsResponseByUserIdList.get(i).getPet_breed();
                                 petId = petDetailsResponseByUserIdList.get(i).get_id();
-                               // petimage = petDetailsResponseByUserIdList.get(i).getPet_img();
+                                petimage = petDetailsResponseByUserIdList.get(i).getPet_img();
                                 petcolor = petDetailsResponseByUserIdList.get(i).getPet_color();
                                 petweight = petDetailsResponseByUserIdList.get(i).getPet_weight();
                                 petage = petDetailsResponseByUserIdList.get(i).getPet_age();
                                 Log.w(TAG, "for petType-->" + petType + "  petcolor : "+petcolor+" petweight : "+petweight+" petage : "+petage);
+
+                                if(petimage!=null&&petimage.size()>0){
+
+                                    cv_pet_img.setVisibility(View.VISIBLE);
+
+                                    img_pet_imge.setVisibility(View.GONE);
+
+                                    viewpageData(petimage);
+                                }
+
+                                else {
+
+                                    img_pet_imge.setVisibility(View.VISIBLE);
+
+                                }
 
                             }
                         }
@@ -340,16 +377,16 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
                         edt_petage.setText(petage+"");
                     }
 
-                    if(petimage != null){
-                        Glide.with(ServiceBookAppointmentActivity.this)
-                                .load(petimage)
-                                .into(img_pet_imge);
-                    }else{
-                        Glide.with(ServiceBookAppointmentActivity.this)
-                                .load(R.drawable.image_thumbnail)
-                                .into(img_pet_imge);
-
-                    }
+//                    if(petimage != null){
+//                        Glide.with(ServiceBookAppointmentActivity.this)
+//                                .load(petimage)
+//                                .into(img_pet_imge);
+//                    }else{
+//                        Glide.with(ServiceBookAppointmentActivity.this)
+//                                .load(R.drawable.image_thumbnail)
+//                                .into(img_pet_imge);
+//
+//                    }
 
                     rl_pettype.setVisibility(View.GONE);
                     rl_petbreed.setVisibility(View.GONE);
@@ -367,6 +404,7 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
                     txt_pettype.setVisibility(View.GONE);
                     txt_petbreed.setVisibility(View.GONE);
                     img_pet_imge.setVisibility(View.GONE);
+                    cv_pet_img.setVisibility(View.GONE);
 
                     edt_petcolor.setVisibility(View.VISIBLE);
                     edt_petweight.setVisibility(View.VISIBLE);
@@ -473,6 +511,32 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
         rl_pet_pics.setOnClickListener(v -> choosePetImage());
 
 
+
+    }
+
+    private void viewpageData(List<PetDetailsResponse.DataBean.PetImgBean> petImgBeanList) {
+        tabLayout.setupWithViewPager(viewPager, true);
+
+        ViewPagerPetlistAdapter viewPagerPetlistAdapter = new ViewPagerPetlistAdapter(getApplicationContext(), petImgBeanList);
+        viewPager.setAdapter(viewPagerPetlistAdapter);
+        /*After setting the adapter use the timer */
+        final Handler handler = new Handler();
+        final Runnable Update =  new Runnable() {
+            public void run() {
+                if (currentPage == petImgBeanList.size()) {
+                    currentPage = 0;
+                }
+                viewPager.setCurrentItem(currentPage++, false);
+            }
+        };
+
+        timer = new Timer(); // This will create a new Thread
+        timer.schedule(new TimerTask() { // task to be scheduled
+            @Override
+            public void run() {
+                handler.post(Update);
+            }
+        }, DELAY_MS, PERIOD_MS);
 
     }
 

@@ -18,11 +18,17 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.requestpojo.PetAddImageRequest;
 import com.petfolio.infinitus.requestpojo.PetUpdateOtherInformationRequest;
 import com.petfolio.infinitus.responsepojo.PetAddImageResponse;
+import com.petfolio.infinitus.responsepojo.PetListResponse;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -161,7 +167,7 @@ public class PetEditOtherInformationsActivity extends AppCompatActivity {
     private boolean pet_tick_free = false;
     private boolean pet_private_part = false;
     private String petimage;
-
+    List<PetListResponse.DataBean.PetImgBean> petImgBeanList;
 
     @SuppressLint("LongLogTag")
     @Override
@@ -172,10 +178,21 @@ public class PetEditOtherInformationsActivity extends AppCompatActivity {
 
         avi_indicator.setVisibility(View.GONE);
 
+        Intent i = getIntent();
+
+        Bundle args = i.getBundleExtra("petimage");
+
+        if(args!=null&&!args.isEmpty()){
+
+            petImgBeanList = (ArrayList<PetListResponse.DataBean.PetImgBean>) args.getSerializable("PETLIST");
+        }
+
+        Log.w(TAG , petImgBeanList.toString());
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             petid = extras.getString("petid");
-            petimage = extras.getString("petimage");
+            //petimage = extras.getString("petimage");
             fromactivity = extras.getString("fromactivity");
 
             pet_spayed = extras.getBoolean("pet_spayed");
@@ -219,7 +236,9 @@ public class PetEditOtherInformationsActivity extends AppCompatActivity {
         txt_skip.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), EditYourPetImageActivity.class);
             intent.putExtra("petid", petid);
-            intent.putExtra("petimage", petimage);
+            Bundle arguments = new Bundle();
+            arguments.putSerializable("PETLIST",(Serializable)petImgBeanList);
+            intent.putExtra("petimage",args);
             intent.putExtra("fromactivity",TAG);
             startActivity(intent);
 
@@ -319,7 +338,9 @@ public class PetEditOtherInformationsActivity extends AppCompatActivity {
                     if(response.body().getData().get_id() != null) {
                         Intent intent = new Intent(getApplicationContext(), EditYourPetImageActivity.class);
                         intent.putExtra("petid", response.body().getData().get_id());
-                        intent.putExtra("petimage", petimage);
+                        Bundle args = new Bundle();
+                        args.putSerializable("PETLIST",(Serializable)petImgBeanList);
+                        intent.putExtra("petimage",args);
                         intent.putExtra("fromactivity",TAG);
                         startActivity(intent);
 

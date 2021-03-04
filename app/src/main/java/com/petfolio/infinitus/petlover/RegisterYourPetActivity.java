@@ -396,7 +396,7 @@ public class RegisterYourPetActivity extends AppCompatActivity implements View.O
                         if( response.body().getData() != null)
                         {
 
-                            if(pet_img.size()>=4){
+                            if(pet_img.size()>=3){
 
                                 Toasty.warning(RegisterYourPetActivity.this,"Sorry You can't Upload more than 4", Toasty.LENGTH_LONG).show();
 
@@ -406,9 +406,20 @@ public class RegisterYourPetActivity extends AppCompatActivity implements View.O
                             {
                                 PetAddImageRequest.PetImgBean petImgBean = new PetAddImageRequest.PetImgBean();
 
-                                petImgBean.setPet_img(ServerUrlImagePath);
+                                if(ServerUrlImagePath != null&&!ServerUrlImagePath.isEmpty())
+                                {
+                                    petImgBean.setPet_img(ServerUrlImagePath);
 
-                                pet_img.add(petImgBean);
+                                    pet_img.add(petImgBean);
+
+                                }
+                                else
+                                {
+                                    petImgBean.setPet_img(APIClient.PROFILE_IMAGE_URL);
+
+                                    pet_img.add(petImgBean);
+
+                                }
 
                                 setView();
 

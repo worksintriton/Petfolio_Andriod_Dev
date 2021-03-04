@@ -40,6 +40,15 @@ public class PetAddImageRequest {
 
         private String pet_img;
 
+        public PetImgBean(String pet_img) {
+
+            this.pet_img = pet_img;
+        }
+
+        public PetImgBean() {
+
+        }
+
 
         public String getPet_img() {
             return pet_img;

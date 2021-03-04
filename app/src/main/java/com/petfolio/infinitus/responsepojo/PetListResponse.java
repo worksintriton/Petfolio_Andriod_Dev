@@ -1,5 +1,6 @@
 package com.petfolio.infinitus.responsepojo;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class PetListResponse {
@@ -391,7 +392,7 @@ public class PetListResponse {
 
         }
 
-        public static class PetImgBean  {
+        public static class PetImgBean implements Serializable{
             /**
              * pet_img : http://54.212.108.156:3000/api/uploads/1614686158761.jpeg
              */
@@ -407,6 +408,8 @@ public class PetListResponse {
                 this.pet_img = pet_img;
 
             }
+
+
         }
     }
 }

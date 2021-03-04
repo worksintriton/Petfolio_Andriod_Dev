@@ -3,6 +3,7 @@ package com.petfolio.infinitus.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,8 @@ import com.petfolio.infinitus.interfaces.PetDeleteListener;
 import com.petfolio.infinitus.petlover.AddYourPetOldUserActivity;
 import com.petfolio.infinitus.petlover.EditYourPetProfileInfoActivity;
 import com.petfolio.infinitus.responsepojo.PetListResponse;
+
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -146,6 +149,12 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
                     i.putExtra("pet_microchipped",petListResponseList.get(position).isPet_microchipped());
                     i.putExtra("pet_tick_free",petListResponseList.get(position).isPet_tick_free());
                     i.putExtra("pet_private_part",petListResponseList.get(position).isPet_private_part());
+
+                    Bundle args = new Bundle();
+                    int list = petListResponseList.get(position).getPet_img().size();
+                    args.putSerializable("PETLIST", (Serializable) petListResponseList.get(position).getPet_img());
+                    i.putExtra("petimage",args);
+
                     context.startActivity(i);
 
                 } else if(titleName != null && titleName.equalsIgnoreCase("Delete")){

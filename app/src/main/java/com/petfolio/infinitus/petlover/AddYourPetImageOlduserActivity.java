@@ -48,6 +48,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -372,7 +373,7 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
                         Log.w(TAG, "ServerUrlImagePath " + ServerUrlImagePath);
 
 
-                        if(pet_img.size()>=4){
+                        if(pet_img.size()>=3){
 
                             Toasty.warning(AddYourPetImageOlduserActivity.this,"Sorry You can't Upload more than 4", Toasty.LENGTH_LONG).show();
 
@@ -382,7 +383,7 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
                         {
                             PetAddImageRequest.PetImgBean petImgBean = new PetAddImageRequest.PetImgBean();
 
-                            if(ServerUrlImagePath != null)
+                            if(ServerUrlImagePath != null&&!ServerUrlImagePath.isEmpty())
                             {
                                 petImgBean.setPet_img(ServerUrlImagePath);
 

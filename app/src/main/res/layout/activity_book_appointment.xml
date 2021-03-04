@@ -326,6 +326,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content" />
+
             <ImageView
                 android:id="@+id/img_pet_imge"
                 android:layout_width="100dp"
@@ -334,7 +335,42 @@
                 android:layout_marginTop="20dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/image"
-                android:src="@drawable/upload" />
+                android:src="@drawable/upload"
+                android:visibility="gone" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cdvw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:cardBackgroundColor="@color/light_green"
+                app:cardCornerRadius="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:layout_below="@id/linear1"
+                    android:background="@drawable/rounded_corner_button"
+                    android:elevation="9dp"
+                    tools:ignore="UnusedAttribute">
+
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/pager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tabDots"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        app:tabBackground="@drawable/tab_selector"
+                        app:tabGravity="center"
+                        app:tabIndicatorHeight="0dp" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
 
             <RelativeLayout
                 android:id="@+id/rv_comment"

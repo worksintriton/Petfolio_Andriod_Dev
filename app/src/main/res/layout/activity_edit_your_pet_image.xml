@@ -64,6 +64,12 @@
             android:src="@drawable/upload"
             tools:ignore="ContentDescription" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rc_uploaded_pet_images"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp" />
+
         <TextView
             android:id="@+id/txt_change_petimage"
             android:layout_width="match_parent"

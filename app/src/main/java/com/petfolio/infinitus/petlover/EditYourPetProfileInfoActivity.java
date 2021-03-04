@@ -41,12 +41,14 @@ import com.petfolio.infinitus.responsepojo.BreedTypeResponse;
 import com.petfolio.infinitus.responsepojo.DropDownListResponse;
 import com.petfolio.infinitus.responsepojo.PetAddImageResponse;
 import com.petfolio.infinitus.responsepojo.PetDetailsResponse;
+import com.petfolio.infinitus.responsepojo.PetListResponse;
 import com.petfolio.infinitus.responsepojo.PetTypeListResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -179,8 +181,7 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
     private boolean pet_microchipped;
     private boolean pet_tick_free;
     private boolean pet_private_part;
-
-
+    List<PetListResponse.DataBean.PetImgBean> petImgBeanList;
 
     @SuppressLint({"LogNotTimber", "SetTextI18n"})
     @Override
@@ -196,14 +197,22 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
 
         edt_petweight.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,2)});
 
+        Intent intent = getIntent();
 
+        Bundle args = intent.getBundleExtra("petimage");
 
+        if(args!=null&&!args.isEmpty()){
+
+            petImgBeanList = (ArrayList<PetListResponse.DataBean.PetImgBean>) args.getSerializable("PETLIST");
+        }
+
+        Log.w(TAG , petImgBeanList.toString());
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             petid = extras.getString("id");
             userid = extras.getString("userid");
-            petimage = extras.getString("petimage");
+           // petimage = extras.getString("petimage");
             petname = extras.getString("petname");
             strPetType = extras.getString("pettype");
             strPetBreedType = extras.getString("petbreed");
@@ -804,7 +813,9 @@ public class EditYourPetProfileInfoActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(),PetEditOtherInformationsActivity.class);
                         intent.putExtra("petid",petid);
                         intent.putExtra("userid",userid);
-                        intent.putExtra("petimage",petimage);
+                        Bundle args = new Bundle();
+                        args.putSerializable("PETLIST",(Serializable)petImgBeanList);
+                        intent.putExtra("petimage",args);
                         intent.putExtra("pet_spayed",pet_spayed);
                         intent.putExtra("pet_purebred",pet_purebred);
                         intent.putExtra("pet_frnd_with_dog",pet_frnd_with_dog);
