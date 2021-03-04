@@ -20,12 +20,7 @@ import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.petlover.PetAppointmentDetailsActivity;
-import com.petfolio.infinitus.petlover.PetCompletedAppointmentDetailsActivity;
-import com.petfolio.infinitus.petlover.PetMissedAppointmentDetailsActivity;
-import com.petfolio.infinitus.petlover.PetSPNewAppointmentDetailsActivity;
 import com.petfolio.infinitus.responsepojo.PetAppointmentResponse;
-import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
-
 import java.util.List;
 
 

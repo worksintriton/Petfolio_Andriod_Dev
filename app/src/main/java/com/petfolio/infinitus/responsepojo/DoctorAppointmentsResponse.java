@@ -2,20 +2,19 @@ package com.petfolio.infinitus.responsepojo;
 
 import java.util.List;
 
-public class PetNewAppointmentDetailsResponse {
-
+public class DoctorAppointmentsResponse {
 
     /**
      * Status : Success
      * Message : New Appointment List
-     * Data : {"doc_attched":[],"doc_business_info":[{"education_details":[{"education":"MBBS","year":"2015"}],"experience_details":[{"company":"Apollo pharmacy","from":"2016","to":"2020","yearsofexperience":4}],"specialization":[{"specialization":"Surgeon"},{"specialization":"Internal Medicine Physician"},{"specialization":"Psychiatrist"},{"specialization":"Testing Spef"},{"specialization":"Dermatologist"}],"pet_handled":[{"pet_handled":"Dog"},{"pet_handled":"Cat"},{"pet_handled":"Parrot"}],"clinic_pic":[{"clinic_pic":"http://54.212.108.156:3000/api/uploads/1614688613605.jpeg"}],"certificate_pic":[{"certificate_pic":"http://54.212.108.156:3000/api/uploads/1614688628168.pdf"}],"govt_id_pic":[{"govt_id_pic":"http://54.212.108.156:3000/api/uploads/1614688635363.pdf"}],"photo_id_pic":[{"photo_id_pic":"http://54.212.108.156:3000/api/uploads/1614688666520.pdf"}],"_id":"603e31a02c2b43125f8cb806","user_id":"603e2a7b2c2b43125f8cb805","dr_title":"Dr","dr_name":"DineshKumar Deva","clinic_name":"Apollo pharmacy","clinic_loc":"4/3 Marriyamman Kovil street","clinic_lat":0,"clinic_long":0,"profile_status":true,"profile_verification_status":"Verified","slot_type":"","date_and_time":"02/03/2021 06:07:51","signature":"","mobile_type":"Android","communication_type":"Online Or Visit","live_status":"Not Live","live_by":"","delete_status":false,"consultancy_fees":500,"calender_status":true,"comments":0,"rating":5,"doctor_exp":4,"updatedAt":"2021-03-02T12:40:05.921Z","createdAt":"2021-03-02T12:37:52.684Z","__v":0}],"_id":"603f65712c2b43125f8cb822","doctor_id":{"_id":"603e2a7b2c2b43125f8cb805","first_name":"DineshKumar","last_name":"Deva","user_email":"iddineshkumar@gmail.com","user_phone":"9842670813","date_of_reg":"02/03/2021 05:37 PM","user_type":4,"user_status":"complete","otp":123456,"profile_img":"","user_email_verification":false,"fb_token":"","device_id":"","device_type":"","mobile_type":"Android","delete_status":false,"updatedAt":"2021-03-03T05:33:24.859Z","createdAt":"2021-03-02T12:07:23.821Z","__v":0},"appointment_UID":"PET-1614767473480","booking_date":"03-03-2021","booking_time":"10:45 PM","booking_date_time":"03-03-2021 10:45 PM","communication_type":"Online","msg_id":"Meeting_id/603f65712c2b43125f8cb822","video_id":"https://meet.jit.si/603f65712c2b43125f8cb822","user_id":{"_id":"603e27792c2b43125f8cb802","first_name":"imthi","last_name":"DKK","user_email":"imthiyas@gmail.com","user_phone":"0123456789","date_of_reg":"02/03/2021 05:24 PM","user_type":1,"user_status":"complete","otp":123456,"profile_img":"","user_email_verification":false,"fb_token":"fWv_aI-ESwigRRbQ9K8gk3:APA91bG6nxnn70Yto__dUXi8ELzbG_h7L-IXPOGyKAMkd-Rxd2IL1HiEeI_5iwSCRh-G8yuoMQA80WqMN_zz-EHSHAAa4rnyymJNQfFToAZcdEkKvF-8bfeshf4lTT7UgZNrrxC5IHso","device_id":"","device_type":"","mobile_type":"Android","delete_status":false,"updatedAt":"2021-03-03T10:27:02.762Z","createdAt":"2021-03-02T11:54:33.405Z","__v":0},"pet_id":{"pet_img":[{"pet_img":"http://54.212.108.156:3000/api/uploads/1614686158761.jpeg"}],"_id":"603e27a92c2b43125f8cb803","user_id":"603e27792c2b43125f8cb802","pet_name":"DEENU","pet_type":"Dog","pet_breed":"Irish Setter","pet_gender":"Male","pet_color":"BLACK","pet_weight":20.5,"pet_age":"","pet_dob":"03-03-2015","pet_spayed":true,"pet_purebred":true,"pet_frnd_with_dog":true,"pet_frnd_with_cat":true,"pet_frnd_with_kit":true,"pet_microchipped":true,"pet_tick_free":true,"pet_private_part":true,"vaccinated":true,"last_vaccination_date":"10-02-2021","default_status":true,"date_and_time":"03-03-2021 03:38 PM","mobile_type":"Android","delete_status":false,"updatedAt":"2021-03-03T10:08:39.919Z","createdAt":"2021-03-02T11:55:21.396Z","__v":0},"problem_info":"fever\n","appoinment_status":"Incomplete","start_appointment_status":"Not Started","end_appointment_status":"Not End","doc_feedback":"","doc_rate":"","user_feedback":"","user_rate":"0","display_date":"2021-03-03 22:45:00","server_date_time":"","payment_method":"Online","prescription_details":"","vaccination_details":"","appointment_types":"Emergency","allergies":"fever","payment_id":"pay_Gi9I4YGcwv28MZ","amount":"500","service_name":"","service_amount":"","completed_at":"","missed_at":"","mobile_type":"Android","delete_status":false,"appoint_patient_st":"","date_and_time":"03-03-2021 04:00 PM","updatedAt":"2021-03-03T10:31:13.488Z","createdAt":"2021-03-03T10:31:13.485Z","__v":0}
+     * Data : [{"doc_attched":[],"doc_business_info":[{"education_details":[{"education":"MBBS","year":"2015"}],"experience_details":[{"company":"Apollo pharmacy","from":"2016","to":"2020","yearsofexperience":4}],"specialization":[{"specialization":"Surgeon"},{"specialization":"Internal Medicine Physician"},{"specialization":"Psychiatrist"},{"specialization":"Testing Spef"},{"specialization":"Dermatologist"}],"pet_handled":[{"pet_handled":"Dog"},{"pet_handled":"Cat"},{"pet_handled":"Parrot"}],"clinic_pic":[{"clinic_pic":"http://54.212.108.156:3000/api/uploads/1614688613605.jpeg"}],"certificate_pic":[{"certificate_pic":"http://54.212.108.156:3000/api/uploads/1614688628168.pdf"}],"govt_id_pic":[{"govt_id_pic":"http://54.212.108.156:3000/api/uploads/1614688635363.pdf"}],"photo_id_pic":[{"photo_id_pic":"http://54.212.108.156:3000/api/uploads/1614688666520.pdf"}],"_id":"603e31a02c2b43125f8cb806","user_id":"603e2a7b2c2b43125f8cb805","dr_title":"Dr","dr_name":"DineshKumar Deva","clinic_name":"Apollo pharmacy","clinic_loc":"4/3 Marriyamman Kovil street","clinic_lat":0,"clinic_long":0,"profile_status":true,"profile_verification_status":"Verified","slot_type":"","date_and_time":"02/03/2021 06:07:51","signature":"","mobile_type":"Android","communication_type":"Online Or Visit","live_status":"Not Live","live_by":"","delete_status":false,"consultancy_fees":500,"calender_status":true,"comments":0,"rating":5,"doctor_exp":4,"updatedAt":"2021-03-02T12:40:05.921Z","createdAt":"2021-03-02T12:37:52.684Z","__v":0}],"_id":"60407d912c2b43125f8cb83d","doctor_id":{"_id":"603e2a7b2c2b43125f8cb805","first_name":"DineshKumar","last_name":"Deva","user_email":"iddineshkumar@gmail.com","user_phone":"9842670813","date_of_reg":"02/03/2021 05:37 PM","user_type":4,"user_status":"complete","otp":123456,"profile_img":"","user_email_verification":false,"fb_token":"dkShpCTiS2--v7J6pop1aB:APA91bEB2qKVtLnayWT8Evp3uPsVKr-wJD_Gnp2dmPP4buRE7HTTrImRKTJWHQTgrxF-Lg4EM2UtzWPLM3hha-k7_-Icb5gsnreUQjDcnUIikWYTG9BZjZxA41sX2_EvHcHGZQvov42Z","device_id":"","device_type":"","mobile_type":"Android","delete_status":false,"updatedAt":"2021-03-04T06:30:03.960Z","createdAt":"2021-03-02T12:07:23.821Z","__v":0},"appointment_UID":"PET-1614839185239","booking_date":"04-03-2021","booking_time":"11:30 PM","booking_date_time":"04-03-2021 11:30 PM","communication_type":"Online","msg_id":"Meeting_id/60407d912c2b43125f8cb83d","video_id":"https://meet.jit.si/60407d912c2b43125f8cb83d","user_id":{"_id":"603e27792c2b43125f8cb802","first_name":"imthi","last_name":"DKK","user_email":"imthiyas@gmail.com","user_phone":"0123456789","date_of_reg":"02/03/2021 05:24 PM","user_type":1,"user_status":"complete","otp":123456,"profile_img":"","user_email_verification":false,"fb_token":"fWv_aI-ESwigRRbQ9K8gk3:APA91bG6nxnn70Yto__dUXi8ELzbG_h7L-IXPOGyKAMkd-Rxd2IL1HiEeI_5iwSCRh-G8yuoMQA80WqMN_zz-EHSHAAa4rnyymJNQfFToAZcdEkKvF-8bfeshf4lTT7UgZNrrxC5IHso","device_id":"","device_type":"","mobile_type":"Android","delete_status":false,"updatedAt":"2021-03-03T10:27:02.762Z","createdAt":"2021-03-02T11:54:33.405Z","__v":0},"pet_id":{"pet_img":[{"pet_img":"http://54.212.108.156:3000/api/uploads/1614838906176.jpeg"},{"pet_img":"http://54.212.108.156:3000/api/uploads/1614838914060.jpeg"},{"pet_img":"http://54.212.108.156:3000/api/uploads/1614838919211.jpeg"}],"_id":"60407c392c2b43125f8cb83c","user_id":"603e27792c2b43125f8cb802","pet_name":"TEENU","pet_type":"Dog","pet_breed":"Pug","pet_gender":"Male","pet_color":"White","pet_weight":5,"pet_age":"","pet_dob":"01-03-2016","pet_spayed":true,"pet_purebred":false,"pet_frnd_with_dog":false,"pet_frnd_with_cat":true,"pet_frnd_with_kit":false,"pet_microchipped":false,"pet_tick_free":false,"pet_private_part":false,"vaccinated":true,"last_vaccination_date":"01-03-2021","default_status":true,"date_and_time":"04-03-2021 11:55 AM","mobile_type":"Android","delete_status":false,"updatedAt":"2021-03-04T06:25:29.004Z","createdAt":"2021-03-04T06:20:41.573Z","__v":0},"problem_info":"fever","appoinment_status":"Incomplete","start_appointment_status":"Not Started","end_appointment_status":"Not End","doc_feedback":"","doc_rate":"","user_feedback":"","user_rate":"0","display_date":"2021-03-04 23:30:00","server_date_time":"","payment_method":"Online","prescription_details":"","vaccination_details":"","appointment_types":"Emergency","allergies":"Fever","payment_id":"pay_GiTeaWTOiIZ2uq","amount":"500","service_name":"","service_amount":"","completed_at":"","missed_at":"","mobile_type":"Android","delete_status":false,"appoint_patient_st":"","date_and_time":"04-03-2021 11:55 AM","updatedAt":"2021-03-04T06:26:25.247Z","createdAt":"2021-03-04T06:26:25.244Z","__v":0},{"doc_attched":[],"doc_business_info":[{"education_details":[{"education":"MBBS","year":"2015"}],"experience_details":[{"company":"Apollo pharmacy","from":"2016","to":"2020","yearsofexperience":4}],"specialization":[{"specialization":"Surgeon"},{"specialization":"Internal Medicine Physician"},{"specialization":"Psychiatrist"},{"specialization":"Testing Spef"},{"specialization":"Dermatologist"}],"pet_handled":[{"pet_handled":"Dog"},{"pet_handled":"Cat"},{"pet_handled":"Parrot"}],"clinic_pic":[{"clinic_pic":"http://54.212.108.156:3000/api/uploads/1614688613605.jpeg"}],"certificate_pic":[{"certificate_pic":"http://54.212.108.156:3000/api/uploads/1614688628168.pdf"}],"govt_id_pic":[{"govt_id_pic":"http://54.212.108.156:3000/api/uploads/1614688635363.pdf"}],"photo_id_pic":[{"photo_id_pic":"http://54.212.108.156:3000/api/uploads/1614688666520.pdf"}],"_id":"603e31a02c2b43125f8cb806","user_id":"603e2a7b2c2b43125f8cb805","dr_title":"Dr","dr_name":"DineshKumar Deva","clinic_name":"Apollo pharmacy","clinic_loc":"4/3 Marriyamman Kovil street","clinic_lat":0,"clinic_long":0,"profile_status":true,"profile_verification_status":"Verified","slot_type":"","date_and_time":"02/03/2021 06:07:51","signature":"","mobile_type":"Android","communication_type":"Online Or Visit","live_status":"Not Live","live_by":"","delete_status":false,"consultancy_fees":500,"calender_status":true,"comments":0,"rating":5,"doctor_exp":4,"updatedAt":"2021-03-02T12:40:05.921Z","createdAt":"2021-03-02T12:37:52.684Z","__v":0}],"_id":"60406e2e2c2b43125f8cb836","doctor_id":{"_id":"603e2a7b2c2b43125f8cb805","first_name":"DineshKumar","last_name":"Deva","user_email":"iddineshkumar@gmail.com","user_phone":"9842670813","date_of_reg":"02/03/2021 05:37 PM","user_type":4,"user_status":"complete","otp":123456,"profile_img":"","user_email_verification":false,"fb_token":"dkShpCTiS2--v7J6pop1aB:APA91bEB2qKVtLnayWT8Evp3uPsVKr-wJD_Gnp2dmPP4buRE7HTTrImRKTJWHQTgrxF-Lg4EM2UtzWPLM3hha-k7_-Icb5gsnreUQjDcnUIikWYTG9BZjZxA41sX2_EvHcHGZQvov42Z","device_id":"","device_type":"","mobile_type":"Android","delete_status":false,"updatedAt":"2021-03-04T06:30:03.960Z","createdAt":"2021-03-02T12:07:23.821Z","__v":0},"appointment_UID":"PET-1614835246653","booking_date":"04-03-2021","booking_time":"07:45 PM","booking_date_time":"04-03-2021 07:45 PM","communication_type":"Online","msg_id":"Meeting_id/60406e2e2c2b43125f8cb836","video_id":"https://meet.jit.si/60406e2e2c2b43125f8cb836","user_id":{"_id":"603e27792c2b43125f8cb802","first_name":"imthi","last_name":"DKK","user_email":"imthiyas@gmail.com","user_phone":"0123456789","date_of_reg":"02/03/2021 05:24 PM","user_type":1,"user_status":"complete","otp":123456,"profile_img":"","user_email_verification":false,"fb_token":"fWv_aI-ESwigRRbQ9K8gk3:APA91bG6nxnn70Yto__dUXi8ELzbG_h7L-IXPOGyKAMkd-Rxd2IL1HiEeI_5iwSCRh-G8yuoMQA80WqMN_zz-EHSHAAa4rnyymJNQfFToAZcdEkKvF-8bfeshf4lTT7UgZNrrxC5IHso","device_id":"","device_type":"","mobile_type":"Android","delete_status":false,"updatedAt":"2021-03-03T10:27:02.762Z","createdAt":"2021-03-02T11:54:33.405Z","__v":0},"pet_id":{"pet_img":[{"pet_img":"http://54.212.108.156:3000/api/uploads/1614686158761.jpeg"}],"_id":"603e27a92c2b43125f8cb803","user_id":"603e27792c2b43125f8cb802","pet_name":"DEENU","pet_type":"Dog","pet_breed":"Irish Setter","pet_gender":"Male","pet_color":"BLACK","pet_weight":20.5,"pet_age":"","pet_dob":"03-03-2015","pet_spayed":true,"pet_purebred":true,"pet_frnd_with_dog":true,"pet_frnd_with_cat":true,"pet_frnd_with_kit":true,"pet_microchipped":true,"pet_tick_free":true,"pet_private_part":true,"vaccinated":true,"last_vaccination_date":"10-02-2021","default_status":true,"date_and_time":"03-03-2021 03:38 PM","mobile_type":"Android","delete_status":true,"updatedAt":"2021-03-04T06:10:40.372Z","createdAt":"2021-03-02T11:55:21.396Z","__v":0},"problem_info":"fever","appoinment_status":"Incomplete","start_appointment_status":"Not Started","end_appointment_status":"Not End","doc_feedback":"","doc_rate":"","user_feedback":"","user_rate":"0","display_date":"2021-03-04 19:45:00","server_date_time":"","payment_method":"Online","prescription_details":"","vaccination_details":"","appointment_types":"Emergency","allergies":"fever","payment_id":"pay_GiSXFUNG1kFSGB","amount":"500","service_name":"","service_amount":"","completed_at":"","missed_at":"","mobile_type":"Android","delete_status":false,"appoint_patient_st":"","date_and_time":"04-03-2021 10:48 AM","updatedAt":"2021-03-04T05:20:46.672Z","createdAt":"2021-03-04T05:20:46.664Z","__v":0}]
      * Code : 200
      */
 
     private String Status;
     private String Message;
-    private DataBean Data;
     private int Code;
+    private List<DataBean> Data;
 
 
     public String getStatus() {
@@ -38,16 +37,6 @@ public class PetNewAppointmentDetailsResponse {
     }
 
 
-    public DataBean getData() {
-        return Data;
-    }
-
-    public void setData(DataBean Data) {
-        this.Data = Data;
-
-    }
-
-
     public int getCode() {
         return Code;
     }
@@ -57,21 +46,31 @@ public class PetNewAppointmentDetailsResponse {
 
     }
 
-    public static class DataBean  {
+
+    public List<DataBean> getData() {
+        return Data;
+    }
+
+    public void setData(List<DataBean> Data) {
+        this.Data = Data;
+
+    }
+
+    public static class DataBean {
         /**
          * doc_attched : []
          * doc_business_info : [{"education_details":[{"education":"MBBS","year":"2015"}],"experience_details":[{"company":"Apollo pharmacy","from":"2016","to":"2020","yearsofexperience":4}],"specialization":[{"specialization":"Surgeon"},{"specialization":"Internal Medicine Physician"},{"specialization":"Psychiatrist"},{"specialization":"Testing Spef"},{"specialization":"Dermatologist"}],"pet_handled":[{"pet_handled":"Dog"},{"pet_handled":"Cat"},{"pet_handled":"Parrot"}],"clinic_pic":[{"clinic_pic":"http://54.212.108.156:3000/api/uploads/1614688613605.jpeg"}],"certificate_pic":[{"certificate_pic":"http://54.212.108.156:3000/api/uploads/1614688628168.pdf"}],"govt_id_pic":[{"govt_id_pic":"http://54.212.108.156:3000/api/uploads/1614688635363.pdf"}],"photo_id_pic":[{"photo_id_pic":"http://54.212.108.156:3000/api/uploads/1614688666520.pdf"}],"_id":"603e31a02c2b43125f8cb806","user_id":"603e2a7b2c2b43125f8cb805","dr_title":"Dr","dr_name":"DineshKumar Deva","clinic_name":"Apollo pharmacy","clinic_loc":"4/3 Marriyamman Kovil street","clinic_lat":0,"clinic_long":0,"profile_status":true,"profile_verification_status":"Verified","slot_type":"","date_and_time":"02/03/2021 06:07:51","signature":"","mobile_type":"Android","communication_type":"Online Or Visit","live_status":"Not Live","live_by":"","delete_status":false,"consultancy_fees":500,"calender_status":true,"comments":0,"rating":5,"doctor_exp":4,"updatedAt":"2021-03-02T12:40:05.921Z","createdAt":"2021-03-02T12:37:52.684Z","__v":0}]
-         * _id : 603f65712c2b43125f8cb822
-         * doctor_id : {"_id":"603e2a7b2c2b43125f8cb805","first_name":"DineshKumar","last_name":"Deva","user_email":"iddineshkumar@gmail.com","user_phone":"9842670813","date_of_reg":"02/03/2021 05:37 PM","user_type":4,"user_status":"complete","otp":123456,"profile_img":"","user_email_verification":false,"fb_token":"","device_id":"","device_type":"","mobile_type":"Android","delete_status":false,"updatedAt":"2021-03-03T05:33:24.859Z","createdAt":"2021-03-02T12:07:23.821Z","__v":0}
-         * appointment_UID : PET-1614767473480
-         * booking_date : 03-03-2021
-         * booking_time : 10:45 PM
-         * booking_date_time : 03-03-2021 10:45 PM
+         * _id : 60407d912c2b43125f8cb83d
+         * doctor_id : {"_id":"603e2a7b2c2b43125f8cb805","first_name":"DineshKumar","last_name":"Deva","user_email":"iddineshkumar@gmail.com","user_phone":"9842670813","date_of_reg":"02/03/2021 05:37 PM","user_type":4,"user_status":"complete","otp":123456,"profile_img":"","user_email_verification":false,"fb_token":"dkShpCTiS2--v7J6pop1aB:APA91bEB2qKVtLnayWT8Evp3uPsVKr-wJD_Gnp2dmPP4buRE7HTTrImRKTJWHQTgrxF-Lg4EM2UtzWPLM3hha-k7_-Icb5gsnreUQjDcnUIikWYTG9BZjZxA41sX2_EvHcHGZQvov42Z","device_id":"","device_type":"","mobile_type":"Android","delete_status":false,"updatedAt":"2021-03-04T06:30:03.960Z","createdAt":"2021-03-02T12:07:23.821Z","__v":0}
+         * appointment_UID : PET-1614839185239
+         * booking_date : 04-03-2021
+         * booking_time : 11:30 PM
+         * booking_date_time : 04-03-2021 11:30 PM
          * communication_type : Online
-         * msg_id : Meeting_id/603f65712c2b43125f8cb822
-         * video_id : https://meet.jit.si/603f65712c2b43125f8cb822
+         * msg_id : Meeting_id/60407d912c2b43125f8cb83d
+         * video_id : https://meet.jit.si/60407d912c2b43125f8cb83d
          * user_id : {"_id":"603e27792c2b43125f8cb802","first_name":"imthi","last_name":"DKK","user_email":"imthiyas@gmail.com","user_phone":"0123456789","date_of_reg":"02/03/2021 05:24 PM","user_type":1,"user_status":"complete","otp":123456,"profile_img":"","user_email_verification":false,"fb_token":"fWv_aI-ESwigRRbQ9K8gk3:APA91bG6nxnn70Yto__dUXi8ELzbG_h7L-IXPOGyKAMkd-Rxd2IL1HiEeI_5iwSCRh-G8yuoMQA80WqMN_zz-EHSHAAa4rnyymJNQfFToAZcdEkKvF-8bfeshf4lTT7UgZNrrxC5IHso","device_id":"","device_type":"","mobile_type":"Android","delete_status":false,"updatedAt":"2021-03-03T10:27:02.762Z","createdAt":"2021-03-02T11:54:33.405Z","__v":0}
-         * pet_id : {"pet_img":[{"pet_img":"http://54.212.108.156:3000/api/uploads/1614686158761.jpeg"}],"_id":"603e27a92c2b43125f8cb803","user_id":"603e27792c2b43125f8cb802","pet_name":"DEENU","pet_type":"Dog","pet_breed":"Irish Setter","pet_gender":"Male","pet_color":"BLACK","pet_weight":20.5,"pet_age":"","pet_dob":"03-03-2015","pet_spayed":true,"pet_purebred":true,"pet_frnd_with_dog":true,"pet_frnd_with_cat":true,"pet_frnd_with_kit":true,"pet_microchipped":true,"pet_tick_free":true,"pet_private_part":true,"vaccinated":true,"last_vaccination_date":"10-02-2021","default_status":true,"date_and_time":"03-03-2021 03:38 PM","mobile_type":"Android","delete_status":false,"updatedAt":"2021-03-03T10:08:39.919Z","createdAt":"2021-03-02T11:55:21.396Z","__v":0}
+         * pet_id : {"pet_img":[{"pet_img":"http://54.212.108.156:3000/api/uploads/1614838906176.jpeg"},{"pet_img":"http://54.212.108.156:3000/api/uploads/1614838914060.jpeg"},{"pet_img":"http://54.212.108.156:3000/api/uploads/1614838919211.jpeg"}],"_id":"60407c392c2b43125f8cb83c","user_id":"603e27792c2b43125f8cb802","pet_name":"TEENU","pet_type":"Dog","pet_breed":"Pug","pet_gender":"Male","pet_color":"White","pet_weight":5,"pet_age":"","pet_dob":"01-03-2016","pet_spayed":true,"pet_purebred":false,"pet_frnd_with_dog":false,"pet_frnd_with_cat":true,"pet_frnd_with_kit":false,"pet_microchipped":false,"pet_tick_free":false,"pet_private_part":false,"vaccinated":true,"last_vaccination_date":"01-03-2021","default_status":true,"date_and_time":"04-03-2021 11:55 AM","mobile_type":"Android","delete_status":false,"updatedAt":"2021-03-04T06:25:29.004Z","createdAt":"2021-03-04T06:20:41.573Z","__v":0}
          * problem_info : fever
          * appoinment_status : Incomplete
          * start_appointment_status : Not Started
@@ -80,14 +79,14 @@ public class PetNewAppointmentDetailsResponse {
          * doc_rate :
          * user_feedback :
          * user_rate : 0
-         * display_date : 2021-03-03 22:45:00
+         * display_date : 2021-03-04 23:30:00
          * server_date_time :
          * payment_method : Online
          * prescription_details :
          * vaccination_details :
          * appointment_types : Emergency
-         * allergies : fever
-         * payment_id : pay_Gi9I4YGcwv28MZ
+         * allergies : Fever
+         * payment_id : pay_GiTeaWTOiIZ2uq
          * amount : 500
          * service_name :
          * service_amount :
@@ -96,9 +95,9 @@ public class PetNewAppointmentDetailsResponse {
          * mobile_type : Android
          * delete_status : false
          * appoint_patient_st :
-         * date_and_time : 03-03-2021 04:00 PM
-         * updatedAt : 2021-03-03T10:31:13.488Z
-         * createdAt : 2021-03-03T10:31:13.485Z
+         * date_and_time : 04-03-2021 11:55 AM
+         * updatedAt : 2021-03-04T06:26:25.247Z
+         * createdAt : 2021-03-04T06:26:25.244Z
          * __v : 0
          */
 
@@ -140,8 +139,7 @@ public class PetNewAppointmentDetailsResponse {
         private String date_and_time;
         private String updatedAt;
         private String createdAt;
-        private int __v;
-        private List<?> doc_attched;
+
         private List<DocBusinessInfoBean> doc_business_info;
 
 
@@ -154,12 +152,14 @@ public class PetNewAppointmentDetailsResponse {
 
         }
 
+
         public DoctorIdBean getDoctor_id() {
             return doctor_id;
         }
 
         public void setDoctor_id(DoctorIdBean doctor_id) {
             this.doctor_id = doctor_id;
+
         }
 
 
@@ -169,7 +169,9 @@ public class PetNewAppointmentDetailsResponse {
 
         public void setAppointment_UID(String appointment_UID) {
             this.appointment_UID = appointment_UID;
+
         }
+
 
         public String getBooking_date() {
             return booking_date;
@@ -227,6 +229,7 @@ public class PetNewAppointmentDetailsResponse {
 
         public void setVideo_id(String video_id) {
             this.video_id = video_id;
+
         }
 
         public UserIdBean getUser_id() {
@@ -248,15 +251,15 @@ public class PetNewAppointmentDetailsResponse {
 
         }
 
-
         public String getProblem_info() {
             return problem_info;
         }
 
         public void setProblem_info(String problem_info) {
             this.problem_info = problem_info;
-           
+
         }
+
 
         public String getAppoinment_status() {
             return appoinment_status;
@@ -286,6 +289,7 @@ public class PetNewAppointmentDetailsResponse {
             this.end_appointment_status = end_appointment_status;
 
         }
+
 
         public String getDoc_feedback() {
             return doc_feedback;
@@ -392,6 +396,7 @@ public class PetNewAppointmentDetailsResponse {
 
         public void setAllergies(String allergies) {
             this.allergies = allergies;
+
         }
 
 
@@ -401,6 +406,7 @@ public class PetNewAppointmentDetailsResponse {
 
         public void setPayment_id(String payment_id) {
             this.payment_id = payment_id;
+
         }
 
 
@@ -410,7 +416,9 @@ public class PetNewAppointmentDetailsResponse {
 
         public void setAmount(String amount) {
             this.amount = amount;
+
         }
+
 
         public String getService_name() {
             return service_name;
@@ -418,7 +426,9 @@ public class PetNewAppointmentDetailsResponse {
 
         public void setService_name(String service_name) {
             this.service_name = service_name;
+
         }
+
 
         public String getService_amount() {
             return service_amount;
@@ -429,12 +439,14 @@ public class PetNewAppointmentDetailsResponse {
 
         }
 
+
         public String getCompleted_at() {
             return completed_at;
         }
 
         public void setCompleted_at(String completed_at) {
             this.completed_at = completed_at;
+
         }
 
 
@@ -477,7 +489,6 @@ public class PetNewAppointmentDetailsResponse {
 
         }
 
-
         public String getDate_and_time() {
             return date_and_time;
         }
@@ -508,24 +519,6 @@ public class PetNewAppointmentDetailsResponse {
         }
 
 
-        public int get__v() {
-            return __v;
-        }
-
-        public void set__v(int __v) {
-            this.__v = __v;
-
-        }
-
-
-        public List<?> getDoc_attched() {
-            return doc_attched;
-        }
-
-        public void setDoc_attched(List<?> doc_attched) {
-            this.doc_attched = doc_attched;
-
-        }
 
 
         public List<DocBusinessInfoBean> getDoc_business_info() {
@@ -534,6 +527,7 @@ public class PetNewAppointmentDetailsResponse {
 
         public void setDoc_business_info(List<DocBusinessInfoBean> doc_business_info) {
             this.doc_business_info = doc_business_info;
+
         }
 
         public static class DoctorIdBean  {
@@ -549,12 +543,12 @@ public class PetNewAppointmentDetailsResponse {
              * otp : 123456
              * profile_img :
              * user_email_verification : false
-             * fb_token :
+             * fb_token : dkShpCTiS2--v7J6pop1aB:APA91bEB2qKVtLnayWT8Evp3uPsVKr-wJD_Gnp2dmPP4buRE7HTTrImRKTJWHQTgrxF-Lg4EM2UtzWPLM3hha-k7_-Icb5gsnreUQjDcnUIikWYTG9BZjZxA41sX2_EvHcHGZQvov42Z
              * device_id :
              * device_type :
              * mobile_type : Android
              * delete_status : false
-             * updatedAt : 2021-03-03T05:33:24.859Z
+             * updatedAt : 2021-03-04T06:30:03.960Z
              * createdAt : 2021-03-02T12:07:23.821Z
              * __v : 0
              */
@@ -577,7 +571,7 @@ public class PetNewAppointmentDetailsResponse {
             private boolean delete_status;
             private String updatedAt;
             private String createdAt;
-            private int __v;
+
 
 
             public String get_id() {
@@ -609,6 +603,7 @@ public class PetNewAppointmentDetailsResponse {
 
             }
 
+
             public String getUser_email() {
                 return user_email;
             }
@@ -627,6 +622,7 @@ public class PetNewAppointmentDetailsResponse {
 
             }
 
+
             public String getDate_of_reg() {
                 return date_of_reg;
             }
@@ -635,6 +631,7 @@ public class PetNewAppointmentDetailsResponse {
                 this.date_of_reg = date_of_reg;
 
             }
+
 
             public int getUser_type() {
                 return user_type;
@@ -674,6 +671,85 @@ public class PetNewAppointmentDetailsResponse {
                 this.profile_img = profile_img;
 
             }
+
+
+            public boolean isUser_email_verification() {
+                return user_email_verification;
+            }
+
+            public void setUser_email_verification(boolean user_email_verification) {
+                this.user_email_verification = user_email_verification;
+
+            }
+
+
+            public String getFb_token() {
+                return fb_token;
+            }
+
+            public void setFb_token(String fb_token) {
+                this.fb_token = fb_token;
+
+            }
+
+
+            public String getDevice_id() {
+                return device_id;
+            }
+
+            public void setDevice_id(String device_id) {
+                this.device_id = device_id;
+
+            }
+
+
+            public String getDevice_type() {
+                return device_type;
+            }
+
+            public void setDevice_type(String device_type) {
+                this.device_type = device_type;
+
+            }
+
+            public String getMobile_type() {
+                return mobile_type;
+            }
+
+            public void setMobile_type(String mobile_type) {
+                this.mobile_type = mobile_type;
+
+            }
+
+
+            public boolean isDelete_status() {
+                return delete_status;
+            }
+
+            public void setDelete_status(boolean delete_status) {
+                this.delete_status = delete_status;
+
+            }
+
+
+            public String getUpdatedAt() {
+                return updatedAt;
+            }
+
+            public void setUpdatedAt(String updatedAt) {
+                this.updatedAt = updatedAt;
+
+            }
+
+            public String getCreatedAt() {
+                return createdAt;
+            }
+
+            public void setCreatedAt(String createdAt) {
+                this.createdAt = createdAt;
+
+            }
+
 
         }
 
@@ -718,7 +794,7 @@ public class PetNewAppointmentDetailsResponse {
             private boolean delete_status;
             private String updatedAt;
             private String createdAt;
-            private int __v;
+
 
 
             public String get_id() {
@@ -729,7 +805,6 @@ public class PetNewAppointmentDetailsResponse {
                 this._id = _id;
 
             }
-
 
             public String getFirst_name() {
                 return first_name;
@@ -749,7 +824,6 @@ public class PetNewAppointmentDetailsResponse {
                 this.last_name = last_name;
 
             }
-
 
             public String getUser_email() {
                 return user_email;
@@ -790,7 +864,6 @@ public class PetNewAppointmentDetailsResponse {
 
             }
 
-
             public String getUser_status() {
                 return user_status;
             }
@@ -821,37 +894,116 @@ public class PetNewAppointmentDetailsResponse {
             }
 
 
+            public boolean isUser_email_verification() {
+                return user_email_verification;
+            }
+
+            public void setUser_email_verification(boolean user_email_verification) {
+                this.user_email_verification = user_email_verification;
+
+            }
+
+
+            public String getFb_token() {
+                return fb_token;
+            }
+
+            public void setFb_token(String fb_token) {
+                this.fb_token = fb_token;
+
+            }
+
+            public String getDevice_id() {
+                return device_id;
+            }
+
+            public void setDevice_id(String device_id) {
+                this.device_id = device_id;
+
+            }
+
+
+            public String getDevice_type() {
+                return device_type;
+            }
+
+            public void setDevice_type(String device_type) {
+                this.device_type = device_type;
+
+            }
+
+
+            public String getMobile_type() {
+                return mobile_type;
+            }
+
+            public void setMobile_type(String mobile_type) {
+                this.mobile_type = mobile_type;
+
+            }
+
+
+            public boolean isDelete_status() {
+                return delete_status;
+            }
+
+            public void setDelete_status(boolean delete_status) {
+                this.delete_status = delete_status;
+
+            }
+
+
+            public String getUpdatedAt() {
+                return updatedAt;
+            }
+
+            public void setUpdatedAt(String updatedAt) {
+                this.updatedAt = updatedAt;
+
+            }
+
+
+            public String getCreatedAt() {
+                return createdAt;
+            }
+
+            public void setCreatedAt(String createdAt) {
+                this.createdAt = createdAt;
+
+            }
+
+
         }
 
         public static class PetIdBean  {
             /**
-             * pet_img : [{"pet_img":"http://54.212.108.156:3000/api/uploads/1614686158761.jpeg"}]
-             * _id : 603e27a92c2b43125f8cb803
+             * pet_img : [{"pet_img":"http://54.212.108.156:3000/api/uploads/1614838906176.jpeg"},{"pet_img":"http://54.212.108.156:3000/api/uploads/1614838914060.jpeg"},{"pet_img":"http://54.212.108.156:3000/api/uploads/1614838919211.jpeg"}]
+             * _id : 60407c392c2b43125f8cb83c
              * user_id : 603e27792c2b43125f8cb802
-             * pet_name : DEENU
+             * pet_name : TEENU
              * pet_type : Dog
-             * pet_breed : Irish Setter
+             * pet_breed : Pug
              * pet_gender : Male
-             * pet_color : BLACK
-             * pet_weight : 20.5
+             * pet_color : White
+             * pet_weight : 5
              * pet_age :
-             * pet_dob : 03-03-2015
+             * pet_dob : 01-03-2016
              * pet_spayed : true
-             * pet_purebred : true
-             * pet_frnd_with_dog : true
+             * pet_purebred : false
+             * pet_frnd_with_dog : false
              * pet_frnd_with_cat : true
-             * pet_frnd_with_kit : true
-             * pet_microchipped : true
-             * pet_tick_free : true
-             * pet_private_part : true
+             * pet_frnd_with_kit : false
+             * pet_microchipped : false
+             * pet_tick_free : false
+             * pet_private_part : false
              * vaccinated : true
-             * last_vaccination_date : 10-02-2021
+             * last_vaccination_date : 01-03-2021
              * default_status : true
-             * date_and_time : 03-03-2021 03:38 PM
+             * date_and_time : 04-03-2021 11:55 AM
              * mobile_type : Android
              * delete_status : false
-             * updatedAt : 2021-03-03T10:08:39.919Z
-             * createdAt : 2021-03-02T11:55:21.396Z
+             * updatedAt : 2021-03-04T06:25:29.004Z
+             * createdAt : 2021-03-04T06:20:41.573Z
              * __v : 0
              */
 
@@ -881,8 +1033,8 @@ public class PetNewAppointmentDetailsResponse {
             private boolean delete_status;
             private String updatedAt;
             private String createdAt;
-            private int __v;
             private List<PetImgBean> pet_img;
+
 
             public String get_id() {
                 return _id;
@@ -892,6 +1044,7 @@ public class PetNewAppointmentDetailsResponse {
                 this._id = _id;
 
             }
+
 
             public String getUser_id() {
                 return user_id;
@@ -962,7 +1115,6 @@ public class PetNewAppointmentDetailsResponse {
 
             }
 
-
             public String getPet_age() {
                 return pet_age;
             }
@@ -1021,6 +1173,7 @@ public class PetNewAppointmentDetailsResponse {
                 this.pet_frnd_with_cat = pet_frnd_with_cat;
 
             }
+
 
             public boolean isPet_frnd_with_kit() {
                 return pet_frnd_with_kit;
@@ -1101,7 +1254,6 @@ public class PetNewAppointmentDetailsResponse {
 
             }
 
-
             public String getMobile_type() {
                 return mobile_type;
             }
@@ -1122,6 +1274,26 @@ public class PetNewAppointmentDetailsResponse {
             }
 
 
+            public String getUpdatedAt() {
+                return updatedAt;
+            }
+
+            public void setUpdatedAt(String updatedAt) {
+                this.updatedAt = updatedAt;
+
+            }
+
+
+            public String getCreatedAt() {
+                return createdAt;
+            }
+
+            public void setCreatedAt(String createdAt) {
+                this.createdAt = createdAt;
+
+            }
+
+
 
             public List<PetImgBean> getPet_img() {
                 return pet_img;
@@ -1132,9 +1304,9 @@ public class PetNewAppointmentDetailsResponse {
 
             }
 
-            public static class PetImgBean {
+            public static class PetImgBean  {
                 /**
-                 * pet_img : http://54.212.108.156:3000/api/uploads/1614686158761.jpeg
+                 * pet_img : http://54.212.108.156:3000/api/uploads/1614838906176.jpeg
                  */
 
                 private String pet_img;
@@ -1151,7 +1323,7 @@ public class PetNewAppointmentDetailsResponse {
             }
         }
 
-        public static class DocBusinessInfoBean {
+        public static class DocBusinessInfoBean  {
             /**
              * education_details : [{"education":"MBBS","year":"2015"}]
              * experience_details : [{"company":"Apollo pharmacy","from":"2016","to":"2020","yearsofexperience":4}]
@@ -1195,7 +1367,8 @@ public class PetNewAppointmentDetailsResponse {
             private String dr_name;
             private String clinic_name;
             private String clinic_loc;
-
+            private double clinic_lat;
+            private double clinic_long;
             private boolean profile_status;
             private String profile_verification_status;
             private String slot_type;
@@ -1282,6 +1455,26 @@ public class PetNewAppointmentDetailsResponse {
 
             }
 
+
+            public double getClinic_lat() {
+                return clinic_lat;
+            }
+
+            public void setClinic_lat(double clinic_lat) {
+                this.clinic_lat = clinic_lat;
+
+            }
+
+            public double getClinic_long() {
+                return clinic_long;
+            }
+
+            public void setClinic_long(double clinic_long) {
+                this.clinic_long = clinic_long;
+
+            }
+
+
             public boolean isProfile_status() {
                 return profile_status;
             }
@@ -1290,6 +1483,7 @@ public class PetNewAppointmentDetailsResponse {
                 this.profile_status = profile_status;
 
             }
+
 
             public String getProfile_verification_status() {
                 return profile_verification_status;
@@ -1319,7 +1513,6 @@ public class PetNewAppointmentDetailsResponse {
                 this.date_and_time = date_and_time;
 
             }
-
 
             public String getSignature() {
                 return signature;
@@ -1377,7 +1570,6 @@ public class PetNewAppointmentDetailsResponse {
 
             public void setDelete_status(boolean delete_status) {
                 this.delete_status = delete_status;
-
             }
 
 
@@ -1451,7 +1643,6 @@ public class PetNewAppointmentDetailsResponse {
             }
 
 
-
             public List<EducationDetailsBean> getEducation_details() {
                 return education_details;
             }
@@ -1489,7 +1680,6 @@ public class PetNewAppointmentDetailsResponse {
                 this.pet_handled = pet_handled;
 
             }
-
 
             public List<ClinicPicBean> getClinic_pic() {
                 return clinic_pic;
@@ -1530,7 +1720,7 @@ public class PetNewAppointmentDetailsResponse {
 
             }
 
-            public static class EducationDetailsBean {
+            public static class EducationDetailsBean  {
                 /**
                  * education : MBBS
                  * year : 2015
@@ -1650,7 +1840,7 @@ public class PetNewAppointmentDetailsResponse {
                 }
             }
 
-            public static class ClinicPicBean {
+            public static class ClinicPicBean  {
                 /**
                  * clinic_pic : http://54.212.108.156:3000/api/uploads/1614688613605.jpeg
                  */
@@ -1692,7 +1882,6 @@ public class PetNewAppointmentDetailsResponse {
                  */
 
                 private String govt_id_pic;
-
 
                 public String getGovt_id_pic() {
                     return govt_id_pic;

@@ -592,41 +592,64 @@ public class SPAppointmentResponse {
 
         public static class PetIdBean  {
             /**
-             * _id : 5fd842507aa4cc1c6a1e5637
-             * user_id : 5fd841a67aa4cc1c6a1e5636
-             * pet_img : http://52.25.163.13:3000/api/uploads/5fd841a67aa4cc1c6a1e563615-12-2020 10:29 AMPetfolio1.jpg
-             * pet_name : DOG
+             * pet_img : [{"pet_img":"http://54.212.108.156:3000/api/uploads/1614686158761.jpeg"}]
+             * _id : 603e27a92c2b43125f8cb803
+             * user_id : 603e27792c2b43125f8cb802
+             * pet_name : DEENU
              * pet_type : Dog
-             * pet_breed : Bull dog
+             * pet_breed : Irish Setter
              * pet_gender : Male
-             * pet_color : Gray
-             * pet_weight : 5
-             * pet_age : 1
+             * pet_color : BLACK
+             * pet_weight : 20.5
+             * pet_age :
+             * pet_dob : 03-03-2015
+             * pet_spayed : true
+             * pet_purebred : true
+             * pet_frnd_with_dog : true
+             * pet_frnd_with_cat : true
+             * pet_frnd_with_kit : true
+             * pet_microchipped : true
+             * pet_tick_free : true
+             * pet_private_part : true
              * vaccinated : true
-             * last_vaccination_date : 14-12-2020
+             * last_vaccination_date : 10-02-2021
              * default_status : true
-             * date_and_time : 15-12-2020 10:27 AM
+             * date_and_time : 03-03-2021 03:38 PM
              * mobile_type : Android
+             * delete_status : false
+             * updatedAt : 2021-03-03T10:08:39.919Z
+             * createdAt : 2021-03-02T11:55:21.396Z
              * __v : 0
              */
 
             private String _id;
             private String user_id;
-            private String pet_img;
             private String pet_name;
             private String pet_type;
             private String pet_breed;
             private String pet_gender;
             private String pet_color;
-            private int pet_weight;
-            private int pet_age;
+            private double pet_weight;
+            private String pet_age;
+            private String pet_dob;
+            private boolean pet_spayed;
+            private boolean pet_purebred;
+            private boolean pet_frnd_with_dog;
+            private boolean pet_frnd_with_cat;
+            private boolean pet_frnd_with_kit;
+            private boolean pet_microchipped;
+            private boolean pet_tick_free;
+            private boolean pet_private_part;
             private boolean vaccinated;
             private String last_vaccination_date;
             private boolean default_status;
             private String date_and_time;
             private String mobile_type;
+            private boolean delete_status;
+            private String updatedAt;
+            private String createdAt;
             private int __v;
-
+            private List<PetNewAppointmentDetailsResponse.DataBean.PetIdBean.PetImgBean> pet_img;
 
             public String get_id() {
                 return _id;
@@ -636,7 +659,6 @@ public class SPAppointmentResponse {
                 this._id = _id;
 
             }
-
 
             public String getUser_id() {
                 return user_id;
@@ -648,21 +670,13 @@ public class SPAppointmentResponse {
             }
 
 
-            public String getPet_img() {
-                return pet_img;
-            }
-
-            public void setPet_img(String pet_img) {
-                this.pet_img = pet_img;
-            }
-
-
             public String getPet_name() {
                 return pet_name;
             }
 
             public void setPet_name(String pet_name) {
                 this.pet_name = pet_name;
+
             }
 
 
@@ -672,6 +686,7 @@ public class SPAppointmentResponse {
 
             public void setPet_type(String pet_type) {
                 this.pet_type = pet_type;
+
             }
 
 
@@ -681,6 +696,7 @@ public class SPAppointmentResponse {
 
             public void setPet_breed(String pet_breed) {
                 this.pet_breed = pet_breed;
+
             }
 
 
@@ -690,7 +706,9 @@ public class SPAppointmentResponse {
 
             public void setPet_gender(String pet_gender) {
                 this.pet_gender = pet_gender;
+
             }
+
 
             public String getPet_color() {
                 return pet_color;
@@ -698,25 +716,118 @@ public class SPAppointmentResponse {
 
             public void setPet_color(String pet_color) {
                 this.pet_color = pet_color;
+
             }
 
 
-            public int getPet_weight() {
+            public double getPet_weight() {
                 return pet_weight;
             }
 
-            public void setPet_weight(int pet_weight) {
+            public void setPet_weight(double pet_weight) {
                 this.pet_weight = pet_weight;
+
             }
 
 
-            public int getPet_age() {
+            public String getPet_age() {
                 return pet_age;
             }
 
-            public void setPet_age(int pet_age) {
+            public void setPet_age(String pet_age) {
                 this.pet_age = pet_age;
+
             }
+
+
+            public String getPet_dob() {
+                return pet_dob;
+            }
+
+            public void setPet_dob(String pet_dob) {
+                this.pet_dob = pet_dob;
+
+            }
+
+
+            public boolean isPet_spayed() {
+                return pet_spayed;
+            }
+
+            public void setPet_spayed(boolean pet_spayed) {
+                this.pet_spayed = pet_spayed;
+
+            }
+
+
+            public boolean isPet_purebred() {
+                return pet_purebred;
+            }
+
+            public void setPet_purebred(boolean pet_purebred) {
+                this.pet_purebred = pet_purebred;
+
+            }
+
+
+            public boolean isPet_frnd_with_dog() {
+                return pet_frnd_with_dog;
+            }
+
+            public void setPet_frnd_with_dog(boolean pet_frnd_with_dog) {
+                this.pet_frnd_with_dog = pet_frnd_with_dog;
+
+            }
+
+
+            public boolean isPet_frnd_with_cat() {
+                return pet_frnd_with_cat;
+            }
+
+            public void setPet_frnd_with_cat(boolean pet_frnd_with_cat) {
+                this.pet_frnd_with_cat = pet_frnd_with_cat;
+
+            }
+
+            public boolean isPet_frnd_with_kit() {
+                return pet_frnd_with_kit;
+            }
+
+            public void setPet_frnd_with_kit(boolean pet_frnd_with_kit) {
+                this.pet_frnd_with_kit = pet_frnd_with_kit;
+
+            }
+
+
+            public boolean isPet_microchipped() {
+                return pet_microchipped;
+            }
+
+            public void setPet_microchipped(boolean pet_microchipped) {
+                this.pet_microchipped = pet_microchipped;
+
+            }
+
+
+            public boolean isPet_tick_free() {
+                return pet_tick_free;
+            }
+
+            public void setPet_tick_free(boolean pet_tick_free) {
+                this.pet_tick_free = pet_tick_free;
+
+            }
+
+
+            public boolean isPet_private_part() {
+                return pet_private_part;
+            }
+
+            public void setPet_private_part(boolean pet_private_part) {
+                this.pet_private_part = pet_private_part;
+
+            }
+
 
             public boolean isVaccinated() {
                 return vaccinated;
@@ -724,7 +835,9 @@ public class SPAppointmentResponse {
 
             public void setVaccinated(boolean vaccinated) {
                 this.vaccinated = vaccinated;
+
             }
+
 
             public String getLast_vaccination_date() {
                 return last_vaccination_date;
@@ -732,6 +845,7 @@ public class SPAppointmentResponse {
 
             public void setLast_vaccination_date(String last_vaccination_date) {
                 this.last_vaccination_date = last_vaccination_date;
+
             }
 
 
@@ -741,6 +855,7 @@ public class SPAppointmentResponse {
 
             public void setDefault_status(boolean default_status) {
                 this.default_status = default_status;
+
             }
 
 
@@ -750,6 +865,7 @@ public class SPAppointmentResponse {
 
             public void setDate_and_time(String date_and_time) {
                 this.date_and_time = date_and_time;
+
             }
 
 
@@ -759,14 +875,46 @@ public class SPAppointmentResponse {
 
             public void setMobile_type(String mobile_type) {
                 this.mobile_type = mobile_type;
+
             }
 
-            public int get__v() {
-                return __v;
+
+            public boolean isDelete_status() {
+                return delete_status;
             }
 
-            public void set__v(int __v) {
-                this.__v = __v;
+            public void setDelete_status(boolean delete_status) {
+                this.delete_status = delete_status;
+
+            }
+
+
+
+            public List<PetNewAppointmentDetailsResponse.DataBean.PetIdBean.PetImgBean> getPet_img() {
+                return pet_img;
+            }
+
+            public void setPet_img(List<PetNewAppointmentDetailsResponse.DataBean.PetIdBean.PetImgBean> pet_img) {
+                this.pet_img = pet_img;
+
+            }
+
+            public static class PetImgBean {
+                /**
+                 * pet_img : http://54.212.108.156:3000/api/uploads/1614686158761.jpeg
+                 */
+
+                private String pet_img;
+
+
+                public String getPet_img() {
+                    return pet_img;
+                }
+
+                public void setPet_img(String pet_img) {
+                    this.pet_img = pet_img;
+
+                }
             }
         }
     }

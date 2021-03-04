@@ -344,6 +344,7 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
                                if (i < response.body().getData().getSpecialization().size() - 1) concatenatedStarNames += ", ";
                            }
                            txt_dr_specialization.setText(concatenatedStarNames);
+                           Log.w(TAG," concatenatedStarNames : "+concatenatedStarNames);
 
                        }if(response.body().getData().getEducation_details() != null){
                            for (int i = 0; i < response.body().getData().getEducation_details().size(); i++) {

@@ -76,6 +76,7 @@ import com.petfolio.infinitus.responsepojo.AppointmentsUpdateResponse;
 import com.petfolio.infinitus.responsepojo.BreedTypeResponse;
 import com.petfolio.infinitus.responsepojo.CreateHolidayResponse;
 import com.petfolio.infinitus.responsepojo.DocBusInfoUploadResponse;
+import com.petfolio.infinitus.responsepojo.DoctorAppointmentsResponse;
 import com.petfolio.infinitus.responsepojo.DoctorCheckStatusResponse;
 import com.petfolio.infinitus.responsepojo.DoctorCompletedAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.DoctorDetailsByUserIdResponse;
@@ -361,15 +362,15 @@ public interface RestApiInterface {
 
     /*Doctor New Appointment*/
     @POST("appointments/mobile/doc_getlist/newapp")
-    Call<DoctorNewAppointmentResponse>doctorNewAppointmentResponseCall(@Header("Content-Type") String type, @Body DoctorNewAppointmentRequest doctorNewAppointmentRequest);
+    Call<DoctorAppointmentsResponse>doctorNewAppointmentResponseCall(@Header("Content-Type") String type, @Body DoctorNewAppointmentRequest doctorNewAppointmentRequest);
 
     /*Doctor Completed Appointment*/
     @POST("appointments/mobile/doc_getlist/comapp")
-    Call<DoctorCompletedAppointmentResponse>doctorCompletedAppointmentResponseCall(@Header("Content-Type") String type, @Body DoctorNewAppointmentRequest doctorNewAppointmentRequest);
+    Call<DoctorAppointmentsResponse>doctorCompletedAppointmentResponseCall(@Header("Content-Type") String type, @Body DoctorNewAppointmentRequest doctorNewAppointmentRequest);
 
     /*Doctor Missed Appointment*/
     @POST("appointments/mobile/doc_getlist/missapp")
-    Call<DoctorMissedAppointmentResponse>doctorMissedAppointmentResponseCall(@Header("Content-Type") String type, @Body DoctorNewAppointmentRequest doctorNewAppointmentRequest);
+    Call<DoctorAppointmentsResponse>doctorMissedAppointmentResponseCall(@Header("Content-Type") String type, @Body DoctorNewAppointmentRequest doctorNewAppointmentRequest);
 
 
     /*Doctor fetch details based on id*/

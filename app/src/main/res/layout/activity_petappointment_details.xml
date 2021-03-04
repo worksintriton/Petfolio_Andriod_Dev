@@ -537,6 +537,18 @@
                     android:textSize="14sp" />
 
             </LinearLayout>
+            <Button
+                android:id="@+id/btn_other_informations"
+                android:layout_width="160dp"
+                android:layout_height="29dp"
+                android:layout_gravity="center"
+                android:background="@drawable/new_rounded_corner_btn"
+                android:fontFamily="@font/futuramediumbt"
+                android:text="Other informations"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:layout_marginStart="20dp"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"

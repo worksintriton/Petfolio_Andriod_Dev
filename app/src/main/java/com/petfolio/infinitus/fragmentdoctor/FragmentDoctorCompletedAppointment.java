@@ -26,6 +26,7 @@ import com.petfolio.infinitus.adapter.DoctorNewAppointmentAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.requestpojo.DoctorNewAppointmentRequest;
+import com.petfolio.infinitus.responsepojo.DoctorAppointmentsResponse;
 import com.petfolio.infinitus.responsepojo.DoctorCompletedAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
@@ -77,7 +78,7 @@ public class FragmentDoctorCompletedAppointment extends Fragment implements View
     String type = "",name = "",doctorid = "";
     private SharedPreferences preferences;
     private Context mContext;
-    private List<DoctorCompletedAppointmentResponse.DataBean> completedAppointmentResponseList;
+    private List<DoctorAppointmentsResponse.DataBean> completedAppointmentResponseList;
 
 
     public FragmentDoctorCompletedAppointment() {
@@ -148,13 +149,13 @@ public class FragmentDoctorCompletedAppointment extends Fragment implements View
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<DoctorCompletedAppointmentResponse> call = ApiService.doctorCompletedAppointmentResponseCall(RestUtils.getContentType(),doctorNewAppointmentRequest());
+        Call<DoctorAppointmentsResponse> call = ApiService.doctorCompletedAppointmentResponseCall(RestUtils.getContentType(),doctorNewAppointmentRequest());
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
-        call.enqueue(new Callback<DoctorCompletedAppointmentResponse>() {
+        call.enqueue(new Callback<DoctorAppointmentsResponse>() {
             @SuppressLint("SetTextI18n")
             @Override
-            public void onResponse(@NonNull Call<DoctorCompletedAppointmentResponse> call, @NonNull Response<DoctorCompletedAppointmentResponse> response) {
+            public void onResponse(@NonNull Call<DoctorAppointmentsResponse> call, @NonNull Response<DoctorAppointmentsResponse> response) {
                avi_indicator.smoothToHide();
                 Log.w(TAG,"DoctorCompletedAppointmentResponse"+ "--->" + new Gson().toJson(response.body()));
 
@@ -194,7 +195,7 @@ public class FragmentDoctorCompletedAppointment extends Fragment implements View
             }
 
             @Override
-            public void onFailure(@NonNull Call<DoctorCompletedAppointmentResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<DoctorAppointmentsResponse> call, @NonNull Throwable t) {
                 avi_indicator.smoothToHide();
 
                 Log.w(TAG,"DoctorCompletedAppointmentResponseflr"+"--->" + t.getMessage());

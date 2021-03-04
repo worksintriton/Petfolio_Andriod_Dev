@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.petlover.PetAppointmentDetailsActivity;
 import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinitus.petlover.VideoCallPetLoverActivity;
 import com.petfolio.infinitus.requestpojo.AppoinmentCancelledRequest;
@@ -34,6 +35,7 @@ import com.petfolio.infinitus.requestpojo.SPNotificationSendRequest;
 import com.petfolio.infinitus.responsepojo.AppoinmentCancelledResponse;
 import com.petfolio.infinitus.responsepojo.AppoinmentCompleteResponse;
 import com.petfolio.infinitus.responsepojo.NotificationSendResponse;
+import com.petfolio.infinitus.responsepojo.PetNewAppointmentDetailsResponse;
 import com.petfolio.infinitus.responsepojo.SPAppointmentDetailsResponse;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -41,7 +43,9 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import butterknife.BindView;
@@ -173,6 +177,8 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
     String appoinment_status;
     String start_appointment_status;
     private Dialog dialog;
+    private List<PetNewAppointmentDetailsResponse.DataBean.PetIdBean.PetImgBean> pet_image;
+    private String petAgeandMonth;
 
 
     @SuppressLint({"LongLogTag", "LogNotTimber"})
@@ -274,7 +280,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
 
                             String pet_name = response.body().getData().getPet_id().getPet_name();
 
-                            String pet_image = response.body().getData().getPet_id().getPet_img();
+                            pet_image = response.body().getData().getPet_id().getPet_img();
 
                             String pet_type = response.body().getData().getPet_id().getPet_type();
 
@@ -285,9 +291,17 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
                             String colour = response.body().getData().getPet_id().getPet_color();
 
                             String weight = String.valueOf(response.body().getData().getPet_id().getPet_weight());
+                            String pet_dob = response.body().getData().getPet_id().getPet_dob();
 
-                            String age = String.valueOf(response.body().getData().getPet_id().getPet_age());
+                            if(pet_dob != null){
+                                String[] separated = pet_dob.split("-");
+                                String day = separated[0];
+                                String month = separated[1];
+                                String year = separated[2];
+                                Log.w(TAG,"day : "+day+" month: "+month+" year : "+year);
 
+                                getAge(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
+                            }
                             if (response.body().getData().getPet_id().isVaccinated()) {
                                 vaccinated = "Yes";
                                 ll_petlastvacinateddate.setVisibility(View.VISIBLE);
@@ -315,9 +329,9 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
 
                             start_appointment_status = response.body().getData().getStart_appointment_status();
 
-                            setView(usrname, usr_image, servname, servcost, pet_name, pet_image, pet_type, breed
+                            setView(usrname, usr_image, servname, servcost, pet_name, pet_type, breed
 
-                                    , gender, colour, weight, age, order_date, orderid, payment_method, order_cost, vaccinated, addr);
+                                    , gender, colour, weight, order_date, orderid, payment_method, order_cost, vaccinated, addr);
                         }
                     }
 
@@ -346,7 +360,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
     }
 
     @SuppressLint({"SetTextI18n", "LongLogTag", "LogNotTimber"})
-    private void setView(String usrname, String usr_image, String servname, String servcost, String pet_name, String pet_image, String pet_type, String breed, String gender, String colour, String weight, String age, String order_date, String orderid, String payment_method, String order_cost, String vaccinated, String addr) {
+    private void setView(String usrname, String usr_image, String servname, String servcost, String pet_name, String pet_type, String breed, String gender, String colour, String weight, String order_date, String orderid, String payment_method, String order_cost, String vaccinated, String addr) {
 
 
         if(usr_image != null && !usr_image.isEmpty()){
@@ -378,15 +392,23 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
         }
 
 
-        if(pet_image != null && !pet_image.isEmpty()){
+        if(pet_image != null && pet_image.size()>0){
+            String petimage = null;
+            for(int i=0;i<pet_image.size();i++){
+                petimage = pet_image.get(i).getPet_img();
+            }
+
             Glide.with(SPAppointmentDetailsActivity.this)
-                    .load(pet_image)
+                    .load(petimage)
                     .into(img_petimg);
         }else{
             Glide.with(SPAppointmentDetailsActivity.this)
                     .load(APIClient.PROFILE_IMAGE_URL)
                     .into(img_petimg);
         }
+
+
+
 
         if(pet_name != null && !pet_name.isEmpty()){
 
@@ -418,9 +440,9 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
             txt_weight.setText(weight);
         }
 
-        if(age != null && !age.isEmpty()){
+        if(petAgeandMonth != null && !petAgeandMonth.isEmpty()){
 
-            txt_age.setText(age);
+            txt_age.setText(petAgeandMonth);
         }
 
         txt_vaccinated.setText(vaccinated);
@@ -785,6 +807,39 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
             e1.printStackTrace();
         }
     }
+    @SuppressLint("LongLogTag")
+    private void getAge(int year, int month, int day){
 
+        Log.w(TAG,"day : "+day+" month: "+month+" year : "+year);
+
+        Calendar dob = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
+
+        dob.set(year, month, day);
+
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+        int months = dob.get(Calendar.MONTH) - today.get(Calendar.MONTH);
+
+        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)){
+            age--;
+        }
+
+        Integer ageInt = new Integer(age);
+        Integer monthsInt = new Integer(months);
+        String ageS = ageInt.toString();
+        String monthsS = monthsInt.toString();
+
+        if(ageInt != 0){
+            petAgeandMonth = ageS+" years "+monthsS+" months";
+        }else{
+            petAgeandMonth = monthsS+" months";
+
+        }
+
+
+
+        Log.w(TAG,"ageS: "+ageS+" months : "+monthsS);
+
+    }
 
 }

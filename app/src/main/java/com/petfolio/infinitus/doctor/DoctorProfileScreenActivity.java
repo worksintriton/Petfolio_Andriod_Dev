@@ -30,29 +30,22 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
 import com.petfolio.infinitus.activity.location.ManageAddressActivity;
-import com.petfolio.infinitus.adapter.ManagePetListAdapter;
-import com.petfolio.infinitus.adapter.ViewPagerClinicDetailsAdapter;
+
 import com.petfolio.infinitus.adapter.ViewPagerDoctorClinicDetailsAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.interfaces.PetDeleteListener;
 import com.petfolio.infinitus.petlover.AddYourPetOldUserActivity;
-import com.petfolio.infinitus.petlover.EditYourPetImageActivity;
-import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
+
 import com.petfolio.infinitus.requestpojo.DoctorDetailsByUserIdRequest;
-import com.petfolio.infinitus.requestpojo.DoctorDetailsRequest;
-import com.petfolio.infinitus.requestpojo.PetDeleteRequest;
-import com.petfolio.infinitus.requestpojo.PetListRequest;
+
 import com.petfolio.infinitus.responsepojo.DoctorDetailsByUserIdResponse;
-import com.petfolio.infinitus.responsepojo.DoctorDetailsResponse;
-import com.petfolio.infinitus.responsepojo.PetDeleteResponse;
+
 import com.petfolio.infinitus.responsepojo.PetListResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -61,7 +54,7 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import es.dmoral.toasty.Toasty;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

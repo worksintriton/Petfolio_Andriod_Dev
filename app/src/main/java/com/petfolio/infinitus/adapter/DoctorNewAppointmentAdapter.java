@@ -37,6 +37,7 @@ import com.petfolio.infinitus.petlover.VideoCallPetLoverActivity;
 import com.petfolio.infinitus.requestpojo.DoctorStartAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.PetNoShowRequest;
 import com.petfolio.infinitus.responsepojo.AppointmentsUpdateResponse;
+import com.petfolio.infinitus.responsepojo.DoctorAppointmentsResponse;
 import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -55,10 +56,10 @@ import retrofit2.Response;
 public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private  String TAG = "DoctorNewAppointmentAdapter";
-    private final List<DoctorNewAppointmentResponse.DataBean> newAppointmentResponseList;
+    private final List<DoctorAppointmentsResponse.DataBean> newAppointmentResponseList;
     private Context context;
 
-    DoctorNewAppointmentResponse.DataBean currentItem;
+    DoctorAppointmentsResponse.DataBean currentItem;
 
     private OnAppointmentCancel onAppointmentCancel;
     private StartAppointmentListener startAppointmentListener;
@@ -66,9 +67,11 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
     private String communicationtype;
     AVLoadingIndicatorView avi_indicator;
     private boolean isVaildDate;
+    private List<DoctorAppointmentsResponse.DataBean.PetIdBean.PetImgBean> petImgBeanList;
+    private String petImagePath;
 
 
-    public DoctorNewAppointmentAdapter(Context context, List<DoctorNewAppointmentResponse.DataBean> newAppointmentResponseList, RecyclerView inbox_list,int size,OnAppointmentCancel onAppointmentCancel, AVLoadingIndicatorView avi_indicator) {
+    public DoctorNewAppointmentAdapter(Context context, List<DoctorAppointmentsResponse.DataBean> newAppointmentResponseList, RecyclerView inbox_list,int size,OnAppointmentCancel onAppointmentCancel, AVLoadingIndicatorView avi_indicator) {
         this.newAppointmentResponseList = newAppointmentResponseList;
         this.context = context;
         this.size = size;
@@ -121,20 +124,27 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
 
         }
 
-           if (newAppointmentResponseList.get(position).getPet_id().getPet_img() != null && !newAppointmentResponseList.get(position).getPet_id().getPet_img().isEmpty()) {
-
-                Glide.with(context)
-                        .load(newAppointmentResponseList.get(position).getPet_id().getPet_img())
-                        .into(holder.img_pet_imge);
-
-            }
-           else{
-                Glide.with(context)
-                        .load(APIClient.PROFILE_IMAGE_URL)
-                        .into(holder.img_pet_imge);
+        petImgBeanList = newAppointmentResponseList.get(position).getPet_id().getPet_img();
+        if (petImgBeanList != null && petImgBeanList.size() > 0) {
+            for(int j=0;j<petImgBeanList.size();j++) {
+                petImagePath = petImgBeanList.get(j).getPet_img();
 
             }
+        }
 
+        if (petImagePath != null && !petImagePath.isEmpty()) {
+            Glide.with(context)
+                    .load(petImagePath)
+                    .into(holder.img_pet_imge);
+        } else{
+            Glide.with(context)
+                    .load(APIClient.PROFILE_IMAGE_URL)
+                    .into(holder.img_pet_imge);
+
+        }
+
+
+        
         if(newAppointmentResponseList.get(position).getAppointment_types() != null && newAppointmentResponseList.get(position).getAppointment_types().equalsIgnoreCase("Emergency")){
             holder.img_emergency_appointment.setVisibility(View.VISIBLE);
         }else{

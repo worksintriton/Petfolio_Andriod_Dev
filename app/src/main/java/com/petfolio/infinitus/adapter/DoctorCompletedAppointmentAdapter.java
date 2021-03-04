@@ -22,6 +22,7 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.doctor.DoctorAppointmentDetailsActivity;
 import com.petfolio.infinitus.doctor.DoctorCompletedAppointmentDetailsActivity;
 import com.petfolio.infinitus.doctor.DoctorPrescriptionDetailsActivity;
+import com.petfolio.infinitus.responsepojo.DoctorAppointmentsResponse;
 import com.petfolio.infinitus.responsepojo.DoctorCompletedAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
 
@@ -30,14 +31,16 @@ import java.util.List;
 
 public class DoctorCompletedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private  String TAG = "DoctorCompletedAppointmentAdapter";
-    private List<DoctorCompletedAppointmentResponse.DataBean> completedAppointmentResponseList;
+    private List<DoctorAppointmentsResponse.DataBean> completedAppointmentResponseList;
     private Context context;
     private int size;
 
-    DoctorNewAppointmentResponse.DataBean currentItem;
+    DoctorAppointmentsResponse.DataBean currentItem;
+    private List<DoctorAppointmentsResponse.DataBean.PetIdBean.PetImgBean> petImgBeanList;
+    private String petImagePath;
 
 
-    public DoctorCompletedAppointmentAdapter(Context context, List<DoctorCompletedAppointmentResponse.DataBean> completedAppointmentResponseList, RecyclerView inbox_list,int size) {
+    public DoctorCompletedAppointmentAdapter(Context context, List<DoctorAppointmentsResponse.DataBean> completedAppointmentResponseList, RecyclerView inbox_list,int size) {
         this.completedAppointmentResponseList = completedAppointmentResponseList;
         this.context = context;
         this.size = size;
@@ -78,19 +81,25 @@ public class DoctorCompletedAppointmentAdapter extends  RecyclerView.Adapter<Rec
             holder.txt_service_cost.setText("\u20B9 "+completedAppointmentResponseList.get(position).getAmount());
         }
 
-        if (completedAppointmentResponseList.get(position).getPet_id().getPet_img() != null && !completedAppointmentResponseList.get(0).getPet_id().getPet_img().isEmpty()) {
+        petImgBeanList = completedAppointmentResponseList.get(position).getPet_id().getPet_img();
+        if (petImgBeanList != null && petImgBeanList.size() > 0) {
+            for(int j=0;j<petImgBeanList.size();j++) {
+                petImagePath = petImgBeanList.get(j).getPet_img();
 
-            Glide.with(context)
-                    .load(completedAppointmentResponseList.get(position).getPet_id().getPet_img())
-                    .into(holder.img_pet_imge);
-
+            }
         }
-        else{
+
+        if (petImagePath != null && !petImagePath.isEmpty()) {
+            Glide.with(context)
+                    .load(petImagePath)
+                    .into(holder.img_pet_imge);
+        } else{
             Glide.with(context)
                     .load(APIClient.PROFILE_IMAGE_URL)
                     .into(holder.img_pet_imge);
 
         }
+
 
         holder.btn__prescriptiondetails.setOnClickListener(new View.OnClickListener() {
             @Override

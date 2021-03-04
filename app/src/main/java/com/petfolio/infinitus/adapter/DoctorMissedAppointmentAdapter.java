@@ -20,8 +20,7 @@ import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.doctor.DoctorAppointmentDetailsActivity;
-import com.petfolio.infinitus.doctor.DoctorMissedAppointmentDetailsActivity;
-import com.petfolio.infinitus.responsepojo.DoctorMissedAppointmentResponse;
+import com.petfolio.infinitus.responsepojo.DoctorAppointmentsResponse;
 
 import java.util.List;
 
@@ -29,14 +28,16 @@ import java.util.List;
 public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private  String TAG = "DoctorMissedAppointmentAdapter";
-    private List<DoctorMissedAppointmentResponse.DataBean> missedAppointmentResponseList;
+    private List<DoctorAppointmentsResponse.DataBean> missedAppointmentResponseList;
     private Context context;
     private int size;
 
-    DoctorMissedAppointmentResponse.DataBean currentItem;
+    DoctorAppointmentsResponse.DataBean currentItem;
+    private List<DoctorAppointmentsResponse.DataBean.PetIdBean.PetImgBean> petImgBeanList;
+    private String petImagePath;
 
 
-    public DoctorMissedAppointmentAdapter(Context context, List<DoctorMissedAppointmentResponse.DataBean> missedAppointmentResponseList, RecyclerView inbox_list,int size) {
+    public DoctorMissedAppointmentAdapter(Context context, List<DoctorAppointmentsResponse.DataBean> missedAppointmentResponseList, RecyclerView inbox_list,int size) {
         this.missedAppointmentResponseList = missedAppointmentResponseList;
         this.context = context;
         this.size = size;
@@ -78,14 +79,21 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
         if(missedAppointmentResponseList.get(position).getAmount() != null){
             holder.txt_service_cost.setText("\u20B9 "+missedAppointmentResponseList.get(position).getAmount());
         }
-        if (missedAppointmentResponseList.get(position).getPet_id().getPet_img() != null && !missedAppointmentResponseList.get(position).getPet_id().getPet_img().isEmpty()) {
 
-            Glide.with(context)
-                    .load(missedAppointmentResponseList.get(position).getPet_id().getPet_img())
-                    .into(holder.img_pet_imge);
+        petImgBeanList = missedAppointmentResponseList.get(position).getPet_id().getPet_img();
 
+        if (petImgBeanList != null && petImgBeanList.size() > 0) {
+            for(int j=0;j<petImgBeanList.size();j++) {
+                petImagePath = petImgBeanList.get(j).getPet_img();
+
+            }
         }
-        else{
+
+        if (petImagePath != null && !petImagePath.isEmpty()) {
+            Glide.with(context)
+                    .load(petImagePath)
+                    .into(holder.img_pet_imge);
+        } else{
             Glide.with(context)
                     .load(APIClient.PROFILE_IMAGE_URL)
                     .into(holder.img_pet_imge);

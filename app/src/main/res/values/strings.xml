@@ -403,7 +403,10 @@
     <string name="friendly_with_kids_greater_10_year"><![CDATA[Friendly with kids > 10 year]]></string>
     <string name="spec1">Spec1</string>
 
-    <string name="text_with_bullet"> \u2022 Spec1</string>
+    <string name="text_with_bullet"> \u2022 Surgeon</string>
+    <string name="text_with_bullet1"> \u2022 Psychiatrist</string>
+    <string name="text_with_bullet2"> \u2022 Dermatologist</string>
+    <string name="text_with_bullet3"> \u2022 Medicine Physician</string>
 
 
 

@@ -370,7 +370,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="2dp"
                     android:fontFamily="@font/futuramediumbt"
-                    android:text="@string/text_with_bullet"
+                    android:text="@string/text_with_bullet1"
                     android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp"
                     android:layout_weight="1"/>
@@ -397,7 +397,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="2dp"
                     android:fontFamily="@font/futuramediumbt"
-                    android:text="@string/text_with_bullet"
+                    android:text="@string/text_with_bullet1"
                     android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp"
                     android:layout_weight="1"/>

@@ -288,7 +288,6 @@ public class PetSPNewAppointmentDetailsActivity extends AppCompatActivity implem
 
                             String pet_name = response.body().getData().getPet_id().getPet_name();
 
-                            String pet_image = response.body().getData().getPet_id().getPet_img();
 
                             String pet_type = response.body().getData().getPet_id().getPet_type();
 
@@ -330,7 +329,7 @@ public class PetSPNewAppointmentDetailsActivity extends AppCompatActivity implem
 
                             start_appointment_status = response.body().getData().getStart_appointment_status();
 
-                            setView(usrname, usr_image, servname, servcost, pet_name, pet_image, pet_type, breed
+                            setView(usrname, usr_image, servname, servcost, pet_name, pet_type, breed
 
                                     , gender, colour, weight, age, order_date, orderid, payment_method, order_cost, vaccinated, addr);
                         }
@@ -361,7 +360,7 @@ public class PetSPNewAppointmentDetailsActivity extends AppCompatActivity implem
     }
 
     @SuppressLint("SetTextI18n")
-    private void setView(String usrname, String usr_image, String servname, String servcost, String pet_name, String pet_image, String pet_type, String breed, String gender, String colour, String weight, String age, String order_date, String orderid, String payment_method, String order_cost, String vaccinated, String addr) {
+    private void setView(String usrname, String usr_image, String servname, String servcost, String pet_name, String pet_type, String breed, String gender, String colour, String weight, String age, String order_date, String orderid, String payment_method, String order_cost, String vaccinated, String addr) {
 
 
         if(usr_image != null && !usr_image.isEmpty()){
@@ -392,7 +391,7 @@ public class PetSPNewAppointmentDetailsActivity extends AppCompatActivity implem
         }
 
 
-        if(pet_image != null && !pet_image.isEmpty()){
+        /*if(pet_image != null && !pet_image.isEmpty()){
 
             Glide.with(PetSPNewAppointmentDetailsActivity.this)
                     .load(pet_image)
@@ -400,7 +399,7 @@ public class PetSPNewAppointmentDetailsActivity extends AppCompatActivity implem
 
 
         }
-
+*/
         if(pet_name != null && !pet_name.isEmpty()){
 
             txt_pet_name.setText(pet_name);

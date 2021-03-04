@@ -36,6 +36,7 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
 
 
     public static String id = "";
+    private List<PetListResponse.DataBean.PetImgBean> petImgBeanList;
 
 
     public ManagePetListAdapter(Context context, List<PetListResponse.DataBean> petListResponseList, PetDeleteListener petDeleteListener) {
@@ -72,25 +73,35 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
             String TAG = "ManagePetListAdapter";
             Log.w(TAG,"petListResponseList : "+new Gson().toJson(petListResponseList));
 
-            for (int i = 0; i < petListResponseList.size(); i++) {
-                List<PetListResponse.DataBean.PetImgBean>    petImgBeanList = petListResponseList.get(i).getPet_img();
-                Log.w(TAG,"petImgBeanList : "+new Gson().toJson(petImgBeanList));
-                if (petImgBeanList != null && petImgBeanList.size() > 0) {
 
-                    for(int j=0;j<petImgBeanList.size();j++) {
-                        if (petImgBeanList.get(j).getPet_img() != null && !petImgBeanList.get(j).getPet_img().isEmpty()) {
-                            Glide.with(context)
-                                    .load(petImgBeanList.get(j).getPet_img())
-                                    .into(holder.img_pet_imge);
-                        }else {
-                            Glide.with(context)
-                                    .load(APIClient.PROFILE_IMAGE_URL)
-                                    .into(holder.img_pet_imge);
+            petImgBeanList =   petListResponseList.get(position).getPet_img();
 
-                        }
+            String petImagePath = null;
 
-                    }
+
+            Log.w(TAG,"petImgBeanList : "+new Gson().toJson(petImgBeanList));
+
+            if (petImgBeanList != null && petImgBeanList.size() > 0) {
+
+                for(int j=0;j<petImgBeanList.size();j++) {
+                    petImagePath = petImgBeanList.get(j).getPet_img();
+
                 }
+            }
+
+
+
+
+            Log.w(TAG,"petImagePath : "+petImagePath);
+
+            if (petImagePath != null && !petImagePath.isEmpty()) {
+                Glide.with(context)
+                        .load(petImagePath)
+                        .into(holder.img_pet_imge);
+            }else {
+                Glide.with(context)
+                        .load(APIClient.PROFILE_IMAGE_URL)
+                        .into(holder.img_pet_imge);
 
             }
 

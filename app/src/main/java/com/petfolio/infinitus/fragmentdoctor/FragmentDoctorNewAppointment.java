@@ -39,6 +39,7 @@ import com.petfolio.infinitus.requestpojo.AppoinmentCancelledRequest;
 import com.petfolio.infinitus.requestpojo.DoctorNewAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.NotificationSendRequest;
 import com.petfolio.infinitus.responsepojo.AppoinmentCancelledResponse;
+import com.petfolio.infinitus.responsepojo.DoctorAppointmentsResponse;
 import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.NotificationSendResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
@@ -89,7 +90,7 @@ public class FragmentDoctorNewAppointment extends Fragment implements OnAppointm
     String type = "",name = "",doctorid = "";
     private SharedPreferences preferences;
     private Context mContext;
-    private List<DoctorNewAppointmentResponse.DataBean> newAppointmentResponseList;
+    private List<DoctorAppointmentsResponse.DataBean> newAppointmentResponseList;
     private Dialog dialog;
 
 
@@ -157,13 +158,13 @@ public class FragmentDoctorNewAppointment extends Fragment implements OnAppointm
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<DoctorNewAppointmentResponse> call = ApiService.doctorNewAppointmentResponseCall(RestUtils.getContentType(),doctorNewAppointmentRequest());
+        Call<DoctorAppointmentsResponse> call = ApiService.doctorNewAppointmentResponseCall(RestUtils.getContentType(),doctorNewAppointmentRequest());
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
-        call.enqueue(new Callback<DoctorNewAppointmentResponse>() {
+        call.enqueue(new Callback<DoctorAppointmentsResponse>() {
             @SuppressLint({"LogNotTimber", "SetTextI18n"})
             @Override
-            public void onResponse(@NonNull Call<DoctorNewAppointmentResponse> call, @NonNull Response<DoctorNewAppointmentResponse> response) {
+            public void onResponse(@NonNull Call<DoctorAppointmentsResponse> call, @NonNull Response<DoctorAppointmentsResponse> response) {
                avi_indicator.smoothToHide();
                 Log.w(TAG,"doctorNewAppointmentResponseCall"+ "--->" + new Gson().toJson(response.body()));
 
@@ -203,7 +204,7 @@ public class FragmentDoctorNewAppointment extends Fragment implements OnAppointm
             }
 
             @Override
-            public void onFailure(@NonNull Call<DoctorNewAppointmentResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<DoctorAppointmentsResponse> call, @NonNull Throwable t) {
                 avi_indicator.smoothToHide();
 
                 Log.w(TAG,"DoctorNewAppointmentResponseflr"+"--->" + t.getMessage());
@@ -214,7 +215,6 @@ public class FragmentDoctorNewAppointment extends Fragment implements OnAppointm
     private DoctorNewAppointmentRequest doctorNewAppointmentRequest() {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentDateandTime = simpleDateFormat.format(new Date());
-
         DoctorNewAppointmentRequest doctorNewAppointmentRequest = new DoctorNewAppointmentRequest();
         doctorNewAppointmentRequest.setDoctor_id(doctorid);
         doctorNewAppointmentRequest.setCurrent_time(currentDateandTime);

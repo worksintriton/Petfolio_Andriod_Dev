@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.petlover.PetAppointmentDetailsActivity;
 import com.petfolio.infinitus.requestpojo.AppoinmentCancelledRequest;
 import com.petfolio.infinitus.requestpojo.DoctorStartAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.PetNewAppointmentDetailsRequest;
@@ -34,6 +35,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -178,6 +180,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity {
 
     private String from;
     private List<PetNewAppointmentDetailsResponse.DataBean.PetIdBean.PetImgBean> pet_image;
+    private String petAgeandMonth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -291,7 +294,17 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity {
 
                             String weight = String.valueOf(response.body().getData().getPet_id().getPet_weight());
 
-                            String age = String.valueOf(response.body().getData().getPet_id().getPet_age());
+                            String pet_dob = response.body().getData().getPet_id().getPet_dob();
+                            if(pet_dob != null){
+                                String[] separated = pet_dob.split("-");
+                                String day = separated[0];
+                                String month = separated[1];
+                                String year = separated[2];
+                                Log.w(TAG,"day : "+day+" month: "+month+" year : "+year);
+
+                                getAge(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
+                            }
+
 
                             if(response.body().getData().getBooking_date_time() != null){
                                 txt_appointment_date.setText(response.body().getData().getBooking_date_time());
@@ -326,9 +339,9 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity {
                             }
                             appoinment_status = response.body().getData().getAppoinment_status();
                             start_appointment_status = response.body().getData().getStart_appointment_status();
-                            setView(usrname, usr_image, pet_name, pet_image, pet_type, breed
+                            setView(usrname, usr_image, pet_name, pet_type, breed
 
-                                    , gender, colour, weight, age, order_date, orderid, payment_method, order_cost, vaccinated, addr);
+                                    , gender, colour, weight, order_date, orderid, payment_method, order_cost, vaccinated, addr);
                         }
                     }
 
@@ -356,7 +369,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity {
     }
 
     @SuppressLint({"SetTextI18n", "LongLogTag", "LogNotTimber"})
-    private void setView(String usrname, String usr_image, String pet_name, List<PetNewAppointmentDetailsResponse.DataBean.PetIdBean.PetImgBean> pet_image, String pet_type, String breed, String gender, String colour, String weight, String age, String order_date, String orderid, String payment_method, String order_cost, String vaccinated, String addr) {
+    private void setView(String usrname, String usr_image, String pet_name, String pet_type, String breed, String gender, String colour, String weight, String order_date, String orderid, String payment_method, String order_cost, String vaccinated, String addr) {
         if(usr_image != null && !usr_image.isEmpty()){
             Glide.with(DoctorAppointmentDetailsActivity.this)
                     .load(usr_image)
@@ -376,17 +389,19 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity {
 
 
 
-        if(pet_image != null && !pet_image.isEmpty()){
+        if(pet_image != null && pet_image.size()>0){
+            String petimage = null;
+            for(int i=0;i<pet_image.size();i++){
+                petimage = pet_image.get(i).getPet_img();
+            }
 
             Glide.with(DoctorAppointmentDetailsActivity.this)
-                    .load(pet_image)
+                    .load(petimage)
                     .into(img_petimg);
-
-
         }else{
             Glide.with(DoctorAppointmentDetailsActivity.this)
                     .load(APIClient.PROFILE_IMAGE_URL)
-                    .into(img_user);
+                    .into(img_petimg);
         }
 
 
@@ -419,9 +434,9 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity {
             txt_weight.setText(weight);
         }
 
-        if(age != null && !age.isEmpty()){
+        if(petAgeandMonth != null && !petAgeandMonth.isEmpty()){
 
-            txt_age.setText(age);
+            txt_age.setText(petAgeandMonth);
         }
 
         if(vaccinated != null && !vaccinated.isEmpty()){
@@ -490,8 +505,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity {
 
         }
     });
-
-        btn_cancel.setOnClickListener(v -> showStatusAlert(appointment_id));
+       btn_cancel.setOnClickListener(v -> showStatusAlert(appointment_id));
 
     }
 
@@ -680,6 +694,41 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity {
         }catch (ParseException e1){
             e1.printStackTrace();
         }
+    }
+
+    @SuppressLint("LongLogTag")
+    private void getAge(int year, int month, int day){
+
+        Log.w(TAG,"day : "+day+" month: "+month+" year : "+year);
+
+        Calendar dob = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
+
+        dob.set(year, month, day);
+
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+        int months = dob.get(Calendar.MONTH) - today.get(Calendar.MONTH);
+
+        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)){
+            age--;
+        }
+
+        Integer ageInt = new Integer(age);
+        Integer monthsInt = new Integer(months);
+        String ageS = ageInt.toString();
+        String monthsS = monthsInt.toString();
+
+        if(ageInt != 0){
+            petAgeandMonth = ageS+" years "+monthsS+" months";
+        }else{
+            petAgeandMonth = monthsS+" months";
+
+        }
+
+
+
+        Log.w(TAG,"ageS: "+ageS+" months : "+monthsS);
+
     }
 
 }

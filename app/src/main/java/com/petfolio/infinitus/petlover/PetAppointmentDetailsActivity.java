@@ -45,6 +45,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -191,6 +192,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
     Dialog alertDialog;
     private String appointmentid;
     private List<PetNewAppointmentDetailsResponse.DataBean.PetIdBean.PetImgBean> pet_image;
+    private String petAgeandMonth;
 
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
@@ -341,8 +343,21 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                             String breed = response.body().getData().getPet_id().getPet_breed();
                             String gender = response.body().getData().getPet_id().getPet_gender();
                             String colour = response.body().getData().getPet_id().getPet_color();
-                            String weight = String.valueOf(response.body().getData().getPet_id().getPet_weight());
-                            String age = String.valueOf(response.body().getData().getPet_id().getPet_age());
+                            double weight = response.body().getData().getPet_id().getPet_weight();
+                            String pet_dob = response.body().getData().getPet_id().getPet_dob();
+                            if(pet_dob != null){
+                            String[] separated = pet_dob.split("-");
+                            String day = separated[0];
+                            String month = separated[1];
+                            String year = separated[2];
+                            Log.w(TAG,"day : "+day+" month: "+month+" year : "+year);
+
+                            getAge(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
+                            }
+
+
+
+
                             if(response.body().getData().getBooking_date_time() != null){
                                 txt_appointment_date.setText(response.body().getData().getBooking_date_time());
                             }
@@ -369,9 +384,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                             }
                             appoinment_status = response.body().getData().getAppoinment_status();
                             start_appointment_status = response.body().getData().getStart_appointment_status();
-                            setView(usrname, usr_image, servname, pet_name, pet_type, breed
-
-                                    , gender, colour, weight, age, order_date, orderid, payment_method, order_cost, vaccinated, addr);
+                            setView(usrname, usr_image, servname, pet_name, pet_type, breed, gender, colour, weight, order_date, orderid, payment_method, order_cost, vaccinated, addr);
                         }
                     }
 
@@ -400,7 +413,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
     }
 
     @SuppressLint({"SetTextI18n", "LongLogTag", "LogNotTimber"})
-    private void setView(String usrname, String usr_image, String servname, String pet_name, String pet_type, String breed, String gender, String colour, String weight, String age, String order_date, String orderid, String payment_method, String order_cost, String vaccinated, String addr) {
+    private void setView(String usrname, String usr_image, String servname, String pet_name, String pet_type, String breed, String gender, String colour, double weight,String order_date, String orderid, String payment_method, String order_cost, String vaccinated, String addr) {
 
 
         if(usr_image != null && !usr_image.isEmpty()){
@@ -425,15 +438,22 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
             txt_serv_name.setText(servname);
         }
 
-        if(this.pet_image != null && !this.pet_image.isEmpty()){
+        
+        if(pet_image != null && pet_image.size()>0){
+            String petimage = null;
+            for(int i=0;i<pet_image.size();i++){
+                petimage = pet_image.get(i).getPet_img();
+            }
+        
             Glide.with(PetAppointmentDetailsActivity.this)
-                    .load(this.pet_image)
+                    .load(petimage)
                     .into(img_petimg);
         }else{
             Glide.with(PetAppointmentDetailsActivity.this)
                     .load(APIClient.PROFILE_IMAGE_URL)
                     .into(img_petimg);
         }
+
 
         if(pet_name != null && !pet_name.isEmpty()){
             txt_pet_name.setText(pet_name);
@@ -459,14 +479,14 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
             txt_color.setText(colour);
         }
 
-        if(weight != null && !weight.isEmpty()){
+        if(weight != 0 ){
 
-            txt_weight.setText(weight);
+            txt_weight.setText(weight+"");
         }
 
-        if(age != null && !age.isEmpty()){
+        if(petAgeandMonth != null && !petAgeandMonth.isEmpty()){
 
-            txt_age.setText(age);
+            txt_age.setText(petAgeandMonth);
         }
         if(vaccinated != null && !vaccinated.isEmpty()) {
             txt_vaccinated.setText(vaccinated);
@@ -708,12 +728,8 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
             public void onResponse(@NonNull Call<SPAppointmentDetailsResponse> call, @NonNull Response<SPAppointmentDetailsResponse> response) {
                 avi_indicator.smoothToHide();
                 Log.w(TAG, "SPAppointmentDetailsResponse" + "--->" + new Gson().toJson(response.body()));
-
-
                 if (response.body() != null) {
-
                     if (200 == response.body().getCode()) {
-
                         String vaccinated, addr, usrname;
                         String usr_image = "";
                         if (response.body().getData() != null) {
@@ -721,19 +737,30 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                             spid = response.body().getData().getSp_id().get_id();
                             appointmentid = response.body().getData().getAppointment_UID();
                             userid = response.body().getData().getUser_id().get_id();
+                            pet_image = response.body().getData().getPet_id().getPet_img();
+
                             if(response.body().getData().getBooking_date_time() != null){
                                 txt_appointment_date.setText(response.body().getData().getBooking_date_time());
                             }
                             usrname = response.body().getData().getSp_business_info().get(0).getBussiness_name();
                             String servname = response.body().getData().getService_name();
                             String pet_name = response.body().getData().getPet_id().getPet_name();
-                            String pet_image = response.body().getData().getPet_id().getPet_img();
                             String pet_type = response.body().getData().getPet_id().getPet_type();
                             String breed = response.body().getData().getPet_id().getPet_breed();
                             String gender = response.body().getData().getPet_id().getPet_gender();
                             String colour = response.body().getData().getPet_id().getPet_color();
-                            String weight = String.valueOf(response.body().getData().getPet_id().getPet_weight());
-                            String age = String.valueOf(response.body().getData().getPet_id().getPet_age());
+                            double weight = response.body().getData().getPet_id().getPet_weight();
+                            String pet_dob = response.body().getData().getPet_id().getPet_dob();
+                            if(pet_dob != null){
+                                String[] separated = pet_dob.split("-");
+                                String day = separated[0];
+                                String month = separated[1];
+                                String year = separated[2];
+                                Log.w(TAG,"day : "+day+" month: "+month+" year : "+year);
+
+                                getAge(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
+                            }
+
                             if (response.body().getData().getPet_id().isVaccinated()) {
                                 vaccinated = "Yes";
                                 ll_petlastvacinateddate.setVisibility(View.VISIBLE);
@@ -754,7 +781,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                             addr = response.body().getData().getSp_business_info().get(0).getSp_loc();
                             appoinment_status = response.body().getData().getAppoinment_status();
                             start_appointment_status = response.body().getData().getStart_appointment_status();
-                            setView(usrname, usr_image, servname, pet_name, pet_type, breed, gender, colour, weight, age, order_date, orderid, payment_method, order_cost, vaccinated, addr);
+                            setView(usrname, usr_image, servname, pet_name, pet_type, breed, gender, colour, weight, order_date, orderid, payment_method, order_cost, vaccinated, addr);
                         }
                     }
 
@@ -1082,5 +1109,41 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
 
         }
     }
+
+    @SuppressLint("LongLogTag")
+    private void getAge(int year, int month, int day){
+
+        Log.w(TAG,"day : "+day+" month: "+month+" year : "+year);
+
+        Calendar dob = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
+
+        dob.set(year, month, day);
+
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+        int months = dob.get(Calendar.MONTH) - today.get(Calendar.MONTH);
+
+        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)){
+            age--;
+        }
+
+        Integer ageInt = new Integer(age);
+        Integer monthsInt = new Integer(months);
+        String ageS = ageInt.toString();
+        String monthsS = monthsInt.toString();
+
+        if(ageInt != 0){
+            petAgeandMonth = ageS+" years "+monthsS+" months";
+        }else{
+            petAgeandMonth = monthsS+" months";
+
+        }
+
+
+
+        Log.w(TAG,"ageS: "+ageS+" months : "+monthsS);
+
+    }
+
 
 }
