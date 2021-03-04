@@ -190,6 +190,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
     private String userrate;
     Dialog alertDialog;
     private String appointmentid;
+    private List<PetNewAppointmentDetailsResponse.DataBean.PetIdBean.PetImgBean> pet_image;
 
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
@@ -335,7 +336,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                             String usr_image = response.body().getData().getDoctor_id().getProfile_img();
                             String servname = response.body().getData().getService_name();
                             String pet_name = response.body().getData().getPet_id().getPet_name();
-                            String pet_image = response.body().getData().getPet_id().getPet_img();
+                            pet_image = response.body().getData().getPet_id().getPet_img();
                             String pet_type = response.body().getData().getPet_id().getPet_type();
                             String breed = response.body().getData().getPet_id().getPet_breed();
                             String gender = response.body().getData().getPet_id().getPet_gender();
@@ -368,7 +369,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                             }
                             appoinment_status = response.body().getData().getAppoinment_status();
                             start_appointment_status = response.body().getData().getStart_appointment_status();
-                            setView(usrname, usr_image, servname, pet_name, pet_image, pet_type, breed
+                            setView(usrname, usr_image, servname, pet_name, pet_type, breed
 
                                     , gender, colour, weight, age, order_date, orderid, payment_method, order_cost, vaccinated, addr);
                         }
@@ -399,7 +400,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
     }
 
     @SuppressLint({"SetTextI18n", "LongLogTag", "LogNotTimber"})
-    private void setView(String usrname, String usr_image, String servname, String pet_name, String pet_image, String pet_type, String breed, String gender, String colour, String weight, String age, String order_date, String orderid, String payment_method, String order_cost, String vaccinated, String addr) {
+    private void setView(String usrname, String usr_image, String servname, String pet_name, String pet_type, String breed, String gender, String colour, String weight, String age, String order_date, String orderid, String payment_method, String order_cost, String vaccinated, String addr) {
 
 
         if(usr_image != null && !usr_image.isEmpty()){
@@ -424,9 +425,9 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
             txt_serv_name.setText(servname);
         }
 
-        if(pet_image != null && !pet_image.isEmpty()){
+        if(this.pet_image != null && !this.pet_image.isEmpty()){
             Glide.with(PetAppointmentDetailsActivity.this)
-                    .load(pet_image)
+                    .load(this.pet_image)
                     .into(img_petimg);
         }else{
             Glide.with(PetAppointmentDetailsActivity.this)
@@ -753,7 +754,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                             addr = response.body().getData().getSp_business_info().get(0).getSp_loc();
                             appoinment_status = response.body().getData().getAppoinment_status();
                             start_appointment_status = response.body().getData().getStart_appointment_status();
-                            setView(usrname, usr_image, servname, pet_name, pet_image, pet_type, breed, gender, colour, weight, age, order_date, orderid, payment_method, order_cost, vaccinated, addr);
+                            setView(usrname, usr_image, servname, pet_name, pet_type, breed, gender, colour, weight, age, order_date, orderid, payment_method, order_cost, vaccinated, addr);
                         }
                     }
 

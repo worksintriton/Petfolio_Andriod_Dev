@@ -94,6 +94,7 @@ public class PetMissedAppointmentDetailsActivity extends AppCompatActivity imple
 
     LinearLayout ll_petlastvacinateddate;
     TextView txt_petlastvaccinatedage;
+    private List<PetNewAppointmentDetailsResponse.DataBean.PetIdBean.PetImgBean> pet_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -206,7 +207,7 @@ public class PetMissedAppointmentDetailsActivity extends AppCompatActivity imple
 
                             String pet_name = response.body().getData().getPet_id().getPet_name();
 
-                            String pet_image = response.body().getData().getPet_id().getPet_img();
+                             pet_image = response.body().getData().getPet_id().getPet_img();
 
                             String pet_type = response.body().getData().getPet_id().getPet_type();
 
@@ -278,7 +279,7 @@ public class PetMissedAppointmentDetailsActivity extends AppCompatActivity imple
     }
 
     @SuppressLint("SetTextI18n")
-    private void setView(String usrname, String usr_image, String servname, String servcost, String pet_name, String pet_image, String pet_type, String breed, String gender, String colour, String weight, String age, String order_date, String orderid, String payment_method, String order_cost, String vaccinated, String addr) {
+    private void setView(String usrname, String usr_image, String servname, String servcost, String pet_name, List<PetNewAppointmentDetailsResponse.DataBean.PetIdBean.PetImgBean> pet_image, String pet_type, String breed, String gender, String colour, String weight, String age, String order_date, String orderid, String payment_method, String order_cost, String vaccinated, String addr) {
 
 
         if(usr_image !=null && !usr_image.equals("")){
