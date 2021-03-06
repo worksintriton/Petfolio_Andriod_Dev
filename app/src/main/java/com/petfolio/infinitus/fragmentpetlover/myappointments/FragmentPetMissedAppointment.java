@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.PetMissedAppointmentAdapter;
@@ -81,6 +82,9 @@ public class FragmentPetMissedAppointment extends Fragment implements View.OnCli
     private List<PetAppointmentResponse.DataBean> missedAppointmentResponseList;
     private String userid;
 
+    private ShimmerFrameLayout mShimmerViewContainer;
+    private View includelayout;
+
 
     public FragmentPetMissedAppointment() {
 
@@ -96,6 +100,8 @@ public class FragmentPetMissedAppointment extends Fragment implements View.OnCli
 
         ButterKnife.bind(this, view);
         mContext = getActivity();
+        includelayout = view.findViewById(R.id.includelayout);
+        mShimmerViewContainer = includelayout.findViewById(R.id.shimmer_layout);
 
         avi_indicator.setVisibility(View.GONE);
         btn_load_more.setVisibility(View.GONE);
@@ -142,8 +148,10 @@ public class FragmentPetMissedAppointment extends Fragment implements View.OnCli
 
 
     private void petMissedAppointmentResponseCall() {
-        avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();
+       /* avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();*/
+        mShimmerViewContainer.startShimmerAnimation();
+
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
         Call<PetAppointmentResponse> call = ApiService.petMissedAppointmentResponseCall(RestUtils.getContentType(),petLoverAppointmentRequest());
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
@@ -152,7 +160,9 @@ public class FragmentPetMissedAppointment extends Fragment implements View.OnCli
             @SuppressLint({"SetTextI18n", "LogNotTimber"})
             @Override
             public void onResponse(@NonNull Call<PetAppointmentResponse> call, @NonNull Response<PetAppointmentResponse> response) {
-                avi_indicator.smoothToHide();
+               /* avi_indicator.smoothToHide();*/
+                mShimmerViewContainer.stopShimmerAnimation();
+                includelayout.setVisibility(View.GONE);
                 Log.w(TAG,"petMissedAppointmentResponseCall"+ "--->" + new Gson().toJson(response.body()));
 
 
@@ -189,7 +199,9 @@ public class FragmentPetMissedAppointment extends Fragment implements View.OnCli
 
             @Override
             public void onFailure(@NonNull Call<PetAppointmentResponse> call, @NonNull Throwable t) {
-                avi_indicator.smoothToHide();
+              /*  avi_indicator.smoothToHide();*/
+                mShimmerViewContainer.stopShimmerAnimation();
+                includelayout.setVisibility(View.GONE);
 
                 Log.w(TAG,"PetAppointmentResponse flr"+"--->" + t.getMessage());
             }

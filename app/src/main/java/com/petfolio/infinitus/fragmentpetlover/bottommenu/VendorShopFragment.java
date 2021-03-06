@@ -270,7 +270,8 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
                             rv_today_deal.setVisibility(View.VISIBLE);
                             setView(response.body().getData().getToday_Special());
 
-                        }else{
+                        }
+                        else{
                             txt_lbl_todaydeal.setVisibility(View.GONE);
                             txt_seemore_todaydeals.setVisibility(View.GONE);
                             rv_today_deal.setVisibility(View.GONE);

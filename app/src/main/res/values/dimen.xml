@@ -91,4 +91,15 @@
     <!-- Set this to 50% of what you want the actual space between the tabs to be. -->
     <dimen name="tab_spacing_half">5dp</dimen> <!-- i.e., 10dp spacing between tabs. -->
 
+    <dimen name="activity_padding">16dp</dimen>
+    <dimen name="placeholder_image">80dp</dimen>
+    <dimen name="placeholder_text_height">8dp</dimen>
+    <dimen name="activity_padding_horizontal">16dp</dimen>
+    <dimen name="padding_10">10dp</dimen>
+    <dimen name="name">15dp</dimen>
+    <dimen name="chef">12dp</dimen>
+    <dimen name="timestamp">11dp</dimen>
+    <dimen name="description">15dp</dimen>
+    <dimen name="price">13dp</dimen>
+
 </resources>

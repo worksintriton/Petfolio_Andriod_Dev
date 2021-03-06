@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:shimmer="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:id="@+id/headerView"
@@ -26,6 +27,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <include android:id="@+id/includelayout"
+                layout="@layout/loading_layout"/>
+
 
             <RelativeLayout
                 android:layout_width="match_parent"

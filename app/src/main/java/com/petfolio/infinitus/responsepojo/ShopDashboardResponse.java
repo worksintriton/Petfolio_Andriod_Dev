@@ -230,6 +230,15 @@ public class ShopDashboardResponse {
 
             private String cat_name;
             private String cat_id;
+            private String see_more;
+
+            public String getSee_more() {
+                return see_more;
+            }
+
+            public void setSee_more(String see_more) {
+                this.see_more = see_more;
+            }
 
             public String getCat_id() {
                 return cat_id;

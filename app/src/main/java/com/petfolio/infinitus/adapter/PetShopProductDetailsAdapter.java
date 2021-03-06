@@ -3,6 +3,7 @@ package com.petfolio.infinitus.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +69,6 @@ public class PetShopProductDetailsAdapter extends  RecyclerView.Adapter<Recycler
             holder.txt_seemore_products.setVisibility(View.VISIBLE);
             holder.rv_productdetails.setVisibility(View.VISIBLE);
             holder.txt_category_title.setText(currentItem.getCat_name());
-
         }else{
             holder.txt_category_title.setVisibility(View.GONE);
             holder.txt_seemore_products.setVisibility(View.GONE);
@@ -87,9 +87,6 @@ public class PetShopProductDetailsAdapter extends  RecyclerView.Adapter<Recycler
                     Intent intent = new Intent(context, ListOfProductsSeeMoreActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("cat_id",currentItem.getCat_id());
                     context.startActivity(intent);
-
-
-
 
                 }
 
