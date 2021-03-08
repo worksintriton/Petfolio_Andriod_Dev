@@ -7,8 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,9 +14,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.petlover.DoctorClinicDetailsActivity;
 import com.petfolio.infinitus.petlover.ListOfProductsSeeMoreActivity;
 import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
 
@@ -29,16 +26,12 @@ public class PetShopProductDetailsAdapter extends  RecyclerView.Adapter<Recycler
 
     private  String TAG = "PetShopProductDetailsAdapter";
     private Context context;
-
-    List<ShopDashboardResponse.DataBean.ProductDetailsBean> product_details;
+    private List<ShopDashboardResponse.DataBean.ProductDetailsBean> product_details;
     List<ShopDashboardResponse.DataBean.ProductDetailsBean.ProductListBean> productList;
 
     ShopDashboardResponse.DataBean.ProductDetailsBean currentItem;
 
-
-
-
-    public PetShopProductDetailsAdapter(Context context,  List<ShopDashboardResponse.DataBean.ProductDetailsBean> product_details,List<ShopDashboardResponse.DataBean.ProductDetailsBean.ProductListBean> productList) {
+    public PetShopProductDetailsAdapter(Context context, List<ShopDashboardResponse.DataBean.ProductDetailsBean> product_details, List<ShopDashboardResponse.DataBean.ProductDetailsBean.ProductListBean> productList) {
         this.context = context;
         this.product_details = product_details;
         this.productList = productList;
@@ -63,6 +56,7 @@ public class PetShopProductDetailsAdapter extends  RecyclerView.Adapter<Recycler
     @SuppressLint({"SetTextI18n", "LogNotTimber"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
+        Log.w("status","CateID------> " + new Gson().toJson(product_details.get(position).getCat_id()));
         currentItem = product_details.get(position);
         if(product_details.get(position).getProduct_list() != null && product_details.get(position).getProduct_list().size()>0){
             holder.txt_category_title.setVisibility(View.VISIBLE);
@@ -78,25 +72,6 @@ public class PetShopProductDetailsAdapter extends  RecyclerView.Adapter<Recycler
         holder.rv_productdetails.setItemAnimator(new DefaultItemAnimator());
         PetShopProductDetailsImageAdapter petShopProductDetailsAdapter = new PetShopProductDetailsImageAdapter(context,product_details.get(position).getProduct_list());
         holder.rv_productdetails.setAdapter(petShopProductDetailsAdapter);
-
-
-        holder.txt_seemore_products.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(product_details.get(position).getProduct_list() != null && product_details.get(position).getProduct_list().size()>0) {
-                    Intent intent = new Intent(context, ListOfProductsSeeMoreActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("cat_id",currentItem.getCat_id());
-                    context.startActivity(intent);
-
-                }
-
-                }
-        });
-
-
-
-
-
     }
 
     @Override
@@ -109,7 +84,7 @@ public class PetShopProductDetailsAdapter extends  RecyclerView.Adapter<Recycler
     public int getItemViewType(int position) {
         return position;
     }
-    static class ViewHolderOne extends RecyclerView.ViewHolder {
+    public class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_category_title,txt_seemore_products;
         RecyclerView rv_productdetails;
 
@@ -120,6 +95,17 @@ public class PetShopProductDetailsAdapter extends  RecyclerView.Adapter<Recycler
             txt_category_title = itemView.findViewById(R.id.txt_category_title);
             rv_productdetails = itemView.findViewById(R.id.rv_productdetails);
             txt_seemore_products = itemView.findViewById(R.id.txt_seemore_products);
+
+            txt_seemore_products.setOnClickListener(v -> {
+                if(product_details.get(getAdapterPosition()).getProduct_list() != null && product_details.get(getAdapterPosition()).getProduct_list().size()>0) {
+                    Intent intent = new Intent(context, ListOfProductsSeeMoreActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("cat_id",product_details.get(getAdapterPosition()).getCat_id());
+                    Log.w("status","Check Cate ID-----> " +product_details.get(getAdapterPosition()).getCat_id());
+                    context.startActivity(intent);
+
+                }
+
+            });
 
 
 

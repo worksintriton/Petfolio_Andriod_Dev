@@ -16,15 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.PetShopCategorySeeMoreAdapter;
-import com.petfolio.infinitus.adapter.PetShopTodayDealsSeeMoreAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.requestpojo.FetctProductByCatRequest;
-import com.petfolio.infinitus.requestpojo.TodayDealMoreRequest;
 import com.petfolio.infinitus.responsepojo.FetctProductByCatResponse;
-import com.petfolio.infinitus.responsepojo.TodayDealMoreResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
+import com.petfolio.infinitus.utils.PaginationListener;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -36,6 +34,8 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.petfolio.infinitus.utils.PaginationListener.PAGE_START;
 
 public class ListOfProductsSeeMoreActivity extends AppCompatActivity {
 
@@ -60,6 +60,13 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity {
     ImageView img_back;
     private String cat_id;
     private int skipcount = 0;
+
+    private int currentPage = PAGE_START;
+    private boolean isLastPage = false;
+    private int totalPage = 10;
+    private boolean isLoading = false;
+    int itemCount = 0;
+
 
 
     @SuppressLint("LogNotTimber")
@@ -90,6 +97,7 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
     }
 
     @Override
@@ -130,7 +138,7 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity {
 
 
             @Override
-            public void onFailure(@NonNull Call<FetctProductByCatResponse> call,@NonNull  Throwable t) {
+            public void onFailure(@NonNull Call<FetctProductByCatResponse> call, @NonNull  Throwable t) {
                 avi_indicator.smoothToHide();
                 Log.w(TAG,"FetctProductByCatResponse flr"+t.getMessage());
             }
@@ -146,18 +154,41 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity {
 
         FetctProductByCatRequest fetctProductByCatRequest = new FetctProductByCatRequest();
         fetctProductByCatRequest.setCat_id(cat_id);
-        fetctProductByCatRequest.setSkip_count(skipcount);
+        fetctProductByCatRequest.setSkip_count(currentPage);
         Log.w(TAG,"fetctProductByCatRequest"+ "--->" + new Gson().toJson(fetctProductByCatRequest));
         return fetctProductByCatRequest;
     }
 
     private void setView(List<FetctProductByCatResponse.DataBean> data) {
-        rv_today_deal.setLayoutManager(new GridLayoutManager(this, 2));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        rv_today_deal.setLayoutManager(gridLayoutManager);
         rv_today_deal.setItemAnimator(new DefaultItemAnimator());
         PetShopCategorySeeMoreAdapter petShopCategorySeeMoreAdapter = new PetShopCategorySeeMoreAdapter(getApplicationContext(), data);
         rv_today_deal.setAdapter(petShopCategorySeeMoreAdapter);
 
+        rv_today_deal.addOnScrollListener(new PaginationListener(gridLayoutManager) {
+            @Override
+            protected void loadMoreItems() {
+                isLoading = true;
+                currentPage++;
+                fetctProductByCatResponseCall();
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+        });
+
+
     }
+
+
 
 
 }

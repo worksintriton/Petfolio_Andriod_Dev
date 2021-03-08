@@ -1,15 +1,6 @@
 package com.petfolio.infinitus.petlover;
 
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
-
-import androidx.fragment.app.FragmentTransaction;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -17,19 +8,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-
 import android.os.Handler;
 import android.util.Log;
-
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -45,7 +39,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.API;
@@ -55,16 +48,13 @@ import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetServicesFragment;
 import com.petfolio.infinitus.fragmentpetlover.bottommenu.VendorShopFragment;
 import com.petfolio.infinitus.responsepojo.GetAddressResultResponse;
 import com.petfolio.infinitus.service.GPSTracker;
-import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -141,6 +131,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
             if(tag.equalsIgnoreCase("1")){
                 active = petHomeFragment;
                 bottom_navigation_view.setSelectedItemId(R.id.home);
+
                 loadFragment(new PetHomeFragment());
             }else if(tag.equalsIgnoreCase("2")){
                 active = vendorShopFragment;
@@ -160,13 +151,10 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
         }else{
             bottom_navigation_view.setSelectedItemId(R.id.home);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.main_container, active, active_tag);
-            transaction.commit();
+            transaction.replace(R.id.frame_schedule, active, active_tag);
+            transaction.commitNowAllowingStateLoss();
         }
         bottom_navigation_view.setOnNavigationItemSelectedListener(this);
-
-
-
     }
 
 
@@ -185,26 +173,23 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
                 Log.w(TAG,"fromactivity : "+fromactivity);
                 // load fragment
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_container, fragment);
+                transaction.replace(R.id.frame_schedule, fragment);
                 transaction.addToBackStack(null);
                 transaction.commitAllowingStateLoss();
             }
         }else {
-
-
-
-
 
             // set Fragmentclass Arguments
             fragment.setArguments(bundle);
 
             // load fragment
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.main_container, fragment);
+            transaction.replace(R.id.frame_schedule, fragment);
             transaction.addToBackStack(null);
             transaction.commitAllowingStateLoss();
         }
     }
+
     @Override
     public void onBackPressed() {
         Log.w(TAG,"tag : "+tag);
@@ -225,8 +210,8 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
                 bottom_navigation_view.setSelectedItemId(R.id.home);
                 // load fragment
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_container,new PetHomeFragment());
-                transaction.commit();
+                transaction.replace(R.id.frame_schedule,new PetHomeFragment());
+                transaction.commitNowAllowingStateLoss();
             }
 
 
@@ -234,15 +219,17 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
             bottom_navigation_view.setSelectedItemId(R.id.home);
             // load fragment
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.main_container,new PetHomeFragment());
-            transaction.commit();
+            transaction.replace(R.id.frame_schedule,new PetHomeFragment());
+            transaction.commitNowAllowingStateLoss();
         }
     }
+
     private void replaceFragment(Fragment fragment){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.main_container,fragment);
-        transaction.commit();
+        transaction.replace(R.id.frame_schedule,fragment);
+        transaction.commitNowAllowingStateLoss();
     }
+
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -293,7 +280,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
         Log.w(TAG,"onActivityResult--->");
         Log.w(TAG,"resultCode---->"+resultCode+"requestCode: "+requestCode);
 
-        Fragment fragment = Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.main_container));
+        Fragment fragment = Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.frame_schedule));
         fragment.onActivityResult(requestCode,resultCode,data);
     }
 

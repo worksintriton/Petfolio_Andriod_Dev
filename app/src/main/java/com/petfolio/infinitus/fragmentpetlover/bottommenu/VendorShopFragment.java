@@ -1,11 +1,9 @@
 package com.petfolio.infinitus.fragmentpetlover.bottommenu;
 
 import android.annotation.SuppressLint;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -18,42 +16,32 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-
 import com.google.android.material.tabs.TabLayout;
-
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-
 import com.petfolio.infinitus.adapter.PetShopProductDetailsAdapter;
 import com.petfolio.infinitus.adapter.PetShopTodayDealsAdapter;
 import com.petfolio.infinitus.adapter.ViewPagerShopDashboardAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-
-import com.petfolio.infinitus.petlover.PetShopTodayDealsSeeMoreActivity;
 import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
-
+import com.petfolio.infinitus.petlover.PetShopTodayDealsSeeMoreActivity;
 import com.petfolio.infinitus.requestpojo.ShopDashboardRequest;
-
 import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
-
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -278,6 +266,7 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
                         }
                         if(response.body().getData().getProduct_details() != null && response.body().getData().getProduct_details().size()>0){
                             for(int i=0;i<response.body().getData().getProduct_details().size();i++){
+
                                 productList = response.body().getData().getProduct_details().get(i).getProduct_list();
                                 if(response.body().getData().getProduct_details().get(i).getProduct_list() != null && response.body().getData().getProduct_details().get(i).getProduct_list().size()>0){
                                     rv_productdetails.setVisibility(View.VISIBLE);
@@ -310,7 +299,7 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
 
             @SuppressLint("LogNotTimber")
             @Override
-            public void onFailure(@NonNull Call<ShopDashboardResponse> call,@NonNull  Throwable t) {
+            public void onFailure(@NonNull Call<ShopDashboardResponse> call, @NonNull  Throwable t) {
                 avi_indicator.smoothToHide();
                 Log.w(TAG,"ShopDashboardResponse flr"+t.getMessage());
             }
