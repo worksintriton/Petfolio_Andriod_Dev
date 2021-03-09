@@ -20,8 +20,8 @@
 
         <ImageView
             android:id="@+id/img_products_image"
-            android:layout_width="250dp"
-            android:layout_height="150dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:contentDescription="@string/image"
             android:scaleType="fitXY"
             android:src="@drawable/app_logo" />

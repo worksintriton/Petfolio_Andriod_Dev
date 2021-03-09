@@ -50,17 +50,18 @@
 
     </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/txt_products_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/futuramediumbt"
-            android:maxLines="1"
-            android:text="@string/producttitle"
-            android:textColor="@color/new_txt_color"
-            android:textSize="14sp" />
+    <TextView
+        android:id="@+id/txt_products_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/futuramediumbt"
+        android:maxLines="1"
+        android:maxLength="20"
+        android:text="@string/producttitle"
+        android:textColor="@color/new_txt_color"
+        android:textSize="14sp" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

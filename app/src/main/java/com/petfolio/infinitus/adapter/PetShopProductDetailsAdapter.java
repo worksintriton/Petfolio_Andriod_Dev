@@ -3,7 +3,6 @@ package com.petfolio.infinitus.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.petlover.ListOfProductsSeeMoreActivity;
 import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
@@ -56,7 +54,6 @@ public class PetShopProductDetailsAdapter extends  RecyclerView.Adapter<Recycler
     @SuppressLint({"SetTextI18n", "LogNotTimber"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
-        Log.w("status","CateID------> " + new Gson().toJson(product_details.get(position).getCat_id()));
         currentItem = product_details.get(position);
         if(product_details.get(position).getProduct_list() != null && product_details.get(position).getProduct_list().size()>0){
             holder.txt_category_title.setVisibility(View.VISIBLE);
@@ -100,7 +97,6 @@ public class PetShopProductDetailsAdapter extends  RecyclerView.Adapter<Recycler
                 if(product_details.get(getAdapterPosition()).getProduct_list() != null && product_details.get(getAdapterPosition()).getProduct_list().size()>0) {
                     Intent intent = new Intent(context, ListOfProductsSeeMoreActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("cat_id",product_details.get(getAdapterPosition()).getCat_id());
-                    Log.w("status","Check Cate ID-----> " +product_details.get(getAdapterPosition()).getCat_id());
                     context.startActivity(intent);
 
                 }
