@@ -263,6 +263,7 @@
 
 
                     <TextView
+                        android:id="@+id/txt_discount"
                         android:layout_marginStart="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -353,8 +354,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
-
-    <LinearLayout
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
        android:orientation="horizontal"
@@ -364,6 +364,7 @@
         android:gravity="center">
 
         <ImageView
+            android:id="@+id/img_remove_product"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_minus"
@@ -371,6 +372,7 @@
             tools:ignore="ContentDescription" />
 
         <TextView
+            android:id="@+id/txt_cart_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/_6"
@@ -384,6 +386,7 @@
             />
 
         <ImageView
+            android:id="@+id/img_add_product"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_plus"
@@ -403,6 +406,23 @@
             android:layout_marginStart="20dp"
             android:padding="10dp"/>
     </LinearLayout>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/new_rounded_corner_btn"
+            app:elevation="20dp"
+            app:itemBackground="@drawable/selected_state"
+            app:itemIconSize="20dp"
+            app:itemIconTint="@color/selector"
+            app:itemTextColor="@color/selector"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/bottom_navigation" />
+
     </LinearLayout>
 
     <com.wang.avi.AVLoadingIndicatorView

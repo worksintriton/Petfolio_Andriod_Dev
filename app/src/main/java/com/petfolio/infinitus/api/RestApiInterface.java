@@ -23,6 +23,7 @@ import com.petfolio.infinitus.requestpojo.DoctorStartAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.DoctorUpdateProfileImageRequest;
 import com.petfolio.infinitus.requestpojo.EmailOTPRequest;
 import com.petfolio.infinitus.requestpojo.FBTokenUpdateRequest;
+import com.petfolio.infinitus.requestpojo.FetchByIdRequest;
 import com.petfolio.infinitus.requestpojo.FetctProductByCatRequest;
 import com.petfolio.infinitus.requestpojo.FilterDoctorRequest;
 import com.petfolio.infinitus.requestpojo.HolidayDeleteRequest;
@@ -65,6 +66,7 @@ import com.petfolio.infinitus.requestpojo.SignupRequest;
 import com.petfolio.infinitus.requestpojo.TodayDealMoreRequest;
 import com.petfolio.infinitus.requestpojo.UserStatusUpdateRequest;
 import com.petfolio.infinitus.requestpojo.ServiceProviderRegisterFormCreateRequest;
+import com.petfolio.infinitus.requestpojo.VendorOrderBookingCreateRequest;
 import com.petfolio.infinitus.requestpojo.VendorOrderRequest;
 import com.petfolio.infinitus.requestpojo.VendorRegisterFormCreateRequest;
 import com.petfolio.infinitus.responsepojo.AddReviewResponse;
@@ -74,6 +76,7 @@ import com.petfolio.infinitus.responsepojo.AppoinmentCompleteResponse;
 import com.petfolio.infinitus.responsepojo.AppointmentCheckResponse;
 import com.petfolio.infinitus.responsepojo.AppointmentsUpdateResponse;
 import com.petfolio.infinitus.responsepojo.BreedTypeResponse;
+import com.petfolio.infinitus.responsepojo.CartDetailsResponse;
 import com.petfolio.infinitus.responsepojo.CreateHolidayResponse;
 import com.petfolio.infinitus.responsepojo.DocBusInfoUploadResponse;
 import com.petfolio.infinitus.responsepojo.DoctorAppointmentsResponse;
@@ -91,6 +94,7 @@ import com.petfolio.infinitus.responsepojo.DoctorUpdateProfileImageResponse;
 import com.petfolio.infinitus.responsepojo.DropDownListResponse;
 import com.petfolio.infinitus.responsepojo.EmailOTPResponse;
 import com.petfolio.infinitus.responsepojo.FBTokenUpdateResponse;
+import com.petfolio.infinitus.responsepojo.FetchProductByIdResponse;
 import com.petfolio.infinitus.responsepojo.FetctProductByCatResponse;
 import com.petfolio.infinitus.responsepojo.FileUploadResponse;
 import com.petfolio.infinitus.responsepojo.FilterDoctorResponse;
@@ -131,6 +135,7 @@ import com.petfolio.infinitus.responsepojo.ServiceCatResponse;
 import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
 import com.petfolio.infinitus.responsepojo.SignupResponse;
 import com.petfolio.infinitus.responsepojo.SplashScreenResponse;
+import com.petfolio.infinitus.responsepojo.SuccessResponse;
 import com.petfolio.infinitus.responsepojo.TodayDealMoreResponse;
 import com.petfolio.infinitus.responsepojo.UserStatusUpdateResponse;
 import com.petfolio.infinitus.responsepojo.UserTypeListResponse;
@@ -540,14 +545,40 @@ public interface RestApiInterface {
     @POST("product_details/getproductdetails_list")
     Call<ShopDashboardResponse> shopDashboardResponseCall(@Header("Content-Type") String type,@Body ShopDashboardRequest ShopDashboardRequest);
 
-    /*View Todays Deal Products*/
+    /*View Todays Deal Products see more*/
     @POST("product_details/today_deal")
     Call<TodayDealMoreResponse> todayDealMoreResponseCall(@Header("Content-Type") String type, @Body TodayDealMoreRequest todayDealMoreRequest);
 
 
-    /*View the Product's by cat id*/
+    /*View the Product's by cat id see more*/
     @POST("product_details/fetch_product_by_cat")
     Call<FetctProductByCatResponse> fetctProductByCatResponseCall(@Header("Content-Type") String type, @Body FetctProductByCatRequest fetctProductByCatRequest);
+
+    /*View Single Product by Id*/
+    @POST("product_details/fetch_product_by_id")
+    Call<FetchProductByIdResponse> fetch_product_by_id_ResponseCall(@Header("Content-Type") String type, @Body FetchByIdRequest fetchByIdRequest);
+
+    /*Add product*/
+    @POST("product_cart_detail/add_product")
+    Call<SuccessResponse> add_product_ResponseCall(@Header("Content-Type") String type, @Body FetchByIdRequest fetchByIdRequest);
+
+    /*Remove product*/
+    @POST("product_cart_detail/remove_product")
+    Call<SuccessResponse> remove_product_ResponseCall(@Header("Content-Type") String type, @Body FetchByIdRequest fetchByIdRequest);
+
+    /*Remove all product*/
+    @POST("product_cart_detail/remove_overall_products")
+    Call<SuccessResponse> remove_overall_products_ResponseCall(@Header("Content-Type") String type, @Body FetchByIdRequest fetchByIdRequest);
+
+
+    /*Cart page fetch details*/
+    @POST("product_cart_detail/fetch_cart_details_by_userid")
+    Call<CartDetailsResponse> fetch_cart_details_by_userid_ResponseCall(@Header("Content-Type") String type, @Body FetchByIdRequest fetchByIdRequest);
+
+    /*Vendor booking create*/
+    @POST("vendor_order_booking/create")
+    Call<SuccessResponse> vendor_order_booking_create_ResponseCall(@Header("Content-Type") String type, @Body VendorOrderBookingCreateRequest vendorOrderBookingCreateRequest);
+
 
 
 

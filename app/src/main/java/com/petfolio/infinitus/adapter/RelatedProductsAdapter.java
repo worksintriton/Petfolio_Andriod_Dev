@@ -7,11 +7,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,37 +17,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
-import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
-import com.petfolio.infinitus.petlover.PetNewAppointmentDetailsActivity;
-import com.petfolio.infinitus.petlover.PetSPNewAppointmentDetailsActivity;
 import com.petfolio.infinitus.petlover.ProductDetailsActivity;
-import com.petfolio.infinitus.petlover.VideoCallPetLoverActivity;
-import com.petfolio.infinitus.responsepojo.PetAppointmentResponse;
+import com.petfolio.infinitus.responsepojo.FetchProductByIdResponse;
 import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-
-import es.dmoral.toasty.Toasty;
 
 
-public class PetShopTodayDealsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RelatedProductsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private  String TAG = "PetShopTodayDealsAdapter";
+    private  String TAG = "RelatedProductsAdapter";
     private Context context;
 
-    List<ShopDashboardResponse.DataBean.TodaySpecialBean> today_special;
-
-    ShopDashboardResponse.DataBean.TodaySpecialBean currentItem;
-
+    List<FetchProductByIdResponse.ProductDetailsBean.ProductRelatedBean> product_related;
+    FetchProductByIdResponse.ProductDetailsBean.ProductRelatedBean currentItem;
 
 
 
-    public PetShopTodayDealsAdapter(Context context, List<ShopDashboardResponse.DataBean.TodaySpecialBean> today_special) {
-        this.today_special = today_special;
+
+    public RelatedProductsAdapter(Context context, List<FetchProductByIdResponse.ProductDetailsBean.ProductRelatedBean> product_related) {
+        this.product_related = product_related;
         this.context = context;
 
 
@@ -73,13 +60,13 @@ public class PetShopTodayDealsAdapter extends  RecyclerView.Adapter<RecyclerView
     @SuppressLint({"SetTextI18n", "LogNotTimber"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
-        currentItem = today_special.get(position);
-        holder.txt_products_title.setText(today_special.get(position).getProduct_title());
-        if(today_special.get(position).getProduct_price() != 0){
-            holder.txt_products_price.setText("\u20B9 "+today_special.get(position).getProduct_price());
+        currentItem = product_related.get(position);
+        holder.txt_products_title.setText(product_related.get(position).getProduct_title());
+        if(product_related.get(position).getProduct_price() != 0){
+            holder.txt_products_price.setText("\u20B9 "+product_related.get(position).getProduct_price());
             }
 
-        if(today_special.get(position).isProduct_fav()){
+        if(product_related.get(position).isProduct_fav()){
             holder.img_like.setVisibility(View.VISIBLE);
             holder.img_dislike.setVisibility(View.GONE);
 
@@ -92,21 +79,21 @@ public class PetShopTodayDealsAdapter extends  RecyclerView.Adapter<RecyclerView
 
         }
 
-        Log.w(TAG,"discount : "+today_special.get(position).getProduct_discount());
+        Log.w(TAG,"discount : "+product_related.get(position).getProduct_discount());
 
 
-        if(today_special.get(position).getProduct_discount() != 0){
+        if(product_related.get(position).getProduct_discount() != 0){
             holder.txt_products_offer.setVisibility(View.VISIBLE);
-            holder.txt_products_offer.setText(today_special.get(position).getProduct_discount()+" % off");
+            holder.txt_products_offer.setText(product_related.get(position).getProduct_discount()+" % off");
         }else{
             holder.txt_products_offer.setVisibility(View.GONE);
 
         }
 
-        if (today_special.get(position).getProduct_img() != null && !today_special.get(position).getProduct_img().isEmpty()) {
+        if (product_related.get(position).getProduct_img() != null && !product_related.get(position).getProduct_img().isEmpty()) {
 
                 Glide.with(context)
-                        .load(today_special.get(position).getProduct_img())
+                        .load(product_related.get(position).getProduct_img())
                         .into(holder.img_products_image);
 
             }
@@ -121,7 +108,7 @@ public class PetShopTodayDealsAdapter extends  RecyclerView.Adapter<RecyclerView
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("productid",today_special.get(position).get_id());
+                intent.putExtra("productid",product_related.get(position).get_id());
                 context.startActivity(intent);
             }
         });
@@ -134,7 +121,7 @@ public class PetShopTodayDealsAdapter extends  RecyclerView.Adapter<RecyclerView
 
     @Override
     public int getItemCount() {
-        return today_special.size();
+        return product_related.size();
     }
 
 

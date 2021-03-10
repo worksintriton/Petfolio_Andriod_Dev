@@ -279,21 +279,8 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
 
                         }
 
-
-
                     }
-
-
-
                 }
-
-
-
-
-
-
-
-
             }
 
 
