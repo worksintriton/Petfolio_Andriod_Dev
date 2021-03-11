@@ -201,6 +201,7 @@ public class FragmentVendorNewOrders extends Fragment implements OnAppointmentCa
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private VendorOrderRequest vendorOrderRequest() {
         /**
          * user_id : 6025040ee15519672cd0dc02
@@ -208,7 +209,7 @@ public class FragmentVendorNewOrders extends Fragment implements OnAppointmentCa
          */
         VendorOrderRequest vendorOrderRequest = new VendorOrderRequest();
         vendorOrderRequest.setUser_id("6025040ee15519672cd0dc02");
-        vendorOrderRequest.setOrder_deliver_status("new");
+        vendorOrderRequest.setOrder_deliver_status("Booked");
         Log.w(TAG,"vendorOrderRequest"+ "--->" + new Gson().toJson(vendorOrderRequest));
         return vendorOrderRequest;
     }

@@ -3,6 +3,7 @@ package com.petfolio.infinitus.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,8 @@ public class Cart_Adapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
         if (data.get(position).getProduct_id().getCost() != 0) {
             holder.txt_original_amount.setText("\u20B9 " + data.get(position).getProduct_id().getCost());
+            holder.txt_original_amount.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+
         }
         if (data.get(position).getProduct_id().getDiscount_amount() != 0) {
             holder.txt_discount_amount.setText("\u20B9 " + data.get(position).getProduct_id().getDiscount_amount());

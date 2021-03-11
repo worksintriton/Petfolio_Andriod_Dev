@@ -124,13 +124,11 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
     private static final int REQUEST_PHONE_CALL =1 ;
     private String sosPhonenumber;
-    private Location mLastLocation;
-    private GoogleApiClient googleApiClient;
-    private static final int REQUEST_CHECK_SETTINGS_GPS = 0x1;
 
 
 
-    @SuppressLint("InflateParams")
+
+    @SuppressLint({"InflateParams", "LogNotTimber"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -159,6 +157,7 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     private void initUI(View view) {
 
         //Initializing NavigationView
@@ -186,63 +185,49 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
         nav_header_profilename.setText(name);
 
         RelativeLayout llheader = header.findViewById(R.id.llheader);
-        llheader.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class));
-            }
-        });
+        llheader.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class)));
 
         TextView nav_header_edit = header.findViewById(R.id.nav_header_edit);
-        nav_header_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),PetLoverEditProfileActivity.class));
-            }
-        });
+        nav_header_edit.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(),PetLoverEditProfileActivity.class)));
 
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @SuppressLint("NonConstantResourceId")
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                //Closing drawer on item click
-                drawerLayout.closeDrawers();
-                //Check to see which item was being clicked and perform appropriate action
-                switch (menuItem.getItemId()) {
-                    //Replacing the main content with ContentFragment Which is our Inbox View;
-                    case R.id.nav_item_one:
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            //Closing drawer on item click
+            drawerLayout.closeDrawers();
+            //Check to see which item was being clicked and perform appropriate action
+            switch (menuItem.getItemId()) {
+                //Replacing the main content with ContentFragment Which is our Inbox View;
+                case R.id.nav_item_one:
 
-                        return true;
+                    return true;
 
-                    // For rest of the options we just show a toast on click
-                    case R.id.nav_item_two:
-                       // gotoMyOrders();
-                        return true;
+                // For rest of the options we just show a toast on click
+                case R.id.nav_item_two:
+                    gotoMyOrders();
+                    return true;
 
-                    case R.id.nav_item_three:
-                        gotoMyAppointments();
-                        return true;
+                case R.id.nav_item_three:
+                    gotoMyAppointments();
+                    return true;
 
-                    case R.id.nav_item_four:
-                        return true;
+                case R.id.nav_item_four:
+                    return true;
 
-                    case R.id.nav_item_five:
-                        return true;
+                case R.id.nav_item_five:
+                    return true;
 
-                    case R.id.nav_item_six:
-                        return true;
-                    case R.id.nav_item_seven:
-                        confirmLogoutDialog();
-                        return true;
+                case R.id.nav_item_six:
+                    return true;
+                case R.id.nav_item_seven:
+                    confirmLogoutDialog();
+                    return true;
 
 
 
 
-                    default:
-                        return true;
+                default:
+                    return true;
 
-                }
             }
         });
 
@@ -263,33 +248,23 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
         ImageView img_cart = toolbar.findViewById(R.id.img_cart);
         ImageView img_profile = toolbar.findViewById(R.id.img_profile);
 
-        img_sos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.w(TAG,"SOSLIST"+new Gson().toJson(APIClient.sosList));
-                showSOSAlert(APIClient.sosList);
+        img_sos.setOnClickListener(v -> {
+            Log.w(TAG,"SOSLIST"+new Gson().toJson(APIClient.sosList));
+            showSOSAlert(APIClient.sosList);
 
-            }
         });
-        img_notification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+        img_notification.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), NotificationActivity.class)));
+
+        img_cart.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), PetCartActivity.class)));
+        img_profile.setOnClickListener(v -> {
+
+           Intent intent = new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class);
+           intent.putExtra("fromactivity",TAG);
+            if(PetLoverDashboardActivity.active_tag != null){
+                intent.putExtra("active_tag",PetLoverDashboardActivity.active_tag);
 
             }
-        });
-        img_profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-               Intent intent = new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class);
-               intent.putExtra("fromactivity",TAG);
-                if(PetLoverDashboardActivity.active_tag != null){
-                    intent.putExtra("active_tag",PetLoverDashboardActivity.active_tag);
-
-                }
-               startActivity(intent);
-            }
+           startActivity(intent);
         });
 
 
@@ -369,21 +344,18 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
 
     private void toggleView() {
-        drawerImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.isClickable()) {
-                    drawerMethod();
-                } else {
+        drawerImg.setOnClickListener(v -> {
+            if (v.isClickable()) {
+                drawerMethod();
+            } else {
 
-                    Intent intent_re = getIntent();
-                    overridePendingTransition(0, 0);
-                    intent_re.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    finish();
-                    overridePendingTransition(0, 0);
-                    startActivity(intent_re);
+                Intent intent_re = getIntent();
+                overridePendingTransition(0, 0);
+                intent_re.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                finish();
+                overridePendingTransition(0, 0);
+                startActivity(intent_re);
 
-                }
             }
         });
     }
@@ -406,6 +378,7 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
         //drawerMethod();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -445,12 +418,6 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
         alertDialog.show();
 
     }
-
-
-
-
-
-
     private void gotoMyAppointments() {
         startActivity(new Intent(getApplicationContext(),PetMyappointmentsActivity.class));
 
@@ -459,16 +426,6 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
         startActivity(new Intent(getApplicationContext(),PetMyOrdrersActivity.class));
 
     }
-
-
-
-
-
-
-
-
-
-
     private void gotoLogout() {
         session.logoutUser();
         session.setIsLogin(false);
@@ -479,8 +436,6 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
 
     }
-
-
     @Override
     public void soSCallListener(long phonenumber) {
         if(phonenumber != 0){

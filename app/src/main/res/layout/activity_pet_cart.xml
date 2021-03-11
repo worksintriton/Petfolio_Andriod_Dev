@@ -47,14 +47,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp">
+                android:layout_marginStart="10dp">
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
                     android:src="@drawable/ic_sos"
                     tools:ignore="ContentDescription" />
 
@@ -217,7 +215,8 @@
                         android:text="@string/subtotal"
                         android:fontFamily="@font/futuramediumbt"
                         android:textColor="@color/new_txt_color"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp"
+                        tools:ignore="RtlHardcoded" />
 
                     <TextView
                         android:id="@+id/txt_sub_total"
@@ -229,7 +228,8 @@
                         android:text="@string/subtotal"
                         android:fontFamily="@font/futuramediumbt"
                         android:textColor="@color/new_txt_color"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp"
+                        tools:ignore="RtlHardcoded" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -245,7 +245,8 @@
                         android:text="@string/discountamount"
                         android:fontFamily="@font/futuramediumbt"
                         android:textColor="@color/new_txt_color"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp"
+                        tools:ignore="RtlHardcoded" />
 
                     <TextView
                         android:id="@+id/txt_discount_amount"
@@ -257,7 +258,8 @@
                         android:text="@string/discountamount"
                         android:fontFamily="@font/futuramediumbt"
                         android:textColor="@color/new_txt_color"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp"
+                        tools:ignore="RtlHardcoded" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -273,7 +275,8 @@
                         android:text="@string/shippingamount"
                         android:fontFamily="@font/futuramediumbt"
                         android:textColor="@color/new_txt_color"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp"
+                        tools:ignore="RtlHardcoded" />
 
                     <TextView
                         android:id="@+id/txt_shipping_amount"
@@ -285,7 +288,8 @@
                         android:text="@string/shippingamount"
                         android:fontFamily="@font/futuramediumbt"
                         android:textColor="@color/new_txt_color"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp"
+                        tools:ignore="RtlHardcoded" />
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
@@ -297,7 +301,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp">
 
                     <TextView
                         android:layout_width="0dp"
@@ -307,7 +312,8 @@
                         android:text="@string/totalamount"
                         android:fontFamily="@font/futuramediumbt"
                         android:textColor="@color/new_txt_color"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp"
+                        tools:ignore="RtlHardcoded" />
 
                     <TextView
                         android:id="@+id/txt_total_amount"
@@ -319,7 +325,8 @@
                         android:text="@string/totalamount"
                         android:fontFamily="@font/futuramediumbt"
                         android:textColor="@color/new_txt_color"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp"
+                        tools:ignore="RtlHardcoded" />
                 </LinearLayout>
 
 
@@ -332,7 +339,8 @@
                 android:layout_gravity="center"
                 android:orientation="vertical"
                 android:id="@+id/ll_cart_is_empty"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:ignore="UseCompoundDrawables">
                 <ImageView
                     android:layout_width="200dp"
                     android:layout_height="200dp"
@@ -366,7 +374,7 @@
         android:orientation="vertical">
 
         <Button
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:id="@+id/btn_procced_to_buy"

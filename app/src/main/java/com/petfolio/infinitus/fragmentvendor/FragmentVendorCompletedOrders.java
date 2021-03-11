@@ -201,7 +201,7 @@ public class FragmentVendorCompletedOrders extends Fragment implements View.OnCl
          */
         VendorOrderRequest vendorOrderRequest = new VendorOrderRequest();
         vendorOrderRequest.setUser_id("6025040ee15519672cd0dc02");
-        vendorOrderRequest.setOrder_deliver_status("complete");
+        vendorOrderRequest.setOrder_deliver_status("Booked");
         Log.w(TAG,"vendorOrderRequest"+ "--->" + new Gson().toJson(vendorOrderRequest));
         return vendorOrderRequest;
     }

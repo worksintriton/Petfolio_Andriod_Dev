@@ -1,6 +1,7 @@
 package com.petfolio.infinitus.petlover;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,10 +35,16 @@ import com.petfolio.infinitus.responsepojo.SuccessResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
+import com.razorpay.Checkout;
+import com.razorpay.PaymentResultListener;
 import com.wang.avi.AVLoadingIndicatorView;
 
 
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -48,7 +55,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PetCartActivity extends AppCompatActivity implements AddandRemoveProductListener {
+public class PetCartActivity extends AppCompatActivity implements AddandRemoveProductListener, PaymentResultListener {
+
     private String TAG = "PetCartActivity";
 
 
@@ -113,6 +121,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
     private int grand_total;
     private int prodcut_count;
     private int prodcut_item_count;
+    private String Payment_id = "";
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -130,7 +139,10 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
         fetch_cart_details_by_userid_Call();
 
         btn_procced_to_buy.setOnClickListener(v -> {
-            if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+
+            if(grand_total != 0) {
+                startPayment();
+            }else if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
                 vendor_order_booking_create_ResponseCall();
             }
         });
@@ -164,9 +176,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
         //Creating an object of our api interface
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
         Call<CartDetailsResponse> call = ApiService.fetch_cart_details_by_userid_ResponseCall(RestUtils.getContentType(),fetchByIdRequest());
-
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
-
         call.enqueue(new Callback<CartDetailsResponse>() {
             @SuppressLint({"LogNotTimber", "SetTextI18n"})
             @Override
@@ -426,7 +436,18 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
          * grand_total : 0
          * prodcut_count : 0
          * prodcut_item_count : 0
+         * "date_of_booking_display" : "23-Jan-2020",
+            "date_of_booking" : "23-10-2021  11 : 00 PM",
+            "coupon_code" : "",
+             "shipping_address_id" : "",
+            "billling_address_id" : "",
+            "shipping_address" : "",
+             "billing_address" : "",
          */
+
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+        String currentDateandTime = simpleDateFormat.format(new Date());
+
         CartDetailsResponse vendorOrderBookingCreateRequest = new CartDetailsResponse();
         vendorOrderBookingCreateRequest.setUser_id(userid);
         vendorOrderBookingCreateRequest.setData(Data);
@@ -436,7 +457,87 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
         vendorOrderBookingCreateRequest.setGrand_total(grand_total);
         vendorOrderBookingCreateRequest.setProdcut_count(prodcut_count);
         vendorOrderBookingCreateRequest.setProdcut_item_count(prodcut_item_count);
+        vendorOrderBookingCreateRequest.setDate_of_booking_display(currentDateandTime);
+        vendorOrderBookingCreateRequest.setDate_of_booking(currentDateandTime);
+        vendorOrderBookingCreateRequest.setCoupon_code("");
+        vendorOrderBookingCreateRequest.setShipping_address_id("");
+        vendorOrderBookingCreateRequest.setBillling_address_id("");
+        vendorOrderBookingCreateRequest.setShipping_address("");
+        vendorOrderBookingCreateRequest.setBilling_address("");
+        vendorOrderBookingCreateRequest.setPayment_id(Payment_id);
         Log.w(TAG,"vendorOrderBookingCreateRequest"+ "--->" + new Gson().toJson(vendorOrderBookingCreateRequest));
         return vendorOrderBookingCreateRequest;
+    }
+
+
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    public void startPayment() {
+        /*
+          You need to pass current activity in order to let Razorpay create CheckoutActivity
+         */
+        final Activity activity = this;
+
+        final Checkout co = new Checkout();
+
+        //totalamount = amount;
+
+      /*  Double d = new Double(amount);
+        int amout = d.intValue();*/
+
+
+        Integer totalamout = grand_total*100;
+
+        try {
+            JSONObject options = new JSONObject();
+            options.put("name", "PetFolio");
+            options.put("description", userid);
+            //You can omit the image option to fetch the image from dashboard
+            options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
+            options.put("currency", "INR");
+            options.put("amount", totalamout);
+
+
+            co.open(activity, options);
+        } catch (Exception e) {
+            Log.w(TAG,"Error in payment: " + e.getMessage());
+
+            e.printStackTrace();
+        }
+    }
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    @Override
+    public void onPaymentSuccess(String razorpayPaymentID) {
+        try {
+            Payment_id = razorpayPaymentID;
+
+            Log.w(TAG, "Payment Successful: " + razorpayPaymentID);
+            Toasty.success(getApplicationContext(), "Payment Successful. View your booking details in upcoming appointments.", Toast.LENGTH_SHORT, true).show();
+
+
+            if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+              vendor_order_booking_create_ResponseCall();
+
+            }
+
+
+
+
+        } catch (Exception e) {
+            Log.w(TAG, "Exception in onPaymentSuccess", e);
+        }
+    }
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    @Override
+    public void onPaymentError(int code, String response) {
+        try {
+            if(new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+
+            }
+            Log.w(TAG,  "Payment failed: " + code + " " + response);
+            Toasty.error(getApplicationContext(), "Payment failed. Please try again with another payment method..", Toast.LENGTH_SHORT, true).show();
+
+        } catch (Exception e) {
+            Log.w(TAG, "Exception in onPaymentError", e);
+        }
     }
 }

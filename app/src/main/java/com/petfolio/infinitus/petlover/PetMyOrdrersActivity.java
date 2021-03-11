@@ -1,9 +1,9 @@
 package com.petfolio.infinitus.petlover;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +20,8 @@ import com.petfolio.infinitus.fragmentpetlover.myorders.FragmentPetCompletedOrde
 import com.petfolio.infinitus.fragmentpetlover.myorders.FragmentPetNewOrders;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +31,11 @@ public class PetMyOrdrersActivity extends AppCompatActivity {
     private String TAG = "PetMyOrdrersActivity";
 
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.bottom_navigation_view)
     BottomNavigationView bottom_navigation_view;
 
@@ -54,6 +58,7 @@ public class PetMyOrdrersActivity extends AppCompatActivity {
 
 
 
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,12 +69,7 @@ public class PetMyOrdrersActivity extends AppCompatActivity {
         img_back = findViewById(R.id.img_back);
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
-        img_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        img_back.setOnClickListener(v -> onBackPressed());
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -88,7 +88,7 @@ public class PetMyOrdrersActivity extends AppCompatActivity {
         finish();
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
+    static class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
@@ -97,7 +97,7 @@ public class PetMyOrdrersActivity extends AppCompatActivity {
         }
 
         @Override
-        public Fragment getItem(int position) {
+        public @NotNull Fragment getItem(int position) {
             return mFragmentList.get(position);
         }
 

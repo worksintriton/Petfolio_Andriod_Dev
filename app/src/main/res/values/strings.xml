@@ -409,7 +409,9 @@
     <string name="text_with_bullet3"> \u2022 Medicine Physician</string>
 
     <string name="your_cart_is_empty">Your cart is empty.</string>
-
+    <string name="cancel_order">Cancel order</string>
+    <string name="track_order">Track order</string>
+    <string name="return_order">Return order</string>
 
 
 </resources>

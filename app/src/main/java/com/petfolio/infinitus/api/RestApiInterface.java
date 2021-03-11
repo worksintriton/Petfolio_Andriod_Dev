@@ -48,6 +48,7 @@ import com.petfolio.infinitus.requestpojo.PetLoverDashboardRequest;
 import com.petfolio.infinitus.requestpojo.PetNewAppointmentDetailsRequest;
 import com.petfolio.infinitus.requestpojo.PetNoShowRequest;
 import com.petfolio.infinitus.requestpojo.PetUpdateOtherInformationRequest;
+import com.petfolio.infinitus.requestpojo.PetVendorOrderRequest;
 import com.petfolio.infinitus.requestpojo.PrescriptionCreateRequest;
 import com.petfolio.infinitus.requestpojo.PrescriptionDetailsRequest;
 import com.petfolio.infinitus.requestpojo.ProfileUpdateRequest;
@@ -119,6 +120,7 @@ import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 import com.petfolio.infinitus.responsepojo.PetNewAppointmentDetailsResponse;
 import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.PetTypeListResponse;
+import com.petfolio.infinitus.responsepojo.PetVendorOrderResponse;
 import com.petfolio.infinitus.responsepojo.PrescriptionCreateResponse;
 import com.petfolio.infinitus.responsepojo.ProfileUpdateResponse;
 import com.petfolio.infinitus.responsepojo.ResendOTPResponse;
@@ -578,6 +580,11 @@ public interface RestApiInterface {
     /*Vendor booking create*/
     @POST("vendor_order_booking/create")
     Call<SuccessResponse> vendor_order_booking_create_ResponseCall(@Header("Content-Type") String type, @Body CartDetailsResponse cartDetailsResponse);
+
+
+    /*Vendor booked view orders*/
+    @POST("vendor_order_booking/get_order_details_user_id")
+    Call<PetVendorOrderResponse> get_order_details_user_id_ResponseCall(@Header("Content-Type") String type, @Body PetVendorOrderRequest petVendorOrderRequest);
 
 
 

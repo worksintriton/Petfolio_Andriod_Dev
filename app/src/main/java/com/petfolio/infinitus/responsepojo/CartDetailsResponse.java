@@ -4,6 +4,7 @@ import java.util.List;
 
 public class CartDetailsResponse {
 
+
     /**
      * Status : Success
      * Message : product categories screen Deleted successfully
@@ -15,8 +16,18 @@ public class CartDetailsResponse {
      * Code : 200
      *  prodcut_count: 1,
      *  prodcut_item_count: 1,
+     *  "date_of_booking_display" : "23-Jan-2020",
+     *             "date_of_booking" : "23-10-2021  11 : 00 PM",
+     *             "coupon_code" : "",
+     *              "shipping_address_id" : "",
+     *             "billling_address_id" : "",
+     *             "shipping_address" : "",
+     *              "billing_address" : "",
      */
+
+
     private String user_id;
+
 
     private String Status;
     private String Message;
@@ -26,8 +37,83 @@ public class CartDetailsResponse {
     private int grand_total;
     private int prodcut_count;
     private int prodcut_item_count;
+    private String date_of_booking_display;
+    private String date_of_booking;
+    private String coupon_code;
+    private String shipping_address_id;
+    private String billling_address_id;
+    private String shipping_address;
+    private String billing_address;
+    private String payment_id ;
+
+    public String getPayment_id() {
+        return payment_id;
+    }
+
+    public void setPayment_id(String payment_id) {
+        this.payment_id = payment_id;
+    }
+
     private int Code;
     private List<DataBean> Data;
+
+
+
+    public String getDate_of_booking_display() {
+        return date_of_booking_display;
+    }
+
+    public void setDate_of_booking_display(String date_of_booking_display) {
+        this.date_of_booking_display = date_of_booking_display;
+    }
+
+    public String getDate_of_booking() {
+        return date_of_booking;
+    }
+
+    public void setDate_of_booking(String date_of_booking) {
+        this.date_of_booking = date_of_booking;
+    }
+
+    public String getCoupon_code() {
+        return coupon_code;
+    }
+
+    public void setCoupon_code(String coupon_code) {
+        this.coupon_code = coupon_code;
+    }
+
+    public String getShipping_address_id() {
+        return shipping_address_id;
+    }
+
+    public void setShipping_address_id(String shipping_address_id) {
+        this.shipping_address_id = shipping_address_id;
+    }
+
+    public String getBillling_address_id() {
+        return billling_address_id;
+    }
+
+    public void setBillling_address_id(String billling_address_id) {
+        this.billling_address_id = billling_address_id;
+    }
+
+    public String getShipping_address() {
+        return shipping_address;
+    }
+
+    public void setShipping_address(String shipping_address) {
+        this.shipping_address = shipping_address;
+    }
+
+    public String getBilling_address() {
+        return billing_address;
+    }
+
+    public void setBilling_address(String billing_address) {
+        this.billing_address = billing_address;
+    }
 
     public String getUser_id() {
         return user_id;
