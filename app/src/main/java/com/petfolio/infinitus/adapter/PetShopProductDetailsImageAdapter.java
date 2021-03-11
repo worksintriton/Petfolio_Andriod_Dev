@@ -102,7 +102,7 @@ public class PetShopProductDetailsImageAdapter extends  RecyclerView.Adapter<Rec
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                //intent.putExtra("productid",today_special.get(position).get_id());
+                intent.putExtra("productid",productListBean.get_id());
                 context.startActivity(intent);
             }
         });

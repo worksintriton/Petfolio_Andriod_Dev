@@ -577,7 +577,7 @@ public interface RestApiInterface {
 
     /*Vendor booking create*/
     @POST("vendor_order_booking/create")
-    Call<SuccessResponse> vendor_order_booking_create_ResponseCall(@Header("Content-Type") String type, @Body VendorOrderBookingCreateRequest vendorOrderBookingCreateRequest);
+    Call<SuccessResponse> vendor_order_booking_create_ResponseCall(@Header("Content-Type") String type, @Body CartDetailsResponse cartDetailsResponse);
 
 
 

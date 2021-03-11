@@ -13,7 +13,10 @@ public class CartDetailsResponse {
      * discount_price : 0
      * grand_total : 0
      * Code : 200
+     *  prodcut_count: 1,
+     *  prodcut_item_count: 1,
      */
+    private String user_id;
 
     private String Status;
     private String Message;
@@ -21,9 +24,34 @@ public class CartDetailsResponse {
     private int shipping_charge;
     private int discount_price;
     private int grand_total;
+    private int prodcut_count;
+    private int prodcut_item_count;
     private int Code;
     private List<DataBean> Data;
 
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
+
+    public int getProdcut_count() {
+        return prodcut_count;
+    }
+
+    public void setProdcut_count(int prodcut_count) {
+        this.prodcut_count = prodcut_count;
+    }
+
+    public int getProdcut_item_count() {
+        return prodcut_item_count;
+    }
+
+    public void setProdcut_item_count(int prodcut_item_count) {
+        this.prodcut_item_count = prodcut_item_count;
+    }
 
     public String getStatus() {
         return Status;
@@ -199,6 +227,7 @@ public class CartDetailsResponse {
              * user_id : 602a2061b3c2dd2c152d77d8
              * cat_id : 5fec14a5ea832e2e73c1fc79
              * cost : 1000
+             * discount_amount : 1000
              * threshould : 100
              * product_name : Cat Dinner
              * product_discription : This cat  food
@@ -227,6 +256,7 @@ public class CartDetailsResponse {
             private int discount;
             private String related;
             private int count;
+            private int discount_amount;
             private String status;
             private String verification_status;
             private String date_and_time;
@@ -242,6 +272,13 @@ public class CartDetailsResponse {
             private List<Integer> age;
             private List<String> product_img;
 
+            public int getDiscount_amount() {
+                return discount_amount;
+            }
+
+            public void setDiscount_amount(int discount_amount) {
+                this.discount_amount = discount_amount;
+            }
 
             public String get_id() {
                 return _id;

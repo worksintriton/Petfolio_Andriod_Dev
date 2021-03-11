@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -112,14 +113,15 @@ public class ProductDetailsActivity extends AppCompatActivity {
     ImageView img_add_product;
 
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.btn_add_to_cart)
+    Button btn_add_to_cart;
+
+
     int currentPage = 0;
     Timer timer;
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000;
-
-
-
-
 
 
     private String userid;
@@ -150,24 +152,25 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         }
 
-        img_remove_product.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+        img_remove_product.setOnClickListener(v -> {
+            if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                if(product_cart_counts != 0) {
                     remove_product_ResponseCall();
                 }
-
             }
+
         });
 
-        img_add_product.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                    add_product_ResponseCall();
-                }
-
+        img_add_product.setOnClickListener(v -> {
+            if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                add_product_ResponseCall();
             }
+
+        });
+
+        btn_add_to_cart.setOnClickListener(v -> {
+            startActivity(new Intent(getApplicationContext(),PetCartActivity.class));
+            finish();
         });
 
 

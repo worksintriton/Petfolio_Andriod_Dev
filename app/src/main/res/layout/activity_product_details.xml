@@ -40,7 +40,7 @@
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/product_details"
                 android:textColor="@color/new_txt_color"
-                android:textSize="@dimen/big_txt_size"  />
+                android:textSize="18sp"  />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -353,15 +353,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="10dp">
         <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
        android:orientation="horizontal"
-        android:layout_marginBottom="10dp"
-        tools:ignore="UselessParent"
+            tools:ignore="UselessParent"
         android:layout_marginEnd="20dp"
-        android:gravity="center">
+        android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
 
         <ImageView
             android:id="@+id/img_remove_product"
@@ -393,7 +395,7 @@
             tools:ignore="ContentDescription" />
 
         <Button
-            android:id="@+id/btn_continue"
+            android:id="@+id/btn_add_to_cart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/new_rounded_corner_btn"
@@ -410,7 +412,6 @@
             android:id="@+id/bottom_navigation_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"

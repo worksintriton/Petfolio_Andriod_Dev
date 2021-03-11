@@ -4,29 +4,51 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.TextureView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.fragmentpetlover.myorders.FragmentPetCompletedOrders;
-import com.petfolio.infinitus.fragmentpetlover.myorders.FragmentPetMissedOrders;
-import com.petfolio.infinitus.fragmentpetlover.myorders.FragmentPetNewOrders;
+import com.petfolio.infinitus.adapter.Cart_Adapter;
+import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.api.RestApiInterface;
+
+import com.petfolio.infinitus.interfaces.AddandRemoveProductListener;
+import com.petfolio.infinitus.requestpojo.FetchByIdRequest;
+import com.petfolio.infinitus.requestpojo.VendorOrderBookingCreateRequest;
+import com.petfolio.infinitus.responsepojo.CartDetailsResponse;
+import com.petfolio.infinitus.responsepojo.SuccessResponse;
+import com.petfolio.infinitus.sessionmanager.SessionManager;
+import com.petfolio.infinitus.utils.ConnectionDetector;
+import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class PetCartActivity extends AppCompatActivity {
+public class PetCartActivity extends AppCompatActivity implements AddandRemoveProductListener {
     private String TAG = "PetCartActivity";
 
 
@@ -38,47 +60,92 @@ public class PetCartActivity extends AppCompatActivity {
     @BindView(R.id.bottom_navigation_view)
     BottomNavigationView bottom_navigation_view;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rv_cart)
+    RecyclerView rv_cart;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_back)
+    ImageView img_back;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_lbl_subtotal)
+    TextView txt_lbl_subtotal;
 
-    private String active_tag = "1";
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_sub_total)
+    TextView txt_sub_total;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_discount_amount)
+    TextView txt_discount_amount;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_shipping_amount)
+    TextView txt_shipping_amount;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_total_amount)
+    TextView txt_total_amount;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.btn_procced_to_buy)
+    Button btn_procced_to_buy;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_cart_is_empty)
+    LinearLayout ll_cart_is_empty;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_content)
+    LinearLayout ll_content;
 
     String tag;
-
     String fromactivity;
 
+    private String userid;
+    private String productid;
 
-    private ImageView img_back;
+    List<CartDetailsResponse.DataBean> Data = new ArrayList<>();
+    private int prodouct_total;
+    private int shipping_charge;
+    private int discount_price;
+    private int grand_total;
+    private int prodcut_count;
+    private int prodcut_item_count;
 
-
-
-
-
-
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_cart);
+        ButterKnife.bind(this);
         Log.w(TAG,"onCreate");
 
-        img_back = findViewById(R.id.img_back);
+        SessionManager sessionManager = new SessionManager(getApplicationContext());
+        HashMap<String, String> user = sessionManager.getProfileDetails();
+        userid = user.get(SessionManager.KEY_ID);
 
-        img_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
+        img_back.setOnClickListener(v -> onBackPressed());
+        fetch_cart_details_by_userid_Call();
+
+        btn_procced_to_buy.setOnClickListener(v -> {
+            if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                vendor_order_booking_create_ResponseCall();
             }
         });
+
+
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FragmentPetNewOrders(), "New");
-        adapter.addFragment(new FragmentPetCompletedOrders(), "Completed");
-         adapter.addFragment(new FragmentPetMissedOrders(), "Missed");
-        viewPager.setAdapter(adapter);
+    private void fetch_cart_details_by_userid_Call() {
+        if(userid != null){
+            if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                fetch_cart_details_by_userid_ResponseCall();
+            }
+        }
     }
+
 
     @Override
     public void onBackPressed() {
@@ -88,36 +155,288 @@ public class PetCartActivity extends AppCompatActivity {
         finish();
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
 
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
 
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
+    @SuppressLint("LogNotTimber")
+    public void fetch_cart_details_by_userid_ResponseCall(){
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        //Creating an object of our api interface
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<CartDetailsResponse> call = ApiService.fetch_cart_details_by_userid_ResponseCall(RestUtils.getContentType(),fetchByIdRequest());
 
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
+        call.enqueue(new Callback<CartDetailsResponse>() {
+            @SuppressLint({"LogNotTimber", "SetTextI18n"})
+            @Override
+            public void onResponse(@NonNull Call<CartDetailsResponse> call, @NonNull Response<CartDetailsResponse> response) {
+                avi_indicator.smoothToHide();
+                if (response.body() != null) {
+                    if(200 == response.body().getCode()){
+                        Log.w(TAG,"CartDetailsResponse" + new Gson().toJson(response.body()));
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
+                        if(response.body().getData() != null && response.body().getData().size()>0){
+                            ll_content.setVisibility(View.VISIBLE);
+                            ll_cart_is_empty.setVisibility(View.GONE);
+                            btn_procced_to_buy.setVisibility(View.VISIBLE);
+
+                            Data = response.body().getData();
+                            setView(response.body().getData());
+
+                            if(response.body().getProdcut_item_count() != 0){
+                                txt_lbl_subtotal.setText("Subtotal ( "+response.body().getProdcut_item_count()+" items)" );
+                            }
+                            if(response.body().getProdouct_total() != 0){
+                                txt_sub_total.setText("\u20B9 "+response.body().getProdouct_total());
+                            }else{
+                                txt_sub_total.setText("\u20B9 "+0);
+
+                            }
+                            if(response.body().getDiscount_price() != 0){
+                                txt_discount_amount.setText("\u20B9 "+response.body().getDiscount_price());
+                            }else{
+                                txt_discount_amount.setText("\u20B9 "+0);
+                            }
+                            if(response.body().getShipping_charge() != 0){
+                                txt_shipping_amount.setText("\u20B9 "+response.body().getShipping_charge());
+                            }else{
+                                txt_shipping_amount.setText("\u20B9 "+0);
+
+                            }
+                            if(response.body().getGrand_total() != 0){
+                                txt_total_amount.setText("\u20B9 "+response.body().getGrand_total());
+                            }else{
+                                txt_total_amount.setText("\u20B9 "+0);
+
+                            }
+
+
+
+                        }
+                        else {
+                            ll_content.setVisibility(View.GONE);
+                            ll_cart_is_empty.setVisibility(View.VISIBLE);
+                            btn_procced_to_buy.setVisibility(View.GONE);
+
+                        }
+
+                        if(response.body() != null) {
+                            prodouct_total = response.body().getProdouct_total();
+                            shipping_charge = response.body().getShipping_charge();
+                            discount_price  = response.body().getDiscount_price();
+                            grand_total = response.body().getGrand_total();
+                            prodcut_count = response.body().getProdcut_count();
+                            prodcut_item_count  = response.body().getProdcut_item_count();
+                        }
+
+
+
+                    }
+                }
+            }
+
+
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onFailure(@NonNull Call<CartDetailsResponse> call, @NonNull  Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"CartDetailsResponse flr"+t.getMessage());
+            }
+        });
+
+    }
+
+    private void setView(List<CartDetailsResponse.DataBean> data) {
+        rv_cart.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        rv_cart.setItemAnimator(new DefaultItemAnimator());
+        Cart_Adapter cart_adapter = new Cart_Adapter(getApplicationContext(), data,this);
+        rv_cart.setAdapter(cart_adapter);
+    }
+
+    @SuppressLint("LogNotTimber")
+    private FetchByIdRequest fetchByIdRequest() {
+        /*
+         * user_id : 603e27792c2b43125f8cb802
+         */
+        FetchByIdRequest fetchByIdRequest = new FetchByIdRequest();
+        fetchByIdRequest.setUser_id(userid);
+        Log.w(TAG,"fetchByIdRequest"+ "--->" + new Gson().toJson(fetchByIdRequest));
+        return fetchByIdRequest;
     }
 
 
+    @Override
+    public void addandRemoveProductListener(String id, String name) {
+        if(name != null){
+            if(name.equalsIgnoreCase("add")){
+                productid = id;
+                if(productid != null){
+                    if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                        add_product_ResponseCall();
+                    }
+                }
+
+            }else if(name.equalsIgnoreCase("remove")){
+                productid = id;
+                if(productid != null){
+                    if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                        remove_product_ResponseCall();
+                    }
+                }
+            }
+        }
+    }
+
+    @SuppressLint("LogNotTimber")
+    public void remove_product_ResponseCall(){
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        //Creating an object of our api interface
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<SuccessResponse> call = ApiService.remove_product_ResponseCall(RestUtils.getContentType(),addandRemoveCartRequest());
+
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<SuccessResponse>() {
+            @SuppressLint({"LogNotTimber", "SetTextI18n"})
+            @Override
+            public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
+                avi_indicator.smoothToHide();
+                if (response.body() != null) {
+                    if(200 == response.body().getCode()){
+                        Log.w(TAG,"Remove SuccessResponse" + new Gson().toJson(response.body()));
+                        Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
+                        fetch_cart_details_by_userid_Call();
+                    }
+                }
+            }
 
 
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull  Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"Remove SuccessResponse flr"+t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint("LogNotTimber")
+    public void add_product_ResponseCall(){
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        //Creating an object of our api interface
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<SuccessResponse> call = ApiService.add_product_ResponseCall(RestUtils.getContentType(),addandRemoveCartRequest());
+
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<SuccessResponse>() {
+            @SuppressLint({"LogNotTimber", "SetTextI18n"})
+            @Override
+            public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
+                avi_indicator.smoothToHide();
+
+
+                if (response.body() != null) {
+                    if(200 == response.body().getCode()){
+                        Log.w(TAG,"Add SuccessResponse" + new Gson().toJson(response.body()));
+                        Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
+                        fetch_cart_details_by_userid_Call();
+
+
+                    }
+                }
+            }
+
+
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull  Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"Add SuccessResponse flr"+t.getMessage());
+            }
+        });
+
+    }
+
+    @SuppressLint("LogNotTimber")
+    private FetchByIdRequest addandRemoveCartRequest() {
+        /*
+         * user_id : 603e27792c2b43125f8cb802
+         * product_id : 6034d6a5888af7628e7e17d4
+         */
+        FetchByIdRequest fetchByIdRequest = new FetchByIdRequest();
+        fetchByIdRequest.setUser_id(userid);
+        fetchByIdRequest.setProduct_id(productid);
+        Log.w(TAG,"fetchByIdRequest"+ "--->" + new Gson().toJson(fetchByIdRequest));
+        return fetchByIdRequest;
+    }
+
+
+    @SuppressLint("LogNotTimber")
+    public void vendor_order_booking_create_ResponseCall(){
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        //Creating an object of our api interface
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<SuccessResponse> call = ApiService.vendor_order_booking_create_ResponseCall(RestUtils.getContentType(),vendorOrderBookingCreateRequest());
+
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<SuccessResponse>() {
+            @SuppressLint({"LogNotTimber", "SetTextI18n"})
+            @Override
+            public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
+                avi_indicator.smoothToHide();
+                if (response.body() != null) {
+                    if(200 == response.body().getCode()){
+                        Log.w(TAG,"SuccessResponse "+new Gson().toJson(response.body().getData()));
+
+                        Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
+                        onBackPressed();
+
+
+
+
+                    }
+                }
+            }
+
+
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull  Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"SuccessResponse flr"+t.getMessage());
+            }
+        });
+
+    }
+
+    @SuppressLint("LogNotTimber")
+    private CartDetailsResponse vendorOrderBookingCreateRequest() {
+        /*
+         * user_id : 603e27792c2b43125f8cb802
+         * Data : [{"_id":"6046fa59cb48ca0b68cda50c","user_id":"603e27792c2b43125f8cb802","product_id":{"breed_type":["602d1c20562e0916bc9b3218"],"pet_type":["602d1c6b562e0916bc9b321d"],"age":[3],"product_img":["http://54.212.108.156:3000/api/uploads/1614075552394.jpg"],"_id":"6034d6a5888af7628e7e17d4","user_id":"602a2061b3c2dd2c152d77d8","cat_id":"5fec14a5ea832e2e73c1fc79","cost":1000,"threshould":"100","product_name":"Cat Dinner","product_discription":"This cat  food","discount":10,"related":"","count":0,"status":"true","verification_status":"Not Verified","date_and_time":"Tue Feb 23 2021 15:49:15 GMT+0530 (India Standard Time)","mobile_type":"Admin","delete_status":true,"fav_status":false,"today_deal":true,"updatedAt":"2021-03-08T09:15:24.812Z","createdAt":"2021-02-23T10:19:17.691Z","__v":0},"product_count":7,"updatedAt":"2021-03-09T06:10:04.116Z","createdAt":"2021-03-09T04:32:25.151Z","__v":0},{"_id":"60471192760fff2968288bbd","user_id":"603e27792c2b43125f8cb802","product_id":{"breed_type":["602d1c17562e0916bc9b3217"],"pet_type":["602d1c6b562e0916bc9b321d"],"age":[3],"product_img":["http://54.212.108.156:3000/api/uploads/1614075490400.jpg"],"_id":"6034d66598fa826140f6a3a3","user_id":"602a2061b3c2dd2c152d77d8","cat_id":"5fec14a5ea832e2e73c1fc79","cost":40000,"threshould":"100","product_name":"CAT Lunch","product_discription":"This is cat lunch","discount":40,"related":"","count":0,"status":"true","verification_status":"Not Verified","date_and_time":"Tue Feb 23 2021 15:48:14 GMT+0530 (India Standard Time)","mobile_type":"Admin","delete_status":true,"fav_status":false,"today_deal":true,"updatedAt":"2021-03-08T09:15:22.710Z","createdAt":"2021-02-23T10:18:13.989Z","__v":0},"product_count":1,"updatedAt":"2021-03-09T06:11:30.904Z","createdAt":"2021-03-09T06:11:30.904Z","__v":0}]
+         * prodouct_total : 47000
+         * shipping_charge : 0
+         * discount_price : 0
+         * grand_total : 0
+         * prodcut_count : 0
+         * prodcut_item_count : 0
+         */
+        CartDetailsResponse vendorOrderBookingCreateRequest = new CartDetailsResponse();
+        vendorOrderBookingCreateRequest.setUser_id(userid);
+        vendorOrderBookingCreateRequest.setData(Data);
+        vendorOrderBookingCreateRequest.setProdouct_total(prodouct_total);
+        vendorOrderBookingCreateRequest.setShipping_charge(shipping_charge);
+        vendorOrderBookingCreateRequest.setDiscount_price(discount_price);
+        vendorOrderBookingCreateRequest.setGrand_total(grand_total);
+        vendorOrderBookingCreateRequest.setProdcut_count(prodcut_count);
+        vendorOrderBookingCreateRequest.setProdcut_item_count(prodcut_item_count);
+        Log.w(TAG,"vendorOrderBookingCreateRequest"+ "--->" + new Gson().toJson(vendorOrderBookingCreateRequest));
+        return vendorOrderBookingCreateRequest;
+    }
 }
