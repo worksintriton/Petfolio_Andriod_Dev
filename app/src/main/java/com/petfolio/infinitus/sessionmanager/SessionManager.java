@@ -46,12 +46,6 @@ public class SessionManager {
     }
 
 
-
-
-
-
-
-
     public void createLoginSession(String id, String firstname, String lastname, String useremail,String userphone,String usertype,
                                  String userstatus,String profileimage, String verifyemailstatus) {
 
@@ -74,10 +68,6 @@ public class SessionManager {
 
 
 
-
-
-
-
     public HashMap<String, String> getProfileDetails() {
         HashMap<String, String> user = new HashMap<>();
         user.put(KEY_ID, pref.getString(KEY_ID, ""));
@@ -91,9 +81,6 @@ public class SessionManager {
         user.put(KEY_VERIFY_EMAIL_STATUS, pref.getString(KEY_VERIFY_EMAIL_STATUS, ""));
         return user;
     }
-
-
-
 
 
     public void logoutUser() {

@@ -110,7 +110,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
         ButterKnife.bind(this);
         edt_otp.setTransformationMethod(new NumericKeyBoardTransformationMethod());
 
-        
+
         avi_indicator.setVisibility(View.GONE);
 
         Bundle extras = getIntent().getExtras();
@@ -144,7 +144,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                         }
 
                         // Get new FCM registration token
-                         token = task.getResult();
+                        token = task.getResult();
                         Log.w(TAG,"token--->"+ token);
 
 
@@ -180,15 +180,15 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
 
 
 
-       startTimer();
+        startTimer();
 
 
     }
 
     private void startTimer() {
         isOTPExpired = false;
-          long timer_milliseconds = 120000;
-          timer = new CountDownTimer(timer_milliseconds, 1000) {
+        long timer_milliseconds = 120000;
+        timer = new CountDownTimer(timer_milliseconds, 1000) {
             @SuppressLint({"DefaultLocale", "SetTextI18n"})
             @Override
             public void onTick(long millisUntilFinished) {
@@ -225,10 +225,10 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                 onBackPressed();
                 break;
 
-                case R.id.txt_resend:
-                    if (new ConnectionDetector(VerifyOtpActivity.this).isNetworkAvailable(VerifyOtpActivity.this)) {
-                        resendOtpResponseCall();
-                    }
+            case R.id.txt_resend:
+                if (new ConnectionDetector(VerifyOtpActivity.this).isNetworkAvailable(VerifyOtpActivity.this)) {
+                    resendOtpResponseCall();
+                }
                 break;
 
 
@@ -241,29 +241,29 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
         boolean can_proceed = true;
         String enteredotp = edt_otp.getText().toString();
         String responseotp = String.valueOf(otp);
-         if (edt_otp.getText().toString().trim().equals("")) {
-             edt_otp.setError("Please enter your OTP");
-             edt_otp.requestFocus();
+        if (edt_otp.getText().toString().trim().equals("")) {
+            edt_otp.setError("Please enter your OTP");
+            edt_otp.requestFocus();
             can_proceed = false;
         }else if(!responseotp.equalsIgnoreCase(enteredotp)){
-             edt_otp.setError("Invalid OTP.");
-             edt_otp.requestFocus();
+            edt_otp.setError("Invalid OTP.");
+            edt_otp.requestFocus();
             can_proceed = false;
         }else if(isOTPExpired){
-             edt_otp.setError("Your otp is expired. please regenerate otp. ");
-             edt_otp.requestFocus();
-             can_proceed = false;
-         }
+            edt_otp.setError("Your otp is expired. please regenerate otp. ");
+            edt_otp.requestFocus();
+            can_proceed = false;
+        }
 
-         if (can_proceed) {
-           //  Toasty.success(getApplicationContext(),"userid : "+userid+ "fbtoken : "+token, Toast.LENGTH_SHORT, true).show();
+        if (can_proceed) {
+            //  Toasty.success(getApplicationContext(),"userid : "+userid+ "fbtoken : "+token, Toast.LENGTH_SHORT, true).show();
 
-             if (new ConnectionDetector(VerifyOtpActivity.this).isNetworkAvailable(VerifyOtpActivity.this)) {
-                 if(userid != null){
+            if (new ConnectionDetector(VerifyOtpActivity.this).isNetworkAvailable(VerifyOtpActivity.this)) {
+                if(userid != null){
                     fBTokenUpdateResponseCall();
                 }
 
-             }
+            }
 
 
 
@@ -297,7 +297,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
         call.enqueue(new Callback<ResendOTPResponse>() {
             @Override
             public void onResponse(@NonNull Call<ResendOTPResponse> call, @NonNull Response<ResendOTPResponse> response) {
-                  avi_indicator.smoothToHide();
+                avi_indicator.smoothToHide();
                 Log.w(TAG,"ResendOTPResponse" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
@@ -459,7 +459,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
         fbTokenUpdateRequest.setUser_id(userid);
         fbTokenUpdateRequest.setFb_token(token);
         Log.w(TAG,"fbTokenUpdateRequest"+ "--->" + new Gson().toJson(fbTokenUpdateRequest));
-      //  Toasty.success(getApplicationContext(),"fbTokenUpdateRequest : "+new Gson().toJson(fbTokenUpdateRequest), Toast.LENGTH_SHORT, true).show();
+        //  Toasty.success(getApplicationContext(),"fbTokenUpdateRequest : "+new Gson().toJson(fbTokenUpdateRequest), Toast.LENGTH_SHORT, true).show();
 
         return fbTokenUpdateRequest;
     }

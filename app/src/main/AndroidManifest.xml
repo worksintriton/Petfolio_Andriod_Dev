@@ -46,6 +46,10 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,UnusedAttribute"
         tools:replace="android:allowBackup,icon,theme,label,name">
+        <activity android:name=".vendor.VendorUpdateOrderStatusActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -96,9 +100,7 @@
             android:name=".activity.VerifyEmailOtpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
-
-        <!-- Pet Lover -->
+            android:windowSoftInputMode="adjustPan" /> <!-- Pet Lover -->
         <activity
             android:name=".petlover.AddYourPetActivity"
             android:screenOrientation="portrait"
@@ -299,10 +301,7 @@
             android:name=".petlover.PetSPNewAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
-
-
-        <!-- Doctor -->
+            android:windowSoftInputMode="adjustPan" /> <!-- Doctor -->
         <activity
             android:name=".doctor.DoctorBusinessInfoActivity"
             android:screenOrientation="portrait"
@@ -377,10 +376,7 @@
             android:name=".doctor.DoctorAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
-
-
-        <!-- Service Provider -->
+            android:windowSoftInputMode="adjustPan" /> <!-- Service Provider -->
         <activity
             android:name=".serviceprovider.ServiceProviderRegisterFormActivity"
             android:screenOrientation="portrait"

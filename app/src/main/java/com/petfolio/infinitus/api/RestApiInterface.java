@@ -67,7 +67,12 @@ import com.petfolio.infinitus.requestpojo.SignupRequest;
 import com.petfolio.infinitus.requestpojo.TodayDealMoreRequest;
 import com.petfolio.infinitus.requestpojo.UserStatusUpdateRequest;
 import com.petfolio.infinitus.requestpojo.ServiceProviderRegisterFormCreateRequest;
-import com.petfolio.infinitus.requestpojo.VendorOrderBookingCreateRequest;
+import com.petfolio.infinitus.requestpojo.VendorCancelsOrderRequest;
+import com.petfolio.infinitus.requestpojo.VendorConfirmsOrderRequest;
+import com.petfolio.infinitus.requestpojo.VendorDispatchesOrderRequest;
+import com.petfolio.infinitus.requestpojo.VendorFetchOrderDetailsIdRequest;
+import com.petfolio.infinitus.requestpojo.VendorGetsOrderIdRequest;
+import com.petfolio.infinitus.requestpojo.VendorNewOrderRequest;
 import com.petfolio.infinitus.requestpojo.VendorOrderRequest;
 import com.petfolio.infinitus.requestpojo.VendorRegisterFormCreateRequest;
 import com.petfolio.infinitus.responsepojo.AddReviewResponse;
@@ -82,14 +87,11 @@ import com.petfolio.infinitus.responsepojo.CreateHolidayResponse;
 import com.petfolio.infinitus.responsepojo.DocBusInfoUploadResponse;
 import com.petfolio.infinitus.responsepojo.DoctorAppointmentsResponse;
 import com.petfolio.infinitus.responsepojo.DoctorCheckStatusResponse;
-import com.petfolio.infinitus.responsepojo.DoctorCompletedAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.DoctorDetailsByUserIdResponse;
 import com.petfolio.infinitus.responsepojo.DoctorDetailsResponse;
-import com.petfolio.infinitus.responsepojo.DoctorMissedAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.DoctorMyCalendarAvlDaysResponse;
 import com.petfolio.infinitus.responsepojo.DoctorMyCalendarAvlTimesResponse;
 import com.petfolio.infinitus.responsepojo.DoctorMyCalendarUpdateDocDateResponse;
-import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.DoctorSearchResponse;
 import com.petfolio.infinitus.responsepojo.DoctorUpdateProfileImageResponse;
 import com.petfolio.infinitus.responsepojo.DropDownListResponse;
@@ -142,6 +144,12 @@ import com.petfolio.infinitus.responsepojo.TodayDealMoreResponse;
 import com.petfolio.infinitus.responsepojo.UserStatusUpdateResponse;
 import com.petfolio.infinitus.responsepojo.UserTypeListResponse;
 import com.petfolio.infinitus.responsepojo.ServiceProviderRegisterFormCreateResponse;
+import com.petfolio.infinitus.responsepojo.VendorCancelsOrderResponse;
+import com.petfolio.infinitus.responsepojo.VendorConfirmsOrderResponse;
+import com.petfolio.infinitus.responsepojo.VendorDispatchesOrderResponse;
+import com.petfolio.infinitus.responsepojo.VendorFetchOrderDetailsResponse;
+import com.petfolio.infinitus.responsepojo.VendorGetsOrderIDResponse;
+import com.petfolio.infinitus.responsepojo.VendorNewOrderResponse;
 import com.petfolio.infinitus.responsepojo.VendorOrderResponse;
 import com.petfolio.infinitus.responsepojo.VendorRegisterFormCreateResponse;
 
@@ -587,6 +595,33 @@ public interface RestApiInterface {
     Call<PetVendorOrderResponse> get_order_details_user_id_ResponseCall(@Header("Content-Type") String type, @Body PetVendorOrderRequest petVendorOrderRequest);
 
 
+    /*Vendor views orders*/
+    @POST("vendor_order_booking/get_order_details_vendor_id")
+    Call<VendorNewOrderResponse> get_order_details_vendordid_ResponseCall(@Header("Content-Type") String type, @Body VendorNewOrderRequest vendorNewOrderRequest);
+
+    /*Vendor accepts order*/
+    @POST("vendor_order_booking/update_status_accept")
+    Call<VendorConfirmsOrderResponse> vendor_order_booking_accept_ResponseCall(@Header("Content-Type") String type, @Body VendorConfirmsOrderRequest vendorConfirmsOrderRequest);
+
+
+    /*Vendor dipatches order*/
+    @POST("vendor_order_booking/update_status_dispatch")
+    Call<VendorDispatchesOrderResponse> vendor_order_booking_dispatch_ResponseCall(@Header("Content-Type") String type, @Body VendorDispatchesOrderRequest vendorDispatchesOrderRequest);
+
+
+    /*Vendor cancels order*/
+    @POST("vendor_order_booking/update_status_vendor_cancel")
+    Call<VendorCancelsOrderResponse> vendor_order_booking_cancels_ResponseCall(@Header("Content-Type") String type, @Body VendorCancelsOrderRequest vendorCancelsOrderRequest);
+
+
+    /*Vendor fetches order details*/
+    @POST("vendor_order_booking/fetch_order_details_id")
+    Call<VendorFetchOrderDetailsResponse> vendor_order_booking_order_fetches_ResponseCall(@Header("Content-Type") String type, @Body VendorFetchOrderDetailsIdRequest vendorFetchOrderDetailsIdRequest);
+
+
+    /*Vendor gets order ID*/
+    @POST("product_vendor/getlist_id")
+    Call<VendorGetsOrderIDResponse> vendor_gets_orderbyId_ResponseCall(@Header("Content-Type") String type, @Body VendorGetsOrderIdRequest vendorGetsOrderIdRequest);
 
 
 }

@@ -20,8 +20,10 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
 import com.petfolio.infinitus.interfaces.OnAppointmentComplete;
 import com.petfolio.infinitus.responsepojo.SPAppointmentResponse;
+import com.petfolio.infinitus.responsepojo.VendorNewOrderResponse;
 import com.petfolio.infinitus.responsepojo.VendorOrderResponse;
 import com.petfolio.infinitus.serviceprovider.SPAppointmentDetailsActivity;
+import com.petfolio.infinitus.vendor.VendorUpdateOrderStatusActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,17 +35,17 @@ import java.util.Locale;
 public class VendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private  String TAG = "VendorNewOrdersAdapter";
-    private List<VendorOrderResponse.DataBean> newOrderResponseList;
+    private List<VendorNewOrderResponse.DataBean> newOrderResponseList;
 
     private Context context;
 
-    VendorOrderResponse.DataBean currentItem;
+    VendorNewOrderResponse.DataBean currentItem;
 
 
     private int size;
 
 
-    public VendorNewOrdersAdapter(Context context, List<VendorOrderResponse.DataBean> newOrderResponseList,int size) {
+    public VendorNewOrdersAdapter(Context context, List<VendorNewOrderResponse.DataBean> newOrderResponseList,int size) {
         this.newOrderResponseList = newOrderResponseList;
         this.context = context;
         this.size = size;
@@ -73,18 +75,14 @@ public class VendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.V
 
         currentItem = newOrderResponseList.get(position);
         holder.txt_orderid.setText(newOrderResponseList.get(position).getOrder_id());
-        holder.txt_producttitle.setText(newOrderResponseList.get(position).getOrder_title());
+        holder.txt_producttitle.setText(newOrderResponseList.get(position).getProduct_name());
 
-        if(newOrderResponseList.get(position).getOrder_final_amount() != null){
-            holder.txt_service_cost.setText("\u20B9 "+newOrderResponseList.get(position).getOrder_final_amount());
-            if(newOrderResponseList.get(position).getOrder_item_count() != null){
-                holder.txt_service_cost.setText("\u20B9 "+newOrderResponseList.get(position).getOrder_final_amount()+" ("+newOrderResponseList.get(position).getOrder_item_count()+" items )");
-
-            }
+        if(newOrderResponseList.get(position).getProduct_price() != 0){
+            holder.txt_service_cost.setText("\u20B9 "+newOrderResponseList.get(position).getProduct_price());
         }
 
-        if(newOrderResponseList.get(position).getOrder_booked_at() != null){
-            holder.txt_bookedon.setText("Booked on:"+" "+newOrderResponseList.get(position).getOrder_booked_at());
+        if(newOrderResponseList.get(position).getDate_of_booking() != null){
+            holder.txt_bookedon.setText("Booked on:"+" "+newOrderResponseList.get(position).getDate_of_booking());
 
         }
 
@@ -94,11 +92,11 @@ public class VendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.V
         holder.ll_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                   /* Intent i = new Intent(context, SPAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra("appointment_id",newAppointmentResponseList.get(position).get_id());
-                    i.putExtra("bookedat",newAppointmentResponseList.get(position).getBooking_date_time());
+
+                    Intent i = new Intent(context, VendorUpdateOrderStatusActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("order_id",newOrderResponseList.get(position).get_id());
                     i.putExtra("fromactivity",TAG);
-                    context.startActivity(i);*/
+                    context.startActivity(i);
 
             }
         });
