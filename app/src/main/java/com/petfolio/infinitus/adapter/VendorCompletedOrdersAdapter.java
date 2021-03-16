@@ -2,6 +2,8 @@ package com.petfolio.infinitus.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +14,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.responsepojo.VendorNewOrderResponse;
 import com.petfolio.infinitus.responsepojo.VendorOrderResponse;
+import com.petfolio.infinitus.vendor.VendorOrderDetailsActivity;
 
 import java.util.List;
 
@@ -21,30 +27,29 @@ import java.util.List;
 public class VendorCompletedOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private  String TAG = "VendorCompletedOrdersAdapter";
-    private List<VendorOrderResponse.DataBean> newOrderResponseList;
+    private List<VendorNewOrderResponse.DataBean> newOrderResponseList;
 
     private Context context;
 
-    VendorOrderResponse.DataBean currentItem;
+    VendorNewOrderResponse.DataBean currentItem;
 
 
     private int size;
 
+    public VendorCompletedOrdersAdapter(Context context, List<VendorNewOrderResponse.DataBean> newOrderResponseList, int size) {
 
-    public VendorCompletedOrdersAdapter(Context context, List<VendorOrderResponse.DataBean> newOrderResponseList, int size) {
         this.newOrderResponseList = newOrderResponseList;
+
         this.context = context;
+
         this.size = size;
-
-
-
 
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_vendor_completed_appointment, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_vendor_completed_order, parent, false);
         return new ViewHolderOne(view);
     }
 
@@ -60,38 +65,65 @@ public class VendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recycler
 
 
         currentItem = newOrderResponseList.get(position);
-        holder.txt_orderid.setText(newOrderResponseList.get(position).getOrder_id());
-        holder.txt_producttitle.setText(newOrderResponseList.get(position).getOrder_title());
 
-        if(newOrderResponseList.get(position).getOrder_final_amount() != null){
-            holder.txt_service_cost.setText("\u20B9 "+newOrderResponseList.get(position).getOrder_final_amount());
-            if(newOrderResponseList.get(position).getOrder_item_count() != null){
-                holder.txt_service_cost.setText("\u20B9 "+newOrderResponseList.get(position).getOrder_final_amount()+" ("+newOrderResponseList.get(position).getOrder_item_count()+" items )");
 
-            }
-        }
+        if(newOrderResponseList.get(position).getOrder_id()!=null&&!(newOrderResponseList.get(position).getOrder_id().isEmpty())){
 
-        if(newOrderResponseList.get(position).getOrder_booked_at() != null){
-            holder.txt_deliveredon.setText("Delivered on:"+" "+newOrderResponseList.get(position).getOrder_deliver_date());
+            holder.txt_orderid.setText(newOrderResponseList.get(position).getOrder_id());
 
         }
 
+        if(newOrderResponseList.get(position).getProduct_name()!=null&&!(newOrderResponseList.get(position).getProduct_name().isEmpty())){
+
+            holder.txt_producttitle.setText(newOrderResponseList.get(position).getProduct_name());
+
+        }
+
+        Log.w(TAG,"image_url "+newOrderResponseList.get(position).getProdcut_image());
+
+        if(newOrderResponseList.get(position).getProdcut_image()!=null&&!(newOrderResponseList.get(position).getProdcut_image().isEmpty())){
+
+            Glide.with(context)
+                    .load(newOrderResponseList.get(position).getProdcut_image())
+                    .into(holder.img_pet_imge);
+
+        }
+        else{
+            Glide.with(context)
+                    .load(APIClient.PROFILE_IMAGE_URL)
+                    .into(holder.img_pet_imge);
+
+        }
+
+
+        if(newOrderResponseList.get(position).getProduct_price() != 0){
+
+            holder.txt_service_cost.setText("\u20B9 "+newOrderResponseList.get(position).getProduct_price());
+
+        }
+
+        if(newOrderResponseList.get(position).getDate_of_booking() != null&&!(newOrderResponseList.get(position).getDate_of_booking().isEmpty())){
+
+            holder.txt_deliveredon.setText("Order Delivered on:"+" "+newOrderResponseList.get(position).getDate_of_booking());
+
+        }
 
 
 
-        holder.ll_new.setOnClickListener(new View.OnClickListener() {
+        holder.txt_order_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                   /* Intent i = new Intent(context, SPAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra("appointment_id",newAppointmentResponseList.get(position).get_id());
-                    i.putExtra("bookedat",newAppointmentResponseList.get(position).getBooking_date_time());
-                    i.putExtra("fromactivity",TAG);
-                    context.startActivity(i);*/
+
+                Intent i = new Intent(context, VendorOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                i.putExtra("order_id",newOrderResponseList.get(position).get_id());
+
+                i.putExtra("fromactivity",TAG);
+
+                context.startActivity(i);
 
             }
         });
-
-
 
 
     }
@@ -110,7 +142,7 @@ public class VendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recycler
     }
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_orderid,txt_producttitle,txt_service_cost,txt_deliveredon;
+        public TextView txt_orderid,txt_producttitle,txt_service_cost,txt_deliveredon,txt_order_details;
         public ImageView img_pet_imge;
         public LinearLayout ll_new;
 
@@ -124,6 +156,7 @@ public class VendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recycler
             txt_service_cost = itemView.findViewById(R.id.txt_service_cost);
             txt_deliveredon = itemView.findViewById(R.id.txt_deliveredon);
             ll_new = itemView.findViewById(R.id.ll_new);
+            txt_order_details = itemView.findViewById(R.id.txt_order_details);
 
 
 

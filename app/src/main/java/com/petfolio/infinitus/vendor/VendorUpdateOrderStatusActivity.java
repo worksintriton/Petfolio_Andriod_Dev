@@ -12,10 +12,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
@@ -35,6 +37,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -133,6 +136,10 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
     TextView txt_order_transit_date;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_order_reject)
+    LinearLayout ll_order_reject;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.spr_ordertype)
     Spinner spr_ordertype;
 
@@ -140,10 +147,11 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
     @BindView(R.id.btn_submit)
     Button btn_submit;
 
-    String product_title, product_image, order_date, order_id, payment_mode,updated_order_status;
+    String product_title, product_image, order_date, order_id, payment_mode,updated_order_status,order_id_display;
 
     int product_pr, order_total, quantity;
 
+    List<VendorFetchOrderDetailsResponse.DataBean.ProdcutTrackDetailsBean> prodcutTrackDetailsBeanList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,7 +163,10 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
+
             order_id = extras.getString("order_id");
+
+
         }
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
@@ -196,25 +207,19 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
             }
         });
 
-        fetch_order_details_id(order_id);
+        if (new ConnectionDetector(VendorUpdateOrderStatusActivity.this).isNetworkAvailable(VendorUpdateOrderStatusActivity.this)) {
+
+            fetch_order_details_id(order_id);
+        }
+
+
 
         btn_submit.setOnClickListener(this);
 
+        img_back.setOnClickListener(this);
+
     }
 
-
-
-    @Override
-    public void onClick(View v) {
-
-        switch (v.getId()){
-
-            case R.id.btn_submit:
-                checkValidation();
-                break;
-
-        }
-    }
 
     private void checkValidation() {
 
@@ -224,19 +229,19 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
                 if (new ConnectionDetector(VendorUpdateOrderStatusActivity.this).isNetworkAvailable(VendorUpdateOrderStatusActivity.this)) {
 
-                    vendorConfirmsOrder(2, "Order Accept");
+                    vendorConfirmsOrder(1, "Order Accept");
                 }
             }
 
             else if(updated_order_status.equals("Order Cancellation")){
 
-                vendorCancelsOrder(7, "Vendor cancelled");
+                vendorCancelsOrder(5, "Vendor cancelled");
 
             }
 
             else {
 
-                vendorDispatches(3, "Order Dispatch");
+                vendorDispatches(2, "Order Dispatch");
 
             }
 
@@ -278,9 +283,23 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
                             product_pr = response.body().getData().getProduct_price();
 
-                            order_date = response.body().getData().getDate_of_booking_display();
+                            order_id_display = response.body().getData().getOrder_id();
 
-                            product_pr = response.body().getData().getProduct_price();
+                            payment_mode = "Online";
+
+                            order_total = response.body().getData().getGrand_total();
+
+                            quantity = response.body().getData().getProduct_quantity();
+
+                            updated_order_status = response.body().getData().getOrder_status();
+
+                            if(response.body().getData().getProdcut_track_details()!=null&&!(response.body().getData().getProdcut_track_details().isEmpty())){
+
+                                prodcutTrackDetailsBeanList = response.body().getData().getProdcut_track_details();
+
+                            }
+
+                            setView();
                         }
 
                     }
@@ -370,7 +389,7 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
         /**
          * _id : 6049e4f564a9296f3d7c3327
-         * activity_id : 2
+         * activity_id : 1
          * activity_title : Order Confirm
          * activity_date : 11-03-2021 03:07 PM
          */
@@ -437,7 +456,7 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
         /**
          * _id : 604b10cc8788633a05dbf018
-         * activity_id : 3
+         * activity_id : 2
          * activity_title : Order Dispatch
          * activity_date : 12-03-2021 12:27 PM
          * vendor_complete_date : 12-03-2021 12:35 PM
@@ -452,7 +471,7 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
         vendorDispatchesOrderRequest.set_id(order_id);
         vendorDispatchesOrderRequest.setActivity_id(id);
         vendorDispatchesOrderRequest.setActivity_title(title);
-        vendorDispatchesOrderRequest.setActivity_date(order_date);
+        vendorDispatchesOrderRequest.setActivity_date(currentDateandTime);
         vendorDispatchesOrderRequest.setVendor_complete_date(currentDateandTime);
         vendorDispatchesOrderRequest.setVendor_complete_info("Tracking-Id : 1234568, You can check the product taacking witn this id");
         vendorDispatchesOrderRequest.setOrder_status("Complete");
@@ -508,7 +527,7 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
         /**
          * _id : 604b387942cb073ec4dfef16
-         * activity_id : 7
+         * activity_id : 5
          * activity_title : Vendor cancelled
          * activity_date : 11-03-2021 03:07 PM
          * order_status : cancelled
@@ -524,7 +543,7 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
         vendorCancelsOrderRequest.set_id(order_id);
         vendorCancelsOrderRequest.setActivity_id(id);
         vendorCancelsOrderRequest.setActivity_title(title);
-        vendorCancelsOrderRequest.setActivity_date(order_date);
+        vendorCancelsOrderRequest.setActivity_date(currentDateandTime);
         vendorCancelsOrderRequest.setVendor_cancell_date(currentDateandTime);
         vendorCancelsOrderRequest.setVendor_cancell_info("We don't have stock in our company");
         vendorCancelsOrderRequest.setOrder_status("cancelled");
@@ -532,6 +551,205 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
         Log.w(TAG,"appoinmentCancelledRequest"+ "--->" + new Gson().toJson(vendorCancelsOrderRequest));
         return vendorCancelsOrderRequest;
     }
+
+    private void setView() {
+
+        if (product_image != null && !product_image.isEmpty()) {
+
+            Glide.with(this)
+                    .load(product_image)
+                    .into(img_products_image);
+
+        } else {
+            Glide.with(this)
+                    .load(R.drawable.image_thumbnail)
+                    .into(img_products_image);
+
+        }
+
+        if (product_title != null && !product_title.isEmpty()) {
+
+            txt_product_title.setText(product_title);
+        }
+
+        if (product_pr != 0) {
+
+            txt_products_price.setText(" \u20B9 " + product_pr);
+        }
+
+        if (order_date != null && !order_date.isEmpty()) {
+
+            txt_order_date.setText(order_date);
+
+        }
+
+        if (order_id != null && !order_id.isEmpty()) {
+
+            txt_booking_id.setText(product_title);
+        }
+
+        if (payment_mode != null && !payment_mode.isEmpty()) {
+
+            txt_payment_method.setText(payment_mode);
+        }
+
+        if (order_total != 0) {
+
+            txt_total_order_cost.setText(""+order_total);
+        }
+
+        if (quantity != 0) {
+
+            txt_quantity.setText(""+quantity);
+        }
+
+        for(int i=0; i<prodcutTrackDetailsBeanList.size();i++){
+
+            if(prodcutTrackDetailsBeanList.get(0).getTitle()!=null&&!(prodcutTrackDetailsBeanList.get(0).getTitle().isEmpty())){
+
+                if(prodcutTrackDetailsBeanList.get(0).getTitle().equals("Order Booked")){
+
+                    if(prodcutTrackDetailsBeanList.get(0).getDate()!=null&&!(prodcutTrackDetailsBeanList.get(0).getDate().isEmpty())){
+
+                        txt_booked_date.setText(" " + prodcutTrackDetailsBeanList.get(0).getDate());
+
+                    }
+
+                    if(prodcutTrackDetailsBeanList.get(0).isStatus()){
+
+                        img_vendor_booked.setImageResource(R.drawable.completed);
+
+                    }
+
+                    else {
+
+                        img_vendor_booked.setImageResource(R.drawable.radio);
+
+                    }
+
+                }
+
+                else if(prodcutTrackDetailsBeanList.get(0).getTitle().equals("Order Accept")){
+
+                    if(prodcutTrackDetailsBeanList.get(0).getDate()!=null&&!(prodcutTrackDetailsBeanList.get(0).getDate().isEmpty())){
+
+                        txt_order_confirm_date.setText(" " + prodcutTrackDetailsBeanList.get(0).getDate());
+
+                    }
+
+                    if(prodcutTrackDetailsBeanList.get(0).isStatus()){
+
+                        img_vendor_confirmed.setImageResource(R.drawable.completed);
+
+                    }
+
+                    else {
+
+                        img_vendor_confirmed.setImageResource(R.drawable.radio);
+
+                    }
+
+                }
+
+                else if(prodcutTrackDetailsBeanList.get(0).getTitle().equals("Order Dispatch")){
+
+                    if(prodcutTrackDetailsBeanList.get(0).getDate()!=null&&!(prodcutTrackDetailsBeanList.get(0).getDate().isEmpty())){
+
+                        txt_order_dispatch_date.setText(" " + prodcutTrackDetailsBeanList.get(0).getDate());
+
+                    }
+
+                    if(prodcutTrackDetailsBeanList.get(0).isStatus()){
+
+                        img_vendor_order_dispatched.setImageResource(R.drawable.completed);
+
+                    }
+
+                    else {
+
+                        img_vendor_order_dispatched.setImageResource(R.drawable.radio);
+
+                    }
+
+                }
+
+                else if(prodcutTrackDetailsBeanList.get(0).getTitle().equals("In Transit")){
+
+                    if(prodcutTrackDetailsBeanList.get(0).getDate()!=null&&!(prodcutTrackDetailsBeanList.get(0).getDate().isEmpty())){
+
+                        txt_order_transit_date.setText(" " + prodcutTrackDetailsBeanList.get(0).getDate());
+
+                    }
+
+                    if(prodcutTrackDetailsBeanList.get(0).isStatus()){
+
+                        img_vendor_order_transit.setImageResource(R.drawable.completed);
+
+                    }
+
+                    else {
+
+                        img_vendor_order_transit.setImageResource(R.drawable.radio);
+
+                    }
+
+                }
+
+                else if(prodcutTrackDetailsBeanList.get(0).getTitle().equals("Vendor cancelled")){
+
+                        if(prodcutTrackDetailsBeanList.get(0).isStatus()){
+
+                            ll_order_reject.setVisibility(View.VISIBLE);
+
+                            if(prodcutTrackDetailsBeanList.get(0).getDate()!=null&&!(prodcutTrackDetailsBeanList.get(0).getDate().isEmpty())) {
+
+                                txt_order_transit_date.setText(" " + prodcutTrackDetailsBeanList.get(0).getDate());
+                                
+                            }
+
+                            img_vendor_order_transit.setImageResource(R.drawable.ic_baseline_check_circle_24);
+
+                        }
+
+                        else {
+
+                           ll_order_reject.setVisibility(View.GONE);
+
+                        }
+
+
+
+                }
+
+            }
+
+
+
+        }
+
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+
+            case R.id.btn_submit:
+                checkValidation();
+                break;
+
+            case R.id.img_back:
+                onBackPressed();
+                break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
 
 
 }

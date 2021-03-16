@@ -65,7 +65,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentVendorNewOrders extends Fragment implements OnAppointmentCancel, OnAppointmentComplete, View.OnClickListener {
+public class FragmentVendorNewOrders extends Fragment implements View.OnClickListener {
     private String TAG = "FragmentVendorNewOrders";
 
     @SuppressLint("NonConstantResourceId")
@@ -124,7 +124,7 @@ public class FragmentVendorNewOrders extends Fragment implements OnAppointmentCa
 
         if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
 
-           // vendorOrderResponseCall();
+           // vendorNewOrderResponseCall();
 
             getVendorOrderIDResponseCall(userid);
 
@@ -180,7 +180,7 @@ public class FragmentVendorNewOrders extends Fragment implements OnAppointmentCa
 
                             if(response.body().getData().get_id()!=null&&!(response.body().getData().get_id().isEmpty())){
 
-                                vendorOrderResponseCall(response.body().getData().get_id());
+                                vendorNewOrderResponseCall(response.body().getData().get_id());
 
                             }
 
@@ -243,7 +243,7 @@ public class FragmentVendorNewOrders extends Fragment implements OnAppointmentCa
 
 
 
-    private void vendorOrderResponseCall(String id) {
+    private void vendorNewOrderResponseCall(String id) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
@@ -254,7 +254,7 @@ public class FragmentVendorNewOrders extends Fragment implements OnAppointmentCa
             @Override
             public void onResponse(@NonNull Call<VendorNewOrderResponse> call, @NonNull Response<VendorNewOrderResponse> response) {
                avi_indicator.smoothToHide();
-                Log.w(TAG,"VendorOrderResponse"+ "--->" + new Gson().toJson(response.body()));
+                Log.w(TAG,"VendorNewOrderResponse"+ "--->" + new Gson().toJson(response.body()));
 
 
                if (response.body() != null) {
@@ -327,120 +327,6 @@ public class FragmentVendorNewOrders extends Fragment implements OnAppointmentCa
     }
 
 
-    @Override
-    public void onAppointmentCancel(String id,String appointmenttype,String userid, String doctorid,String appointmentid,String spid) {
-        if(id != null){
-            Log.w(TAG,"userid : "+userid+" spid :"+doctorid+"appointmentid : "+appointmentid);
-            showStatusAlert(id,appointmenttype,userid,doctorid,appointmentid,spid);
-        }
-    }
-
-    private void showStatusAlert(String id,String appointmenttype,String userid, String doctorid,String appointmentid,String spid ) {
-
-        try {
-
-            dialog = new Dialog(mContext);
-            dialog.setContentView(R.layout.alert_approve_reject_layout);
-            TextView tvheader = (TextView)dialog.findViewById(R.id.tvInternetNotConnected);
-            tvheader.setText(R.string.cancelappointment);
-            Button dialogButtonApprove = (Button) dialog.findViewById(R.id.btnApprove);
-            dialogButtonApprove.setText("Yes");
-            Button dialogButtonRejected = (Button) dialog.findViewById(R.id.btnReject);
-            dialogButtonRejected.setText("No");
-
-            dialogButtonApprove.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                    appoinmentCancelledResponseCall(id,appointmenttype,userid,doctorid,appointmentid,spid);
-
-
-                }
-            });
-            dialogButtonRejected.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // Toasty.info(context, "Rejected Successfully", Toast.LENGTH_SHORT, true).show();
-                    dialog.dismiss();
-
-
-
-
-                }
-            });
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.show();
-
-        } catch (WindowManager.BadTokenException e) {
-            e.printStackTrace();
-        }
-
-
-
-
-    }
-    private void appoinmentCancelledResponseCall(String id,String appointmenttype,String userid, String doctorid,String appointmentid,String spid) {
-        avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();
-        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-        Call<AppoinmentCancelledResponse> call = apiInterface.spappoinmentCancelledResponseCall(RestUtils.getContentType(), appoinmentCancelledRequest(id));
-        Log.w(TAG,"appoinmentCancelledResponseCall url  :%s"+" "+ call.request().url().toString());
-
-        call.enqueue(new Callback<AppoinmentCancelledResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<AppoinmentCancelledResponse> call, @NonNull Response<AppoinmentCancelledResponse> response) {
-
-                Log.w(TAG,"appoinmentCancelledResponseCall"+ "--->" + new Gson().toJson(response.body()));
-
-                avi_indicator.smoothToHide();
-
-                if (response.body() != null) {
-                    if(response.body().getCode() == 200){
-                        spnotificationSendResponseCall(id,appointmenttype,userid,doctorid,appointmentid,spid);
-
-
-
-
-
-                    }
-                    else{
-                        //showErrorLoading(response.body().getMessage());
-                    }
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<AppoinmentCancelledResponse> call, @NonNull Throwable t) {
-
-                avi_indicator.smoothToHide();
-                Log.w(TAG,"appoinmentCancelledResponseCall flr"+"--->" + t.getMessage());
-            }
-        });
-
-    }
-    private AppoinmentCancelledRequest appoinmentCancelledRequest(String id) {
-
-        /*
-         * _id : 5fc639ea72fc42044bfa1683
-         * missed_at : 23-10-2000 10 : 00 AM
-         * doc_feedback : One Emergenecy work i am cancelling this appointment
-         * appoinment_status : Missed
-         */
-
-
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
-        String currentDateandTime = sdf.format(new Date());
-
-        AppoinmentCancelledRequest appoinmentCancelledRequest = new AppoinmentCancelledRequest();
-        appoinmentCancelledRequest.set_id(id);
-        appoinmentCancelledRequest.setMissed_at(currentDateandTime);
-        appoinmentCancelledRequest.setDoc_feedback("");
-        appoinmentCancelledRequest.setAppoinment_status("Missed");
-        Log.w(TAG,"appoinmentCancelledRequest"+ "--->" + new Gson().toJson(appoinmentCancelledRequest));
-        return appoinmentCancelledRequest;
-    }
 
     @Override
     public void onClick(View v) {
@@ -449,171 +335,6 @@ public class FragmentVendorNewOrders extends Fragment implements OnAppointmentCa
                 setViewLoadMore();
                 break;
         }
-    }
-
-    @Override
-    public void onAppointmentComplete(String id) {
-
-        showStatusAlertCompleteAppointment(id);
-
-    }
-    private void showStatusAlertCompleteAppointment(String id) {
-
-        try {
-
-            dialog = new Dialog(mContext);
-            dialog.setContentView(R.layout.alert_approve_reject_layout);
-            TextView tvheader = (TextView)dialog.findViewById(R.id.tvInternetNotConnected);
-            tvheader.setText(R.string.completeappointment);
-            Button dialogButtonApprove = (Button) dialog.findViewById(R.id.btnApprove);
-            dialogButtonApprove.setText("Yes");
-            Button dialogButtonRejected = (Button) dialog.findViewById(R.id.btnReject);
-            dialogButtonRejected.setText("No");
-
-            dialogButtonApprove.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                    appoinmentCompleteResponseCall(id);
-
-
-                }
-            });
-            dialogButtonRejected.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // Toasty.info(context, "Rejected Successfully", Toast.LENGTH_SHORT, true).show();
-                    dialog.dismiss();
-
-
-
-
-                }
-            });
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.show();
-
-        } catch (WindowManager.BadTokenException e) {
-            e.printStackTrace();
-        }
-
-
-
-
-    }
-    private void appoinmentCompleteResponseCall(String id) {
-        avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();
-        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-        Call<AppoinmentCompleteResponse> call = apiInterface.spappoinmentCompleteResponseCall(RestUtils.getContentType(), appoinmentCompleteRequest(id));
-        Log.w(TAG,"AppoinmentCompleteResponse url  :%s"+" "+ call.request().url().toString());
-
-        call.enqueue(new Callback<AppoinmentCompleteResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<AppoinmentCompleteResponse> call, @NonNull Response<AppoinmentCompleteResponse> response) {
-
-                Log.w(TAG,"AppoinmentCompleteResponse"+ "--->" + new Gson().toJson(response.body()));
-
-                avi_indicator.smoothToHide();
-
-                if (response.body() != null) {
-                    if(response.body().getCode() == 200){
-                        startActivity(new Intent(mContext, ServiceProviderDashboardActivity.class));
-                    }
-                    else{
-                        //showErrorLoading(response.body().getMessage());
-                    }
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<AppoinmentCompleteResponse> call, @NonNull Throwable t) {
-
-                avi_indicator.smoothToHide();
-                Log.w(TAG,"AppoinmentCompleteResponseflr"+"--->" + t.getMessage());
-            }
-        });
-
-    }
-    private AppoinmentCompleteRequest appoinmentCompleteRequest(String id) {
-        /*
-         * _id : 5fc639ea72fc42044bfa1683
-         * completed_at : 23-10-2000 10 : 00 AM
-         * appoinment_status : Completed
-         */
-
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault());
-        String currentDateandTime = sdf.format(new Date());
-
-        AppoinmentCompleteRequest appoinmentCompleteRequest = new AppoinmentCompleteRequest();
-        appoinmentCompleteRequest.set_id(id);
-        appoinmentCompleteRequest.setCompleted_at(currentDateandTime);
-        appoinmentCompleteRequest.setAppoinment_status("Completed");
-        Log.w(TAG,"appoinmentCompleteRequest"+ "--->" + new Gson().toJson(appoinmentCompleteRequest));
-        return appoinmentCompleteRequest;
-    }
-
-    private void spnotificationSendResponseCall(String id,String appointmenttype,String userid, String doctorid,String appointmentid,String spid) {
-        avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();
-        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<NotificationSendResponse> call = ApiService.spnotificationSendResponseCall(RestUtils.getContentType(),spNotificationSendRequest(id,appointmenttype,userid,doctorid,appointmentid,spid));
-
-        Log.w(TAG,"url  :%s"+ call.request().url().toString());
-
-        call.enqueue(new Callback<NotificationSendResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<NotificationSendResponse> call, @NonNull Response<NotificationSendResponse> response) {
-                avi_indicator.smoothToHide();
-                Log.w(TAG,"notificationSendResponseCall"+ "--->" + new Gson().toJson(response.body()));
-
-
-                if (response.body() != null) {
-                    if(response.body().getCode() == 200){
-                        startActivity(new Intent(mContext, ServiceProviderDashboardActivity.class));
-
-                    }
-
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<NotificationSendResponse> call, @NonNull Throwable t) {
-                avi_indicator.smoothToHide();
-
-                Log.w(TAG,"NotificationSendResponse flr"+"--->" + t.getMessage());
-            }
-        });
-
-    }
-    private SPNotificationSendRequest spNotificationSendRequest(String id,String appointmenttype,String userid, String doctorid,String appointmentid,String spid) {
-
-        /*
-         * status : Payment Failed
-         * date : 23-10-2020 11:00 AM
-         * appointment_UID : PET-2923029239123
-         * user_id : 601b8ac3204c595ee52582f2
-         * sp_id : 601ba9c6270cbe79fd900183
-         */
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
-        String currentDateandTime = simpleDateFormat.format(new Date());
-
-
-
-        SPNotificationSendRequest spNotificationSendRequest = new SPNotificationSendRequest();
-        spNotificationSendRequest.setStatus("Patient Appointment Cancelled");
-        spNotificationSendRequest.setDate(currentDateandTime);
-        spNotificationSendRequest.setAppointment_UID(appointmentid);
-        spNotificationSendRequest.setUser_id(userid);
-        spNotificationSendRequest.setSp_id(doctorid);
-
-
-        Log.w(TAG,"spNotificationSendRequest"+ "--->" + new Gson().toJson(spNotificationSendRequest));
-        return spNotificationSendRequest;
     }
 
 }

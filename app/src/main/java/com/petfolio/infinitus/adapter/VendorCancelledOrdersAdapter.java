@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,16 +17,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.responsepojo.VendorCancelsOrderResponse;
 import com.petfolio.infinitus.responsepojo.VendorNewOrderResponse;
+import com.petfolio.infinitus.responsepojo.VendorOrderResponse;
 import com.petfolio.infinitus.vendor.VendorOrderDetailsActivity;
-import com.petfolio.infinitus.vendor.VendorUpdateOrderStatusActivity;
 
 import java.util.List;
 
 
-public class VendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class VendorCancelledOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private  String TAG = "VendorNewOrdersAdapter";
+    private  String TAG = "VendorCancelledOrdersAdapter";
     private List<VendorNewOrderResponse.DataBean> newOrderResponseList;
 
     private Context context;
@@ -38,20 +38,20 @@ public class VendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.V
     private int size;
 
 
-    public VendorNewOrdersAdapter(Context context, List<VendorNewOrderResponse.DataBean> newOrderResponseList,int size) {
-
+    public VendorCancelledOrdersAdapter(Context context, List<VendorNewOrderResponse.DataBean> newOrderResponseList, int size) {
         this.newOrderResponseList = newOrderResponseList;
-
         this.context = context;
-
         this.size = size;
+
+
+
 
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_vendor_new_order, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_vendor_cancelled_order, parent, false);
         return new ViewHolderOne(view);
     }
 
@@ -65,7 +65,9 @@ public class VendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.V
     @SuppressLint("SetTextI18n")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
+
         currentItem = newOrderResponseList.get(position);
+
 
         if(newOrderResponseList.get(position).getOrder_id()!=null&&!(newOrderResponseList.get(position).getOrder_id().isEmpty())){
 
@@ -104,36 +106,38 @@ public class VendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.V
 
         if(newOrderResponseList.get(position).getDate_of_booking() != null&&!(newOrderResponseList.get(position).getDate_of_booking().isEmpty())){
 
-            holder.txt_bookedon.setText("Order Booked on:"+" "+newOrderResponseList.get(position).getDate_of_booking());
+            holder.txt_cancelledon.setText("Order Cancelled on:"+" "+newOrderResponseList.get(position).getDate_of_booking());
 
         }
+
+
 
         holder.txt_order_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                    Intent i = new Intent(context, VendorOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent i = new Intent(context, VendorOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                    i.putExtra("order_id",newOrderResponseList.get(position).get_id());
+                i.putExtra("order_id",newOrderResponseList.get(position).get_id());
 
-                    i.putExtra("fromactivity",TAG);
+                i.putExtra("fromactivity",TAG);
 
-                    context.startActivity(i);
+                context.startActivity(i);
 
             }
         });
 
-        holder.btn_update_status.setOnClickListener(new View.OnClickListener() {
+
+
+
+        holder.ll_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                    Intent i = new Intent(context, VendorUpdateOrderStatusActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                    i.putExtra("order_id",newOrderResponseList.get(position).get_id());
-
+                   /* Intent i = new Intent(context, SPAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("appointment_id",newAppointmentResponseList.get(position).get_id());
+                    i.putExtra("bookedat",newAppointmentResponseList.get(position).getBooking_date_time());
                     i.putExtra("fromactivity",TAG);
-
-                    context.startActivity(i);
+                    context.startActivity(i);*/
 
             }
         });
@@ -157,10 +161,11 @@ public class VendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.V
     }
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_orderid,txt_producttitle,txt_service_cost,txt_bookedon,txt_order_details;
+        public TextView txt_orderid,txt_producttitle,txt_service_cost,txt_cancelledon,txt_order_details;
         public ImageView img_pet_imge;
         public LinearLayout ll_new;
-        public Button btn_update_status;
+
+
 
         public ViewHolderOne(View itemView) {
             super(itemView);
@@ -168,13 +173,22 @@ public class VendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.V
             txt_orderid = itemView.findViewById(R.id.txt_orderid);
             txt_producttitle = itemView.findViewById(R.id.txt_producttitle);
             txt_service_cost = itemView.findViewById(R.id.txt_service_cost);
-            txt_bookedon = itemView.findViewById(R.id.txt_bookedon);
+            txt_cancelledon = itemView.findViewById(R.id.txt_cancelledon);
             ll_new = itemView.findViewById(R.id.ll_new);
             txt_order_details = itemView.findViewById(R.id.txt_order_details);
-            btn_update_status = itemView.findViewById(R.id.btn_update_status);
+
+
 
         }
 
+
+
+
     }
+
+
+
+
+
 
 }

@@ -65,6 +65,7 @@ import com.petfolio.infinitus.requestpojo.ServiceCatRequest;
 import com.petfolio.infinitus.requestpojo.ShopDashboardRequest;
 import com.petfolio.infinitus.requestpojo.SignupRequest;
 import com.petfolio.infinitus.requestpojo.TodayDealMoreRequest;
+import com.petfolio.infinitus.requestpojo.UpdateStatusCancelRequest;
 import com.petfolio.infinitus.requestpojo.UserStatusUpdateRequest;
 import com.petfolio.infinitus.requestpojo.ServiceProviderRegisterFormCreateRequest;
 import com.petfolio.infinitus.requestpojo.VendorCancelsOrderRequest;
@@ -636,7 +637,7 @@ public interface RestApiInterface {
 
     /*Cancel the order*/
     @POST("vendor_order_booking/update_status_cancel")
-    Call<SuccessResponse> update_status_cancelResponseCall(@Header("Content-Type") String type, @Body VendorOrderDetailsRequest vendorOrderDetailsRequest);
+    Call<SuccessResponse> update_status_cancelResponseCall(@Header("Content-Type") String type, @Body UpdateStatusCancelRequest updateStatusCancelRequest);
 
 
 

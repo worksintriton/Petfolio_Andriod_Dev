@@ -8,31 +8,31 @@ public class VendorFetchOrderDetailsResponse {
     /**
      * Status : Success
      * Message : Order Details
-     * Data : {"_id":"604b387942cb073ec4dfef16","order_id":"ITEM-1615542393826","product_name":"DOG FOOD 2","product_quantity":1,"product_price":100,"prodcut_image":"http://54.212.108.156:3000/api/uploads/1615541391131.jpeg","date_of_booking":"12-03-2021 03:16 PM","status":"cancelled","user_cancell_info":"","user_cancell_date":"","vendor_cancell_info":"We don't have stock in our company","vendor_cancell_date":"We don't have stock in our company","vendor_accept_cancel":"","vendor_complete_date":"","vendor_complete_info":"","prodcut_track_details":[{"id":1,"title":"Order booked","date":"12-03-2021 03:16 PM"},{"id":7,"title":"Vendor cancelled","date":"11-03-2021 03:07 PM"}],"delivery_date":"","date_of_booking_display":"12-03-2021 03:16 PM","delivery_date_display":"","order_status":"cancelled","prodouct_total":100,"shipping_address_id":"","billling_address_id":"","shipping_address":"","billing_address":"","shipping_charge":0,"over_all_total":100,"discount_price":0,"grand_total":100,"coupon_code":"","payment_id":"pay_GlhKnypTPnSzMr"}
+     * Data : {"_id":"604f6162cdef38628f812fc1","order_id":"ITEM-1615815010601","product_name":"DOG FOOD 2","product_quantity":1,"product_price":100,"prodcut_image":"http://54.212.108.156:3000/api/uploads/1615541391131.jpeg","date_of_booking":"15-03-2021 07:00 PM","status":"cancelled","user_cancell_info":"","user_cancell_date":"","vendor_cancell_info":"We don't have stock in our company","vendor_cancell_date":"15-03-2021 07:02 PM","vendor_accept_cancel":"","vendor_complete_date":"","vendor_complete_info":"","prodcut_track_details":[{"id":0,"title":"Order Booked","date":"15-03-2021 04:17 PM","Status":true},{"id":1,"title":"Order Accept","date":"15-03-2021 04:17 PM","Status":false},{"id":2,"title":"Order Dispatch","date":"15-03-2021 04:17 PM","Status":false},{"id":3,"title":"In Transit","date":"15-03-2021 04:17 PM","Status":false},{"id":4,"title":"Order Cancelled","date":"15-03-2021 04:17 PM","Status":false},{"id":5,"title":"Vendor cancelled","date":"15-03-2021 07:02 PM","Status":true}],"delivery_date":"","date_of_booking_display":"15-03-2021 07:00 PM","delivery_date_display":"","order_status":"cancelled","prodouct_total":100,"shipping_address_id":"","billling_address_id":"","shipping_address":"","billing_address":"","shipping_charge":0,"over_all_total":100,"discount_price":0,"grand_total":100,"coupon_code":"","payment_id":"pay_GmwkXbR3GOA0qC"}
      * Code : 200
      */
 
     private String Status;
     private String Message;
     /**
-     * _id : 604b387942cb073ec4dfef16
-     * order_id : ITEM-1615542393826
+     * _id : 604f6162cdef38628f812fc1
+     * order_id : ITEM-1615815010601
      * product_name : DOG FOOD 2
      * product_quantity : 1
      * product_price : 100
      * prodcut_image : http://54.212.108.156:3000/api/uploads/1615541391131.jpeg
-     * date_of_booking : 12-03-2021 03:16 PM
+     * date_of_booking : 15-03-2021 07:00 PM
      * status : cancelled
      * user_cancell_info :
      * user_cancell_date :
      * vendor_cancell_info : We don't have stock in our company
-     * vendor_cancell_date : We don't have stock in our company
+     * vendor_cancell_date : 15-03-2021 07:02 PM
      * vendor_accept_cancel :
      * vendor_complete_date :
      * vendor_complete_info :
-     * prodcut_track_details : [{"id":1,"title":"Order booked","date":"12-03-2021 03:16 PM"},{"id":7,"title":"Vendor cancelled","date":"11-03-2021 03:07 PM"}]
+     * prodcut_track_details : [{"id":0,"title":"Order Booked","date":"15-03-2021 04:17 PM","Status":true},{"id":1,"title":"Order Accept","date":"15-03-2021 04:17 PM","Status":false},{"id":2,"title":"Order Dispatch","date":"15-03-2021 04:17 PM","Status":false},{"id":3,"title":"In Transit","date":"15-03-2021 04:17 PM","Status":false},{"id":4,"title":"Order Cancelled","date":"15-03-2021 04:17 PM","Status":false},{"id":5,"title":"Vendor cancelled","date":"15-03-2021 07:02 PM","Status":true}]
      * delivery_date :
-     * date_of_booking_display : 12-03-2021 03:16 PM
+     * date_of_booking_display : 15-03-2021 07:00 PM
      * delivery_date_display :
      * order_status : cancelled
      * prodouct_total : 100
@@ -45,7 +45,7 @@ public class VendorFetchOrderDetailsResponse {
      * discount_price : 0
      * grand_total : 100
      * coupon_code :
-     * payment_id : pay_GlhKnypTPnSzMr
+     * payment_id : pay_GmwkXbR3GOA0qC
      */
 
     private DataBean Data;
@@ -115,9 +115,10 @@ public class VendorFetchOrderDetailsResponse {
         private String coupon_code;
         private String payment_id;
         /**
-         * id : 1
-         * title : Order booked
-         * date : 12-03-2021 03:16 PM
+         * id : 0
+         * title : Order Booked
+         * date : 15-03-2021 04:17 PM
+         * Status : true
          */
 
         private List<ProdcutTrackDetailsBean> prodcut_track_details;
@@ -374,6 +375,7 @@ public class VendorFetchOrderDetailsResponse {
             private int id;
             private String title;
             private String date;
+            private boolean Status;
 
             public int getId() {
                 return id;
@@ -397,6 +399,14 @@ public class VendorFetchOrderDetailsResponse {
 
             public void setDate(String date) {
                 this.date = date;
+            }
+
+            public boolean isStatus() {
+                return Status;
+            }
+
+            public void setStatus(boolean Status) {
+                this.Status = Status;
             }
         }
     }

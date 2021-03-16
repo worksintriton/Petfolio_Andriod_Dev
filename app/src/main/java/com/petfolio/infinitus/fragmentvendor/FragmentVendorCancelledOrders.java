@@ -23,16 +23,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.adapter.SPCompletedAppointmentAdapter;
+import com.petfolio.infinitus.adapter.VendorCancelledOrdersAdapter;
 import com.petfolio.infinitus.adapter.VendorCompletedOrdersAdapter;
-import com.petfolio.infinitus.adapter.VendorNewOrdersAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.requestpojo.SPAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.VendorGetsOrderIdRequest;
 import com.petfolio.infinitus.requestpojo.VendorNewOrderRequest;
 import com.petfolio.infinitus.requestpojo.VendorOrderRequest;
-import com.petfolio.infinitus.responsepojo.SPAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.VendorGetsOrderIDResponse;
 import com.petfolio.infinitus.responsepojo.VendorNewOrderResponse;
 import com.petfolio.infinitus.responsepojo.VendorOrderResponse;
@@ -53,8 +50,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentVendorCompletedOrders extends Fragment implements View.OnClickListener {
-    private String TAG = "FragmentVendorCompletedAppointment";
+public class FragmentVendorCancelledOrders extends Fragment implements View.OnClickListener {
+    private String TAG = "FragmentVendorCancelledAppointment";
+
+
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
@@ -65,8 +64,8 @@ public class FragmentVendorCompletedOrders extends Fragment implements View.OnCl
     TextView txt_no_records;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.rv_completedappointment)
-    RecyclerView rv_completedappointment;
+    @BindView(R.id.rv_missedappointment)
+    RecyclerView rv_missedappointment;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_load_more)
@@ -86,7 +85,7 @@ public class FragmentVendorCompletedOrders extends Fragment implements View.OnCl
     private List<VendorNewOrderResponse.DataBean> newOrderResponseList;
 
 
-    public FragmentVendorCompletedOrders() {
+    public FragmentVendorCancelledOrders() {
 
     }
 
@@ -96,7 +95,7 @@ public class FragmentVendorCompletedOrders extends Fragment implements View.OnCl
         Log.w(TAG,"onCreateView");
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        View view = inflater.inflate(R.layout.fragment_vendor_completed_orders, container, false);
+        View view = inflater.inflate(R.layout.fragment_vendor_missed_orders, container, false);
 
         ButterKnife.bind(this, view);
         mContext = getActivity();
@@ -109,7 +108,6 @@ public class FragmentVendorCompletedOrders extends Fragment implements View.OnCl
 
         session = new SessionManager(getContext());
         HashMap<String, String> user = session.getProfileDetails();
-
         userid = user.get(SessionManager.KEY_ID);
         username = user.get(SessionManager.KEY_FIRST_NAME);
 
@@ -118,9 +116,7 @@ public class FragmentVendorCompletedOrders extends Fragment implements View.OnCl
       
 
         if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-
             getVendorOrderIDResponseCall(userid);
-
         }
 
         final Handler handler = new Handler();
@@ -133,7 +129,6 @@ public class FragmentVendorCompletedOrders extends Fragment implements View.OnCl
                         try {
                             //your method here
                             if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-
                                 getVendorOrderIDResponseCall(userid);
                             }
 
@@ -148,7 +143,6 @@ public class FragmentVendorCompletedOrders extends Fragment implements View.OnCl
 
         return view;
     }
-
 
 
     @SuppressLint("LongLogTag")
@@ -249,7 +243,7 @@ public class FragmentVendorCompletedOrders extends Fragment implements View.OnCl
             @Override
             public void onResponse(@NonNull Call<VendorNewOrderResponse> call, @NonNull Response<VendorNewOrderResponse> response) {
                 avi_indicator.smoothToHide();
-                Log.w(TAG,"VendorCompletdOrderResponse"+ "--->" + new Gson().toJson(response.body()));
+                Log.w(TAG,"VendorMissedOrderResponse"+ "--->" + new Gson().toJson(response.body()));
 
 
                 if (response.body() != null) {
@@ -261,12 +255,12 @@ public class FragmentVendorCompletedOrders extends Fragment implements View.OnCl
                         if(response.body().getData().isEmpty()){
                             txt_no_records.setVisibility(View.VISIBLE);
                             txt_no_records.setText("No new orders");
-                            rv_completedappointment.setVisibility(View.GONE);
+                            rv_missedappointment.setVisibility(View.GONE);
                             btn_load_more.setVisibility(View.GONE);
                         }
                         else{
                             txt_no_records.setVisibility(View.GONE);
-                            rv_completedappointment.setVisibility(View.VISIBLE);
+                            rv_missedappointment.setVisibility(View.VISIBLE);
                             if(newOrderResponseList.size()>3){
                                 btn_load_more.setVisibility(View.VISIBLE);
                             }else{
@@ -286,7 +280,7 @@ public class FragmentVendorCompletedOrders extends Fragment implements View.OnCl
             public void onFailure(@NonNull Call<VendorNewOrderResponse> call, @NonNull Throwable t) {
                 avi_indicator.smoothToHide();
 
-                Log.w(TAG,"VendorCompletdOrderResponse flr"+"--->" + t.getMessage());
+                Log.w(TAG,"VendorMissedOrderResponse flr"+"--->" + t.getMessage());
             }
         });
 
@@ -300,25 +294,25 @@ public class FragmentVendorCompletedOrders extends Fragment implements View.OnCl
 
         VendorNewOrderRequest vendorNewOrderRequest = new VendorNewOrderRequest();
         vendorNewOrderRequest.setVendor_id(id);
-        vendorNewOrderRequest.setOrder_status("Complete");
+        vendorNewOrderRequest.setOrder_status("cancelled");
         Log.w(TAG,"vendorNewOrderRequest"+ "--->" + new Gson().toJson(vendorNewOrderRequest));
         return vendorNewOrderRequest;
     }
 
     private void setView() {
-        rv_completedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv_completedappointment.setItemAnimator(new DefaultItemAnimator());
+        rv_missedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv_missedappointment.setItemAnimator(new DefaultItemAnimator());
         int size = 3;
-        VendorCompletedOrdersAdapter vendorCompletedOrdersAdapter = new VendorCompletedOrdersAdapter(getContext(), newOrderResponseList,size);
-        rv_completedappointment.setAdapter(vendorCompletedOrdersAdapter);
+        VendorCancelledOrdersAdapter vendorCancelledOrdersAdapter = new VendorCancelledOrdersAdapter(getContext(), newOrderResponseList,size);
+        rv_missedappointment.setAdapter(vendorCancelledOrdersAdapter);
 
     }
     private void setViewLoadMore() {
-        rv_completedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv_completedappointment.setItemAnimator(new DefaultItemAnimator());
+        rv_missedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv_missedappointment.setItemAnimator(new DefaultItemAnimator());
         int size = newOrderResponseList.size();
-        VendorCompletedOrdersAdapter vendorCompletedOrdersAdapter = new VendorCompletedOrdersAdapter(getContext(), newOrderResponseList,size);
-        rv_completedappointment.setAdapter(vendorCompletedOrdersAdapter);
+        VendorCancelledOrdersAdapter vendorCancelledOrdersAdapter = new VendorCancelledOrdersAdapter(getContext(), newOrderResponseList,size);
+        rv_missedappointment.setAdapter(vendorCancelledOrdersAdapter);
 
     }
 

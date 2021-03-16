@@ -26,9 +26,11 @@ import com.petfolio.infinitus.activity.location.PickUpLocationAllowActivity;
 import com.petfolio.infinitus.activity.location.PickUpLocationDenyActivity;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.requestpojo.UpdateStatusCancelRequest;
 import com.petfolio.infinitus.requestpojo.VendorOrderDetailsRequest;
 import com.petfolio.infinitus.responsepojo.DropDownListResponse;
 import com.petfolio.infinitus.responsepojo.PetTypeListResponse;
+import com.petfolio.infinitus.responsepojo.SuccessResponse;
 import com.petfolio.infinitus.responsepojo.VendorOrderDetailsResponse;
 import com.petfolio.infinitus.responsepojo.VendorReasonListResponse;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -36,9 +38,12 @@ import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.ObjectOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -72,7 +77,8 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
     private List<DropDownListResponse.DataBean.SpecialzationBean> petSpecilaziationList;
     private String _id;
     HashMap<String, String> hashMap_ReasonTypeid = new HashMap<>();
-    private String strSelectedReason;
+    private String strSelectedReason = "";
+    private Dialog dialog;
 
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
@@ -154,62 +160,7 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
 
 
 
-    @SuppressLint({"LongLogTag", "LogNotTimber"})
-    private void vendorOrderDetailsResponseCall() {
-        avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();
-        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-        Call<VendorOrderDetailsResponse> call = apiInterface.vendorOrderDetailsResponseCall(RestUtils.getContentType(), vendorOrderDetailsRequest());
-        Log.w(TAG,"vendorOrderDetailsResponseCall url  :%s"+" "+ call.request().url().toString());
 
-        call.enqueue(new Callback<VendorOrderDetailsResponse>() {
-            @SuppressLint({"LongLogTag", "LogNotTimber", "SetTextI18n"})
-            @Override
-            public void onResponse(@NonNull Call<VendorOrderDetailsResponse> call, @NonNull Response<VendorOrderDetailsResponse> response) {
-
-                Log.w(TAG,"vendorOrderDetailsResponseCall"+ "--->" + new Gson().toJson(response.body()));
-
-                avi_indicator.smoothToHide();
-
-                if (response.body() != null) {
-                    if(response.body().getCode() == 200){
-
-                        if(response.body().getData()!=null){
-
-
-
-                        }
-
-
-                    }
-
-                }
-
-
-            }
-
-            @SuppressLint({"LongLogTag", "LogNotTimber"})
-            @Override
-            public void onFailure(@NonNull Call<VendorOrderDetailsResponse> call, @NonNull Throwable t) {
-
-                avi_indicator.smoothToHide();
-                Log.w(TAG,"VendorOrderDetailsResponse flr"+"--->" + t.getMessage());
-            }
-        });
-
-    }
-
-    @SuppressLint({"LongLogTag", "LogNotTimber"})
-    private VendorOrderDetailsRequest vendorOrderDetailsRequest() {
-
-        VendorOrderDetailsRequest vendorOrderDetailsRequest = new VendorOrderDetailsRequest();
-
-        vendorOrderDetailsRequest.set_id(_id);
-
-        Log.w(TAG,"vendorOrderDetailsRequest"+ "--->" + new Gson().toJson(vendorOrderDetailsRequest));
-
-        return vendorOrderDetailsRequest;
-    }
 
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
@@ -253,9 +204,6 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
         });
 
     }
-
-
-
     @SuppressLint("LongLogTag")
     private void setReasonList(List<VendorReasonListResponse.DataBean.CancelStatusBean> cancel_status) {
         ArrayList<String> pettypeArrayList = new ArrayList<>();
@@ -271,13 +219,11 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
 
         }
     }
-
-
     private void showCancelAlert() {
 
         try {
 
-            Dialog dialog = new Dialog(PetVendorCancelOrderActivity.this);
+             dialog = new Dialog(PetVendorCancelOrderActivity.this);
             dialog.setContentView(R.layout.alert_cancel_layout);
             dialog.setCanceledOnTouchOutside(false);
             Button btn_ok = dialog.findViewById(R.id.btn_ok);
@@ -285,8 +231,12 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
             btn_ok.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    dialog.dismiss();
-                   // startActivity(new Intent(getApplicationContext(), PickUpLocationDenyActivity.class));
+                    if (new ConnectionDetector(PetVendorCancelOrderActivity.this).isNetworkAvailable(PetVendorCancelOrderActivity.this)) {
+                        update_status_cancelResponseCall();
+
+                    }
+
+
 
 
 
@@ -310,6 +260,77 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
 
 
 
+    }
+
+
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    private void update_status_cancelResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<SuccessResponse> call = apiInterface.update_status_cancelResponseCall(RestUtils.getContentType(), updateStatusCancelRequest());
+        Log.w(TAG,"vendorOrderDetailsResponseCall url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<SuccessResponse>() {
+            @SuppressLint({"LongLogTag", "LogNotTimber", "SetTextI18n"})
+            @Override
+            public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
+
+                Log.w(TAG,"update_status_cancelResponseCall"+ "--->" + new Gson().toJson(response.body()));
+
+                avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        dialog.dismiss();
+                        startActivity(new Intent(PetVendorCancelOrderActivity.this,PetMyOrdrersActivity.class));
+                        finish();
+
+
+                    }
+
+                }
+
+
+            }
+
+            @SuppressLint({"LongLogTag", "LogNotTimber"})
+            @Override
+            public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull Throwable t) {
+
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"update_status_cancelResponseCall flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    private UpdateStatusCancelRequest updateStatusCancelRequest() {
+        /*
+         * _id : 604f4386a358454d3208f685
+         * activity_id : 4
+         * activity_title : Order Cancelled
+         * activity_date : 11-03-2021 03:07 PM
+         * order_status : Cancelled
+         * user_cancell_info : I have order wrongly
+         * user_cancell_date : 11-03-2021 03:07 PM
+         */
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
+
+        UpdateStatusCancelRequest updateStatusCancelRequest = new UpdateStatusCancelRequest();
+        updateStatusCancelRequest.set_id(_id);
+        updateStatusCancelRequest.setActivity_id(4);
+        updateStatusCancelRequest.setActivity_title("Order Cancelled");
+        updateStatusCancelRequest.setActivity_date(currentDateandTime);
+        updateStatusCancelRequest.setOrder_status("Cancelled");
+        updateStatusCancelRequest.setUser_cancell_info(strSelectedReason);
+        updateStatusCancelRequest.setUser_cancell_date(currentDateandTime);
+
+        Log.w(TAG,"updateStatusCancelRequest"+ "--->" + new Gson().toJson(updateStatusCancelRequest));
+
+        return updateStatusCancelRequest;
     }
 
 

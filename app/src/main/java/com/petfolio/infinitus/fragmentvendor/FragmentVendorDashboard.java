@@ -125,7 +125,7 @@ public class FragmentVendorDashboard extends Fragment  {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager(),3);
         adapter.addFragment(new FragmentVendorNewOrders(), "New");
         adapter.addFragment(new FragmentVendorCompletedOrders(), "Completed");
-        adapter.addFragment(new FragmentVendorMissedOrders(), "Missed");
+        adapter.addFragment(new FragmentVendorCancelledOrders(), "Cancelled");
         viewPager.setAdapter(adapter);
     }
 
