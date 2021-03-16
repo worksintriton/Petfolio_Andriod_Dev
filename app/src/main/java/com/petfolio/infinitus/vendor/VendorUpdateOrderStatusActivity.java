@@ -16,7 +16,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
@@ -156,10 +155,7 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
-
             order_id = extras.getString("order_id");
-
-
         }
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());

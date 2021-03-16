@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -18,28 +19,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="20dp"
+            android:layout_marginStart="10dp">
             <LinearLayout
                 android:id="@+id/headerView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:orientation="vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp">
+                android:orientation="vertical">
                 <LinearLayout
                     android:id="@+id/linear1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/scrollView"
                     android:layout_marginTop="@dimen/normal_margin_value8"
                     android:layout_marginBottom="@dimen/big_margin_value"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    tools:ignore="UselessParent">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="160dp"
-                        android:elevation="9dp">
+                        android:elevation="9dp"
+                        tools:ignore="UselessParent">
 
                         <androidx.viewpager.widget.ViewPager
                             android:id="@+id/pager"
@@ -67,24 +67,13 @@
 
 
                 </LinearLayout>
-               <!-- <androidx.core.widget.NestedScrollView
-                    android:id="@+id/scrollView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/linear"
-                    android:layout_marginTop="@dimen/small_margin_value">
-
-
-                </androidx.core.widget.NestedScrollView>-->
 
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_marginTop="10dp"
@@ -368,7 +357,7 @@
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="310dp"
-            />
+            tools:ignore="FragmentTagUsage" />
     </RelativeLayout>
 
 

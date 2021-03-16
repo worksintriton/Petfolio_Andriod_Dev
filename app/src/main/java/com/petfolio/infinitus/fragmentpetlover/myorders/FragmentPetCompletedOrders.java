@@ -191,7 +191,7 @@ public class FragmentPetCompletedOrders extends Fragment implements View.OnClick
                             Log.w(TAG, "newOrderResponseList : " + new Gson().toJson(newOrderResponseList));
                             if (response.body().getData().isEmpty()) {
                                 txt_no_records.setVisibility(View.VISIBLE);
-                                txt_no_records.setText("No new orders");
+                                txt_no_records.setText("No completed orders");
                                 rv_completedappointment.setVisibility(View.GONE);
                                 btn_load_more.setVisibility(View.GONE);
                             } else {

@@ -2,11 +2,11 @@ package com.petfolio.infinitus.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,8 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.petlover.PetVendorCancelOrderActivity;
+import com.petfolio.infinitus.petlover.PetVendorOrderDetailsActivity;
+import com.petfolio.infinitus.petlover.PetVendorTrackOrderActivity;
 import com.petfolio.infinitus.responsepojo.PetVendorOrderResponse;
-import com.petfolio.infinitus.responsepojo.VendorOrderResponse;
 
 import java.util.List;
 
@@ -93,6 +95,37 @@ public class PetVendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerVie
 
         }
 
+        holder.txt_order_details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    Intent i = new Intent(context, PetVendorOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("_id",newOrderResponseList.get(position).get_id());
+                    i.putExtra("fromactivity",TAG);
+                    context.startActivity(i);
+
+            }
+        });
+        holder.txt_track_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, PetVendorTrackOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("_id",newOrderResponseList.get(position).get_id());
+                i.putExtra("fromactivity",TAG);
+                context.startActivity(i);
+
+
+            }
+        }); holder.txt_cancell_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, PetVendorCancelOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("_id",newOrderResponseList.get(position).get_id());
+                i.putExtra("fromactivity",TAG);
+                context.startActivity(i);
+
+            }
+        });
+
 
 
 
@@ -116,7 +149,7 @@ public class PetVendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerVie
     }
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_orderid,txt_producttitle,txt_products_price,txt_bookedon;
+        public TextView txt_orderid,txt_producttitle,txt_products_price,txt_bookedon,txt_order_details,txt_track_order,txt_cancell_order;
         public ImageView img_products_image;
 
 
@@ -128,6 +161,9 @@ public class PetVendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerVie
             txt_producttitle = itemView.findViewById(R.id.txt_producttitle);
             txt_products_price = itemView.findViewById(R.id.txt_products_price);
             txt_bookedon = itemView.findViewById(R.id.txt_bookedon);
+            txt_order_details = itemView.findViewById(R.id.txt_order_details);
+            txt_track_order = itemView.findViewById(R.id.txt_track_order);
+            txt_cancell_order = itemView.findViewById(R.id.txt_cancell_order);
 
 
 

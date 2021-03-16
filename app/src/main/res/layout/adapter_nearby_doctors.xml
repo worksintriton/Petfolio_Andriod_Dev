@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_doctornearyby"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -9,14 +10,13 @@
         android:id="@+id/ll_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="UselessParent">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_pet"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="5dp"
             app:cardCornerRadius="1dp"
@@ -47,9 +47,8 @@
 
             <TextView
                 android:id="@+id/txt_doctors_name"
-                android:layout_width="wrap_content"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
                 android:fontFamily="@font/futuramediumbt"
                 android:maxLines="1"
                 android:text="@string/doctor_name"
@@ -64,10 +63,9 @@
 
                 <TextView
                     android:id="@+id/txt_doctors_specialization"
-                    android:layout_width="wrap_content"
+                    android:layout_width="130dp"
                     android:layout_height="match_parent"
                     android:layout_marginTop="5dp"
-                    android:ellipsize="end"
                     android:fontFamily="@font/futuramediumbt"
                     android:maxLines="1"
                     android:text="@string/specialization"
@@ -82,10 +80,9 @@
                         android:id="@+id/btn_book"
                         android:layout_width="wrap_content"
                         android:layout_height="25dp"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_gravity="end"
                         android:layout_marginEnd="10dp"
-                        android:layout_marginRight="10dp"
                         android:background="@drawable/new_rounded_corner_btn"
                         android:fontFamily="@font/futuramediumbt"
                         android:text="@string/book"
@@ -98,7 +95,7 @@
 
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal">
@@ -108,7 +105,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:ellipsize="end"
                     android:fontFamily="@font/futuramediumbt"
                     android:maxLines="1"
                     android:text="@string/address"
@@ -117,22 +113,21 @@
 
                 <TextView
                     android:id="@+id/txt_bullet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="27dp"
+                    android:layout_height="31dp"
                     android:layout_weight="1"
-                    android:ellipsize="end"
                     android:fontFamily="@font/futuramediumbt"
                     android:maxLines="1"
                     android:text="@string/bullet"
                     android:textColor="@color/new_sec_txt_color"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/txt_km"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:ellipsize="end"
                     android:fontFamily="@font/futuramediumbt"
                     android:maxLines="1"
                     android:text="@string/_2_km_away"
@@ -141,9 +136,8 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <RelativeLayout
@@ -157,7 +151,6 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="5dp"
-                        android:layout_marginLeft="5dp"
                         android:layout_marginBottom="5dp"
                         android:drawablePadding="5dp"
                         android:fontFamily="@font/futuramediumbt"
