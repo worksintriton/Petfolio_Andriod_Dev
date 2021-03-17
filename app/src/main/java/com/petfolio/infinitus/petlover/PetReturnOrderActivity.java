@@ -329,11 +329,9 @@ public class PetReturnOrderActivity extends AppCompatActivity implements View.On
 
         return updateStatusReturnRequest;
     }
-
     private void showReturnAlert() {
 
         try {
-
             dialog = new Dialog(PetReturnOrderActivity.this);
             dialog.setContentView(R.layout.alert_return_layout);
             dialog.setCanceledOnTouchOutside(false);
@@ -409,7 +407,6 @@ public class PetReturnOrderActivity extends AppCompatActivity implements View.On
 
 
     }
-
     public void showErrorLoading(String errormesage){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage(errormesage);
