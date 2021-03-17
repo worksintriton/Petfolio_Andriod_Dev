@@ -15,7 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.fragmentpetlover.myorders.FragmentPetMissedOrders;
+import com.petfolio.infinitus.fragmentpetlover.myorders.FragmentPetCancelledOrders;
 import com.petfolio.infinitus.fragmentpetlover.myorders.FragmentPetCompletedOrders;
 import com.petfolio.infinitus.fragmentpetlover.myorders.FragmentPetNewOrders;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -68,7 +68,7 @@ public class PetMyOrdrersActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new FragmentPetNewOrders(), "New");
         adapter.addFragment(new FragmentPetCompletedOrders(), "Completed");
-         adapter.addFragment(new FragmentPetMissedOrders(), "Cancelled");
+         adapter.addFragment(new FragmentPetCancelledOrders(), "Cancelled");
         viewPager.setAdapter(adapter);
     }
 

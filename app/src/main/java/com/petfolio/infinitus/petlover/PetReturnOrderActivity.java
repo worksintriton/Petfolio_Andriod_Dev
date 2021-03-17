@@ -118,6 +118,7 @@ public class PetReturnOrderActivity extends AppCompatActivity implements View.On
         ButterKnife.bind(this);
 
         img_back.setOnClickListener(this);
+        edt_comment.setVisibility(View.GONE);
 
 
         Bundle extras = getIntent().getExtras();
@@ -171,6 +172,13 @@ public class PetReturnOrderActivity extends AppCompatActivity implements View.On
                 if (radioButton != null) {
                     returnreason = (String) radioButton.getText();
                     Log.w(TAG, "selected returnreason : " + returnreason);
+
+                    if(returnreason != null && returnreason.equalsIgnoreCase("Other")){
+                        edt_comment.setVisibility(View.VISIBLE);
+                    }else{
+                        edt_comment.setVisibility(View.GONE);
+                    }
+
                 }
             }
 
@@ -314,6 +322,13 @@ public class PetReturnOrderActivity extends AppCompatActivity implements View.On
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
+        String User_return_info;
+        if(returnreason != null && returnreason.equalsIgnoreCase("Other")){
+            User_return_info = edt_comment.getText().toString();
+        }else{
+            User_return_info = returnreason;
+        }
+
 
         UpdateStatusReturnRequest updateStatusReturnRequest = new UpdateStatusReturnRequest();
         updateStatusReturnRequest.set_id(_id);
@@ -321,7 +336,7 @@ public class PetReturnOrderActivity extends AppCompatActivity implements View.On
         updateStatusReturnRequest.setActivity_title("Order Returned");
         updateStatusReturnRequest.setActivity_date(currentDateandTime);
         updateStatusReturnRequest.setOrder_status("Cancelled");
-        updateStatusReturnRequest.setUser_return_info(returnreason);
+        updateStatusReturnRequest.setUser_return_info(User_return_info);
         updateStatusReturnRequest.setUser_return_date(currentDateandTime);
         updateStatusReturnRequest.setUser_return_pic("");
 

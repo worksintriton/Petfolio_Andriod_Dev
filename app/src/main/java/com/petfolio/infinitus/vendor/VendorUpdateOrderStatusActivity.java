@@ -630,10 +630,10 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
         VendorDispatchesOrderRequest vendorDispatchesOrderRequest = new VendorDispatchesOrderRequest();
         vendorDispatchesOrderRequest.set_id(order_id);
         vendorDispatchesOrderRequest.setActivity_id(id);
-        vendorDispatchesOrderRequest.setActivity_title(title);
+        vendorDispatchesOrderRequest.setActivity_title("Order Dispatch");
         vendorDispatchesOrderRequest.setActivity_date(currentDateandTime);
         vendorDispatchesOrderRequest.setVendor_complete_date(currentDateandTime);
-        vendorDispatchesOrderRequest.setVendor_complete_info("Tracking-Id : 1234568, You can check the product taacking witn this id");
+        vendorDispatchesOrderRequest.setVendor_complete_info(title);
         vendorDispatchesOrderRequest.setOrder_status("Complete");
 
         Log.w(TAG,"appoinmentCancelledRequest"+ "--->" + new Gson().toJson(vendorDispatchesOrderRequest));

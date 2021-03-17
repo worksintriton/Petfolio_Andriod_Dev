@@ -41,8 +41,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentPetMissedOrders extends Fragment implements View.OnClickListener {
-    private final String TAG = "FragmentPetMissedOrders";
+public class FragmentPetCancelledOrders extends Fragment implements View.OnClickListener {
+    private final String TAG = "FragmentPetCancelledOrders";
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
@@ -81,7 +81,7 @@ public class FragmentPetMissedOrders extends Fragment implements View.OnClickLis
     Context mContext;
 
 
-    public FragmentPetMissedOrders() {
+    public FragmentPetCancelledOrders() {
 
     }
 
@@ -144,7 +144,7 @@ public class FragmentPetMissedOrders extends Fragment implements View.OnClickLis
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<PetVendorOrderResponse>() {
-            @SuppressLint({"LogNotTimber", "SetTextI18n"})
+            @SuppressLint({"LogNotTimber", "SetTextI18n", "LongLogTag"})
             @Override
             public void onResponse(@NonNull Call<PetVendorOrderResponse> call, @NonNull Response<PetVendorOrderResponse> response) {
                 /*  avi_indicator.smoothToHide();*/
@@ -162,7 +162,7 @@ public class FragmentPetMissedOrders extends Fragment implements View.OnClickLis
                             Log.w(TAG, "newOrderResponseList : " + new Gson().toJson(newOrderResponseList));
                             if (response.body().getData().isEmpty()) {
                                 txt_no_records.setVisibility(View.VISIBLE);
-                                txt_no_records.setText("No missed orders");
+                                txt_no_records.setText("No cancelled orders");
                                 rv_missedappointment.setVisibility(View.GONE);
                                 btn_load_more.setVisibility(View.GONE);
                             } else {
