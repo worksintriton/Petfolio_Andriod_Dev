@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -21,6 +23,7 @@ import com.petfolio.infinitus.responsepojo.VendorOrderDetailsResponse;
 import com.petfolio.infinitus.responsepojo.VendorReasonListResponse;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
+import com.petfolio.infinitus.vendor.VendorUpdateOrderStatusActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.List;
@@ -83,8 +86,92 @@ public class PetVendorTrackOrderActivity extends AppCompatActivity implements Vi
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_vendor_booked)
+    ImageView img_vendor_booked;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_booked_date)
+    TextView txt_booked_date;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_vendor_confirmed)
+    ImageView img_vendor_confirmed;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_order_confirm_date)
+    TextView txt_order_confirm_date;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_edit_order_confirm)
+    TextView txt_edit_order_confirm;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_order_reject_date)
+    TextView txt_order_reject_date;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_order_vendor_reject_date_reason)
+    TextView txt_order_vendor_reject_date_reason;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_vendor_order_rejected)
+    ImageView img_vendor_order_rejected;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_edit_order_reject)
+    TextView txt_edit_order_reject;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_order_reject_bypetlover)
+    LinearLayout ll_order_reject_bypetlover;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_order_reject_date_petlover)
+    TextView txt_order_reject_date_petlover;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_order_reject_date_reason)
+    TextView txt_order_reject_date_reason;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_vendor_order_rejected_bypetlover)
+    ImageView img_vendor_order_rejected_bypetlover;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_edit_order_reject_petlover)
+    TextView txt_edit_order_reject_petlover;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_vendor_order_dispatched)
+    ImageView img_vendor_order_dispatched;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_order_dispatch_date)
+    TextView txt_order_dispatch_date;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_order_dispatch_packdetails)
+    TextView txt_order_dispatch_packdetails;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_vendor_order_transit)
+    ImageView img_vendor_order_transit;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_order_transit_date)
+    TextView txt_order_transit_date;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_order_reject)
+    LinearLayout ll_order_reject;
+
+
     private List<DropDownListResponse.DataBean.SpecialzationBean> petSpecilaziationList;
     private String _id;
+    private List<VendorOrderDetailsResponse.DataBean.ProdcutTrackDetailsBean> prodcutTrackDetailsBeanList;
 
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
@@ -194,7 +281,88 @@ public class PetVendorTrackOrderActivity extends AppCompatActivity implements Vi
                             }
 
                             if(response.body().getData().getProdcut_track_details() != null && response.body().getData().getProdcut_track_details().size()>0){
-                                for(int i=0;i<response.body().getData().getProdcut_track_details().size();i++){
+                                prodcutTrackDetailsBeanList = response.body().getData().getProdcut_track_details();
+                                for(int i=0; i<prodcutTrackDetailsBeanList.size();i++){
+                                    if(prodcutTrackDetailsBeanList.get(i).getTitle()!= null && !prodcutTrackDetailsBeanList.get(i).getTitle().isEmpty()){
+                                        Log.w(TAG, "Title " + i + prodcutTrackDetailsBeanList.get(i).getTitle());
+                                        if(prodcutTrackDetailsBeanList.get(i).getTitle().equals("Order Booked")){
+                                            if(prodcutTrackDetailsBeanList.get(i).isStatus()){
+                                                txt_booked_date.setText(" " + prodcutTrackDetailsBeanList.get(i).getDate());
+                                                txt_booked_date.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+                                                img_vendor_booked.setImageResource(R.drawable.completed);
+                                            } else {
+                                                txt_booked_date.setText(" " );
+                                                txt_booked_date.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.coolGrey));
+                                                img_vendor_booked.setImageResource(R.drawable.button_grey_circle);
+
+                                            }
+
+                                        }
+                                        else if(prodcutTrackDetailsBeanList.get(i).getTitle().equals("Order Accept")) {
+                                            if (prodcutTrackDetailsBeanList.get(i).isStatus()) {
+                                                txt_order_confirm_date.setText(" " + prodcutTrackDetailsBeanList.get(i).getDate());
+                                                txt_order_confirm_date.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+                                                img_vendor_confirmed.setImageResource(R.drawable.completed);
+
+                                            } else {
+                                                txt_booked_date.setText(" ");
+                                                txt_order_confirm_date.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.coolGrey));
+                                                img_vendor_confirmed.setImageResource(R.drawable.button_grey_circle);
+
+                                            }
+
+                                        }
+                                        else if(prodcutTrackDetailsBeanList.get(i).getTitle().equals("Order Dispatch")) {
+                                            if (prodcutTrackDetailsBeanList.get(i).isStatus()) {
+                                                txt_order_dispatch_date.setText(" " + prodcutTrackDetailsBeanList.get(i).getDate());
+                                                txt_order_dispatch_date.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+                                                txt_order_transit_date.setText(" " + prodcutTrackDetailsBeanList.get(i).getDate());
+                                                txt_order_transit_date.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+                                                img_vendor_order_dispatched.setImageResource(R.drawable.completed);
+                                                img_vendor_order_transit.setImageResource(R.drawable.completed);
+                                            } else {
+                                                txt_order_dispatch_date.setText(" ");
+                                                txt_order_transit_date.setText(" ");
+                                                img_vendor_order_dispatched.setImageResource(R.drawable.button_grey_circle);
+                                                img_vendor_order_transit.setImageResource(R.drawable.button_grey_circle);
+                                                txt_order_transit_date.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.coolGrey));
+                                                txt_order_dispatch_date.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.coolGrey));
+                                                txt_order_dispatch_packdetails.setVisibility(View.GONE);
+
+                                            }
+
+                                        }
+                                        else if(prodcutTrackDetailsBeanList.get(i).getTitle().equals("Order Cancelled")) {
+                                            if (prodcutTrackDetailsBeanList.get(i).isStatus()) {
+                                                ll_order_reject_bypetlover.setVisibility(View.VISIBLE);
+                                                txt_order_reject_date_petlover.setText(" " + prodcutTrackDetailsBeanList.get(i).getDate());
+                                                txt_order_reject_date_petlover.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+                                                img_vendor_order_rejected_bypetlover.setImageResource(R.drawable.ic_baseline_check_circle_24);
+
+                                            } else {
+                                                ll_order_reject_bypetlover.setVisibility(View.GONE);
+
+                                            }
+
+                                        }
+                                        else if(prodcutTrackDetailsBeanList.get(i).getTitle().equals("Vendor cancelled")) {
+                                            if (prodcutTrackDetailsBeanList.get(i).isStatus()) {
+                                                ll_order_reject.setVisibility(View.VISIBLE);
+                                                txt_order_reject_date.setText(" " + prodcutTrackDetailsBeanList.get(i).getDate());
+                                                txt_order_reject_date.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+                                                img_vendor_order_rejected.setImageResource(R.drawable.ic_baseline_check_circle_24);
+
+
+                                            } else {
+                                                ll_order_reject.setVisibility(View.GONE);
+
+
+                                            }
+
+                                        }
+
+
+                                    }
 
                                 }
 

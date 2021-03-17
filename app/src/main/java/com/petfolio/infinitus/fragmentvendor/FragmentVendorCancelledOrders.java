@@ -294,7 +294,7 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
 
         VendorNewOrderRequest vendorNewOrderRequest = new VendorNewOrderRequest();
         vendorNewOrderRequest.setVendor_id(id);
-        vendorNewOrderRequest.setOrder_status("cancelled");
+        vendorNewOrderRequest.setOrder_status("Cancelled");
         Log.w(TAG,"vendorNewOrderRequest"+ "--->" + new Gson().toJson(vendorNewOrderRequest));
         return vendorNewOrderRequest;
     }

@@ -175,7 +175,7 @@ public class VendorOrderDetailsActivity extends AppCompatActivity implements Vie
 
                             }
 
-                            else if(updated_order_status.equals("cancelled")){
+                            else if(updated_order_status.equals("Cancelled")){
 
                                 order_date = response.body().getData().getVendor_cancell_date();
 
