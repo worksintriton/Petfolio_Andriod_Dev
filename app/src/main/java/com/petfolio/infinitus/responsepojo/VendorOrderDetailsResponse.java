@@ -95,7 +95,7 @@ public class VendorOrderDetailsResponse {
         private String order_id;
         private String product_name;
         private int product_quantity;
-        private int product_price;
+        private double product_price;
         private String prodcut_image;
         private String date_of_booking;
         private String status;
@@ -164,11 +164,11 @@ public class VendorOrderDetailsResponse {
         }
 
 
-        public int getProduct_price() {
+        public double getProduct_price() {
             return product_price;
         }
 
-        public void setProduct_price(int product_price) {
+        public void setProduct_price(double product_price) {
             this.product_price = product_price;
 
         }
@@ -433,7 +433,15 @@ public class VendorOrderDetailsResponse {
             private int id;
             private String title;
             private String date;
+            private boolean Status;
 
+            public boolean isStatus() {
+                return Status;
+            }
+
+            public void setStatus(boolean status) {
+                Status = status;
+            }
 
             public int getId() {
                 return id;

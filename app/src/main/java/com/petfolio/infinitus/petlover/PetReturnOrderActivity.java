@@ -339,7 +339,7 @@ public class PetReturnOrderActivity extends AppCompatActivity implements View.On
             WebView webView = dialog.findViewById(R.id.webView);
 
             //initialize the pdfLayout
-             pdfLayout = findViewById(R.id.pdf_layout);
+             pdfLayout = dialog.findViewById(R.id.pdf_layout);
             CheckBox chxbox_acceptandterms = dialog.findViewById(R.id.chxbox_acceptandterms);
 
 
@@ -349,30 +349,8 @@ public class PetReturnOrderActivity extends AppCompatActivity implements View.On
             try {
                 Log.w(TAG,"termsandconditions : "+termsandconditions);
                 if(termsandconditions != null) {
-
                     setPdfUrl(termsandconditions);
-                   /* webView.requestFocus();
-                    webView.getSettings().setJavaScriptEnabled(true);
 
-                    String url = "https://docs.google.com/viewer?embedded = true&url = "+termsandconditions;
-                    webView.loadUrl(termsandconditions);
-                    webView.setWebViewClient(new WebViewClient() {
-                        @Override
-                        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                            view.loadUrl(url);
-                            return true;
-                        }
-                    });
-                    webView.setWebChromeClient(new WebChromeClient() {
-                        public void onProgressChanged(WebView view, int progress) {
-                            if (progress < 100) {
-
-                            }
-                            if (progress == 100) {
-
-                            }
-                        }
-                    });*/
 
                 }
 
@@ -433,7 +411,10 @@ public class PetReturnOrderActivity extends AppCompatActivity implements View.On
         // That's the positive case. PDF Download went fine
         pdfPagerAdapter = new PDFPagerAdapter(this, FileUtil.extractFileNameFromURL(url));
         remotePDFViewPager.setAdapter(pdfPagerAdapter);
-        updateLayout();
+        if(pdfLayout != null){
+            updateLayout();
+        }
+
 
     }
 
@@ -455,7 +436,6 @@ public class PetReturnOrderActivity extends AppCompatActivity implements View.On
 
     }
     private void updateLayout() {
-
         pdfLayout.addView(remotePDFViewPager,
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
     }

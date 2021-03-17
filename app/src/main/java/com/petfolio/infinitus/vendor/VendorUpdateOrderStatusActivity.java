@@ -10,7 +10,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,7 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
+
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -219,7 +218,8 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
     String product_title, product_image, order_date, order_id, payment_mode,updated_order_status,order_id_display,order_status;
 
-    int product_pr, order_total, quantity;
+    double product_pr;
+    int order_total, quantity;
 
     List<VendorFetchOrderDetailsResponse.DataBean.ProdcutTrackDetailsBean> prodcutTrackDetailsBeanList;
 

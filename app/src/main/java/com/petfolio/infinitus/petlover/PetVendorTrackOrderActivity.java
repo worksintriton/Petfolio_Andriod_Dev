@@ -168,25 +168,35 @@ public class PetVendorTrackOrderActivity extends AppCompatActivity implements Vi
                             }
                             if(response.body().getData().getDate_of_booking_display()!=null){
                                 txt_order_date.setText(response.body().getData().getDate_of_booking_display());
-                            } if(response.body().getData().getOrder_id()!=null){
+                            }
+                            if(response.body().getData().getOrder_id()!=null){
                                 txt_booking_id.setText(response.body().getData().getOrder_id());
-                            } if(response.body().getData().getGrand_total() !=0){
+                            }
+                            if(response.body().getData().getGrand_total() !=0){
                                 txt_total_order_cost.setText("\u20B9 "+response.body().getData().getGrand_total());
-                            }if(response.body().getData().getProduct_quantity() !=0){
+                            }
+                            if(response.body().getData().getProduct_quantity() !=0){
                                 txt_quantity.setText(""+response.body().getData().getProduct_quantity());
                             }
                             if(response.body().getData().getProduct_quantity() !=0){
                                 txt_quantity.setText(""+response.body().getData().getProduct_quantity());
                             }
-
                             if (response.body().getData().getProdcut_image() != null && !response.body().getData().getProdcut_image().isEmpty()) {
                                 Glide.with(getApplicationContext())
                                         .load(response.body().getData().getProdcut_image())
                                         .into(img_products_image);
-                            } else{
+                            }
+                            else{
                                 Glide.with(getApplicationContext())
                                         .load(APIClient.PROFILE_IMAGE_URL)
                                         .into(img_products_image);
+
+                            }
+
+                            if(response.body().getData().getProdcut_track_details() != null && response.body().getData().getProdcut_track_details().size()>0){
+                                for(int i=0;i<response.body().getData().getProdcut_track_details().size();i++){
+
+                                }
 
                             }
 

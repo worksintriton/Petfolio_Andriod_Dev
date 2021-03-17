@@ -207,7 +207,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                             String product_title = response.body().getProduct_details().getProduct_title();
                             int product_review = response.body().getProduct_details().getProduct_review();
                             double product_rating = response.body().getProduct_details().getProduct_rating();
-                            int product_price = response.body().getProduct_details().getProduct_price();
+                            double product_price = response.body().getProduct_details().getProduct_price();
                             int product_discount = response.body().getProduct_details().getProduct_discount();
                             String  product_discription = response.body().getProduct_details().getProduct_discription();
                             int product_cart_count = response.body().getProduct_details().getProduct_cart_count();
@@ -275,7 +275,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     }
 
     @SuppressLint("SetTextI18n")
-    private void setUIData(String product_title,int product_review, double product_rating, int product_price, int product_discount, String product_discription, int product_cart_count, String threshould) {
+    private void setUIData(String product_title,int product_review, double product_rating, double product_price, int product_discount, String product_discription, int product_cart_count, String threshould) {
 
         product_cart_counts = product_cart_count;
 

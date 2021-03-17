@@ -94,7 +94,8 @@ public class VendorOrderDetailsActivity extends AppCompatActivity implements Vie
 
     String product_title, product_image, order_date, order_id, payment_mode,updated_order_status,fromActivity,order_id_display,order_status_title;
 
-    int product_pr, order_total, quantity;
+    double product_pr;
+            int order_total, quantity;
 
     Boolean order_image;
 

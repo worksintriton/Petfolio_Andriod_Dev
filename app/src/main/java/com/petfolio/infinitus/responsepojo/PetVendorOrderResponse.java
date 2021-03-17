@@ -74,13 +74,17 @@ public class PetVendorOrderResponse {
          * vendor_accept_cancel_data :
          * vendor_complete_date :
          * vendor_complete_info :
+         *  "user_return_info": "return - 1",
+         *             "user_return_date": "17-03-2021 12:22 PM",
+         *             "user_return_pic": "",
+         *             "vendor_accept_cancel_date": ""
          */
 
         private String _id;
         private String order_id;
         private String product_name;
         private int product_quantity;
-        private int product_price;
+        private double product_price;
         private String prodcut_image;
         private String date_of_booking;
         private String status;
@@ -92,7 +96,42 @@ public class PetVendorOrderResponse {
         private String vendor_accept_cancel_data;
         private String vendor_complete_date;
         private String vendor_complete_info;
+        private String user_return_info;
+        private String user_return_date;
+        private String user_return_pic;
+        private String vendor_accept_cancel_date;
 
+        public String getUser_return_info() {
+            return user_return_info;
+        }
+
+        public void setUser_return_info(String user_return_info) {
+            this.user_return_info = user_return_info;
+        }
+
+        public String getUser_return_date() {
+            return user_return_date;
+        }
+
+        public void setUser_return_date(String user_return_date) {
+            this.user_return_date = user_return_date;
+        }
+
+        public String getUser_return_pic() {
+            return user_return_pic;
+        }
+
+        public void setUser_return_pic(String user_return_pic) {
+            this.user_return_pic = user_return_pic;
+        }
+
+        public String getVendor_accept_cancel_date() {
+            return vendor_accept_cancel_date;
+        }
+
+        public void setVendor_accept_cancel_date(String vendor_accept_cancel_date) {
+            this.vendor_accept_cancel_date = vendor_accept_cancel_date;
+        }
 
         public String get_id() {
             return _id;
@@ -134,11 +173,11 @@ public class PetVendorOrderResponse {
         }
 
 
-        public int getProduct_price() {
+        public double getProduct_price() {
             return product_price;
         }
 
-        public void setProduct_price(int product_price) {
+        public void setProduct_price(double product_price) {
             this.product_price = product_price;
 
         }

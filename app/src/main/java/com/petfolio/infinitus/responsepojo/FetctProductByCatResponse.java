@@ -83,7 +83,7 @@ public class FetctProductByCatResponse {
         private String _id;
         private String product_img;
         private String product_title;
-        private int product_price;
+        private double product_price;
         private int product_discount;
         private boolean product_fav;
         private double product_rating;
@@ -120,11 +120,11 @@ public class FetctProductByCatResponse {
         }
 
 
-        public int getProduct_price() {
+        public double getProduct_price() {
             return product_price;
         }
 
-        public void setProduct_price(int product_price) {
+        public void setProduct_price(double product_price) {
             this.product_price = product_price;
         }
 
