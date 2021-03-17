@@ -1,7 +1,6 @@
 package com.petfolio.infinitus.doctor;
 
 import android.animation.LayoutTransition;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -26,16 +25,13 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.appUtils.NumericKeyBoardTransformationMethod;
 import com.petfolio.infinitus.requestpojo.AppoinmentCompleteRequest;
-import com.petfolio.infinitus.requestpojo.DoctorCheckStatusRequest;
 import com.petfolio.infinitus.requestpojo.PrescriptionCreateRequest;
 import com.petfolio.infinitus.responsepojo.AppoinmentCompleteResponse;
-import com.petfolio.infinitus.responsepojo.DoctorCheckStatusResponse;
 import com.petfolio.infinitus.responsepojo.PrescriptionCreateResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
-
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -93,7 +89,7 @@ public class PrescriptionActivity extends AppCompatActivity {
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
         Doctor_Name = user.get(SessionManager.KEY_FIRST_NAME);
-        userid = user.get(SessionManager.KEY_ID);
+        Doctor_ID = user.get(SessionManager.KEY_ID);
 
         avi_indicator = findViewById(R.id.avi_indicator);
         avi_indicator.setVisibility(View.GONE);
@@ -102,8 +98,9 @@ public class PrescriptionActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             appoinmentid = extras.getString("id");
-            Doctor_ID = extras.getString("doctorid");
-            Log.w(TAG,"userid :"+" "+appoinmentid);
+            userid = extras.getString("patient_id");
+            Log.w(TAG,"appnntid :"+" "+appoinmentid);
+            Log.w(TAG,"userid :"+" "+userid);
 
         }
 
@@ -309,6 +306,7 @@ public class PrescriptionActivity extends AppCompatActivity {
         prescriptionCreateRequest.setPrescription_type("PDF");
         prescriptionCreateRequest.setPrescription_img("");
         prescriptionCreateRequest.setUser_id(userid);
+        Log.w(TAG, "User_ID" + userid);
         prescriptionCreateRequest.setPrescription_data(prescriptionDataList);
         prescriptionCreateRequest.setTreatment_Done_by(Treatment_Done_by);
         prescriptionCreateRequest.setAppointment_ID(appoinmentid);
@@ -361,7 +359,7 @@ public class PrescriptionActivity extends AppCompatActivity {
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        startActivity(new Intent(PrescriptionActivity.this,DoctorDashboardActivity.class));
+                        startActivity(new Intent(PrescriptionActivity.this, DoctorDashboardActivity.class));
 
 
 

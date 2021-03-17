@@ -21,7 +21,7 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 
-import com.petfolio.infinitus.adapter.PetVendorMissedOrdersAdapter;
+import com.petfolio.infinitus.adapter.PetVendorCancelledOrdersAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.requestpojo.PetVendorOrderRequest;
@@ -212,7 +212,7 @@ public class FragmentPetMissedOrders extends Fragment implements View.OnClickLis
         rv_missedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_missedappointment.setItemAnimator(new DefaultItemAnimator());
         int size = 3;
-        PetVendorMissedOrdersAdapter petVendorMissedOrdersAdapter = new PetVendorMissedOrdersAdapter(mContext, newOrderResponseList,size);
+        PetVendorCancelledOrdersAdapter petVendorMissedOrdersAdapter = new PetVendorCancelledOrdersAdapter(mContext, newOrderResponseList,size);
         rv_missedappointment.setAdapter(petVendorMissedOrdersAdapter);
 
     }
@@ -220,7 +220,7 @@ public class FragmentPetMissedOrders extends Fragment implements View.OnClickLis
         rv_missedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_missedappointment.setItemAnimator(new DefaultItemAnimator());
         int size = newOrderResponseList.size();
-        PetVendorMissedOrdersAdapter petVendorMissedOrdersAdapter = new PetVendorMissedOrdersAdapter(mContext, newOrderResponseList,size);
+        PetVendorCancelledOrdersAdapter petVendorMissedOrdersAdapter = new PetVendorCancelledOrdersAdapter(mContext, newOrderResponseList,size);
         rv_missedappointment.setAdapter(petVendorMissedOrdersAdapter);
 
     }

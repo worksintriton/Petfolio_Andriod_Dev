@@ -1,12 +1,8 @@
 package com.petfolio.infinitus.adapter;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Context;
-
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,26 +15,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.doctor.DoctorAppointmentDetailsActivity;
-import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
-import com.petfolio.infinitus.doctor.DoctorNewAppointmentDetailsActivity;
 import com.petfolio.infinitus.doctor.PrescriptionActivity;
 import com.petfolio.infinitus.doctor.VideoCallDoctorActivity;
 import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
 import com.petfolio.infinitus.interfaces.StartAppointmentListener;
-import com.petfolio.infinitus.petlover.PetNewAppointmentDetailsActivity;
-import com.petfolio.infinitus.petlover.VideoCallPetLoverActivity;
 import com.petfolio.infinitus.requestpojo.DoctorStartAppointmentRequest;
-import com.petfolio.infinitus.requestpojo.PetNoShowRequest;
 import com.petfolio.infinitus.responsepojo.AppointmentsUpdateResponse;
 import com.petfolio.infinitus.responsepojo.DoctorAppointmentsResponse;
-import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -71,7 +60,7 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
     private String petImagePath;
 
 
-    public DoctorNewAppointmentAdapter(Context context, List<DoctorAppointmentsResponse.DataBean> newAppointmentResponseList, RecyclerView inbox_list,int size,OnAppointmentCancel onAppointmentCancel, AVLoadingIndicatorView avi_indicator) {
+    public DoctorNewAppointmentAdapter(Context context, List<DoctorAppointmentsResponse.DataBean> newAppointmentResponseList, RecyclerView inbox_list, int size, OnAppointmentCancel onAppointmentCancel, AVLoadingIndicatorView avi_indicator) {
         this.newAppointmentResponseList = newAppointmentResponseList;
         this.context = context;
         this.size = size;
@@ -171,6 +160,7 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
                 i.putExtra("pettype",newAppointmentResponseList.get(position).getPet_id().getPet_type());
                 i.putExtra("id",newAppointmentResponseList.get(position).get_id());
                 i.putExtra("userid",newAppointmentResponseList.get(position).getUser_id().get_id());
+                Log.w(TAG, " User_ID "+newAppointmentResponseList.get(position).getUser_id().get_id());
                 i.putExtra("allergies",newAppointmentResponseList.get(position).getAllergies());
                 i.putExtra("probleminfo",newAppointmentResponseList.get(position).getProblem_info());
                 i.putExtra("doctorid",newAppointmentResponseList.get(position).getDoctor_id().get_id());
@@ -211,6 +201,7 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
                     i.putExtra("petname", newAppointmentResponseList.get(position).getPet_id().getPet_name());
                     i.putExtra("pettype", newAppointmentResponseList.get(position).getPet_id().getPet_type());
                     i.putExtra("userid", newAppointmentResponseList.get(position).getUser_id().get_id());
+                    Log.w(TAG, " User_ID "+newAppointmentResponseList.get(position).getUser_id().get_id());
                     i.putExtra("allergies", newAppointmentResponseList.get(position).getAllergies());
                     i.putExtra("probleminfo", newAppointmentResponseList.get(position).getProblem_info());
                     Log.w(TAG, "ID-->" + newAppointmentResponseList.get(position).get_id());

@@ -113,6 +113,9 @@ dependencies {
     // Shimmer
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
 
+    //pdf viewpager
+    implementation 'es.voghdev.pdfviewpager:library:1.1.2'
+
 
 
 

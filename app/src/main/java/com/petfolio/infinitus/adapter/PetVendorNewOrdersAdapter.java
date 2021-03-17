@@ -74,14 +74,10 @@ public class PetVendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerVie
         if(newOrderResponseList.get(position).getProduct_price() != 0 && newOrderResponseList.get(position).getProduct_quantity() != 0) {
             holder.txt_products_price.setText("\u20B9 " + newOrderResponseList.get(position).getProduct_price() + " (" + newOrderResponseList.get(position).getProduct_quantity() + " items )");
         }
-
-
-
         if(newOrderResponseList.get(position).getDate_of_booking() != null){
             holder.txt_bookedon.setText("Booked on:"+" "+newOrderResponseList.get(position).getDate_of_booking());
 
         }
-
         if (newOrderResponseList.get(position).getProdcut_image() != null && !newOrderResponseList.get(position).getProdcut_image().isEmpty()) {
             Glide.with(context)
                     .load(newOrderResponseList.get(position).getProdcut_image())
@@ -115,7 +111,8 @@ public class PetVendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerVie
 
 
             }
-        }); holder.txt_cancell_order.setOnClickListener(new View.OnClickListener() {
+        });
+        holder.txt_cancell_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, PetVendorCancelOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

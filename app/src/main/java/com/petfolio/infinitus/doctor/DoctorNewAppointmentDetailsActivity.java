@@ -1,8 +1,5 @@
 package com.petfolio.infinitus.doctor;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
@@ -16,7 +13,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -24,8 +23,6 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.petlover.PetMyappointmentsActivity;
-import com.petfolio.infinitus.petlover.PetNewAppointmentDetailsActivity;
-import com.petfolio.infinitus.petlover.VideoCallPetLoverActivity;
 import com.petfolio.infinitus.requestpojo.AppoinmentCancelledRequest;
 import com.petfolio.infinitus.requestpojo.DoctorStartAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.PetNewAppointmentDetailsRequest;
@@ -42,7 +39,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -264,6 +260,10 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
 
                             String pet_name = response.body().getData().getPet_id().getPet_name();
 
+                            userid = response.body().getData().getUser_id().get_id();
+
+                            Log.w(TAG, " User_ID "+userid);
+
                             pet_image = response.body().getData().getPet_id().getPet_img();
 
                             String pet_type = response.body().getData().getPet_id().getPet_type();
@@ -463,6 +463,7 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
                 i.putExtra("petname", pet_name);
                 i.putExtra("pettype", pet_type);
                 i.putExtra("userid", userid );
+                Log.w(TAG, " User_ID "+userid);
                 i.putExtra("allergies", allergies);
                 i.putExtra("probleminfo", problem_info );
                 i.putExtra("doctorid",doctorid);
@@ -486,6 +487,7 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
                  i.putExtra("petname", pet_name);
                  i.putExtra("pettype", pet_type);
                  i.putExtra("userid", userid );
+                 Log.w(TAG, " User_ID "+userid);
                  i.putExtra("allergies", allergies);
                  i.putExtra("probleminfo", problem_info );
                  Log.w(TAG, "ID-->" + appointment_id);

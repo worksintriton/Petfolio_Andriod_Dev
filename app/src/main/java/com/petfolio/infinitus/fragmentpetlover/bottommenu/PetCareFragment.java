@@ -177,11 +177,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
 
         avi_indicator.setVisibility(View.GONE);
-
-
-
-
-            if(getArguments() != null){
+        if(getArguments() != null){
             fromactivity = getArguments().getString("fromactivity");
             reviewcount = getArguments().getInt("reviewcount");
             specialization = getArguments().getString("specialization");
@@ -203,13 +199,13 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    txt_communicationtype.setText("Communicatoin Online");
+                    txt_communicationtype.setText("Online Doctors");
                     communication_type = 1;
                     if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
                         doctorSearchResponseCall(searchString,communication_type);
                     }
                 }else{
-                    txt_communicationtype.setText("Communicatoin Offline");
+                    txt_communicationtype.setText("Offline Doctors");
                     communication_type = 0;
                     if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
                         doctorSearchResponseCall(searchString,communication_type);
@@ -232,12 +228,14 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
 
         edt_search.addTextChangedListener(new TextWatcher() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
                 Log.w(TAG,"beforeTextChanged-->"+s.toString());
             }
 
+            @SuppressLint("LogNotTimber")
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.w(TAG,"onTextChanged-->"+s.toString());
@@ -427,7 +425,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
         }
     }
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NotNull String[] permissions, @NotNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NotNull String @NotNull [] permissions, @NotNull int[] grantResults) {
         if (requestCode == MY_PERMISSIONS_REQUEST_LOCATION) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {

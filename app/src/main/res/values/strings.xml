@@ -122,6 +122,7 @@
     <string name="tabnew">New</string>
     <string name="tabcompleted">Completed</string>
     <string name="tabmissed">Missed</string>
+    <string name="tabcancelled">Cancelled</string>
     <string name="load_more">Load More</string>
     <string name="settings">Settings</string>
     <string name="logout">Logout</string>
@@ -301,7 +302,7 @@
     <string name="average">Average</string>
     <string name="below_average">Below Average</string>
     <string name="poor">Poor</string>
-    <string name="communication_type">Communication Offline</string>
+    <string name="communication_type">Offline Doctors</string>
     <string name="communicationtype">Communication Type</string>
 
     <string name="review_added">Review Added</string>
@@ -417,6 +418,9 @@
     <string name="ok">Ok</string>
 
     <string name="update_status">Update Status</string>
+    <string name="why_are_you_returning_this">Why are you returning this?</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="accept_terms_and_conditions">Accept Terms and Conditions</string>
 
 
 </resources>

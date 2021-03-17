@@ -97,7 +97,6 @@ public class PetHomeFragment extends Fragment implements Serializable,
         GoogleApiClient.OnConnectionFailedListener, LocationListener,
         View.OnClickListener  {
 
-
     private String TAG = "PetHomeFragment";
     int currentPage = 0;
     Timer timer;

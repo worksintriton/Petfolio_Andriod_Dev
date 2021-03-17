@@ -56,6 +56,10 @@ public class PetVendorOrderDetailsActivity extends AppCompatActivity implements 
     TextView txt_products_price;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_order_status)
+    TextView txt_order_status;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_delivered_date)
     TextView txt_delivered_date;
 
@@ -93,9 +97,10 @@ public class PetVendorOrderDetailsActivity extends AppCompatActivity implements 
 
     private List<DropDownListResponse.DataBean.SpecialzationBean> petSpecilaziationList;
     private String _id;
+    private String fromactivity;
 
 
-    @SuppressLint({"LogNotTimber", "LongLogTag"})
+    @SuppressLint({"LogNotTimber", "LongLogTag", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,9 +112,13 @@ public class PetVendorOrderDetailsActivity extends AppCompatActivity implements 
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-
             _id = extras.getString("_id");
-            Log.w(TAG,"_id : "+_id);
+            fromactivity = extras.getString("fromactivity");
+            Log.w(TAG,"_id : "+_id+" fromactivity : "+fromactivity);
+
+            if(fromactivity != null && fromactivity.equalsIgnoreCase("PetVendorCancelledOrdersAdapter")){
+                txt_order_status.setText("Cancelled");
+            }
 
 
         }

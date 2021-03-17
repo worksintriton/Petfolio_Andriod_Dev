@@ -53,9 +53,11 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
 
     }
 
+    @SuppressLint("LogNotTimber")
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Log.w(TAG,"onCreateViewHolder");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_nearby_doctors, parent, false);
         return new ViewHolderOne(view);
     }
@@ -77,7 +79,7 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
               holder.txt_place.setText(currentItem.getClinic_loc());
           }
           if(currentItem.getDistance() != null) {
-              holder.txt_km.setText(currentItem.getDistance() + "km away");
+              holder.txt_km.setText(currentItem.getDistance() +" km");
           }
           if(currentItem.getSpecialization() != null && currentItem.getSpecialization().size()>0){
               List<DoctorSearchResponse.DataBean.SpecializationBean> specializationBeanList = currentItem.getSpecialization();

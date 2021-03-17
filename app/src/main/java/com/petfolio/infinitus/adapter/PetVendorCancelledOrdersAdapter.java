@@ -2,6 +2,7 @@ package com.petfolio.infinitus.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.petlover.PetVendorOrderDetailsActivity;
 import com.petfolio.infinitus.responsepojo.PetVendorOrderResponse;
 
 import java.util.List;
 
 
-public class PetVendorMissedOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class PetVendorCancelledOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private  String TAG = "PetVendorMissedOrdersAdapter";
+    private  String TAG = "PetVendorCancelledOrdersAdapter";
     private List<PetVendorOrderResponse.DataBean> newOrderResponseList;
 
 
@@ -33,7 +35,7 @@ public class PetVendorMissedOrdersAdapter extends  RecyclerView.Adapter<Recycler
     private int size;
 
 
-    public PetVendorMissedOrdersAdapter(Context context, List<PetVendorOrderResponse.DataBean> newOrderResponseList, int size) {
+    public PetVendorCancelledOrdersAdapter(Context context, List<PetVendorOrderResponse.DataBean> newOrderResponseList, int size) {
         this.newOrderResponseList = newOrderResponseList;
         this.context = context;
         this.size = size;
@@ -46,7 +48,7 @@ public class PetVendorMissedOrdersAdapter extends  RecyclerView.Adapter<Recycler
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_pet_missed_orders, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_pet_cancelled_orders, parent, false);
         return new ViewHolderOne(view);
     }
 
@@ -90,7 +92,16 @@ public class PetVendorMissedOrdersAdapter extends  RecyclerView.Adapter<Recycler
                     .into(holder.img_products_image);
 
         }
+        holder.txt_order_details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, PetVendorOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("_id",newOrderResponseList.get(position).get_id());
+                i.putExtra("fromactivity",TAG);
+                context.startActivity(i);
 
+            }
+        });
 
 
 
@@ -114,7 +125,7 @@ public class PetVendorMissedOrdersAdapter extends  RecyclerView.Adapter<Recycler
     }
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_orderid,txt_producttitle,txt_products_price,txt_bookedon;
+        public TextView txt_orderid,txt_producttitle,txt_products_price,txt_bookedon,txt_order_details;
         public ImageView img_products_image;
 
 
@@ -126,6 +137,7 @@ public class PetVendorMissedOrdersAdapter extends  RecyclerView.Adapter<Recycler
             txt_producttitle = itemView.findViewById(R.id.txt_producttitle);
             txt_products_price = itemView.findViewById(R.id.txt_products_price);
             txt_bookedon = itemView.findViewById(R.id.txt_bookedon);
+            txt_order_details = itemView.findViewById(R.id.txt_order_details);
 
 
 

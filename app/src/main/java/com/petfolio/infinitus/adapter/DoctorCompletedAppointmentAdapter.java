@@ -3,7 +3,6 @@ package com.petfolio.infinitus.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +19,8 @@ import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.doctor.DoctorAppointmentDetailsActivity;
-import com.petfolio.infinitus.doctor.DoctorCompletedAppointmentDetailsActivity;
 import com.petfolio.infinitus.doctor.DoctorPrescriptionDetailsActivity;
 import com.petfolio.infinitus.responsepojo.DoctorAppointmentsResponse;
-import com.petfolio.infinitus.responsepojo.DoctorCompletedAppointmentResponse;
-import com.petfolio.infinitus.responsepojo.DoctorNewAppointmentResponse;
 
 import java.util.List;
 
@@ -40,7 +36,7 @@ public class DoctorCompletedAppointmentAdapter extends  RecyclerView.Adapter<Rec
     private String petImagePath;
 
 
-    public DoctorCompletedAppointmentAdapter(Context context, List<DoctorAppointmentsResponse.DataBean> completedAppointmentResponseList, RecyclerView inbox_list,int size) {
+    public DoctorCompletedAppointmentAdapter(Context context, List<DoctorAppointmentsResponse.DataBean> completedAppointmentResponseList, RecyclerView inbox_list, int size) {
         this.completedAppointmentResponseList = completedAppointmentResponseList;
         this.context = context;
         this.size = size;
@@ -107,6 +103,8 @@ public class DoctorCompletedAppointmentAdapter extends  RecyclerView.Adapter<Rec
                 if(completedAppointmentResponseList.get(position).get_id() != null) {
                     Intent i = new Intent(context, DoctorPrescriptionDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.putExtra("id", completedAppointmentResponseList.get(position).get_id());
+                    i.putExtra("doctor_id", completedAppointmentResponseList.get(position).getDoctor_id().get_id());
+                    i.putExtra("userid", completedAppointmentResponseList.get(position).getUser_id().get_id());
                     context.startActivity(i);
                 }
 

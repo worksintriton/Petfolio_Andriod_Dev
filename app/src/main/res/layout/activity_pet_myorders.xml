@@ -145,7 +145,7 @@
                 android:id="@+id/tabcancelled"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tabmissed" />
+                android:text="@string/tabcancelled" />
 
         </com.google.android.material.tabs.TabLayout>
 

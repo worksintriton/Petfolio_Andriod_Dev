@@ -28,7 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 
 public class PetMyOrdrersActivity extends AppCompatActivity {
-    private String TAG = "PetMyOrdrersActivity";
+    private final String TAG = "PetMyOrdrersActivity";
 
 
     @SuppressLint("NonConstantResourceId")
@@ -42,20 +42,12 @@ public class PetMyOrdrersActivity extends AppCompatActivity {
 
 
 
-    private String active_tag = "1";
+    private final String active_tag = "1";
 
 
     String tag;
 
     String fromactivity;
-
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
-    private ImageView img_back;
-
-
-
-
 
 
     @SuppressLint("LogNotTimber")
@@ -64,9 +56,9 @@ public class PetMyOrdrersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_myorders);
         Log.w(TAG,"onCreate");
-        tabLayout = findViewById(R.id.tablayout);
-        viewPager = findViewById(R.id.viewPager);
-        img_back = findViewById(R.id.img_back);
+        TabLayout tabLayout = findViewById(R.id.tablayout);
+        ViewPager viewPager = findViewById(R.id.viewPager);
+        ImageView img_back = findViewById(R.id.img_back);
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
         img_back.setOnClickListener(v -> onBackPressed());
@@ -76,7 +68,7 @@ public class PetMyOrdrersActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new FragmentPetNewOrders(), "New");
         adapter.addFragment(new FragmentPetCompletedOrders(), "Completed");
-         adapter.addFragment(new FragmentPetMissedOrders(), "Missed");
+         adapter.addFragment(new FragmentPetMissedOrders(), "Cancelled");
         viewPager.setAdapter(adapter);
     }
 

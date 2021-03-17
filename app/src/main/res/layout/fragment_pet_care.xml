@@ -17,8 +17,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="horizontal">
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
 
             <EditText
                 android:id="@+id/edt_search"
@@ -39,7 +41,6 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
@@ -66,91 +67,110 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="10dp"
             android:orientation="vertical">
 
+
             <LinearLayout
+                android:orientation="horizontal"
+                android:weightSum="2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:baselineAligned="false">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
                     <TextView
-                        android:id="@+id/textView20"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/futuramediumbt"
                         android:text="@string/near_by_doctors"
                         android:textColor="@color/new_txt_color"
-                        android:textSize="16sp" />
-
+                        android:textSize="17sp" />
                     <TextView
-                        android:id="@+id/txt_filter"
+                        android:id="@+id/txt_totaldrs"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:drawableEnd="@drawable/ic_baseline_filter_alt_24"
-                        android:drawableRight="@drawable/ic_baseline_filter_alt_24"
-                        android:drawablePadding="10dp"
-                        android:padding="3dp"
-                        android:text="@string/filter"
+                        android:text="@string/doctors"
                         android:textAllCaps="false"
-                        android:textColor="@color/new_txt_color"
-                        android:textSize="16sp"
-                        app:drawableEndCompat="@drawable/ic_baseline_filter_alt_24"
-                        app:drawableRightCompat="@drawable/ic_baseline_filter_alt_24" />
+                        android:textColor="@color/new_sec_txt_color"
+                        android:textSize="14sp" />
 
-                </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end">
+                        <TextView
+                            android:id="@+id/txt_filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:drawableEnd="@drawable/ic_baseline_filter_alt_24"
+                            android:drawablePadding="10dp"
+                            android:padding="3dp"
+                            android:text="@string/filter"
+                            android:textAllCaps="false"
+                            android:textColor="@color/new_txt_color"
+                            android:textSize="14sp"
+                            app:drawableEndCompat="@drawable/ic_baseline_filter_alt_24"
+                            app:drawableRightCompat="@drawable/ic_baseline_filter_alt_24"
+                            tools:ignore="RelativeOverlap,UseCompatTextViewDrawableXml"
+                            android:textStyle="bold"
+                            android:paddingEnd="10dp"
+                            android:paddingStart="20dp"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:layout_marginTop="5dp">
+
+                            <TextView
+                                android:id="@+id/txt_communicationtype"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="2dp"
+                                android:text="@string/communication_type"
+                                android:textColor="@color/new_sec_txt_color"
+                                android:textSize="12sp" />
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/switchButton_communcationtype"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="false"
+                                android:layout_toEndOf="@+id/txt_communicationtype"
+                                android:layout_marginStart="5dp"
+
+                                />
+
+
+
+
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/txt_totaldrs"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/doctors"
-                    android:textAllCaps="false"
-                    android:textColor="@color/new_sec_txt_color"
-                    android:textSize="14sp" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="end">
-
-                    <TextView
-                        android:id="@+id/txt_communicationtype"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="2dp"
-                        android:text="@string/communication_type"
-                        android:textColor="@color/new_sec_txt_color"
-                        android:textSize="12sp" />
-
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/switchButton_communcationtype"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:checked="false"
-
-                        />
-
-                </RelativeLayout>
 
 
-            </RelativeLayout>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_nearbydoctors"
