@@ -169,7 +169,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
         });
 
         btn_add_to_cart.setOnClickListener(v -> {
-            startActivity(new Intent(getApplicationContext(),PetCartActivity.class));
+            Intent intent = new Intent(getApplicationContext(),PetCartActivity.class);
+            intent.putExtra("productid",productid);
+            intent.putExtra("fromactivity",TAG);
+            startActivity(intent);
             finish();
         });
 
@@ -351,12 +354,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     if(200 == response.body().getCode()){
                         Log.w(TAG,"Remove SuccessResponse" + new Gson().toJson(response.body()));
                         product_cart_counts--;
-                        if(product_cart_counts != 0){
-                            txt_cart_count.setText(product_cart_counts+"");
-                        }
-
-
-
+                        txt_cart_count.setText(product_cart_counts+"");
                     }
                 }
             }

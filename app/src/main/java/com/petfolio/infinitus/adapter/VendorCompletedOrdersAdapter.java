@@ -18,8 +18,8 @@ import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.responsepojo.VendorNewOrderResponse;
-import com.petfolio.infinitus.responsepojo.VendorOrderResponse;
 import com.petfolio.infinitus.vendor.VendorOrderDetailsActivity;
+import com.petfolio.infinitus.vendor.VendorUpdateOrderStatusActivity;
 
 import java.util.List;
 
@@ -102,9 +102,9 @@ public class VendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recycler
 
         }
 
-        if(newOrderResponseList.get(position).getDate_of_booking() != null&&!(newOrderResponseList.get(position).getDate_of_booking().isEmpty())){
+        if(newOrderResponseList.get(position).getVendor_complete_date() != null&&!(newOrderResponseList.get(position).getVendor_complete_date().isEmpty())){
 
-            holder.txt_deliveredon.setText("Order Delivered on:"+" "+newOrderResponseList.get(position).getDate_of_booking());
+            holder.txt_deliveredon.setText("Delivered on:"+" "+newOrderResponseList.get(position).getVendor_complete_date());
 
         }
 
@@ -115,6 +115,22 @@ public class VendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recycler
             public void onClick(View v) {
 
                 Intent i = new Intent(context, VendorOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                i.putExtra("order_id",newOrderResponseList.get(position).get_id());
+
+                i.putExtra("fromactivity",TAG);
+
+                context.startActivity(i);
+
+            }
+        });
+
+
+        holder.txt_track_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(context, VendorUpdateOrderStatusActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 i.putExtra("order_id",newOrderResponseList.get(position).get_id());
 
@@ -142,7 +158,7 @@ public class VendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recycler
     }
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_orderid,txt_producttitle,txt_service_cost,txt_deliveredon,txt_order_details;
+        public TextView txt_orderid,txt_producttitle,txt_service_cost,txt_deliveredon,txt_order_details,txt_track_order;
         public ImageView img_pet_imge;
         public LinearLayout ll_new;
 
@@ -157,6 +173,7 @@ public class VendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recycler
             txt_deliveredon = itemView.findViewById(R.id.txt_deliveredon);
             ll_new = itemView.findViewById(R.id.ll_new);
             txt_order_details = itemView.findViewById(R.id.txt_order_details);
+            txt_track_order = itemView.findViewById(R.id.txt_track_order);
 
 
 

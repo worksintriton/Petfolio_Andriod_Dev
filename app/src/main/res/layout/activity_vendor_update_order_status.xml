@@ -353,9 +353,10 @@
                         android:id="@+id/txt_booked_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/futuramediumbt"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
                         android:ellipsize="end"
+                        android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
                         android:text="19-Aug-2020"
                         android:textSize="12sp" />
@@ -419,6 +420,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
@@ -449,7 +451,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal"
-                android:visibility="visible"
+                android:visibility="gone"
                 tools:ignore="UseCompoundDrawables">
 
 
@@ -498,6 +500,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
@@ -509,6 +512,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
@@ -539,7 +543,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal"
-                android:visibility="gone"
+                android:visibility="visible"
                 tools:ignore="UseCompoundDrawables">
 
 
@@ -588,6 +592,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
@@ -599,6 +604,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
@@ -676,6 +682,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
@@ -687,6 +694,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
@@ -758,6 +766,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"

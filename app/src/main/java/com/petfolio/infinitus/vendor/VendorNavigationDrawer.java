@@ -25,9 +25,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
 import com.petfolio.infinitus.activity.NotificationActivity;
-import com.petfolio.infinitus.doctor.DoctorEditProfileActivity;
-import com.petfolio.infinitus.doctor.DoctorMyCalendarActivity;
-import com.petfolio.infinitus.doctor.DoctorProfileScreenActivity;
+
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 
 import java.util.HashMap;
@@ -171,7 +169,7 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
 
                     // For rest of the options we just show a toast on click
                     case R.id.nav_item_two:
-                        gotoMyCalendar();
+                        gotoManageProducts();
                         return true;
 
                     case R.id.nav_item_three:
@@ -279,8 +277,8 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
 
 
 
-    private void gotoMyCalendar() {
-        Intent i = new Intent(VendorNavigationDrawer.this, DoctorMyCalendarActivity.class);
+    private void gotoManageProducts() {
+        Intent i = new Intent(VendorNavigationDrawer.this, ManageProductsActivity.class);
         startActivity(i);
 
     }

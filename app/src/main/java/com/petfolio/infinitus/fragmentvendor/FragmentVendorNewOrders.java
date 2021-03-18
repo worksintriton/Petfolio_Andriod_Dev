@@ -181,6 +181,7 @@ public class FragmentVendorNewOrders extends Fragment implements View.OnClickLis
                             if(response.body().getData().get_id()!=null&&!(response.body().getData().get_id().isEmpty())){
 
                                 vendorNewOrderResponseCall(response.body().getData().get_id());
+                                APIClient.VENDOR_ID = response.body().getData().get_id();
 
                             }
 

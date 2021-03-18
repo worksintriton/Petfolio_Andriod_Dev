@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
             android:layout_marginStart="10dp">
 
 
@@ -29,12 +29,13 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/terms_and_conditions"
                 android:textColor="@color/new_txt_color"
                 android:textSize="18sp"
                 android:textStyle="normal"
+                android:layout_marginStart="10dp"
                />
 
 
@@ -47,7 +48,8 @@
                 app:cardCornerRadius="10dp"
                 app:cardPreventCornerOverlap="true"
                 app:cardUseCompatPadding="true"
-                android:layout_marginTop="30dp">
+                android:layout_marginTop="15dp">
+
                 <ScrollView
                     android:id="@+id/scrollablContent"
                     android:layout_width="match_parent"
@@ -61,10 +63,11 @@
                     <LinearLayout
                         android:id="@+id/pdf_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="200dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
-                        android:orientation="vertical"/>
+                        android:orientation="vertical" />
+
                     <WebView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -75,7 +78,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginTop="30dp"
                         android:layout_marginBottom="20dp"
                         android:layout_marginStart="30dp">
                         <CheckBox
@@ -114,7 +116,7 @@
                 <Button
                     android:id="@+id/btn_return"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="0dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"

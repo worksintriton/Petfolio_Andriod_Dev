@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -108,11 +109,16 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
     @BindView(R.id.ll_content)
     LinearLayout ll_content;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.scrollablContent)
+    ScrollView scrollablContent;
+
     String tag;
     String fromactivity;
 
     private String userid;
     private String productid;
+    private String productdetails_productid;
 
     List<CartDetailsResponse.DataBean> Data = new ArrayList<>();
     private int prodouct_total;
@@ -131,12 +137,27 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
         ButterKnife.bind(this);
         Log.w(TAG,"onCreate");
 
+        scrollablContent.setVisibility(View.GONE);
+        btn_procced_to_buy.setVisibility(View.GONE);
+
         SessionManager sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            productdetails_productid = extras.getString("productid");
+            fromactivity = extras.getString("fromactivity");
+        }
+
+
         img_back.setOnClickListener(v -> onBackPressed());
-        fetch_cart_details_by_userid_Call();
+
+            if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                fetch_cart_details_by_userid_Call();
+            }
+
+
 
         btn_procced_to_buy.setOnClickListener(v -> {
 
@@ -162,9 +183,17 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(PetCartActivity.this, PetLoverDashboardActivity.class);
-        startActivity(i);
-        finish();
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("ProductDetailsActivity")){
+            Intent i = new Intent(PetCartActivity.this, ProductDetailsActivity.class);
+            i.putExtra("productid",productdetails_productid);
+            startActivity(i);
+            finish();
+        }else{
+            Intent i = new Intent(PetCartActivity.this, PetLoverDashboardActivity.class);
+            startActivity(i);
+            finish();
+        }
+
     }
 
 
@@ -187,6 +216,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                         Log.w(TAG,"CartDetailsResponse" + new Gson().toJson(response.body()));
 
                         if(response.body().getData() != null && response.body().getData().size()>0){
+                            scrollablContent.setVisibility(View.VISIBLE);
                             ll_content.setVisibility(View.VISIBLE);
                             ll_cart_is_empty.setVisibility(View.GONE);
                             btn_procced_to_buy.setVisibility(View.VISIBLE);
@@ -225,6 +255,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
 
                         }
                         else {
+                            scrollablContent.setVisibility(View.VISIBLE);
                             ll_content.setVisibility(View.GONE);
                             ll_cart_is_empty.setVisibility(View.VISIBLE);
                             btn_procced_to_buy.setVisibility(View.GONE);

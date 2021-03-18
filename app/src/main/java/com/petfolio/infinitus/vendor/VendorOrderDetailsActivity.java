@@ -1,14 +1,14 @@
 package com.petfolio.infinitus.vendor;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -94,10 +94,11 @@ public class VendorOrderDetailsActivity extends AppCompatActivity implements Vie
 
     String product_title, product_image, order_date, order_id, payment_mode,updated_order_status,fromActivity,order_id_display,order_status_title;
 
-    double product_pr;
-            int order_total, quantity;
+    int order_total, quantity;
 
     Boolean order_image;
+
+    Double product_pr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,7 +176,7 @@ public class VendorOrderDetailsActivity extends AppCompatActivity implements Vie
 
                             }
 
-                            else if(updated_order_status.equals("Cancelled")){
+                            else if(updated_order_status.equals("cancelled")){
 
                                 order_date = response.body().getData().getVendor_cancell_date();
 
@@ -296,7 +297,7 @@ public class VendorOrderDetailsActivity extends AppCompatActivity implements Vie
             txt_quantity.setText("" +quantity);
         }
 
-        if(!order_image){
+        if(order_image){
 
             img_order_status.setImageResource(R.drawable.ic_baseline_check_circle_24);
 

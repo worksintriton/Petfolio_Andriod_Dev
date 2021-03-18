@@ -31,6 +31,8 @@ public class APIClient {
     /* Profile or other Image*/
     public static String PROFILE_IMAGE_URL = BASE_URL+"uploads/Pic_empty.jpg";
 
+    public static String VENDOR_ID = "";
+
 
 
 

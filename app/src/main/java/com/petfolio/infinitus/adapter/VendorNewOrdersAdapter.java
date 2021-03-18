@@ -104,7 +104,7 @@ public class VendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.V
 
         if(newOrderResponseList.get(position).getDate_of_booking() != null&&!(newOrderResponseList.get(position).getDate_of_booking().isEmpty())){
 
-            holder.txt_bookedon.setText("Order Booked on:"+" "+newOrderResponseList.get(position).getDate_of_booking());
+            holder.txt_bookedon.setText("Booked on:"+" "+newOrderResponseList.get(position).getDate_of_booking());
 
         }
 

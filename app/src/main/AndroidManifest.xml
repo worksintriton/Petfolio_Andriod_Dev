@@ -16,7 +16,6 @@
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
-
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -47,6 +46,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,UnusedAttribute"
         tools:replace="android:allowBackup,icon,theme,label,name">
+        <activity android:name=".vendor.ManageProductsActivity"></activity>
         <activity
             android:name=".vendor.VendorUpdateOrderStatusActivity"
             android:screenOrientation="portrait"
@@ -534,17 +534,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
-        <activity android:name=".petlover.PetReturnOrderActivity"
+        <activity
+            android:name=".petlover.PetReturnOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
-        <activity android:name=".vendor.VendorOrderDetailsActivity"
+        <activity
+            android:name=".vendor.VendorOrderDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
 
         <receiver
             android:name=".receiver.SmsBroadcastListener"

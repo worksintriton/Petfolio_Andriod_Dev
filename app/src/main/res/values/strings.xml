@@ -422,5 +422,20 @@
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="accept_terms_and_conditions">Accept Terms and Conditions</string>
 
+    <string name="enter_discount_per_unit">Enter Discount per Unit</string>
+    <string name="enter_deal_price">Enter Deal Price</string>
+    <string name="enter_product_minimal_qty">Enter Product Minimal Qty</string>
+    <string name="select_deal_expiry_date">Select Deal Expiry Date</string>
+    <string name="discount_price">Discount Price</string>
+    <string name="discount">Discount %</string>
+    <string name="apply_discount">Apply Discount</string>
+
+
+    <string name="manage_products">Manage Products</string>
+    <string name="product_name">Product Name</string>
+    <string name="pet_breed">Pet breed</string>
+    <string name="threshold">Threshold</string>
+    <string name="deal_status">Deal Status</string>
+
 
 </resources>

@@ -62,13 +62,13 @@ public class Cart_Adapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder>
         if (data.get(position).getProduct_id().getProduct_name() != null) {
             holder.txt_products_title.setText(data.get(position).getProduct_id().getProduct_name());
         }
-        if (data.get(position).getProduct_id().getCost() != 0) {
-            holder.txt_original_amount.setText("\u20B9 " + data.get(position).getProduct_id().getCost());
+        if (data.get(position).getProduct_id().getDiscount_amount() != 0) {
+            holder.txt_original_amount.setText("\u20B9 " + data.get(position).getProduct_id().getDiscount_amount());
             holder.txt_original_amount.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 
         }
-        if (data.get(position).getProduct_id().getDiscount_amount() != 0) {
-            holder.txt_discount_amount.setText("\u20B9 " + data.get(position).getProduct_id().getDiscount_amount());
+        if (data.get(position).getProduct_id().getCost() != 0) {
+            holder.txt_discount_amount.setText("\u20B9 " + data.get(position).getProduct_id().getCost());
         }
         if (data.get(position).getProduct_id().getDiscount() != 0) {
             holder.txt_discount.setText(data.get(position).getProduct_id().getDiscount() + " % off");
