@@ -30,7 +30,7 @@
                 android:orientation="vertical">
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cv_pet"
-                    android:layout_width="100dp"
+                    android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="5dp"
@@ -55,13 +55,11 @@
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1.3"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginStart="10dp">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -89,7 +87,7 @@
                             android:id="@+id/txt_doctors_specialization"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="2dp"
                             android:fontFamily="@font/futuramediumbt"
                             android:maxLines="1"
                             android:text="@string/specialization"
@@ -104,7 +102,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="2dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -142,7 +140,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginTop="5dp">
+                        android:layout_marginTop="12dp">
 
                         <RelativeLayout
                             android:layout_width="50dp"

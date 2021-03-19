@@ -2,6 +2,7 @@ package com.petfolio.infinitus.petlover;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
@@ -31,6 +33,7 @@ import com.petfolio.infinitus.responsepojo.SuccessResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
+import com.petfolio.infinitus.vendor.VendorUpdateOrderStatusActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.HashMap;
@@ -40,6 +43,7 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -131,7 +135,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     private String userid;
     private String productid;
-    private int product_cart_counts;
+    private int product_cart_counts = 0;
+    private String threshould;
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -168,7 +173,20 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         img_add_product.setOnClickListener(v -> {
             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                add_product_ResponseCall();
+
+                if(threshould != null){
+                    int productqty = Integer.parseInt(threshould);
+                    int cartcount = Integer.parseInt(txt_cart_count.getText().toString());
+                    Log.w(TAG," productqty : "+productqty+" cartcount : "+cartcount);
+                    if(cartcount == productqty || cartcount >productqty){
+                        Toasty.warning(getApplicationContext(), "You can buy only up to "+productqty+" quantity of this product", Toast.LENGTH_SHORT, true).show();
+                    }else{
+                        add_product_ResponseCall();
+                    }
+                }
+
+
+
             }
 
         });
@@ -219,7 +237,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                             int product_discount = response.body().getProduct_details().getProduct_discount();
                             String  product_discription = response.body().getProduct_details().getProduct_discription();
                             int product_cart_count = response.body().getProduct_details().getProduct_cart_count();
-                            String threshould = response.body().getProduct_details().getThreshould();
+                            threshould = response.body().getProduct_details().getThreshould();
 
                             if(response.body().getProduct_details().getProduct_img() != null && response.body().getProduct_details().getProduct_img().size()>0){
                                 viewpageData(response.body().getProduct_details().getProduct_img());
@@ -308,7 +326,23 @@ public class ProductDetailsActivity extends AppCompatActivity {
             ll_discount.setVisibility(View.GONE);
         }
         if(threshould != null && !threshould.isEmpty() ){
-            txt_products_quantity.setText("Prodcut Quantity : "+threshould);
+            if(threshould.equalsIgnoreCase("0")){
+                txt_products_quantity.setText("Out Of Stock");
+                txt_products_quantity.setTextColor(ContextCompat.getColor(ProductDetailsActivity.this, R.color.vermillion));
+                img_add_product.setVisibility(View.GONE);
+                txt_cart_count.setVisibility(View.GONE);
+                img_remove_product.setVisibility(View.GONE);
+                btn_add_to_cart.setVisibility(View.GONE);
+            }else{
+                img_add_product.setVisibility(View.VISIBLE);
+                txt_cart_count.setVisibility(View.VISIBLE);
+                img_remove_product.setVisibility(View.VISIBLE);
+                btn_add_to_cart.setVisibility(View.VISIBLE);
+                txt_products_quantity.setText("Prodcut Quantity : "+threshould);
+                txt_products_quantity.setTextColor(ContextCompat.getColor(ProductDetailsActivity.this, R.color.black));
+
+            }
+
 
         }
         if(product_discription != null && !product_discription.isEmpty()){
@@ -397,9 +431,20 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     if(200 == response.body().getCode()){
                         Log.w(TAG,"Add SuccessResponse" + new Gson().toJson(response.body()));
                         product_cart_counts++;
-                        if(product_cart_counts != 0){
-                            txt_cart_count.setText(product_cart_counts+"");
+                        if(threshould != null){
+                            int productqty = Integer.parseInt(threshould);
+                            if(product_cart_counts > productqty){
+                                Toasty.warning(getApplicationContext(), "You can buy only up to "+productqty+" quantity of this product", Toast.LENGTH_SHORT, true).show();
+                            }else{
+                                if(product_cart_counts != 0){
+                                    txt_cart_count.setText(product_cart_counts+"");
+                                }
+
+                            }
                         }
+
+
+
 
 
 
