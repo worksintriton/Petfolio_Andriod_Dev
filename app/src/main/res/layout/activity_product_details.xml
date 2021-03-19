@@ -252,7 +252,8 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="0.10"
                     android:gravity="end"
-                    tools:ignore="UseCompoundDrawables">
+                    tools:ignore="UseCompoundDrawables"
+                    android:id="@+id/ll_discount">
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"

@@ -239,11 +239,23 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
     @BindView(R.id.txt_order_status_reject_petlover)
     TextView txt_order_status_reject_petlover;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_orderconfirm)
+    LinearLayout ll_orderconfirm;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_dispatch)
+    LinearLayout ll_dispatch;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_transit)
+    LinearLayout ll_transit;
+
     String product_title, product_image, order_date, order_id, payment_mode,updated_order_status,order_id_display,order_status;
 
     int order_total, quantity;
 
-    Double product_pr;
+    int product_pr;
 
     List<VendorFetchOrderDetailsResponse.DataBean.ProdcutTrackDetailsBean> prodcutTrackDetailsBeanList;
 
@@ -358,7 +370,7 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
                 if (new ConnectionDetector(VendorUpdateOrderStatusActivity.this).isNetworkAvailable(VendorUpdateOrderStatusActivity.this)) {
 
-                    vendorCancelsOrder(5, "Vendor cancelled");
+                    addCancelReason();
                 }
 
             }
@@ -380,6 +392,40 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
             Toasty.warning(VendorUpdateOrderStatusActivity.this, "Please Select Order Type", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
+    private void addCancelReason() {
+        try {
+
+            Dialog dialog = new Dialog(VendorUpdateOrderStatusActivity.this);
+            dialog.setContentView(R.layout.add_trackid_popup);
+            dialog.setCancelable(true);
+            EditText edt_addtrackid = dialog.findViewById(R.id.edt_addtrackid);
+            Button btn_addtrackid = dialog.findViewById(R.id.btn_addtrackid);
+
+            edt_addtrackid.setHint("Plz Enter Reason");
+
+            btn_addtrackid.setOnClickListener(view -> {
+                if(edt_addtrackid.getText().toString() != null){
+                    dialog.dismiss();
+                    if (new ConnectionDetector(VendorUpdateOrderStatusActivity.this).isNetworkAvailable(VendorUpdateOrderStatusActivity.this)) {
+
+                        vendorCancelsOrder(5, edt_addtrackid.getText().toString());
+                    }
+                }else{
+                    showErrorLoading("Please Enter the Reason");
+                }
+
+
+            });
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
@@ -728,10 +774,10 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
         VendorCancelsOrderRequest vendorCancelsOrderRequest = new VendorCancelsOrderRequest();
         vendorCancelsOrderRequest.set_id(order_id);
         vendorCancelsOrderRequest.setActivity_id(id);
-        vendorCancelsOrderRequest.setActivity_title(title);
+        vendorCancelsOrderRequest.setActivity_title("Vendor cancelled");
         vendorCancelsOrderRequest.setActivity_date(currentDateandTime);
         vendorCancelsOrderRequest.setVendor_cancell_date(currentDateandTime);
-        vendorCancelsOrderRequest.setVendor_cancell_info("We don't have stock in our company");
+        vendorCancelsOrderRequest.setVendor_cancell_info(title);
         vendorCancelsOrderRequest.setOrder_status("Cancelled");
 
         Log.w(TAG,"appoinmentCancelledRequest"+ "--->" + new Gson().toJson(vendorCancelsOrderRequest));
@@ -921,7 +967,15 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
                         }
 
-                        view_cancel_to_dispatch.setBackground(ContextCompat.getDrawable(VendorUpdateOrderStatusActivity.this, R.drawable.vertical_lines_green));
+                        ll_orderconfirm.setVisibility(View.GONE);
+
+                        ll_dispatch.setVisibility(View.GONE);
+
+                        ll_transit.setVisibility(View.GONE);
+
+                        view_cancel_to_dispatch.setVisibility(View.GONE);
+
+                       // view_cancel_to_dispatch.setBackground(ContextCompat.getDrawable(VendorUpdateOrderStatusActivity.this, R.drawable.vertical_lines_green));
 
                        img_vendor_order_rejected_bypetlover.setImageResource(R.drawable.ic_baseline_check_circle_24);
 
@@ -954,7 +1008,15 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
                         }
 
-                        view_reject_to_dispatch.setBackground(ContextCompat.getDrawable(VendorUpdateOrderStatusActivity.this, R.drawable.vertical_dotted_line_red));
+                        ll_orderconfirm.setVisibility(View.GONE);
+
+                        ll_dispatch.setVisibility(View.GONE);
+
+                        ll_transit.setVisibility(View.GONE);
+
+                        view_reject_to_dispatch.setVisibility(View.GONE);
+
+                        //view_reject_to_dispatch.setBackground(ContextCompat.getDrawable(VendorUpdateOrderStatusActivity.this, R.drawable.vertical_dotted_line_red));
 
                         img_vendor_order_rejected.setImageResource(R.drawable.ic_baseline_check_circle_24);
 

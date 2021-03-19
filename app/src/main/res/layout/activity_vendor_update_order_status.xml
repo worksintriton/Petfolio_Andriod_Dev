@@ -342,11 +342,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:ellipsize="end"
+                        android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
                         android:text="Order booked"
                         android:textColor="@color/black"
                         android:textSize="16sp"
-                        android:fontFamily="@font/futuramediumbt"
                         tools:ignore="UseCompatTextViewDrawableXml" />
 
                     <TextView
@@ -366,11 +366,12 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_order_reject_bypetlover"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal"
-                android:visibility="visible"
+                android:visibility="gone"
                 tools:ignore="UseCompoundDrawables">
 
 
@@ -379,19 +380,19 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/img_vendor_confirmed"
+                        android:id="@+id/img_vendor_order_rejected_bypetlover"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/radio" />
+                        android:src="@drawable/ic_baseline_cancel_24" />
 
                     <View
-                        android:id="@+id/view_confirm_to_dipatch"
+                        android:id="@+id/view_cancel_to_dispatch"
                         android:layout_width="7dp"
                         android:layout_height="40dp"
-                        android:layout_below="@id/img_vendor_confirmed"
+                        android:layout_below="@id/img_vendor_order_rejected_bypetlover"
                         android:layout_centerInParent="false"
                         android:layout_centerHorizontal="true"
-                        android:background="@drawable/vertical_dotted_lines"
+                        android:background="@drawable/vertical_dotted_line_red"
                         android:layerType="software" />
                 </RelativeLayout>
 
@@ -399,24 +400,35 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:orientation="vertical"
-                    android:visibility="visible">
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/txt_order_status_confirm"
+                        android:id="@+id/txt_order_status_reject_petlover"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
-                        android:text="Order Confirmation"
+                        android:text="Order Cancelled"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         tools:ignore="UseCompatTextViewDrawableXml" />
 
                     <TextView
-                        android:id="@+id/txt_order_confirm_date"
+                        android:id="@+id/txt_order_reject_date_reason"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:maxLines="1"
+                        android:text="We don't have stock in our company"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/txt_order_reject_date_petlover"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
@@ -433,7 +445,7 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/txt_edit_order_confirm"
+                        android:id="@+id/txt_edit_order_reject_petlover"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -538,7 +550,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_order_reject_bypetlover"
+                android:id="@+id/ll_orderconfirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -552,19 +564,19 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/img_vendor_order_rejected_bypetlover"
+                        android:id="@+id/img_vendor_confirmed"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_baseline_cancel_24" />
+                        android:src="@drawable/radio" />
 
                     <View
-                        android:id="@+id/view_cancel_to_dispatch"
+                        android:id="@+id/view_confirm_to_dipatch"
                         android:layout_width="7dp"
                         android:layout_height="40dp"
-                        android:layout_below="@id/img_vendor_order_rejected_bypetlover"
+                        android:layout_below="@id/img_vendor_confirmed"
                         android:layout_centerInParent="false"
                         android:layout_centerHorizontal="true"
-                        android:background="@drawable/vertical_dotted_line_red"
+                        android:background="@drawable/vertical_dotted_lines"
                         android:layerType="software" />
                 </RelativeLayout>
 
@@ -572,35 +584,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="visible">
 
                     <TextView
-                        android:id="@+id/txt_order_status_reject_petlover"
+                        android:id="@+id/txt_order_status_confirm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
-                        android:text="Order Cancelled"
+                        android:text="Order Confirmation"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         tools:ignore="UseCompatTextViewDrawableXml" />
 
                     <TextView
-                        android:id="@+id/txt_order_reject_date_reason"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="5dp"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/futuramediumbt"
-                        android:maxLines="1"
-                        android:text="We don't have stock in our company"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/txt_order_reject_date_petlover"
+                        android:id="@+id/txt_order_confirm_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
@@ -617,7 +618,7 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/txt_edit_order_reject_petlover"
+                        android:id="@+id/txt_edit_order_confirm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -630,10 +631,12 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_dispatch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal"
+                android:visibility="visible"
                 tools:ignore="UseCompoundDrawables">
 
 
@@ -645,7 +648,7 @@
                         android:id="@+id/img_vendor_order_dispatched"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/radio"/>
+                        android:src="@drawable/radio" />
 
                     <View
                         android:id="@+id/view_dispatch_to_transit"
@@ -712,10 +715,10 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="5dp"
+                        android:fontFamily="@font/futuramediumbt"
                         android:text="Edit"
-                        android:visibility="gone"
                         android:textColor="@color/red"
-                        android:fontFamily="@font/futuramediumbt"/>
+                        android:visibility="gone" />
                 </RelativeLayout>
 
             </LinearLayout>
@@ -723,6 +726,7 @@
             <!--Order Status type-->
 
             <LinearLayout
+                android:id="@+id/ll_transit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

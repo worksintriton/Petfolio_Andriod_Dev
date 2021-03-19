@@ -98,7 +98,7 @@ public class VendorOrderDetailsActivity extends AppCompatActivity implements Vie
 
     Boolean order_image;
 
-    Double product_pr;
+    int product_pr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.interfaces.OnAcceptsReturnOrder;
+import com.petfolio.infinitus.interfaces.OnRejectsReturnOrder;
 import com.petfolio.infinitus.responsepojo.VendorNewOrderResponse;
 import com.petfolio.infinitus.vendor.VendorOrderDetailsActivity;
 import com.petfolio.infinitus.vendor.VendorUpdateOrderStatusActivity;
@@ -36,14 +39,15 @@ public class VendorCancelledOrdersAdapter extends  RecyclerView.Adapter<Recycler
 
     private int size;
 
+    private OnAcceptsReturnOrder onAcceptsReturnOrder;
 
-    public VendorCancelledOrdersAdapter(Context context, List<VendorNewOrderResponse.DataBean> newOrderResponseList, int size) {
+    private OnRejectsReturnOrder onRejectsReturnOrder;
+
+    public VendorCancelledOrdersAdapter(Context context, List<VendorNewOrderResponse.DataBean> newOrderResponseList, int size, OnAcceptsReturnOrder onAcceptsReturnOrder) {
         this.newOrderResponseList = newOrderResponseList;
         this.context = context;
         this.size = size;
-
-
-
+        this.onAcceptsReturnOrder = onAcceptsReturnOrder;
 
     }
 
@@ -159,9 +163,84 @@ public class VendorCancelledOrdersAdapter extends  RecyclerView.Adapter<Recycler
             }
         });
 
+        Log.w(TAG, "RtnInfo"+ newOrderResponseList.get(position).getUser_return_info());
+
+        Log.w(TAG, "Vndr Acpt"+ newOrderResponseList.get(position).getVendor_accept_cancel());
+
+        if(newOrderResponseList.get(position).getUser_return_info().equals("")&&newOrderResponseList.get(position).getVendor_accept_cancel().equals("")){
+
+            //holder.ll_btn.setVisibility(View.GONE);
+
+            Log.w(TAG, "RtnInfo"+ newOrderResponseList.get(position).getUser_return_info());
+
+            Log.w(TAG, "Vndr Acpt"+ newOrderResponseList.get(position).getVendor_accept_cancel());
+
+            Log.w(TAG, " Do Nothing");
+
+        }
+
+        else if(!(newOrderResponseList.get(position).getUser_return_info().equals(""))&&newOrderResponseList.get(position).getVendor_accept_cancel().equals("")){
+
+            holder.ll_btn.setVisibility(View.VISIBLE);
+
+            Log.w(TAG, "RtnInfo"+ newOrderResponseList.get(position).getUser_return_info());
+
+            Log.w(TAG, "Vndr Acpt"+ newOrderResponseList.get(position).getVendor_accept_cancel());
+
+            Log.w(TAG, " Button Show");
+
+        }
+
+        else if(!(newOrderResponseList.get(position).getUser_return_info().equals(""))&&!(newOrderResponseList.get(position).getVendor_accept_cancel().equals(""))){
+
+            //order return accept - text`
+
+            holder.txt_return_accept.setVisibility(View.VISIBLE);
+
+            Log.w(TAG, "RtnInfo"+ newOrderResponseList.get(position).getUser_return_info());
+
+            Log.w(TAG, "Vndr Acpt"+ newOrderResponseList.get(position).getVendor_accept_cancel());
+
+            Log.w(TAG, " Accept Return");
+
+           //holder.txt_return_accept.setText(" Vendor return accept " + newOrderResponseList.get(position).getUser_return_date());
+
+        }
+
+        else if(!(newOrderResponseList.get(position).getUser_return_info().equals(""))&&!(newOrderResponseList.get(position).getVendor_cancell_info().equals(""))){
+
+            //order return cancel - text
+
+            holder.txt_return_cancel.setVisibility(View.VISIBLE);
+
+            Log.w(TAG, "RtnInfo"+ newOrderResponseList.get(position).getUser_return_info());
+
+            Log.w(TAG, "Vndr Acpt"+ newOrderResponseList.get(position).getVendor_cancell_info());
+
+            Log.w(TAG, " Reject Return");
+
+            //holder.txt_return_cancel.setText(" Vendor return reject " + newOrderResponseList.get(position).getUser_return_date());
+
+        }
+
+
+        holder.btn_accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                onAcceptsReturnOrder.string(newOrderResponseList.get(position).get_id());
+
+            }
+        });
+
+        holder.btn_reject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
 
 
+            }
+        });
     }
 
 
@@ -180,8 +259,9 @@ public class VendorCancelledOrdersAdapter extends  RecyclerView.Adapter<Recycler
     static class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_orderid,txt_producttitle,txt_service_cost,txt_cancelledon,txt_order_details,txt_track_order;
         public ImageView img_pet_imge;
-        public LinearLayout ll_new;
-
+        public LinearLayout ll_new,ll_btn;
+        Button btn_accept,btn_reject;
+        TextView txt_return_accept, txt_return_cancel;
 
 
         public ViewHolderOne(View itemView) {
@@ -194,6 +274,11 @@ public class VendorCancelledOrdersAdapter extends  RecyclerView.Adapter<Recycler
             ll_new = itemView.findViewById(R.id.ll_new);
             txt_order_details = itemView.findViewById(R.id.txt_order_details);
             txt_track_order = itemView.findViewById(R.id.txt_track_order);
+            ll_btn = itemView.findViewById(R.id.ll_btn);
+            btn_accept = itemView.findViewById(R.id.btn_accept);
+            btn_reject = itemView.findViewById(R.id.btn_reject);
+            txt_return_accept = itemView.findViewById(R.id.txt_return_accept);
+            txt_return_cancel = itemView.findViewById(R.id.txt_return_cancel);
 
 
 
@@ -203,10 +288,5 @@ public class VendorCancelledOrdersAdapter extends  RecyclerView.Adapter<Recycler
 
 
     }
-
-
-
-
-
 
 }

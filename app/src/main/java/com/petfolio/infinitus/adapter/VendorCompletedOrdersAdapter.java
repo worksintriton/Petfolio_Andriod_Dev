@@ -141,6 +141,30 @@ public class VendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recycler
             }
         });
 
+//        if(newOrderResponseList.get(position).getUser_cancell_info().equals("")&&newOrderResponseList.get(position).getVendor_accept_cancel().equals("")){
+//
+//            holder.ll_btn.setVisibility(View.GONE);
+//
+//        }
+//
+//        else if(user_return_info=="fjfjfjfjfjfj"&&vendor_accept_cancel==""){
+//
+//            Accept and cancel button need to show
+//
+//        }
+//
+//        else if(user_return_info=="fjfjfjfjfjfj"&&vendor_accept_cancel=="fjfjfjfjfj"){
+//
+//            order return accept - text
+//
+//        }
+//
+//        else (user_return_info=="fjfjfjfjfjfj"&&vendor_cancell_info=="fjfjfjfjfj"){
+//
+//            order return cancel - text
+//
+//        }
+
 
     }
 
@@ -160,7 +184,7 @@ public class VendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recycler
     static class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_orderid,txt_producttitle,txt_service_cost,txt_deliveredon,txt_order_details,txt_track_order;
         public ImageView img_pet_imge;
-        public LinearLayout ll_new;
+        public LinearLayout ll_new,ll_btn;
 
 
 
@@ -174,6 +198,7 @@ public class VendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recycler
             ll_new = itemView.findViewById(R.id.ll_new);
             txt_order_details = itemView.findViewById(R.id.txt_order_details);
             txt_track_order = itemView.findViewById(R.id.txt_track_order);
+            ll_btn = itemView.findViewById(R.id.ll_btn);
 
 
 

@@ -83,7 +83,7 @@ public class TodayDealMoreResponse {
         private String _id;
         private String product_img;
         private String product_title;
-        private double product_price;
+        private int product_price;
         private int product_discount;
         private boolean product_fav;
         private double product_rating;
@@ -120,11 +120,11 @@ public class TodayDealMoreResponse {
         }
 
 
-        public double getProduct_price() {
+        public int getProduct_price() {
             return product_price;
         }
 
-        public void setProduct_price(double product_price) {
+        public void setProduct_price(int product_price) {
             this.product_price = product_price;
 
         }

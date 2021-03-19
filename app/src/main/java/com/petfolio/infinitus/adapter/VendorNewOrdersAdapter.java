@@ -38,7 +38,7 @@ public class VendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.V
     private int size;
 
 
-    public VendorNewOrdersAdapter(Context context, List<VendorNewOrderResponse.DataBean> newOrderResponseList,int size) {
+    public VendorNewOrdersAdapter(Context context, List<VendorNewOrderResponse.DataBean> newOrderResponseList, int size) {
 
         this.newOrderResponseList = newOrderResponseList;
 

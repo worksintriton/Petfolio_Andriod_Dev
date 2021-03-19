@@ -63,15 +63,21 @@ public class Cart_Adapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder>
             holder.txt_products_title.setText(data.get(position).getProduct_id().getProduct_name());
         }
         if (data.get(position).getProduct_id().getDiscount_amount() != 0) {
+            holder.txt_original_amount.setVisibility(View.VISIBLE);
+            holder.txt_original_amount.setPaintFlags(holder.txt_original_amount.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             holder.txt_original_amount.setText("\u20B9 " + data.get(position).getProduct_id().getDiscount_amount());
-            holder.txt_original_amount.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 
+        }else{
+            holder.txt_original_amount.setVisibility(View.GONE);
         }
         if (data.get(position).getProduct_id().getCost() != 0) {
             holder.txt_discount_amount.setText("\u20B9 " + data.get(position).getProduct_id().getCost());
         }
         if (data.get(position).getProduct_id().getDiscount() != 0) {
+            holder.txt_discount.setVisibility(View.VISIBLE);
             holder.txt_discount.setText(data.get(position).getProduct_id().getDiscount() + " % off");
+        }else {
+            holder.txt_discount.setVisibility(View.GONE);
         }
 
         if (data.get(position).getProduct_count() != 0) {
@@ -81,7 +87,7 @@ public class Cart_Adapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         if (petImgBeanList != null && petImgBeanList.size() > 0) {
             for (int j = 0; j < petImgBeanList.size(); j++) {
-                petImagePath = petImgBeanList.get(j);
+                petImagePath = petImgBeanList.get(0);
 
             }
         }

@@ -76,7 +76,7 @@ public class PetVendorCancelledOrdersAdapter extends  RecyclerView.Adapter<Recyc
 
 
         if(newOrderResponseList.get(position).getDate_of_booking() != null){
-            holder.txt_bookedon.setText("Missed on:"+" "+newOrderResponseList.get(position).getDate_of_booking());
+            holder.txt_bookedon.setText("Cancelled on:"+" "+newOrderResponseList.get(position).getDate_of_booking());
 
         }
 

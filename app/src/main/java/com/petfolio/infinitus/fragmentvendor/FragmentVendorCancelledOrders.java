@@ -3,6 +3,7 @@ package com.petfolio.infinitus.fragmentvendor;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,19 +28,26 @@ import com.petfolio.infinitus.adapter.VendorCancelledOrdersAdapter;
 import com.petfolio.infinitus.adapter.VendorCompletedOrdersAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.interfaces.OnAcceptsReturnOrder;
+import com.petfolio.infinitus.requestpojo.VendorAcceptReturnOrderRequest;
 import com.petfolio.infinitus.requestpojo.VendorGetsOrderIdRequest;
 import com.petfolio.infinitus.requestpojo.VendorNewOrderRequest;
 import com.petfolio.infinitus.requestpojo.VendorOrderRequest;
+import com.petfolio.infinitus.responsepojo.VendorAcceptsReturnOrderResponse;
 import com.petfolio.infinitus.responsepojo.VendorGetsOrderIDResponse;
 import com.petfolio.infinitus.responsepojo.VendorNewOrderResponse;
 import com.petfolio.infinitus.responsepojo.VendorOrderResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
+import com.petfolio.infinitus.vendor.VendorDashboardActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -50,7 +58,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentVendorCancelledOrders extends Fragment implements View.OnClickListener {
+public class FragmentVendorCancelledOrders extends Fragment implements View.OnClickListener, OnAcceptsReturnOrder {
     private String TAG = "FragmentVendorCancelledAppointment";
 
 
@@ -303,7 +311,7 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
         rv_missedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_missedappointment.setItemAnimator(new DefaultItemAnimator());
         int size = 3;
-        VendorCancelledOrdersAdapter vendorCancelledOrdersAdapter = new VendorCancelledOrdersAdapter(getContext(), newOrderResponseList,size);
+        VendorCancelledOrdersAdapter vendorCancelledOrdersAdapter = new VendorCancelledOrdersAdapter(getContext(), newOrderResponseList,size,this);
         rv_missedappointment.setAdapter(vendorCancelledOrdersAdapter);
 
     }
@@ -311,7 +319,7 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
         rv_missedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_missedappointment.setItemAnimator(new DefaultItemAnimator());
         int size = newOrderResponseList.size();
-        VendorCancelledOrdersAdapter vendorCancelledOrdersAdapter = new VendorCancelledOrdersAdapter(getContext(), newOrderResponseList,size);
+        VendorCancelledOrdersAdapter vendorCancelledOrdersAdapter = new VendorCancelledOrdersAdapter(getContext(), newOrderResponseList,size,this);
         rv_missedappointment.setAdapter(vendorCancelledOrdersAdapter);
 
     }
@@ -325,6 +333,97 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
                 setViewLoadMore();
                 break;
         }
+    }
+
+    @Override
+    public void string(String order_id) {
+
+        VendorAcceptReturnOrderIDResponseCall(order_id);
+    }
+
+
+    @SuppressLint("LongLogTag")
+    private void VendorAcceptReturnOrderIDResponseCall(String order_id) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<VendorAcceptsReturnOrderResponse> call = apiInterface.update_status_vendor_accept_returnResponseCall(RestUtils.getContentType(), vendorAcceptReturnOrderRequest(order_id) );
+        Log.w(TAG,"VendorAcceptsReturnOrderResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<VendorAcceptsReturnOrderResponse>() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onResponse(@NonNull Call<VendorAcceptsReturnOrderResponse> call, @NonNull Response<VendorAcceptsReturnOrderResponse> response) {
+
+                Log.w(TAG,"VendorAcceptsReturnOrderResponse"+ "--->" + new Gson().toJson(response.body()));
+
+                avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+
+                        if(response.body().getData()!=null){
+
+
+                            startActivity(new Intent(getContext(), VendorDashboardActivity.class));
+
+                        }
+
+
+                    }
+                    else{
+                        showErrorLoading(response.body().getMessage());
+                    }
+                }
+
+
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onFailure(@NonNull Call<VendorAcceptsReturnOrderResponse> call, @NonNull Throwable t) {
+
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"VendorAcceptsReturnOrderResponse flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+
+    private VendorAcceptReturnOrderRequest vendorAcceptReturnOrderRequest(String order_id) {
+
+        /**
+         * _id : 6053b5e0d7570364e4d28c98
+         * activity_id : 6
+         * activity_title : Vendor Accept Return
+         * activity_date : 11-03-2021 03:07 PM
+         * vendor_accept_cancel : Ok I will accept the Return
+         * vendor_accept_cancel_date : 11-03-2021 03:07 PM
+         */
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
+
+
+
+        VendorAcceptReturnOrderRequest vendorAcceptReturnOrderRequest = new VendorAcceptReturnOrderRequest();
+
+        vendorAcceptReturnOrderRequest.set_id(order_id);
+
+        vendorAcceptReturnOrderRequest.setActivity_id(6);
+
+        vendorAcceptReturnOrderRequest.setActivity_title("Vendor Accept Return");
+
+        vendorAcceptReturnOrderRequest.setActivity_date(currentDateandTime);
+
+        vendorAcceptReturnOrderRequest.setVendor_accept_cancel("Ok I will accept the Return");
+
+        vendorAcceptReturnOrderRequest.setVendor_accept_cancel_date(currentDateandTime);
+
+        Log.w(TAG,"vendorAcceptReturnOrderRequest"+ "--->" + new Gson().toJson(vendorAcceptReturnOrderRequest));
+        //  Toasty.success(getApplicationContext(),"fbTokenUpdateRequest : "+new Gson().toJson(fbTokenUpdateRequest), Toast.LENGTH_SHORT, true).show();
+
+        return vendorAcceptReturnOrderRequest;
     }
 
 }

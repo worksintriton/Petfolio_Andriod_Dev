@@ -8,7 +8,7 @@ public class VendorNewOrderResponse {
     /**
      * Status : Success
      * Message : Vendor Order Details List
-     * Data : [{"_id":"604df4edf2d265475731c69e","order_id":"ITEM-1615721709329","product_name":"DOG FOOD 2","product_quantity":1,"product_price":100,"prodcut_image":"http://54.212.108.156:3000/api/uploads/1615541391131.jpeg","date_of_booking":"14-03-2021 05:05 PM","status":"New","user_cancell_info":"","user_cancell_date":"","vendor_cancell_info":"","vendor_cancell_date":"","vendor_accept_cancel":"","vendor_complete_date":"","vendor_complete_info":""}]
+     * Data : [{"_id":"6051f24b9b91642741a996fd","order_id":"ITEM-1615983179194","product_name":"DOG FOOD 2","product_quantity":1,"product_price":100,"prodcut_image":"http://54.212.108.156:3000/api/uploads/1615541391131.jpeg","date_of_booking":"17-03-2021 05:42 PM","status":"Cancelled","user_cancell_info":"","user_cancell_date":"","vendor_cancell_info":"","vendor_cancell_date":"","vendor_accept_cancel":"","vendor_complete_date":"17-03-2021 06:00 pm","vendor_complete_info":"Tracking-Id : 1234568, You can check the product taacking witn this id","user_return_info":"fjfjffjfjxn","user_return_date":"17-03-2021 06:23 PM","user_return_pic":""},{"_id":"605244457d065c2ad31a33f4","order_id":"ITEM-1616004165335","product_name":"DOG FOOD 2","product_quantity":1,"product_price":100,"prodcut_image":"http://54.212.108.156:3000/api/uploads/1615541391131.jpeg","date_of_booking":"17-03-2021 11:32 PM","status":"Cancelled","user_cancell_info":"","user_cancell_date":"","vendor_cancell_info":"We don't have stock in our company","vendor_cancell_date":"18-03-2021 01:14 AM","vendor_accept_cancel":"","vendor_complete_date":"","vendor_complete_info":"","user_return_info":"","user_return_date":"","user_return_pic":""}]
      * Code : 200
      */
 
@@ -16,21 +16,24 @@ public class VendorNewOrderResponse {
     private String Message;
     private int Code;
     /**
-     * _id : 604df4edf2d265475731c69e
-     * order_id : ITEM-1615721709329
+     * _id : 6051f24b9b91642741a996fd
+     * order_id : ITEM-1615983179194
      * product_name : DOG FOOD 2
      * product_quantity : 1
      * product_price : 100
      * prodcut_image : http://54.212.108.156:3000/api/uploads/1615541391131.jpeg
-     * date_of_booking : 14-03-2021 05:05 PM
-     * status : New
+     * date_of_booking : 17-03-2021 05:42 PM
+     * status : Cancelled
      * user_cancell_info :
      * user_cancell_date :
      * vendor_cancell_info :
      * vendor_cancell_date :
      * vendor_accept_cancel :
-     * vendor_complete_date :
-     * vendor_complete_info :
+     * vendor_complete_date : 17-03-2021 06:00 pm
+     * vendor_complete_info : Tracking-Id : 1234568, You can check the product taacking witn this id
+     * user_return_info : fjfjffjfjxn
+     * user_return_date : 17-03-2021 06:23 PM
+     * user_return_pic :
      */
 
     private List<DataBean> Data;
@@ -72,7 +75,7 @@ public class VendorNewOrderResponse {
         private String order_id;
         private String product_name;
         private int product_quantity;
-        private double product_price;
+        private int product_price;
         private String prodcut_image;
         private String date_of_booking;
         private String status;
@@ -83,6 +86,9 @@ public class VendorNewOrderResponse {
         private String vendor_accept_cancel;
         private String vendor_complete_date;
         private String vendor_complete_info;
+        private String user_return_info;
+        private String user_return_date;
+        private String user_return_pic;
 
         public String get_id() {
             return _id;
@@ -116,11 +122,11 @@ public class VendorNewOrderResponse {
             this.product_quantity = product_quantity;
         }
 
-        public double getProduct_price() {
+        public int getProduct_price() {
             return product_price;
         }
 
-        public void setProduct_price(double product_price) {
+        public void setProduct_price(int product_price) {
             this.product_price = product_price;
         }
 
@@ -202,6 +208,30 @@ public class VendorNewOrderResponse {
 
         public void setVendor_complete_info(String vendor_complete_info) {
             this.vendor_complete_info = vendor_complete_info;
+        }
+
+        public String getUser_return_info() {
+            return user_return_info;
+        }
+
+        public void setUser_return_info(String user_return_info) {
+            this.user_return_info = user_return_info;
+        }
+
+        public String getUser_return_date() {
+            return user_return_date;
+        }
+
+        public void setUser_return_date(String user_return_date) {
+            this.user_return_date = user_return_date;
+        }
+
+        public String getUser_return_pic() {
+            return user_return_pic;
+        }
+
+        public void setUser_return_pic(String user_return_pic) {
+            this.user_return_pic = user_return_pic;
         }
     }
 }

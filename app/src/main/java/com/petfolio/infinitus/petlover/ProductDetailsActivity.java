@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
@@ -117,6 +118,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
     @BindView(R.id.btn_add_to_cart)
     Button btn_add_to_cart;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_discount)
+    LinearLayout ll_discount;
+
 
     int currentPage = 0;
     Timer timer;
@@ -210,7 +215,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                             String product_title = response.body().getProduct_details().getProduct_title();
                             int product_review = response.body().getProduct_details().getProduct_review();
                             double product_rating = response.body().getProduct_details().getProduct_rating();
-                            double product_price = response.body().getProduct_details().getProduct_price();
+                            int product_price = response.body().getProduct_details().getProduct_price();
                             int product_discount = response.body().getProduct_details().getProduct_discount();
                             String  product_discription = response.body().getProduct_details().getProduct_discription();
                             int product_cart_count = response.body().getProduct_details().getProduct_cart_count();
@@ -278,7 +283,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     }
 
     @SuppressLint("SetTextI18n")
-    private void setUIData(String product_title,int product_review, double product_rating, double product_price, int product_discount, String product_discription, int product_cart_count, String threshould) {
+    private void setUIData(String product_title,int product_review, double product_rating, int product_price, int product_discount, String product_discription, int product_cart_count, String threshould) {
 
         product_cart_counts = product_cart_count;
 
@@ -293,12 +298,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         }
         if(product_price != 0 ){
-            txt_products_price.setText(product_price+"");
+            txt_products_price.setText("\u20B9 "+product_price);
 
         }
         if(product_discount != 0 ){
-            txt_discount.setText(product_price+" % discount");
-
+            ll_discount.setVisibility(View.VISIBLE);
+            txt_discount.setText(product_discount+" % discount");
+        }else{
+            ll_discount.setVisibility(View.GONE);
         }
         if(threshould != null && !threshould.isEmpty() ){
             txt_products_quantity.setText("Prodcut Quantity : "+threshould);

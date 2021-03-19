@@ -108,14 +108,6 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
     @BindView(R.id.txt_seemore_todaydeals)
     TextView txt_seemore_todaydeals;
 
-
-
-
-
-
-
-
-
     private Context mContext;
     private Dialog alertDialog;
     private List<ShopDashboardResponse.DataBean.BannerDetailsBean> listHomeBannerResponse;
