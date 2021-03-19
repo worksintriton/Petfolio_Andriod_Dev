@@ -32,6 +32,7 @@ import com.petfolio.infinitus.interfaces.AddandRemoveProductListener;
 import com.petfolio.infinitus.requestpojo.FetchByIdRequest;
 import com.petfolio.infinitus.requestpojo.VendorOrderBookingCreateRequest;
 import com.petfolio.infinitus.responsepojo.CartDetailsResponse;
+import com.petfolio.infinitus.responsepojo.CartSuccessResponse;
 import com.petfolio.infinitus.responsepojo.SuccessResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -165,6 +166,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                 startPayment();
             }else if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
                 vendor_order_booking_create_ResponseCall();
+
             }
         });
 
@@ -422,21 +424,21 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
         avi_indicator.smoothToShow();
         //Creating an object of our api interface
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<SuccessResponse> call = ApiService.vendor_order_booking_create_ResponseCall(RestUtils.getContentType(),vendorOrderBookingCreateRequest());
+        Call<CartSuccessResponse> call = ApiService.vendor_order_booking_create_ResponseCall(RestUtils.getContentType(),vendorOrderBookingCreateRequest());
 
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
-        call.enqueue(new Callback<SuccessResponse>() {
+        call.enqueue(new Callback<CartSuccessResponse>() {
             @SuppressLint({"LogNotTimber", "SetTextI18n"})
             @Override
-            public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
+            public void onResponse(@NonNull Call<CartSuccessResponse> call, @NonNull Response<CartSuccessResponse> response) {
                 avi_indicator.smoothToHide();
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
                         Log.w(TAG,"SuccessResponse "+new Gson().toJson(response.body().getData()));
 
                         Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
-                        onBackPressed();
+                        callDirections("2");
 
 
 
@@ -448,7 +450,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
 
             @SuppressLint("LogNotTimber")
             @Override
-            public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull  Throwable t) {
+            public void onFailure(@NonNull Call<CartSuccessResponse> call, @NonNull  Throwable t) {
                 avi_indicator.smoothToHide();
                 Log.w(TAG,"SuccessResponse flr"+t.getMessage());
             }
@@ -570,5 +572,12 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
         } catch (Exception e) {
             Log.w(TAG, "Exception in onPaymentError", e);
         }
+    }
+
+    public void callDirections(String tag){
+        Intent intent = new Intent(getApplicationContext(), PetLoverDashboardActivity.class);
+        intent.putExtra("tag",tag);
+        startActivity(intent);
+        finish();
     }
 }
