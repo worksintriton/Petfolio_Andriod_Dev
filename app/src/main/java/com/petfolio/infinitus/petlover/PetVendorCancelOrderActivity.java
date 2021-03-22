@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -68,6 +69,10 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
     @BindView(R.id.btn_cancel_order)
     Button btn_cancel_order;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.edt_comment)
+    EditText edt_comment;
+
 
 
     @SuppressLint("NonConstantResourceId")
@@ -80,6 +85,8 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
     private String strSelectedReason = "";
     private Dialog dialog;
 
+    String User_cancell_info = "";
+
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
     @Override
@@ -90,10 +97,11 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
 
         img_back.setOnClickListener(this);
 
+        edt_comment.setVisibility(View.GONE);
+
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-
             _id = extras.getString("_id");
             Log.w(TAG,"_id : "+_id);
 
@@ -111,6 +119,14 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
                 ((TextView) parent.getChildAt(0)).setTextColor(getResources().getColor(R.color.green));
                 strSelectedReason = spr_reason.getSelectedItem().toString();
                 Log.w(TAG,"strSelectedReason : "+strSelectedReason);
+
+                if(strSelectedReason != null){
+                    if(strSelectedReason.equalsIgnoreCase("Other")){
+                        edt_comment.setVisibility(View.VISIBLE);
+                    }else{
+                        edt_comment.setVisibility(View.GONE);
+                    }
+                }
 
 
             }
@@ -316,6 +332,14 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
          * user_cancell_date : 11-03-2021 03:07 PM
          */
 
+
+        if(strSelectedReason.equalsIgnoreCase("Other")){
+            edt_comment.setVisibility(View.VISIBLE);
+            User_cancell_info = edt_comment.getText().toString();
+        }else{
+            User_cancell_info = strSelectedReason;
+        }
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
 
@@ -325,7 +349,7 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
         updateStatusCancelRequest.setActivity_title("Order Cancelled");
         updateStatusCancelRequest.setActivity_date(currentDateandTime);
         updateStatusCancelRequest.setOrder_status("Cancelled");
-        updateStatusCancelRequest.setUser_cancell_info(strSelectedReason);
+        updateStatusCancelRequest.setUser_cancell_info(User_cancell_info);
         updateStatusCancelRequest.setUser_cancell_date(currentDateandTime);
 
         Log.w(TAG,"updateStatusCancelRequest"+ "--->" + new Gson().toJson(updateStatusCancelRequest));

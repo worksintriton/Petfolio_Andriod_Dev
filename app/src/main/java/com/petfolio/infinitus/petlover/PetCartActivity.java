@@ -498,6 +498,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
         vendorOrderBookingCreateRequest.setShipping_address("");
         vendorOrderBookingCreateRequest.setBilling_address("");
         vendorOrderBookingCreateRequest.setPayment_id(Payment_id);
+        vendorOrderBookingCreateRequest.setShipping_details_id("60587225344d9b55ceeec259");
         Log.w(TAG,"vendorOrderBookingCreateRequest"+ "--->" + new Gson().toJson(vendorOrderBookingCreateRequest));
         return vendorOrderBookingCreateRequest;
     }

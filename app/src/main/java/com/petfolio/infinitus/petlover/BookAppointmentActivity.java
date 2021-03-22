@@ -260,6 +260,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         cv_pet_img.setVisibility(View.GONE);
         rv_upload_pet_images.setVisibility(View.GONE);
         img_pet_imge.setVisibility(View.VISIBLE);
+        rl_petbreed.setVisibility(View.GONE);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -281,7 +282,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
             if(communicationtype.equalsIgnoreCase("Online Or Visit")){
                 radioButton_online.setVisibility(View.VISIBLE);
                 radioButton_visit.setVisibility(View.VISIBLE);
-
+                radioButton_online.setChecked(true);
 
             }else if(communicationtype.equalsIgnoreCase("Online")){
                 radioButton_online.setVisibility(View.VISIBLE);
@@ -364,16 +365,6 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                     txt_pettype.setText(petType);
                     txt_petbreed.setText(petBreed);
 
-//                    if(petimage != null){
-//                        Glide.with(BookAppointmentActivity.this)
-//                                .load(petimage)
-//                                .into(img_pet_imge);
-//                    }else{
-//                        Glide.with(BookAppointmentActivity.this)
-//                                .load(R.drawable.image_thumbnail)
-//                                .into(img_pet_imge);
-//
-//                    }
 
                     rl_pettype.setVisibility(View.GONE);
                     rl_petbreed.setVisibility(View.GONE);
@@ -396,7 +387,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                     edt_petname.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
 
                     rl_pettype.setVisibility(View.VISIBLE);
-                    rl_petbreed.setVisibility(View.VISIBLE);
+
                     rv_upload_pet_images.setVisibility(View.VISIBLE);
                     txt_lbl_uploadpet.setVisibility(View.VISIBLE);
                     rl_pet_pics.setVisibility(View.VISIBLE);
@@ -420,8 +411,14 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                 strPetType = sprpettype.getSelectedItem().toString();
                 petTypeId = hashMap_PetTypeid.get(strPetType);
                 breedTypeResponseByPetIdCall(petTypeId);
-
                 Log.w(TAG, "petTypeId : " + petTypeId + " strPetType :" + strPetType);
+
+                if(strPetType != null && !strPetType.equalsIgnoreCase("Pet Type")){
+                    rl_petbreed.setVisibility(View.VISIBLE);
+                }else{
+                    rl_petbreed.setVisibility(View.GONE);
+                }
+
 
 
             }
@@ -485,7 +482,6 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                 if( bookAppointmentValidator()){
                     if (validdSelectPetType()) {
                         if(validdSelectPetBreedType()){
-
                             if (edt_allergies.getText().toString().trim().equals("")) {
                                 edt_allergies.setError("Please enter allergies");
                                 edt_allergies.requestFocus();
@@ -606,7 +602,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     }
     private void setPetType(List<PetTypeListResponse.DataBean.UsertypedataBean> usertypedataBeanList) {
         ArrayList<String> pettypeArrayList = new ArrayList<>();
-        pettypeArrayList.add("Select Pet Type");
+        pettypeArrayList.add("Pet Type");
         for (int i = 0; i < usertypedataBeanList.size(); i++) {
 
             String petType = usertypedataBeanList.get(i).getPet_type_title();
@@ -618,6 +614,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
             ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(BookAppointmentActivity.this, R.layout.spinner_item, pettypeArrayList);
             spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item); // The drop down view
             sprpettype.setAdapter(spinnerArrayAdapter);
+
 
 
         }
@@ -667,7 +664,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
     private void setBreedType(List<BreedTypeResponse.DataBean> breedTypedataBeanList) {
         ArrayList<String> pettypeArrayList = new ArrayList<>();
-        pettypeArrayList.add("Select Pet Breed");
+        pettypeArrayList.add("Pet Breed");
         for (int i = 0; i < breedTypedataBeanList.size(); i++) {
 
             String petType = breedTypedataBeanList.get(i).getPet_breed();
@@ -777,7 +774,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     }
 
     public boolean validdSelectPetType() {
-        if (strPetType != null && strPetType.equalsIgnoreCase("Select Pet Type")) {
+        if (strPetType != null && strPetType.equalsIgnoreCase("Pet Type")) {
             final AlertDialog alertDialog = new AlertDialog.Builder(BookAppointmentActivity.this).create();
             alertDialog.setMessage(getString(R.string.err_msg_type_of_pettype));
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
@@ -791,7 +788,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     }
 
     public boolean validdSelectPetBreedType() {
-        if (strPetBreedType != null && strPetBreedType.equalsIgnoreCase("Select Pet Breed")) {
+        if (strPetBreedType != null && strPetBreedType.equalsIgnoreCase("Pet Breed")) {
             final AlertDialog alertDialog = new AlertDialog.Builder(BookAppointmentActivity.this).create();
             alertDialog.setMessage(getString(R.string.err_msg_type_of_petbreedtype));
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
@@ -948,6 +945,8 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                         uploadimagepath = response.body().getData();
                         if (uploadimagepath != null) {
                             setView();
+                        }else{
+                            img_pet_imge.setVisibility(View.GONE);
                         }
 
 

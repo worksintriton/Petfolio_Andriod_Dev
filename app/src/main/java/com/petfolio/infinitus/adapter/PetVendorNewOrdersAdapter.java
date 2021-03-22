@@ -42,9 +42,6 @@ public class PetVendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerVie
         this.context = context;
         this.size = size;
 
-
-
-
     }
 
     @NonNull
@@ -122,13 +119,6 @@ public class PetVendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerVie
 
             }
         });
-
-
-
-
-
-
-
 
     }
 

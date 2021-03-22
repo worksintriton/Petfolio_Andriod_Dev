@@ -448,6 +448,8 @@
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
+            <!--Clinic Pictures-->
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/cdvw_clinic_address"
                 android:layout_width="match_parent"
@@ -468,21 +470,19 @@
                     android:fontFamily="@font/futuramediumbt"
                     android:gravity="start"
                     android:hint="@string/write_here"
+                    android:inputType="textMultiLine"
+                    android:lines="4"
                     android:maxLength="150"
+                    android:maxLines="4"
+                    android:minLines="2"
                     android:padding="15dp"
+                    android:scrollbars="vertical"
                     android:textAlignment="viewStart"
                     android:textColorHint="@color/dark_gray"
                     android:textSize="14sp"
-                    tools:ignore="Autofill,LabelFor"
-                    android:inputType="textMultiLine"
-                    android:lines="4"
-                    android:minLines="2"
-                    android:maxLines="4"
-                android:scrollbars="vertical"/>
+                    tools:ignore="Autofill,LabelFor" />
 
             </androidx.cardview.widget.CardView>
-
-            <!--Clinic Pictures-->
 
             <TextView
                 android:id="@+id/textView16"

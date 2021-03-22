@@ -33,7 +33,7 @@ import retrofit2.Response;
 
 public class PetVendorOrderDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String TAG = "VendorOrderDetailsActivity" ;
+    private static final String TAG = "PetVendorOrderDetailsActivity" ;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_no_records)
@@ -92,6 +92,10 @@ public class PetVendorOrderDetailsActivity extends AppCompatActivity implements 
     TextView txt_billing_address;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_order_status)
+    ImageView img_order_status;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
@@ -116,8 +120,16 @@ public class PetVendorOrderDetailsActivity extends AppCompatActivity implements 
             fromactivity = extras.getString("fromactivity");
             Log.w(TAG,"_id : "+_id+" fromactivity : "+fromactivity);
 
-            if(fromactivity != null && fromactivity.equalsIgnoreCase("PetVendorCancelledOrdersAdapter")){
-                txt_order_status.setText("Cancelled");
+            if(fromactivity != null && fromactivity.equalsIgnoreCase("PetVendorNewOrdersAdapter")){
+                txt_order_status.setText("Booked on");
+                img_order_status.setImageResource(R.drawable.completed);
+            }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetVendorCompletedOrdersAdapter")){
+                txt_order_status.setText("Delivered on");
+                img_order_status.setImageResource(R.drawable.completed);
+            }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetVendorCancelledOrdersAdapter")){
+                txt_order_status.setText("Cancelled on");
+                img_order_status.setImageResource(R.drawable.ic_baseline_cancel_24);
+
             }
 
 
@@ -204,12 +216,19 @@ public class PetVendorOrderDetailsActivity extends AppCompatActivity implements 
                                 Glide.with(getApplicationContext())
                                         .load(response.body().getData().getProdcut_image())
                                         .into(img_products_image);
-                            } else{
+                            }
+                            else{
                                 Glide.with(getApplicationContext())
                                         .load(APIClient.PROFILE_IMAGE_URL)
                                         .into(img_products_image);
 
                             }
+
+                            if(response.body().getData().getDate_of_booking() != null){
+                                txt_delivered_date.setText(response.body().getData().getDate_of_booking());
+                            }
+
+
 
 
                         }
@@ -237,7 +256,6 @@ public class PetVendorOrderDetailsActivity extends AppCompatActivity implements 
     private VendorOrderDetailsRequest vendorOrderDetailsRequest() {
 
         VendorOrderDetailsRequest vendorOrderDetailsRequest = new VendorOrderDetailsRequest();
-
         vendorOrderDetailsRequest.set_id(_id);
 
         Log.w(TAG,"vendorOrderDetailsRequest"+ "--->" + new Gson().toJson(vendorOrderDetailsRequest));

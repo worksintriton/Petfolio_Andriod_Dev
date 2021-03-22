@@ -85,6 +85,10 @@ public class VendorOrderDetailsActivity extends AppCompatActivity implements Vie
     TextView txt_date;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.text)
+    TextView text;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_shipping_address)
     TextView txt_shipping_address;
 
@@ -92,7 +96,7 @@ public class VendorOrderDetailsActivity extends AppCompatActivity implements Vie
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
-    String product_title, product_image, order_date, order_id, payment_mode,updated_order_status,fromActivity,order_id_display,order_status_title;
+    String product_title, product_image, order_date, order_id, payment_mode,updated_order_status,fromActivity,order_id_display,order_status_title = "Booked On";
 
     int order_total, quantity;
 
@@ -124,6 +128,10 @@ public class VendorOrderDetailsActivity extends AppCompatActivity implements Vie
         }
 
         img_back.setOnClickListener(this);
+
+        txt_shipping_address.setVisibility(View.GONE);
+
+        text.setVisibility(View.GONE);
 
     }
 
@@ -166,19 +174,29 @@ public class VendorOrderDetailsActivity extends AppCompatActivity implements Vie
 
                             updated_order_status = response.body().getData().getOrder_status();
 
+                            Log.w(TAG, "Order Status " +updated_order_status);
+
+                            if(response.body().getData().getOrder_id()!=null){
+                                txt_booking_id.setText(response.body().getData().getOrder_id());
+                            }
+
                             if(updated_order_status.equals("New")){
 
                                 order_date = response.body().getData().getDate_of_booking_display();
 
-                                order_status_title = "Delivering on";
+                                Log.w(TAG, "Order Date " +response.body().getData().getDate_of_booking_display());
+
+                                order_status_title = "Booked on";
 
                                 order_image = false;
 
                             }
 
-                            else if(updated_order_status.equals("cancelled")){
+                            else if(updated_order_status.equals("Cancelled")){
 
                                 order_date = response.body().getData().getVendor_cancell_date();
+
+                                Log.w(TAG, "Order Date " +response.body().getData().getDate_of_booking_display());
 
                                 order_status_title = "Cancelled on";
 
@@ -189,6 +207,8 @@ public class VendorOrderDetailsActivity extends AppCompatActivity implements Vie
                             else {
 
                                 order_date = response.body().getData().getDelivery_date_display();
+
+                                Log.w(TAG, "Order Date " +response.body().getData().getDate_of_booking_display());
 
                                 order_status_title = "Delivered on";
 
@@ -245,6 +265,7 @@ public class VendorOrderDetailsActivity extends AppCompatActivity implements Vie
         return vendorFetchOrderDetailsIdRequest;
     }
 
+    @SuppressLint("SetTextI18n")
     private void setView() {
 
         if(product_image != null&&!product_image.isEmpty()){
@@ -275,11 +296,8 @@ public class VendorOrderDetailsActivity extends AppCompatActivity implements Vie
 
             txt_order_date.setText(order_date);
 
-        }
+            txt_date.setText(order_date);
 
-        if(order_id != null&&!order_id.isEmpty()){
-
-            txt_booking_id.setText(product_title);
         }
 
         if(payment_mode != null&&!payment_mode.isEmpty()){
@@ -289,7 +307,7 @@ public class VendorOrderDetailsActivity extends AppCompatActivity implements Vie
 
         if(order_total != 0){
 
-            txt_total_order_cost.setText(""+order_total);
+            txt_total_order_cost.setText("\u20B9 "+order_total);
         }
 
         if(quantity != 0){
@@ -298,12 +316,8 @@ public class VendorOrderDetailsActivity extends AppCompatActivity implements Vie
         }
 
         if(order_image){
-
-            img_order_status.setImageResource(R.drawable.ic_baseline_check_circle_24);
-
-        }
-
-        else {
+            img_order_status.setImageResource(R.drawable.ic_baseline_cancel_24);
+        } else {
 
             img_order_status.setImageResource(R.drawable.completed);
 
@@ -315,6 +329,7 @@ public class VendorOrderDetailsActivity extends AppCompatActivity implements Vie
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
 

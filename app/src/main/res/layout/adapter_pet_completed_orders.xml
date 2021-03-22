@@ -60,7 +60,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/txtlbl_orderid"
@@ -112,7 +113,8 @@
                         android:maxLines="1"
                         android:text="@string/product_title"
                         android:textColor="@color/new_sec_txt_color"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:id="@+id/textView6"
@@ -120,7 +122,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/colon1"
                         android:textColor="@color/new_sec_txt_color"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:id="@+id/txt_producttitle"
@@ -148,14 +151,16 @@
                         android:maxLines="1"
                         android:text="@string/service_cost"
                         android:textColor="@color/new_tri_txt_color"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="gone"/>
                     <TextView
                         android:id="@+id/textView8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/colon1"
                         android:textColor="@color/new_tri_txt_color"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="gone"/>
                     <TextView
                         android:id="@+id/txt_products_price"
                         android:layout_width="wrap_content"
@@ -199,6 +204,18 @@
                         android:textSize="12sp" />
 
                     <TextView
+                        android:id="@+id/txt_track_order"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:maxLines="1"
+                        android:text="@string/track_order"
+                        android:textColor="@color/new_orange_bgm_color"
+                        android:textSize="12sp" />
+
+                    <TextView
                         android:id="@+id/txt_return_order"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -207,16 +224,15 @@
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
                         android:text="@string/return_order"
-                        android:textColor="@color/new_orange_bgm_color"
+                        android:textColor="@color/new_light_green"
                         android:textSize="12sp" />
-
-
 
                 </LinearLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="end">
+                    android:gravity="end"
+                    android:layout_marginTop="10dp">
                     <Button
                         android:id="@+id/btn_add_review"
                         android:layout_width="80dp"

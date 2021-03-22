@@ -34,7 +34,7 @@
     <string name="resendotp">Resend OTP in</string>
     <string name="addyourpet">Add your Pet</string>
     <string name="skip">Skip</string>
-    <string name="pet_name">Pet Name</string>
+    <string name="pet_name">Pet name</string>
     <string name="pet_gender">Pet Gender</string>
     <string name="pet_color">Pet color</string>
     <string name="pet_weight">Pet weight (kg)</string>

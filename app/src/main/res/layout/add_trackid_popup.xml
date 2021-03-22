@@ -59,7 +59,7 @@
             android:layout_margin="20dp"
             android:background="@drawable/new_rounded_corner_btn"
             android:fontFamily="@font/futuramediumbt"
-            android:text="Submit`"
+            android:text="Submit"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="18sp" />

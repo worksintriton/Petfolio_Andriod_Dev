@@ -207,7 +207,7 @@
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
                         android:text="Monday 24 Aug 2020"
-                        android:textColor="@color/black"
+                        android:textColor="@color/new_sec_txt_color"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -232,14 +232,14 @@
 
                 <TextView
                     android:id="@+id/txt_order_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:ellipsize="end"
                     android:fontFamily="@font/futuramediumbt"
                     android:maxLines="1"
                     android:text="19-Aug-2020"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textColor="@color/new_sec_txt_color"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -268,8 +268,8 @@
                     android:fontFamily="@font/futuramediumbt"
                     android:maxLines="1"
                     android:text="1234ABCD12344321"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textColor="@color/new_sec_txt_color"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -298,8 +298,8 @@
                     android:fontFamily="@font/futuramediumbt"
                     android:maxLines="1"
                     android:text="Online"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textColor="@color/new_sec_txt_color"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -328,8 +328,8 @@
                     android:fontFamily="@font/futuramediumbt"
                     android:maxLines="1"
                     android:text="\u20B9  800"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textColor="@color/new_sec_txt_color"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -358,8 +358,8 @@
                     android:fontFamily="@font/futuramediumbt"
                     android:maxLines="1"
                     android:text="2"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textColor="@color/new_sec_txt_color"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -393,8 +393,8 @@
                 android:fontFamily="@font/futuramediumbt"
                 android:maxLines="3"
                 android:text="@string/desc_dummy"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textColor="@color/new_sec_txt_color"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/text1"

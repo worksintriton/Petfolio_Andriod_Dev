@@ -27,7 +27,15 @@ public class CartDetailsResponse {
 
 
     private String user_id;
+    private String shipping_details_id;
 
+    public String getShipping_details_id() {
+        return shipping_details_id;
+    }
+
+    public void setShipping_details_id(String shipping_details_id) {
+        this.shipping_details_id = shipping_details_id;
+    }
 
     private String Status;
     private String Message;

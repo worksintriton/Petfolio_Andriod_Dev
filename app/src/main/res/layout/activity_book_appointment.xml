@@ -8,7 +8,9 @@
         android:id="@+id/headerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true" >
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_header"
@@ -26,7 +28,6 @@
                 android:layout_height="25dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="15dp"
                 android:src="@drawable/back"
                 tools:ignore="ContentDescription" />
 
@@ -44,15 +45,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp">
+                android:layout_marginStart="10dp">
 
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
                     android:src="@drawable/ic_sos"
                     tools:ignore="ContentDescription" />
 
@@ -60,7 +59,6 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
                     android:src="@drawable/ic_notifications"
                     tools:ignore="ContentDescription" />
                 <ImageView
@@ -68,17 +66,13 @@
                     android:layout_height="24dp"
                     android:src="@drawable/ic_bag"
                     tools:ignore="ContentDescription"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"/>
+                    android:layout_marginStart="20dp" />
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_user"
                     tools:ignore="ContentDescription"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp" />
+                    android:layout_marginStart="20dp" />
             </LinearLayout>
 
 
@@ -102,24 +96,25 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="45dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/rectangular_curved_corner"
-                android:padding="10dp">
+                android:background="@drawable/rectangular_curved_corner">
 
                 <Spinner
                     android:id="@+id/spr_selectyourpettype"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent" />
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:gravity="center_horizontal"
+                    android:layout_marginStart="10dp"/>
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/option"
-                    tools:ignore="ContentDescription" />
+                    android:background="@drawable/option"
+                    tools:ignore="ContentDescription"
+                    android:layout_margin="5dp"/>
             </RelativeLayout>
 
             <TextView
@@ -136,7 +131,7 @@
             <EditText
                 android:id="@+id/edt_petname"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/rectangular_curved_corner"
                 android:fontFamily="@font/futuramediumbt"
@@ -154,7 +149,7 @@
             <TextView
                 android:id="@+id/txt_pettype"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/rectangular_curved_corner"
                 android:fontFamily="@font/futuramediumbt"
@@ -167,7 +162,7 @@
             <TextView
                 android:id="@+id/txt_petbreed"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/rectangular_curved_corner"
                 android:fontFamily="@font/futuramediumbt"
@@ -178,53 +173,54 @@
                 android:textSize="14sp"
                 tools:ignore="Autofill,LabelFor" />
 
+
+
+
             <RelativeLayout
                 android:id="@+id/rl_pettype"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/rectangular_curved_corner"
-                android:padding="10dp">
+                android:background="@drawable/rectangular_curved_corner">
 
                 <Spinner
                     android:id="@+id/sprpettype"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent" />
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:gravity="center_horizontal"
+                    android:layout_marginStart="10dp"/>
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/option"
-                    tools:ignore="ContentDescription" />
-
+                    android:background="@drawable/option"
+                    tools:ignore="ContentDescription"
+                    android:layout_margin="5dp"/>
             </RelativeLayout>
-
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rectangular_curved_corner"
+                android:id="@+id/rl_petbreed"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
                 android:layout_marginTop="10dp"
-                android:padding="10dp"
-                android:id="@+id/rl_petbreed">
+                android:background="@drawable/rectangular_curved_corner">
 
                 <Spinner
                     android:id="@+id/sprpetbreed"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@android:color/transparent"
-                    android:autofillHints="Pet Breed"/>
+                    android:gravity="center_horizontal"
+                    android:layout_marginStart="10dp"/>
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/option"
-                    tools:ignore="ContentDescription" />
-
+                    android:background="@drawable/option"
+                    tools:ignore="ContentDescription"
+                    android:layout_margin="5dp"/>
             </RelativeLayout>
 
 
@@ -234,34 +230,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
-
                 <RadioButton
                     android:id="@+id/radioButton1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/new_green_btn"
-                    android:checked="true"
                     android:fontFamily="@font/futuramediumbt"
                     android:text="@string/emergency"
                     android:textColor="@color/new_txt_color"
                     tools:ignore="UnusedAttribute" />
-
                 <RadioButton
                     android:id="@+id/radioButton2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:buttonTint="@color/new_green_btn"
                     android:fontFamily="@font/futuramediumbt"
                     android:text="@string/normal"
                     android:textColor="@color/new_txt_color"
-                    tools:ignore="UnusedAttribute" />
+                    tools:ignore="UnusedAttribute"
+                    android:checked="true"/>
+
+
             </RadioGroup>
 
             <EditText
                 android:id="@+id/edt_allergies"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/rectangular_curved_corner"
                 android:fontFamily="@font/futuramediumbt"
@@ -291,7 +287,7 @@
                 android:id="@+id/rl_pet_pics"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="45dp">
 
                     <TextView
                         android:id="@+id/txt_pet_image"
@@ -308,14 +304,10 @@
                         tools:ignore="Autofill,LabelFor" />
 
                     <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
                         android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_margin="5dp"
                         android:contentDescription="@string/image"
                         android:src="@drawable/img_add" />
 
@@ -331,12 +323,11 @@
                 android:id="@+id/img_pet_imge"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/image"
                 android:src="@drawable/upload"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cdvw"

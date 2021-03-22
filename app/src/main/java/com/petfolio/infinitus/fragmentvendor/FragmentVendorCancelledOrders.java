@@ -62,7 +62,6 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
     private String TAG = "FragmentVendorCancelledAppointment";
 
 
-
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
@@ -262,7 +261,7 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
                         Log.w(TAG,"newOrderResponseList : "+new Gson().toJson(newOrderResponseList));
                         if(response.body().getData().isEmpty()){
                             txt_no_records.setVisibility(View.VISIBLE);
-                            txt_no_records.setText("No new orders");
+                            txt_no_records.setText("No Cancelled orders");
                             rv_missedappointment.setVisibility(View.GONE);
                             btn_load_more.setVisibility(View.GONE);
                         }

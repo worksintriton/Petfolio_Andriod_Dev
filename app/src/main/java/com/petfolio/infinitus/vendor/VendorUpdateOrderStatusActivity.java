@@ -264,6 +264,7 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
     private Dialog alertDialog;
 
     String fromactivity,date_of_booking;
+    private boolean isOrderAccept;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -288,19 +289,6 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
         String currentDateandTime = sdf.format(new Date());
 
 
-        ArrayList<String> orderTypeArrayList = new ArrayList<>();
-
-        orderTypeArrayList.add("Select Order Status");
-
-        orderTypeArrayList.add("Order Confirmation");
-
-        orderTypeArrayList.add("Order Cancellation");
-
-        orderTypeArrayList.add("Order Dispatched");
-
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(VendorUpdateOrderStatusActivity.this, R.layout.spinner_item, orderTypeArrayList);
-
-        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item); // The drop down view
 
 
         if (new ConnectionDetector(VendorUpdateOrderStatusActivity.this).isNetworkAvailable(VendorUpdateOrderStatusActivity.this)) {
@@ -318,7 +306,6 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
             rl_spinner.setVisibility(View.VISIBLE);
 
-            spr_ordertype.setAdapter(spinnerArrayAdapter);
 
             spr_ordertype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -877,6 +864,7 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
                 else if(prodcutTrackDetailsBeanList.get(i).getTitle().equals("Order Accept")) {
 
                     if (prodcutTrackDetailsBeanList.get(i).isStatus()) {
+                        isOrderAccept = true;
 
                         txt_order_confirm_date.setText(" " + prodcutTrackDetailsBeanList.get(i).getDate());
 
@@ -886,15 +874,30 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
                         img_vendor_confirmed.setImageResource(R.drawable.completed);
 
+                        ArrayList<String> orderTypeArrayList = new ArrayList<>();
+                        orderTypeArrayList.add("Select Order Status");
+                        orderTypeArrayList.add("Order Cancellation");
+                        orderTypeArrayList.add("Order Dispatched");
+                        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(VendorUpdateOrderStatusActivity.this, R.layout.spinner_item, orderTypeArrayList);
+                        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item); // The drop down view
+                        spr_ordertype.setAdapter(spinnerArrayAdapter);
 
                     } else {
                         txt_order_confirm_date.setText(" ");
-
                         txt_order_status_confirm.setTextColor(ContextCompat.getColor(VendorUpdateOrderStatusActivity.this, R.color.coolGrey));
-
                         view_book_to_confirm.setBackground(ContextCompat.getDrawable(VendorUpdateOrderStatusActivity.this, R.drawable.vertical_dotted_lines_grey));
-
                         img_vendor_confirmed.setImageResource(R.drawable.button_grey_circle);
+                        txt_edit_order_confirm.setVisibility(View.GONE);
+
+                        ArrayList<String> orderTypeArrayList = new ArrayList<>();
+                        orderTypeArrayList.add("Select Order Status");
+                        orderTypeArrayList.add("Order Confirmation");
+                        orderTypeArrayList.add("Order Cancellation");
+                        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(VendorUpdateOrderStatusActivity.this, R.layout.spinner_item, orderTypeArrayList);
+                        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item); // The drop down view
+                        spr_ordertype.setAdapter(spinnerArrayAdapter);
+
+
 
                     }
 
@@ -920,15 +923,18 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
                         view_dispatch_to_transit.setBackground(ContextCompat.getDrawable(VendorUpdateOrderStatusActivity.this, R.drawable.vertical_lines_green));
 
-                        if(dataBeanList.getVendor_complete_info()!=null&&dataBeanList.getVendor_complete_info().isEmpty()){
+                        if(dataBeanList.getVendor_complete_info()!=null&&!dataBeanList.getVendor_complete_info().isEmpty()){
 
                             txt_order_dispatch_packdetails.setText(""+dataBeanList.getVendor_complete_info());
 
                             txt_order_dispatch_packdetails.setTextColor(ContextCompat.getColor(VendorUpdateOrderStatusActivity.this, R.color.black));
                         }
 
+                        txt_edit_order_confirm.setVisibility(View.GONE);
 
-                    } else {
+
+                    }
+                    else {
                         txt_order_dispatch_date.setText(" ");
 
                         txt_order_transit_date.setText(" ");
@@ -961,7 +967,7 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
                         txt_order_status_reject.setTextColor(ContextCompat.getColor(VendorUpdateOrderStatusActivity.this, R.color.black));
 
-                        if(dataBeanList.getUser_cancell_info()!=null&&dataBeanList.getUser_cancell_info().isEmpty()){
+                        if(dataBeanList.getUser_cancell_info()!=null&&!dataBeanList.getUser_cancell_info().isEmpty()){
 
                             txt_order_reject_date_reason.setText(""+dataBeanList.getUser_cancell_info());
 
@@ -978,6 +984,8 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
                        // view_cancel_to_dispatch.setBackground(ContextCompat.getDrawable(VendorUpdateOrderStatusActivity.this, R.drawable.vertical_lines_green));
 
                        img_vendor_order_rejected_bypetlover.setImageResource(R.drawable.ic_baseline_check_circle_24);
+
+                       txt_edit_order_reject_petlover.setVisibility(View.GONE);
 
 
                     } else {
@@ -1002,7 +1010,7 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
                         txt_order_status_reject_petlover.setTextColor(ContextCompat.getColor(VendorUpdateOrderStatusActivity.this, R.color.black));
 
-                        if(dataBeanList.getVendor_cancell_info()!=null&&dataBeanList.getVendor_cancell_info().isEmpty()){
+                        if(dataBeanList.getVendor_cancell_info()!=null&&!dataBeanList.getVendor_cancell_info().isEmpty()){
 
                             txt_order_vendor_reject_date_reason.setText(""+dataBeanList.getVendor_cancell_info());
 
@@ -1020,6 +1028,7 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
                         img_vendor_order_rejected.setImageResource(R.drawable.ic_baseline_check_circle_24);
 
+                        txt_edit_order_reject.setVisibility(View.GONE);
 
                     } else {
 

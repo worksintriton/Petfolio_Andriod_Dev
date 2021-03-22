@@ -661,7 +661,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:orientation="vertical">
-
                     <TextView
                         android:id="@+id/txt_order_status_dispatch"
                         android:layout_width="wrap_content"
@@ -674,23 +673,23 @@
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         tools:ignore="UseCompatTextViewDrawableXml" />
-
                     <TextView
                         android:id="@+id/txt_order_dispatch_packdetails"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
                         android:text="Tracking-Id : 1234568, You can check the product taacking witn this id"
                         android:textSize="12sp" />
-
                     <TextView
                         android:id="@+id/txt_order_dispatch_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"

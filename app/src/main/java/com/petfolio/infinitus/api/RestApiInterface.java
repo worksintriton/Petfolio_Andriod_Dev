@@ -63,6 +63,8 @@ import com.petfolio.infinitus.requestpojo.SPMyCalendarAvlDaysRequest;
 import com.petfolio.infinitus.requestpojo.SPNotificationSendRequest;
 import com.petfolio.infinitus.requestpojo.SPSpecificServiceDetailsRequest;
 import com.petfolio.infinitus.requestpojo.ServiceCatRequest;
+import com.petfolio.infinitus.requestpojo.ShippingAddressDeleteRequest;
+import com.petfolio.infinitus.requestpojo.ShippingAddressFetchUserRequest;
 import com.petfolio.infinitus.requestpojo.ShopDashboardRequest;
 import com.petfolio.infinitus.requestpojo.SignupRequest;
 import com.petfolio.infinitus.requestpojo.TodayDealMoreRequest;
@@ -143,6 +145,8 @@ import com.petfolio.infinitus.responsepojo.SPFilterPriceListResponse;
 import com.petfolio.infinitus.responsepojo.SPServiceListResponse;
 import com.petfolio.infinitus.responsepojo.SPSpecificServiceDetailsResponse;
 import com.petfolio.infinitus.responsepojo.ServiceCatResponse;
+import com.petfolio.infinitus.responsepojo.ShippingAddressDeleteResponse;
+import com.petfolio.infinitus.responsepojo.ShippingAddressFetchUserResponse;
 import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
 import com.petfolio.infinitus.responsepojo.SignupResponse;
 import com.petfolio.infinitus.responsepojo.SplashScreenResponse;
@@ -656,6 +660,18 @@ public interface RestApiInterface {
     /* Vendor Accepts Return order*/
     @POST("vendor_order_booking/update_status_return")
     Call<VendorAcceptsReturnOrderResponse> update_status_vendor_accept_returnResponseCall(@Header("Content-Type") String type, @Body VendorAcceptReturnOrderRequest vendorAcceptReturnOrderRequest);
+
+  /* User Fetches Last Used Shipping Address */
+    @POST("shipping_address/fetch_by_userid")
+    Call<ShippingAddressFetchUserResponse> fetch_shipp_addr_ResponseCall(@Header("Content-Type") String type, @Body ShippingAddressFetchUserRequest shippingAddressFetchUserRequest);
+
+    /* User Deletes Shipping Address */
+    @POST("shipping_address/fetch_by_userid")
+    Call<ShippingAddressDeleteResponse> delete_shipp_addr_ResponseCall(@Header("Content-Type") String type, @Body ShippingAddressDeleteRequest shippingAddressDeleteRequest);
+
+//    /* User Fetches Last Used Shipping Address */
+//    @POST("shipping_address/fetch_by_userid")
+//    Call<ShippingAddressFetchUserResponse> fetch_shipp_addr_ResponseCall(@Header("Content-Type") String type, @Body ShippingAddressFetchUserRequest shippingAddressFetchUserRequest);
 
 
 }

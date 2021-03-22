@@ -61,7 +61,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/txtlbl_orderid"
@@ -113,7 +114,8 @@
                         android:maxLines="1"
                         android:text="@string/product_title"
                         android:textColor="@color/new_sec_txt_color"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:id="@+id/textView6"
@@ -121,7 +123,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/colon1"
                         android:textColor="@color/new_sec_txt_color"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:id="@+id/txt_producttitle"
@@ -151,7 +154,8 @@
                         android:maxLines="1"
                         android:text="@string/service_cost"
                         android:textColor="@color/new_tri_txt_color"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:id="@+id/textView8"
@@ -159,7 +163,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/colon1"
                         android:textColor="@color/new_tri_txt_color"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:id="@+id/txt_service_cost"
@@ -225,68 +230,68 @@
                         android:visibility="gone" />
 
                 </LinearLayout>
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/ll_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/ly_petname"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <Button
-                    android:id="@+id/btn_accept"
-                    android:layout_width="110dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/new_rounded_corner_btn"
-                    android:fontFamily="@font/futuramediumbt"
-                    android:text="Accept"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
-                    tools:ignore="ButtonStyle" />
-
-                <Button
-                    android:id="@+id/btn_reject"
-                    android:layout_width="110dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
+                <LinearLayout
+                    android:id="@+id/ll_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/orange_background_button"
-                    android:fontFamily="@font/futuramediumbt"
-                    android:text="Reject"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
-                    tools:ignore="ButtonStyle" />
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <Button
+                        android:id="@+id/btn_accept"
+                        android:layout_width="90dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/new_rounded_corner_btn"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:text="Accept"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        tools:ignore="ButtonStyle" />
+
+                    <Button
+                        android:id="@+id/btn_reject"
+                        android:layout_width="90dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/orange_background_button"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:text="Reject"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        tools:ignore="ButtonStyle" />
+
+
+                </LinearLayout>
 
 
             </LinearLayout>
+
+
+
 
             <TextView
                 android:id="@+id/txt_cancelledon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ll_btn"
+                android:layout_below="@id/cv_pet"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/futuramediumbt"
                 android:maxLines="1"
                 android:text="@string/cancelledon"
                 android:textColor="@color/missed_red_color"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:layout_marginBottom="10dp"/>
 
             <TextView
                 android:id="@+id/txt_return_accept"

@@ -132,6 +132,31 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/rv_comment"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="20dp">
+
+                <EditText
+                    android:id="@+id/edt_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rectangular_curved_corner"
+                    android:fontFamily="@font/futuramediumbt"
+                    android:gravity="start"
+                    android:hint="@string/write_here"
+                    android:padding="15dp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/new_light_green"
+                    android:textColorHint="@color/dark_gray"
+                    android:textSize="14sp"
+                    tools:ignore="Autofill,LabelFor"
+                    android:inputType="textMultiLine"
+                    android:scrollbars="vertical"/>
+
+            </RelativeLayout>
+
 
 
 

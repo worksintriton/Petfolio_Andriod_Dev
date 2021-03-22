@@ -17,6 +17,7 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.petlover.PetReturnOrderActivity;
 import com.petfolio.infinitus.petlover.PetVendorOrderDetailsActivity;
+import com.petfolio.infinitus.petlover.PetVendorTrackOrderActivity;
 import com.petfolio.infinitus.responsepojo.PetVendorOrderResponse;
 
 import java.util.List;
@@ -104,6 +105,18 @@ public class PetVendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recyc
 
             }
         });
+        holder.txt_track_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, PetVendorTrackOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("_id",newOrderResponseList.get(position).get_id());
+                i.putExtra("fromactivity",TAG);
+                context.startActivity(i);
+
+
+            }
+        });
+
 
         holder.txt_return_order.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +150,7 @@ public class PetVendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recyc
     }
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_orderid,txt_producttitle,txt_products_price,txt_bookedon,txt_order_details,txt_return_order;
+        public TextView txt_orderid,txt_producttitle,txt_products_price,txt_bookedon,txt_order_details,txt_track_order,txt_return_order;
         public ImageView img_products_image;
 
 
@@ -150,6 +163,7 @@ public class PetVendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recyc
             txt_products_price = itemView.findViewById(R.id.txt_products_price);
             txt_bookedon = itemView.findViewById(R.id.txt_bookedon);
             txt_order_details = itemView.findViewById(R.id.txt_order_details);
+            txt_track_order = itemView.findViewById(R.id.txt_track_order);
             txt_return_order = itemView.findViewById(R.id.txt_return_order);
 
 
