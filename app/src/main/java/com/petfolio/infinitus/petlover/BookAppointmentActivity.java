@@ -84,6 +84,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -248,6 +249,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000;
 
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -848,6 +850,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
     }
 
+    @SuppressLint("LogNotTimber")
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -855,14 +858,16 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         if (requestCode == SELECT_CLINIC_PICTURE || requestCode == SELECT_CLINIC_CAMERA) {
 
             if (requestCode == SELECT_CLINIC_CAMERA) {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                Bitmap photo = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
 
                 File file = new File(getFilesDir(), "Petfolio1" + ".jpg");
 
                 OutputStream os;
                 try {
                     os = new FileOutputStream(file);
-                    photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
+                    if (photo != null) {
+                        photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
+                    }
                     os.flush();
                     os.close();
                 } catch (Exception e) {
@@ -886,7 +891,10 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
                         Log.w("selectedImageUri", " " + selectedImageUri);
 
-                        String filename = getFileName(selectedImageUri);
+                        String filename = null;
+                        if (selectedImageUri != null) {
+                            filename = getFileName(selectedImageUri);
+                        }
 
                         Log.w("filename", " " + filename);
 
@@ -929,19 +937,17 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         Log.w(TAG, "url  :%s" + call.request().url().toString());
 
         call.enqueue(new Callback<FileUploadResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<FileUploadResponse> call, @NonNull Response<FileUploadResponse> response) {
                 avi_indicator.smoothToHide();
-                Log.w(TAG, "Profpic" + "--->" + new Gson().toJson(response.body()));
 
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
-                        // FileUploadResponse fileUploadResponse = new FileUploadResponse(response.body().getStatus(),response.body().getMessage(),response.body().getData(),response.body().getCode());
+                        Log.w(TAG, "Profpic" + "--->" + new Gson().toJson(response.body()));
+
                         DocBusInfoUploadRequest.ClinicPicBean clinicPicBean = new DocBusInfoUploadRequest.ClinicPicBean(response.body().getData().trim());
                         clinicPicBeans.add(clinicPicBean);
-                        Log.w(TAG, "clinicPicBeans : " + new Gson().toJson(clinicPicBeans));
-                        Log.w(TAG, "uploadimagepath " + response.body().getData());
-                        Log.w(TAG, "clinicPicBeans size " + clinicPicBeans.size());
                         uploadimagepath = response.body().getData();
                         if (uploadimagepath != null) {
                             setView();
@@ -957,6 +963,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
             }
 
+            @SuppressLint("LogNotTimber")
             @Override
             public void onFailure(@NonNull Call<FileUploadResponse> call, @NonNull Throwable t) {
                 // avi_indicator.smoothToHide();
@@ -996,6 +1003,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     }
 
 
+    @SuppressLint("LogNotTimber")
     private void addYourPetResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -1004,6 +1012,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         Log.w(TAG, "AddYourPetResponse url  :%s" + " " + call.request().url().toString());
 
         call.enqueue(new Callback<AddYourPetResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<AddYourPetResponse> call, @NonNull Response<AddYourPetResponse> response) {
                 avi_indicator.smoothToHide();
@@ -1380,6 +1389,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<NotificationSendResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<NotificationSendResponse> call, @NonNull Response<NotificationSendResponse> response) {
                 avi_indicator.smoothToHide();
@@ -1408,6 +1418,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private NotificationSendRequest notificationSendRequest() {
 
         /**
@@ -1420,17 +1431,12 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
         String currentDateandTime = simpleDateFormat.format(new Date());
-
-
-
         NotificationSendRequest notificationSendRequest = new NotificationSendRequest();
         notificationSendRequest.setStatus("Payment Failed");
         notificationSendRequest.setDate(currentDateandTime);
         notificationSendRequest.setAppointment_UID("");
         notificationSendRequest.setUser_id(userid);
         notificationSendRequest.setDoctor_id(doctorid);
-
-
         Log.w(TAG,"notificationSendRequest"+ "--->" + new Gson().toJson(notificationSendRequest));
         return notificationSendRequest;
     }

@@ -79,7 +79,6 @@
 
         </androidx.appcompat.widget.Toolbar>
     </LinearLayout>
-
     <ScrollView
         android:id="@+id/scrollablContent"
         android:layout_width="match_parent"
@@ -93,12 +92,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp">
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp">
             <com.vivekkaushik.datepicker.DatePickerTimeline
                 android:id="@+id/datePickerTimeline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -119,7 +118,8 @@
                 android:text="@string/time"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="10dp"
+               />
 
             <LinearLayout
                 android:id="@+id/rootContainer"
@@ -127,15 +127,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="10dp">
 
 
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/rv_doctoravailabeslottime"
-                    />
+                    android:id="@+id/rv_doctoravailabeslottime" />
 
                 <TextView
                     android:layout_marginTop="20dp"
@@ -210,9 +209,6 @@
 
         </LinearLayout>
     </ScrollView>
-
-
-
     <LinearLayout
         android:id="@+id/footerView"
         android:layout_width="match_parent"
@@ -232,7 +228,6 @@
             android:textColor="@color/white"
             android:textSize="@dimen/normal_text_size_for_header"  />
     </LinearLayout>
-
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/avi_indicator"
         android:layout_width="wrap_content"
