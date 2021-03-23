@@ -563,6 +563,8 @@
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
 
+
+
         <receiver
             android:name=".receiver.SmsBroadcastListener"
             android:permission="android.permission.BROADCAST_SMS">

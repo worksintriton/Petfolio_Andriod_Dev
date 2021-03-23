@@ -2,6 +2,8 @@ package com.petfolio.infinitus.petlover;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
@@ -20,12 +22,21 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.adapter.PetCompletedAppointmentAdapter;
+import com.petfolio.infinitus.adapter.ShippingAddressListAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.interfaces.OnDeleteShipAddrListener;
+import com.petfolio.infinitus.interfaces.OnEditShipAddrListener;
+import com.petfolio.infinitus.interfaces.OnSelectingShipIdListener;
+import com.petfolio.infinitus.requestpojo.ShippingAddrMarkAsLastUsedRequest;
+import com.petfolio.infinitus.requestpojo.ShippingAddrMarkAsLastUsedResponse;
 import com.petfolio.infinitus.requestpojo.ShippingAddressDeleteRequest;
-import com.petfolio.infinitus.requestpojo.ShippingAddressFetchUserRequest;
+import com.petfolio.infinitus.requestpojo.ShippingAddressFetchByUserIDRequest;
+import com.petfolio.infinitus.requestpojo.ShippingAddressListingByUserIDRequest;
 import com.petfolio.infinitus.responsepojo.ShippingAddressDeleteResponse;
-import com.petfolio.infinitus.responsepojo.ShippingAddressFetchUserResponse;
+import com.petfolio.infinitus.responsepojo.ShippingAddressFetchByUserIDResponse;
+import com.petfolio.infinitus.responsepojo.ShippingAddressListingByUserIDResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -44,7 +55,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ShippingAddressAddActivity extends AppCompatActivity implements View.OnClickListener{
+public class ShippingAddressAddActivity extends AppCompatActivity implements View.OnClickListener, OnSelectingShipIdListener, OnEditShipAddrListener, OnDeleteShipAddrListener {
 
     private String TAG = "ShippingAddressAddActivity";
 
@@ -76,11 +87,13 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
     @BindView(R.id.btn_use_this_addreess)
     Button btn_use_this_addreess;
 
-    String userid,shipid;
+    String userid;
 
-    List<ShippingAddressFetchUserResponse.DataBean> dataBeanList;
+    List<ShippingAddressListingByUserIDResponse.DataBean> dataBeanList;
 
     Dialog dialog;
+
+    String shippid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +110,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
         userid = user.get(SessionManager.KEY_ID);
 
-        Log.w(TAG,"Vendor ID:  "+userid);
+        Log.w(TAG,"User ID:  "+userid);
 
         ll_add_address.setOnClickListener(this);
 
@@ -145,15 +158,15 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-        Call<ShippingAddressFetchUserResponse> call = apiInterface.fetch_shipp_addr_ResponseCall(RestUtils.getContentType(), shippingAddressFetchUserRequest(userid));
+        Call<ShippingAddressListingByUserIDResponse> call = apiInterface.list_shipp_addr_ResponseCall(RestUtils.getContentType(), shippingAddressListingByUserIDRequest(userid));
 
-        Log.w(TAG,"ShippingAddressFetchUserResponse url  :%s"+" "+ call.request().url().toString());
+        Log.w(TAG,"ShippingAddressListingByUserIDResponse url  :%s"+" "+ call.request().url().toString());
 
-        call.enqueue(new Callback<ShippingAddressFetchUserResponse>() {
+        call.enqueue(new Callback<ShippingAddressListingByUserIDResponse>() {
             @Override
-            public void onResponse(@NonNull Call<ShippingAddressFetchUserResponse> call, @NonNull Response<ShippingAddressFetchUserResponse> response) {
+            public void onResponse(@NonNull Call<ShippingAddressListingByUserIDResponse> call, @NonNull Response<ShippingAddressListingByUserIDResponse> response) {
 
-                Log.w(TAG,"VendorFetchOrderDetailsResponse"+ "--->" + new Gson().toJson(response.body()));
+                Log.w(TAG,"ShippingAddressListingByUserIDResponse"+ "--->" + new Gson().toJson(response.body()));
 
                 avi_indicator.smoothToHide();
 
@@ -198,10 +211,10 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
                 }
 
             @Override
-            public void onFailure(@NonNull Call<ShippingAddressFetchUserResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ShippingAddressListingByUserIDResponse> call, @NonNull Throwable t) {
 
                 avi_indicator.smoothToHide();
-                Log.w(TAG,"ShippingAddressFetchUserResponse flr"+"--->" + t.getMessage());
+                Log.w(TAG,"ShippingAddressFetchByUserIDResponse flr"+"--->" + t.getMessage());
             }
         });
 
@@ -209,7 +222,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
     }
 
     @SuppressLint("LogNotTimber")
-    private ShippingAddressFetchUserRequest shippingAddressFetchUserRequest(String userid) {
+    private ShippingAddressListingByUserIDRequest shippingAddressListingByUserIDRequest(String userid) {
 
 
         /**
@@ -220,13 +233,85 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
 
-        ShippingAddressFetchUserRequest shippingAddressFetchUserRequest = new ShippingAddressFetchUserRequest();
-        shippingAddressFetchUserRequest.setUser_id(userid);
+        ShippingAddressListingByUserIDRequest shippingAddressListingByUserIDRequest = new ShippingAddressListingByUserIDRequest();
+        shippingAddressListingByUserIDRequest.setUser_id(userid);
 
 
-        Log.w(TAG,"shippingAddressFetchUserRequest"+ "--->" + new Gson().toJson(shippingAddressFetchUserRequest));
-        return shippingAddressFetchUserRequest;
+        Log.w(TAG,"shippingAddressFetchByUserIDRequest"+ "--->" + new Gson().toJson(shippingAddressListingByUserIDRequest));
+        return shippingAddressListingByUserIDRequest;
     }
+
+    private void markAsLastUsedResponseCall(String shipsid){
+
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<ShippingAddrMarkAsLastUsedResponse> call = apiInterface.mark_shipp_addr_ResponseCall(RestUtils.getContentType(), shippingAddrMarkAsLastUsedRequest(shipsid));
+
+        Log.w(TAG,"ShippingAddrMarkAsLastUsedResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<ShippingAddrMarkAsLastUsedResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ShippingAddrMarkAsLastUsedResponse> call, @NonNull Response<ShippingAddrMarkAsLastUsedResponse> response) {
+
+                Log.w(TAG,"ShippingAddrMarkAsLastUsedResponse"+ "--->" + new Gson().toJson(response.body()));
+
+                avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+
+                        Intent intent = new Intent(ShippingAddressAddActivity.this, ShippingAddressActivity.class);
+
+                        startActivity(intent);
+
+                        finish();
+
+                    }
+                    else{
+                        //showErrorLoading(response.body().getMessage());
+                        avi_indicator.smoothToHide();
+
+                        Toasty.warning(ShippingAddressAddActivity.this,"Server Issue",Toasty.LENGTH_LONG).show();
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ShippingAddrMarkAsLastUsedResponse> call, @NonNull Throwable t) {
+
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"ShippingAddrMarkAsLastUsedResponse flr"+"--->" + t.getMessage());
+            }
+        });
+
+
+    }
+
+    @SuppressLint("LogNotTimber")
+    private ShippingAddrMarkAsLastUsedRequest shippingAddrMarkAsLastUsedRequest(String shipid) {
+
+        /**
+         * _id : 6058f4ebe748565ddb1fc515
+         * user_id : 604081d12c2b43125f8cb840
+         * user_address_stauts : Last Used
+         */
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
+
+        ShippingAddrMarkAsLastUsedRequest shippingAddrMarkAsLastUsedRequest = new ShippingAddrMarkAsLastUsedRequest();
+        shippingAddrMarkAsLastUsedRequest.set_id(shipid);
+        shippingAddrMarkAsLastUsedRequest.setUser_id(userid);
+        shippingAddrMarkAsLastUsedRequest.setUser_address_stauts("Last Used");
+
+
+        Log.w(TAG,"shippingAddrMarkAsLastUsedRequest"+ "--->" + new Gson().toJson(shippingAddrMarkAsLastUsedRequest));
+        return shippingAddrMarkAsLastUsedRequest;
+    }
+
 
     private void deleteshipAddrresponseCall(String shippingid) {
 
@@ -271,8 +356,6 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
                 Log.w(TAG,"ShippingAddressDeleteResponse flr"+"--->" + t.getMessage());
             }
         });
-
-
 
 
     }
@@ -340,7 +423,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
     }
 
-    private void showWaring() {
+    private void showWaring(String shippingid) {
 
         try{
 
@@ -357,7 +440,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
                     if (new ConnectionDetector(ShippingAddressAddActivity.this).isNetworkAvailable(ShippingAddressAddActivity.this)) {
 
-                        deleteshipAddrresponseCall(shipid);
+                        deleteshipAddrresponseCall(shippingid);
 
                     }
 
@@ -388,6 +471,12 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
     private void setView() {
 
+        rv_shipping_address.setLayoutManager(new LinearLayoutManager(ShippingAddressAddActivity.this));
+        rv_shipping_address.setItemAnimator(new DefaultItemAnimator());
+        int size = 3;
+        ShippingAddressListAdapter shippingAddressListAdapter = new ShippingAddressListAdapter(ShippingAddressAddActivity.this,dataBeanList,size,this,this,this);
+        rv_shipping_address.setAdapter(shippingAddressListAdapter);
+
 
     }
 
@@ -401,11 +490,69 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
     private void gotoShippingAddressActivity() {
 
-        Intent intent = new Intent(ShippingAddressAddActivity.this, ShippingAddressActivity.class);
+        if(shippid!=null&&!shippid.isEmpty()){
 
-        startActivity(intent);
+            markAsLastUsedResponseCall(shippid);
+
+        }
+
+        else
+        {
+
+            Toasty.warning(ShippingAddressAddActivity.this,"Plz choose shipping address ", Toasty.LENGTH_LONG).show();
+        }
 
 
     }
 
+    @Override
+    public void OnEditShipAddr(String shipid, String first_name, String last_name, String phonum, String alt_phonum, String flat_no, String state, String street, String landmark, String pincode, String address_type, String date, String address_status) {
+
+        Intent intent = new Intent(getApplicationContext(), ShippingAddressEditActivity.class);
+
+        intent.putExtra("fromactivity", TAG);
+
+        intent.putExtra("shipid",shipid);
+
+        intent.putExtra("first_name",first_name);
+
+        intent.putExtra("last_name",last_name);
+
+        intent.putExtra("phonum",phonum);
+
+        intent.putExtra("alt_phonum",alt_phonum);
+
+        intent.putExtra("flat_no",flat_no);
+
+        intent.putExtra("state",state);
+
+        intent.putExtra("street",street);
+
+        intent.putExtra("landmark",landmark);
+
+        intent.putExtra("pincode",pincode);
+
+        intent.putExtra("address_type",address_type);
+
+        intent.putExtra("date",date);
+
+        intent.putExtra("address_status",address_status);
+
+        startActivity(intent);
+
+        finish();
+
+    }
+
+    @Override
+    public void onSelectShipID(String shipid, String first_name, String last_name, String phonum, String alt_phonum, String flat_no, String state, String street, String landmark, String pincode, String address_type, String date, String address_status) {
+
+        shippid = shipid;
+    }
+
+    @Override
+    public void OnDeleteShipAddr(String shipid, String first_name, String last_name, String phonum, String alt_phonum, String flat_no, String state, String street, String landmark, String pincode, String address_type, String date, String address_status) {
+
+        showWaring(shipid);
+    }
 }

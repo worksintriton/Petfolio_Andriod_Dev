@@ -15,12 +15,12 @@
         android:background="@drawable/new_background_black">
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/rb_choose_addr_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:buttonTint="@color/new_green_btn"
-            android:checked="true"
+            android:checked="false"
             android:fontFamily="@font/futuramediumbt"
             android:textColor="@color/new_txt_color"
             tools:ignore="UnusedAttribute" />
@@ -32,7 +32,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_toEndOf="@id/radioButton"
+            android:layout_toEndOf="@id/rb_choose_addr_list"
             android:orientation="vertical">
 
             <LinearLayout

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.TextureView;
 import android.view.View;
@@ -44,6 +45,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -162,10 +164,25 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
 
         btn_procced_to_buy.setOnClickListener(v -> {
 
-            if(grand_total != 0) {
-                startPayment();
-            }else if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                vendor_order_booking_create_ResponseCall();
+//            if(grand_total != 0) {
+//                startPayment();
+//            }else if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+//                vendor_order_booking_create_ResponseCall();
+//
+//            }
+
+            if(grand_total!=0){
+
+                Intent i = new Intent(getApplicationContext(), ShippingAddressActivity.class);
+                i.putExtra("fromactivity",TAG);
+             //   i.putExtra("data", (Serializable) Data);
+                i.putExtra("product_total",prodouct_total);
+                i.putExtra("shipping_charge",shipping_charge);
+                i.putExtra("discount_price",discount_price);
+                i.putExtra("grand_total",grand_total);
+                i.putExtra("prodcut_count",prodcut_count);
+                i.putExtra("prodcut_item_count",prodcut_item_count);
+                startActivity(i);
 
             }
         });
@@ -420,18 +437,18 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
 
     @SuppressLint("LogNotTimber")
     public void vendor_order_booking_create_ResponseCall(){
-        avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();
+       avi_indicator.setVisibility(View.VISIBLE);
+       avi_indicator.smoothToShow();
         //Creating an object of our api interface
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
         Call<CartSuccessResponse> call = ApiService.vendor_order_booking_create_ResponseCall(RestUtils.getContentType(),vendorOrderBookingCreateRequest());
 
-        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+       Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
-        call.enqueue(new Callback<CartSuccessResponse>() {
+       call.enqueue(new Callback<CartSuccessResponse>() {
             @SuppressLint({"LogNotTimber", "SetTextI18n"})
-            @Override
-            public void onResponse(@NonNull Call<CartSuccessResponse> call, @NonNull Response<CartSuccessResponse> response) {
+           @Override
+           public void onResponse(@NonNull Call<CartSuccessResponse> call, @NonNull Response<CartSuccessResponse> response) {
                 avi_indicator.smoothToHide();
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
@@ -451,9 +468,9 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
             @SuppressLint("LogNotTimber")
             @Override
             public void onFailure(@NonNull Call<CartSuccessResponse> call, @NonNull  Throwable t) {
-                avi_indicator.smoothToHide();
-                Log.w(TAG,"SuccessResponse flr"+t.getMessage());
-            }
+            avi_indicator.smoothToHide();
+               Log.w(TAG,"SuccessResponse flr"+t.getMessage());
+          }
         });
 
     }
@@ -498,7 +515,6 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
         vendorOrderBookingCreateRequest.setShipping_address("");
         vendorOrderBookingCreateRequest.setBilling_address("");
         vendorOrderBookingCreateRequest.setPayment_id(Payment_id);
-        vendorOrderBookingCreateRequest.setShipping_details_id("60587225344d9b55ceeec259");
         Log.w(TAG,"vendorOrderBookingCreateRequest"+ "--->" + new Gson().toJson(vendorOrderBookingCreateRequest));
         return vendorOrderBookingCreateRequest;
     }

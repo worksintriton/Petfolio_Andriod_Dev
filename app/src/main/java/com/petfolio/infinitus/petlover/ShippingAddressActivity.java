@@ -24,17 +24,15 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.requestpojo.ShippingAddressDeleteRequest;
-import com.petfolio.infinitus.requestpojo.ShippingAddressFetchUserRequest;
-import com.petfolio.infinitus.requestpojo.VendorFetchOrderDetailsIdRequest;
+import com.petfolio.infinitus.requestpojo.ShippingAddressFetchByUserIDRequest;
+import com.petfolio.infinitus.requestpojo.VendorOrderBookingCreateRequest;
 import com.petfolio.infinitus.responsepojo.CartDetailsResponse;
 import com.petfolio.infinitus.responsepojo.CartSuccessResponse;
 import com.petfolio.infinitus.responsepojo.ShippingAddressDeleteResponse;
-import com.petfolio.infinitus.responsepojo.ShippingAddressFetchUserResponse;
-import com.petfolio.infinitus.responsepojo.VendorFetchOrderDetailsResponse;
+import com.petfolio.infinitus.responsepojo.ShippingAddressFetchByUserIDResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
-import com.petfolio.infinitus.vendor.VendorOrderDetailsActivity;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -42,11 +40,11 @@ import com.wang.avi.AVLoadingIndicatorView;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -127,13 +125,26 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
     String first_name,last_name,flat_no,landmark,pincode,alt_phonum,address_status;
 
-    List<ShippingAddressFetchUserResponse.DataBean> dataBeanList;
+    ShippingAddressFetchByUserIDResponse.DataBean dataBeanList;
 
     private Dialog dialog;
 
     private String Payment_id = "";
 
-    int grand_total;
+    List<CartDetailsResponse.DataBean> Data = new ArrayList<>();
+
+    private int prodouct_total;
+
+    private int shipping_charge;
+
+    private int discount_price;
+
+    private int grand_total;
+
+    private int prodcut_count;
+
+    private int prodcut_item_count;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -151,7 +162,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
         userid = user.get(SessionManager.KEY_ID);
 
-        Log.w(TAG,"Vendor ID:  "+userid);
+        Log.w(TAG,"User ID:  "+userid);
 
         Bundle extras = getIntent().getExtras();
 
@@ -159,10 +170,23 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
             fromactivity = extras.getString("fromactivity");
 
-            if(fromactivity.equals("PetCartActivity"))
+            if(!fromactivity.equals("ShippingAddressAddActivity"))
             {
+                Log.w(TAG,"From "+ fromactivity +" : true-->");
+
+             //   Data = (List<VendorOrderBookingCreateRequest.DataBean>) extras.getSerializable("data");
+
+                prodouct_total = extras.getInt("product_total");
+
+                shipping_charge = extras.getInt("shipping_charge");
+
+                discount_price = extras.getInt("discount_price");
 
                 grand_total = extras.getInt("grand_total");
+
+                prodcut_count = extras.getInt("prodcut_count");
+
+                prodcut_item_count = extras.getInt("prodcut_item_count");
 
                 if (new ConnectionDetector(ShippingAddressActivity.this).isNetworkAvailable(ShippingAddressActivity.this)) {
 
@@ -174,6 +198,8 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
             else
             {
+                Log.w(TAG,"false-->");
+
                 shipid = extras.getString("shipid");
 
                 first_name = extras.getString("first_name");
@@ -198,13 +224,9 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
                 landmark_pincode = landmark +" , "+ pincode;
 
-                address_type = "Home";
+                address_type = extras.getString("address_type");
 
-                //address_type = extras.getString("address_type");
-
-                date = "14/02/2021";
-
-                //date = extras.getString("date");
+                date = extras.getString("date");
 
                 address_status = extras.getString("address_status");
 
@@ -255,6 +277,17 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
         }
 
+        if(date!=null&&!date.isEmpty()){
+
+            txt_date.setText(date);
+
+        }
+
+        if(address_type!=null&&!address_type.isEmpty()){
+
+            txt_addrs_type.setText(address_type);
+
+        }
     }
 
 
@@ -267,68 +300,93 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
 
-        Call<ShippingAddressFetchUserResponse> call = apiInterface.fetch_shipp_addr_ResponseCall(RestUtils.getContentType(), shippingAddressFetchUserRequest(userid));
+        Call<ShippingAddressFetchByUserIDResponse> call = apiInterface.fetch_shipp_addr_ResponseCall(RestUtils.getContentType(), shippingAddressFetchByUserIDRequest(userid));
 
-        Log.w(TAG,"ShippingAddressFetchUserResponse url  :%s"+" "+ call.request().url().toString());
+        Log.w(TAG,"ShippingAddressFetchByUserIDResponse url  :%s"+" "+ call.request().url().toString());
 
-        call.enqueue(new Callback<ShippingAddressFetchUserResponse>() {
+        call.enqueue(new Callback<ShippingAddressFetchByUserIDResponse>() {
             @Override
-            public void onResponse(@NonNull Call<ShippingAddressFetchUserResponse> call, @NonNull Response<ShippingAddressFetchUserResponse> response) {
+            public void onResponse(@NonNull Call<ShippingAddressFetchByUserIDResponse> call, @NonNull Response<ShippingAddressFetchByUserIDResponse> response) {
 
-                Log.w(TAG,"VendorFetchOrderDetailsResponse"+ "--->" + new Gson().toJson(response.body()));
+                Log.w(TAG,"ShippingAddressFetchByUserIDResponse"+ "--->" + new Gson().toJson(response.body()));
 
                 avi_indicator.smoothToHide();
 
-                if (response.body() != null) {
-                    if(response.body().getCode() == 200){
+                if (response.body() != null)
+                {
+                    if(response.body().getCode() == 200)
+                    {
 
-                        if(response.body().getData()!=null&&!(response.body().getData().isEmpty()))
+                        if(response.body().getData()!=null)
                         {
                             dataBeanList = response.body().getData();
 
-                            if(dataBeanList.size()>0)
+                            if(dataBeanList.getUser_address_stauts()!=null&&!dataBeanList.getUser_address_stauts().isEmpty())
                             {
 
-                                for(int i=0;i<dataBeanList.size();i++){
+                                Log.w(TAG, "Status" + dataBeanList.getUser_address_stauts());
 
-                                    if(dataBeanList.get(i).getUser_address_stauts().equals("Last Used")){
+                                if(dataBeanList.getUser_address_stauts().equals("Last Used")){
 
-                                        shipid = dataBeanList.get(i).get_id();
+                                    Log.w(TAG,"true-->");
 
-                                        first_name = dataBeanList.get(i).getUser_first_name();
+                                    shipid = dataBeanList.get_id();
 
-                                        last_name = dataBeanList.get(i).getUser_last_name();
+                                    first_name = dataBeanList.getUser_first_name();
 
-                                        name = first_name + " " + last_name;
+                                    last_name = dataBeanList.getUser_last_name();
 
-                                        phonum = dataBeanList.get(i).getUser_mobile();
+                                    name = first_name + " " + last_name;
 
-                                        alt_phonum = dataBeanList.get(i).getUser_alter_mobile();
+                                    phonum = dataBeanList.getUser_mobile();
 
-                                        flat_no = dataBeanList.get(i).getUser_flat_no();
+                                    alt_phonum = dataBeanList.getUser_alter_mobile();
 
-                                        state = dataBeanList.get(i).getUser_state();
+                                    flat_no = dataBeanList.getUser_flat_no();
 
-                                        street = dataBeanList.get(i).getUser_stree();
+                                    state = dataBeanList.getUser_state();
 
-                                        landmark = dataBeanList.get(i).getUser_landmark();
+                                    street = dataBeanList.getUser_stree();
 
-                                        pincode  = dataBeanList.get(i).getUser_picocode();
+                                    landmark = dataBeanList.getUser_landmark();
 
-                                        landmark_pincode = landmark +" , "+ pincode;
+                                    pincode  = dataBeanList.getUser_picocode();
 
-                                        address_type = "Home";
+                                    landmark_pincode = landmark +" , "+ pincode;
 
-                                        date = "14/02/2021";
+                                    address_type = dataBeanList.getUser_address_type();
 
-                                        address_status = dataBeanList.get(i).getUser_address_stauts();
+                                    Log.w(TAG, "address_type"+address_type);
 
-                                        setView();
+                                    date = dataBeanList.getUser_display_date();
 
-                                    }
+                                    address_status = dataBeanList.getUser_address_stauts();
+
+                                    setView();
+
+                                    ll_address_list_show.setVisibility(View.VISIBLE);
+
+                                    txt_no_records.setVisibility(View.GONE);
+
+                                    avi_indicator.smoothToHide();
+
+
                                 }
 
-                            }
+
+                                else {
+
+                                    showNoAddressAlert();
+
+                                    ll_address_list_show.setVisibility(View.GONE);
+
+                                    txt_no_records.setVisibility(View.VISIBLE);
+
+                                    avi_indicator.smoothToHide();
+
+                                }
+
+                           }
 
                             else {
 
@@ -342,25 +400,47 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
                             }
 
+
+
+
                         }
 
+                        else{
+                            //showErrorLoading(response.body().getMessage());
+                            avi_indicator.smoothToHide();
+
+                            Toasty.warning(ShippingAddressActivity.this,"Server Issue",Toasty.LENGTH_LONG).show();
+                        }
+
+
                     }
+
                     else{
                         //showErrorLoading(response.body().getMessage());
                         avi_indicator.smoothToHide();
 
                         Toasty.warning(ShippingAddressActivity.this,"Server Issue",Toasty.LENGTH_LONG).show();
                     }
+
+
                 }
+
+                else{
+                    //showErrorLoading(response.body().getMessage());
+                    avi_indicator.smoothToHide();
+
+                    Toasty.warning(ShippingAddressActivity.this,"Server Issue",Toasty.LENGTH_LONG).show();
+                }
+
 
 
             }
 
             @Override
-            public void onFailure(@NonNull Call<ShippingAddressFetchUserResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ShippingAddressFetchByUserIDResponse> call, @NonNull Throwable t) {
 
                 avi_indicator.smoothToHide();
-                Log.w(TAG,"ShippingAddressFetchUserResponse flr"+"--->" + t.getMessage());
+                Log.w(TAG,"ShippingAddressFetchByUserIDResponse flr"+"--->" + t.getMessage());
             }
         });
 
@@ -368,7 +448,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
     }
 
     @SuppressLint("LogNotTimber")
-    private ShippingAddressFetchUserRequest shippingAddressFetchUserRequest(String userid) {
+    private ShippingAddressFetchByUserIDRequest shippingAddressFetchByUserIDRequest(String userid) {
 
 
         /**
@@ -379,12 +459,12 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
 
-        ShippingAddressFetchUserRequest shippingAddressFetchUserRequest = new ShippingAddressFetchUserRequest();
-        shippingAddressFetchUserRequest.setUser_id(userid);
+        ShippingAddressFetchByUserIDRequest shippingAddressFetchByUserIDRequest = new ShippingAddressFetchByUserIDRequest();
+        shippingAddressFetchByUserIDRequest.setUser_id(userid);
 
 
-        Log.w(TAG,"shippingAddressFetchUserRequest"+ "--->" + new Gson().toJson(shippingAddressFetchUserRequest));
-        return shippingAddressFetchUserRequest;
+        Log.w(TAG,"shippingAddressFetchByUserIDRequest"+ "--->" + new Gson().toJson(shippingAddressFetchByUserIDRequest));
+        return shippingAddressFetchByUserIDRequest;
     }
 
 
@@ -497,7 +577,9 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
     }
 
-    @SuppressLint("LogNotTimber")
+
+
+
     private CartDetailsResponse vendorOrderBookingCreateRequest() {
         /*
          * user_id : 603e27792c2b43125f8cb802
@@ -515,6 +597,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
             "billling_address_id" : "",
             "shipping_address" : "",
              "billing_address" : "",
+             * shipping_details_id
          */
 
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
@@ -522,13 +605,13 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
         CartDetailsResponse vendorOrderBookingCreateRequest = new CartDetailsResponse();
         vendorOrderBookingCreateRequest.setUser_id(userid);
-     //   vendorOrderBookingCreateRequest.setData(Data);
-       // vendorOrderBookingCreateRequest.setProdouct_total(prodouct_total);
-        //vendorOrderBookingCreateRequest.setShipping_charge(shipping_charge);
-        //vendorOrderBookingCreateRequest.setDiscount_price(discount_price);
-        //vendorOrderBookingCreateRequest.setGrand_total(grand_total);
-        //vendorOrderBookingCreateRequest.setProdcut_count(prodcut_count);
-       // vendorOrderBookingCreateRequest.setProdcut_item_count(prodcut_item_count);
+        vendorOrderBookingCreateRequest.setData(Data);
+        vendorOrderBookingCreateRequest.setProdouct_total(prodouct_total);
+        vendorOrderBookingCreateRequest.setShipping_charge(shipping_charge);
+        vendorOrderBookingCreateRequest.setDiscount_price(discount_price);
+        vendorOrderBookingCreateRequest.setGrand_total(grand_total);
+        vendorOrderBookingCreateRequest.setProdcut_count(prodcut_count);
+        vendorOrderBookingCreateRequest.setProdcut_item_count(prodcut_item_count);
         vendorOrderBookingCreateRequest.setDate_of_booking_display(currentDateandTime);
         vendorOrderBookingCreateRequest.setDate_of_booking(currentDateandTime);
         vendorOrderBookingCreateRequest.setCoupon_code("");
@@ -537,13 +620,12 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
         vendorOrderBookingCreateRequest.setShipping_address("");
         vendorOrderBookingCreateRequest.setBilling_address("");
         vendorOrderBookingCreateRequest.setPayment_id(Payment_id);
-        vendorOrderBookingCreateRequest.setShipping_details_id("60587225344d9b55ceeec259");
-
+        vendorOrderBookingCreateRequest.setShipping_details_id(shipid);
         Log.w(TAG,"vendorOrderBookingCreateRequest"+ "--->" + new Gson().toJson(vendorOrderBookingCreateRequest));
         return vendorOrderBookingCreateRequest;
     }
 
-    @Override
+    @SuppressLint("NonConstantResourceId")
     public void onClick(View v) {
 
         switch (v.getId()){
@@ -583,35 +665,39 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
     private void gotoShippingaddressEdit() {
 
-        Intent intent = new Intent(ShippingAddressActivity.this, ShippingAddressEditActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ShippingAddressEditActivity.class);
 
-        intent.putExtra(shipid,"shipid");
+        intent.putExtra("fromactivity", TAG);
 
-        intent.putExtra(first_name,"first_name");
+        intent.putExtra("shipid",shipid);
 
-        intent.putExtra(last_name,"last_name");
+        intent.putExtra("first_name",first_name);
 
-        intent.putExtra(phonum,"phonum");
+        intent.putExtra("last_name",last_name);
 
-        intent.putExtra(alt_phonum,"alt_phonum");
+        intent.putExtra("phonum",phonum);
 
-        intent.putExtra(flat_no,"flat_no");
+        intent.putExtra("alt_phonum",alt_phonum);
 
-        intent.putExtra(state,"state");
+        intent.putExtra("flat_no",flat_no);
 
-        intent.putExtra(street,"street");
+        intent.putExtra("state",state);
 
-        intent.putExtra(landmark,"landmark");
+        intent.putExtra("street",street);
 
-        intent.putExtra(pincode,"pincode");
+        intent.putExtra("landmark",landmark);
 
-        intent.putExtra(address_type,"address_type");
+        intent.putExtra("pincode",pincode);
 
-        intent.putExtra(date,"date");
+        intent.putExtra("address_type",address_type);
 
-        intent.putExtra(address_status,"address_status");
+        intent.putExtra("date",date);
+
+        intent.putExtra("address_status",address_status);
 
         startActivity(intent);
+
+        finish();
 
     }
 
