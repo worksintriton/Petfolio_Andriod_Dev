@@ -175,7 +175,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
 
                 Intent i = new Intent(getApplicationContext(), ShippingAddressActivity.class);
                 i.putExtra("fromactivity",TAG);
-             //   i.putExtra("data", (Serializable) Data);
+                i.putExtra("data", (Serializable) Data);
                 i.putExtra("product_total",prodouct_total);
                 i.putExtra("shipping_charge",shipping_charge);
                 i.putExtra("discount_price",discount_price);

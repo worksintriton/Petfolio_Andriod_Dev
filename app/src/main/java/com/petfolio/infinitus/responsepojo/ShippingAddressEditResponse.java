@@ -2,32 +2,34 @@ package com.petfolio.infinitus.responsepojo;
 
 public class ShippingAddressEditResponse {
 
+
     /**
      * Status : Success
      * Message : Shipping address Updated
-     * Data : {"_id":"60586cc9817d8046d6c82a22","user_id":"6048589d0b3a487571a1c567","user_first_name":"Mohammed","user_last_name":"imthiyas","user_flat_no":"no 23","user_stree":"203rd Street,Muthamil nage, chennai - 600119","user_landmark":"Near Temple","user_picocode":"600119","user_state":"Tamil Nadu","user_mobile":"+919181823011","user_alter_mobile":"+919181823011","user_address_stauts":"","user_address_type":"Office","user_display_date":"22-03-2021","updatedAt":"2021-03-22T10:11:12.243Z","createdAt":"2021-03-22T10:09:13.374Z","__v":0}
+     * Data : {"_id":"605990a7bc985303d7f397c3","user_id":"604081d12c2b43125f8cb840","user_first_name":"Mohammeds","user_last_name":"imthiyas","user_flat_no":"no 23","user_stree":"203rd Street,Muthamil nage, chennai - 600119","user_landmark":"Near Temple","user_picocode":"600119","user_state":"Tamil Nadu","user_city":"Salem Steel","user_mobile":"+919181823011","user_alter_mobile":"+919181823011","user_address_stauts":"","user_address_type":"Office","user_display_date":"22-03-2021","updatedAt":"2021-03-23T07:23:02.506Z","createdAt":"2021-03-23T06:54:31.242Z","__v":0}
      * Code : 200
      */
 
     private String Status;
     private String Message;
     /**
-     * _id : 60586cc9817d8046d6c82a22
-     * user_id : 6048589d0b3a487571a1c567
-     * user_first_name : Mohammed
+     * _id : 605990a7bc985303d7f397c3
+     * user_id : 604081d12c2b43125f8cb840
+     * user_first_name : Mohammeds
      * user_last_name : imthiyas
      * user_flat_no : no 23
      * user_stree : 203rd Street,Muthamil nage, chennai - 600119
      * user_landmark : Near Temple
      * user_picocode : 600119
      * user_state : Tamil Nadu
+     * user_city : Salem Steel
      * user_mobile : +919181823011
      * user_alter_mobile : +919181823011
      * user_address_stauts :
      * user_address_type : Office
      * user_display_date : 22-03-2021
-     * updatedAt : 2021-03-22T10:11:12.243Z
-     * createdAt : 2021-03-22T10:09:13.374Z
+     * updatedAt : 2021-03-23T07:23:02.506Z
+     * createdAt : 2021-03-23T06:54:31.242Z
      * __v : 0
      */
 
@@ -76,6 +78,7 @@ public class ShippingAddressEditResponse {
         private String user_landmark;
         private String user_picocode;
         private String user_state;
+        private String user_city;
         private String user_mobile;
         private String user_alter_mobile;
         private String user_address_stauts;
@@ -155,6 +158,14 @@ public class ShippingAddressEditResponse {
 
         public void setUser_state(String user_state) {
             this.user_state = user_state;
+        }
+
+        public String getUser_city() {
+            return user_city;
+        }
+
+        public void setUser_city(String user_city) {
+            this.user_city = user_city;
         }
 
         public String getUser_mobile() {

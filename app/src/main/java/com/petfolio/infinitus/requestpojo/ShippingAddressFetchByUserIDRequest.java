@@ -4,7 +4,7 @@ public class ShippingAddressFetchByUserIDRequest {
 
 
     /**
-     * user_id : 6048589d0b3a487571a1c567
+     * user_id : 604081d12c2b43125f8cb840
      */
 
     private String user_id;

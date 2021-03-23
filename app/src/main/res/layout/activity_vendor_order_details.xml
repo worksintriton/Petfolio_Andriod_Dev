@@ -44,7 +44,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
                 android:gravity="end">
 
 
@@ -52,7 +51,6 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
                     android:src="@drawable/ic_notifications"
                     tools:ignore="ContentDescription" />
 
@@ -60,7 +58,6 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
                     android:src="@drawable/ic_bag"
                     tools:ignore="ContentDescription" />
 
@@ -68,9 +65,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
                     android:src="@drawable/ic_user"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
@@ -157,7 +152,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/futuramediumbt"
                     android:maxLines="1"
-                    android:text="\u20B9 880"
+                    android:text="\u20B9 0"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -198,7 +193,7 @@
                         tools:ignore="UseCompatTextViewDrawableXml" />
 
                     <TextView
-                        android:id="@+id/txt_date"
+                        android:id="@+id/txt_delivered_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
@@ -232,14 +227,14 @@
 
                 <TextView
                     android:id="@+id/txt_order_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:fontFamily="@font/futuramediumbt"
                     android:maxLines="1"
                     android:text="19-Aug-2020"
                     android:textColor="@color/new_sec_txt_color"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -269,7 +264,7 @@
                     android:maxLines="1"
                     android:text="1234ABCD12344321"
                     android:textColor="@color/new_sec_txt_color"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -292,14 +287,14 @@
 
                 <TextView
                     android:id="@+id/txt_payment_method"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:fontFamily="@font/futuramediumbt"
                     android:maxLines="1"
                     android:text="Online"
                     android:textColor="@color/new_sec_txt_color"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -327,9 +322,9 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/futuramediumbt"
                     android:maxLines="1"
-                    android:text="\u20B9  800"
+                    android:text="\u20B9  0"
                     android:textColor="@color/new_sec_txt_color"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -357,9 +352,9 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/futuramediumbt"
                     android:maxLines="1"
-                    android:text="2"
+                    android:text="0"
                     android:textColor="@color/new_sec_txt_color"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -384,51 +379,77 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/txt_shipping_address"
+                android:id="@+id/txt_shipping_address_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:drawablePadding="10dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/futuramediumbt"
-                android:maxLines="3"
-                android:text="@string/desc_dummy"
+                android:maxLines="1"
                 android:textColor="@color/new_sec_txt_color"
-                android:textSize="12sp" />
-
+                android:textSize="14sp" />
             <TextView
-                android:id="@+id/text1"
+                android:id="@+id/txt_shipping_address_street"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:drawablePadding="10dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/futuramediumbt"
+                android:maxLines="2"
+                android:textColor="@color/new_sec_txt_color"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/txt_shipping_address_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:drawablePadding="10dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/futuramediumbt"
+                android:maxLines="1"
+                android:textColor="@color/new_sec_txt_color"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/txt_shipping_address_state_pincode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:drawablePadding="10dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/futuramediumbt"
+                android:maxLines="1"
+                android:textColor="@color/new_sec_txt_color"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/txt_shipping_address_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:drawablePadding="10dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/futuramediumbt"
-                android:text="Billing Address"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:visibility="gone" />
-
+                android:maxLines="1"
+                android:textColor="@color/new_sec_txt_color"
+                android:textSize="14sp" />
             <TextView
-                android:id="@+id/txt_billing_address"
+                android:id="@+id/txt_shipping_address_landmark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:drawablePadding="10dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/futuramediumbt"
-                android:maxLines="3"
-                android:text="@string/desc_dummy"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:visibility="gone" />
+                android:maxLines="1"
+                android:textColor="@color/new_sec_txt_color"
+                android:textSize="14sp" />
+
+
 
         </LinearLayout>
 
     </ScrollView>
-
-
-
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/avi_indicator"
         android:layout_width="wrap_content"
@@ -437,6 +458,9 @@
         app:indicatorColor="@color/green"
         app:indicatorName="LineSpinFadeLoaderIndicator"
         tools:ignore="TooManyViews" />
+
+
+
 
     <LinearLayout
         android:id="@+id/footerView"
@@ -449,7 +473,6 @@
             android:id="@+id/bottom_navigation_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"

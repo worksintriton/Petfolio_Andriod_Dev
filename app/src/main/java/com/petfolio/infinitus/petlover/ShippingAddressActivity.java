@@ -39,6 +39,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -106,6 +107,10 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
     TextView txt_addrs_type;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_grand_total)
+    TextView txt_grand_total;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.ll_edit)
     LinearLayout ll_edit;
 
@@ -114,16 +119,16 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
     LinearLayout ll_delete;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.btn_rupee)
-    Button btn_rupee;
+    @BindView(R.id.ll_create_addreess)
+    LinearLayout ll_create_addreess;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.btn_continue)
-    Button btn_continue;
+    @BindView(R.id.ll_price)
+    LinearLayout ll_price;
 
     String userid, name, phonum, state, street, landmark_pincode, address_type, date, shipid, fromactivity;
 
-    String first_name,last_name,flat_no,landmark,pincode,alt_phonum,address_status;
+    String first_name,last_name,flat_no,landmark,pincode,alt_phonum,address_status,city;
 
     ShippingAddressFetchByUserIDResponse.DataBean dataBeanList;
 
@@ -170,69 +175,33 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
             fromactivity = extras.getString("fromactivity");
 
-            if(!fromactivity.equals("ShippingAddressAddActivity"))
-            {
-                Log.w(TAG,"From "+ fromactivity +" : true-->");
+            Log.w(TAG,"From "+ fromactivity +" : true-->");
 
-             //   Data = (List<VendorOrderBookingCreateRequest.DataBean>) extras.getSerializable("data");
+            Data = (List<CartDetailsResponse.DataBean>) extras.getSerializable("data");
 
-                prodouct_total = extras.getInt("product_total");
+            prodouct_total = extras.getInt("product_total");
 
-                shipping_charge = extras.getInt("shipping_charge");
+            shipping_charge = extras.getInt("shipping_charge");
 
-                discount_price = extras.getInt("discount_price");
+            discount_price = extras.getInt("discount_price");
 
-                grand_total = extras.getInt("grand_total");
+            grand_total = extras.getInt("grand_total");
 
-                prodcut_count = extras.getInt("prodcut_count");
+            if (grand_total!=0){
 
-                prodcut_item_count = extras.getInt("prodcut_item_count");
+                txt_grand_total.setText("\u20B9 "+ grand_total);
+            }
 
-                if (new ConnectionDetector(ShippingAddressActivity.this).isNetworkAvailable(ShippingAddressActivity.this)) {
+            prodcut_count = extras.getInt("prodcut_count");
 
-                    shippingAddressresponseCall(userid);
+            prodcut_item_count = extras.getInt("prodcut_item_count");
 
-                }
+            if (new ConnectionDetector(ShippingAddressActivity.this).isNetworkAvailable(ShippingAddressActivity.this)) {
+
+                shippingAddressresponseCall(userid);
 
             }
 
-            else
-            {
-                Log.w(TAG,"false-->");
-
-                shipid = extras.getString("shipid");
-
-                first_name = extras.getString("first_name");
-
-                last_name = extras.getString("last_name");
-
-                name = first_name + " " + last_name;
-
-                phonum = extras.getString("phonum");
-
-                alt_phonum = extras.getString("alt_phonum");
-
-                flat_no = extras.getString("flat_no");
-
-                state = extras.getString("state");
-
-                street = extras.getString("street");
-
-                landmark = extras.getString("landmark");
-
-                pincode  = extras.getString("pincode");
-
-                landmark_pincode = landmark +" , "+ pincode;
-
-                address_type = extras.getString("address_type");
-
-                date = extras.getString("date");
-
-                address_status = extras.getString("address_status");
-
-                setView();
-
-            }
 
         }
 
@@ -244,7 +213,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
         ll_delete.setOnClickListener(this);
 
-        btn_continue.setOnClickListener(this);
+        ll_create_addreess.setOnClickListener(this);
 
 
     }
@@ -261,9 +230,9 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
             txt_phnum.setText(phonum);
         }
 
-        if(state!=null&&!state.isEmpty()){
+        if(city!=null&&!city.isEmpty()){
 
-            txt_user_city.setText(state);
+            txt_user_city.setText(city);
         }
 
         if(landmark_pincode!=null&&!landmark_pincode.isEmpty()){
@@ -352,8 +321,6 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
                                     pincode  = dataBeanList.getUser_picocode();
 
-                                    landmark_pincode = landmark +" , "+ pincode;
-
                                     address_type = dataBeanList.getUser_address_type();
 
                                     Log.w(TAG, "address_type"+address_type);
@@ -361,6 +328,10 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
                                     date = dataBeanList.getUser_display_date();
 
                                     address_status = dataBeanList.getUser_address_stauts();
+
+                                    city = dataBeanList.getUser_city();
+
+                                    landmark_pincode = landmark +" , "+state +" , "+ pincode;
 
                                     setView();
 
@@ -646,7 +617,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
                 showWaring();
                 break;
 
-            case R.id.btn_continue:
+            case R.id.ll_create_addreess:
                 if(grand_total!=0){
                     startPayment();
                 }
@@ -659,6 +630,20 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
     private void gotoShippingaddresslist() {
 
         Intent intent = new Intent(ShippingAddressActivity.this, ShippingAddressAddActivity.class);
+
+        intent.putExtra("data", (Serializable) Data);
+
+        intent.putExtra("product_total",prodouct_total);
+
+        intent.putExtra("shipping_charge",shipping_charge);
+
+        intent.putExtra("discount_price",discount_price);
+
+        intent.putExtra("grand_total",grand_total);
+
+        intent.putExtra("prodcut_count",prodcut_count);
+
+        intent.putExtra("prodcut_item_count",prodcut_item_count);
 
         startActivity(intent);
     }
@@ -693,7 +678,23 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
         intent.putExtra("date",date);
 
+        intent.putExtra("city",city);
+
         intent.putExtra("address_status",address_status);
+
+        intent.putExtra("data", (Serializable) Data);
+
+        intent.putExtra("product_total",prodouct_total);
+
+        intent.putExtra("shipping_charge",shipping_charge);
+
+        intent.putExtra("discount_price",discount_price);
+
+        intent.putExtra("grand_total",grand_total);
+
+        intent.putExtra("prodcut_count",prodcut_count);
+
+        intent.putExtra("prodcut_item_count",prodcut_item_count);
 
         startActivity(intent);
 
@@ -704,6 +705,20 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
     private void gotoShippingaddressCreate() {
 
         Intent intent = new Intent(ShippingAddressActivity.this, ShippingAddressCreateActivity.class);
+
+        intent.putExtra("data", (Serializable) Data);
+
+        intent.putExtra("product_total",prodouct_total);
+
+        intent.putExtra("shipping_charge",shipping_charge);
+
+        intent.putExtra("discount_price",discount_price);
+
+        intent.putExtra("grand_total",grand_total);
+
+        intent.putExtra("prodcut_count",prodcut_count);
+
+        intent.putExtra("prodcut_item_count",prodcut_item_count);
 
         startActivity(intent);
 

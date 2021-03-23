@@ -47,7 +47,6 @@
         tools:ignore="AllowBackup,UnusedAttribute"
         tools:replace="android:allowBackup,icon,theme,label,name">
 
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -57,67 +56,74 @@
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme"
             android:windowSoftInputMode="adjustPan">
-           <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-               <category android:name="android.intent.category.LAUNCHER" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
-
-
-
-        <activity android:name=".petlover.ShippingAddressEditActivity"
+        <activity
+            android:name=".petlover.ShippingAddressEditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".petlover.ShippingAddressCreateActivity"
+        <activity
+            android:name=".petlover.ShippingAddressCreateActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".petlover.ShippingAddressAddActivity"
+        <activity
+            android:name=".petlover.ShippingAddressAddActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".petlover.ShippingAddressActivity"
+        <activity
+            android:name=".petlover.ShippingAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".vendor.VendorUpdateOrderStatusActivity"
+        <activity
+            android:name=".vendor.VendorUpdateOrderStatusActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".petlover.PetOtherInformationsActivity"
+        <activity
+            android:name=".petlover.PetOtherInformationsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".petlover.PetEditOtherInformationsActivity"
+        <activity
+            android:name=".petlover.PetEditOtherInformationsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.VerifyOtpActivity"
+        <activity
+            android:name=".activity.VerifyOtpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.SignUpActivity"
+        <activity
+            android:name=".activity.SignUpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.LoginActivity"
+        <activity
+            android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.ChooseUserTypeActivity"
+        <activity
+            android:name=".activity.ChooseUserTypeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.VerifyEmailOtpActivity"
+        <activity
+            android:name=".activity.VerifyEmailOtpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
-
-        <!-- Pet Lover -->
-        <activity android:name=".petlover.AddYourPetActivity"
+            android:windowSoftInputMode="adjustPan" /> <!-- Pet Lover -->
+        <activity
+            android:name=".petlover.AddYourPetActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
@@ -563,6 +569,10 @@
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
 
+        <activity android:name=".petlover.SearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
 
 
         <receiver

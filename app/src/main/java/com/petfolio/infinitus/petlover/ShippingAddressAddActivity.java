@@ -34,6 +34,7 @@ import com.petfolio.infinitus.requestpojo.ShippingAddrMarkAsLastUsedResponse;
 import com.petfolio.infinitus.requestpojo.ShippingAddressDeleteRequest;
 import com.petfolio.infinitus.requestpojo.ShippingAddressFetchByUserIDRequest;
 import com.petfolio.infinitus.requestpojo.ShippingAddressListingByUserIDRequest;
+import com.petfolio.infinitus.responsepojo.CartDetailsResponse;
 import com.petfolio.infinitus.responsepojo.ShippingAddressDeleteResponse;
 import com.petfolio.infinitus.responsepojo.ShippingAddressFetchByUserIDResponse;
 import com.petfolio.infinitus.responsepojo.ShippingAddressListingByUserIDResponse;
@@ -42,7 +43,9 @@ import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -87,13 +90,28 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
     @BindView(R.id.btn_use_this_addreess)
     Button btn_use_this_addreess;
 
-    String userid;
+    String userid,fromactivity;
 
     List<ShippingAddressListingByUserIDResponse.DataBean> dataBeanList;
 
     Dialog dialog;
 
     String shippid;
+
+    List<CartDetailsResponse.DataBean> Data = new ArrayList<>();
+
+    private int prodouct_total;
+
+    private int shipping_charge;
+
+    private int discount_price;
+
+    private int grand_total;
+
+    private int prodcut_count;
+
+    private int prodcut_item_count;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +137,32 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
         btn_cancel.setOnClickListener(this);
 
         btn_use_this_addreess.setOnClickListener(this);
+
+        Bundle extras = getIntent().getExtras();
+
+        if (extras != null) {
+
+            fromactivity = extras.getString("fromactivity");
+
+            Log.w(TAG,"From "+ fromactivity +" : true-->");
+
+            Data = (List<CartDetailsResponse.DataBean>) extras.getSerializable("data");
+
+            prodouct_total = extras.getInt("product_total");
+
+            shipping_charge = extras.getInt("shipping_charge");
+
+            discount_price = extras.getInt("discount_price");
+
+            grand_total = extras.getInt("grand_total");
+
+            prodcut_count = extras.getInt("prodcut_count");
+
+            prodcut_item_count = extras.getInt("prodcut_item_count");
+
+
+        }
+
 
         if (new ConnectionDetector(ShippingAddressAddActivity.this).isNetworkAvailable(ShippingAddressAddActivity.this)) {
 
@@ -262,6 +306,22 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
                     if(response.body().getCode() == 200){
 
                         Intent intent = new Intent(ShippingAddressAddActivity.this, ShippingAddressActivity.class);
+
+                        intent.putExtra("fromactivity",TAG);
+
+                        intent.putExtra("data", (Serializable) Data);
+
+                        intent.putExtra("product_total",prodouct_total);
+
+                        intent.putExtra("shipping_charge",shipping_charge);
+
+                        intent.putExtra("discount_price",discount_price);
+
+                        intent.putExtra("grand_total",grand_total);
+
+                        intent.putExtra("prodcut_count",prodcut_count);
+
+                        intent.putExtra("prodcut_item_count",prodcut_item_count);
 
                         startActivity(intent);
 
@@ -484,6 +544,21 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
         Intent intent = new Intent(ShippingAddressAddActivity.this, ShippingAddressCreateActivity.class);
 
+        intent.putExtra("data", (Serializable) Data);
+
+        intent.putExtra("product_total",prodouct_total);
+
+        intent.putExtra("shipping_charge",shipping_charge);
+
+        intent.putExtra("discount_price",discount_price);
+
+        intent.putExtra("grand_total",grand_total);
+
+        intent.putExtra("prodcut_count",prodcut_count);
+
+        intent.putExtra("prodcut_item_count",prodcut_item_count);
+
+
         startActivity(intent);
 
     }
@@ -506,7 +581,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
     }
 
     @Override
-    public void OnEditShipAddr(String shipid, String first_name, String last_name, String phonum, String alt_phonum, String flat_no, String state, String street, String landmark, String pincode, String address_type, String date, String address_status) {
+    public void OnEditShipAddr(String shipid, String first_name, String last_name, String phonum, String alt_phonum, String flat_no, String state, String street, String landmark, String pincode, String address_type, String date, String address_status, String city) {
 
         Intent intent = new Intent(getApplicationContext(), ShippingAddressEditActivity.class);
 
@@ -537,6 +612,22 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
         intent.putExtra("date",date);
 
         intent.putExtra("address_status",address_status);
+
+        intent.putExtra("city",city);
+
+        intent.putExtra("data", (Serializable) Data);
+
+        intent.putExtra("product_total",prodouct_total);
+
+        intent.putExtra("shipping_charge",shipping_charge);
+
+        intent.putExtra("discount_price",discount_price);
+
+        intent.putExtra("grand_total",grand_total);
+
+        intent.putExtra("prodcut_count",prodcut_count);
+
+        intent.putExtra("prodcut_item_count",prodcut_item_count);
 
         startActivity(intent);
 

@@ -4,10 +4,11 @@ import java.util.List;
 
 public class VendorOrderDetailsResponse {
 
+
     /**
      * Status : Success
      * Message : Order Details
-     * Data : {"_id":"604eff88096d72248f2f9668","order_id":"ITEM-1615789960153","product_name":"Bird Food","product_quantity":2,"product_price":2000,"prodcut_image":"http://54.212.108.156:3000/api/uploads/birdfood.jpg","date_of_booking":"15-03-2021 12:02 PM","status":"New","user_cancell_info":"","user_cancell_date":"","vendor_cancell_info":"","vendor_cancell_date":"","vendor_accept_cancel":"","vendor_complete_date":"","vendor_complete_info":"","prodcut_track_details":[{"id":1,"title":"Order booked","date":"15-03-2021 12:02 PM"}],"delivery_date":"","date_of_booking_display":"15-03-2021 12:02 PM","delivery_date_display":"","order_status":"New","prodouct_total":2000,"shipping_address_id":"","billling_address_id":"","shipping_address":"","billing_address":"","shipping_charge":0,"over_all_total":2000,"discount_price":0,"grand_total":2000,"coupon_code":"","payment_id":"pay_GmpdVk7KNqClKU"}
+     * Data : {"_id":"6059b984bf0e2a1c88e5dd88","order_id":"ITEM-1616492932696","product_name":"DOG FOOD 2","product_quantity":2,"product_price":196,"prodcut_image":"http://54.212.108.156:3000/api/uploads/1615541391131.jpeg","date_of_booking":"23-03-2021 03:18 PM","status":"New","user_cancell_info":"","user_cancell_date":"","vendor_cancell_info":"","vendor_cancell_date":"","vendor_accept_cancel":"","vendor_complete_date":"","vendor_complete_info":"","prodcut_track_details":[{"id":0,"title":"Order Booked","date":"15-03-2021 04:17 PM","Status":true},{"id":1,"title":"Order Accept","date":"15-03-2021 04:17 PM","Status":false},{"id":2,"title":"Order Dispatch","date":"15-03-2021 04:17 PM","Status":false},{"id":3,"title":"In Transit","date":"15-03-2021 04:17 PM","Status":false},{"id":4,"title":"Order Cancelled","date":"15-03-2021 04:17 PM","Status":false},{"id":5,"title":"Vendor cancelled","date":"15-03-2021 04:17 PM","Status":false}],"delivery_date":"","date_of_booking_display":"23-03-2021 03:18 PM","delivery_date_display":"","order_status":"New","prodouct_total":196,"shipping_address_id":"","billling_address_id":"","shipping_address":"","billing_address":"","shipping_charge":0,"over_all_total":196,"discount_price":0,"grand_total":196,"coupon_code":"","payment_id":"pay_Gq3FZTClKcqVMy","shipping_details_id":{"_id":"605979dee748565ddb1fc51a","user_id":"603e27792c2b43125f8cb802","user_first_name":"Dineshkumar","user_last_name":"Deva","user_flat_no":"4/3","user_stree":"Immanuel street","user_landmark":"","user_picocode":"600113","user_state":"tamilnadu","user_mobile":"9842670813","user_alter_mobile":"","user_address_stauts":"Last Used","user_address_type":"Home","user_display_date":"23-03-2021","updatedAt":"2021-03-23T05:17:32.915Z","createdAt":"2021-03-23T05:17:18.190Z","__v":0},"shipping_details":"No :4/3, Immanuel street, undefined, tamilnadu, ZIP CODE - 600113"}
      * Code : 200
      */
 
@@ -33,9 +34,7 @@ public class VendorOrderDetailsResponse {
 
     public void setMessage(String Message) {
         this.Message = Message;
-
     }
-
 
     public DataBean getData() {
         return Data;
@@ -56,15 +55,15 @@ public class VendorOrderDetailsResponse {
 
     }
 
-    public static class DataBean {
+    public static class DataBean  {
         /**
-         * _id : 604eff88096d72248f2f9668
-         * order_id : ITEM-1615789960153
-         * product_name : Bird Food
+         * _id : 6059b984bf0e2a1c88e5dd88
+         * order_id : ITEM-1616492932696
+         * product_name : DOG FOOD 2
          * product_quantity : 2
-         * product_price : 2000
-         * prodcut_image : http://54.212.108.156:3000/api/uploads/birdfood.jpg
-         * date_of_booking : 15-03-2021 12:02 PM
+         * product_price : 196
+         * prodcut_image : http://54.212.108.156:3000/api/uploads/1615541391131.jpeg
+         * date_of_booking : 23-03-2021 03:18 PM
          * status : New
          * user_cancell_info :
          * user_cancell_date :
@@ -73,22 +72,24 @@ public class VendorOrderDetailsResponse {
          * vendor_accept_cancel :
          * vendor_complete_date :
          * vendor_complete_info :
-         * prodcut_track_details : [{"id":1,"title":"Order booked","date":"15-03-2021 12:02 PM"}]
+         * prodcut_track_details : [{"id":0,"title":"Order Booked","date":"15-03-2021 04:17 PM","Status":true},{"id":1,"title":"Order Accept","date":"15-03-2021 04:17 PM","Status":false},{"id":2,"title":"Order Dispatch","date":"15-03-2021 04:17 PM","Status":false},{"id":3,"title":"In Transit","date":"15-03-2021 04:17 PM","Status":false},{"id":4,"title":"Order Cancelled","date":"15-03-2021 04:17 PM","Status":false},{"id":5,"title":"Vendor cancelled","date":"15-03-2021 04:17 PM","Status":false}]
          * delivery_date :
-         * date_of_booking_display : 15-03-2021 12:02 PM
+         * date_of_booking_display : 23-03-2021 03:18 PM
          * delivery_date_display :
          * order_status : New
-         * prodouct_total : 2000
+         * prodouct_total : 196
          * shipping_address_id :
          * billling_address_id :
          * shipping_address :
          * billing_address :
          * shipping_charge : 0
-         * over_all_total : 2000
+         * over_all_total : 196
          * discount_price : 0
-         * grand_total : 2000
+         * grand_total : 196
          * coupon_code :
-         * payment_id : pay_GmpdVk7KNqClKU
+         * payment_id : pay_Gq3FZTClKcqVMy
+         * shipping_details_id : {"_id":"605979dee748565ddb1fc51a","user_id":"603e27792c2b43125f8cb802","user_first_name":"Dineshkumar","user_last_name":"Deva","user_flat_no":"4/3","user_stree":"Immanuel street","user_landmark":"","user_picocode":"600113","user_state":"tamilnadu","user_mobile":"9842670813","user_alter_mobile":"","user_address_stauts":"Last Used","user_address_type":"Home","user_display_date":"23-03-2021","updatedAt":"2021-03-23T05:17:32.915Z","createdAt":"2021-03-23T05:17:18.190Z","__v":0}
+         * shipping_details : No :4/3, Immanuel street, undefined, tamilnadu, ZIP CODE - 600113
          */
 
         private String _id;
@@ -121,6 +122,8 @@ public class VendorOrderDetailsResponse {
         private int grand_total;
         private String coupon_code;
         private String payment_id;
+        private ShippingDetailsIdBean shipping_details_id;
+        private String shipping_details;
         private List<ProdcutTrackDetailsBean> prodcut_track_details;
 
 
@@ -203,7 +206,6 @@ public class VendorOrderDetailsResponse {
 
         }
 
-
         public String getUser_cancell_info() {
             return user_cancell_info;
         }
@@ -253,7 +255,6 @@ public class VendorOrderDetailsResponse {
 
         }
 
-
         public String getVendor_complete_date() {
             return vendor_complete_date;
         }
@@ -270,7 +271,9 @@ public class VendorOrderDetailsResponse {
 
         public void setVendor_complete_info(String vendor_complete_info) {
             this.vendor_complete_info = vendor_complete_info;
+
         }
+
 
         public String getDelivery_date() {
             return delivery_date;
@@ -278,6 +281,7 @@ public class VendorOrderDetailsResponse {
 
         public void setDelivery_date(String delivery_date) {
             this.delivery_date = delivery_date;
+
         }
 
 
@@ -330,12 +334,14 @@ public class VendorOrderDetailsResponse {
 
         }
 
+
         public String getBillling_address_id() {
             return billling_address_id;
         }
 
         public void setBillling_address_id(String billling_address_id) {
             this.billling_address_id = billling_address_id;
+
         }
 
 
@@ -367,6 +373,7 @@ public class VendorOrderDetailsResponse {
 
         }
 
+
         public int getOver_all_total() {
             return over_all_total;
         }
@@ -396,12 +403,14 @@ public class VendorOrderDetailsResponse {
 
         }
 
+
         public String getCoupon_code() {
             return coupon_code;
         }
 
         public void setCoupon_code(String coupon_code) {
             this.coupon_code = coupon_code;
+
         }
 
 
@@ -411,6 +420,27 @@ public class VendorOrderDetailsResponse {
 
         public void setPayment_id(String payment_id) {
             this.payment_id = payment_id;
+
+        }
+
+
+        public ShippingDetailsIdBean getShipping_details_id() {
+            return shipping_details_id;
+        }
+
+        public void setShipping_details_id(ShippingDetailsIdBean shipping_details_id) {
+            this.shipping_details_id = shipping_details_id;
+
+        }
+
+
+        public String getShipping_details() {
+            return shipping_details;
+        }
+
+        public void setShipping_details(String shipping_details) {
+            this.shipping_details = shipping_details;
+
         }
 
 
@@ -423,11 +453,196 @@ public class VendorOrderDetailsResponse {
 
         }
 
+        public static class ShippingDetailsIdBean  {
+            /**
+             * _id : 605979dee748565ddb1fc51a
+             * user_id : 603e27792c2b43125f8cb802
+             * user_first_name : Dineshkumar
+             * user_last_name : Deva
+             * user_flat_no : 4/3
+             * user_stree : Immanuel street
+             * user_landmark :
+             * user_picocode : 600113
+             * user_state : tamilnadu
+             * user_mobile : 9842670813
+             * user_alter_mobile :
+             * user_address_stauts : Last Used
+             * user_address_type : Home
+             * user_display_date : 23-03-2021
+             * updatedAt : 2021-03-23T05:17:32.915Z
+             * createdAt : 2021-03-23T05:17:18.190Z
+             * __v : 0
+             */
+
+            private String _id;
+            private String user_id;
+            private String user_first_name;
+            private String user_last_name;
+            private String user_flat_no;
+            private String user_stree;
+            private String user_landmark;
+            private String user_picocode;
+            private String user_state;
+            private String user_mobile;
+            private String user_alter_mobile;
+            private String user_address_stauts;
+            private String user_address_type;
+            private String user_display_date;
+            private String user_city ;
+
+            public String getUser_city() {
+                return user_city;
+            }
+
+            public void setUser_city(String user_city) {
+                this.user_city = user_city;
+            }
+
+            public String get_id() {
+                return _id;
+            }
+
+            public void set_id(String _id) {
+                this._id = _id;
+
+            }
+
+            public String getUser_id() {
+                return user_id;
+            }
+
+            public void setUser_id(String user_id) {
+                this.user_id = user_id;
+
+            }
+
+
+            public String getUser_first_name() {
+                return user_first_name;
+            }
+
+            public void setUser_first_name(String user_first_name) {
+                this.user_first_name = user_first_name;
+
+            }
+
+            public String getUser_last_name() {
+                return user_last_name;
+            }
+
+            public void setUser_last_name(String user_last_name) {
+                this.user_last_name = user_last_name;
+
+            }
+
+
+            public String getUser_flat_no() {
+                return user_flat_no;
+            }
+
+            public void setUser_flat_no(String user_flat_no) {
+                this.user_flat_no = user_flat_no;
+
+            }
+
+
+            public String getUser_stree() {
+                return user_stree;
+            }
+
+            public void setUser_stree(String user_stree) {
+                this.user_stree = user_stree;
+
+            }
+
+
+            public String getUser_landmark() {
+                return user_landmark;
+            }
+
+            public void setUser_landmark(String user_landmark) {
+                this.user_landmark = user_landmark;
+
+            }
+
+
+            public String getUser_picocode() {
+                return user_picocode;
+            }
+
+            public void setUser_picocode(String user_picocode) {
+                this.user_picocode = user_picocode;
+
+            }
+
+            public String getUser_state() {
+                return user_state;
+            }
+
+            public void setUser_state(String user_state) {
+                this.user_state = user_state;
+
+            }
+
+
+            public String getUser_mobile() {
+                return user_mobile;
+            }
+
+            public void setUser_mobile(String user_mobile) {
+                this.user_mobile = user_mobile;
+
+            }
+
+
+            public String getUser_alter_mobile() {
+                return user_alter_mobile;
+            }
+
+            public void setUser_alter_mobile(String user_alter_mobile) {
+                this.user_alter_mobile = user_alter_mobile;
+
+            }
+
+
+            public String getUser_address_stauts() {
+                return user_address_stauts;
+            }
+
+            public void setUser_address_stauts(String user_address_stauts) {
+                this.user_address_stauts = user_address_stauts;
+
+            }
+
+
+            public String getUser_address_type() {
+                return user_address_type;
+            }
+
+            public void setUser_address_type(String user_address_type) {
+                this.user_address_type = user_address_type;
+
+            }
+
+
+            public String getUser_display_date() {
+                return user_display_date;
+            }
+
+            public void setUser_display_date(String user_display_date) {
+                this.user_display_date = user_display_date;
+
+            }
+
+
+        }
+
         public static class ProdcutTrackDetailsBean  {
             /**
-             * id : 1
-             * title : Order booked
-             * date : 15-03-2021 12:02 PM
+             * id : 0
+             * title : Order Booked
+             * date : 15-03-2021 04:17 PM
+             * Status : true
              */
 
             private int id;
@@ -435,13 +650,6 @@ public class VendorOrderDetailsResponse {
             private String date;
             private boolean Status;
 
-            public boolean isStatus() {
-                return Status;
-            }
-
-            public void setStatus(boolean status) {
-                Status = status;
-            }
 
             public int getId() {
                 return id;
@@ -469,6 +677,16 @@ public class VendorOrderDetailsResponse {
 
             public void setDate(String date) {
                 this.date = date;
+
+            }
+
+
+            public boolean isStatus() {
+                return Status;
+            }
+
+            public void setStatus(boolean Status) {
+                this.Status = Status;
 
             }
         }

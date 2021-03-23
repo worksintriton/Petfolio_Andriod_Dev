@@ -15,15 +15,13 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.requestpojo.VendorFetchOrderDetailsIdRequest;
-import com.petfolio.infinitus.responsepojo.VendorFetchOrderDetailsResponse;
+
+import com.petfolio.infinitus.requestpojo.VendorOrderDetailsRequest;
+import com.petfolio.infinitus.responsepojo.VendorOrderDetailsResponse;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,8 +32,7 @@ import retrofit2.Response;
 public class VendorOrderDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    private  String TAG = "VendorOrderDetailsActivity";
-
+    private final String TAG = "VendorOrderDetailsActivity";
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
     ImageView img_back;
@@ -51,6 +48,14 @@ public class VendorOrderDetailsActivity extends AppCompatActivity implements Vie
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_products_price)
     TextView txt_products_price;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_order_status)
+    TextView txt_order_status;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_delivered_date)
+    TextView txt_delivered_date;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_order_date)
@@ -73,83 +78,110 @@ public class VendorOrderDetailsActivity extends AppCompatActivity implements Vie
     TextView txt_quantity;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.txt_order_status)
-    TextView txt_order_status;
+    @BindView(R.id.txt_shipping_address_name)
+    TextView txt_shipping_address_name;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_shipping_address_street)
+    TextView txt_shipping_address_street;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_shipping_address_city)
+    TextView txt_shipping_address_city;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_shipping_address_state_pincode)
+    TextView txt_shipping_address_state_pincode;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_shipping_address_phone)
+    TextView txt_shipping_address_phone;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_shipping_address_landmark)
+    TextView txt_shipping_address_landmark;
+
+
+
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_order_status)
     ImageView img_order_status;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.txt_date)
-    TextView txt_date;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.text)
-    TextView text;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.txt_shipping_address)
-    TextView txt_shipping_address;
-
-    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
-    String product_title, product_image, order_date, order_id, payment_mode,updated_order_status,fromActivity,order_id_display,order_status_title = "Booked On";
+    private String _id;
 
-    int order_total, quantity;
 
-    Boolean order_image;
-
-    int product_pr;
-
+    @SuppressLint({"SetTextI18n", "LogNotTimber", "LongLogTag"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor_order_details);
 
         ButterKnife.bind(this);
-
+        img_back.setOnClickListener(this);
         Bundle extras = getIntent().getExtras();
-
         if (extras != null) {
+            _id = extras.getString("_id");
+            String fromactivity = extras.getString("fromactivity");
+            Log.w(TAG,"_id : "+_id+" fromactivity : "+ fromactivity);
 
-            order_id = extras.getString("order_id");
+            if(fromactivity != null && fromactivity.equalsIgnoreCase("VendorNewOrdersAdapter")){
+                txt_order_status.setText("Booked on");
+                img_order_status.setImageResource(R.drawable.completed);
+            }else if(fromactivity != null && fromactivity.equalsIgnoreCase("VendorCompletedOrdersAdapter")){
+                txt_order_status.setText("Delivered on");
+                img_order_status.setImageResource(R.drawable.completed);
+            }else if(fromactivity != null && fromactivity.equalsIgnoreCase("VendorCancelledOrdersAdapter")){
+                txt_order_status.setText("Cancelled on");
+                img_order_status.setImageResource(R.drawable.ic_baseline_cancel_24);
 
-            fromActivity = extras.getString("fromactivity");
+            }
+
 
         }
 
         if (new ConnectionDetector(VendorOrderDetailsActivity.this).isNetworkAvailable(VendorOrderDetailsActivity.this)) {
-
-                fetch_order_details_id(order_id);
+            vendorOrderDetailsResponseCall();
 
         }
 
-        img_back.setOnClickListener(this);
+    }
 
-        txt_shipping_address.setVisibility(View.GONE);
 
-        text.setVisibility(View.GONE);
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.img_back) {
+            onBackPressed();
+        }
 
     }
 
-    @SuppressLint("LogNotTimber")
-    private void fetch_order_details_id(String order_id) {
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    private void vendorOrderDetailsResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-        Call<VendorFetchOrderDetailsResponse> call = apiInterface.vendor_order_booking_order_fetches_ResponseCall(RestUtils.getContentType(), vendorFetchOrderDetailsIdRequest(order_id));
+        Call<VendorOrderDetailsResponse> call = apiInterface.vendorOrderDetailsResponseCall(RestUtils.getContentType(), vendorOrderDetailsRequest());
+        Log.w(TAG,"vendorOrderDetailsResponseCall url  :%s"+" "+ call.request().url().toString());
 
-        Log.w(TAG,"fetch_order_details_id url  :%s"+" "+ call.request().url().toString());
-
-        call.enqueue(new Callback<VendorFetchOrderDetailsResponse>() {
+        call.enqueue(new Callback<VendorOrderDetailsResponse>() {
+            @SuppressLint({"LongLogTag", "LogNotTimber", "SetTextI18n"})
             @Override
-            public void onResponse(@NonNull Call<VendorFetchOrderDetailsResponse> call, @NonNull Response<VendorFetchOrderDetailsResponse> response) {
+            public void onResponse(@NonNull Call<VendorOrderDetailsResponse> call, @NonNull Response<VendorOrderDetailsResponse> response) {
 
-                Log.w(TAG,"fetch_order_details_id_responseCall"+ "--->" + new Gson().toJson(response.body()));
+                Log.w(TAG,"vendorOrderDetailsResponseCall"+ "--->" + new Gson().toJson(response.body()));
 
                 avi_indicator.smoothToHide();
 
@@ -158,194 +190,81 @@ public class VendorOrderDetailsActivity extends AppCompatActivity implements Vie
 
                         if(response.body().getData()!=null){
 
-                            product_image = response.body().getData().getProdcut_image();
-
-                            product_title = response.body().getData().getProduct_name();
-
-                            product_pr = response.body().getData().getProduct_price();
-
-                            order_id_display = response.body().getData().getOrder_id();
-
-                            payment_mode = "Online";
-
-                            order_total = response.body().getData().getGrand_total();
-
-                            quantity = response.body().getData().getProduct_quantity();
-
-                            updated_order_status = response.body().getData().getOrder_status();
-
-                            Log.w(TAG, "Order Status " +updated_order_status);
-
-                            if(response.body().getData().getOrder_id()!=null){
+                            if(response.body().getData().getProduct_name()!=null&&!(response.body().getData().getProduct_name().isEmpty())){
+                                txt_product_title.setText(response.body().getData().getProduct_name());
+                            }
+                            if(response.body().getData().getProduct_price()!=0){
+                                txt_products_price.setText("\u20B9 "+response.body().getData().getProduct_price());
+                            }
+                            if(response.body().getData().getDate_of_booking_display()!=null){
+                                txt_order_date.setText(response.body().getData().getDate_of_booking_display());
+                            } if(response.body().getData().getOrder_id()!=null){
                                 txt_booking_id.setText(response.body().getData().getOrder_id());
+                            } if(response.body().getData().getGrand_total() !=0){
+                                txt_total_order_cost.setText("\u20B9 "+response.body().getData().getGrand_total());
+                            }if(response.body().getData().getProduct_quantity() !=0){
+                                txt_quantity.setText(""+response.body().getData().getProduct_quantity());
                             }
-
-                            if(updated_order_status.equals("New")){
-
-                                order_date = response.body().getData().getDate_of_booking_display();
-
-                                Log.w(TAG, "Order Date " +response.body().getData().getDate_of_booking_display());
-
-                                order_status_title = "Booked on";
-
-                                order_image = false;
-
-                            }
-
-                            else if(updated_order_status.equals("Cancelled")){
-
-                                order_date = response.body().getData().getVendor_cancell_date();
-
-                                Log.w(TAG, "Order Date " +response.body().getData().getDate_of_booking_display());
-
-                                order_status_title = "Cancelled on";
-
-                                order_image = true;
+                            if(response.body().getData().getProduct_quantity() !=0){
+                                txt_quantity.setText(""+response.body().getData().getProduct_quantity());
+                            }if(response.body().getData().getShipping_details_id() !=null){
+                                txt_shipping_address_name.setText(response.body().getData().getShipping_details_id().getUser_first_name()+" "+response.body().getData().getShipping_details_id().getUser_last_name());
+                                txt_shipping_address_street.setText(response.body().getData().getShipping_details_id().getUser_flat_no()+" ,"+response.body().getData().getShipping_details_id().getUser_stree()+", ");
+                                txt_shipping_address_city.setText(response.body().getData().getShipping_details_id().getUser_city());
+                                txt_shipping_address_state_pincode.setText(response.body().getData().getShipping_details_id().getUser_state()+" - "+response.body().getData().getShipping_details_id().getUser_picocode());
+                                if(response.body().getData().getShipping_details_id().getUser_mobile() != null && !response.body().getData().getShipping_details_id().getUser_mobile().isEmpty()) {
+                                    txt_shipping_address_phone.setText("Phone : " + response.body().getData().getShipping_details_id().getUser_mobile());
+                                }
+                                if(response.body().getData().getShipping_details_id().getUser_landmark() != null && !response.body().getData().getShipping_details_id().getUser_landmark().isEmpty()) {
+                                    txt_shipping_address_landmark.setText("Landmark : " + response.body().getData().getShipping_details_id().getUser_landmark());
+                                }
 
                             }
 
-                            else {
-
-                                order_date = response.body().getData().getDelivery_date_display();
-
-                                Log.w(TAG, "Order Date " +response.body().getData().getDate_of_booking_display());
-
-                                order_status_title = "Delivered on";
-
-                                order_image = false;
-
+                            if (response.body().getData().getProdcut_image() != null && !response.body().getData().getProdcut_image().isEmpty()) {
+                                Glide.with(getApplicationContext())
+                                        .load(response.body().getData().getProdcut_image())
+                                        .into(img_products_image);
+                            }
+                            else{
+                                Glide.with(getApplicationContext())
+                                        .load(APIClient.PROFILE_IMAGE_URL)
+                                        .into(img_products_image);
 
                             }
 
+                            if(response.body().getData().getDate_of_booking() != null){
+                                txt_delivered_date.setText(response.body().getData().getDate_of_booking());
+                            }
 
-                            setView();
+
 
 
                         }
 
+
                     }
-                    else{
-                        //showErrorLoading(response.body().getMessage());
-                    }
+
                 }
 
 
             }
 
+            @SuppressLint({"LongLogTag", "LogNotTimber"})
             @Override
-            public void onFailure(@NonNull Call<VendorFetchOrderDetailsResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<VendorOrderDetailsResponse> call, @NonNull Throwable t) {
 
                 avi_indicator.smoothToHide();
-                Log.w(TAG,"appoinmentCancelledResponseCall flr"+"--->" + t.getMessage());
+                Log.w(TAG,"VendorOrderDetailsResponse flr"+"--->" + t.getMessage());
             }
         });
 
-
     }
-
-
-
-    @SuppressLint("LogNotTimber")
-    private VendorFetchOrderDetailsIdRequest vendorFetchOrderDetailsIdRequest(String order_id) {
-
-
-        /**
-         * _id : 604b387942cb073ec4dfef16
-         */
-
-
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
-        String currentDateandTime = sdf.format(new Date());
-
-        VendorFetchOrderDetailsIdRequest vendorFetchOrderDetailsIdRequest = new VendorFetchOrderDetailsIdRequest();
-        vendorFetchOrderDetailsIdRequest.set_id(order_id);
-
-
-        Log.w(TAG,"appoinmentCancelledRequest"+ "--->" + new Gson().toJson(vendorFetchOrderDetailsIdRequest));
-        return vendorFetchOrderDetailsIdRequest;
-    }
-
-    @SuppressLint("SetTextI18n")
-    private void setView() {
-
-        if(product_image != null&&!product_image.isEmpty()){
-
-            Glide.with(this)
-                    .load(product_image)
-                    .into(img_products_image);
-
-        }
-        else{
-            Glide.with(this)
-                    .load(R.drawable.image_thumbnail)
-                    .into(img_products_image);
-
-        }
-
-        if(product_title != null&&!product_title.isEmpty()){
-
-            txt_product_title.setText(product_title);
-        }
-
-        if(product_pr!=0){
-
-            txt_products_price.setText(" \u20B9 "+ product_pr);
-        }
-
-        if(order_date != null&&!order_date.isEmpty()){
-
-            txt_order_date.setText(order_date);
-
-            txt_date.setText(order_date);
-
-        }
-
-        if(payment_mode != null&&!payment_mode.isEmpty()){
-
-            txt_payment_method.setText(payment_mode);
-        }
-
-        if(order_total != 0){
-
-            txt_total_order_cost.setText("\u20B9 "+order_total);
-        }
-
-        if(quantity != 0){
-
-            txt_quantity.setText("" +quantity);
-        }
-
-        if(order_image){
-            img_order_status.setImageResource(R.drawable.ic_baseline_cancel_24);
-        } else {
-
-            img_order_status.setImageResource(R.drawable.completed);
-
-        }
-
-
-        txt_order_status.setText(order_status_title);
-
-
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public void onClick(View v) {
-
-        switch (v.getId()){
-
-            case R.id.img_back:
-                onBackPressed();
-                break;
-
-        }
-
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    private VendorOrderDetailsRequest vendorOrderDetailsRequest() {
+        VendorOrderDetailsRequest vendorOrderDetailsRequest = new VendorOrderDetailsRequest();
+        vendorOrderDetailsRequest.set_id(_id);
+        Log.w(TAG,"vendorOrderDetailsRequest"+ "--->" + new Gson().toJson(vendorOrderDetailsRequest));
+        return vendorOrderDetailsRequest;
     }
 }

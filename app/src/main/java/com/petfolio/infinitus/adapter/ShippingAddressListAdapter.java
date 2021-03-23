@@ -120,9 +120,12 @@ public class ShippingAddressListAdapter extends  RecyclerView.Adapter<RecyclerVi
 
         }
 
-        if(newOrderResponseList.get(position).getUser_state()!=null&&!newOrderResponseList.get(position).getUser_state().isEmpty()){
+        if(newOrderResponseList.get(position).getUser_city()!=null&&!newOrderResponseList.get(position).getUser_city().isEmpty()){
 
-            holder.txt_user_city.setText(newOrderResponseList.get(position).getUser_state());
+            holder.txt_user_city.setText(newOrderResponseList.get(position).getUser_city());
+
+        }
+        if(newOrderResponseList.get(position).getUser_state()!=null&&!newOrderResponseList.get(position).getUser_state().isEmpty()){
 
             state = newOrderResponseList.get(position).getUser_state();
 
@@ -178,7 +181,7 @@ public class ShippingAddressListAdapter extends  RecyclerView.Adapter<RecyclerVi
 
                 onEditShipAddrListener.OnEditShipAddr(newOrderResponseList.get(position).get_id(),newOrderResponseList.get(position).getUser_first_name(),newOrderResponseList.get(position).getUser_last_name(),newOrderResponseList.get(position).getUser_mobile(),newOrderResponseList.get(position).getUser_alter_mobile(),
 
-                        newOrderResponseList.get(position).getUser_flat_no(),newOrderResponseList.get(position).getUser_state(),newOrderResponseList.get(position).getUser_stree(),newOrderResponseList.get(position).getUser_landmark(),newOrderResponseList.get(position).getUser_picocode(),newOrderResponseList.get(position).getUser_address_type(),newOrderResponseList.get(position).getUser_display_date(),newOrderResponseList.get(position).getUser_address_stauts());
+                        newOrderResponseList.get(position).getUser_flat_no(),newOrderResponseList.get(position).getUser_state(),newOrderResponseList.get(position).getUser_stree(),newOrderResponseList.get(position).getUser_landmark(),newOrderResponseList.get(position).getUser_picocode(),newOrderResponseList.get(position).getUser_address_type(),newOrderResponseList.get(position).getUser_display_date(),newOrderResponseList.get(position).getUser_address_stauts(),newOrderResponseList.get(position).getUser_city());
             }
         });
 

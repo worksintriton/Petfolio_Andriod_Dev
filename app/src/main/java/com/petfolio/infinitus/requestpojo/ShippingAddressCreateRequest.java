@@ -4,7 +4,7 @@ public class ShippingAddressCreateRequest {
 
 
     /**
-     * user_id : 6048589d0b3a487571a1c567
+     * user_id : 604081d12c2b43125f8cb840
      * user_first_name : Mohammed
      * user_last_name : imthiyas
      * user_flat_no : no 23
@@ -17,6 +17,7 @@ public class ShippingAddressCreateRequest {
      * user_address_stauts :
      * user_address_type : Home
      * user_display_date : 22-03-2021
+     * user_city : Salem
      */
 
     private String user_id;
@@ -32,6 +33,7 @@ public class ShippingAddressCreateRequest {
     private String user_address_stauts;
     private String user_address_type;
     private String user_display_date;
+    private String user_city;
 
     public String getUser_id() {
         return user_id;
@@ -135,5 +137,13 @@ public class ShippingAddressCreateRequest {
 
     public void setUser_display_date(String user_display_date) {
         this.user_display_date = user_display_date;
+    }
+
+    public String getUser_city() {
+        return user_city;
+    }
+
+    public void setUser_city(String user_city) {
+        this.user_city = user_city;
     }
 }

@@ -219,7 +219,8 @@
                     android:textSize="14sp"
                     tools:ignore="Autofill,LabelFor"
                     android:inputType="textMultiLine"
-                    android:scrollbars="vertical"/>
+                    android:scrollbars="vertical"
+                    android:maxLength="150"/>
 
             </RelativeLayout>
 

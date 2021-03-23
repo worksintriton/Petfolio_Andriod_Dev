@@ -54,6 +54,7 @@ import com.petfolio.infinitus.requestpojo.PetUpdateOtherInformationRequest;
 import com.petfolio.infinitus.requestpojo.PetVendorOrderRequest;
 import com.petfolio.infinitus.requestpojo.PrescriptionCreateRequest;
 import com.petfolio.infinitus.requestpojo.PrescriptionDetailsRequest;
+import com.petfolio.infinitus.requestpojo.ProductSearchRequest;
 import com.petfolio.infinitus.requestpojo.ProfileUpdateRequest;
 import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
 import com.petfolio.infinitus.requestpojo.SPAppointmentRequest;
@@ -143,6 +144,7 @@ import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.PetTypeListResponse;
 import com.petfolio.infinitus.responsepojo.PetVendorOrderResponse;
 import com.petfolio.infinitus.responsepojo.PrescriptionCreateResponse;
+import com.petfolio.infinitus.responsepojo.ProductSearchResponse;
 import com.petfolio.infinitus.responsepojo.ProfileUpdateResponse;
 import com.petfolio.infinitus.responsepojo.ResendOTPResponse;
 import com.petfolio.infinitus.responsepojo.SPAppointmentDetailsResponse;
@@ -711,6 +713,13 @@ public interface RestApiInterface {
     /* Multi Discount Apply*/
     @POST("product_details/discount_multi")
     Call<ApplyMultiProdDiscountResponse> apply_multi_dis_ResponseCall(@Header("Content-Type") String type, @Body ApplyMultiProdDiscountRequest applyMultiProdDiscountRequest);
+
+
+    /* Shop Dashboard products search*/
+    @POST("product_details/text_search")
+    Call<ProductSearchResponse> productSearchResponseCall(@Header("Content-Type") String type, @Body ProductSearchRequest productSearchRequest);
+
+
 
 
 }

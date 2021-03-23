@@ -108,6 +108,7 @@ public class PetReturnOrderActivity extends AppCompatActivity implements View.On
     private Dialog dialog;
     private String termsandconditions;
     private Dialog alertDialog;
+    private String User_return_info;
 
 
     @SuppressLint({"LogNotTimber", "SetTextI18n"})
@@ -322,7 +323,7 @@ public class PetReturnOrderActivity extends AppCompatActivity implements View.On
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
-        String User_return_info;
+
         if(returnreason != null && returnreason.equalsIgnoreCase("Other")){
             User_return_info = edt_comment.getText().toString();
         }else{

@@ -137,6 +137,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private String productid;
     private int product_cart_counts = 0;
     private String threshould;
+    private String fromactivity;
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -154,6 +155,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             productid = extras.getString("productid");
+            fromactivity = extras.getString("fromactivity");
         }
 
         if(userid != null && productid != null){
@@ -207,7 +209,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        callDirections("2");
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("ProductsSearchAdapter")){
+            Intent intent = new Intent(ProductDetailsActivity.this,SearchActivity.class);
+            startActivity(intent);
+            finish();
+        }else {
+            callDirections("2");
+        }
     }
 
     @SuppressLint("LogNotTimber")

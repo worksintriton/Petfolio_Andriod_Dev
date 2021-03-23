@@ -16,15 +16,10 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.requestpojo.VendorOrderDetailsRequest;
-import com.petfolio.infinitus.responsepojo.DropDownListResponse;
 import com.petfolio.infinitus.responsepojo.VendorOrderDetailsResponse;
-import com.petfolio.infinitus.responsepojo.VendorReasonListResponse;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
-
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -84,12 +79,31 @@ public class PetVendorOrderDetailsActivity extends AppCompatActivity implements 
     TextView txt_quantity;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.txt_shipping_address)
-    TextView txt_shipping_address;
+    @BindView(R.id.txt_shipping_address_name)
+    TextView txt_shipping_address_name;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.txt_billing_address)
-    TextView txt_billing_address;
+    @BindView(R.id.txt_shipping_address_street)
+    TextView txt_shipping_address_street;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_shipping_address_city)
+    TextView txt_shipping_address_city;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_shipping_address_state_pincode)
+    TextView txt_shipping_address_state_pincode;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_shipping_address_phone)
+    TextView txt_shipping_address_phone;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_shipping_address_landmark)
+    TextView txt_shipping_address_landmark;
+
+
+
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_order_status)
@@ -99,9 +113,7 @@ public class PetVendorOrderDetailsActivity extends AppCompatActivity implements 
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
-    private List<DropDownListResponse.DataBean.SpecialzationBean> petSpecilaziationList;
     private String _id;
-    private String fromactivity;
 
 
     @SuppressLint({"LogNotTimber", "LongLogTag", "SetTextI18n"})
@@ -110,15 +122,12 @@ public class PetVendorOrderDetailsActivity extends AppCompatActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_vendor_order_details);
         ButterKnife.bind(this);
-
         img_back.setOnClickListener(this);
-
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             _id = extras.getString("_id");
-            fromactivity = extras.getString("fromactivity");
-            Log.w(TAG,"_id : "+_id+" fromactivity : "+fromactivity);
+            String fromactivity = extras.getString("fromactivity");
+            Log.w(TAG,"_id : "+_id+" fromactivity : "+ fromactivity);
 
             if(fromactivity != null && fromactivity.equalsIgnoreCase("PetVendorNewOrdersAdapter")){
                 txt_order_status.setText("Booked on");
@@ -155,14 +164,8 @@ public class PetVendorOrderDetailsActivity extends AppCompatActivity implements 
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.img_back:
-                onBackPressed();
-                break;
-
-
-
-
+        if (v.getId() == R.id.img_back) {
+            onBackPressed();
         }
 
     }
@@ -206,10 +209,18 @@ public class PetVendorOrderDetailsActivity extends AppCompatActivity implements 
                             }
                             if(response.body().getData().getProduct_quantity() !=0){
                                 txt_quantity.setText(""+response.body().getData().getProduct_quantity());
-                            }if(response.body().getData().getShipping_address() !=null){
-                                txt_shipping_address.setText(response.body().getData().getShipping_address());
-                            }if(response.body().getData().getBilling_address() !=null){
-                                txt_billing_address.setText(response.body().getData().getBilling_address());
+                            }if(response.body().getData().getShipping_details_id() !=null){
+                                txt_shipping_address_name.setText(response.body().getData().getShipping_details_id().getUser_first_name()+" "+response.body().getData().getShipping_details_id().getUser_last_name());
+                                txt_shipping_address_street.setText(response.body().getData().getShipping_details_id().getUser_flat_no()+" ,"+response.body().getData().getShipping_details_id().getUser_stree()+", ");
+                                txt_shipping_address_city.setText(response.body().getData().getShipping_details_id().getUser_city());
+                                txt_shipping_address_state_pincode.setText(response.body().getData().getShipping_details_id().getUser_state()+" - "+response.body().getData().getShipping_details_id().getUser_picocode());
+                               if(response.body().getData().getShipping_details_id().getUser_mobile() != null && !response.body().getData().getShipping_details_id().getUser_mobile().isEmpty()) {
+                                   txt_shipping_address_phone.setText("Phone : " + response.body().getData().getShipping_details_id().getUser_mobile());
+                               }
+                                if(response.body().getData().getShipping_details_id().getUser_landmark() != null && !response.body().getData().getShipping_details_id().getUser_landmark().isEmpty()) {
+                                    txt_shipping_address_landmark.setText("Landmark : " + response.body().getData().getShipping_details_id().getUser_landmark());
+                                }
+
                             }
 
                             if (response.body().getData().getProdcut_image() != null && !response.body().getData().getProdcut_image().isEmpty()) {
@@ -251,15 +262,11 @@ public class PetVendorOrderDetailsActivity extends AppCompatActivity implements 
         });
 
     }
-
     @SuppressLint({"LongLogTag", "LogNotTimber"})
     private VendorOrderDetailsRequest vendorOrderDetailsRequest() {
-
         VendorOrderDetailsRequest vendorOrderDetailsRequest = new VendorOrderDetailsRequest();
         vendorOrderDetailsRequest.set_id(_id);
-
         Log.w(TAG,"vendorOrderDetailsRequest"+ "--->" + new Gson().toJson(vendorOrderDetailsRequest));
-
         return vendorOrderDetailsRequest;
     }
 

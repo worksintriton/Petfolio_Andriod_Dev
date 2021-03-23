@@ -4,9 +4,9 @@ public class ShippingAddressEditRequest {
 
 
     /**
-     * _id : 60586cc9817d8046d6c82a22
-     * user_id : 6048589d0b3a487571a1c567
-     * user_first_name : Mohammed
+     * _id : 605990a7bc985303d7f397c3
+     * user_id : 604081d12c2b43125f8cb840
+     * user_first_name : Mohammeds
      * user_last_name : imthiyas
      * user_flat_no : no 23
      * user_stree : 203rd Street,Muthamil nage, chennai - 600119
@@ -17,6 +17,7 @@ public class ShippingAddressEditRequest {
      * user_alter_mobile : +919181823011
      * user_address_stauts :
      * user_address_type : Office
+     * user_city : Salem Steel
      */
 
     private String _id;
@@ -32,6 +33,7 @@ public class ShippingAddressEditRequest {
     private String user_alter_mobile;
     private String user_address_stauts;
     private String user_address_type;
+    private String user_city;
 
     public String get_id() {
         return _id;
@@ -135,5 +137,13 @@ public class ShippingAddressEditRequest {
 
     public void setUser_address_type(String user_address_type) {
         this.user_address_type = user_address_type;
+    }
+
+    public String getUser_city() {
+        return user_city;
+    }
+
+    public void setUser_city(String user_city) {
+        this.user_city = user_city;
     }
 }

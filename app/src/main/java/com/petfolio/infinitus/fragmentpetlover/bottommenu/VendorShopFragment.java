@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,7 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinitus.petlover.PetShopTodayDealsSeeMoreActivity;
+import com.petfolio.infinitus.petlover.SearchActivity;
 import com.petfolio.infinitus.requestpojo.ShopDashboardRequest;
 import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
@@ -75,9 +77,6 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
     TabLayout tabLayout;
 
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.edt_search)
-    EditText edt_search;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_all_categories)
@@ -104,9 +103,13 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
     RecyclerView rv_productdetails;
 
 
-   @SuppressLint("NonConstantResourceId")
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_seemore_todaydeals)
     TextView txt_seemore_todaydeals;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_search)
+    RelativeLayout rl_search;
 
     private Context mContext;
     private Dialog alertDialog;
@@ -151,6 +154,14 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
                 Intent intent =new Intent(mContext, PetShopTodayDealsSeeMoreActivity.class);
                 intent.putExtra("from","");
                 startActivity(intent);
+            }
+        });
+
+        rl_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mContext, SearchActivity.class));
+
             }
         });
 

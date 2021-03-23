@@ -113,13 +113,9 @@ public class VendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recycler
         holder.txt_order_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent i = new Intent(context, VendorOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                i.putExtra("order_id",newOrderResponseList.get(position).get_id());
-
+                i.putExtra("_id",newOrderResponseList.get(position).get_id());
                 i.putExtra("fromactivity",TAG);
-
                 context.startActivity(i);
 
             }
