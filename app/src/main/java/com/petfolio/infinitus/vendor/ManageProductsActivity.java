@@ -1,15 +1,25 @@
 package com.petfolio.infinitus.vendor;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,15 +29,24 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.ManageProductsListAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.interfaces.OnItemCheckProduct;
+import com.petfolio.infinitus.requestpojo.ApplySingleDiscountCalRequest;
+import com.petfolio.infinitus.requestpojo.ApplySingleDiscountRequest;
 import com.petfolio.infinitus.requestpojo.ManageProductsListRequest;
+import com.petfolio.infinitus.responsepojo.ApplySingleDiscountCalResponse;
+import com.petfolio.infinitus.responsepojo.ApplySingleDiscountResponse;
 import com.petfolio.infinitus.responsepojo.ManageProductsListResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +54,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ManageProductsActivity extends AppCompatActivity implements View.OnClickListener{
+public class ManageProductsActivity extends AppCompatActivity implements View.OnClickListener, OnItemCheckProduct {
 
     private String TAG = "ManageProductsActivity";
 
@@ -71,6 +90,25 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
     private List<ManageProductsListResponse.DataBean> manageProductsListResponseList;
 
     boolean showCheckbox = false;
+    private Dialog dialog;
+
+    int productcount;
+    String productid, productname;
+    int productprice;
+    private int productdiscount;
+
+    TextView txt_discount_price,txt_cost;
+    TextView txt_deal_start_date,txt_deal_expriy_date;
+    private int discountamount =0;
+    private boolean discountstatus = false;
+    private String searchString = "";
+    private String getfromdate = "";
+    private String gettodate = "";
+
+     boolean isvaliddate = false;
+    private AlertDialog.Builder alertDialogBuilder;
+    AlertDialog alertDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +120,7 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
         HashMap<String, String> user = session.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
 
-        ll_discard.setVisibility(View.GONE);
+        ll_discard.setVisibility(View.INVISIBLE);
 
 
         img_back.setOnClickListener(v -> onBackPressed());
@@ -93,6 +131,7 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
 
         ll_apply.setOnClickListener(this);
         ll_discard.setOnClickListener(this);
+        txt_applydeal.setOnClickListener(this);
 
 
     }
@@ -150,10 +189,12 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
     @SuppressLint("LogNotTimber")
     private ManageProductsListRequest manageProductsListRequest() {
         /*
-         * vendor_id : 5ee3666a5dfb34019b13c3a2
+         * vendor_id : 6048589d0b3a487571a1c567
+         * search_string : CAT
          */
         ManageProductsListRequest manageProductsListRequest = new ManageProductsListRequest();
         manageProductsListRequest.setVendor_id(APIClient.VENDOR_ID);
+        manageProductsListRequest.setSearch_string(searchString);
         Log.w(TAG,"manageProductsListRequest"+ "--->" + new Gson().toJson(manageProductsListRequest));
         return manageProductsListRequest;
     }
@@ -161,8 +202,9 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
     private void setView() {
         rv_manage_productlist.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rv_manage_productlist.setItemAnimator(new DefaultItemAnimator());
-        ManageProductsListAdapter manageProductsListAdapter = new ManageProductsListAdapter(getApplicationContext(), manageProductsListResponseList,showCheckbox);
+        ManageProductsListAdapter manageProductsListAdapter = new ManageProductsListAdapter(getApplicationContext(), manageProductsListResponseList,showCheckbox,this);
         rv_manage_productlist.setAdapter(manageProductsListAdapter);
+
 
     }
 
@@ -174,21 +216,433 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
     }
 
 
-    @SuppressLint("NonConstantResourceId")
+    @SuppressLint({"NonConstantResourceId", "SetTextI18n", "LogNotTimber"})
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ll_discard:
-            showCheckbox = false;
-            getlist_from_vendor_id_ResponseCall();
+                 showCheckbox = false;
+                ll_discard.setVisibility(View.INVISIBLE);
+                txt_applydeal.setText("Apply Deal");
+                setView();
+                //  getlist_from_vendor_id_ResponseCall();
             break;
 
             case R.id.ll_apply:
-            showCheckbox = true;
-            getlist_from_vendor_id_ResponseCall();
+                Log.w(TAG,"Apply Deal Clicked");
+                showCheckbox = true;
+                ll_discard.setVisibility(View.VISIBLE);
+                txt_applydeal.setText("Submit");
+                setView();
+               //  getlist_from_vendor_id_ResponseCall();
             break;
+
+            case R.id.txt_applydeal:
+                Log.w(TAG,"txt_applydeal clicked"+txt_applydeal.getText().toString());
+                if(txt_applydeal.getText().toString().equalsIgnoreCase("Submit")){
+                    showProductDealAlert();
+                }else{
+                    showCheckbox = true;
+                    ll_discard.setVisibility(View.VISIBLE);
+                    txt_applydeal.setText("Submit");
+                    setView();
+                }
+                break;
 
         }
 
     }
+
+
+    @SuppressLint("LogNotTimber")
+    @Override
+    public void onItemCheckProduct(int count, String product_id, String product_name, int product_price) {
+        Log.w(TAG,"onItemCheckProduct : count "+count);
+        productcount = count;
+        productid = product_id;
+        productname = product_name;
+        productprice = product_price;
+
+
+
+    }
+
+    private void showProductDealAlert() {
+
+        try {
+            dialog = new Dialog(ManageProductsActivity.this);
+            dialog.setContentView(R.layout.add_todays_deal_popup);
+            dialog.setCanceledOnTouchOutside(false);
+            EditText edt_discount_per_unit = dialog.findViewById(R.id.edt_discount_per_unit);
+            EditText edt_deal_price = dialog.findViewById(R.id.edt_deal_price);
+            txt_deal_start_date = dialog.findViewById(R.id.txt_deal_start_date);
+            txt_deal_expriy_date = dialog.findViewById(R.id.txt_deal_expriy_date);
+            txt_discount_price  = dialog.findViewById(R.id.txt_discount_price);
+            txt_cost  = dialog.findViewById(R.id.txt_cost);
+            Button btn_apply_discount  = dialog.findViewById(R.id.btn_apply_discount);
+
+
+            edt_discount_per_unit.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                    if(s.toString() != null && !s.toString().isEmpty()){
+                        if(edt_deal_price.getText().toString() != null && !edt_deal_price.getText().toString().isEmpty()){
+                            edt_deal_price.setText("");
+                        }
+                        discountamount = 0;
+                        productdiscount = Integer.parseInt(s.toString());
+                        discountstatus = true;
+                        Log.w(TAG,"productcount : "+productcount+"edt_discount_per_unit afterTextChanged "+s.toString());
+                        if(productcount ==1){
+                            if(productdiscount != 0) {
+                                cal_discount_single_ResponseCall();
+                            }
+                        }else{
+
+                        }
+
+                    }
+
+
+
+
+
+                }
+            });
+            edt_deal_price.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @SuppressLint("LogNotTimber")
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                    if(s.toString() != null && !s.toString().isEmpty()){
+                        if(edt_discount_per_unit.getText().toString() != null && !edt_discount_per_unit.getText().toString().isEmpty()){
+                            edt_discount_per_unit.setText("");
+                        }
+                        productdiscount = 0;
+                        discountamount = Integer.parseInt(s.toString());
+                        discountstatus = false;
+                        Log.w(TAG,"productcount : "+productcount+"edt_discount_per_unit afterTextChanged "+s.toString());
+                        if(productcount ==1){
+                            if(discountamount != 0) {
+                                cal_discount_single_ResponseCall();
+                            }
+                        }else{
+
+                        }
+
+                    }
+
+
+
+
+                }
+            });
+
+            btn_apply_discount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if(getfromdate.isEmpty()){
+                        showErrorLoading("Please select deal start date");
+                    }else if(gettodate.isEmpty()){
+                        showErrorLoading("Please select deal end date");
+                    }else {
+                        CheckDates(getfromdate,gettodate);
+                        if(isvaliddate){
+                            if(productcount == 1){
+                                apply_sing_dis_ResponseCall();
+                            }
+                        }else{
+                            showErrorLoading("Please select valid deal date");
+                        }
+                    }
+
+
+
+
+                }
+            });
+
+            txt_deal_start_date.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getStartDate();
+                }
+            });
+            txt_deal_expriy_date.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getEndDate();
+                }
+            });
+
+
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
+
+    @SuppressLint("LogNotTimber")
+    private void apply_sing_dis_ResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<ApplySingleDiscountResponse> call = apiInterface.apply_sing_dis_ResponseCall(RestUtils.getContentType(), applySingleDiscountRequest());
+        Log.w(TAG,"ApplySingleDiscountResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<ApplySingleDiscountResponse>() {
+            @SuppressLint({"LogNotTimber", "SetTextI18n"})
+            @Override
+            public void onResponse(@NonNull Call<ApplySingleDiscountResponse> call, @NonNull Response<ApplySingleDiscountResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"ApplySingleDiscountResponse" + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+                    if (200 == response.body().getCode()) {
+                        dialog.dismiss();
+                        ll_discard.setVisibility(View.INVISIBLE);
+                        txt_applydeal.setText("Apply Deal");
+                        showCheckbox = false;
+                        getlist_from_vendor_id_ResponseCall();
+
+
+                    }
+
+                }
+
+
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onFailure(@NonNull Call<ApplySingleDiscountResponse> call,@NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.e("ApplySingleDiscountResponse flr", "--->" + t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint("LogNotTimber")
+    private ApplySingleDiscountRequest applySingleDiscountRequest() {
+        /*
+         * _id : 605328895e35b95a5cf804e4
+         * discount_status : false
+         * discount_amount : 2
+         * discount : 0
+         * "discount_start_date" : "23-03-2021",
+         * "discount_end_date" : "24-02-2021"
+         */
+        ApplySingleDiscountRequest applySingleDiscountRequest = new ApplySingleDiscountRequest();
+        applySingleDiscountRequest.set_id(productid);
+        applySingleDiscountRequest.setDiscount_status(false);
+        applySingleDiscountRequest.setDiscount_amount(0);
+        applySingleDiscountRequest.setDiscount(productdiscount);
+        applySingleDiscountRequest.setDiscount_start_date(getfromdate);
+        applySingleDiscountRequest.setDiscount_end_date(gettodate);
+        Log.w(TAG,"applySingleDiscountRequest"+ new Gson().toJson(applySingleDiscountRequest));
+        return applySingleDiscountRequest;
+    }
+
+     @SuppressLint("LogNotTimber")
+    private void cal_discount_single_ResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<ApplySingleDiscountCalResponse> call = apiInterface.cal_discount_single_ResponseCall(RestUtils.getContentType(), applySingleDiscountCalRequest());
+        Log.w(TAG,"ApplySingleDiscountCalResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<ApplySingleDiscountCalResponse>() {
+            @SuppressLint({"LogNotTimber", "SetTextI18n"})
+            @Override
+            public void onResponse(@NonNull Call<ApplySingleDiscountCalResponse> call, @NonNull Response<ApplySingleDiscountCalResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"ApplySingleDiscountCalResponse" + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+                    if (200 == response.body().getCode()) {
+
+
+                        if (response.body().getData() != null) {
+                            if(discountstatus){
+                                txt_discount_price.setText(response.body().getData().getDiscount()+" %");
+                            }else{
+                                txt_discount_price.setText("\u20B9 "+response.body().getData().getDiscount_amount());
+                            }
+
+                            txt_cost.setText("\u20B9 " +response.body().getData().getCost());
+
+                        }
+
+
+
+                    }
+
+                }
+
+
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onFailure(@NonNull Call<ApplySingleDiscountCalResponse> call,@NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.e("ApplySingleDiscountCalResponse flr", "--->" + t.getMessage());
+            }
+        });
+
+    }
+    private ApplySingleDiscountCalRequest applySingleDiscountCalRequest() {
+        /*
+         * _id : 605328895e35b95a5cf804e4
+         * discount_status : false
+         * discount_amount : 2
+         * discount : 0
+         */
+        ApplySingleDiscountCalRequest applySingleDiscountCalRequest = new ApplySingleDiscountCalRequest();
+        applySingleDiscountCalRequest.set_id(productid);
+        applySingleDiscountCalRequest.setDiscount_status(discountstatus);
+        applySingleDiscountCalRequest.setDiscount_amount(discountamount);
+        applySingleDiscountCalRequest.setDiscount(productdiscount);
+        Log.w(TAG,"applySingleDiscountCalRequest"+ new Gson().toJson(applySingleDiscountCalRequest));
+        return applySingleDiscountCalRequest;
+    }
+
+
+
+    private void getStartDate() {
+
+        Calendar c = Calendar.getInstance();
+        int mYear = c.get(Calendar.YEAR);
+        int mMonth = c.get(Calendar.MONTH);
+        int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                (view, year, monthOfYear, dayOfMonth) -> {
+
+                    String nd = "" + dayOfMonth;
+                    String nm = "" + monthOfYear ;
+                    if ( dayOfMonth < 10 ){
+                        nd = "0"+ dayOfMonth;
+                    }
+
+
+                    if ( (monthOfYear + 1) < 10){
+                        nm = "0"+ ( monthOfYear +1 ) ;
+                    }else {
+                        nm = ""+ ( monthOfYear + 1) ;
+                    }
+                    getfromdate = nd+"-"+nm+"-"+year;
+                    txt_deal_start_date.setText(getfromdate);
+
+
+
+                }, mYear, mMonth, mDay);
+
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis()-1000);
+
+        datePickerDialog.show();
+    }
+    private void getEndDate() {
+
+         Calendar c = Calendar.getInstance();
+        int mYear = c.get(Calendar.YEAR);
+        int mMonth = c.get(Calendar.MONTH);
+        int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                (view, year, monthOfYear, dayOfMonth) -> {
+                    String nd = "" + dayOfMonth;
+                    String nm = "" + monthOfYear ;
+                    if ( dayOfMonth < 10 ){
+                        nd = "0"+ dayOfMonth;
+                    }
+
+                    if ( (monthOfYear + 1) < 10){
+                        nm = "0"+ ( monthOfYear +1 ) ;
+                    }else {
+                        nm = ""+ ( monthOfYear + 1) ;
+                    }
+                    gettodate = nd+"-"+nm+"-"+year;
+                    txt_deal_expriy_date.setText(gettodate);
+
+
+                }, mYear, mMonth, mDay);
+
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis()-1000);
+
+        datePickerDialog.show();
+    }
+
+
+    @SuppressLint("LogNotTimber")
+    public void CheckDates(String d1, String d2){
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dfDate  = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            if(d1 != null && d2 != null){
+                if(Objects.requireNonNull(dfDate.parse(d1)).before(dfDate.parse(d2)))
+                {
+                    isvaliddate = true;//If start date is before end date
+                    Log.w(TAG,"before "+isvaliddate);
+                } else {
+                    isvaliddate = false; //If start date is after the end date
+                    Log.w(TAG,"else "+isvaliddate);
+                }
+
+            }
+
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public void showErrorLoading(String errormesage){
+        alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(errormesage);
+        alertDialogBuilder.setPositiveButton("ok",
+                (arg0, arg1) -> hideLoading());
+
+
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+    public void hideLoading(){
+        try {
+            alertDialog.dismiss();
+        }catch (Exception ignored){
+
+        }
+    }
+
 }

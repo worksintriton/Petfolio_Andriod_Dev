@@ -203,8 +203,10 @@ public class FragmentVendorDashboard extends Fragment  {
                                     Log.w(TAG,"isDoctorStatus else : "+isDoctorStatus);
 
                                     if(isDoctorStatus){
-                                        setupViewPager(viewPager);
-                                        tablayout.setupWithViewPager(viewPager);
+                                        if(viewPager != null) {
+                                            setupViewPager(viewPager);
+                                            tablayout.setupWithViewPager(viewPager);
+                                        }
                                     }
 
                                 }

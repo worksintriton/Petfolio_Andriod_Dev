@@ -26,14 +26,15 @@
             android:background="@drawable/rectangle_corner"
             android:fontFamily="@font/futuramediumbt"
             android:hint="@string/enter_discount_per_unit"
-            android:inputType="text"
-            android:maxLength="25"
+            android:inputType="number"
+            android:maxLength="2"
             android:maxLines="1"
             android:padding="15dp"
             android:textColor="@color/green"
             android:textColorHint="@color/dark_gray"
             android:textSize="14sp"
-            tools:ignore="Autofill,LabelFor" />
+            tools:ignore="Autofill,LabelFor"
+            android:imeOptions="actionDone"/>
 
 
         <TextView
@@ -56,20 +57,31 @@
             android:background="@drawable/rectangle_corner"
             android:fontFamily="@font/futuramediumbt"
             android:hint="@string/enter_deal_price"
-            android:inputType="text"
-            android:maxLength="25"
+            android:inputType="number"
+            android:maxLength="4"
             android:maxLines="1"
             android:padding="15dp"
             android:textColor="@color/green"
             android:textColorHint="@color/dark_gray"
             android:textSize="14sp"
-            tools:ignore="Autofill,LabelFor" />
+            tools:ignore="Autofill,LabelFor"
+            android:imeOptions="actionDone"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
             android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/futuramediumbt"
+                android:maxLines="1"
+                android:text="Before Discount"
+                android:textColor="@color/new_txt_color"
+                android:textSize="14sp"
+                android:layout_marginTop="10dp"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -86,7 +98,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/futuramediumbt"
                     android:maxLines="1"
-                    android:text="@string/discount_price"
+                    android:text="Discount"
                     android:textColor="@color/new_txt_color"
                     android:textSize="14sp" />
 
@@ -117,12 +129,12 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/futuramediumbt"
                     android:maxLines="1"
-                    android:text="@string/discount"
+                    android:text="Cost"
                     android:textColor="@color/new_txt_color"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/txt_discount_perc"
+                    android:id="@+id/txt_cost"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -135,16 +147,14 @@
 
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/edt_product_qty"
+        <TextView
+            android:id="@+id/txt_deal_start_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:background="@drawable/rectangle_corner"
             android:fontFamily="@font/futuramediumbt"
             android:hint="Select Deal Start Date"
-            android:inputType="text"
-            android:maxLength="25"
             android:maxLines="1"
             android:padding="15dp"
             android:textColor="@color/green"
@@ -152,16 +162,14 @@
             android:textSize="14sp"
             tools:ignore="Autofill,LabelFor" />
 
-        <EditText
-            android:id="@+id/edt_scheduledate"
+        <TextView
+            android:id="@+id/txt_deal_expriy_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/rectangle_corner"
             android:fontFamily="@font/futuramediumbt"
             android:hint="@string/select_deal_expiry_date"
-            android:inputType="none"
-            android:maxLength="25"
             android:maxLines="1"
             android:padding="15dp"
             android:textColor="@color/green"

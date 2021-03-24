@@ -3,6 +3,7 @@ package com.petfolio.infinitus.api;
 import com.petfolio.infinitus.requestpojo.AddReviewRequest;
 import com.petfolio.infinitus.requestpojo.AddYourPetRequest;
 import com.petfolio.infinitus.requestpojo.ApplyMultiProdDiscountRequest;
+import com.petfolio.infinitus.requestpojo.ApplySingleDiscountCalRequest;
 import com.petfolio.infinitus.requestpojo.ApplySingleDiscountRequest;
 import com.petfolio.infinitus.requestpojo.AppoinmentCancelledRequest;
 import com.petfolio.infinitus.requestpojo.AppoinmentCloseRequest;
@@ -94,6 +95,7 @@ import com.petfolio.infinitus.requestpojo.VendorRegisterFormCreateRequest;
 import com.petfolio.infinitus.responsepojo.AddReviewResponse;
 import com.petfolio.infinitus.responsepojo.AddYourPetResponse;
 import com.petfolio.infinitus.responsepojo.ApplyMultiProdDiscountResponse;
+import com.petfolio.infinitus.responsepojo.ApplySingleDiscountCalResponse;
 import com.petfolio.infinitus.responsepojo.ApplySingleDiscountResponse;
 import com.petfolio.infinitus.responsepojo.AppoinmentCancelledResponse;
 import com.petfolio.infinitus.responsepojo.AppoinmentCompleteResponse;
@@ -670,7 +672,7 @@ public interface RestApiInterface {
     Call<SuccessResponse> update_status_returnResponseCall(@Header("Content-Type") String type, @Body UpdateStatusReturnRequest updateStatusReturnRequest);
 
     /*Manage products list*/
-    @POST("product_details/mobile/getlist_from_vendor_id")
+    @POST("product_details/mobile/getlist_from_vendor_id1")
     Call<ManageProductsListResponse> getlist_from_vendor_id_ResponseCall(@Header("Content-Type") String type, @Body ManageProductsListRequest manageProductsListRequest);
 
     /* Vendor Accepts Return order*/
@@ -706,7 +708,12 @@ public interface RestApiInterface {
     @POST("shipping_address/mark_used_address")
     Call<ShippingAddrMarkAsLastUsedResponse> mark_shipp_addr_ResponseCall(@Header("Content-Type") String type, @Body ShippingAddrMarkAsLastUsedRequest shippingAddrMarkAsLastUsedRequest);
 
-    /* Single Discount Apply*/
+    /* Calculate Single Discount*/
+    @POST("product_details/cal_discount_single")
+    Call<ApplySingleDiscountCalResponse> cal_discount_single_ResponseCall(@Header("Content-Type") String type, @Body ApplySingleDiscountCalRequest applySingleDiscountCalRequest);
+
+
+  /* Single Discount Apply*/
     @POST("product_details/discount_single")
     Call<ApplySingleDiscountResponse> apply_sing_dis_ResponseCall(@Header("Content-Type") String type, @Body ApplySingleDiscountRequest applySingleDiscountRequest);
 

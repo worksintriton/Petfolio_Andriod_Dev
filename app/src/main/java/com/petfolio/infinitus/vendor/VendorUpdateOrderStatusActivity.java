@@ -606,10 +606,10 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
     @SuppressLint("LogNotTimber")
     private VendorConfirmsOrderRequest vendorConfirmsOrderRequest(int id, String title) {
 
-        /**
+        /*
          * _id : 6049e4f564a9296f3d7c3327
          * activity_id : 1
-         * activity_title : Order Confirm
+         * activity_title : Order Accept
          * activity_date : 11-03-2021 03:07 PM
          */
 

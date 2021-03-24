@@ -435,7 +435,7 @@
     <string name="product_name">Product Name</string>
     <string name="pet_breed">Pet breed</string>
     <string name="threshold">Threshold</string>
-    <string name="deal_status">Deal Status</string>
+    <string name="deal_status">Today Deal</string>
 
 
 </resources>

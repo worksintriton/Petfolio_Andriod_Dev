@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/rl_vendorlist"
-    >
+    android:id="@+id/rl_vendorlist">
 
     <CheckBox
         android:id="@+id/checkBox"
@@ -75,7 +74,8 @@
                     android:id="@+id/img_expand_arrow"
                     android:layout_width="18dp"
                     android:layout_height="18dp"
-                    android:src="@drawable/ic_down" />
+                    android:src="@drawable/ic_down"
+                    tools:ignore="ContentDescription" />
 
             </RelativeLayout>
 
