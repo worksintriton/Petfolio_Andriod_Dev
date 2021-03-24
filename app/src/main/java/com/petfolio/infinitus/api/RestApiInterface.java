@@ -703,7 +703,7 @@ public interface RestApiInterface {
     Call<ShippingAddressEditResponse> edit_shipp_addr_ResponseCall(@Header("Content-Type") String type, @Body ShippingAddressEditRequest shippingAddressEditRequest);
 
     /* User Marks Chossen Shipping Address as Last Used*/
-    @POST("shipping_address/edit")
+    @POST("shipping_address/mark_used_address")
     Call<ShippingAddrMarkAsLastUsedResponse> mark_shipp_addr_ResponseCall(@Header("Content-Type") String type, @Body ShippingAddrMarkAsLastUsedRequest shippingAddrMarkAsLastUsedRequest);
 
     /* Single Discount Apply*/

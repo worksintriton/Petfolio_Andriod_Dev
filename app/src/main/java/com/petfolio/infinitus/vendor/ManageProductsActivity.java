@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -34,7 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ManageProductsActivity extends AppCompatActivity {
+public class ManageProductsActivity extends AppCompatActivity implements View.OnClickListener{
 
     private String TAG = "ManageProductsActivity";
 
@@ -53,10 +54,23 @@ public class ManageProductsActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_no_records)
     TextView txt_no_records;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_apply)
+    LinearLayout ll_apply;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_discard)
+    LinearLayout ll_discard;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_applydeal)
+    TextView txt_applydeal;
+
     private String userid;
     private List<ManageProductsListResponse.DataBean> manageProductsListResponseList;
 
-
+    boolean showCheckbox = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +82,8 @@ public class ManageProductsActivity extends AppCompatActivity {
         HashMap<String, String> user = session.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
 
+        ll_discard.setVisibility(View.GONE);
+
 
         img_back.setOnClickListener(v -> onBackPressed());
 
@@ -75,6 +91,8 @@ public class ManageProductsActivity extends AppCompatActivity {
             getlist_from_vendor_id_ResponseCall();
         }
 
+        ll_apply.setOnClickListener(this);
+        ll_discard.setOnClickListener(this);
 
 
     }
@@ -93,7 +111,7 @@ public class ManageProductsActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<ManageProductsListResponse> call, @NonNull Response<ManageProductsListResponse> response) {
                 avi_indicator.smoothToHide();
-                Log.w(TAG,"NotificationGetlistResponse"+ "--->" + new Gson().toJson(response.body()));
+                Log.w(TAG,"ManageProductsListResponse"+ "--->" + new Gson().toJson(response.body()));
 
 
                 if (response.body() != null) {
@@ -143,7 +161,7 @@ public class ManageProductsActivity extends AppCompatActivity {
     private void setView() {
         rv_manage_productlist.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rv_manage_productlist.setItemAnimator(new DefaultItemAnimator());
-        ManageProductsListAdapter manageProductsListAdapter = new ManageProductsListAdapter(getApplicationContext(), manageProductsListResponseList);
+        ManageProductsListAdapter manageProductsListAdapter = new ManageProductsListAdapter(getApplicationContext(), manageProductsListResponseList,showCheckbox);
         rv_manage_productlist.setAdapter(manageProductsListAdapter);
 
     }
@@ -156,4 +174,21 @@ public class ManageProductsActivity extends AppCompatActivity {
     }
 
 
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.ll_discard:
+            showCheckbox = false;
+            getlist_from_vendor_id_ResponseCall();
+            break;
+
+            case R.id.ll_apply:
+            showCheckbox = true;
+            getlist_from_vendor_id_ResponseCall();
+            break;
+
+        }
+
+    }
 }

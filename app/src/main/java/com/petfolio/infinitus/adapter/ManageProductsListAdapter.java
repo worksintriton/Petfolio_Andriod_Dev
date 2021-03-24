@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
@@ -37,9 +38,11 @@ public class ManageProductsListAdapter extends  RecyclerView.Adapter<RecyclerVie
     private List<ManageProductsListResponse.DataBean> manageProductsListResponseList;
     public static String id = "";
     private int currentSelectedPosition = RecyclerView.NO_POSITION;
-    public ManageProductsListAdapter(Context context, List<ManageProductsListResponse.DataBean> manageProductsListResponseList) {
+    boolean showCheckbox;
+    public ManageProductsListAdapter(Context context, List<ManageProductsListResponse.DataBean> manageProductsListResponseList, boolean showCheckbox) {
         this.context = context;
         this.manageProductsListResponseList = manageProductsListResponseList;
+        this.showCheckbox = showCheckbox;
     }
 
     @NonNull
@@ -137,6 +140,7 @@ public class ManageProductsListAdapter extends  RecyclerView.Adapter<RecyclerVie
         public TextView txt_prod_name,txt_prod_price,txt_pet_type,txt_age,txt_pet_breed,txt_threshold,txt_deal_status;
         public ImageView img_products_image,img_prodsettings,img_expand_arrow;
         public View include_vendor_productlist_childview;
+        public CheckBox checkBox;
         public ViewHolderOne(View itemView) {
             super(itemView);
             img_products_image = itemView.findViewById(R.id.img_products_image);
@@ -152,14 +156,18 @@ public class ManageProductsListAdapter extends  RecyclerView.Adapter<RecyclerVie
             txt_pet_breed = include_vendor_productlist_childview.findViewById(R.id.txt_pet_breed);
             txt_threshold = include_vendor_productlist_childview.findViewById(R.id.txt_threshold);
             txt_deal_status = include_vendor_productlist_childview.findViewById(R.id.txt_deal_status);
+            checkBox = itemView.findViewById(R.id.checkBox);
 
+            if(showCheckbox){
 
+                checkBox.setVisibility(View.VISIBLE);
+            }
 
+            else {
 
+                checkBox.setVisibility(View.GONE);
 
-
-
-
+            }
         }
 
     }
