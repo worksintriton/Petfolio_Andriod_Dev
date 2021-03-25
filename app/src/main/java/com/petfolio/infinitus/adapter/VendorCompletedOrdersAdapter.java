@@ -68,13 +68,11 @@ public class VendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recycler
 
 
         if(newOrderResponseList.get(position).getOrder_id()!=null&&!(newOrderResponseList.get(position).getOrder_id().isEmpty())){
-
             holder.txt_orderid.setText(newOrderResponseList.get(position).getOrder_id());
 
         }
 
         if(newOrderResponseList.get(position).getProduct_name()!=null&&!(newOrderResponseList.get(position).getProduct_name().isEmpty())){
-
             holder.txt_producttitle.setText(newOrderResponseList.get(position).getProduct_name());
 
         }
@@ -95,15 +93,12 @@ public class VendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recycler
 
         }
 
-
-        if(newOrderResponseList.get(position).getProduct_price() != 0){
-
-            holder.txt_service_cost.setText("\u20B9 "+newOrderResponseList.get(position).getProduct_price());
-
+        if(newOrderResponseList.get(position).getProduct_price() != 0 && newOrderResponseList.get(position).getProduct_quantity() != 0) {
+            holder.txt_service_cost.setText("\u20B9 " + newOrderResponseList.get(position).getProduct_price() + " (" + newOrderResponseList.get(position).getProduct_quantity() + " items )");
         }
 
-        if(newOrderResponseList.get(position).getVendor_complete_date() != null&&!(newOrderResponseList.get(position).getVendor_complete_date().isEmpty())){
 
+        if(newOrderResponseList.get(position).getVendor_complete_date() != null&&!(newOrderResponseList.get(position).getVendor_complete_date().isEmpty())){
             holder.txt_deliveredon.setText("Delivered on:"+" "+newOrderResponseList.get(position).getVendor_complete_date());
 
         }

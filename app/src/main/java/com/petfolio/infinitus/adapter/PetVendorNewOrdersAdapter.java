@@ -27,19 +27,14 @@ public class PetVendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerVie
 
     private  String TAG = "PetVendorNewOrdersAdapter";
     private List<PetVendorOrderResponse.DataBean> newOrderResponseList;
-
-
     private Context context;
-
     PetVendorOrderResponse.DataBean currentItem;
-
-
     private int size;
 
 
     public PetVendorNewOrdersAdapter(Context context, List<PetVendorOrderResponse.DataBean> newOrderResponseList, int size) {
-        this.newOrderResponseList = newOrderResponseList;
         this.context = context;
+        this.newOrderResponseList = newOrderResponseList;
         this.size = size;
 
     }

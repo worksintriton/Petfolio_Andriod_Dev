@@ -41,10 +41,6 @@ public class PetVendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recyc
         this.newOrderResponseList = newOrderResponseList;
         this.context = context;
         this.size = size;
-
-
-
-
     }
 
     @NonNull
@@ -57,8 +53,6 @@ public class PetVendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recyc
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         initLayoutOne((ViewHolderOne) holder, position);
-
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -78,7 +72,7 @@ public class PetVendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recyc
 
 
         if(newOrderResponseList.get(position).getDate_of_booking() != null){
-            holder.txt_bookedon.setText("Completed on:"+" "+newOrderResponseList.get(position).getVendor_complete_date());
+            holder.txt_bookedon.setText("Delivered on:"+" "+newOrderResponseList.get(position).getVendor_complete_date());
 
         }
 

@@ -138,8 +138,7 @@ public class PickUpLocationDenyActivity extends FragmentActivity implements OnMa
         }
 
 
-
-
+        
         rl_placessearch.setOnClickListener(v -> {
             Intent intent = new Intent(PickUpLocationDenyActivity.this, PlacesSearchActivity.class);
             intent.putExtra("fromactivity",TAG);

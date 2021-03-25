@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,15 +24,15 @@ import java.util.List;
 
 public class ManageProductsListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private  String TAG = "ManageProductsListAdapter";
-    private Context context;
+    private final String TAG = "ManageProductsListAdapter";
+    private final Context context;
     ManageProductsListResponse.DataBean currentItem;
-    private List<ManageProductsListResponse.DataBean> manageProductsListResponseList;
+    private final List<ManageProductsListResponse.DataBean> manageProductsListResponseList;
     public static String id = "";
     private int currentSelectedPosition = RecyclerView.NO_POSITION;
     boolean showCheckbox;
 
-   private OnItemCheckProduct onItemCheckProduct;
+   private final OnItemCheckProduct onItemCheckProduct;
     int count = 0;
 
     public ManageProductsListAdapter(Context context, List<ManageProductsListResponse.DataBean> manageProductsListResponseList, boolean showCheckbox,OnItemCheckProduct onItemCheckProduct) {
@@ -57,7 +56,7 @@ public class ManageProductsListAdapter extends  RecyclerView.Adapter<RecyclerVie
 
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "LogNotTimber", "LongLogTag"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
         currentItem = manageProductsListResponseList.get(position);
         if(manageProductsListResponseList.get(position).getProduct_name() != null) {
@@ -77,16 +76,12 @@ public class ManageProductsListAdapter extends  RecyclerView.Adapter<RecyclerVie
                     .into(holder.img_products_image);
 
         }
-        holder.img_expand_arrow.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("LogNotTimber")
-            @Override
-            public void onClick(View v) {
-                currentSelectedPosition = position;
-                notifyDataSetChanged();
+        holder.img_expand_arrow.setOnClickListener(v -> {
+            currentSelectedPosition = position;
+            notifyDataSetChanged();
 
 
 
-            }
         });
         if (currentSelectedPosition == position) {
             holder.include_vendor_productlist_childview.setVisibility(View.VISIBLE);
@@ -121,27 +116,22 @@ public class ManageProductsListAdapter extends  RecyclerView.Adapter<RecyclerVie
             holder.txt_deal_status.setVisibility(View.GONE);
         }
 
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @SuppressLint("LogNotTimber")
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                String product_name = manageProductsListResponseList.get(position).getProduct_name();
+        holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-                if(isChecked){
-                    if (holder.checkBox.isChecked()) {
-                        count++;
-                        Log.w(TAG,"ischecked count : "+count);
-                        onItemCheckProduct.onItemCheckProduct(count,manageProductsListResponseList.get(position).getProduct_id(),manageProductsListResponseList.get(position).getProduct_name(),manageProductsListResponseList.get(position).getProduct_price());
-                    }
-
-                }else{
-                    count--;
-                    Log.w(TAG,"unchecked count : "+count);
+            if(isChecked){
+                if (holder.checkBox.isChecked()) {
+                    count++;
+                    Log.w(TAG,"ischecked count : "+count);
                     onItemCheckProduct.onItemCheckProduct(count,manageProductsListResponseList.get(position).getProduct_id(),manageProductsListResponseList.get(position).getProduct_name(),manageProductsListResponseList.get(position).getProduct_price());
-
                 }
 
+            }else{
+                count--;
+                Log.w(TAG,"unchecked count : "+count);
+                onItemCheckProduct.onItemUnCheckProduct(count,manageProductsListResponseList.get(position).getProduct_id(),manageProductsListResponseList.get(position).getProduct_name(),manageProductsListResponseList.get(position).getProduct_price());
+
             }
+
         });
 
 

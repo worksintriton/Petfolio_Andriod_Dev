@@ -2,13 +2,11 @@ package com.petfolio.infinitus.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
+
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -17,18 +15,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.api.APIClient;
-import com.petfolio.infinitus.interfaces.OnAcceptsReturnOrder;
+
 import com.petfolio.infinitus.interfaces.OnDeleteShipAddrListener;
 import com.petfolio.infinitus.interfaces.OnEditShipAddrListener;
-import com.petfolio.infinitus.interfaces.OnRejectsReturnOrder;
 import com.petfolio.infinitus.interfaces.OnSelectingShipIdListener;
 import com.petfolio.infinitus.responsepojo.ShippingAddressListingByUserIDResponse;
-import com.petfolio.infinitus.responsepojo.VendorNewOrderResponse;
-import com.petfolio.infinitus.vendor.VendorOrderDetailsActivity;
-import com.petfolio.infinitus.vendor.VendorUpdateOrderStatusActivity;
+
 
 import java.util.List;
 

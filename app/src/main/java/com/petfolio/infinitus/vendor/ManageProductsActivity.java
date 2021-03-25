@@ -30,9 +30,11 @@ import com.petfolio.infinitus.adapter.ManageProductsListAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.interfaces.OnItemCheckProduct;
+import com.petfolio.infinitus.requestpojo.ApplyMultiProdDiscountRequest;
 import com.petfolio.infinitus.requestpojo.ApplySingleDiscountCalRequest;
 import com.petfolio.infinitus.requestpojo.ApplySingleDiscountRequest;
 import com.petfolio.infinitus.requestpojo.ManageProductsListRequest;
+import com.petfolio.infinitus.responsepojo.ApplyMultiProdDiscountResponse;
 import com.petfolio.infinitus.responsepojo.ApplySingleDiscountCalResponse;
 import com.petfolio.infinitus.responsepojo.ApplySingleDiscountResponse;
 import com.petfolio.infinitus.responsepojo.ManageProductsListResponse;
@@ -43,6 +45,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -86,13 +89,12 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
     @BindView(R.id.txt_applydeal)
     TextView txt_applydeal;
 
-    private String userid;
     private List<ManageProductsListResponse.DataBean> manageProductsListResponseList;
 
     boolean showCheckbox = false;
     private Dialog dialog;
 
-    int productcount;
+    int productcount = 0;
     String productid, productname;
     int productprice;
     private int productdiscount;
@@ -106,9 +108,12 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
     private String gettodate = "";
 
      boolean isvaliddate = false;
-    private AlertDialog.Builder alertDialogBuilder;
     AlertDialog alertDialog;
 
+    List<String> _id = new ArrayList<>();
+    private boolean isValidProductPrice = true;
+
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,7 +123,7 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
 
         SessionManager session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
-        userid = user.get(SessionManager.KEY_ID);
+        String userid = user.get(SessionManager.KEY_ID);
 
         ll_discard.setVisibility(View.INVISIBLE);
 
@@ -135,8 +140,6 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
 
 
     }
-
-
     @SuppressLint("LogNotTimber")
     private void getlist_from_vendor_id_ResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
@@ -198,7 +201,6 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
         Log.w(TAG,"manageProductsListRequest"+ "--->" + new Gson().toJson(manageProductsListRequest));
         return manageProductsListRequest;
     }
-
     private void setView() {
         rv_manage_productlist.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rv_manage_productlist.setItemAnimator(new DefaultItemAnimator());
@@ -207,15 +209,11 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
 
 
     }
-
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
     }
-
-
     @SuppressLint({"NonConstantResourceId", "SetTextI18n", "LogNotTimber"})
     @Override
     public void onClick(View v) {
@@ -225,8 +223,7 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
                 ll_discard.setVisibility(View.INVISIBLE);
                 txt_applydeal.setText("Apply Deal");
                 setView();
-                //  getlist_from_vendor_id_ResponseCall();
-            break;
+                break;
 
             case R.id.ll_apply:
                 Log.w(TAG,"Apply Deal Clicked");
@@ -234,13 +231,17 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
                 ll_discard.setVisibility(View.VISIBLE);
                 txt_applydeal.setText("Submit");
                 setView();
-               //  getlist_from_vendor_id_ResponseCall();
-            break;
+                break;
 
             case R.id.txt_applydeal:
                 Log.w(TAG,"txt_applydeal clicked"+txt_applydeal.getText().toString());
                 if(txt_applydeal.getText().toString().equalsIgnoreCase("Submit")){
-                    showProductDealAlert();
+                    if(productcount != 0){
+                        showProductDealAlert();
+                    }else{
+                        showErrorLoading("Please select the product");
+                    }
+
                 }else{
                     showCheckbox = true;
                     ll_discard.setVisibility(View.VISIBLE);
@@ -252,8 +253,6 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
         }
 
     }
-
-
     @SuppressLint("LogNotTimber")
     @Override
     public void onItemCheckProduct(int count, String product_id, String product_name, int product_price) {
@@ -262,13 +261,43 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
         productid = product_id;
         productname = product_name;
         productprice = product_price;
+        if(product_id != null) {
+            _id.add(product_id);
+            Log.w(TAG, "after Add list if" + new Gson().toJson(_id));
+        }
+
+
 
 
 
     }
 
-    private void showProductDealAlert() {
+    @SuppressLint("LogNotTimber")
+    @Override
+    public void onItemUnCheckProduct(int count, String product_id, String product_name, int product_price) {
+        Log.w(TAG,"onItemUnCheckProduct : count "+count);
+        productcount = count;
+        productid = product_id;
+        productname = product_name;
+        productprice = product_price;
+        if(product_id != null){
+            if(_id != null){
+                for (int i = 0; i < _id.size(); i++)
+                    if (_id.get(i).equalsIgnoreCase(product_id)) {
+                        _id.remove(i);
+                        Log.w(TAG, "after removing list if" + new Gson().toJson(_id));
 
+                    }
+
+            }
+
+
+
+        }
+
+    }
+
+    private void showProductDealAlert() {
         try {
             dialog = new Dialog(ManageProductsActivity.this);
             dialog.setContentView(R.layout.add_todays_deal_popup);
@@ -280,6 +309,8 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
             txt_discount_price  = dialog.findViewById(R.id.txt_discount_price);
             txt_cost  = dialog.findViewById(R.id.txt_cost);
             Button btn_apply_discount  = dialog.findViewById(R.id.btn_apply_discount);
+            LinearLayout ll_content  = dialog.findViewById(R.id.ll_content);
+            ll_content.setVisibility(View.GONE);
 
 
             edt_discount_per_unit.addTextChangedListener(new TextWatcher() {
@@ -293,6 +324,7 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
 
                 }
 
+                @SuppressLint("LogNotTimber")
                 @Override
                 public void afterTextChanged(Editable s) {
 
@@ -306,9 +338,11 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
                         Log.w(TAG,"productcount : "+productcount+"edt_discount_per_unit afterTextChanged "+s.toString());
                         if(productcount ==1){
                             if(productdiscount != 0) {
+                                ll_content.setVisibility(View.VISIBLE);
                                 cal_discount_single_ResponseCall();
                             }
                         }else{
+                            ll_content.setVisibility(View.GONE);
 
                         }
 
@@ -345,10 +379,17 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
                         Log.w(TAG,"productcount : "+productcount+"edt_discount_per_unit afterTextChanged "+s.toString());
                         if(productcount ==1){
                             if(discountamount != 0) {
-                                cal_discount_single_ResponseCall();
+                                if(productprice>discountamount) {
+                                    isValidProductPrice = true;
+                                    ll_content.setVisibility(View.VISIBLE);
+                                    cal_discount_single_ResponseCall();
+                                }else{
+                                    isValidProductPrice = false;
+                                    showErrorLoading("Please enter the amount below the product price");
+                                }
                             }
                         }else{
-
+                            ll_content.setVisibility(View.GONE);
                         }
 
                     }
@@ -359,43 +400,38 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
                 }
             });
 
-            btn_apply_discount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            btn_apply_discount.setOnClickListener(v -> {
 
-                    if(getfromdate.isEmpty()){
-                        showErrorLoading("Please select deal start date");
-                    }else if(gettodate.isEmpty()){
-                        showErrorLoading("Please select deal end date");
-                    }else {
-                        CheckDates(getfromdate,gettodate);
-                        if(isvaliddate){
-                            if(productcount == 1){
+                if(getfromdate.isEmpty()){
+                    showErrorLoading("Please select deal start date");
+                }else if(gettodate.isEmpty()){
+                    showErrorLoading("Please select deal end date");
+                }else {
+                    CheckDates(getfromdate,gettodate);
+                    if(isvaliddate){
+                        if(productcount != 0){
+                        if(productcount == 1){
+                            if(isValidProductPrice) {
                                 apply_sing_dis_ResponseCall();
+                            }else{
+                                showErrorLoading("Please enter the amount below the product price");
                             }
                         }else{
-                            showErrorLoading("Please select valid deal date");
+                            apply_multi_dis_ResponseCall();
                         }
+                        }
+                    }else{
+                        showErrorLoading("Please select valid deal date");
                     }
-
-
-
-
                 }
+
+
+
+
             });
 
-            txt_deal_start_date.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getStartDate();
-                }
-            });
-            txt_deal_expriy_date.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getEndDate();
-                }
-            });
+            txt_deal_start_date.setOnClickListener(v -> getStartDate());
+            txt_deal_expriy_date.setOnClickListener(v -> getEndDate());
 
 
             Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -460,15 +496,78 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
          * "discount_start_date" : "23-03-2021",
          * "discount_end_date" : "24-02-2021"
          */
+
         ApplySingleDiscountRequest applySingleDiscountRequest = new ApplySingleDiscountRequest();
         applySingleDiscountRequest.set_id(productid);
-        applySingleDiscountRequest.setDiscount_status(false);
-        applySingleDiscountRequest.setDiscount_amount(0);
+        applySingleDiscountRequest.setDiscount_status(discountstatus);
+        applySingleDiscountRequest.setDiscount_amount(discountamount);
         applySingleDiscountRequest.setDiscount(productdiscount);
         applySingleDiscountRequest.setDiscount_start_date(getfromdate);
         applySingleDiscountRequest.setDiscount_end_date(gettodate);
         Log.w(TAG,"applySingleDiscountRequest"+ new Gson().toJson(applySingleDiscountRequest));
         return applySingleDiscountRequest;
+    }
+
+    @SuppressLint("LogNotTimber")
+    private void apply_multi_dis_ResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<ApplyMultiProdDiscountResponse> call = apiInterface.apply_multi_dis_ResponseCall(RestUtils.getContentType(), applyMultiProdDiscountRequest());
+        Log.w(TAG,"ApplyMultiProdDiscountResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<ApplyMultiProdDiscountResponse>() {
+            @SuppressLint({"LogNotTimber", "SetTextI18n"})
+            @Override
+            public void onResponse(@NonNull Call<ApplyMultiProdDiscountResponse> call, @NonNull Response<ApplyMultiProdDiscountResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"ApplySingleDiscountResponse" + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+                    if (200 == response.body().getCode()) {
+                        dialog.dismiss();
+                        ll_discard.setVisibility(View.INVISIBLE);
+                        txt_applydeal.setText("Apply Deal");
+                        showCheckbox = false;
+                        getlist_from_vendor_id_ResponseCall();
+
+
+                    }
+
+                }
+
+
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onFailure(@NonNull Call<ApplyMultiProdDiscountResponse> call,@NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.e("ApplyMultiProdDiscountResponse flr", "--->" + t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint("LogNotTimber")
+    private ApplyMultiProdDiscountRequest applyMultiProdDiscountRequest() {
+        /*
+         * _id : 605328895e35b95a5cf804e4
+         * discount_status : false
+         * discount_amount : 2
+         * discount : 0
+         * "discount_start_date" : "23-03-2021",
+         * "discount_end_date" : "24-02-2021"
+         */
+
+
+        ApplyMultiProdDiscountRequest applyMultiProdDiscountRequest = new ApplyMultiProdDiscountRequest();
+        applyMultiProdDiscountRequest.set_id(_id);
+        applyMultiProdDiscountRequest.setDiscount_status(discountstatus);
+        applyMultiProdDiscountRequest.setDiscount_amount(discountamount);
+        applyMultiProdDiscountRequest.setDiscount(productdiscount);
+        applyMultiProdDiscountRequest.setDiscount_start_date(getfromdate);
+        applyMultiProdDiscountRequest.setDiscount_end_date(gettodate);
+        Log.w(TAG,"applyMultiProdDiscountRequest"+ new Gson().toJson(applyMultiProdDiscountRequest));
+        return applyMultiProdDiscountRequest;
     }
 
      @SuppressLint("LogNotTimber")
@@ -495,7 +594,6 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
                             }else{
                                 txt_discount_price.setText("\u20B9 "+response.body().getData().getDiscount_amount());
                             }
-
                             txt_cost.setText("\u20B9 " +response.body().getData().getCost());
 
                         }
@@ -518,6 +616,7 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private ApplySingleDiscountCalRequest applySingleDiscountCalRequest() {
         /*
          * _id : 605328895e35b95a5cf804e4
@@ -533,9 +632,6 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
         Log.w(TAG,"applySingleDiscountCalRequest"+ new Gson().toJson(applySingleDiscountCalRequest));
         return applySingleDiscountCalRequest;
     }
-
-
-
     private void getStartDate() {
 
         Calendar c = Calendar.getInstance();
@@ -548,7 +644,7 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
                 (view, year, monthOfYear, dayOfMonth) -> {
 
                     String nd = "" + dayOfMonth;
-                    String nm = "" + monthOfYear ;
+                    String nm;
                     if ( dayOfMonth < 10 ){
                         nd = "0"+ dayOfMonth;
                     }
@@ -571,8 +667,7 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
         datePickerDialog.show();
     }
     private void getEndDate() {
-
-         Calendar c = Calendar.getInstance();
+        Calendar c = Calendar.getInstance();
         int mYear = c.get(Calendar.YEAR);
         int mMonth = c.get(Calendar.MONTH);
         int mDay = c.get(Calendar.DAY_OF_MONTH);
@@ -581,7 +676,7 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 (view, year, monthOfYear, dayOfMonth) -> {
                     String nd = "" + dayOfMonth;
-                    String nm = "" + monthOfYear ;
+                    String nm;
                     if ( dayOfMonth < 10 ){
                         nd = "0"+ dayOfMonth;
                     }
@@ -601,8 +696,6 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
 
         datePickerDialog.show();
     }
-
-
     @SuppressLint("LogNotTimber")
     public void CheckDates(String d1, String d2){
         @SuppressLint("SimpleDateFormat") SimpleDateFormat dfDate  = new SimpleDateFormat("yyyy-MM-dd");
@@ -625,9 +718,8 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
             e.printStackTrace();
         }
     }
-
     public void showErrorLoading(String errormesage){
-        alertDialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage(errormesage);
         alertDialogBuilder.setPositiveButton("ok",
                 (arg0, arg1) -> hideLoading());

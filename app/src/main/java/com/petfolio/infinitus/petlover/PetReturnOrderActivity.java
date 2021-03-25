@@ -109,6 +109,7 @@ public class PetReturnOrderActivity extends AppCompatActivity implements View.On
     private String termsandconditions;
     private Dialog alertDialog;
     private String User_return_info;
+    private boolean isOtherReason = false;
 
 
     @SuppressLint({"LogNotTimber", "SetTextI18n"})
@@ -176,7 +177,9 @@ public class PetReturnOrderActivity extends AppCompatActivity implements View.On
 
                     if(returnreason != null && returnreason.equalsIgnoreCase("Other")){
                         edt_comment.setVisibility(View.VISIBLE);
+                        isOtherReason = true;
                     }else{
+                        isOtherReason = false;
                         edt_comment.setVisibility(View.GONE);
                     }
 
@@ -187,9 +190,14 @@ public class PetReturnOrderActivity extends AppCompatActivity implements View.On
 
         });
 
-        btn_continue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btn_continue.setOnClickListener(v -> {
+            if(isOtherReason){
+                if(edt_comment.getText().toString() != null && !edt_comment.getText().toString().isEmpty()){
+                    showReturnAlert();
+                }else{
+                    showErrorLoading("Please enter the reason");
+                }
+            }else {
                 showReturnAlert();
             }
         });

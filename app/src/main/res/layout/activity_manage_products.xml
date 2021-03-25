@@ -3,19 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="10dp">
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:background="@color/white">
 
     <LinearLayout
         android:id="@+id/headerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true">
-
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_header"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/whiteTwo"
             app:contentInsetLeft="0dp"
             app:contentInsetStart="0dp"
             app:popupTheme="@style/AppTheme.PopupOverlay"
@@ -65,68 +66,59 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginEnd="10dp"
                     android:src="@drawable/ic_user"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
 
 
         </androidx.appcompat.widget.Toolbar>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:id="@+id/edt_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangle_corner_bgm"
+                android:fontFamily="@font/futuramediumbt"
+                android:hint="@string/search"
+                android:inputType="textWebEmailAddress"
+                android:padding="15dp"
+                android:textColor="@color/green"
+                android:textColorHint="@color/dark_gray"
+                android:textSize="16sp"
+                tools:ignore="Autofill,LabelFor,TextFields" />
+
+            <ImageView
+                android:id="@+id/img_search"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:contentDescription="@string/image"
+                android:padding="8dp"
+                android:src="@drawable/search" />
+
+
+        </RelativeLayout>
     </LinearLayout>
 
-    <ScrollView
-        android:id="@+id/scrollablContent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/footerView"
-        android:layout_below="@+id/headerView"
-        android:fillViewport="true">
 
         <LinearLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/edt_search"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle_corner_bgm"
-                    android:fontFamily="@font/futuramediumbt"
-                    android:hint="@string/search"
-                    android:inputType="textWebEmailAddress"
-                    android:padding="15dp"
-                    android:textColor="@color/green"
-                    android:textColorHint="@color/dark_gray"
-                    android:textSize="16sp"
-                    tools:ignore="Autofill,LabelFor,TextFields" />
-
-                <ImageView
-                    android:id="@+id/img_search"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:contentDescription="@string/image"
-                    android:padding="8dp"
-                    android:src="@drawable/search" />
-
-
-            </RelativeLayout>
-
+            android:orientation="vertical"
+            android:layout_above="@+id/footerView"
+            android:layout_below="@+id/headerView">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -147,10 +139,10 @@
                     app:drawableRightCompat="@drawable/ic_baseline_filter_alt_24" />
 
             </RelativeLayout>
-
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_manage_productlist"
@@ -171,7 +163,7 @@
             </RelativeLayout>
 
         </LinearLayout>
-    </ScrollView>
+
 
     <LinearLayout
         android:id="@+id/footerView"
@@ -183,12 +175,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="15dp"
             android:orientation="horizontal"
-            android:visibility="visible">
+            android:visibility="visible"
+            tools:ignore="DisableBaselineAlignment">
 
             <LinearLayout
                 android:id="@+id/ll_discard"
@@ -208,7 +198,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
                     android:fontFamily="@font/futuramediumbt"
-                    android:text="Discard"
+                    android:text="@string/discard"
                     android:textColor="@color/new_txt_color"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -233,7 +223,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
                     android:fontFamily="@font/futuramediumbt"
-                    android:text="Apply Deal"
+                    android:text="@string/apply_deal"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 
@@ -259,7 +249,7 @@
                 android:textColor="@color/color"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                tools:ignore="HardcodedText" />
+                tools:ignore="ButtonStyle,HardcodedText" />
 
             <Button
                 android:id="@+id/btn_continue"
@@ -273,7 +263,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                tools:ignore="HardcodedText" />
+                tools:ignore="ButtonStyle,HardcodedText" />
 
         </LinearLayout>
 
@@ -281,7 +271,6 @@
             android:id="@+id/bottom_navigation_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/new_rounded_corner_btn"
             app:elevation="8dp"

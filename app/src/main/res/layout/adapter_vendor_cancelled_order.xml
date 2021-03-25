@@ -14,12 +14,10 @@
         app:cardCornerRadius="10dp"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true">
-
-
-
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_pet"
@@ -284,14 +282,13 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cv_pet"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/futuramediumbt"
                 android:maxLines="1"
                 android:text="@string/cancelledon"
                 android:textColor="@color/missed_red_color"
-                android:textSize="12sp"
-                android:layout_marginBottom="10dp"/>
+                android:textSize="12sp"/>
 
             <TextView
                 android:id="@+id/txt_return_accept"
@@ -315,7 +312,6 @@
                 android:layout_below="@id/txt_return_accept"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/futuramediumbt"
                 android:maxLines="1"

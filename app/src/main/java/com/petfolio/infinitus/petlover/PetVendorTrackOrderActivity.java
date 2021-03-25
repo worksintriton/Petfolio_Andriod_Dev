@@ -288,7 +288,7 @@ public class PetVendorTrackOrderActivity extends AppCompatActivity implements Vi
                                                 if (prodcutTrackDetailsBeanList.get(i).isStatus()) {
                                                     Log.w(TAG, "Order Booked Date " + prodcutTrackDetailsBeanList.get(i).getDate());
                                                     txt_booked_date.setText(" " + prodcutTrackDetailsBeanList.get(i).getDate());
-                                                    txt_booked_date.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+                                                //    txt_booked_date.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
                                                     img_vendor_booked.setImageResource(R.drawable.completed);
                                                 }else {
                                                     //txt_booked_date.setText(" ");
@@ -301,7 +301,7 @@ public class PetVendorTrackOrderActivity extends AppCompatActivity implements Vi
                                             case "Order Accept":
                                                 if (prodcutTrackDetailsBeanList.get(i).isStatus()) {
                                                     txt_order_confirm_date.setText(" " + prodcutTrackDetailsBeanList.get(i).getDate());
-                                                    txt_order_confirm_date.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+                                                  //  txt_order_confirm_date.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
                                                     img_vendor_confirmed.setImageResource(R.drawable.completed);
 
                                                 } else {
@@ -315,9 +315,9 @@ public class PetVendorTrackOrderActivity extends AppCompatActivity implements Vi
                                             case "Order Dispatch":
                                                 if (prodcutTrackDetailsBeanList.get(i).isStatus()) {
                                                     txt_order_dispatch_date.setText(" " + prodcutTrackDetailsBeanList.get(i).getDate());
-                                                    txt_order_dispatch_date.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+                                                  //  txt_order_dispatch_date.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
                                                     txt_order_transit_date.setText(" " + prodcutTrackDetailsBeanList.get(i).getDate());
-                                                    txt_order_transit_date.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+                                                   // txt_order_transit_date.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
                                                     img_vendor_order_dispatched.setImageResource(R.drawable.completed);
                                                     img_vendor_order_transit.setImageResource(R.drawable.completed);
 
@@ -337,7 +337,7 @@ public class PetVendorTrackOrderActivity extends AppCompatActivity implements Vi
                                                 if (prodcutTrackDetailsBeanList.get(i).isStatus()) {
                                                     ll_order_reject_bypetlover.setVisibility(View.VISIBLE);
                                                     txt_order_reject_date_petlover.setText(" " + prodcutTrackDetailsBeanList.get(i).getDate());
-                                                    txt_order_reject_date_petlover.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+                                                   // txt_order_reject_date_petlover.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
                                                     img_vendor_order_rejected_bypetlover.setImageResource(R.drawable.ic_baseline_check_circle_24);
 
                                                 } else {
@@ -350,7 +350,7 @@ public class PetVendorTrackOrderActivity extends AppCompatActivity implements Vi
                                                 if (prodcutTrackDetailsBeanList.get(i).isStatus()) {
                                                     ll_order_reject.setVisibility(View.VISIBLE);
                                                     txt_order_reject_date.setText(" " + prodcutTrackDetailsBeanList.get(i).getDate());
-                                                    txt_order_reject_date.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+                                                   // txt_order_reject_date.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
                                                     img_vendor_order_rejected.setImageResource(R.drawable.ic_baseline_check_circle_24);
 
 

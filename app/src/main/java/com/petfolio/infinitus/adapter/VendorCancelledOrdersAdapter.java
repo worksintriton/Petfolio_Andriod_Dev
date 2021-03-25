@@ -101,20 +101,15 @@ public class VendorCancelledOrdersAdapter extends  RecyclerView.Adapter<Recycler
         }
 
 
-        if(newOrderResponseList.get(position).getProduct_price() != 0){
-
-            holder.txt_service_cost.setText("\u20B9 "+newOrderResponseList.get(position).getProduct_price());
-
+        if(newOrderResponseList.get(position).getProduct_price() != 0 && newOrderResponseList.get(position).getProduct_quantity() != 0) {
+            holder.txt_service_cost.setText("\u20B9 " + newOrderResponseList.get(position).getProduct_price() + " (" + newOrderResponseList.get(position).getProduct_quantity() + " items )");
         }
 
-        if(newOrderResponseList.get(position).getVendor_cancell_date() != null&&!(newOrderResponseList.get(position).getVendor_cancell_date().isEmpty())){
-
+        if(newOrderResponseList.get(position).getVendor_cancell_date() != null && !(newOrderResponseList.get(position).getVendor_cancell_date().isEmpty())){
             holder.txt_cancelledon.setText("Cancelled on:"+" "+newOrderResponseList.get(position).getVendor_cancell_date());
 
-        }
-        else if(newOrderResponseList.get(position).getUser_cancell_date() != null&&!(newOrderResponseList.get(position).getUser_cancell_date().isEmpty())){
-
-            holder.txt_cancelledon.setText("Cancelled on:"+" "+newOrderResponseList.get(position).getUser_cancell_date());
+        } else if(newOrderResponseList.get(position).getUser_return_date() != null&&!(newOrderResponseList.get(position).getUser_return_date().isEmpty())){
+            holder.txt_cancelledon.setText("Returned on:"+" "+newOrderResponseList.get(position).getUser_return_date());
 
         }
 
@@ -133,11 +128,8 @@ public class VendorCancelledOrdersAdapter extends  RecyclerView.Adapter<Recycler
         holder.txt_track_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent i = new Intent(context, VendorUpdateOrderStatusActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
                 i.putExtra("order_id",newOrderResponseList.get(position).get_id());
-
                 i.putExtra("fromactivity",TAG);
 
                 context.startActivity(i);
@@ -159,63 +151,24 @@ public class VendorCancelledOrdersAdapter extends  RecyclerView.Adapter<Recycler
             }
         });
 
-        Log.w(TAG, "RtnInfo"+ newOrderResponseList.get(position).getUser_return_info());
 
-        Log.w(TAG, "Vndr Acpt"+ newOrderResponseList.get(position).getVendor_accept_cancel());
 
         if(newOrderResponseList.get(position).getUser_return_info().equals("")&&newOrderResponseList.get(position).getVendor_accept_cancel().equals("")){
-
-            //holder.ll_btn.setVisibility(View.GONE);
-
-            Log.w(TAG, "RtnInfo"+ newOrderResponseList.get(position).getUser_return_info());
-
-            Log.w(TAG, "Vndr Acpt"+ newOrderResponseList.get(position).getVendor_accept_cancel());
-
-            Log.w(TAG, " Do Nothing");
-
         }
 
         else if(!(newOrderResponseList.get(position).getUser_return_info().equals(""))&&newOrderResponseList.get(position).getVendor_accept_cancel().equals("")){
-
             holder.ll_btn.setVisibility(View.VISIBLE);
-
-            Log.w(TAG, "RtnInfo"+ newOrderResponseList.get(position).getUser_return_info());
-
-            Log.w(TAG, "Vndr Acpt"+ newOrderResponseList.get(position).getVendor_accept_cancel());
-
-            Log.w(TAG, " Button Show");
-
         }
-
         else if(!(newOrderResponseList.get(position).getUser_return_info().equals(""))&&!(newOrderResponseList.get(position).getVendor_accept_cancel().equals(""))){
-
-            //order return accept - text`
-
             holder.txt_return_accept.setVisibility(View.VISIBLE);
 
-            Log.w(TAG, "RtnInfo"+ newOrderResponseList.get(position).getUser_return_info());
-
-            Log.w(TAG, "Vndr Acpt"+ newOrderResponseList.get(position).getVendor_accept_cancel());
-
-            Log.w(TAG, " Accept Return");
-
-           //holder.txt_return_accept.setText(" Vendor return accept " + newOrderResponseList.get(position).getUser_return_date());
 
         }
 
         else if(!(newOrderResponseList.get(position).getUser_return_info().equals(""))&&!(newOrderResponseList.get(position).getVendor_cancell_info().equals(""))){
-
             //order return cancel - text
-
             holder.txt_return_cancel.setVisibility(View.VISIBLE);
 
-            Log.w(TAG, "RtnInfo"+ newOrderResponseList.get(position).getUser_return_info());
-
-            Log.w(TAG, "Vndr Acpt"+ newOrderResponseList.get(position).getVendor_cancell_info());
-
-            Log.w(TAG, " Reject Return");
-
-            //holder.txt_return_cancel.setText(" Vendor return reject " + newOrderResponseList.get(position).getUser_return_date());
 
         }
 
@@ -223,7 +176,6 @@ public class VendorCancelledOrdersAdapter extends  RecyclerView.Adapter<Recycler
         holder.btn_accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 onAcceptsReturnOrder.string(newOrderResponseList.get(position).get_id());
 
             }

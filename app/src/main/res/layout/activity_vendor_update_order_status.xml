@@ -185,8 +185,9 @@
                     android:layout_height="wrap_content"
                     android:text="19-Aug-2020"
                     android:fontFamily="@font/futuramediumbt"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textColor="@color/new_sec_txt_color"
+                    android:textSize="14sp"
+                    />
 
             </LinearLayout>
 
@@ -211,7 +212,7 @@
                     android:layout_height="wrap_content"
                     android:text="1234ABCD12344321"
                     android:fontFamily="@font/futuramediumbt"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -237,7 +238,7 @@
                     android:layout_height="wrap_content"
                     android:text="Online"
                     android:fontFamily="@font/futuramediumbt"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -261,10 +262,10 @@
                     android:id="@+id/txt_total_order_cost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp"
                     android:fontFamily="@font/futuramediumbt"
-                    android:text="\u20B9  800"/>
+                    android:text="\u20B9  0"/>
 
             </LinearLayout>
 
@@ -287,7 +288,7 @@
                     android:id="@+id/txt_quantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp"
                     android:fontFamily="@font/futuramediumbt"
                     android:text="2"/>
@@ -359,7 +360,8 @@
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
                         android:text="19-Aug-2020"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:textColor="@color/new_sec_txt_color"/>
                 </LinearLayout>
 
 
@@ -610,7 +612,8 @@
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
                         android:text="19-Aug-2020"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:textColor="@color/new_sec_txt_color"/>
                 </LinearLayout>
 
                 <RelativeLayout
@@ -625,7 +628,8 @@
                         android:layout_marginEnd="5dp"
                         android:fontFamily="@font/futuramediumbt"
                         android:text="Edit"
-                        android:textColor="@color/red" />
+                        android:textColor="@color/red"
+                        android:visibility="gone"/>
                 </RelativeLayout>
 
             </LinearLayout>
@@ -686,9 +690,10 @@
                         android:layout_marginTop="5dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
-                        android:maxLines="1"
+                        android:maxLines="2"
                         android:text="Tracking-Id : 1234568, You can check the product taacking witn this id"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:textColor="@color/new_sec_txt_color"/>
                     <TextView
                         android:id="@+id/txt_order_dispatch_date"
                         android:layout_width="match_parent"
@@ -699,7 +704,8 @@
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
                         android:text="19-Aug-2020"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:textColor="@color/new_sec_txt_color"/>
                 </LinearLayout>
 
                 <RelativeLayout
@@ -772,7 +778,8 @@
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
                         android:text="19-Aug-2020"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:textColor="@color/new_sec_txt_color"/>
                 </LinearLayout>
 
             </LinearLayout>

@@ -3,7 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/rl_vendorlist">
+    android:id="@+id/rl_vendorlist"
+    android:background="@color/white">
+
+
 
     <CheckBox
         android:id="@+id/checkBox"
@@ -25,7 +28,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
 
             <ImageView
                 android:id="@+id/img_products_image"
@@ -34,7 +38,9 @@
                 android:layout_weight="0.95"
                 android:scaleType="fitXY"
                 android:src="@drawable/upload"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="60dp"/>
 
             <ImageView
                 android:id="@+id/img_prodsettings"

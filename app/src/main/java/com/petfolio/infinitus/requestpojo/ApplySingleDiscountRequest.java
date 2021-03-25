@@ -8,8 +8,8 @@ public class ApplySingleDiscountRequest {
      * discount_status : false
      * discount_amount : 2
      * discount : 0
-     * "discount_start_date" : "23-03-2021",
-     * "discount_end_date" : "24-02-2021"
+     * discount_start_date : "23-03-2021",
+     * discount_end_date : "24-02-2021"
      */
 
     private String _id;

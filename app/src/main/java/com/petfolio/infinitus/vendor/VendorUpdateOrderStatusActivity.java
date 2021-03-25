@@ -377,7 +377,7 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
         else {
 
-            Toasty.warning(VendorUpdateOrderStatusActivity.this, "Please Select Order Type", Toast.LENGTH_SHORT).show();
+            Toasty.warning(VendorUpdateOrderStatusActivity.this, "Please select order status type", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -581,8 +581,10 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
+                        finish();
+                        startActivity(getIntent());
 
-                        startActivity(new Intent(VendorUpdateOrderStatusActivity.this, VendorDashboardActivity.class));
+                       // startActivity(new Intent(VendorUpdateOrderStatusActivity.this, VendorDashboardActivity.class));
 
                     }
                     else{
@@ -648,8 +650,10 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
+                        finish();
+                        startActivity(getIntent());
 
-                        startActivity(new Intent(VendorUpdateOrderStatusActivity.this, VendorDashboardActivity.class));
+                        //startActivity(new Intent(VendorUpdateOrderStatusActivity.this, VendorDashboardActivity.class));
 
                     }
                     else{
@@ -719,8 +723,9 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-
-                        startActivity(new Intent(VendorUpdateOrderStatusActivity.this, VendorDashboardActivity.class));
+                        finish();
+                        startActivity(getIntent());
+                       // startActivity(new Intent(VendorUpdateOrderStatusActivity.this, VendorDashboardActivity.class));
 
                     }
                     else{
@@ -771,6 +776,7 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
         return vendorCancelsOrderRequest;
     }
 
+    @SuppressLint("SetTextI18n")
     private void setView() {
 
         if (product_image != null && !product_image.isEmpty()) {
@@ -803,18 +809,15 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
         }
 
         if (order_id_display != null && !order_id_display.isEmpty()) {
-
             txt_booking_id.setText(order_id_display);
         }
 
         if (payment_mode != null && !payment_mode.isEmpty()) {
-
             txt_payment_method.setText(payment_mode);
         }
 
         if (order_total != 0) {
-
-            txt_total_order_cost.setText(""+order_total);
+            txt_total_order_cost.setText(" \u20B9 "+order_total);
         }
 
         if (quantity != 0) {
@@ -927,7 +930,6 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
                             txt_order_dispatch_packdetails.setText(""+dataBeanList.getVendor_complete_info());
 
-                            txt_order_dispatch_packdetails.setTextColor(ContextCompat.getColor(VendorUpdateOrderStatusActivity.this, R.color.black));
                         }
 
                         txt_edit_order_confirm.setVisibility(View.GONE);

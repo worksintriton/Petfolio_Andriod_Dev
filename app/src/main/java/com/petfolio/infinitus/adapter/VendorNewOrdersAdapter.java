@@ -3,7 +3,7 @@ package com.petfolio.infinitus.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,21 +29,12 @@ public class VendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.V
 
     private  String TAG = "VendorNewOrdersAdapter";
     private List<VendorNewOrderResponse.DataBean> newOrderResponseList;
-
     private Context context;
-
     VendorNewOrderResponse.DataBean currentItem;
-
-
     private int size;
-
-
     public VendorNewOrdersAdapter(Context context, List<VendorNewOrderResponse.DataBean> newOrderResponseList, int size) {
-
-        this.newOrderResponseList = newOrderResponseList;
-
         this.context = context;
-
+        this.newOrderResponseList = newOrderResponseList;
         this.size = size;
 
     }
@@ -66,23 +57,15 @@ public class VendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.V
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
         currentItem = newOrderResponseList.get(position);
-
         if(newOrderResponseList.get(position).getOrder_id()!=null&&!(newOrderResponseList.get(position).getOrder_id().isEmpty())){
-
             holder.txt_orderid.setText(newOrderResponseList.get(position).getOrder_id());
-
         }
 
         if(newOrderResponseList.get(position).getProduct_name()!=null&&!(newOrderResponseList.get(position).getProduct_name().isEmpty())){
-
             holder.txt_producttitle.setText(newOrderResponseList.get(position).getProduct_name());
-
         }
 
-        Log.w(TAG,"image_url "+newOrderResponseList.get(position).getProdcut_image());
-
         if(newOrderResponseList.get(position).getProdcut_image()!=null&&!(newOrderResponseList.get(position).getProdcut_image().isEmpty())){
-
             Glide.with(context)
                     .load(newOrderResponseList.get(position).getProdcut_image())
                     .into(holder.img_pet_imge);
@@ -94,45 +77,28 @@ public class VendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.V
                     .into(holder.img_pet_imge);
 
         }
-
-
-        if(newOrderResponseList.get(position).getProduct_price() != 0){
-
-            holder.txt_service_cost.setText("\u20B9 "+newOrderResponseList.get(position).getProduct_price());
-
+        if(newOrderResponseList.get(position).getProduct_price() != 0 && newOrderResponseList.get(position).getProduct_quantity() != 0) {
+            holder.txt_service_cost.setText("\u20B9 " + newOrderResponseList.get(position).getProduct_price() + " (" + newOrderResponseList.get(position).getProduct_quantity() + " items )");
         }
 
         if(newOrderResponseList.get(position).getDate_of_booking() != null&&!(newOrderResponseList.get(position).getDate_of_booking().isEmpty())){
-
             holder.txt_bookedon.setText("Booked on:"+" "+newOrderResponseList.get(position).getDate_of_booking());
 
         }
 
-        holder.txt_order_details.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+        holder.txt_order_details.setOnClickListener(v -> {
                 Intent i = new Intent(context, VendorOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra("_id",newOrderResponseList.get(position).get_id());
-                    i.putExtra("fromactivity",TAG);
-                    context.startActivity(i);
+                i.putExtra("_id",newOrderResponseList.get(position).get_id());
+                i.putExtra("fromactivity",TAG);
+                context.startActivity(i);
 
-            }
         });
+        holder.btn_update_status.setOnClickListener(v -> {
+                Intent i = new Intent(context, VendorUpdateOrderStatusActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("order_id",newOrderResponseList.get(position).get_id());
+                i.putExtra("fromactivity",TAG);
+                context.startActivity(i);
 
-        holder.btn_update_status.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                    Intent i = new Intent(context, VendorUpdateOrderStatusActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                    i.putExtra("order_id",newOrderResponseList.get(position).get_id());
-
-                    i.putExtra("fromactivity",TAG);
-
-                    context.startActivity(i);
-
-            }
         });
 
 

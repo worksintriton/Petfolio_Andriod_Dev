@@ -158,7 +158,7 @@
     <string name="book_appointment">Book Appointment</string>
 
     <string name="service_name_pet_name">Service name * Pet Name</string>
-    <string name="price">₹ 800</string>
+    <string name="price">₹ 0</string>
     <string name="cancel_appointment">Cancel appointment</string>
     <string name="add_review">Add Review</string>
     <string name="all_categories">All categories</string>
@@ -436,6 +436,8 @@
     <string name="pet_breed">Pet breed</string>
     <string name="threshold">Threshold</string>
     <string name="deal_status">Today Deal</string>
+    <string name="discard">Discard</string>
+    <string name="apply_deal">Apply Deal</string>
 
 
 </resources>
