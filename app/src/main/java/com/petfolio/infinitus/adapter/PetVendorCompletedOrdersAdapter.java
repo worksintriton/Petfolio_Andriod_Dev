@@ -89,43 +89,34 @@ public class PetVendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recyc
 
         }
 
-        holder.txt_order_details.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(context, PetVendorOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("_id",newOrderResponseList.get(position).get_id());
-                i.putExtra("fromactivity",TAG);
-                context.startActivity(i);
+        holder.txt_order_details.setOnClickListener(v -> {
+            Intent i = new Intent(context, PetVendorOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra("_id",newOrderResponseList.get(position).get_id());
+            i.putExtra("fromactivity",TAG);
+            context.startActivity(i);
 
-            }
         });
-        holder.txt_track_order.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(context, PetVendorTrackOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("_id",newOrderResponseList.get(position).get_id());
-                i.putExtra("fromactivity",TAG);
-                context.startActivity(i);
+        holder.txt_track_order.setOnClickListener(v -> {
+            Intent i = new Intent(context, PetVendorTrackOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra("_id",newOrderResponseList.get(position).get_id());
+            i.putExtra("fromactivity",TAG);
+            context.startActivity(i);
 
 
-            }
         });
 
 
-        holder.txt_return_order.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(context, PetReturnOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("_id",newOrderResponseList.get(position).get_id());
-                i.putExtra("productimage",newOrderResponseList.get(position).getProdcut_image());
-                i.putExtra("productname",newOrderResponseList.get(position).getProduct_name());
-                i.putExtra("productprice",newOrderResponseList.get(position).getProduct_price());
-                i.putExtra("productquantity",newOrderResponseList.get(position).getProduct_quantity());
-                i.putExtra("completeddate",newOrderResponseList.get(position).getVendor_complete_date());
-                i.putExtra("fromactivity",TAG);
-                context.startActivity(i);
+        holder.txt_return_order.setOnClickListener(v -> {
+            Intent i = new Intent(context, PetReturnOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra("_id",newOrderResponseList.get(position).get_id());
+            i.putExtra("productimage",newOrderResponseList.get(position).getProdcut_image());
+            i.putExtra("productname",newOrderResponseList.get(position).getProduct_name());
+            i.putExtra("productprice",newOrderResponseList.get(position).getProduct_price());
+            i.putExtra("productquantity",newOrderResponseList.get(position).getProduct_quantity());
+            i.putExtra("completeddate",newOrderResponseList.get(position).getVendor_complete_date());
+            i.putExtra("fromactivity",TAG);
+            context.startActivity(i);
 
-            }
         });
 
     }

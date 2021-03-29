@@ -8,13 +8,6 @@
 
     <include layout="@layout/content_home" />
 
-<!--    <ScrollView
-        android:id="@+id/scrollablContent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fillViewport="true"
-        android:layout_marginBottom="60dp">
-        -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -315,7 +308,7 @@
         </LinearLayout>
 
 
-  <!--  </ScrollView>-->
+
 
     <LinearLayout
         android:id="@+id/footerView"
