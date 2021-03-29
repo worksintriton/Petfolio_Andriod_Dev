@@ -138,6 +138,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private int product_cart_counts = 0;
     private String threshould;
     private String fromactivity;
+    private String cat_id;
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -155,6 +156,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             productid = extras.getString("productid");
+            cat_id = extras.getString("cat_id");
             fromactivity = extras.getString("fromactivity");
         }
 
@@ -209,8 +211,17 @@ public class ProductDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(fromactivity != null && fromactivity.equalsIgnoreCase("ProductsSearchAdapter")){
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("SearchActivity")){
             Intent intent = new Intent(ProductDetailsActivity.this,SearchActivity.class);
+            startActivity(intent);
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("ListOfProductsSeeMoreActivity")){
+            Intent intent = new Intent(ProductDetailsActivity.this,ListOfProductsSeeMoreActivity.class);
+            intent.putExtra("cat_id",cat_id);
+            startActivity(intent);
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetShopTodayDealsSeeMoreActivity")){
+            Intent intent = new Intent(ProductDetailsActivity.this,PetShopTodayDealsSeeMoreActivity.class);
             startActivity(intent);
             finish();
         }else {

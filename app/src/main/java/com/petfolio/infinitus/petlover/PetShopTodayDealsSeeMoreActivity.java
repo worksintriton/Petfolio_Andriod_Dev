@@ -8,18 +8,34 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.PetShopTodayDealsSeeMoreAdapter;
+import com.petfolio.infinitus.adapter.ProductsSearchAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.requestpojo.ProductSearchRequest;
+import com.petfolio.infinitus.requestpojo.ProductSortByRequest;
 import com.petfolio.infinitus.requestpojo.TodayDealMoreRequest;
+import com.petfolio.infinitus.responsepojo.ProductSearchResponse;
 import com.petfolio.infinitus.responsepojo.TodayDealMoreResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -29,6 +45,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +53,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity {
+public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String TAG = "PetShopTodayDealsSeeMoreActivity";
 
@@ -58,6 +75,24 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity {
     @BindView(R.id.img_back)
     ImageView img_back;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_sort)
+    RelativeLayout rl_sort;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.edt_sort)
+    EditText edt_sort;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_filters)
+    RelativeLayout rl_filters;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.edt_search)
+    EditText edt_search;
+
+
+
     private PetShopTodayDealsSeeMoreAdapter petShopTodayDealsSeeMoreAdapter;
     private GridLayoutManager gridLayoutManager;
 
@@ -66,6 +101,17 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity {
     private boolean isLoading = false, isLastPage = false;
     private List<TodayDealMoreResponse.DataBean> todayDealsList;
     private List<TodayDealMoreResponse.DataBean> todayDealsListSeeMore = new ArrayList<>();
+
+
+    RadioGroup rg_sortby;
+    RadioButton rb_recent_products,rb_highest_discount,rb_best_sellers,rb_price_low_to_high,rb_price_high_to_low;
+    private int recent = 0;
+    private int high_discount = 0;
+    private int best_sellers = 0;
+    private int high_to_low = 0;
+    private int low_to_high = 0;
+    private Dialog dialog;
+    private String searchString = "";
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -79,8 +125,7 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity {
         SessionManager sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getProfileDetails();
         String userid = user.get(SessionManager.KEY_ID);
-        Log.w(TAG,"customerid-->"+ userid);
-
+        Log.w(TAG, "customerid-->" + userid);
 
 
         img_back.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +146,47 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity {
 
         initResultRecylerView();
 
+        rl_filters.setOnClickListener(this);
+        rl_sort.setOnClickListener(this);
+        edt_sort.setOnClickListener(this);
+
+        edt_search.addTextChangedListener(new TextWatcher() {
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                Log.w(TAG,"beforeTextChanged-->"+s.toString());
+            }
+
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.w(TAG,"onTextChanged-->"+s.toString());
+                searchString = s.toString();
+
+
+            }
+
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.w(TAG,"afterTextChanged-->"+s.toString());
+                searchString = s.toString();
+                if(!searchString.isEmpty()){
+                    if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                        productSearchResponseCall(searchString);
+                    }
+
+
+                }else{
+                    searchString ="";
+                    if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                        productSearchResponseCall(searchString);
+                    }
+
+                }
+
+            }
+        });
 
 
 
@@ -110,18 +196,18 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        callDirections("2");
     }
 
     @SuppressLint("LogNotTimber")
-    public void todayDealMoreResponseCall(){
+    public void todayDealMoreResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         //Creating an object of our api interface
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<TodayDealMoreResponse> call = ApiService.todayDealMoreResponseCall(RestUtils.getContentType(),todayDealMoreRequest());
+        Call<TodayDealMoreResponse> call = ApiService.todayDealMoreResponseCall(RestUtils.getContentType(), todayDealMoreRequest());
 
-        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+        Log.w(TAG, "url  :%s" + call.request().url().toString());
 
         call.enqueue(new Callback<TodayDealMoreResponse>() {
             @Override
@@ -129,41 +215,40 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity {
                 avi_indicator.smoothToHide();
 
                 if (response.body() != null) {
-                    if(200 == response.body().getCode()){
-                        Log.w(TAG,"ShopDashboardResponse" + new Gson().toJson(response.body()));
-                        if(response.body().getData()!= null && response.body().getData().size()>0){
-                           todayDealsList =  response.body().getData();
-                           for(int i=0;i<todayDealsList.size();i++) {
-                               /**
-                                * _id : 602e11404775fa0735d7bf40
-                                * product_img : http://54.212.108.156:3000/api/uploads/resize-1613548631141238608collar.jpg
-                                * product_title : DOGISTA PET PRODUCTS Dog Rope Leash,Brass
-                                * product_price : 180
-                                * product_discount : 0
-                                * product_fav : false
-                                * product_rating : 4.8
-                                * product_review : 232
-                                */
-                               TodayDealMoreResponse.DataBean  dataBean = new TodayDealMoreResponse.DataBean();
-                               dataBean.set_id(todayDealsList.get(i).get_id());
-                               dataBean.setProduct_img(todayDealsList.get(i).getProduct_img());
-                               dataBean.setProduct_title(todayDealsList.get(i).getProduct_title());
-                               dataBean.setProduct_price(todayDealsList.get(i).getProduct_price());
-                               dataBean.setProduct_discount(todayDealsList.get(i).getProduct_discount());
-                               dataBean.setProduct_fav(todayDealsList.get(i).isProduct_fav());
-                               dataBean.setProduct_rating(todayDealsList.get(i).getProduct_rating());
-                               dataBean.setProduct_rating(todayDealsList.get(i).getProduct_review());
-                               todayDealsListSeeMore.add(dataBean);
+                    if (200 == response.body().getCode()) {
+                        Log.w(TAG, "ShopDashboardResponse" + new Gson().toJson(response.body()));
+                        if (response.body().getData() != null && response.body().getData().size() > 0) {
+                            todayDealsList = response.body().getData();
+                            for (int i = 0; i < todayDealsList.size(); i++) {
+                                /**
+                                 * _id : 602e11404775fa0735d7bf40
+                                 * product_img : http://54.212.108.156:3000/api/uploads/resize-1613548631141238608collar.jpg
+                                 * product_title : DOGISTA PET PRODUCTS Dog Rope Leash,Brass
+                                 * product_price : 180
+                                 * product_discount : 0
+                                 * product_fav : false
+                                 * product_rating : 4.8
+                                 * product_review : 232
+                                 */
+                                TodayDealMoreResponse.DataBean dataBean = new TodayDealMoreResponse.DataBean();
+                                dataBean.set_id(todayDealsList.get(i).get_id());
+                                dataBean.setProduct_img(todayDealsList.get(i).getProduct_img());
+                                dataBean.setProduct_title(todayDealsList.get(i).getProduct_title());
+                                dataBean.setProduct_price(todayDealsList.get(i).getProduct_price());
+                                dataBean.setProduct_discount(todayDealsList.get(i).getProduct_discount());
+                                dataBean.setProduct_fav(todayDealsList.get(i).isProduct_fav());
+                                dataBean.setProduct_rating(todayDealsList.get(i).getProduct_rating());
+                                dataBean.setProduct_rating(todayDealsList.get(i).getProduct_review());
+                                todayDealsListSeeMore.add(dataBean);
 
 
-                           }
-                           Log.w(TAG,"todayDealsListSeeMore : "+new Gson().toJson(todayDealsListSeeMore));
-                           Log.w(TAG,"todayDealsListSeeMore size : "+todayDealsListSeeMore.size());
-                           setView(todayDealsListSeeMore);
+                            }
+                            Log.w(TAG, "todayDealsListSeeMore : " + new Gson().toJson(todayDealsListSeeMore));
+                            Log.w(TAG, "todayDealsListSeeMore size : " + todayDealsListSeeMore.size());
+                            setView(todayDealsListSeeMore);
                         }
 
                     }
-
 
 
                 }
@@ -173,13 +258,14 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity {
 
 
             @Override
-            public void onFailure(@NonNull Call<TodayDealMoreResponse> call,@NonNull  Throwable t) {
+            public void onFailure(@NonNull Call<TodayDealMoreResponse> call, @NonNull Throwable t) {
                 avi_indicator.smoothToHide();
-                Log.w(TAG,"TodayDealMoreRespons flr"+t.getMessage());
+                Log.w(TAG, "TodayDealMoreRespons flr" + t.getMessage());
             }
         });
 
     }
+
     @SuppressLint("LogNotTimber")
     private TodayDealMoreRequest todayDealMoreRequest() {
         /*
@@ -188,14 +274,14 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity {
          */
         TodayDealMoreRequest todayDealMoreRequest = new TodayDealMoreRequest();
         todayDealMoreRequest.setSkip_count(CURRENT_PAGE);
-        Log.w(TAG,"todayDealMoreRequest"+ "--->" + new Gson().toJson(todayDealMoreRequest));
+        Log.w(TAG, "todayDealMoreRequest" + "--->" + new Gson().toJson(todayDealMoreRequest));
         return todayDealMoreRequest;
     }
 
     private void setView(List<TodayDealMoreResponse.DataBean> data) {
        /* rv_today_deal.setLayoutManager(new GridLayoutManager(this, 2));
         rv_today_deal.setItemAnimator(new DefaultItemAnimator());*/
-         petShopTodayDealsSeeMoreAdapter = new PetShopTodayDealsSeeMoreAdapter(getApplicationContext(), data);
+        petShopTodayDealsSeeMoreAdapter = new PetShopTodayDealsSeeMoreAdapter(getApplicationContext(), data);
         rv_today_deal.setAdapter(petShopTodayDealsSeeMoreAdapter);
         petShopTodayDealsSeeMoreAdapter.notifyDataSetChanged();
         isLoading = false;
@@ -229,4 +315,257 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity {
             }
         });
     }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.rl_sort:
+                showSortByAlert();
+                break;
+
+            case R.id.edt_sort:
+                showSortByAlert();
+                break;
+
+            case R.id.rl_filters:
+                break;
+
+            case R.id.rb_recent_products:
+                recent = 1;
+                high_discount = 0;
+                best_sellers = 0;
+                high_to_low = 0;
+                low_to_high = 0;
+                break;
+
+            case R.id.rb_highest_discount:
+                recent = 0;
+                high_discount = 1;
+                best_sellers = 0;
+                high_to_low = 0;
+                low_to_high = 0;
+                break;
+
+            case R.id.rb_best_sellers:
+                recent = 0;
+                high_discount = 0;
+                best_sellers = 0;
+                high_to_low = 0;
+                low_to_high = 0;
+                break;
+
+            case R.id.rb_price_high_to_low:
+                recent = 0;
+                high_discount = 0;
+                best_sellers = 0;
+                high_to_low = 1;
+                low_to_high = 0;
+                break;
+
+            case R.id.rb_price_low_to_high:
+                recent = 0;
+                high_discount = 0;
+                best_sellers = 0;
+                high_to_low = 0;
+                low_to_high = 1;
+                break;
+
+        }
+
+    }
+
+    private void showSortByAlert() {
+        try {
+            dialog = new Dialog(PetShopTodayDealsSeeMoreActivity.this);
+            dialog.setContentView(R.layout.alert_sortby_layout);
+            //dialog.setCanceledOnTouchOutside(false);
+            rg_sortby = dialog.findViewById(R.id.rg_sortby);
+            rb_recent_products = dialog.findViewById(R.id.rb_recent_products);
+            rb_highest_discount = dialog.findViewById(R.id.rb_highest_discount);
+            rb_best_sellers = dialog.findViewById(R.id.rb_best_sellers);
+            rb_price_low_to_high = dialog.findViewById(R.id.rb_price_low_to_high);
+            rb_price_high_to_low = dialog.findViewById(R.id.rb_price_high_to_low);
+
+
+            rb_recent_products.setOnClickListener(this);
+            rb_highest_discount.setOnClickListener(this);
+            rb_best_sellers.setOnClickListener(this);
+            rb_price_low_to_high.setOnClickListener(this);
+            rb_price_high_to_low.setOnClickListener(this);
+
+            Button btn_apply = dialog.findViewById(R.id.btn_apply);
+
+
+            btn_apply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    productSortByResponseCall();
+                    dialog.dismiss();
+
+
+                }
+            });
+
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
+    @SuppressLint("LogNotTimber")
+    private void productSortByResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<ProductSearchResponse> call = apiInterface.productSortByResponseCall(RestUtils.getContentType(), productSortByRequest());
+        Log.w(TAG,"productSortByResponseCall url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<ProductSearchResponse>() {
+            @SuppressLint({"LogNotTimber", "SetTextI18n"})
+            @Override
+            public void onResponse(@NonNull Call<ProductSearchResponse> call, @NonNull Response<ProductSearchResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"productSortByResponseCall" + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+                    if (200 == response.body().getCode()) {
+
+
+                        if (response.body().getData() != null) {
+                            if (response.body().getData() != null && response.body().getData().size()>0) {
+                                rv_today_deal.setVisibility(View.VISIBLE);
+                                txt_no_records.setVisibility(View.GONE);
+                                setViewProducts(response.body().getData());
+                            } else {
+                                rv_today_deal.setVisibility(View.GONE);
+                                txt_no_records.setVisibility(View.VISIBLE);
+                                txt_no_records.setText("No products available");
+
+                            }
+
+                        }
+
+
+
+                    }
+
+                }
+
+
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onFailure(@NonNull Call<ProductSearchResponse> call,@NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.e("ProductSearchResponse flr", "--->" + t.getMessage());
+            }
+        });
+
+    }
+    private void setViewProducts(List<ProductSearchResponse.DataBean> productSearchResponseCall) {
+        rv_today_deal.setLayoutManager(new GridLayoutManager(this, 2));
+        rv_today_deal.setItemAnimator(new DefaultItemAnimator());
+        ProductsSearchAdapter productsSearchAdapter = new ProductsSearchAdapter(getApplicationContext(), productSearchResponseCall,TAG,"");
+        rv_today_deal.setAdapter(productsSearchAdapter);
+    }
+    @SuppressLint("LogNotTimber")
+    private ProductSortByRequest productSortByRequest() {
+        /*
+         * recent : 0
+         * high_discount : 0
+         * best_sellers : 0
+         * high_to_low : 0
+         * low_to_high : 1
+         * cat_id :
+         * today_deals : true
+         */
+        ProductSortByRequest productSortByRequest = new ProductSortByRequest();
+        productSortByRequest.setRecent(recent);
+        productSortByRequest.setHigh_discount(high_discount);
+        productSortByRequest.setBest_sellers(best_sellers);
+        productSortByRequest.setHigh_to_low(high_to_low);
+        productSortByRequest.setLow_to_high(low_to_high);
+        productSortByRequest.setCat_id("");
+        productSortByRequest.setToday_deals(true);
+        Log.w(TAG,"productSortByRequest"+ new Gson().toJson(productSortByRequest));
+        return productSortByRequest;
+    }
+
+    public void callDirections(String tag){
+        Intent intent = new Intent(PetShopTodayDealsSeeMoreActivity.this,PetLoverDashboardActivity.class);
+        intent.putExtra("tag",tag);
+        startActivity(intent);
+        finish();
+
+    }
+
+    @SuppressLint("LogNotTimber")
+    private void productSearchResponseCall(String searchString) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<ProductSearchResponse> call = apiInterface.todayDealSearchResponseCall(RestUtils.getContentType(), productSearchRequest(searchString));
+        Log.w(TAG,"DoctorSearchResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<ProductSearchResponse>() {
+            @SuppressLint({"LogNotTimber", "SetTextI18n"})
+            @Override
+            public void onResponse(@NonNull Call<ProductSearchResponse> call, @NonNull Response<ProductSearchResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"DoctorSearchResponse" + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+                    if (200 == response.body().getCode()) {
+
+
+                        if (response.body().getData() != null) {
+                            Log.w(TAG, "productSearchResponseCall Size" + response.body().getData().size());
+                            if (response.body().getData() != null && response.body().getData().size()>0) {
+                                rv_today_deal.setVisibility(View.VISIBLE);
+                                txt_no_records.setVisibility(View.GONE);
+                                setViewProducts(response.body().getData());
+                            } else {
+                                rv_today_deal.setVisibility(View.GONE);
+                                txt_no_records.setVisibility(View.VISIBLE);
+                                txt_no_records.setText("No products available");
+
+                            }
+
+                        }
+
+
+
+                    }
+
+                }
+
+
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onFailure(@NonNull Call<ProductSearchResponse> call,@NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.e("ProductSearchResponse flr", "--->" + t.getMessage());
+            }
+        });
+
+    }
+    private ProductSearchRequest productSearchRequest(String searchString) {
+        /*
+         * search_string :
+         */
+        ProductSearchRequest productSearchRequest = new ProductSearchRequest();
+        productSearchRequest.setSearch_string(searchString);
+        Log.w(TAG,"productSearchRequest"+ new Gson().toJson(productSearchRequest));
+        return productSearchRequest;
+    }
+
+
 }

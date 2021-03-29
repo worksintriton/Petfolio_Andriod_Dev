@@ -439,5 +439,11 @@
     <string name="discard">Discard</string>
     <string name="apply_deal">Apply Deal</string>
 
+    <string name="recent_products">Recent products</string>
+    <string name="highest_discount">Highest discount</string>
+    <string name="best_sellers">Best sellers</string>
+    <string name="price_low_to_high">Price - Low to High</string>
+    <string name="price_high_to_low">Price - High to Low</string>
+
 
 </resources>

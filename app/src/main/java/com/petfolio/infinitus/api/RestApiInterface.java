@@ -56,6 +56,7 @@ import com.petfolio.infinitus.requestpojo.PetVendorOrderRequest;
 import com.petfolio.infinitus.requestpojo.PrescriptionCreateRequest;
 import com.petfolio.infinitus.requestpojo.PrescriptionDetailsRequest;
 import com.petfolio.infinitus.requestpojo.ProductSearchRequest;
+import com.petfolio.infinitus.requestpojo.ProductSortByRequest;
 import com.petfolio.infinitus.requestpojo.ProfileUpdateRequest;
 import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
 import com.petfolio.infinitus.requestpojo.SPAppointmentRequest;
@@ -725,6 +726,20 @@ public interface RestApiInterface {
     /* Shop Dashboard products search*/
     @POST("product_details/text_search")
     Call<ProductSearchResponse> productSearchResponseCall(@Header("Content-Type") String type, @Body ProductSearchRequest productSearchRequest);
+
+    /*Shop Dashboard products today deals see more search*/
+    @POST("product_details/todaydeal_text_search")
+    Call<ProductSearchResponse> todayDealSearchResponseCall(@Header("Content-Type") String type, @Body ProductSearchRequest productSearchRequest);
+
+
+    /*Shop Dashboard products category see more search*/
+    @POST("product_details/cat_text_search")
+    Call<ProductSearchResponse> categorySearchResponseCall(@Header("Content-Type") String type, @Body ProductSearchRequest productSearchRequest);
+
+
+    /* Shop Dashboard sort by*/
+    @POST("product_details/sort")
+    Call<ProductSearchResponse> productSortByResponseCall(@Header("Content-Type") String type, @Body ProductSortByRequest productSortByRequest);
 
 
 

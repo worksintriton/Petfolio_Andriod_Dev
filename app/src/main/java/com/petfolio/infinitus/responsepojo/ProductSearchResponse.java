@@ -68,6 +68,7 @@ public class ProductSearchResponse {
          * product_review : 232
          */
 
+
         private String _id;
         private String product_img;
         private String product_title;

@@ -64,7 +64,9 @@
                 android:textColor="@color/green"
                 android:textColorHint="@color/dark_gray"
                 android:textSize="16sp"
-                tools:ignore="Autofill,LabelFor,TextFields" />
+                tools:ignore="Autofill,LabelFor,TextFields"
+                android:maxLines="1"
+                android:imeOptions="actionDone"/>
 
             <ImageView
                 android:id="@+id/img_search"

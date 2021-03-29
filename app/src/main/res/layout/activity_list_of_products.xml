@@ -105,7 +105,9 @@
                     android:textColor="@color/green"
                     android:textColorHint="@color/dark_gray"
                     android:textSize="16sp"
-                    tools:ignore="Autofill,LabelFor,TextFields" />
+                    tools:ignore="Autofill,LabelFor,TextFields"
+                    android:maxLines="1"
+                    android:imeOptions="actionDone"/>
 
                 <ImageView
                     android:id="@+id/img_search"
@@ -190,7 +192,7 @@
                             android:id="@+id/rl_filters"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="5dp"
+                            android:layout_marginStart="10dp"
                             android:background="@drawable/new_rounded_corner_btn_orange"
                             android:orientation="horizontal"
                             android:padding="5dp">

@@ -216,7 +216,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private void setViewProducts(List<ProductSearchResponse.DataBean> productSearchResponseCall) {
         rv_relatedproducts.setLayoutManager(new GridLayoutManager(this, 2));
         rv_relatedproducts.setItemAnimator(new DefaultItemAnimator());
-        ProductsSearchAdapter productsSearchAdapter = new ProductsSearchAdapter(getApplicationContext(), productSearchResponseCall);
+        ProductsSearchAdapter productsSearchAdapter = new ProductsSearchAdapter(getApplicationContext(), productSearchResponseCall,TAG,"");
         rv_relatedproducts.setAdapter(productsSearchAdapter);
     }
     private ProductSearchRequest productSearchRequest(String searchString) {

@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:id="@+id/ll_root"
     android:layout_marginTop="10dp"
-    android:layout_marginStart="5dp"
+    android:layout_marginStart="10dp"
     android:layout_marginEnd="5dp">
 
 
@@ -20,8 +20,8 @@
 
         <ImageView
             android:id="@+id/img_products_image"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
             android:contentDescription="@string/image"
             android:scaleType="fitXY"
             android:src="@drawable/app_logo" />
@@ -50,8 +50,7 @@
             />
 
     </androidx.cardview.widget.CardView>
-
-        <TextView
+    <TextView
             android:id="@+id/txt_products_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -92,8 +91,7 @@
                 android:textColor="@color/new_green_btn"
                 android:textSize="12sp" />
         </LinearLayout>
-
-        <LinearLayout
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

@@ -1,10 +1,23 @@
 package com.petfolio.infinitus.petlover;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.webkit.WebView;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,10 +31,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.PetShopCategorySeeMoreAdapter;
+import com.petfolio.infinitus.adapter.ProductsSearchAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.requestpojo.FetctProductByCatRequest;
+import com.petfolio.infinitus.requestpojo.ProductSearchRequest;
+import com.petfolio.infinitus.requestpojo.ProductSortByRequest;
 import com.petfolio.infinitus.responsepojo.FetctProductByCatResponse;
+import com.petfolio.infinitus.responsepojo.ProductSearchResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -30,6 +47,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,7 +56,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class ListOfProductsSeeMoreActivity extends AppCompatActivity  {
+public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String TAG = "ListOfProductsSeeMoreActivity";
 
@@ -60,6 +78,25 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity  {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
     ImageView img_back;
+
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_sort)
+    RelativeLayout rl_sort;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.edt_sort)
+    EditText edt_sort;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_filters)
+    RelativeLayout rl_filters;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.edt_search)
+    EditText edt_search;
+
+
     private String cat_id;
 
 
@@ -71,6 +108,16 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity  {
     private int CURRENT_PAGE = PAGE_START;
     private List<FetctProductByCatResponse.DataBean> catListSeeMore;
     private List<FetctProductByCatResponse.DataBean> catListSeeMoreAll = new ArrayList<>();
+    private Dialog dialog;
+
+    RadioGroup rg_sortby;
+    RadioButton rb_recent_products,rb_highest_discount,rb_best_sellers,rb_price_low_to_high,rb_price_high_to_low;
+    private int recent = 0;
+    private int high_discount = 0;
+    private int best_sellers = 0;
+    private int high_to_low = 0;
+    private int low_to_high = 0;
+    private String searchString = "";
 
 
     @SuppressLint("LogNotTimber")
@@ -110,6 +157,47 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity  {
             fetctProductByCatResponseCall();
         }
         initResultRecylerView();
+
+        rl_filters.setOnClickListener(this);
+        rl_sort.setOnClickListener(this);
+        edt_sort.setOnClickListener(this);
+
+        edt_search.addTextChangedListener(new TextWatcher() {
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                Log.w(TAG,"beforeTextChanged-->"+s.toString());
+            }
+
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.w(TAG,"onTextChanged-->"+s.toString());
+                searchString = s.toString();
+
+
+            }
+
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.w(TAG,"afterTextChanged-->"+s.toString());
+                searchString = s.toString();
+                if(!searchString.isEmpty()){
+                    if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                        productSearchResponseCall(searchString);
+                    }
+                }else{
+                    searchString ="";
+                    if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                        productSearchResponseCall(searchString);
+                    }
+
+                }
+
+            }
+        });
+
 
 
 
@@ -213,8 +301,8 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity  {
     private void setView(List<FetctProductByCatResponse.DataBean> data) {
          petShopCategorySeeMoreAdapter = new PetShopCategorySeeMoreAdapter(getApplicationContext(), data);
          rv_today_deal.setAdapter(petShopCategorySeeMoreAdapter);
-        petShopCategorySeeMoreAdapter.notifyDataSetChanged();
-        isLoading = false;
+         petShopCategorySeeMoreAdapter.notifyDataSetChanged();
+         isLoading = false;
 
 
 
@@ -222,7 +310,6 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity  {
 
 
     private void initResultRecylerView() {
-
         rv_today_deal.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -250,5 +337,251 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity  {
     }
 
 
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.rl_sort:
+                showSortByAlert();
+                break;
+
+                case R.id.edt_sort:
+                showSortByAlert();
+                break;
+
+                case R.id.rl_filters:
+                break;
+
+                case R.id.rb_recent_products:
+                    recent = 1;
+                    high_discount = 0;
+                    best_sellers = 0;
+                    high_to_low = 0;
+                    low_to_high = 0;
+                break;
+
+                case R.id.rb_highest_discount:
+                    recent = 0;
+                    high_discount = 1;
+                    best_sellers = 0;
+                    high_to_low = 0;
+                    low_to_high = 0;
+                break;
+
+                case R.id.rb_best_sellers:
+                    recent = 0;
+                    high_discount = 0;
+                    best_sellers = 0;
+                    high_to_low = 0;
+                    low_to_high = 0;
+                break;
+
+                case R.id.rb_price_high_to_low:
+                    recent = 0;
+                    high_discount = 0;
+                    best_sellers = 0;
+                    high_to_low = 1;
+                    low_to_high = 0;
+                break;
+
+                case R.id.rb_price_low_to_high:
+                    recent = 0;
+                    high_discount = 0;
+                    best_sellers = 0;
+                    high_to_low = 0;
+                    low_to_high = 1;
+                break;
+
+        }
+
+    }
+
+    private void showSortByAlert() {
+        try {
+            dialog = new Dialog(ListOfProductsSeeMoreActivity.this);
+            dialog.setContentView(R.layout.alert_sortby_layout);
+            //dialog.setCanceledOnTouchOutside(false);
+             rg_sortby = dialog.findViewById(R.id.rg_sortby);
+             rb_recent_products = dialog.findViewById(R.id.rb_recent_products);
+             rb_highest_discount = dialog.findViewById(R.id.rb_highest_discount);
+             rb_best_sellers = dialog.findViewById(R.id.rb_best_sellers);
+             rb_price_low_to_high = dialog.findViewById(R.id.rb_price_low_to_high);
+             rb_price_high_to_low = dialog.findViewById(R.id.rb_price_high_to_low);
+
+
+             rb_recent_products.setOnClickListener(this);
+             rb_highest_discount.setOnClickListener(this);
+             rb_best_sellers.setOnClickListener(this);
+             rb_price_low_to_high.setOnClickListener(this);
+             rb_price_high_to_low.setOnClickListener(this);
+
+            Button btn_apply = dialog.findViewById(R.id.btn_apply);
+
+
+            btn_apply.setOnClickListener(view -> {
+                productSortByResponseCall();
+                dialog.dismiss();
+
+
+            });
+
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
+
+
+    @SuppressLint("LogNotTimber")
+    private void productSortByResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<ProductSearchResponse> call = apiInterface.productSortByResponseCall(RestUtils.getContentType(), productSortByRequest());
+        Log.w(TAG,"productSortByResponseCall url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<ProductSearchResponse>() {
+            @SuppressLint({"LogNotTimber", "SetTextI18n"})
+            @Override
+            public void onResponse(@NonNull Call<ProductSearchResponse> call, @NonNull Response<ProductSearchResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"productSortByResponseCall" + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+                    if (200 == response.body().getCode()) {
+
+
+                        if (response.body().getData() != null) {
+
+                            if (response.body().getData() != null && response.body().getData().size()>0) {
+                                rv_today_deal.setVisibility(View.VISIBLE);
+                                txt_no_records.setVisibility(View.GONE);
+                                setViewProducts(response.body().getData());
+                            } else {
+                                rv_today_deal.setVisibility(View.GONE);
+                                txt_no_records.setVisibility(View.VISIBLE);
+                                txt_no_records.setText("No products available");
+
+                            }
+
+                        }
+
+
+
+                    }
+
+                }
+
+
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onFailure(@NonNull Call<ProductSearchResponse> call,@NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.e("ProductSearchResponse flr", "--->" + t.getMessage());
+            }
+        });
+
+    }
+    private void setViewProducts(List<ProductSearchResponse.DataBean> productSearchResponseCall) {
+        rv_today_deal.setLayoutManager(new GridLayoutManager(this, 2));
+        rv_today_deal.setItemAnimator(new DefaultItemAnimator());
+        ProductsSearchAdapter productsSearchAdapter = new ProductsSearchAdapter(getApplicationContext(), productSearchResponseCall,TAG,cat_id);
+        rv_today_deal.setAdapter(productsSearchAdapter);
+    }
+    @SuppressLint("LogNotTimber")
+    private ProductSortByRequest productSortByRequest() {
+        /*
+         * recent : 0
+         * high_discount : 0
+         * best_sellers : 0
+         * high_to_low : 0
+         * low_to_high : 1
+         * cat_id :
+         * today_deals : true
+         */
+        ProductSortByRequest productSortByRequest = new ProductSortByRequest();
+        productSortByRequest.setRecent(recent);
+        productSortByRequest.setHigh_discount(high_discount);
+        productSortByRequest.setBest_sellers(best_sellers);
+        productSortByRequest.setHigh_to_low(high_to_low);
+        productSortByRequest.setLow_to_high(low_to_high);
+        productSortByRequest.setCat_id(cat_id);
+        productSortByRequest.setToday_deals(false);
+        Log.w(TAG,"productSortByRequest"+ new Gson().toJson(productSortByRequest));
+        return productSortByRequest;
+    }
+
+
+    @SuppressLint("LogNotTimber")
+    private void productSearchResponseCall(String searchString) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<ProductSearchResponse> call = apiInterface.todayDealSearchResponseCall(RestUtils.getContentType(), productSearchRequest(searchString));
+        Log.w(TAG,"DoctorSearchResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<ProductSearchResponse>() {
+            @SuppressLint({"LogNotTimber", "SetTextI18n"})
+            @Override
+            public void onResponse(@NonNull Call<ProductSearchResponse> call, @NonNull Response<ProductSearchResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"DoctorSearchResponse" + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+                    if (200 == response.body().getCode()) {
+
+
+                        if (response.body().getData() != null) {
+                            Log.w(TAG, "productSearchResponseCall Size" + response.body().getData().size());
+                            if (response.body().getData() != null && response.body().getData().size()>0) {
+                                rv_today_deal.setVisibility(View.VISIBLE);
+                                txt_no_records.setVisibility(View.GONE);
+                                setViewProducts(response.body().getData());
+                            } else {
+                                rv_today_deal.setVisibility(View.GONE);
+                                txt_no_records.setVisibility(View.VISIBLE);
+                                txt_no_records.setText("No products available");
+
+                            }
+
+                        }
+
+
+
+                    }
+
+                }
+
+
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onFailure(@NonNull Call<ProductSearchResponse> call,@NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.e("ProductSearchResponse flr", "--->" + t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint("LogNotTimber")
+    private ProductSearchRequest productSearchRequest(String searchString) {
+        /*
+         * search_string :
+         * cat_id
+         */
+        ProductSearchRequest productSearchRequest = new ProductSearchRequest();
+        productSearchRequest.setSearch_string(searchString);
+        productSearchRequest.setCat_id(cat_id);
+        Log.w(TAG,"productSearchRequest"+ new Gson().toJson(productSearchRequest));
+        return productSearchRequest;
+    }
 
 }
