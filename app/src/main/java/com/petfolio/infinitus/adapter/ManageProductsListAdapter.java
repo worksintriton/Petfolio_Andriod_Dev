@@ -92,16 +92,16 @@ public class ManageProductsListAdapter extends  RecyclerView.Adapter<RecyclerVie
             holder.img_expand_arrow.setImageResource(R.drawable.ic_down);
         }
 
-        if(manageProductsListResponseList.get(position).getPet_type().get(position).getPet_type_title() != null){
-            holder.txt_pet_type.setText(" : "+manageProductsListResponseList.get(position).getPet_type().get(position).getPet_type_title());
+        if(manageProductsListResponseList.get(position).getPet_type().get(0).getPet_type_title() != null){
+            holder.txt_pet_type.setText(" : "+manageProductsListResponseList.get(position).getPet_type().get(0).getPet_type_title());
 
         }
-        if(manageProductsListResponseList.get(position).getPet_breed().get(position).getPet_breed() != null){
-            holder.txt_pet_breed.setText(" : "+manageProductsListResponseList.get(position).getPet_breed().get(position).getPet_breed());
+        if(manageProductsListResponseList.get(position).getPet_breed().get(0).getPet_breed() != null){
+            holder.txt_pet_breed.setText(" : "+manageProductsListResponseList.get(position).getPet_breed().get(0).getPet_breed());
 
         }
-        if(manageProductsListResponseList.get(position).getPet_age().get(position) != null){
-            holder.txt_age.setText(" : "+manageProductsListResponseList.get(position).getPet_age().get(position)+"");
+        if(manageProductsListResponseList.get(position).getPet_age().get(0) != null){
+            holder.txt_age.setText(" : "+manageProductsListResponseList.get(position).getPet_age().get(0)+"");
 
         }
         if(manageProductsListResponseList.get(position).getPet_threshold()!= null){

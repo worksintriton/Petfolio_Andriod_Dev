@@ -25,7 +25,6 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.requestpojo.ShippingAddressDeleteRequest;
 import com.petfolio.infinitus.requestpojo.ShippingAddressFetchByUserIDRequest;
-import com.petfolio.infinitus.requestpojo.VendorOrderBookingCreateRequest;
 import com.petfolio.infinitus.responsepojo.CartDetailsResponse;
 import com.petfolio.infinitus.responsepojo.CartSuccessResponse;
 import com.petfolio.infinitus.responsepojo.ShippingAddressDeleteResponse;
@@ -380,7 +379,6 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
                             //showErrorLoading(response.body().getMessage());
                             avi_indicator.smoothToHide();
 
-                            Toasty.warning(ShippingAddressActivity.this,"Server Issue",Toasty.LENGTH_LONG).show();
                         }
 
 
@@ -390,7 +388,6 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
                         //showErrorLoading(response.body().getMessage());
                         avi_indicator.smoothToHide();
 
-                        Toasty.warning(ShippingAddressActivity.this,"Server Issue",Toasty.LENGTH_LONG).show();
                     }
 
 
@@ -400,7 +397,6 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
                     //showErrorLoading(response.body().getMessage());
                     avi_indicator.smoothToHide();
 
-                    Toasty.warning(ShippingAddressActivity.this,"Server Issue",Toasty.LENGTH_LONG).show();
                 }
 
 
@@ -468,7 +464,6 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
                         //showErrorLoading(response.body().getMessage());
                         avi_indicator.smoothToHide();
 
-                        Toasty.warning(ShippingAddressActivity.this,"Server Issue",Toasty.LENGTH_LONG).show();
                     }
                 }
 

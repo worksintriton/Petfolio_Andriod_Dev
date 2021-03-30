@@ -71,7 +71,21 @@ public class PetVendorCancelledOrdersAdapter extends  RecyclerView.Adapter<Recyc
             holder.txt_producttitle.setText(newOrderResponseList.get(position).getProduct_name());
         }
         if(newOrderResponseList.get(position).getProduct_price() != 0 && newOrderResponseList.get(position).getProduct_quantity() != 0) {
-            holder.txt_products_price.setText("\u20B9 " + newOrderResponseList.get(position).getProduct_price() + " (" + newOrderResponseList.get(position).getProduct_quantity() + " items )");
+            if(newOrderResponseList.get(position).getProduct_quantity() == 1){
+                holder.txt_products_price.setText("\u20B9 " + newOrderResponseList.get(position).getProduct_price() + " (" + newOrderResponseList.get(position).getProduct_quantity() + " item )");
+            }else{
+                holder.txt_products_price.setText("\u20B9 " + newOrderResponseList.get(position).getProduct_price() + " (" + newOrderResponseList.get(position).getProduct_quantity() + " items )");
+
+            }
+        }
+        else{
+            if(newOrderResponseList.get(position).getProduct_quantity() == 1){
+                holder.txt_products_price.setText("\u20B9 " + 0 + " (" + newOrderResponseList.get(position).getProduct_quantity() + " item )");
+            }else{
+                holder.txt_products_price.setText("\u20B9 " + 0 + " (" + newOrderResponseList.get(position).getProduct_quantity() + " items )");
+
+            }
+
         }
 
 

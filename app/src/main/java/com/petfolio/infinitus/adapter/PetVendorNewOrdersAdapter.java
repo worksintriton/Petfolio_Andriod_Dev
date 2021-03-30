@@ -64,7 +64,21 @@ public class PetVendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerVie
             holder.txt_producttitle.setText(newOrderResponseList.get(position).getProduct_name());
         }
         if(newOrderResponseList.get(position).getProduct_price() != 0 && newOrderResponseList.get(position).getProduct_quantity() != 0) {
-            holder.txt_products_price.setText("\u20B9 " + newOrderResponseList.get(position).getProduct_price() + " (" + newOrderResponseList.get(position).getProduct_quantity() + " items )");
+            if(newOrderResponseList.get(position).getProduct_quantity() == 1){
+                holder.txt_products_price.setText("\u20B9 " + newOrderResponseList.get(position).getProduct_price() + " (" + newOrderResponseList.get(position).getProduct_quantity() + " item )");
+            }else{
+                holder.txt_products_price.setText("\u20B9 " + newOrderResponseList.get(position).getProduct_price() + " (" + newOrderResponseList.get(position).getProduct_quantity() + " items )");
+
+            }
+        }
+        else{
+            if(newOrderResponseList.get(position).getProduct_quantity() == 1){
+                holder.txt_products_price.setText("\u20B9 " + 0 + " (" + newOrderResponseList.get(position).getProduct_quantity() + " item )");
+            }else{
+                holder.txt_products_price.setText("\u20B9 " + 0 + " (" + newOrderResponseList.get(position).getProduct_quantity() + " items )");
+
+            }
+
         }
         if(newOrderResponseList.get(position).getDate_of_booking() != null){
             holder.txt_bookedon.setText("Booked on:"+" "+newOrderResponseList.get(position).getDate_of_booking());

@@ -250,7 +250,6 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
                         //showErrorLoading(response.body().getMessage());
                         avi_indicator.smoothToHide();
 
-                        Toasty.warning(ShippingAddressAddActivity.this,"Server Issue",Toasty.LENGTH_LONG).show();
                     }
                 }
 
@@ -332,7 +331,6 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
                         //showErrorLoading(response.body().getMessage());
                         avi_indicator.smoothToHide();
 
-                        Toasty.warning(ShippingAddressAddActivity.this,"Server Issue",Toasty.LENGTH_LONG).show();
                     }
                 }
 
@@ -402,7 +400,6 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
                         //showErrorLoading(response.body().getMessage());
                         avi_indicator.smoothToHide();
 
-                        Toasty.warning(ShippingAddressAddActivity.this,"Server Issue",Toasty.LENGTH_LONG).show();
                     }
                 }
 

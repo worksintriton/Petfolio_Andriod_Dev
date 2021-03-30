@@ -57,12 +57,13 @@ public class PetShopProductDetailsImageAdapter extends  RecyclerView.Adapter<Rec
 
     @SuppressLint({"SetTextI18n", "LogNotTimber"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
-
         ShopDashboardResponse.DataBean.ProductDetailsBean.ProductListBean productListBean = productList.get(position);
         holder.txt_products_title.setText(productListBean.getProduct_title());
         if(productListBean.getProduct_price() != 0){
             holder.txt_products_price.setText("\u20B9 "+productListBean.getProduct_price());
-            }
+        }else{
+            holder.txt_products_price.setText("\u20B9 "+0);
+        }
 
         if(productListBean.isProduct_fav()){
             holder.img_like.setVisibility(View.VISIBLE);

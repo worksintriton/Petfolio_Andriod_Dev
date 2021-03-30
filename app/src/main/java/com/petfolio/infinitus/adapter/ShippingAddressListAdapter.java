@@ -158,9 +158,6 @@ public class ShippingAddressListAdapter extends  RecyclerView.Adapter<RecyclerVi
                 lastSelectedPosition = holder.getAdapterPosition();
                 notifyDataSetChanged();
 
-                Toast.makeText(context,
-                        "selected shipping Id is " + newOrderResponseList.get(position).get_id(),
-                        Toast.LENGTH_LONG).show();
 
                 onSelectingShipIdListener.onSelectShipID(newOrderResponseList.get(position).get_id(),newOrderResponseList.get(position).getUser_first_name(),newOrderResponseList.get(position).getUser_last_name(),newOrderResponseList.get(position).getUser_mobile(),newOrderResponseList.get(position).getUser_alter_mobile(),
 

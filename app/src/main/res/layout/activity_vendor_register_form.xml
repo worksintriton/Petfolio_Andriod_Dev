@@ -20,7 +20,6 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
             android:background="@drawable/ic_baseline_arrow_back_ios_24"
             tools:ignore="ContentDescription" />
 
@@ -55,7 +54,8 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="30dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="UselessParent">
 
                 <EditText
                     android:id="@+id/edt_business_name"
@@ -164,8 +164,7 @@
                     android:textSize="14sp"
                     tools:ignore="Autofill,LabelFor" />
 
-
-                  <!--Service gallery images-->
+                <!--Service gallery images-->
             <TextView
                 android:id="@+id/textView16"
                 android:layout_width="wrap_content"
@@ -173,7 +172,7 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:padding="2dp"
-                android:text="@string/upload_gallery_images"
+                android:text="@string/upload_service_images"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
             <androidx.cardview.widget.CardView
@@ -211,7 +210,6 @@
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
                         android:layout_marginStart="5dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="5dp"
@@ -276,7 +274,6 @@
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
                         android:layout_marginStart="5dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="5dp"
@@ -342,7 +339,6 @@
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
                         android:layout_marginStart="5dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="5dp"
@@ -406,7 +402,6 @@
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
                         android:layout_marginStart="5dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="5dp"
