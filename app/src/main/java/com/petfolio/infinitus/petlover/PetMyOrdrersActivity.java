@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +28,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class PetMyOrdrersActivity extends AppCompatActivity {
+public class PetMyOrdrersActivity extends AppCompatActivity  {
     private final String TAG = "PetMyOrdrersActivity";
 
 
@@ -40,17 +41,7 @@ public class PetMyOrdrersActivity extends AppCompatActivity {
     BottomNavigationView bottom_navigation_view;
 
 
-
-
-    private final String active_tag = "1";
-
-
-    String tag;
-
-    String fromactivity;
-
-
-    @SuppressLint("LogNotTimber")
+    @SuppressLint({"LogNotTimber", "NonConstantResourceId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +53,40 @@ public class PetMyOrdrersActivity extends AppCompatActivity {
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
         img_back.setOnClickListener(v -> onBackPressed());
+
+
+      /*  String active_tag = "1";
+        if(active_tag != null){
+            if(active_tag.equalsIgnoreCase("3")) {
+                bottom_navigation_view.setSelectedItemId(R.id.services);
+            }else if(active_tag.equalsIgnoreCase("4")) {
+                bottom_navigation_view.setSelectedItemId(R.id.care);
+            }
+        }
+        bottom_navigation_view.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.home:
+                    callDirections("1");
+                    break;
+                case R.id.shop:
+                    callDirections("2");
+                    break;
+                case R.id.services:
+                    callDirections("3");
+                    break;
+                case R.id.care:
+                    callDirections("4");
+                    break;
+                case R.id.community:
+                    callDirections("5");
+                    break;
+
+                default:
+                    return false;
+            }
+            return  true;
+        });*/
+
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -77,6 +102,14 @@ public class PetMyOrdrersActivity extends AppCompatActivity {
         super.onBackPressed();
         Intent i = new Intent(PetMyOrdrersActivity.this, PetLoverDashboardActivity.class);
         startActivity(i);
+        finish();
+    }
+
+
+    public void callDirections(String tag){
+        Intent intent = new Intent(getApplicationContext(), PetLoverDashboardActivity.class);
+        intent.putExtra("tag",tag);
+        startActivity(intent);
         finish();
     }
 

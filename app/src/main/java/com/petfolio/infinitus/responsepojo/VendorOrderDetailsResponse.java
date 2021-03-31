@@ -4,11 +4,10 @@ import java.util.List;
 
 public class VendorOrderDetailsResponse {
 
-
     /**
      * Status : Success
      * Message : Order Details
-     * Data : {"_id":"6059b984bf0e2a1c88e5dd88","order_id":"ITEM-1616492932696","product_name":"DOG FOOD 2","product_quantity":2,"product_price":196,"prodcut_image":"http://54.212.108.156:3000/api/uploads/1615541391131.jpeg","date_of_booking":"23-03-2021 03:18 PM","status":"New","user_cancell_info":"","user_cancell_date":"","vendor_cancell_info":"","vendor_cancell_date":"","vendor_accept_cancel":"","vendor_complete_date":"","vendor_complete_info":"","prodcut_track_details":[{"id":0,"title":"Order Booked","date":"15-03-2021 04:17 PM","Status":true},{"id":1,"title":"Order Accept","date":"15-03-2021 04:17 PM","Status":false},{"id":2,"title":"Order Dispatch","date":"15-03-2021 04:17 PM","Status":false},{"id":3,"title":"In Transit","date":"15-03-2021 04:17 PM","Status":false},{"id":4,"title":"Order Cancelled","date":"15-03-2021 04:17 PM","Status":false},{"id":5,"title":"Vendor cancelled","date":"15-03-2021 04:17 PM","Status":false}],"delivery_date":"","date_of_booking_display":"23-03-2021 03:18 PM","delivery_date_display":"","order_status":"New","prodouct_total":196,"shipping_address_id":"","billling_address_id":"","shipping_address":"","billing_address":"","shipping_charge":0,"over_all_total":196,"discount_price":0,"grand_total":196,"coupon_code":"","payment_id":"pay_Gq3FZTClKcqVMy","shipping_details_id":{"_id":"605979dee748565ddb1fc51a","user_id":"603e27792c2b43125f8cb802","user_first_name":"Dineshkumar","user_last_name":"Deva","user_flat_no":"4/3","user_stree":"Immanuel street","user_landmark":"","user_picocode":"600113","user_state":"tamilnadu","user_mobile":"9842670813","user_alter_mobile":"","user_address_stauts":"Last Used","user_address_type":"Home","user_display_date":"23-03-2021","updatedAt":"2021-03-23T05:17:32.915Z","createdAt":"2021-03-23T05:17:18.190Z","__v":0},"shipping_details":"No :4/3, Immanuel street, undefined, tamilnadu, ZIP CODE - 600113"}
+     * Data : {"_id":"605d7d0dc63b6e29ba4e64ff","order_id":"ITEM-1616739597042","product_name":"DOG FOOD 2","product_quantity":2,"product_price":86,"prodcut_image":"http://54.212.108.156:3000/api/uploads/1615541391131.jpeg","date_of_booking":"26-03-2021 11:49 AM","status":"Cancelled","user_cancell_info":"not needs now","user_cancell_date":"26-03-2021 11:56 AM","vendor_cancell_info":"","vendor_cancell_date":"","vendor_accept_cancel":"","vendor_complete_date":"","vendor_complete_info":"","prodcut_track_details":[{"id":0,"title":"Order Booked","date":"15-03-2021 04:17 PM","Status":true},{"id":1,"title":"Order Accept","date":"15-03-2021 04:17 PM","Status":false},{"id":2,"title":"Order Dispatch","date":"15-03-2021 04:17 PM","Status":false},{"id":3,"title":"In Transit","date":"15-03-2021 04:17 PM","Status":false},{"id":4,"title":"Order Cancelled","date":"26-03-2021 11:56 AM","Status":true},{"id":5,"title":"Vendor cancelled","date":"15-03-2021 04:17 PM","Status":false}],"delivery_date":"","date_of_booking_display":"26-03-2021 11:49 AM","delivery_date_display":"","order_status":"Cancelled","prodouct_total":86,"shipping_address_id":"","billling_address_id":"","shipping_address":"","billing_address":"","shipping_charge":0,"over_all_total":86,"discount_price":0,"grand_total":86,"coupon_code":"","payment_id":"pay_GrBIOQh54RbTTt","shipping_details_id":{"_id":"605b030e5eb1ea4d142324c9","user_id":"605322f25e35b95a5cf804de","user_first_name":"sangeetha","user_last_name":"saravanan","user_flat_no":"k.k.nagar","user_stree":"malles AV garden lavnder street","user_landmark":"max fashion","user_picocode":"600125","user_state":"Tamil Nadu","user_city":"Chennai","user_mobile":"9003237255","user_alter_mobile":"1234567899","user_address_stauts":"Last Used","user_address_type":"Home","user_display_date":"24-03-2021","updatedAt":"2021-03-26T06:30:48.177Z","createdAt":"2021-03-24T09:14:54.231Z","__v":0},"shipping_details":"No :k.k.nagar, malles AV garden, Chennai, Tamil Nadu, ZIP CODE - 600125"}
      * Code : 200
      */
 
@@ -34,7 +33,9 @@ public class VendorOrderDetailsResponse {
 
     public void setMessage(String Message) {
         this.Message = Message;
+
     }
+
 
     public DataBean getData() {
         return Data;
@@ -57,39 +58,39 @@ public class VendorOrderDetailsResponse {
 
     public static class DataBean  {
         /**
-         * _id : 6059b984bf0e2a1c88e5dd88
-         * order_id : ITEM-1616492932696
+         * _id : 605d7d0dc63b6e29ba4e64ff
+         * order_id : ITEM-1616739597042
          * product_name : DOG FOOD 2
          * product_quantity : 2
-         * product_price : 196
+         * product_price : 86
          * prodcut_image : http://54.212.108.156:3000/api/uploads/1615541391131.jpeg
-         * date_of_booking : 23-03-2021 03:18 PM
-         * status : New
-         * user_cancell_info :
-         * user_cancell_date :
+         * date_of_booking : 26-03-2021 11:49 AM
+         * status : Cancelled
+         * user_cancell_info : not needs now
+         * user_cancell_date : 26-03-2021 11:56 AM
          * vendor_cancell_info :
          * vendor_cancell_date :
          * vendor_accept_cancel :
          * vendor_complete_date :
          * vendor_complete_info :
-         * prodcut_track_details : [{"id":0,"title":"Order Booked","date":"15-03-2021 04:17 PM","Status":true},{"id":1,"title":"Order Accept","date":"15-03-2021 04:17 PM","Status":false},{"id":2,"title":"Order Dispatch","date":"15-03-2021 04:17 PM","Status":false},{"id":3,"title":"In Transit","date":"15-03-2021 04:17 PM","Status":false},{"id":4,"title":"Order Cancelled","date":"15-03-2021 04:17 PM","Status":false},{"id":5,"title":"Vendor cancelled","date":"15-03-2021 04:17 PM","Status":false}]
+         * prodcut_track_details : [{"id":0,"title":"Order Booked","date":"15-03-2021 04:17 PM","Status":true},{"id":1,"title":"Order Accept","date":"15-03-2021 04:17 PM","Status":false},{"id":2,"title":"Order Dispatch","date":"15-03-2021 04:17 PM","Status":false},{"id":3,"title":"In Transit","date":"15-03-2021 04:17 PM","Status":false},{"id":4,"title":"Order Cancelled","date":"26-03-2021 11:56 AM","Status":true},{"id":5,"title":"Vendor cancelled","date":"15-03-2021 04:17 PM","Status":false}]
          * delivery_date :
-         * date_of_booking_display : 23-03-2021 03:18 PM
+         * date_of_booking_display : 26-03-2021 11:49 AM
          * delivery_date_display :
-         * order_status : New
-         * prodouct_total : 196
+         * order_status : Cancelled
+         * prodouct_total : 86
          * shipping_address_id :
          * billling_address_id :
          * shipping_address :
          * billing_address :
          * shipping_charge : 0
-         * over_all_total : 196
+         * over_all_total : 86
          * discount_price : 0
-         * grand_total : 196
+         * grand_total : 86
          * coupon_code :
-         * payment_id : pay_Gq3FZTClKcqVMy
-         * shipping_details_id : {"_id":"605979dee748565ddb1fc51a","user_id":"603e27792c2b43125f8cb802","user_first_name":"Dineshkumar","user_last_name":"Deva","user_flat_no":"4/3","user_stree":"Immanuel street","user_landmark":"","user_picocode":"600113","user_state":"tamilnadu","user_mobile":"9842670813","user_alter_mobile":"","user_address_stauts":"Last Used","user_address_type":"Home","user_display_date":"23-03-2021","updatedAt":"2021-03-23T05:17:32.915Z","createdAt":"2021-03-23T05:17:18.190Z","__v":0}
-         * shipping_details : No :4/3, Immanuel street, undefined, tamilnadu, ZIP CODE - 600113
+         * payment_id : pay_GrBIOQh54RbTTt
+         * shipping_details_id : {"_id":"605b030e5eb1ea4d142324c9","user_id":"605322f25e35b95a5cf804de","user_first_name":"sangeetha","user_last_name":"saravanan","user_flat_no":"k.k.nagar","user_stree":"malles AV garden lavnder street","user_landmark":"max fashion","user_picocode":"600125","user_state":"Tamil Nadu","user_city":"Chennai","user_mobile":"9003237255","user_alter_mobile":"1234567899","user_address_stauts":"Last Used","user_address_type":"Home","user_display_date":"24-03-2021","updatedAt":"2021-03-26T06:30:48.177Z","createdAt":"2021-03-24T09:14:54.231Z","__v":0}
+         * shipping_details : No :k.k.nagar, malles AV garden, Chennai, Tamil Nadu, ZIP CODE - 600125
          */
 
         private String _id;
@@ -156,7 +157,6 @@ public class VendorOrderDetailsResponse {
 
         }
 
-
         public int getProduct_quantity() {
             return product_quantity;
         }
@@ -206,6 +206,7 @@ public class VendorOrderDetailsResponse {
 
         }
 
+
         public String getUser_cancell_info() {
             return user_cancell_info;
         }
@@ -224,7 +225,6 @@ public class VendorOrderDetailsResponse {
             this.user_cancell_date = user_cancell_date;
 
         }
-
 
         public String getVendor_cancell_info() {
             return vendor_cancell_info;
@@ -274,7 +274,6 @@ public class VendorOrderDetailsResponse {
 
         }
 
-
         public String getDelivery_date() {
             return delivery_date;
         }
@@ -294,14 +293,12 @@ public class VendorOrderDetailsResponse {
 
         }
 
-
-        public String getDelivery_date_display() {
+         public String getDelivery_date_display() {
             return delivery_date_display;
         }
 
         public void setDelivery_date_display(String delivery_date_display) {
             this.delivery_date_display = delivery_date_display;
-
         }
 
 
@@ -373,7 +370,6 @@ public class VendorOrderDetailsResponse {
 
         }
 
-
         public int getOver_all_total() {
             return over_all_total;
         }
@@ -403,7 +399,6 @@ public class VendorOrderDetailsResponse {
 
         }
 
-
         public String getCoupon_code() {
             return coupon_code;
         }
@@ -422,7 +417,6 @@ public class VendorOrderDetailsResponse {
             this.payment_id = payment_id;
 
         }
-
 
         public ShippingDetailsIdBean getShipping_details_id() {
             return shipping_details_id;
@@ -443,7 +437,6 @@ public class VendorOrderDetailsResponse {
 
         }
 
-
         public List<ProdcutTrackDetailsBean> getProdcut_track_details() {
             return prodcut_track_details;
         }
@@ -455,22 +448,23 @@ public class VendorOrderDetailsResponse {
 
         public static class ShippingDetailsIdBean  {
             /**
-             * _id : 605979dee748565ddb1fc51a
-             * user_id : 603e27792c2b43125f8cb802
-             * user_first_name : Dineshkumar
-             * user_last_name : Deva
-             * user_flat_no : 4/3
-             * user_stree : Immanuel street
-             * user_landmark :
-             * user_picocode : 600113
-             * user_state : tamilnadu
-             * user_mobile : 9842670813
-             * user_alter_mobile :
+             * _id : 605b030e5eb1ea4d142324c9
+             * user_id : 605322f25e35b95a5cf804de
+             * user_first_name : sangeetha
+             * user_last_name : saravanan
+             * user_flat_no : k.k.nagar
+             * user_stree : malles AV garden lavnder street
+             * user_landmark : max fashion
+             * user_picocode : 600125
+             * user_state : Tamil Nadu
+             * user_city : Chennai
+             * user_mobile : 9003237255
+             * user_alter_mobile : 1234567899
              * user_address_stauts : Last Used
              * user_address_type : Home
-             * user_display_date : 23-03-2021
-             * updatedAt : 2021-03-23T05:17:32.915Z
-             * createdAt : 2021-03-23T05:17:18.190Z
+             * user_display_date : 24-03-2021
+             * updatedAt : 2021-03-26T06:30:48.177Z
+             * createdAt : 2021-03-24T09:14:54.231Z
              * __v : 0
              */
 
@@ -483,20 +477,16 @@ public class VendorOrderDetailsResponse {
             private String user_landmark;
             private String user_picocode;
             private String user_state;
+            private String user_city;
             private String user_mobile;
             private String user_alter_mobile;
             private String user_address_stauts;
             private String user_address_type;
             private String user_display_date;
-            private String user_city ;
+            private String updatedAt;
+            private String createdAt;
+            private int __v;
 
-            public String getUser_city() {
-                return user_city;
-            }
-
-            public void setUser_city(String user_city) {
-                this.user_city = user_city;
-            }
 
             public String get_id() {
                 return _id;
@@ -506,6 +496,7 @@ public class VendorOrderDetailsResponse {
                 this._id = _id;
 
             }
+
 
             public String getUser_id() {
                 return user_id;
@@ -526,6 +517,7 @@ public class VendorOrderDetailsResponse {
 
             }
 
+
             public String getUser_last_name() {
                 return user_last_name;
             }
@@ -534,7 +526,6 @@ public class VendorOrderDetailsResponse {
                 this.user_last_name = user_last_name;
 
             }
-
 
             public String getUser_flat_no() {
                 return user_flat_no;
@@ -555,7 +546,6 @@ public class VendorOrderDetailsResponse {
 
             }
 
-
             public String getUser_landmark() {
                 return user_landmark;
             }
@@ -575,12 +565,23 @@ public class VendorOrderDetailsResponse {
 
             }
 
+
             public String getUser_state() {
                 return user_state;
             }
 
             public void setUser_state(String user_state) {
                 this.user_state = user_state;
+
+            }
+
+
+            public String getUser_city() {
+                return user_city;
+            }
+
+            public void setUser_city(String user_city) {
+                this.user_city = user_city;
 
             }
 
@@ -594,7 +595,6 @@ public class VendorOrderDetailsResponse {
 
             }
 
-
             public String getUser_alter_mobile() {
                 return user_alter_mobile;
             }
@@ -603,7 +603,6 @@ public class VendorOrderDetailsResponse {
                 this.user_alter_mobile = user_alter_mobile;
 
             }
-
 
             public String getUser_address_stauts() {
                 return user_address_stauts;
@@ -633,6 +632,8 @@ public class VendorOrderDetailsResponse {
                 this.user_display_date = user_display_date;
 
             }
+
+
 
 
         }

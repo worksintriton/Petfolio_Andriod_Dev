@@ -177,22 +177,24 @@ public class PetVendorTrackOrderActivity extends AppCompatActivity implements Vi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_vendor_track_order_status);
         ButterKnife.bind(this);
-
         img_back.setOnClickListener(this);
+
+        txt_booked_date.setText(" ");
+        txt_order_confirm_date.setText("");
+        txt_order_dispatch_packdetails.setText("");
+        txt_order_reject_date_reason.setText("");
+        txt_order_dispatch_date.setText(" ");
+        txt_order_transit_date.setText(" ");
+
 
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-
             _id = extras.getString("_id");
             Log.w(TAG,"_id : "+_id);
-
-
         }
-
         if (new ConnectionDetector(PetVendorTrackOrderActivity.this).isNetworkAvailable(PetVendorTrackOrderActivity.this)) {
             vendorOrderDetailsResponseCall();
-
         }
 
 
@@ -278,8 +280,7 @@ public class PetVendorTrackOrderActivity extends AppCompatActivity implements Vi
                             if(response.body().getData().getProdcut_track_details() != null && response.body().getData().getProdcut_track_details().size()>0){
                                 prodcutTrackDetailsBeanList = response.body().getData().getProdcut_track_details();
 
-                                txt_booked_date.setText(" ");
-                                txt_order_confirm_date.setText("");
+
                                 for(int i=0; i<prodcutTrackDetailsBeanList.size();i++){
                                     if(prodcutTrackDetailsBeanList.get(i).getTitle()!= null && !prodcutTrackDetailsBeanList.get(i).getTitle().isEmpty()){
                                         Log.w(TAG, " Title " + i+" " + prodcutTrackDetailsBeanList.get(i).getTitle());
@@ -305,7 +306,6 @@ public class PetVendorTrackOrderActivity extends AppCompatActivity implements Vi
                                                     img_vendor_confirmed.setImageResource(R.drawable.completed);
 
                                                 } else {
-                                                    //txt_booked_date.setText(" ");
                                                     txt_order_confirm_date.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.coolGrey));
                                                     img_vendor_confirmed.setImageResource(R.drawable.button_grey_circle);
 
@@ -337,6 +337,7 @@ public class PetVendorTrackOrderActivity extends AppCompatActivity implements Vi
                                                 if (prodcutTrackDetailsBeanList.get(i).isStatus()) {
                                                     ll_order_reject_bypetlover.setVisibility(View.VISIBLE);
                                                     txt_order_reject_date_petlover.setText(" " + prodcutTrackDetailsBeanList.get(i).getDate());
+                                                    txt_order_reject_date_reason.setText(response.body().getData().getUser_cancell_info());
                                                    // txt_order_reject_date_petlover.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
                                                     img_vendor_order_rejected_bypetlover.setImageResource(R.drawable.ic_baseline_check_circle_24);
 
@@ -395,13 +396,9 @@ public class PetVendorTrackOrderActivity extends AppCompatActivity implements Vi
 
     @SuppressLint({"LongLogTag", "LogNotTimber"})
     private VendorOrderDetailsRequest vendorOrderDetailsRequest() {
-
         VendorOrderDetailsRequest vendorOrderDetailsRequest = new VendorOrderDetailsRequest();
-
         vendorOrderDetailsRequest.set_id(_id);
-
         Log.w(TAG,"vendorOrderDetailsRequest"+ "--->" + new Gson().toJson(vendorOrderDetailsRequest));
-
         return vendorOrderDetailsRequest;
     }
 

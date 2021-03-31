@@ -390,18 +390,16 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
             dialog.setCancelable(true);
             EditText edt_addtrackid = dialog.findViewById(R.id.edt_addtrackid);
             Button btn_addtrackid = dialog.findViewById(R.id.btn_addtrackid);
-
-            edt_addtrackid.setHint("Plz Enter Reason");
+            edt_addtrackid.setHint("Please enter the reason...");
 
             btn_addtrackid.setOnClickListener(view -> {
-                if(edt_addtrackid.getText().toString() != null){
+                if(edt_addtrackid.getText().toString() != null &&  !edt_addtrackid.getText().toString().isEmpty()){
                     dialog.dismiss();
                     if (new ConnectionDetector(VendorUpdateOrderStatusActivity.this).isNetworkAvailable(VendorUpdateOrderStatusActivity.this)) {
-
                         vendorCancelsOrder(5, edt_addtrackid.getText().toString());
                     }
                 }else{
-                    showErrorLoading("Please Enter the Reason");
+                    showErrorLoading("Please enter the reason");
                 }
 
 
@@ -424,6 +422,7 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
             dialog.setCancelable(true);
             EditText edt_addtrackid = dialog.findViewById(R.id.edt_addtrackid);
             Button btn_addtrackid = dialog.findViewById(R.id.btn_addtrackid);
+            edt_addtrackid.setHint("Please enter the package details...");
 
             btn_addtrackid.setOnClickListener(view -> {
                 if(edt_addtrackid.getText().toString() != null){
@@ -433,7 +432,7 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
                         vendorDispatches(2, edt_addtrackid.getText().toString());
                     }
                 }else{
-                    showErrorLoading("Please Enter the Package Details");
+                    showErrorLoading("Please enter the package details");
                 }
 
 
@@ -650,10 +649,11 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        finish();
-                        startActivity(getIntent());
+                       /* finish();
+                        spr_ordertype.setVisibility(View.GONE);
+                        startActivity(getIntent());*/
 
-                        //startActivity(new Intent(VendorUpdateOrderStatusActivity.this, VendorDashboardActivity.class));
+                        startActivity(new Intent(VendorUpdateOrderStatusActivity.this, VendorDashboardActivity.class));
 
                     }
                     else{
@@ -798,8 +798,9 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
         }
 
         if (product_pr != 0) {
-
             txt_products_price.setText(" \u20B9 " + product_pr);
+        }else{
+            txt_products_price.setText(" \u20B9 " + 0);
         }
 
         if (date_of_booking != null && !date_of_booking.isEmpty()) {
@@ -818,10 +819,11 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
         if (order_total != 0) {
             txt_total_order_cost.setText(" \u20B9 "+order_total);
+        }else{
+            txt_total_order_cost.setText(" \u20B9 "+0);
         }
 
         if (quantity != 0) {
-
             txt_quantity.setText(""+quantity);
         }
 
@@ -831,7 +833,16 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
             if(prodcutTrackDetailsBeanList.get(i).getTitle()!=null&&!(prodcutTrackDetailsBeanList.get(i).getTitle().isEmpty())){
 
+               /* if(prodcutTrackDetailsBeanList.get(i).getTitle().equals("Order Dispatch")) {
+                    if (prodcutTrackDetailsBeanList.get(i).isStatus()) {
+                        spr_ordertype.setVisibility(View.GONE);
+                    }
+                }else{
+                    spr_ordertype.setVisibility(View.VISIBLE);
+                }*/
+
                 if(prodcutTrackDetailsBeanList.get(i).getTitle().equals("Order Booked")){
+
 
                     if(prodcutTrackDetailsBeanList.get(i).isStatus()){
 
@@ -867,6 +878,7 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
                 else if(prodcutTrackDetailsBeanList.get(i).getTitle().equals("Order Accept")) {
 
                     if (prodcutTrackDetailsBeanList.get(i).isStatus()) {
+
                         isOrderAccept = true;
 
                         txt_order_confirm_date.setText(" " + prodcutTrackDetailsBeanList.get(i).getDate());
@@ -876,6 +888,7 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
                         view_book_to_confirm.setBackground(ContextCompat.getDrawable(VendorUpdateOrderStatusActivity.this, R.drawable.vertical_lines_green));
 
                         img_vendor_confirmed.setImageResource(R.drawable.completed);
+
 
                         ArrayList<String> orderTypeArrayList = new ArrayList<>();
                         orderTypeArrayList.add("Select Order Status");
@@ -892,6 +905,7 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
                         img_vendor_confirmed.setImageResource(R.drawable.button_grey_circle);
                         txt_edit_order_confirm.setVisibility(View.GONE);
 
+
                         ArrayList<String> orderTypeArrayList = new ArrayList<>();
                         orderTypeArrayList.add("Select Order Status");
                         orderTypeArrayList.add("Order Confirmation");
@@ -907,7 +921,6 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
                 }
 
                 else if(prodcutTrackDetailsBeanList.get(i).getTitle().equals("Order Dispatch")) {
-
                     if (prodcutTrackDetailsBeanList.get(i).isStatus()) {
 
                         txt_order_dispatch_date.setText(" " + prodcutTrackDetailsBeanList.get(i).getDate());
@@ -991,7 +1004,6 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
 
                     } else {
-
                         ll_order_reject_bypetlover.setVisibility(View.GONE);
 
                         //txt_order_reject_date_petlover.setText(" " + prodcutTrackDetailsBeanList.get(0).getDate());
@@ -1052,9 +1064,9 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
-
         switch (v.getId()){
 
             case R.id.btn_submit:
@@ -1070,6 +1082,8 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(),VendorDashboardActivity.class));
+        finish();
     }
 
 

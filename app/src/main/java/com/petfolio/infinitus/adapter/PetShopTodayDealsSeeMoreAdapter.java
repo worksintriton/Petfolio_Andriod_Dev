@@ -33,15 +33,9 @@ public class PetShopTodayDealsSeeMoreAdapter extends  RecyclerView.Adapter<Recyc
 
     TodayDealMoreResponse.DataBean currentItem;
 
-
-
-
     public PetShopTodayDealsSeeMoreAdapter(Context context, List<TodayDealMoreResponse.DataBean> data) {
-        this.data = data;
         this.context = context;
-
-
-
+        this.data = data;
     }
 
     @NonNull
@@ -67,7 +61,9 @@ public class PetShopTodayDealsSeeMoreAdapter extends  RecyclerView.Adapter<Recyc
         }
         if(data.get(position).getProduct_price() != 0){
             holder.txt_products_price.setText("\u20B9 "+data.get(position).getProduct_price());
-            }
+        }else{
+            holder.txt_products_price.setText("\u20B9 "+0);
+        }
 
 
         if(data.get(position).isProduct_fav()){
@@ -95,8 +91,7 @@ public class PetShopTodayDealsSeeMoreAdapter extends  RecyclerView.Adapter<Recyc
         }
 
         if (data.get(position).getProduct_img() != null && !data.get(position).getProduct_img().isEmpty()) {
-
-                Glide.with(context)
+               Glide.with(context)
                         .load(data.get(position).getProduct_img())
                         .into(holder.img_products_image);
 
@@ -108,13 +103,10 @@ public class PetShopTodayDealsSeeMoreAdapter extends  RecyclerView.Adapter<Recyc
 
             }
 
-           holder.ll_root.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View v) {
-                   Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                   intent.putExtra("productid",data.get(position).get_id());
-                   context.startActivity(intent);
-               }
+           holder.ll_root.setOnClickListener(v -> {
+               Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+               intent.putExtra("productid",data.get(position).get_id());
+               context.startActivity(intent);
            });
 
 
@@ -149,8 +141,6 @@ public class PetShopTodayDealsSeeMoreAdapter extends  RecyclerView.Adapter<Recyc
             img_products_image = itemView.findViewById(R.id.img_products_image);
             img_like = itemView.findViewById(R.id.img_like);
             img_dislike = itemView.findViewById(R.id.img_dislike);
-
-
 
         }
 

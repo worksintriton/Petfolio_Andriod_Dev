@@ -301,7 +301,7 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
         try {
             dialog = new Dialog(ManageProductsActivity.this);
             dialog.setContentView(R.layout.add_todays_deal_popup);
-            dialog.setCanceledOnTouchOutside(false);
+            dialog.setCanceledOnTouchOutside(true);
             EditText edt_discount_per_unit = dialog.findViewById(R.id.edt_discount_per_unit);
             EditText edt_deal_price = dialog.findViewById(R.id.edt_deal_price);
             txt_deal_start_date = dialog.findViewById(R.id.txt_deal_start_date);
@@ -314,19 +314,23 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
 
 
             edt_discount_per_unit.addTextChangedListener(new TextWatcher() {
+                @SuppressLint("LogNotTimber")
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    Log.w(TAG,"beforeTextChanged : "+s.toString());
 
                 }
 
                 @SuppressLint("LogNotTimber")
                 @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    Log.w(TAG,"onTextChanged : "+s.toString());
+                }
+
+                @SuppressLint("LogNotTimber")
+                @Override
                 public void afterTextChanged(Editable s) {
+                    Log.w(TAG,"afterTextChanged : "+s.toString());
 
                     if(s.toString() != null && !s.toString().isEmpty()){
                         if(edt_deal_price.getText().toString() != null && !edt_deal_price.getText().toString().isEmpty()){
@@ -341,10 +345,10 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
                                 ll_content.setVisibility(View.VISIBLE);
                                 cal_discount_single_ResponseCall();
                             }
-                        }else{
-                            ll_content.setVisibility(View.GONE);
-
                         }
+
+                    }else{
+                        ll_content.setVisibility(View.GONE);
 
                     }
 

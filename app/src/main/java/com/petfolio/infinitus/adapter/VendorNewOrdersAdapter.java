@@ -78,7 +78,21 @@ public class VendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.V
 
         }
         if(newOrderResponseList.get(position).getProduct_price() != 0 && newOrderResponseList.get(position).getProduct_quantity() != 0) {
-            holder.txt_service_cost.setText("\u20B9 " + newOrderResponseList.get(position).getProduct_price() + " (" + newOrderResponseList.get(position).getProduct_quantity() + " items )");
+            if(newOrderResponseList.get(position).getProduct_quantity() == 1){
+                holder.txt_service_cost.setText("\u20B9 " + newOrderResponseList.get(position).getProduct_price() + " (" + newOrderResponseList.get(position).getProduct_quantity() + " item )");
+            }else{
+                holder.txt_service_cost.setText("\u20B9 " + newOrderResponseList.get(position).getProduct_price() + " (" + newOrderResponseList.get(position).getProduct_quantity() + " items )");
+
+            }
+        }
+        else{
+            if(newOrderResponseList.get(position).getProduct_quantity() == 1){
+                holder.txt_service_cost.setText("\u20B9 " + 0 + " (" + newOrderResponseList.get(position).getProduct_quantity() + " item )");
+            }else{
+                holder.txt_service_cost.setText("\u20B9 " + 0 + " (" + newOrderResponseList.get(position).getProduct_quantity() + " items )");
+
+            }
+
         }
 
         if(newOrderResponseList.get(position).getDate_of_booking() != null&&!(newOrderResponseList.get(position).getDate_of_booking().isEmpty())){

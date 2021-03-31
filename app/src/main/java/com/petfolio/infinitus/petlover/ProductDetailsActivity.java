@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -126,6 +127,19 @@ public class ProductDetailsActivity extends AppCompatActivity {
     @BindView(R.id.ll_discount)
     LinearLayout ll_discount;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.footerView)
+    LinearLayout footerView;
+
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_product_title)
+    LinearLayout ll_product_title;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.scrollablContent)
+    ScrollView scrollablContent;
+
 
     int currentPage = 0;
     Timer timer;
@@ -148,6 +162,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
         Log.w(TAG,"onCreate -->");
         ButterKnife.bind(this);
         avi_indicator.setVisibility(View.GONE);
+        ll_product_title.setVisibility(View.GONE);
+        scrollablContent.setVisibility(View.GONE);
+        footerView.setVisibility(View.GONE);
 
         img_back.setOnClickListener(v -> onBackPressed());
         SessionManager sessionManager = new SessionManager(getApplicationContext());
@@ -159,13 +176,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
             cat_id = extras.getString("cat_id");
             fromactivity = extras.getString("fromactivity");
         }
-
         if(userid != null && productid != null){
             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
                 fetch_product_by_id_ResponseCall();
             }
         }
-
         img_remove_product.setOnClickListener(v -> {
             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
                 if(product_cart_counts != 0) {
@@ -174,7 +189,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
 
         });
-
         img_add_product.setOnClickListener(v -> {
             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
 
@@ -194,7 +208,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
 
         });
-
         btn_add_to_cart.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(),PetCartActivity.class);
             intent.putExtra("productid",productid);
@@ -246,8 +259,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 avi_indicator.smoothToHide();
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
+                        ll_product_title.setVisibility(View.VISIBLE);
+                        scrollablContent.setVisibility(View.VISIBLE);
+                        footerView.setVisibility(View.VISIBLE);
                         Log.w(TAG,"FetchProductByIdResponse" + new Gson().toJson(response.body()));
-
                         if(response.body().getProduct_details() != null){
                             String product_title = response.body().getProduct_details().getProduct_title();
                             int product_review = response.body().getProduct_details().getProduct_review();
@@ -271,8 +286,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
 
                         }
-
-
                     }
                 }
             }
@@ -337,6 +350,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
         if(product_price != 0 ){
             txt_products_price.setText("\u20B9 "+product_price);
 
+        }else{
+            txt_products_price.setText("\u20B9 "+0);
         }
         if(product_discount != 0 ){
             ll_discount.setVisibility(View.VISIBLE);

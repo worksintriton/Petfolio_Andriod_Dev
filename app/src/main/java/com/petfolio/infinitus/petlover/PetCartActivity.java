@@ -116,6 +116,10 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
     @BindView(R.id.scrollablContent)
     ScrollView scrollablContent;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.footerView)
+    LinearLayout footerView;
+
     String tag;
     String fromactivity;
 
@@ -142,6 +146,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
 
         scrollablContent.setVisibility(View.GONE);
         btn_procced_to_buy.setVisibility(View.GONE);
+        footerView.setVisibility(View.GONE);
 
         SessionManager sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getProfileDetails();
@@ -233,6 +238,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
                         Log.w(TAG,"CartDetailsResponse" + new Gson().toJson(response.body()));
+                        footerView.setVisibility(View.VISIBLE);
 
                         if(response.body().getData() != null && response.body().getData().size()>0){
                             scrollablContent.setVisibility(View.VISIBLE);

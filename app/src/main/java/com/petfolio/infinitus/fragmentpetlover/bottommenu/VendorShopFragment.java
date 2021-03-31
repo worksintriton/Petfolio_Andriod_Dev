@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -111,6 +112,10 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
     @BindView(R.id.rl_search)
     RelativeLayout rl_search;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.scrollablContent)
+    ScrollView scrollablContent;
+
     private Context mContext;
     private Dialog alertDialog;
     private List<ShopDashboardResponse.DataBean.BannerDetailsBean> listHomeBannerResponse;
@@ -138,6 +143,7 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
         ButterKnife.bind(this, view);
         mContext = getActivity();
         avi_indicator.setVisibility(View.GONE);
+        scrollablContent.setVisibility(View.GONE);
 
         SessionManager sessionManager = new SessionManager(mContext);
         HashMap<String, String> user = sessionManager.getProfileDetails();
@@ -148,22 +154,13 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
              shopDashboardResponseCall();
         }
 
-        txt_seemore_todaydeals.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent =new Intent(mContext, PetShopTodayDealsSeeMoreActivity.class);
-                intent.putExtra("from","");
-                startActivity(intent);
-            }
+        txt_seemore_todaydeals.setOnClickListener(v -> {
+            Intent intent =new Intent(mContext, PetShopTodayDealsSeeMoreActivity.class);
+            intent.putExtra("from","");
+            startActivity(intent);
         });
 
-        rl_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(mContext, SearchActivity.class));
-
-            }
-        });
+        rl_search.setOnClickListener(v -> startActivity(new Intent(mContext, SearchActivity.class)));
 
 
         return view;
@@ -226,6 +223,7 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
 
 
 
+    @SuppressLint("LogNotTimber")
     public void shopDashboardResponseCall(){
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -236,13 +234,13 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<ShopDashboardResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<ShopDashboardResponse> call, @NonNull Response<ShopDashboardResponse> response) {
                 avi_indicator.smoothToHide();
-
-
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
+                        scrollablContent.setVisibility(View.VISIBLE);
                         Log.w(TAG,"ShopDashboardResponse" + new Gson().toJson(response.body()));
 
                         if(response.body().getData().getBanner_details() != null && response.body().getData().getBanner_details().size()>0) {
@@ -269,7 +267,6 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
                         }
                         if(response.body().getData().getProduct_details() != null && response.body().getData().getProduct_details().size()>0){
                             for(int i=0;i<response.body().getData().getProduct_details().size();i++){
-
                                 productList = response.body().getData().getProduct_details().get(i).getProduct_list();
                                 if(response.body().getData().getProduct_details().get(i).getProduct_list() != null && response.body().getData().getProduct_details().get(i).getProduct_list().size()>0){
                                     rv_productdetails.setVisibility(View.VISIBLE);

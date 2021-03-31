@@ -22,21 +22,19 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.VendorCancelledOrdersAdapter;
-import com.petfolio.infinitus.adapter.VendorCompletedOrdersAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.interfaces.OnAcceptsReturnOrder;
 import com.petfolio.infinitus.requestpojo.VendorAcceptReturnOrderRequest;
 import com.petfolio.infinitus.requestpojo.VendorGetsOrderIdRequest;
 import com.petfolio.infinitus.requestpojo.VendorNewOrderRequest;
-import com.petfolio.infinitus.requestpojo.VendorOrderRequest;
 import com.petfolio.infinitus.responsepojo.VendorAcceptsReturnOrderResponse;
 import com.petfolio.infinitus.responsepojo.VendorGetsOrderIDResponse;
 import com.petfolio.infinitus.responsepojo.VendorNewOrderResponse;
-import com.petfolio.infinitus.responsepojo.VendorOrderResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -92,6 +90,10 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
     private List<VendorNewOrderResponse.DataBean> newOrderResponseList;
 
 
+    private ShimmerFrameLayout mShimmerViewContainer;
+    private View includelayout;
+
+
     public FragmentVendorCancelledOrders() {
 
     }
@@ -102,10 +104,13 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
         Log.w(TAG,"onCreateView");
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        View view = inflater.inflate(R.layout.fragment_vendor_missed_orders, container, false);
+        View view = inflater.inflate(R.layout.fragment_vendor_cancelled_orders, container, false);
 
         ButterKnife.bind(this, view);
         mContext = getActivity();
+
+        includelayout = view.findViewById(R.id.includelayout);
+        mShimmerViewContainer = includelayout.findViewById(R.id.shimmer_layout);
 
         avi_indicator.setVisibility(View.GONE);
         btn_load_more.setVisibility(View.GONE);
@@ -154,8 +159,10 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
 
     @SuppressLint("LongLogTag")
     private void getVendorOrderIDResponseCall(String userid) {
-        avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();
+       /* avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();*/
+        mShimmerViewContainer.startShimmerAnimation();
+
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
         Call<VendorGetsOrderIDResponse> call = apiInterface.vendor_gets_orderbyId_ResponseCall(RestUtils.getContentType(), vendorGetsOrderIdRequest(userid));
         Log.w(TAG,"getVendorOrderIDResponseCall url  :%s"+" "+ call.request().url().toString());
@@ -167,7 +174,7 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
 
                 Log.w(TAG,"getVendorOrderIDResponseCall"+ "--->" + new Gson().toJson(response.body()));
 
-                avi_indicator.smoothToHide();
+                //avi_indicator.smoothToHide();
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
@@ -197,7 +204,9 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
             @Override
             public void onFailure(@NonNull Call<VendorGetsOrderIDResponse> call, @NonNull Throwable t) {
 
-                avi_indicator.smoothToHide();
+              /*  avi_indicator.smoothToHide();*/
+                mShimmerViewContainer.stopShimmerAnimation();
+                includelayout.setVisibility(View.GONE);
                 Log.w(TAG,"getVendorOrderIDResponseCall flr"+"--->" + t.getMessage());
             }
         });
@@ -240,8 +249,8 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
 
 
     private void vendorNewOrderResponseCall(String id) {
-        avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();
+        /*avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();*/
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
         Call<VendorNewOrderResponse> call = ApiService.get_order_details_vendordid_ResponseCall(RestUtils.getContentType(),vendorNewOrderRequest(id));
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
@@ -249,7 +258,9 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
         call.enqueue(new Callback<VendorNewOrderResponse>() {
             @Override
             public void onResponse(@NonNull Call<VendorNewOrderResponse> call, @NonNull Response<VendorNewOrderResponse> response) {
-                avi_indicator.smoothToHide();
+                mShimmerViewContainer.stopShimmerAnimation();
+                includelayout.setVisibility(View.GONE);
+                //avi_indicator.smoothToHide();
                 Log.w(TAG,"VendorMissedOrderResponse"+ "--->" + new Gson().toJson(response.body()));
 
 
@@ -285,8 +296,10 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
 
             @Override
             public void onFailure(@NonNull Call<VendorNewOrderResponse> call, @NonNull Throwable t) {
-                avi_indicator.smoothToHide();
+             /*   avi_indicator.smoothToHide();*/
 
+                mShimmerViewContainer.stopShimmerAnimation();
+                includelayout.setVisibility(View.GONE);
                 Log.w(TAG,"VendorMissedOrderResponse flr"+"--->" + t.getMessage());
             }
         });
