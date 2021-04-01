@@ -291,7 +291,7 @@
     <string name="contact">Contact</string>
     <string name="phn_nu">9876543210</string>
     <string name="filters">Filters</string>
-    <string name="clear_all">Clear All</string>
+    <string name="clear_all">Clear all</string>
     <string name="apply">Apply</string>
 
     <string name="review">Review</string>
@@ -360,7 +360,7 @@
     <string name="proceedtobuy">Proceed to Buy</string>
     <string name="coupon_applied">coupon applied</string>
     <string name="coupon">Coupon </string>
-    <string name="percentage_discount">20 % discount </string>
+    <string name="percentage_discount">0 % discount </string>
     <string name="product_quantity">Product Quantity :</string>
     <string name="related_products">Related Products</string>
     <string name="business_info">Business Info</string>
@@ -375,6 +375,8 @@
     <string name="view_prescription">View Prescription</string>
     <string name="consultation_fees">Consultation Fee</string>
     <string name="notification">Notification</string>
+
+    <string name="Discount">Discount</string>
 
 
     <string name="orderid">Order ID</string>
@@ -445,6 +447,12 @@
     <string name="best_sellers">Best sellers</string>
     <string name="price_low_to_high">Price - Low to High</string>
     <string name="price_high_to_low">Price - High to Low</string>
+
+
+    <string name="discount30">30% or more </string>
+    <string name="discount20">20% or more </string>
+    <string name="discount10">10% or more </string>
+    <string name="discount10below">10% and below </string>
 
 
 </resources>

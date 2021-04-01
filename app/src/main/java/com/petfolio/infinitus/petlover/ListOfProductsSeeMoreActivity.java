@@ -2,6 +2,7 @@ package com.petfolio.infinitus.petlover;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ import com.petfolio.infinitus.adapter.ProductsSearchAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.requestpojo.FetctProductByCatRequest;
+import com.petfolio.infinitus.requestpojo.ProductFiltersRequest;
 import com.petfolio.infinitus.requestpojo.ProductSearchRequest;
 import com.petfolio.infinitus.requestpojo.ProductSortByRequest;
 import com.petfolio.infinitus.responsepojo.FetctProductByCatResponse;
@@ -93,6 +95,10 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
     RelativeLayout rl_filters;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.edt_filter)
+    EditText edt_filter;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_search)
     EditText edt_search;
 
@@ -119,6 +125,11 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
     private int low_to_high = 0;
     private String searchString = "";
 
+    private String discount_value;
+    private String petTypeId = "";
+    private String petBreedTypeId = "";
+    private String fromactivity;
+
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -136,6 +147,16 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             cat_id = extras.getString("cat_id");
+
+            discount_value = extras.getString("discount_value");
+            petTypeId = extras.getString("petTypeId");
+            petBreedTypeId = extras.getString("petBreedTypeId");
+            fromactivity = extras.getString("fromactivity");
+            if (fromactivity != null && fromactivity.equalsIgnoreCase("ProductFiltersActivity")) {
+                if (petTypeId != null) {
+                    productFiltersResponseCall();
+                }
+            }
         }
 
 
@@ -159,6 +180,7 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
         initResultRecylerView();
 
         rl_filters.setOnClickListener(this);
+        edt_filter.setOnClickListener(this);
         rl_sort.setOnClickListener(this);
         edt_sort.setOnClickListener(this);
 
@@ -349,7 +371,12 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
                 showSortByAlert();
                 break;
 
-                case R.id.rl_filters:
+            case R.id.rl_filters:
+                gotoFilters();
+                break;
+
+            case R.id.edt_filter:
+                gotoFilters();
                 break;
 
                 case R.id.rb_recent_products:
@@ -583,5 +610,81 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
         Log.w(TAG,"productSearchRequest"+ new Gson().toJson(productSearchRequest));
         return productSearchRequest;
     }
+
+    private void gotoFilters() {
+        Intent intent = new Intent(getApplicationContext(),ProductFiltersActivity.class);
+        intent.putExtra("fromactivity",TAG);
+        intent.putExtra("cat_id",cat_id);
+        startActivity(intent);
+    }
+
+        @SuppressLint("LogNotTimber")
+        private void productFiltersResponseCall() {
+            avi_indicator.setVisibility(View.VISIBLE);
+            avi_indicator.smoothToShow();
+            RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+            Call<ProductSearchResponse> call = apiInterface.productFiltersResponseCall(RestUtils.getContentType(), productFiltersRequest());
+            Log.w(TAG,"productFiltersResponseCall url  :%s"+" "+ call.request().url().toString());
+
+            call.enqueue(new Callback<ProductSearchResponse>() {
+                @SuppressLint({"LogNotTimber", "SetTextI18n"})
+                @Override
+                public void onResponse(@NonNull Call<ProductSearchResponse> call, @NonNull Response<ProductSearchResponse> response) {
+                    avi_indicator.smoothToHide();
+                    Log.w(TAG,"productFiltersResponseCall" + new Gson().toJson(response.body()));
+                    if (response.body() != null) {
+                        if (200 == response.body().getCode()) {
+
+
+                            if (response.body().getData() != null) {
+                                if (response.body().getData() != null && response.body().getData().size()>0) {
+                                    rv_today_deal.setVisibility(View.VISIBLE);
+                                    txt_no_records.setVisibility(View.GONE);
+                                    setViewProducts(response.body().getData());
+                                } else {
+                                    rv_today_deal.setVisibility(View.GONE);
+                                    txt_no_records.setVisibility(View.VISIBLE);
+                                    txt_no_records.setText("No products available");
+
+                                }
+
+                            }
+
+
+
+                        }
+
+                    }
+
+
+                }
+
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onFailure(@NonNull Call<ProductSearchResponse> call,@NonNull Throwable t) {
+                    avi_indicator.smoothToHide();
+                    Log.e("ProductSearchResponse flr", "--->" + t.getMessage());
+                }
+            });
+
+        }
+        @SuppressLint("LogNotTimber")
+        private ProductFiltersRequest productFiltersRequest() {
+            /*
+             * pet_type : 602d1bf4562e0916bc9b3215
+             * pet_breed :
+             * discount_value :
+             * cat_id :
+             */
+
+            ProductFiltersRequest productFiltersRequest = new ProductFiltersRequest();
+            productFiltersRequest.setPet_type(petTypeId);
+            productFiltersRequest.setPet_breed(petBreedTypeId);
+            productFiltersRequest.setDiscount_value(discount_value);
+            productFiltersRequest.setCat_id("");
+            Log.w(TAG,"productFiltersRequest"+ new Gson().toJson(productFiltersRequest));
+            return productFiltersRequest;
+        }
+
 
 }
