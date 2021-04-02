@@ -622,7 +622,8 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
-        </provider> <!-- Add your API key here -->
+        </provider>
+        <!-- Add your API key here -->
         <meta-data
             android:name="com.razorpay.ApiKey"
             android:value="rzp_test_zioohqmxDjJJtd" />

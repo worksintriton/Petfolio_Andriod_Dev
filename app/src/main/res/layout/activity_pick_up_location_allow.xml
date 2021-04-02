@@ -41,20 +41,18 @@
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/choose_location"
                 android:textColor="@color/new_txt_color"
-                android:textSize="@dimen/big_txt_size" />
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
                 android:gravity="end">
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
                     android:src="@drawable/ic_sos"
                     tools:ignore="ContentDescription" />
 
@@ -62,7 +60,6 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
                     android:src="@drawable/ic_notifications"
                     tools:ignore="ContentDescription" />
 
@@ -71,7 +68,6 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
                     android:src="@drawable/ic_bag"
                     tools:ignore="ContentDescription" />
 
@@ -79,9 +75,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
                     android:src="@drawable/ic_user"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
@@ -110,7 +104,8 @@
                 android:id="@+id/map"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:ignore="FragmentTagUsage" />
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -126,7 +121,7 @@
                     android:layout_height="match_parent"
                     android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
 
-                    />
+                    tools:ignore="FragmentTagUsage" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -142,7 +137,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    tools:ignore="UseCompoundDrawables">
 
                     <ImageView
                         android:id="@+id/imageView"

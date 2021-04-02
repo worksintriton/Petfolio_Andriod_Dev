@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -251,6 +252,10 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
     @BindView(R.id.ll_transit)
     LinearLayout ll_transit;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.scrollablContent)
+    ScrollView scrollablContent;
+
     String product_title, product_image, order_date, order_id, payment_mode,updated_order_status,order_id_display,order_status;
 
     int order_total, quantity;
@@ -274,6 +279,9 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
         ButterKnife.bind(this);
 
         Bundle extras = getIntent().getExtras();
+
+        scrollablContent.setVisibility(View.GONE);
+        btn_submit.setVisibility(View.GONE);
 
         if (extras != null) {
 
@@ -486,6 +494,7 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
+                        scrollablContent.setVisibility(View.VISIBLE);
 
                         if(response.body().getData()!=null){
 

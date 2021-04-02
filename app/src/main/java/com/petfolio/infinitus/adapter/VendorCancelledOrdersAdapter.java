@@ -172,7 +172,7 @@ public class VendorCancelledOrdersAdapter extends  RecyclerView.Adapter<Recycler
         }
 
         else if(!(newOrderResponseList.get(position).getUser_return_info().equals(""))&&newOrderResponseList.get(position).getVendor_accept_cancel().equals("")){
-            holder.ll_btn.setVisibility(View.VISIBLE);
+            holder.ll_btn.setVisibility(View.GONE);
         }
         else if(!(newOrderResponseList.get(position).getUser_return_info().equals(""))&&!(newOrderResponseList.get(position).getVendor_accept_cancel().equals(""))){
             holder.txt_return_accept.setVisibility(View.VISIBLE);

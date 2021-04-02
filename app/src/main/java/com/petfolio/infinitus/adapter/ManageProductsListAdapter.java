@@ -181,6 +181,8 @@ public class ManageProductsListAdapter extends  RecyclerView.Adapter<RecyclerVie
             txt_deal_status.setVisibility(View.GONE);
             checkBox = itemView.findViewById(R.id.checkBox);
 
+            img_prodsettings.setVisibility(View.GONE);
+
             if(showCheckbox){
                 checkBox.setVisibility(View.VISIBLE);
             } else {

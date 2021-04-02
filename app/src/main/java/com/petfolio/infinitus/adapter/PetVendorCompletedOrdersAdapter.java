@@ -164,6 +164,7 @@ public class PetVendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recyc
             txt_order_details = itemView.findViewById(R.id.txt_order_details);
             txt_track_order = itemView.findViewById(R.id.txt_track_order);
             txt_return_order = itemView.findViewById(R.id.txt_return_order);
+            txt_return_order.setVisibility(View.INVISIBLE);
 
 
 

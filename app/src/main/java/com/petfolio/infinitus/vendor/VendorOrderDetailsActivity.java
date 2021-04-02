@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -101,9 +102,6 @@ public class VendorOrderDetailsActivity extends AppCompatActivity implements Vie
     @BindView(R.id.txt_shipping_address_landmark)
     TextView txt_shipping_address_landmark;
 
-
-
-
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_order_status)
     ImageView img_order_status;
@@ -111,6 +109,12 @@ public class VendorOrderDetailsActivity extends AppCompatActivity implements Vie
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.scrollablContent)
+    ScrollView scrollablContent;
+
+
 
     private String _id;
 
@@ -122,6 +126,9 @@ public class VendorOrderDetailsActivity extends AppCompatActivity implements Vie
         setContentView(R.layout.activity_vendor_order_details);
 
         ButterKnife.bind(this);
+
+        scrollablContent.setVisibility(View.GONE);
+
         img_back.setOnClickListener(this);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -187,6 +194,7 @@ public class VendorOrderDetailsActivity extends AppCompatActivity implements Vie
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
+                        scrollablContent.setVisibility(View.VISIBLE);
 
                         if(response.body().getData()!=null){
 

@@ -122,7 +122,6 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
         if (extras != null) {
             fromactivity = extras.getString("fromactivity");
             placesearchactivity = extras.getString("placesearchactivity");
-
             Log.w(TAG,"fromactivity if : "+fromactivity+" placesearchactivity : "+placesearchactivity);
 
         }else{

@@ -4,9 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -86,6 +88,43 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
     @BindView(R.id.rb_discount10below)
     RadioButton rb_discount10below;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_pettype)
+    LinearLayout ll_pettype;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_petbreedtype)
+    LinearLayout ll_petbreedtype;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_discount)
+    LinearLayout ll_discount;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_category)
+    LinearLayout ll_category;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_pettype)
+    ImageView img_pettype;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_petbreedtype)
+    ImageView img_petbreedtype;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_discount)
+    ImageView img_discount;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_category)
+    ImageView img_category;
+
+
+
+
+
+
     private String strPetType = "";
     private String strPetBreedType = "";
 
@@ -97,9 +136,10 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
     private String petBreedTypeId = "";
     private String fromactivity;
     private String cat_id;
+    private boolean flag;
 
 
-    @SuppressLint("LogNotTimber")
+    @SuppressLint({"LogNotTimber", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,6 +155,12 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
         rb_discount10.setOnClickListener(this);
         rb_discount10below.setOnClickListener(this);
 
+
+        rg_pettype.setVisibility(View.GONE);
+        rg_petbreedtype.setVisibility(View.GONE);
+        rg_discount.setVisibility(View.GONE);
+
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             fromactivity = extras.getString("fromactivity");
@@ -129,7 +175,6 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
             petTypeListResponseCall();
 
         }
-
         rg_pettype.setOnCheckedChangeListener((group, checkedId) -> {
             if(rg_pettype != null) {
                 int radioButtonID = rg_pettype.getCheckedRadioButtonId();
@@ -166,11 +211,63 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
 
         });
 
+        ll_pettype.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.w(TAG,"flag : "+flag);
+
+                if (!flag) {
+                    rg_pettype.setVisibility(View.VISIBLE);
+                    img_pettype.setImageResource(R.drawable.ic_down);
+                    flag=true;
+                }
+                else {
+                    rg_pettype.setVisibility(View.GONE);
+                    img_pettype.setImageResource(R.drawable.ic_up);
+                    flag=false;
+                }
+            }
+        });
+        ll_petbreedtype.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.w(TAG,"flag : "+flag);
+
+                if (!flag) {
+                    rg_petbreedtype.setVisibility(View.VISIBLE);
+                    img_petbreedtype.setImageResource(R.drawable.ic_down);
+                    flag=true;
+                }
+                else {
+                    rg_petbreedtype.setVisibility(View.GONE);
+                    img_petbreedtype.setImageResource(R.drawable.ic_up);
+                    flag=false;
+                }
+            }
+        });
+        ll_discount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.w(TAG,"flag : "+flag);
+
+                if (!flag) {
+                    rg_discount.setVisibility(View.VISIBLE);
+                    img_discount.setImageResource(R.drawable.ic_down);
+                    flag=true;
+                }
+                else {
+                    rg_discount.setVisibility(View.GONE);
+                    img_discount.setImageResource(R.drawable.ic_up);
+                    flag=false;
+                }
+            }
+        });
+
+
 
     }
     @SuppressLint("LogNotTimber")
     public void petTypeListResponseCall(){
-
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         //Creating an object of our api interface
@@ -195,7 +292,6 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
 
                         Log.w(TAG,"petTypeList : "+new Gson().toJson(petTypeList));
                         if(petTypeList != null && petTypeList.size()>0){
-                            rg_pettype.setVisibility(View.VISIBLE);
                             txt_no_records.setVisibility(View.GONE);
                             setPetTypeList(petTypeList);
                         }else{
@@ -314,7 +410,10 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
                     rb_discount10below.setBackgroundResource(R.drawable.checked);
                 break;
 
-        }
+
+
+
+         }
 
     }
 
