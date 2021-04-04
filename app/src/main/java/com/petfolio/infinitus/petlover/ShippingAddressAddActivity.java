@@ -113,6 +113,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
     private int prodcut_item_count;
 
 
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -172,6 +173,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
 
@@ -437,6 +439,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
     }
 
 
+    @SuppressLint("SetTextI18n")
     private void showNoAddressAlert() {
 
         try{
@@ -480,6 +483,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
     }
 
+    @SuppressLint("SetTextI18n")
     private void showWaring(String shippingid) {
 
         try{
@@ -505,13 +509,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
                 }
             });
-            btn_cancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-
-                }
-            });
+            btn_cancel.setOnClickListener(view -> dialog.dismiss());
 
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 

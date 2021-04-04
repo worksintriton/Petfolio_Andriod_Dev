@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.interfaces.AddReviewListener;
 import com.petfolio.infinitus.petlover.PetReturnOrderActivity;
 import com.petfolio.infinitus.petlover.PetVendorOrderDetailsActivity;
 import com.petfolio.infinitus.petlover.PetVendorTrackOrderActivity;
@@ -35,12 +37,14 @@ public class PetVendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recyc
 
 
     private int size;
+    private AddReviewListener addReviewListener;
 
 
-    public PetVendorCompletedOrdersAdapter(Context context, List<PetVendorOrderResponse.DataBean> newOrderResponseList, int size) {
-        this.newOrderResponseList = newOrderResponseList;
+    public PetVendorCompletedOrdersAdapter(Context context, List<PetVendorOrderResponse.DataBean> newOrderResponseList, int size,AddReviewListener addReviewListener) {
         this.context = context;
+        this.newOrderResponseList = newOrderResponseList;
         this.size = size;
+        this.addReviewListener = addReviewListener;
     }
 
     @NonNull
@@ -133,6 +137,17 @@ public class PetVendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recyc
 
         });
 
+        if(newOrderResponseList.get(position).getUser_rate() != null && newOrderResponseList.get(position).getUser_rate().equalsIgnoreCase("0")){
+            holder.btn_add_review.setVisibility(View.VISIBLE);
+        }else{
+            holder.btn_add_review.setVisibility(View.GONE);
+
+        }
+
+        holder.btn_add_review.setOnClickListener(v -> addReviewListener.addReviewListener(newOrderResponseList.get(position).get_id(),newOrderResponseList.get(position).getUser_rate(),newOrderResponseList.get(position).getUser_feedback(),""));
+
+
+
     }
 
 
@@ -151,6 +166,7 @@ public class PetVendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recyc
     static class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_orderid,txt_producttitle,txt_products_price,txt_bookedon,txt_order_details,txt_track_order,txt_return_order;
         public ImageView img_products_image;
+        public Button btn_add_review;
 
 
 
@@ -165,6 +181,7 @@ public class PetVendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recyc
             txt_track_order = itemView.findViewById(R.id.txt_track_order);
             txt_return_order = itemView.findViewById(R.id.txt_return_order);
             txt_return_order.setVisibility(View.INVISIBLE);
+            btn_add_review = itemView.findViewById(R.id.btn_add_review);
 
 
 

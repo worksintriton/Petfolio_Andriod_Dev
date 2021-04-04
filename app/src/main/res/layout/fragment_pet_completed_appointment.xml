@@ -11,7 +11,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <include android:id="@+id/includelayout"
-                layout="@layout/loading_layout"/>
+                layout="@layout/loading_layout" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -26,8 +26,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_completedappointment"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp" />
+                    android:layout_height="match_parent" />
 
                 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

@@ -2,7 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp">
 
     <TextView
         android:id="@+id/txt_no_records"
@@ -38,7 +40,6 @@
                 android:layout_height="25dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="15dp"
                 android:src="@drawable/back"
                 tools:ignore="ContentDescription" />
 
@@ -46,11 +47,11 @@
                 android:id="@+id/txt_toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="5dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:text="Shipping Address"
                 android:textColor="@color/new_txt_color"
-                android:textSize="16sp" />
+                android:textSize="@dimen/big_txt_size" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -83,7 +84,6 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginEnd="10dp"
                     android:src="@drawable/ic_user"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
@@ -139,13 +139,13 @@
                 android:id="@+id/ll_addresslist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:id="@+id/img_back2"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:src="@drawable/addaddr"
                     tools:ignore="ContentDescription" />
@@ -165,7 +165,6 @@
                 android:id="@+id/ll_address_list_show"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp">
 
                 <RelativeLayout
@@ -174,7 +173,8 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
-                    android:background="@drawable/new_background_black">
+                    android:background="@drawable/new_background_black"
+                    tools:ignore="UselessParent">
 
                     <LinearLayout
                         android:id="@+id/ll_shipdaddr"
@@ -274,18 +274,7 @@
                         </LinearLayout>
 
                         <TextView
-                            android:id="@+id/txt_user_city"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/futuramediumbt"
-                            android:maxLines="1"
-                            android:text="chennai"
-                            android:textSize="14sp"
-                            android:textStyle="normal" />
-
-                        <TextView
+                            android:layout_marginTop="5dp"
                             android:id="@+id/txt_street"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -295,16 +284,26 @@
                             android:text="225/1, Sample ABCD Nagar Main Road"
                             android:textSize="14sp"
                             android:textStyle="normal" />
-
                         <TextView
+                            android:layout_marginTop="5dp"
                             android:id="@+id/txt_dist_pincode_state"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
                             android:ellipsize="end"
                             android:fontFamily="@font/futuramediumbt"
                             android:maxLines="1"
                             android:text="Salem, 636009, TamilNadu"
+                            android:textSize="14sp"
+                            android:textStyle="normal" />
+                        <TextView
+                            android:id="@+id/txt_user_city"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/futuramediumbt"
+                            android:maxLines="1"
+                            android:text="chennai"
                             android:textSize="14sp"
                             android:textStyle="normal" />
 
@@ -398,9 +397,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
             android:orientation="horizontal"
             android:visibility="visible">
@@ -419,7 +416,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
                     android:fontFamily="@font/futuramediumbt"
@@ -432,7 +428,6 @@
                 android:id="@+id/ll_create_addreess"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_marginStart="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/new_rounded_corner_btn"
                 android:fontFamily="@font/futuramediumbt"
@@ -443,9 +438,7 @@
                     android:id="@+id/create"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
                     android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
                     android:fontFamily="@font/futuramediumbt"
@@ -456,42 +449,7 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="20dp"
-            android:orientation="horizontal"
-            android:visibility="gone">
 
-            <Button
-                android:id="@+id/btn_rupee"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/rectangle_corner_white"
-                android:fontFamily="@font/futuramediumbt"
-                android:text="@string/price"
-                android:textAllCaps="false"
-                android:textColor="@color/color"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText" />
-
-            <Button
-                android:id="@+id/btn_continue"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_weight="1"
-                android:background="@drawable/new_rounded_corner_btn"
-                android:fontFamily="@font/futuramediumbt"
-                android:text="Go to final Payment"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
-
-        </LinearLayout>
 
     </LinearLayout>
 

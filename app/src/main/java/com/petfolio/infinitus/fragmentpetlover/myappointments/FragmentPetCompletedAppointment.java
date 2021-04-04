@@ -326,7 +326,6 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
 
 
     }
-
     @SuppressLint({"LogNotTimber", "LongLogTag"})
     private void addReviewResponseCall(String id, String userfeedback, String userrate) {
         avi_indicator.setVisibility(View.VISIBLE);
@@ -368,6 +367,7 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
         });
 
     } @SuppressLint({"LogNotTimber", "LongLogTag"})
+
     private void spaddReviewResponseCall(String id, String userfeedback, String userrate) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -408,8 +408,6 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
         });
 
     }
-
-
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
     private AddReviewRequest addReviewRequest(String id, String userfeedback, String userrate) {

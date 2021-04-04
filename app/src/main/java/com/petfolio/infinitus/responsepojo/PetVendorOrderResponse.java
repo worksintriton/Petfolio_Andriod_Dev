@@ -74,10 +74,10 @@ public class PetVendorOrderResponse {
          * vendor_accept_cancel_data :
          * vendor_complete_date :
          * vendor_complete_info :
-         *  "user_return_info": "return - 1",
-         *             "user_return_date": "17-03-2021 12:22 PM",
-         *             "user_return_pic": "",
-         *             "vendor_accept_cancel_date": ""
+         * user_return_info: "return - 1",
+         * user_return_date: "17-03-2021 12:22 PM",
+         * user_return_pic: "",
+         * vendor_accept_cancel_date: ""
          */
 
         private String _id;
@@ -100,6 +100,24 @@ public class PetVendorOrderResponse {
         private String user_return_date;
         private String user_return_pic;
         private String vendor_accept_cancel_date;
+        private String user_rate;
+        private String user_feedback;
+
+        public String getUser_rate() {
+            return user_rate;
+        }
+
+        public void setUser_rate(String user_rate) {
+            this.user_rate = user_rate;
+        }
+
+        public String getUser_feedback() {
+            return user_feedback;
+        }
+
+        public void setUser_feedback(String user_feedback) {
+            this.user_feedback = user_feedback;
+        }
 
         public String getUser_return_info() {
             return user_return_info;

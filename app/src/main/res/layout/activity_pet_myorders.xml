@@ -4,8 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/whiteTwo"
-    android:orientation="vertical">
+    android:background="@color/bg_white"
+    android:orientation="vertical"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp">
     <LinearLayout
         android:id="@+id/headerView"
         android:layout_width="match_parent"
@@ -29,7 +31,6 @@
                 android:layout_height="25dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="15dp"
                 android:src="@drawable/back"
                 tools:ignore="ContentDescription" />
 
@@ -41,7 +42,7 @@
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/my_orders"
                 android:textColor="@color/new_txt_color"
-                android:textSize="18sp"  />
+                android:textSize="@dimen/big_txt_size"  />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -77,8 +78,7 @@
                     android:layout_height="24dp"
                     android:src="@drawable/ic_user"
                     tools:ignore="ContentDescription"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="10dp" />
+                    android:layout_marginStart="20dp"/>
             </LinearLayout>
 
 
@@ -115,7 +115,6 @@
             android:id="@+id/tablayout"
             style="@style/TabLayout"
             android:layout_width="match_parent"
-            android:layout_margin="@dimen/tab_spacing_half"
             android:layout_height="wrap_content"
             app:tabSelectedTextColor="@color/white"
             app:tabTextColor="@color/new_green_btn"
@@ -152,7 +151,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/vertical_dotted_line"
             android:layerType="software" />
 
@@ -195,7 +194,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="20dp">
 
 
 
@@ -207,9 +207,6 @@
             app:itemIconSize="20dp"
             app:menu="@menu/bottom_navigation"
             android:background="@drawable/new_rounded_corner_btn"
-            android:layout_marginBottom="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             app:itemBackground="@drawable/selected_state"
             app:itemIconTint="@color/selector"
             app:itemTextColor="@color/selector"
