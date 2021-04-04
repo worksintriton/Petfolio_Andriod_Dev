@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.Gson;
@@ -84,6 +85,10 @@ public class FragmentVendorNewOrders extends Fragment implements View.OnClickLis
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_load_more)
     Button btn_load_more;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout refresh_layout;
 
 
     SessionManager session;
@@ -146,17 +151,31 @@ public class FragmentVendorNewOrders extends Fragment implements View.OnClickLis
                 handler.post(() -> {
                     try {
                         //your method here
-                        if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-                            getVendorOrderIDResponseCall(userid);
-
+                        if (APIClient.VENDOR_ID != null && !APIClient.VENDOR_ID.isEmpty()) {
+                            vendorNewOrderResponseCall(APIClient.VENDOR_ID);
                         }
 
-                    } catch (Exception ignored) {
+                    }catch (Exception ignored) {
                     }
                 });
             }
         };
         timer.schedule(doAsynchronousTask, 0, 30000);//you can put 30000(30 secs)
+
+        refresh_layout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
+                            if(APIClient.VENDOR_ID != null && !APIClient.VENDOR_ID.isEmpty()) {
+                                vendorNewOrderResponseCall(APIClient.VENDOR_ID);
+                            }
+
+                        }
+
+                    }
+                }
+        );
 
 
         return view;
@@ -181,17 +200,14 @@ public class FragmentVendorNewOrders extends Fragment implements View.OnClickLis
 
                // avi_indicator.smoothToHide();
 
-
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
 
                         if(response.body().getData()!=null){
 
                             if(response.body().getData().get_id()!=null&&!(response.body().getData().get_id().isEmpty())){
-
-                                vendorNewOrderResponseCall(response.body().getData().get_id());
                                 APIClient.VENDOR_ID = response.body().getData().get_id();
-
+                                vendorNewOrderResponseCall(response.body().getData().get_id());
                             }
 
 
@@ -272,6 +288,7 @@ public class FragmentVendorNewOrders extends Fragment implements View.OnClickLis
 
                 mShimmerViewContainer.stopShimmerAnimation();
                 includelayout.setVisibility(View.GONE);
+                refresh_layout.setRefreshing(false);
                 Log.w(TAG,"VendorNewOrderResponse"+ "--->" + new Gson().toJson(response.body()));
 
 

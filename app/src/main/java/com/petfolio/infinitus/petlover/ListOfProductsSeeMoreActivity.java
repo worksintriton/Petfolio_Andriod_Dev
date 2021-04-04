@@ -11,24 +11,19 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.PetShopCategorySeeMoreAdapter;
@@ -45,12 +40,10 @@ import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -125,9 +118,10 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
     private int low_to_high = 0;
     private String searchString = "";
 
-    private String discount_value;
+    private String discount_value="";
     private String petTypeId = "";
     private String petBreedTypeId = "";
+    private String strCategoryTypeId = "";
     private String fromactivity;
 
 
@@ -152,38 +146,37 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
             petTypeId = extras.getString("petTypeId");
             petBreedTypeId = extras.getString("petBreedTypeId");
             fromactivity = extras.getString("fromactivity");
+            strCategoryTypeId = extras.getString("strCategoryTypeId");
             if (fromactivity != null && fromactivity.equalsIgnoreCase("ProductFiltersActivity")) {
-                if (petTypeId != null) {
+                if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
                     productFiltersResponseCall();
                 }
+            }else{
+                if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                    fetctProductByCatResponseCall();
+                }
             }
+
         }
-
-
-
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
-
         rv_today_deal.setHasFixedSize(true);
         gridLayoutManager = new GridLayoutManager(this, 2);
         rv_today_deal.setLayoutManager(gridLayoutManager);
         rv_today_deal.setItemAnimator(new DefaultItemAnimator());
 
 
-        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-            fetctProductByCatResponseCall();
-        }
+
         initResultRecylerView();
 
         rl_filters.setOnClickListener(this);
         edt_filter.setOnClickListener(this);
         rl_sort.setOnClickListener(this);
         edt_sort.setOnClickListener(this);
-
         edt_search.addTextChangedListener(new TextWatcher() {
             @SuppressLint("LogNotTimber")
             @Override
@@ -219,13 +212,6 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
 
             }
         });
-
-
-
-
-
-
-
 
     }
 
@@ -319,7 +305,6 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
         Log.w(TAG,"fetctProductByCatRequest"+ "--->" + new Gson().toJson(fetctProductByCatRequest));
         return fetctProductByCatRequest;
     }
-
     private void setView(List<FetctProductByCatResponse.DataBean> data) {
          petShopCategorySeeMoreAdapter = new PetShopCategorySeeMoreAdapter(getApplicationContext(), data);
          rv_today_deal.setAdapter(petShopCategorySeeMoreAdapter);
@@ -329,7 +314,6 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
 
 
     }
-
 
     private void initResultRecylerView() {
         rv_today_deal.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -681,7 +665,7 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
             productFiltersRequest.setPet_type(petTypeId);
             productFiltersRequest.setPet_breed(petBreedTypeId);
             productFiltersRequest.setDiscount_value(discount_value);
-            productFiltersRequest.setCat_id("");
+            productFiltersRequest.setCat_id(strCategoryTypeId);
             Log.w(TAG,"productFiltersRequest"+ new Gson().toJson(productFiltersRequest));
             return productFiltersRequest;
         }

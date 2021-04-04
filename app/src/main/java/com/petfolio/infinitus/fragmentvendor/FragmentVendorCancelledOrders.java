@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.Gson;
@@ -80,6 +81,10 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
     @BindView(R.id.btn_filter)
     Button btn_filter;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout refresh_layout;
+
     Dialog alertDialog;
 
 
@@ -98,6 +103,7 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
 
     }
 
+    @SuppressLint("LogNotTimber")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -136,28 +142,40 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
         TimerTask doAsynchronousTask = new TimerTask() {
             @Override
             public void run() {
-                handler.post(new Runnable() {
-                    public void run() {
-                        try {
-                            //your method here
-                            if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-                                getVendorOrderIDResponseCall(userid);
+                handler.post(() -> {
+                    try {
+                        //your method here
+                            if(APIClient.VENDOR_ID != null && !APIClient.VENDOR_ID.isEmpty()) {
+                                vendorNewOrderResponseCall(APIClient.VENDOR_ID);
                             }
 
-                        } catch (Exception e) {
-                        }
+
+                    } catch (Exception ignored) {
                     }
                 });
             }
         };
         timer.schedule(doAsynchronousTask, 0, 30000);//you can put 30000(30 secs)
 
+        refresh_layout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
+                            if (APIClient.VENDOR_ID != null && !APIClient.VENDOR_ID.isEmpty()) {
+                                vendorNewOrderResponseCall(APIClient.VENDOR_ID);
+                            }
+                        }
+                    }
+                }
+        );
+
 
         return view;
     }
 
 
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private void getVendorOrderIDResponseCall(String userid) {
        /* avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();*/
@@ -168,7 +186,7 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
         Log.w(TAG,"getVendorOrderIDResponseCall url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<VendorGetsOrderIDResponse>() {
-            @SuppressLint("LongLogTag")
+            @SuppressLint({"LongLogTag", "LogNotTimber"})
             @Override
             public void onResponse(@NonNull Call<VendorGetsOrderIDResponse> call, @NonNull Response<VendorGetsOrderIDResponse> response) {
 
@@ -182,7 +200,7 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
                         if(response.body().getData()!=null){
 
                             if(response.body().getData().get_id()!=null&&!(response.body().getData().get_id().isEmpty())){
-
+                                APIClient.VENDOR_ID = response.body().getData().get_id();
                                 vendorNewOrderResponseCall(response.body().getData().get_id());
 
                             }
@@ -200,7 +218,7 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
 
             }
 
-            @SuppressLint("LongLogTag")
+            @SuppressLint({"LongLogTag", "LogNotTimber"})
             @Override
             public void onFailure(@NonNull Call<VendorGetsOrderIDResponse> call, @NonNull Throwable t) {
 
@@ -213,6 +231,7 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
 
     }
 
+    @SuppressLint("LogNotTimber")
     private VendorGetsOrderIdRequest vendorGetsOrderIdRequest(String userid) {
 
         VendorGetsOrderIdRequest vendorGetsOrderIdRequest = new VendorGetsOrderIdRequest();
@@ -248,6 +267,7 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
 
 
 
+    @SuppressLint("LogNotTimber")
     private void vendorNewOrderResponseCall(String id) {
         /*avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();*/
@@ -256,10 +276,12 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<VendorNewOrderResponse>() {
+            @SuppressLint({"LogNotTimber", "SetTextI18n"})
             @Override
             public void onResponse(@NonNull Call<VendorNewOrderResponse> call, @NonNull Response<VendorNewOrderResponse> response) {
                 mShimmerViewContainer.stopShimmerAnimation();
                 includelayout.setVisibility(View.GONE);
+                refresh_layout.setRefreshing(false);
                 //avi_indicator.smoothToHide();
                 Log.w(TAG,"VendorMissedOrderResponse"+ "--->" + new Gson().toJson(response.body()));
 
@@ -294,6 +316,7 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
                 }
             }
 
+            @SuppressLint("LogNotTimber")
             @Override
             public void onFailure(@NonNull Call<VendorNewOrderResponse> call, @NonNull Throwable t) {
              /*   avi_indicator.smoothToHide();*/
@@ -307,7 +330,7 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
     }
     @SuppressLint("LogNotTimber")
     private VendorNewOrderRequest vendorNewOrderRequest(String id) {
-        /**
+        /*
          * vendor_id : 604866a50b3a487571a1c568
          * order_status : New
          */
@@ -338,12 +361,11 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
 
 
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btn_load_more:
-                setViewLoadMore();
-                break;
+        if (v.getId() == R.id.btn_load_more) {
+            setViewLoadMore();
         }
     }
 
@@ -354,7 +376,7 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
     }
 
 
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private void VendorAcceptReturnOrderIDResponseCall(String order_id) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -363,7 +385,7 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
         Log.w(TAG,"VendorAcceptsReturnOrderResponse url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<VendorAcceptsReturnOrderResponse>() {
-            @SuppressLint("LongLogTag")
+            @SuppressLint({"LongLogTag", "LogNotTimber"})
             @Override
             public void onResponse(@NonNull Call<VendorAcceptsReturnOrderResponse> call, @NonNull Response<VendorAcceptsReturnOrderResponse> response) {
 
@@ -391,7 +413,7 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
 
             }
 
-            @SuppressLint("LongLogTag")
+            @SuppressLint({"LongLogTag", "LogNotTimber"})
             @Override
             public void onFailure(@NonNull Call<VendorAcceptsReturnOrderResponse> call, @NonNull Throwable t) {
 
@@ -402,9 +424,10 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
 
     }
 
+    @SuppressLint("LogNotTimber")
     private VendorAcceptReturnOrderRequest vendorAcceptReturnOrderRequest(String order_id) {
 
-        /**
+        /*
          * _id : 6053b5e0d7570364e4d28c98
          * activity_id : 6
          * activity_title : Vendor Accept Return

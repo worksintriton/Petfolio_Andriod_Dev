@@ -527,7 +527,6 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
 
     private void setView() {
-
         rv_shipping_address.setLayoutManager(new LinearLayoutManager(ShippingAddressAddActivity.this));
         rv_shipping_address.setItemAnimator(new DefaultItemAnimator());
         int size = 3;

@@ -154,6 +154,22 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
              shopDashboardResponseCall();
         }
 
+        final Handler handler = new Handler();
+        Timer timer = new Timer();
+        TimerTask doAsynchronousTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(() -> {
+                    try {
+                        //your method here
+                        shopDashboardResponseCall();
+                    }catch (Exception ignored) {
+                    }
+                });
+            }
+        };
+        timer.schedule(doAsynchronousTask, 0, 30000);//you can put 30000(30 secs)
+
         txt_seemore_todaydeals.setOnClickListener(v -> {
             Intent intent =new Intent(mContext, PetShopTodayDealsSeeMoreActivity.class);
             intent.putExtra("from","");

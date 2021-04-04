@@ -112,9 +112,7 @@
 
         </RelativeLayout>
     </LinearLayout>
-
-
-        <LinearLayout
+    <LinearLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -146,11 +144,19 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp">
 
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                    android:id="@+id/refresh_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:ignore="MissingClass">
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_manage_productlist"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="visible" />
+
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
                 <TextView
                     android:id="@+id/txt_no_records"
@@ -165,8 +171,6 @@
             </RelativeLayout>
 
         </LinearLayout>
-
-
     <LinearLayout
         android:id="@+id/footerView"
         android:layout_width="match_parent"

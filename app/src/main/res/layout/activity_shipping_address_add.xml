@@ -129,22 +129,23 @@
                 android:id="@+id/ll_add_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp">
 
                 <ImageView
                     android:id="@+id/img_back2"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
                     android:src="@drawable/addaddr"
                     tools:ignore="ContentDescription" />
 
                 <TextView
+                    android:layout_marginStart="5dp"
                     android:id="@+id/txt_address_add"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/futuramediumbt"
                     android:text="Add Address"
                     android:textColor="@color/new_light_green"
@@ -185,7 +186,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp">
 
             <Button
                 android:id="@+id/btn_cancel"

@@ -120,9 +120,10 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
     private Dialog dialog;
     private String searchString = "";
 
-    private String discount_value;
+    private String discount_value = "";
     private String petTypeId = "";
     private String petBreedTypeId = "";
+    private String strCategoryTypeId = "";
     private String fromactivity;
 
     @SuppressLint("LogNotTimber")
@@ -158,20 +159,25 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
           discount_value = extras.getString("discount_value");
           petTypeId = extras.getString("petTypeId");
           petBreedTypeId = extras.getString("petBreedTypeId");
+          strCategoryTypeId = extras.getString("strCategoryTypeId");
           fromactivity = extras.getString("fromactivity");
-          if(fromactivity != null && fromactivity.equalsIgnoreCase("ProductFiltersActivity")){
-            if(petTypeId != null){
-                productFiltersResponseCall();
-            }
-          }
-
             Log.w(TAG,"petTypeId : "+petTypeId+" petBreedTypeId : "+petBreedTypeId+" discount_value : "+discount_value);
 
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("ProductFiltersActivity")){
+            if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                productFiltersResponseCall();
+            }
+
+          }else{
+              if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                  todayDealMoreResponseCall();
+              }
+          }
+
+
         }
 
-        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-            todayDealMoreResponseCall();
-        }
+
 
         initResultRecylerView();
 

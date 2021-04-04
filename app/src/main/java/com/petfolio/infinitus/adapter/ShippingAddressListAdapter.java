@@ -230,6 +230,7 @@ public class ShippingAddressListAdapter extends  RecyclerView.Adapter<RecyclerVi
 
 
             txt_date = itemView.findViewById(R.id.txt_date);
+            txt_date.setVisibility(View.GONE);
 
 
             txt_addrs_type = itemView.findViewById(R.id.txt_addrs_type);

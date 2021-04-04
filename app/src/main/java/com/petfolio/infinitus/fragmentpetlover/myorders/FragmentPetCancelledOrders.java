@@ -3,6 +3,7 @@ package com.petfolio.infinitus.fragmentpetlover.myorders;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.Gson;
@@ -33,6 +35,8 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,6 +70,11 @@ public class FragmentPetCancelledOrders extends Fragment implements View.OnClick
     Button btn_filter;
 
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout refresh_layout;
+
+
     private ShimmerFrameLayout mShimmerViewContainer;
     private View includelayout;
 
@@ -85,7 +94,7 @@ public class FragmentPetCancelledOrders extends Fragment implements View.OnClick
 
     }
 
-    @SuppressLint("LogNotTimber")
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -117,6 +126,37 @@ public class FragmentPetCancelledOrders extends Fragment implements View.OnClick
         if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
             get_order_details_user_id_ResponseCall();
         }
+
+        refresh_layout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
+                            get_order_details_user_id_ResponseCall();
+
+                        }
+
+                    }
+                }
+        );
+
+
+        final Handler handler = new Handler();
+        Timer timer = new Timer();
+        TimerTask doAsynchronousTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(() -> {
+                    try {
+                        //your method here
+                        get_order_details_user_id_ResponseCall();
+                    }catch (Exception ignored) {
+                    }
+                });
+            }
+        };
+        timer.schedule(doAsynchronousTask, 0, 30000);//you can put 30000(30 secs)
+
         return view;
     }
 
@@ -133,7 +173,7 @@ public class FragmentPetCancelledOrders extends Fragment implements View.OnClick
     }
 
 
-    @SuppressLint("LogNotTimber")
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
     private void get_order_details_user_id_ResponseCall() {
        /* avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();*/
@@ -148,6 +188,7 @@ public class FragmentPetCancelledOrders extends Fragment implements View.OnClick
             @Override
             public void onResponse(@NonNull Call<PetVendorOrderResponse> call, @NonNull Response<PetVendorOrderResponse> response) {
                 /*  avi_indicator.smoothToHide();*/
+                refresh_layout.setRefreshing(false);
                 mShimmerViewContainer.stopShimmerAnimation();
                 includelayout.setVisibility(View.GONE);
                 Log.w(TAG,"PetVendorOrderResponse"+ "--->" + new Gson().toJson(response.body()));
@@ -196,7 +237,7 @@ public class FragmentPetCancelledOrders extends Fragment implements View.OnClick
         });
 
     }
-    @SuppressLint("LogNotTimber")
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
     private PetVendorOrderRequest petVendorOrderRequest() {
         /*
          * user_id : 603e27792c2b43125f8cb802

@@ -121,7 +121,9 @@
             android:name=".activity.VerifyEmailOtpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" /> <!-- Pet Lover -->
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- Pet Lover -->
         <activity
             android:name=".petlover.AddYourPetActivity"
             android:screenOrientation="portrait"

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -13,6 +14,7 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -50,6 +52,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,6 +93,10 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
     @BindView(R.id.txt_applydeal)
     TextView txt_applydeal;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout refresh_layout;
+
     private List<ManageProductsListResponse.DataBean> manageProductsListResponseList;
 
     boolean showCheckbox = false;
@@ -124,7 +132,6 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
         SessionManager session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
         String userid = user.get(SessionManager.KEY_ID);
-
         ll_discard.setVisibility(View.INVISIBLE);
 
 
@@ -133,6 +140,36 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
         if (new ConnectionDetector(ManageProductsActivity.this).isNetworkAvailable(ManageProductsActivity.this)) {
             getlist_from_vendor_id_ResponseCall();
         }
+
+        refresh_layout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                              getlist_from_vendor_id_ResponseCall();
+
+                        }
+
+                    }
+                }
+        );
+
+
+        final Handler handler = new Handler();
+        Timer timer = new Timer();
+        TimerTask doAsynchronousTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(() -> {
+                    try {
+                        //your method here
+                        getlist_from_vendor_id_ResponseCall();
+                    }catch (Exception ignored) {
+                    }
+                });
+            }
+        };
+        timer.schedule(doAsynchronousTask, 0, 30000);//you can put 30000(30 secs)
 
         ll_apply.setOnClickListener(this);
         ll_discard.setOnClickListener(this);
@@ -158,6 +195,7 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
+                        refresh_layout.setRefreshing(false);
 
                         if(response.body().getData() != null && response.body().getData().size()>0){
                             manageProductsListResponseList = response.body().getData();

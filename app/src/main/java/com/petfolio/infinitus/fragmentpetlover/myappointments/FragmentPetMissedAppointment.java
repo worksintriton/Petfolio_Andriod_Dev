@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.Gson;
@@ -70,6 +71,10 @@ public class FragmentPetMissedAppointment extends Fragment implements View.OnCli
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_filter)
     Button btn_filter;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout refresh_layout;
 
 
 
@@ -130,9 +135,8 @@ public class FragmentPetMissedAppointment extends Fragment implements View.OnCli
                     public void run() {
                         try {
                             //your method here
-                            if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
                                 petMissedAppointmentResponseCall();
-                            }
+
 
                         } catch (Exception e) {
                         }
@@ -141,6 +145,20 @@ public class FragmentPetMissedAppointment extends Fragment implements View.OnCli
             }
         };
         timer.schedule(doAsynchronousTask, 0, 30000);//you can put 30000(30 secs)
+
+
+        refresh_layout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
+                            petMissedAppointmentResponseCall();
+
+                        }
+
+                    }
+                }
+        );
 
         return view;
     }
@@ -161,6 +179,7 @@ public class FragmentPetMissedAppointment extends Fragment implements View.OnCli
             @Override
             public void onResponse(@NonNull Call<PetAppointmentResponse> call, @NonNull Response<PetAppointmentResponse> response) {
                /* avi_indicator.smoothToHide();*/
+                refresh_layout.setRefreshing(false);
                 mShimmerViewContainer.stopShimmerAnimation();
                 includelayout.setVisibility(View.GONE);
                 Log.w(TAG,"petMissedAppointmentResponseCall"+ "--->" + new Gson().toJson(response.body()));

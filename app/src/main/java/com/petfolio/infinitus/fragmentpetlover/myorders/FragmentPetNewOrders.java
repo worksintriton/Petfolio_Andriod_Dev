@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.Gson;
@@ -36,6 +38,8 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,6 +66,11 @@ public class FragmentPetNewOrders extends Fragment implements  View.OnClickListe
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_load_more)
     Button btn_load_more;
+
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout refresh_layout;
 
 
     private ShimmerFrameLayout mShimmerViewContainer;
@@ -106,6 +115,37 @@ public class FragmentPetNewOrders extends Fragment implements  View.OnClickListe
         if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
             get_order_details_user_id_ResponseCall();
         }
+
+        refresh_layout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
+                            get_order_details_user_id_ResponseCall();
+
+                        }
+
+                    }
+                }
+        );
+
+
+        final Handler handler = new Handler();
+        Timer timer = new Timer();
+        TimerTask doAsynchronousTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(() -> {
+                    try {
+                        //your method here
+                        get_order_details_user_id_ResponseCall();
+                    }catch (Exception ignored) {
+                    }
+                });
+            }
+        };
+        timer.schedule(doAsynchronousTask, 0, 30000);//you can put 30000(30 secs)
+
         return view;
     }
 
@@ -128,6 +168,7 @@ public class FragmentPetNewOrders extends Fragment implements  View.OnClickListe
              /*  avi_indicator.smoothToHide();*/
                 mShimmerViewContainer.stopShimmerAnimation();
                 includelayout.setVisibility(View.GONE);
+                refresh_layout.setRefreshing(false);
                 Log.w(TAG,"PetVendorOrderResponse"+ "--->" + new Gson().toJson(response.body()));
 
 

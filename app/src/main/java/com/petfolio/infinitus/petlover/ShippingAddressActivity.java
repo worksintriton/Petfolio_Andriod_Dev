@@ -203,6 +203,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
 
         }
+        txt_date.setVisibility(View.GONE);
 
         img_back.setOnClickListener(this);
 
@@ -246,7 +247,6 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
         }
 
         if(date!=null&&!date.isEmpty()){
-
             txt_date.setText(date);
 
         }
