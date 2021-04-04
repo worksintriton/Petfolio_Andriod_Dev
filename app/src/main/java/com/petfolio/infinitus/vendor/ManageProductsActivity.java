@@ -3,6 +3,7 @@ package com.petfolio.infinitus.vendor;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -26,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.ManageProductsListAdapter;
@@ -97,6 +100,32 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout refresh_layout;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.add_deal_fab)
+    FloatingActionButton add_deal_fab;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.fab_add_deal)
+    FloatingActionButton fab_add_deal;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.fab_discard_deal)
+    FloatingActionButton fab_discard_deal;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_add_deal)
+    TextView txt_add_deal;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_discard_deal)
+    TextView txt_discard_deal;
+
+
+
+    // to check whether sub FAB buttons are visible or not.
+    Boolean isAllFabsVisible;
+    Boolean isAddDealFabsVisible;
+
     private List<ManageProductsListResponse.DataBean> manageProductsListResponseList;
 
     boolean showCheckbox = false;
@@ -134,6 +163,11 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
         String userid = user.get(SessionManager.KEY_ID);
         ll_discard.setVisibility(View.INVISIBLE);
 
+        txt_add_deal.setVisibility(View.GONE);
+        txt_discard_deal.setVisibility(View.GONE);
+        fab_add_deal.setVisibility(View.GONE);
+        fab_discard_deal.setVisibility(View.GONE);
+
 
         img_back.setOnClickListener(v -> onBackPressed());
 
@@ -155,7 +189,7 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
         );
 
 
-        final Handler handler = new Handler();
+    /*    final Handler handler = new Handler();
         Timer timer = new Timer();
         TimerTask doAsynchronousTask = new TimerTask() {
             @Override
@@ -169,11 +203,84 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
                 });
             }
         };
-        timer.schedule(doAsynchronousTask, 0, 30000);//you can put 30000(30 secs)
+        timer.schedule(doAsynchronousTask, 0, 30000);//you can put 30000(30 secs)*/
 
         ll_apply.setOnClickListener(this);
         ll_discard.setOnClickListener(this);
         txt_applydeal.setOnClickListener(this);
+
+
+
+        isAllFabsVisible = false;
+        isAddDealFabsVisible = false;
+        add_deal_fab.setOnClickListener(new View.OnClickListener() {
+                    @SuppressLint({"UseCompatLoadingForDrawables", "ObsoleteSdkInt"})
+                    @Override
+                    public void onClick(View view) {
+                        if (!isAllFabsVisible) {
+                            fab_add_deal.show();
+                            fab_discard_deal.show();
+                            txt_add_deal.setVisibility(View.VISIBLE);
+                            txt_discard_deal.setVisibility(View.VISIBLE);
+                            isAllFabsVisible = true;
+                            add_deal_fab.setImageResource(R.drawable.ic_baseline_close_white24);
+
+                        } else {
+                            fab_add_deal.hide();
+                            fab_discard_deal.hide();
+                            txt_add_deal.setVisibility(View.GONE);
+                            txt_discard_deal.setVisibility(View.GONE);
+                            isAllFabsVisible = false;
+                            add_deal_fab.setImageResource(R.drawable.ic_baseline_add_24);
+                            showCheckbox = false;
+                            setView();
+
+                        }
+                    }
+                });
+
+        fab_add_deal.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (!isAddDealFabsVisible) {
+                            showCheckbox = true;
+                            setView();
+                          /*  fab_add_deal.show();
+                            fab_discard_deal.show();
+                            txt_add_deal.setVisibility(View.VISIBLE);
+                            txt_discard_deal.setVisibility(View.VISIBLE);*/
+                            isAddDealFabsVisible = true;
+                          //  add_deal_fab.setImageResource(R.drawable.ic_baseline_close_white24);
+
+                        } else {
+                          /*  fab_add_deal.hide();
+                            fab_discard_deal.hide();
+                            txt_add_deal.setVisibility(View.GONE);
+                            txt_discard_deal.setVisibility(View.GONE);*/
+                            isAddDealFabsVisible = false;
+                            if(productcount != 0){
+                                showProductDealAlert();
+                            }else{
+                                showErrorLoading("Please select the product");
+                            }
+                           // add_deal_fab.setImageResource(R.drawable.ic_baseline_add_24);
+
+                        }
+                    }
+                });
+        fab_discard_deal.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showCheckbox = false;
+                        setView();
+                        fab_add_deal.hide();
+                        fab_discard_deal.hide();
+                        txt_add_deal.setVisibility(View.GONE);
+                        txt_discard_deal.setVisibility(View.GONE);
+                        isAllFabsVisible = false;
+                        add_deal_fab.setImageResource(R.drawable.ic_baseline_add_24);
+                    }
+                });
 
 
     }
@@ -257,7 +364,7 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ll_discard:
-                 showCheckbox = false;
+                showCheckbox = false;
                 ll_discard.setVisibility(View.INVISIBLE);
                 txt_applydeal.setText("Apply Deal");
                 setView();
@@ -509,7 +616,15 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
                         ll_discard.setVisibility(View.INVISIBLE);
                         txt_applydeal.setText("Apply Deal");
                         showCheckbox = false;
+                        fab_add_deal.hide();
+                        fab_discard_deal.hide();
+                        txt_add_deal.setVisibility(View.GONE);
+                        txt_discard_deal.setVisibility(View.GONE);
+                        isAllFabsVisible = false;
+                        add_deal_fab.setImageResource(R.drawable.ic_baseline_add_24);
                         getlist_from_vendor_id_ResponseCall();
+
+
 
 
                     }
@@ -570,6 +685,12 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
                         ll_discard.setVisibility(View.INVISIBLE);
                         txt_applydeal.setText("Apply Deal");
                         showCheckbox = false;
+                        fab_add_deal.hide();
+                        fab_discard_deal.hide();
+                        txt_add_deal.setVisibility(View.GONE);
+                        txt_discard_deal.setVisibility(View.GONE);
+                        isAllFabsVisible = false;
+                        add_deal_fab.setImageResource(R.drawable.ic_baseline_add_24);
                         getlist_from_vendor_id_ResponseCall();
 
 
