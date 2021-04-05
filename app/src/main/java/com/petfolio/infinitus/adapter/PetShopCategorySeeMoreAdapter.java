@@ -18,7 +18,6 @@ import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.petlover.ProductDetailsActivity;
 import com.petfolio.infinitus.responsepojo.FetctProductByCatResponse;
-import com.petfolio.infinitus.responsepojo.TodayDealMoreResponse;
 
 import java.util.List;
 
@@ -29,12 +28,7 @@ public class PetShopCategorySeeMoreAdapter extends  RecyclerView.Adapter<Recycle
     private Context context;
 
     List<FetctProductByCatResponse.DataBean> data;
-
     FetctProductByCatResponse.DataBean currentItem;
-
-
-
-
     public PetShopCategorySeeMoreAdapter(Context context, List<FetctProductByCatResponse.DataBean> data) {
         this.data = data;
         this.context = context;
@@ -106,6 +100,17 @@ public class PetShopCategorySeeMoreAdapter extends  RecyclerView.Adapter<Recycle
                         .into(holder.img_products_image);
 
             }
+
+        if(currentItem.getProduct_rating() != 0){
+            holder.txt_star_rating.setText(currentItem.getProduct_rating()+"");
+        }else{
+            holder.txt_star_rating.setText("0");
+        }
+        if(currentItem.getProduct_review() != 0){
+            holder.txt_review_count.setText(currentItem.getProduct_review()+"");
+        }else{
+            holder.txt_review_count.setText("0");
+        }
 
            holder.ll_root.setOnClickListener(new View.OnClickListener() {
                @Override

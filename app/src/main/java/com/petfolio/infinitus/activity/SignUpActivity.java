@@ -479,7 +479,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             edt_phone.requestFocus();
             can_proceed = false;
         }else if(!emailAddress.matches(emailPattern)){
-            edt_email.setError("Please enter correct Email address");
+            edt_email.setError("Please enter correct email address");
             edt_email.requestFocus();
             can_proceed = false;
         }
@@ -504,7 +504,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
               edt_email.requestFocus();
             can_proceed = false;
         }else if(!emailAddress.matches(emailPattern)){
-            edt_email.setError("Please enter correct Email address");
+            edt_email.setError("Please enter correct email address");
             edt_email.requestFocus();
             can_proceed = false;
         }

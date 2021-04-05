@@ -94,6 +94,17 @@ public class PetShopTodayDealsAdapter extends  RecyclerView.Adapter<RecyclerView
 
             }
 
+        if(currentItem.getProduct_rating() != 0){
+            holder.txt_star_rating.setText(currentItem.getProduct_rating()+"");
+        }else{
+            holder.txt_star_rating.setText("0");
+        }
+        if(currentItem.getProduct_review() != 0){
+            holder.txt_review_count.setText(currentItem.getProduct_review()+"");
+        }else{
+            holder.txt_review_count.setText("0");
+        }
+
         holder.ll_root.setOnClickListener(v -> {
             Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("productid",today_special.get(position).get_id());

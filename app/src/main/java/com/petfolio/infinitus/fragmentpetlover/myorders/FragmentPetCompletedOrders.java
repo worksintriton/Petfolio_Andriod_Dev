@@ -37,6 +37,7 @@ import com.petfolio.infinitus.api.RestApiInterface;
 
 import com.petfolio.infinitus.interfaces.AddReviewListener;
 import com.petfolio.infinitus.requestpojo.AddReviewRequest;
+import com.petfolio.infinitus.requestpojo.AddShopReviewRequest;
 import com.petfolio.infinitus.requestpojo.PetVendorOrderRequest;
 
 import com.petfolio.infinitus.responsepojo.AddReviewResponse;
@@ -269,7 +270,6 @@ public class FragmentPetCompletedOrders extends Fragment implements View.OnClick
                 /*   avi_indicator.smoothToHide();*/
                 mShimmerViewContainer.stopShimmerAnimation();
                 includelayout.setVisibility(View.GONE);
-
                 Log.w(TAG,"PetVendorOrderResponse"+"--->" + t.getMessage());
             }
         });
@@ -313,7 +313,6 @@ public class FragmentPetCompletedOrders extends Fragment implements View.OnClick
     @SuppressLint({"LogNotTimber", "LongLogTag"})
     private void showAddReview(String id,String appointment_for) {
         try {
-
             Dialog dialog = new Dialog(mContext);
             dialog.setContentView(R.layout.addreview_popup_layout);
             dialog.setCancelable(true);
@@ -354,7 +353,7 @@ public class FragmentPetCompletedOrders extends Fragment implements View.OnClick
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-        Call<AddReviewResponse> call = apiInterface.addReviewResponseCall(RestUtils.getContentType(), addReviewRequest(id,userfeedback,userrate));
+        Call<AddReviewResponse> call = apiInterface.shopaddReviewResponseCall(RestUtils.getContentType(), addShopReviewRequest(id,userfeedback,userrate));
         Log.w(TAG,"addReviewResponseCall url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<AddReviewResponse>() {
@@ -391,30 +390,31 @@ public class FragmentPetCompletedOrders extends Fragment implements View.OnClick
 
     }
     @SuppressLint({"LogNotTimber", "LongLogTag"})
-    private AddReviewRequest addReviewRequest(String id, String userfeedback, String userrate) {
+    private AddShopReviewRequest addShopReviewRequest(String id, String userfeedback, String userrate) {
 
-        /*
-         * _id : 5fd30a701978e618628c966c
+        /**
+         * order_id : 5fd30a701978e618628c966c
          * user_feedback :
          * user_rate : 0
          */
-        AddReviewRequest addReviewRequest = new AddReviewRequest();
-        addReviewRequest.set_id(id);
+
+        AddShopReviewRequest addShopReviewRequest = new AddShopReviewRequest();
+        addShopReviewRequest.setOrder_id(id);
         if(userfeedback != null){
-            addReviewRequest.setUser_feedback(userfeedback);
+            addShopReviewRequest.setUser_feedback(userfeedback);
 
         }else{
-            addReviewRequest.setUser_feedback("");
+            addShopReviewRequest.setUser_feedback("");
 
         }if(userrate != null){
-            addReviewRequest.setUser_rate(userrate);
+            addShopReviewRequest.setUser_rate(userrate);
 
         }else{
-            addReviewRequest.setUser_rate("");
+            addShopReviewRequest.setUser_rate("");
 
         }
-        Log.w(TAG,"addReviewRequest"+ "--->" + new Gson().toJson(addReviewRequest));
-        return addReviewRequest;
+        Log.w(TAG,"addShopReviewRequest"+ "--->" + new Gson().toJson(addShopReviewRequest));
+        return addShopReviewRequest;
     }
 
     private void showAddReviewSuccess() {

@@ -103,7 +103,20 @@ public class ProductsSearchAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
 
             }
 
-           holder.ll_root.setOnClickListener(new View.OnClickListener() {
+        if(currentItem.getProduct_rating() != 0){
+            holder.txt_star_rating.setText(currentItem.getProduct_rating()+"");
+        }else{
+            holder.txt_star_rating.setText("0");
+        }
+        if(currentItem.getProduct_review() != 0){
+            holder.txt_review_count.setText(currentItem.getProduct_review()+"");
+        }else{
+            holder.txt_review_count.setText("0");
+        }
+
+
+
+        holder.ll_root.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
                    Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

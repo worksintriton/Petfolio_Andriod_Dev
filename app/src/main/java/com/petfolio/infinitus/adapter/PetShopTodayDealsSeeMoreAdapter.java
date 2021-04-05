@@ -78,14 +78,14 @@ public class PetShopTodayDealsSeeMoreAdapter extends  RecyclerView.Adapter<Recyc
 
 
         }
-
         Log.w(TAG,"discount : "+data.get(position).getProduct_discount());
 
 
         if(data.get(position).getProduct_discount() != 0){
             holder.txt_products_offer.setVisibility(View.VISIBLE);
             holder.txt_products_offer.setText(data.get(position).getProduct_discount()+" % off");
-        }else{
+        }
+        else{
             holder.txt_products_offer.setVisibility(View.GONE);
 
         }
@@ -96,22 +96,30 @@ public class PetShopTodayDealsSeeMoreAdapter extends  RecyclerView.Adapter<Recyc
                         .into(holder.img_products_image);
 
             }
-           else{
+        else{
                 Glide.with(context)
                         .load(R.drawable.app_logo)
                         .into(holder.img_products_image);
 
             }
 
-           holder.ll_root.setOnClickListener(v -> {
+        if(currentItem.getProduct_rating() != 0){
+            holder.txt_star_rating.setText(currentItem.getProduct_rating()+"");
+        }
+        else{
+            holder.txt_star_rating.setText("0");
+        }
+        if(currentItem.getProduct_review() != 0){
+            holder.txt_review_count.setText(currentItem.getProduct_review()+"");
+        }
+        else{
+            holder.txt_review_count.setText("0");
+        }
+        holder.ll_root.setOnClickListener(v -> {
                Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                intent.putExtra("productid",data.get(position).get_id());
                context.startActivity(intent);
            });
-
-
-
-
     }
 
     @Override

@@ -68,6 +68,9 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
         OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
+    private String TAG = "PetLoverDashboardActivity";
+
+
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
@@ -76,7 +79,6 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
     @BindView(R.id.bottom_navigation_view)
     BottomNavigationView bottom_navigation_view;
 
-    private String TAG = "PetLoverDashboardActivity";
 
     final Fragment petHomeFragment = new PetHomeFragment();
     final Fragment petCareFragment = new PetCareFragment();

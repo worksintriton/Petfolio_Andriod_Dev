@@ -143,7 +143,6 @@ public class PetVendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recyc
             holder.btn_add_review.setVisibility(View.GONE);
 
         }
-
         holder.btn_add_review.setOnClickListener(v -> addReviewListener.addReviewListener(newOrderResponseList.get(position).get_id(),newOrderResponseList.get(position).getUser_rate(),newOrderResponseList.get(position).getUser_feedback(),""));
 
 

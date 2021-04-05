@@ -1,6 +1,7 @@
 package com.petfolio.infinitus.api;
 
 import com.petfolio.infinitus.requestpojo.AddReviewRequest;
+import com.petfolio.infinitus.requestpojo.AddShopReviewRequest;
 import com.petfolio.infinitus.requestpojo.AddYourPetRequest;
 import com.petfolio.infinitus.requestpojo.ApplyMultiProdDiscountRequest;
 import com.petfolio.infinitus.requestpojo.ApplySingleDiscountCalRequest;
@@ -344,6 +345,10 @@ public interface RestApiInterface {
     /*SP lover review add*/
     @POST("sp_appointments/reviews/update")
     Call<AddReviewResponse>spaddReviewResponseCall(@Header("Content-Type") String type, @Body AddReviewRequest addReviewRequest  );
+
+    /*Shop review add*/
+    @POST("product_details/reviews/update")
+    Call<AddReviewResponse>shopaddReviewResponseCall(@Header("Content-Type") String type, @Body AddShopReviewRequest addShopReviewRequest  );
 
 
     /*Specific service*/

@@ -61,7 +61,7 @@
             android:maxLength="20"
             android:text="@string/producttitle"
             android:textColor="@color/new_txt_color"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

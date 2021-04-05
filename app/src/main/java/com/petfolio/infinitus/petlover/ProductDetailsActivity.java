@@ -34,7 +34,6 @@ import com.petfolio.infinitus.responsepojo.SuccessResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
-import com.petfolio.infinitus.vendor.VendorUpdateOrderStatusActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.HashMap;
@@ -342,10 +341,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
         }
         if(product_review != 0 ){
             txt_review_count.setText(product_review+"");
+        }else{
+            txt_review_count.setText("0");
         }
         if(product_rating != 0 ){
             txt_star_rating.setText(product_rating+"");
-
+        }else{
+            txt_star_rating.setText("0");
         }
         if(product_price != 0 ){
             txt_products_price.setText("\u20B9 "+product_price);

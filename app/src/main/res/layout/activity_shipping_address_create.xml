@@ -369,13 +369,14 @@
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/futuramediumbt"
                             android:hint="Mobile no*"
-                            android:inputType="number"
                             android:maxLength="10"
                             android:maxLines="1"
                             android:padding="15dp"
                             android:textColor="@color/new_light_green"
                             android:textColorHint="@color/dark_gray"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            android:imeOptions="actionDone"
+                            android:inputType="numberPassword"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -423,13 +424,14 @@
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/futuramediumbt"
                             android:hint="Alternate Mobile no"
-                            android:inputType="number"
                             android:maxLength="10"
                             android:maxLines="1"
                             android:padding="15dp"
                             android:textColor="@color/new_light_green"
                             android:textColorHint="@color/dark_gray"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            android:imeOptions="actionDone"
+                            android:inputType="numberPassword"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
 

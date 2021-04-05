@@ -28,6 +28,7 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.appUtils.NumericKeyBoardTransformationMethod;
 import com.petfolio.infinitus.requestpojo.ShippingAddressCreateRequest;
 import com.petfolio.infinitus.requestpojo.ShippingAddressDeleteRequest;
 import com.petfolio.infinitus.responsepojo.CartDetailsResponse;
@@ -156,6 +157,10 @@ public class ShippingAddressCreateActivity extends AppCompatActivity implements 
         Log.w(TAG,"onCreate ");
 
         ButterKnife.bind(this);
+
+        edt_phoneno.setTransformationMethod(new NumericKeyBoardTransformationMethod());
+        edt_altphoneno.setTransformationMethod(new NumericKeyBoardTransformationMethod());
+
 
         SessionManager session = new SessionManager(getApplicationContext());
 
@@ -310,6 +315,10 @@ public class ShippingAddressCreateActivity extends AppCompatActivity implements 
             state = edt_state.getText().toString().trim();
             phoneno = edt_phoneno.getText().toString().trim();
             altphoneno = edt_altphoneno.getText().toString().trim();
+
+        int moblength = edt_phoneno.getText().toString().trim().length();
+        int mobaltlength = edt_altphoneno.getText().toString().trim().length();
+        int pincodelength = edt_pincode.getText().toString().trim().length();
             boolean can_proceed = true;
             if(firstname != null && firstname.isEmpty()){
                 edt_firstname.setError("Please fill the first name");
@@ -349,7 +358,10 @@ public class ShippingAddressCreateActivity extends AppCompatActivity implements 
                 edt_pincode.requestFocus();
                 //Toasty.warning(getApplicationContext(), "Please Enter the Pincode", Toast.LENGTH_SHORT).show();
                 can_proceed = false;
-
+            }else if (pincodelength <= 5) {
+                edt_pincode.setError("Please enter valid pin code");
+                edt_pincode.requestFocus();
+                can_proceed = false;
             }
 
             else if(city != null &&city.isEmpty()){
@@ -374,7 +386,16 @@ public class ShippingAddressCreateActivity extends AppCompatActivity implements 
                 //Toasty.warning(getApplicationContext(), "Please Enter the Phone No", Toast.LENGTH_SHORT).show();
                 can_proceed = false;
 
+            }else if (moblength <= 9) {
+                edt_phoneno.setError("Please enter valid mobile number");
+                edt_phoneno.requestFocus();
+                can_proceed = false;
+            }else if (altphoneno != null && !altphoneno.isEmpty() && mobaltlength <= 9) {
+                edt_altphoneno.setError("Please enter valid mobile number");
+                edt_altphoneno.requestFocus();
+                can_proceed = false;
             }
+
 
         if(landmark !=  null && landmark.isEmpty()){
             landmark = "";
@@ -388,8 +409,7 @@ public class ShippingAddressCreateActivity extends AppCompatActivity implements 
 
         if(can_proceed){
             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-
-                        createAddressResponseCall();
+                createAddressResponseCall();
 
             }
 

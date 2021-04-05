@@ -61,7 +61,8 @@ public class PetShopProductDetailsImageAdapter extends  RecyclerView.Adapter<Rec
         holder.txt_products_title.setText(productListBean.getProduct_title());
         if(productListBean.getProduct_price() != 0){
             holder.txt_products_price.setText("\u20B9 "+productListBean.getProduct_price());
-        }else{
+        }
+        else{
             holder.txt_products_price.setText("\u20B9 "+0);
         }
 
@@ -81,7 +82,8 @@ public class PetShopProductDetailsImageAdapter extends  RecyclerView.Adapter<Rec
         if(productListBean.getProduct_discount() != 0){
             holder.txt_products_offer.setVisibility(View.VISIBLE);
             holder.txt_products_offer.setText(productListBean.getProduct_discount()+" % off");
-        }else{
+        }
+        else{
             holder.txt_products_offer.setVisibility(View.GONE);
         }
 
@@ -92,12 +94,26 @@ public class PetShopProductDetailsImageAdapter extends  RecyclerView.Adapter<Rec
                         .into(holder.img_products_image);
 
             }
-           else{
+        else{
                 Glide.with(context)
                         .load(R.drawable.app_logo)
                         .into(holder.img_products_image);
 
             }
+
+        if(productListBean.getProduct_rating() != 0){
+            holder.txt_star_rating.setText(productListBean.getProduct_rating()+"");
+        }else{
+            holder.txt_star_rating.setText("0");
+        }
+        if(productListBean.getProduct_review() != 0){
+            holder.txt_review_count.setText(productListBean.getProduct_review()+"");
+        }else{
+            holder.txt_review_count.setText("0");
+        }
+
+
+
 
         holder.ll_root.setOnClickListener(new View.OnClickListener() {
             @Override

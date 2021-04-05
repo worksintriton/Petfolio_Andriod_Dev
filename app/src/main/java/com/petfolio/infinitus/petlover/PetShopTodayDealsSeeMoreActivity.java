@@ -176,9 +176,6 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
 
 
         }
-
-
-
         initResultRecylerView();
 
         rl_filters.setOnClickListener(this);
