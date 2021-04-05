@@ -198,7 +198,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     if(cartcount == productqty || cartcount >productqty){
                         Toasty.warning(getApplicationContext(), "You can buy only up to "+productqty+" quantity of this product", Toast.LENGTH_SHORT, true).show();
                     }else{
-                        add_product_ResponseCall();
+                        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                            add_product_ResponseCall();
+                        }
                     }
                 }
 

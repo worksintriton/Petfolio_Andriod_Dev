@@ -136,6 +136,9 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
     private int prodcut_item_count;
     private String Payment_id = "";
 
+    private int product_cart_counts = 0;
+    private String threshould;
+
     @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,12 +172,6 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
 
         btn_procced_to_buy.setOnClickListener(v -> {
 
-//            if(grand_total != 0) {
-//                startPayment();
-//            }else if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-//                vendor_order_booking_create_ResponseCall();
-//
-//            }
 
             if(grand_total!=0){
 
@@ -247,6 +244,10 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                             btn_procced_to_buy.setVisibility(View.VISIBLE);
 
                             Data = response.body().getData();
+                            for(int i=0;i<Data.size();i++){
+                                threshould = Data.get(i).getProduct_id().getThreshould();
+
+                            }
                             setView(response.body().getData());
 
                             if(response.body().getProdcut_item_count() != 0){
@@ -275,6 +276,9 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                                 txt_total_amount.setText("\u20B9 "+0);
 
                             }
+
+
+
 
 
 
@@ -331,29 +335,35 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
         return fetchByIdRequest;
     }
 
-
     @Override
-    public void addandRemoveProductListener(String id, String name) {
+    public void addandRemoveProductListener(String id, String name,String threshould,int prodcutcount) {
         if(name != null){
             if(name.equalsIgnoreCase("add")){
-                productid = id;
-                if(productid != null){
-                    if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                        add_product_ResponseCall();
+                if(threshould != null){
+                    productid = id;
+                    int productqty = Integer.parseInt(threshould);
+                    Log.w(TAG," productqty : "+productqty+" prodcutcount : "+prodcutcount);
+                    if(prodcutcount == productqty || prodcutcount >productqty){
+                        Toasty.warning(getApplicationContext(), "You can buy only up to "+productqty+" quantity of this product", Toast.LENGTH_SHORT, true).show();
+                    }else{
+                        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                            add_product_ResponseCall();
+                        }
                     }
                 }
 
             }else if(name.equalsIgnoreCase("remove")){
                 productid = id;
                 if(productid != null){
-                    if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                        remove_product_ResponseCall();
+                    if(prodcutcount != 0) {
+                        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                            remove_product_ResponseCall();
+                        }
                     }
                 }
             }
         }
     }
-
     @SuppressLint("LogNotTimber")
     public void remove_product_ResponseCall(){
         avi_indicator.setVisibility(View.VISIBLE);
@@ -426,7 +436,6 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
         });
 
     }
-
     @SuppressLint("LogNotTimber")
     private FetchByIdRequest addandRemoveCartRequest() {
         /*
@@ -439,8 +448,6 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
         Log.w(TAG,"fetchByIdRequest"+ "--->" + new Gson().toJson(fetchByIdRequest));
         return fetchByIdRequest;
     }
-
-
     @SuppressLint("LogNotTimber")
     public void vendor_order_booking_create_ResponseCall(){
        avi_indicator.setVisibility(View.VISIBLE);

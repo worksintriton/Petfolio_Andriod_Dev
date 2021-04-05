@@ -106,7 +106,7 @@ public class Cart_Adapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder>
         holder.img_add_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addandRemoveProductListener.addandRemoveProductListener(data.get(position).getProduct_id().get_id(),"add");
+                addandRemoveProductListener.addandRemoveProductListener(data.get(position).getProduct_id().get_id(),"add",data.get(position).getProduct_id().getThreshould(),data.get(position).getProduct_count());
 
 
             }
@@ -116,7 +116,7 @@ public class Cart_Adapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder>
             @Override
             public void onClick(View v) {
                 if (data.get(position).getProduct_count() != 0) {
-                    addandRemoveProductListener.addandRemoveProductListener(data.get(position).getProduct_id().get_id(),"remove");
+                    addandRemoveProductListener.addandRemoveProductListener(data.get(position).getProduct_id().get_id(),"remove",data.get(position).getProduct_id().getThreshould(),data.get(position).getProduct_count());
                 }
 
             }
