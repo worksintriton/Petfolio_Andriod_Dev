@@ -44,6 +44,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -120,6 +121,14 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
     @BindView(R.id.footerView)
     LinearLayout footerView;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_content_amount)
+    LinearLayout ll_content_amount;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_removeall_products)
+    TextView txt_removeall_products;
+
     String tag;
     String fromactivity;
 
@@ -149,6 +158,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
 
         scrollablContent.setVisibility(View.GONE);
         btn_procced_to_buy.setVisibility(View.GONE);
+        ll_content_amount.setVisibility(View.GONE);
         footerView.setVisibility(View.GONE);
 
         SessionManager sessionManager = new SessionManager(getApplicationContext());
@@ -189,6 +199,13 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
             }
         });
 
+            txt_removeall_products.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    remove_overall_products_ResponseCall();
+                }
+            });
+
 
     }
 
@@ -217,8 +234,6 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
 
     }
 
-
-
     @SuppressLint("LogNotTimber")
     public void fetch_cart_details_by_userid_ResponseCall(){
         avi_indicator.setVisibility(View.VISIBLE);
@@ -242,6 +257,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                             ll_content.setVisibility(View.VISIBLE);
                             ll_cart_is_empty.setVisibility(View.GONE);
                             btn_procced_to_buy.setVisibility(View.VISIBLE);
+                            ll_content_amount.setVisibility(View.VISIBLE);
 
                             Data = response.body().getData();
                             for(int i=0;i<Data.size();i++){
@@ -254,26 +270,26 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                                 txt_lbl_subtotal.setText("Subtotal ( "+response.body().getProdcut_item_count()+" items)" );
                             }
                             if(response.body().getProdouct_total() != 0){
-                                txt_sub_total.setText("\u20B9 "+response.body().getProdouct_total());
+                                txt_sub_total.setText(response.body().getProdouct_total()+" \u20B9 ");
                             }else{
-                                txt_sub_total.setText("\u20B9 "+0);
+                                txt_sub_total.setText(0+ "\u20B9 ");
 
                             }
                             if(response.body().getDiscount_price() != 0){
-                                txt_discount_amount.setText("\u20B9 "+response.body().getDiscount_price());
+                                txt_discount_amount.setText(response.body().getDiscount_price()+" \u20B9 ");
                             }else{
-                                txt_discount_amount.setText("\u20B9 "+0);
+                                txt_discount_amount.setText(0+" \u20B9 ");
                             }
                             if(response.body().getShipping_charge() != 0){
-                                txt_shipping_amount.setText("\u20B9 "+response.body().getShipping_charge());
+                                txt_shipping_amount.setText(response.body().getShipping_charge()+" \u20B9 ");
                             }else{
-                                txt_shipping_amount.setText("\u20B9 "+0);
+                                txt_shipping_amount.setText(0+" \u20B9 ");
 
                             }
                             if(response.body().getGrand_total() != 0){
-                                txt_total_amount.setText("\u20B9 "+response.body().getGrand_total());
+                                txt_total_amount.setText(response.body().getGrand_total()+" \u20B9 ");
                             }else{
-                                txt_total_amount.setText("\u20B9 "+0);
+                                txt_total_amount.setText(0+" \u20B9 ");
 
                             }
 
@@ -288,6 +304,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                             ll_content.setVisibility(View.GONE);
                             ll_cart_is_empty.setVisibility(View.VISIBLE);
                             btn_procced_to_buy.setVisibility(View.GONE);
+                            ll_content_amount.setVisibility(View.GONE);
 
                         }
 
@@ -398,6 +415,39 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
         });
 
     }
+    public void remove_overall_products_ResponseCall(){
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        //Creating an object of our api interface
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<SuccessResponse> call = ApiService.remove_overall_products_ResponseCall(RestUtils.getContentType(),removeAllProductsRequest());
+
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<SuccessResponse>() {
+            @SuppressLint({"LogNotTimber", "SetTextI18n"})
+            @Override
+            public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
+                avi_indicator.smoothToHide();
+                if (response.body() != null) {
+                    if(200 == response.body().getCode()){
+                        Log.w(TAG,"Remove SuccessResponse" + new Gson().toJson(response.body()));
+                        Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
+                        fetch_cart_details_by_userid_Call();
+                    }
+                }
+            }
+
+
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull  Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"Remove SuccessResponse flr"+t.getMessage());
+            }
+        });
+
+    }
     @SuppressLint("LogNotTimber")
     public void add_product_ResponseCall(){
         avi_indicator.setVisibility(View.VISIBLE);
@@ -445,6 +495,15 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
         FetchByIdRequest fetchByIdRequest = new FetchByIdRequest();
         fetchByIdRequest.setUser_id(userid);
         fetchByIdRequest.setProduct_id(productid);
+        Log.w(TAG,"fetchByIdRequest"+ "--->" + new Gson().toJson(fetchByIdRequest));
+        return fetchByIdRequest;
+    }
+    private FetchByIdRequest removeAllProductsRequest() {
+        /*
+         * user_id : 603e27792c2b43125f8cb802
+       */
+        FetchByIdRequest fetchByIdRequest = new FetchByIdRequest();
+        fetchByIdRequest.setUser_id(userid);
         Log.w(TAG,"fetchByIdRequest"+ "--->" + new Gson().toJson(fetchByIdRequest));
         return fetchByIdRequest;
     }

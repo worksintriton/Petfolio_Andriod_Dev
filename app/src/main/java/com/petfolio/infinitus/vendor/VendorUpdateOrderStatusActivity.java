@@ -714,14 +714,11 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
     @SuppressLint("LogNotTimber")
     private void vendorCancelsOrder(int activity_id, String activity_title) {
-
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
         Call<VendorCancelsOrderResponse> call = apiInterface.vendor_order_booking_cancels_ResponseCall(RestUtils.getContentType(), vendorCancelsOrderRequest(activity_id,activity_title));
-
         Log.w(TAG,"vendorConfirmsOrderRequest url  :%s"+" "+ call.request().url().toString());
-
         call.enqueue(new Callback<VendorCancelsOrderResponse>() {
             @Override
             public void onResponse(@NonNull Call<VendorCancelsOrderResponse> call, @NonNull Response<VendorCancelsOrderResponse> response) {
@@ -757,8 +754,7 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
 
     @SuppressLint("LogNotTimber")
     private VendorCancelsOrderRequest vendorCancelsOrderRequest(int id, String title) {
-
-        /**
+        /*
          * _id : 604b387942cb073ec4dfef16
          * activity_id : 5
          * activity_title : Vendor cancelled

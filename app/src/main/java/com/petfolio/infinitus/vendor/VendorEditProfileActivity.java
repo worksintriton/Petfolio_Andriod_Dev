@@ -223,7 +223,7 @@ public class VendorEditProfileActivity extends AppCompatActivity implements View
                                 verifyemailstatus
 
                         );
-                        Intent intent = new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), VendorDashboardActivity.class);
                         startActivity(intent);
                         finish();
 

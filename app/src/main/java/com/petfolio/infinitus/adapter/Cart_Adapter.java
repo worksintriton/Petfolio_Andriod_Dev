@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,6 +74,7 @@ public class Cart_Adapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder>
         if (data.get(position).getProduct_id().getCost() != 0) {
             holder.txt_discount_amount.setText("\u20B9 " + data.get(position).getProduct_id().getCost());
         }
+        Log.w(TAG,"Discount-->"+data.get(position).getProduct_id().getDiscount());
         if (data.get(position).getProduct_id().getDiscount() != 0) {
             holder.txt_discount.setVisibility(View.VISIBLE);
             holder.txt_discount.setText(data.get(position).getProduct_id().getDiscount() + " % off");

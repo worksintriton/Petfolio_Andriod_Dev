@@ -22,6 +22,7 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
 import com.petfolio.infinitus.activity.location.ManageAddressActivity;
 import com.petfolio.infinitus.adapter.ViewPagerDoctorClinicDetailsAdapter;
+import com.petfolio.infinitus.adapter.ViewPagerVendorDetailsAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
@@ -30,8 +31,10 @@ import com.petfolio.infinitus.doctor.EditDoctorBusinessInfoActivity;
 import com.petfolio.infinitus.doctor.EditDoctorProfileImageActivity;
 import com.petfolio.infinitus.petlover.AddYourPetOldUserActivity;
 import com.petfolio.infinitus.requestpojo.DoctorDetailsByUserIdRequest;
+import com.petfolio.infinitus.requestpojo.VendorGetsOrderIdRequest;
 import com.petfolio.infinitus.responsepojo.DoctorDetailsByUserIdResponse;
 import com.petfolio.infinitus.responsepojo.PetListResponse;
+import com.petfolio.infinitus.responsepojo.VendorGetsOrderIDResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -93,7 +96,6 @@ public class VendorProfileScreenActivity extends AppCompatActivity implements Vi
     AVLoadingIndicatorView avi_indicator;
 
 
-
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_logout)
     TextView txt_logout;
@@ -111,15 +113,24 @@ public class VendorProfileScreenActivity extends AppCompatActivity implements Vi
     @BindView(R.id.txt_edit_doc_business_info)
     TextView txt_edit_doc_business_info;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_business_name)
+    TextView txt_business_name;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_business_email)
+    TextView txt_business_email;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_phone)
+    TextView txt_phone;
+
+
 
     private SessionManager session;
     String name,emailid,phoneNo,userid;
-    private List<PetListResponse.DataBean> petList;
     private Dialog dialog;
-    private List<DoctorDetailsByUserIdResponse.DataBean.ClinicPicBean> doctorclinicdetailsResponseList;
-    private String clinicname,doctorname;
-    private String concatenatedSpcNames = "";
-    private String concatenatedPetHandled = "";
+
 
     int currentPage = 0;
     Timer timer;
@@ -171,7 +182,7 @@ public class VendorProfileScreenActivity extends AppCompatActivity implements Vi
 
 
         if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-           // doctorDetailsByUserIdResponseCall();
+            getVendorOrderIDResponseCall();
         }
 
 
@@ -259,98 +270,90 @@ public class VendorProfileScreenActivity extends AppCompatActivity implements Vi
 
     }
 
-
-
-
-
-
-    private void doctorDetailsByUserIdResponseCall() {
+    private void getVendorOrderIDResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
-        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<DoctorDetailsByUserIdResponse> call = ApiService.doctorDetailsByUserIdResponseCall(RestUtils.getContentType(),doctorDetailsByUserIdRequest());
-        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<VendorGetsOrderIDResponse> call = apiInterface.vendor_gets_orderbyId_ResponseCall(RestUtils.getContentType(), vendorGetsOrderIdRequest());
+        Log.w(TAG,"getVendorOrderIDResponseCall url  :%s"+" "+ call.request().url().toString());
 
-        call.enqueue(new Callback<DoctorDetailsByUserIdResponse>() {
+        call.enqueue(new Callback<VendorGetsOrderIDResponse>() {
+            @SuppressLint({"LongLogTag", "LogNotTimber"})
             @Override
-            public void onResponse(@NonNull Call<DoctorDetailsByUserIdResponse> call, @NonNull Response<DoctorDetailsByUserIdResponse> response) {
-                avi_indicator.smoothToHide();
-                Log.w(TAG,"DoctorDetailsByUserIdResponse"+ "--->" + new Gson().toJson(response.body()));
+            public void onResponse(@NonNull Call<VendorGetsOrderIDResponse> call, @NonNull Response<VendorGetsOrderIDResponse> response) {
 
+                Log.w(TAG,"getVendorOrderIDResponseCall"+ "--->" + new Gson().toJson(response.body()));
+
+                 avi_indicator.smoothToHide();
 
                 if (response.body() != null) {
-                    if(200 == response.body().getCode()){
+                    if(response.body().getCode() == 200){
 
-                        doctorclinicdetailsResponseList  = response.body().getData().getClinic_pic();
-                        clinicname =  response.body().getData().getClinic_name();
-                        doctorname = response.body().getData().getDr_name();
+                        if(response.body().getData()!=null){
 
-
-
-
-
-                        Log.w(TAG,"Size"+doctorclinicdetailsResponseList.size());
-                        Log.w(TAG,"doctorclinicdetailsResponseList : "+new Gson().toJson(doctorclinicdetailsResponseList));
-
-                        if(doctorclinicdetailsResponseList != null && doctorclinicdetailsResponseList.size()>0){
-
-                            for (int i = 0; i < doctorclinicdetailsResponseList.size(); i++) {
-                                doctorclinicdetailsResponseList.get(i).getClinic_pic();
-                                Log.w(TAG, "RES" + ", " +  doctorclinicdetailsResponseList.get(i).getClinic_pic());
+                            if(response.body().getData().get_id()!=null&&!(response.body().getData().get_id().isEmpty())){
+                                APIClient.VENDOR_ID = response.body().getData().get_id();
                             }
 
 
-                            viewpageData(doctorclinicdetailsResponseList);
+                            if(response.body().getData().getBussiness_gallery() != null && response.body().getData().getBussiness_gallery().size()>0){
+                                for (int i = 0; i < response.body().getData().getBussiness_gallery().size(); i++) {
+                                    response.body().getData().getBussiness_gallery().get(i).getBussiness_gallery();
+                                }
 
-                        }
 
+                                viewpageData(response.body().getData().getBussiness_gallery());
 
-                        if(response.body().getData().getSpecialization() != null){
-                            for (int i = 0; i < response.body().getData().getSpecialization().size(); i++) {
-                                concatenatedSpcNames += response.body().getData().getSpecialization().get(i).getSpecialization();
-                                if (i < response.body().getData().getSpecialization().size() - 1) concatenatedSpcNames += ", ";
+                                if(response.body().getData().getBussiness_name() != null){
+                                    txt_business_name.setText(response.body().getData().getBussiness_name());
+                                }
+                                if(response.body().getData().getBussiness_email() != null){
+                                    txt_business_email.setText(response.body().getData().getBussiness_email());
+                                }
+                                if(response.body().getData().getBussiness_phone() != null){
+                                    txt_phone.setText(response.body().getData().getBussiness_phone());
+                                }
+
                             }
 
-                        }
-                        if(response.body().getData().getPet_handled() != null){
-                            for (int i = 0; i < response.body().getData().getPet_handled().size(); i++) {
-                                concatenatedPetHandled += response.body().getData().getPet_handled().get(i).getPet_handled();
-                                if (i < response.body().getData().getPet_handled().size() - 1) concatenatedPetHandled += ", ";
-                            }
 
                         }
+
 
                     }
 
-
                 }
+
+
             }
 
+            @SuppressLint({"LongLogTag", "LogNotTimber"})
             @Override
-            public void onFailure(@NonNull Call<DoctorDetailsByUserIdResponse> call, @NonNull Throwable t) {
-                avi_indicator.smoothToHide();
+            public void onFailure(@NonNull Call<VendorGetsOrderIDResponse> call, @NonNull Throwable t) {
 
-                Log.w(TAG,"DoctorDetailsResponse flr"+"--->" + t.getMessage());
+                  avi_indicator.smoothToHide();
+
+                Log.w(TAG,"getVendorOrderIDResponseCall flr"+"--->" + t.getMessage());
             }
         });
 
     }
-    private DoctorDetailsByUserIdRequest doctorDetailsByUserIdRequest() {
-        DoctorDetailsByUserIdRequest doctorDetailsByUserIdRequest = new DoctorDetailsByUserIdRequest();
-        doctorDetailsByUserIdRequest.setUser_id(userid);
-        Log.w(TAG,"doctorDetailsByUserIdRequest"+ "--->" + new Gson().toJson(doctorDetailsByUserIdRequest));
-        return doctorDetailsByUserIdRequest;
+    private VendorGetsOrderIdRequest vendorGetsOrderIdRequest() {
+        VendorGetsOrderIdRequest vendorGetsOrderIdRequest = new VendorGetsOrderIdRequest();
+        vendorGetsOrderIdRequest.setUser_id(userid);
+        Log.w(TAG,"vendorGetsOrderIdRequest"+ "--->" + new Gson().toJson(vendorGetsOrderIdRequest));
+        return vendorGetsOrderIdRequest;
     }
-    private void viewpageData(List<DoctorDetailsByUserIdResponse.DataBean.ClinicPicBean> doctorclinicdetailsResponseList) {
+    private void viewpageData(List<VendorGetsOrderIDResponse.DataBean.BussinessGalleryBean> bussiness_gallery) {
         tabLayout.setupWithViewPager(viewPager, true);
 
-        ViewPagerDoctorClinicDetailsAdapter viewPagerClinicDetailsAdapter = new ViewPagerDoctorClinicDetailsAdapter(getApplicationContext(), doctorclinicdetailsResponseList);
-        viewPager.setAdapter(viewPagerClinicDetailsAdapter);
+        ViewPagerVendorDetailsAdapter viewPagerVendorDetailsAdapter = new ViewPagerVendorDetailsAdapter(getApplicationContext(), bussiness_gallery);
+        viewPager.setAdapter(viewPagerVendorDetailsAdapter);
         /*After setting the adapter use the timer */
         final Handler handler = new Handler();
         final Runnable Update =  new Runnable() {
             public void run() {
-                if (currentPage == VendorProfileScreenActivity.this.doctorclinicdetailsResponseList.size()) {
+                if (currentPage == bussiness_gallery.size()) {
                     currentPage = 0;
                 }
                 viewPager.setCurrentItem(currentPage++, false);

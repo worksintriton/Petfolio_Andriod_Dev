@@ -267,29 +267,31 @@ public class EditVendorProfileImageActivity extends AppCompatActivity implements
 
             if(requestCode == SELECT_CLINIC_CAMERA)
             {
-                Bitmap photo = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
+                if(data != null) {
+                    Bitmap photo = (Bitmap) data.getExtras().get("data");
 
-                File file = new File(getFilesDir(), "Petfolio1" + ".jpg");
+                    File file = new File(getFilesDir(), "Petfolio1" + ".jpg");
 
-                OutputStream os;
-                try {
-                    os = new FileOutputStream(file);
-                    if (photo != null) {
-                        photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
+                    OutputStream os;
+                    try {
+                        os = new FileOutputStream(file);
+                        if (photo != null) {
+                            photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
+                        }
+                        os.flush();
+                        os.close();
+                    } catch (Exception e) {
+                        Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
                     }
-                    os.flush();
-                    os.close();
-                } catch (Exception e) {
-                    Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+                    String currentDateandTime = sdf.format(new Date());
+
+                    RequestBody requestFile = RequestBody.create(MediaType.parse("image*/"), file);
+
+                    filePart = MultipartBody.Part.createFormData("sampleFile", userid + currentDateandTime + file.getName(), requestFile);
+
+                    uploadPetImage();
                 }
-                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
-                String currentDateandTime = sdf.format(new Date());
-
-                RequestBody requestFile = RequestBody.create(MediaType.parse("image*/"), file);
-
-                filePart = MultipartBody.Part.createFormData("sampleFile",  userid+currentDateandTime+file.getName(), requestFile);
-
-                uploadPetImage();
 
             }
 
@@ -298,36 +300,39 @@ public class EditVendorProfileImageActivity extends AppCompatActivity implements
                 try {
                     if (resultCode == Activity.RESULT_OK)
                     {
+                        if(data != null){
+                            Log.w("VALUEEEEEEE1111", " " + data);
 
-                        Log.w("VALUEEEEEEE1111", " " + data);
+                            Uri selectedImageUri = data.getData();
 
-                        Uri selectedImageUri = data.getData();
+                            Log.w("selectedImageUri", " " + selectedImageUri);
 
-                        Log.w("selectedImageUri", " " + selectedImageUri);
+                            String filename = null;
+                            if (selectedImageUri != null) {
+                                filename = getFileName(selectedImageUri);
+                            }
 
-                        String filename = null;
-                        if (selectedImageUri != null) {
-                            filename = getFileName(selectedImageUri);
+                            Log.w("filename", " " + filename);
+
+                            String filePath = FileUtil.getPath(EditVendorProfileImageActivity.this,selectedImageUri);
+
+                            assert filePath != null;
+
+                            File file = new File(filePath); // initialize file here
+
+                            long length = file.length() / 1024; // Size in KB
+
+                            Log.w("filesize", " " + length);
+
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+                            String currentDateandTime = sdf.format(new Date());
+
+                            filePart = MultipartBody.Part.createFormData("sampleFile", userid+currentDateandTime+file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+
+                            uploadPetImage();
                         }
 
-                        Log.w("filename", " " + filename);
 
-                        String filePath = FileUtil.getPath(EditVendorProfileImageActivity.this,selectedImageUri);
-
-                        assert filePath != null;
-
-                        File file = new File(filePath); // initialize file here
-
-                        long length = file.length() / 1024; // Size in KB
-
-                        Log.w("filesize", " " + length);
-
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
-                        String currentDateandTime = sdf.format(new Date());
-
-                        filePart = MultipartBody.Part.createFormData("sampleFile", userid+currentDateandTime+file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-
-                        uploadPetImage();
 
 
                     }

@@ -6,6 +6,7 @@ public class VendorRegisterFormCreateRequest {
 
     /**
      * user_id : 123123213
+     * _id
      * user_name : Mohammed imthiyas
      * user_email : mohammed@gmail.com
      * bussiness_name : Mohammed
@@ -28,6 +29,7 @@ public class VendorRegisterFormCreateRequest {
      */
 
     private String user_id;
+    private String _id;
     private String user_name;
     private String user_email;
     private String bussiness_name;
@@ -48,6 +50,13 @@ public class VendorRegisterFormCreateRequest {
     private List<BussinessGalleryBean> bussiness_gallery;
     private List<CertifiBean> certifi;
 
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
 
     public String getUser_id() {
         return user_id;

@@ -560,6 +560,10 @@ public interface RestApiInterface {
     @POST("product_vendor/create")
     Call<VendorRegisterFormCreateResponse>vendorRegisterFormCreateResponseCall(@Header("Content-Type") String type, @Body VendorRegisterFormCreateRequest vendorRegisterFormCreateRequest );
 
+   /*Service provider register form update*/
+    @POST("product_vendor/edit")
+    Call<VendorRegisterFormCreateResponse>vendorRegisterFormUpdateResponseCall(@Header("Content-Type") String type, @Body VendorRegisterFormCreateRequest vendorRegisterFormCreateRequest );
+
 
     /*Vendor Check status*/
     @POST("product_vendor/check_status")

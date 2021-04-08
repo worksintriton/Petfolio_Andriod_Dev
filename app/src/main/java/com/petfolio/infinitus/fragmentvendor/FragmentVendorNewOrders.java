@@ -238,14 +238,9 @@ public class FragmentVendorNewOrders extends Fragment implements View.OnClickLis
 
    @SuppressLint("LogNotTimber")
    private VendorGetsOrderIdRequest vendorGetsOrderIdRequest(String userid) {
-
         VendorGetsOrderIdRequest vendorGetsOrderIdRequest = new VendorGetsOrderIdRequest();
-
         vendorGetsOrderIdRequest.setUser_id(userid);
-
         Log.w(TAG,"vendorGetsOrderIdRequest"+ "--->" + new Gson().toJson(vendorGetsOrderIdRequest));
-        //  Toasty.success(getApplicationContext(),"fbTokenUpdateRequest : "+new Gson().toJson(fbTokenUpdateRequest), Toast.LENGTH_SHORT, true).show();
-
         return vendorGetsOrderIdRequest;
     }
 
