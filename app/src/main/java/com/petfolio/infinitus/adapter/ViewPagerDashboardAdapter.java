@@ -4,9 +4,11 @@ import android.content.Context;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
@@ -53,8 +55,9 @@ public class ViewPagerDashboardAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup view, int position) {
-        View itemView = inflater.inflate(R.layout.sliding_image, view, false);
+        View itemView = inflater.inflate(R.layout.sliding_image_banner, view, false);
         ImageView imageView = itemView.findViewById(R.id.itemImage);
+        TextView txt_banner_title = itemView.findViewById(R.id.txt_banner_title);
 
 
 
@@ -62,6 +65,10 @@ public class ViewPagerDashboardAdapter extends PagerAdapter {
 
         try {
             String imageURL = listHomeBannerResponse.get(position).getImg_path();
+            String bannerTitle = listHomeBannerResponse.get(position).getTitle();
+            if(bannerTitle != null){
+                txt_banner_title.setText(bannerTitle);
+            }
             if(imageURL != null && !imageURL.isEmpty()){
                 Glide.with(context)
                         .load(imageURL)

@@ -32,8 +32,6 @@ public class PetShopProductDetailsImageAdapter extends  RecyclerView.Adapter<Rec
     ShopDashboardResponse.DataBean.ProductDetailsBean.ProductListBean currentItem;
 
 
-
-
     public PetShopProductDetailsImageAdapter(Context context,List<ShopDashboardResponse.DataBean.ProductDetailsBean.ProductListBean> productList) {
         this.context = context;
         this.productList = productList;

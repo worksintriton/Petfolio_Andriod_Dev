@@ -63,7 +63,8 @@ public class PetLoverDashboardProductsAdapter extends  RecyclerView.Adapter<Recy
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
           currentItem = productDetailsResponseList.get(position);
-          Log.w(TAG,"getImg_path :"+currentItem.getImg_path());
+
+          /*Log.w(TAG,"getImg_path :"+currentItem.getImg_path());
 
           if (currentItem.getImg_path() != null && !currentItem.getImg_path().isEmpty()) {
 
@@ -78,7 +79,7 @@ public class PetLoverDashboardProductsAdapter extends  RecyclerView.Adapter<Recy
                     .load(APIClient.PROFILE_IMAGE_URL)
                     .into(holder.img_products_image);
 
-        }
+        }*/
 
         holder.ll_root.setOnClickListener(new View.OnClickListener() {
             @Override

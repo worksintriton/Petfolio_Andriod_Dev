@@ -2,22 +2,28 @@ package com.petfolio.infinitus.responsepojo;
 
 
 import java.util.List;
-
-public class PetLoverDashboardResponse {
-
+public class PetLoverDashboardResponse{
 
     /**
      * Status : Success
      * Message : Pet Lover Dashboard Details
-     * Data : {"SOS":[{"Number":9876543210},{"Number":9876543211},{"Number":9876543212},{"Number":9876543214}],"LocationDetails":[{"_id":"5fd842ea7aa4cc1c6a1e5638","user_id":"5fd841a67aa4cc1c6a1e5636","location_state":"Tamil Nadu","location_country":"India","location_city":"Iluppaiyur","location_pin":"621006","location_address":"Karatampatti Iluppaiyur road, Iluppaiyur, Tamil Nadu 621006, India","location_lat":11.065114195042826,"location_long":78.63421741873026,"location_title":"Home","location_nickname":"Dk home","default_status":true,"date_and_time":"15-12-2020 10:30 AM","mobile_type":"Android","delete_status":false,"__v":0}],"PetDetails":[{"_id":"5fd842507aa4cc1c6a1e5637","user_id":"5fd841a67aa4cc1c6a1e5636","pet_img":"http://52.25.163.13:3000/api/uploads/5fd841a67aa4cc1c6a1e563615-12-2020 10:29 AMPetfolio1.jpg","pet_name":"DOG","pet_type":"Dog","pet_breed":"Bull dog","pet_gender":"Male","pet_color":"Gray","pet_weight":5,"pet_age":1,"vaccinated":true,"last_vaccination_date":"14-12-2020","default_status":true,"date_and_time":"15-12-2020 10:27 AM","mobile_type":"Android","__v":0},{"_id":"5feaf6186e150222f151a01e","user_id":"5fd841a67aa4cc1c6a1e5636","pet_img":"http://52.25.163.13:3000/api/uploads/5fd841a67aa4cc1c6a1e5636Petfolio1.jpg","pet_name":"DOG Teens","pet_type":"Dog","pet_breed":"German sheperd","pet_gender":"","pet_color":"","pet_weight":0,"pet_age":0,"vaccinated":false,"last_vaccination_date":"","default_status":true,"date_and_time":"29-12-2020 02:55 PM","mobile_type":"Android","updatedAt":"2020-12-29T09:25:44.918Z","createdAt":"2020-12-29T09:25:44.918Z","__v":0}],"userdetails":{"_id":"5fd841a67aa4cc1c6a1e5636","first_name":"Kumar","last_name":"Dk","user_email":"iddineshkumar@gmail.com","user_phone":"6383791451","date_of_reg":"15/12/2020 10:25 AM","user_type":1,"user_status":"complete","otp":425519,"fb_token":"fTBhnOXQSFiib-k7z_v3tq:APA91bEaguNGK8B6wuL1TY4-tjWkmX9ZlIk9pVQZZRf1gxJmDe5JcqEqKAXqPoq6NCNoEm745TShStzXvSJVWjs4OcDnM1EbySmM_nbJW8rrYRI3KNKB_RPtiuS97tnOt512TTc7dyMC","device_id":"","device_type":"","mobile_type":"Android","delete_status":false,"__v":0,"updatedAt":"2020-12-31T05:00:54.817Z"},"Dashboarddata":{"Banner_details":[{"_id":"5fdc49c21e5d8b0eb31c36b3","title":"","img_path":"http://52.25.163.13:3000/api/uploads/Slide1.jpg"}],"Doctor_details":[{"_id":"5fec55a29c25086a03d72d38","doctor_name":"DINESHKUMAR","doctor_img":"http://52.25.163.13:3000/api/uploads/5fec55a29c25086a03d72d3830-12-2020 04:04 PMPetfolio1.jpg","specialization":[{"specialization":"Surgeon"},{"specialization":"Internal Medicine Physician"},{"specialization":"Psychiatrist"}],"distance":"0.00","star_count":4,"review_count":223},{"_id":"5fec58129c25086a03d72d3a","doctor_name":"","doctor_img":"http://52.25.163.13:3000/api/uploads/5fec58129c25086a03d72d3a3012161129","specialization":[{"specialization":"Family Physician"},{"specialization":"Internal Medicine Physician"},{"specialization":"Cardiologist"}],"distance":"268.38","star_count":4,"review_count":223},{"_id":"5fec7215343cb878a26f929f","doctor_name":"dr ram ","doctor_img":"http://52.25.163.13:3000/api/uploads/5fec7215343cb878a26f929f3012180052","specialization":[{"specialization":"Pediatrician"},{"specialization":"Cardiologist"},{"specialization":"Endocrinologist"}],"distance":"268.38","star_count":4,"review_count":223},{"_id":"5fec7766343cb878a26f92a3","doctor_name":"dr Sriram","doctor_img":"http://52.25.163.13:3000/api/uploads/5fec7766343cb878a26f92a33012182054","specialization":[{"specialization":"Family Physician"},{"specialization":"Internal Medicine Physician"},{"specialization":"Psychiatrist"},{"specialization":"Dermatologist"}],"distance":"268.38","star_count":4,"review_count":223},{"_id":"5fecc29ae5e324019968e0a6","doctor_name":"hari","doctor_img":"http://52.25.163.13:3000/api/uploads/5fecc29ae5e324019968e0a630-12-2020 11:42 PMScreenshot_20201230-221005.jpg","specialization":[{"specialization":"Surgeon"},{"specialization":"Internal Medicine Physician"},{"specialization":"Dermatologist"},{"specialization":"Psychiatrist"},{"specialization":"Family Physician"},{"specialization":"Pediatrician"},{"specialization":"Cardiologist"},{"specialization":"Endocrinologist"}],"distance":"268.68","star_count":4,"review_count":223},{"_id":"5fecb55be5e324019968e0a0","doctor_name":"Boss","doctor_img":"http://52.25.163.13:3000/api/uploads/5fecb55be5e324019968e0a030-12-2020 10:44 pmPetfolio1.jpg","specialization":[{"specialization":"Family Physician"},{"specialization":"Pediatrician"},{"specialization":"Cardiologist"},{"specialization":"Endocrinologist"}],"distance":"276.20","star_count":4,"review_count":223}],"Service_details":[{"_id":"123456","service_icon":"http://52.25.163.13:3000/api/uploads/1.jpeg","service_title":"Grooming","background_color":"#00FFA2"},{"_id":"123456","service_icon":"http://52.25.163.13:3000/api/uploads/2.jpeg","service_title":"Bathing","background_color":"#2980B9"},{"_id":"123456","service_icon":"http://52.25.163.13:3000/api/uploads/3.jpeg","service_title":"Training","background_color":"#45B39D"},{"_id":"123456","service_icon":"http://52.25.163.13:3000/api/uploads/4.jpeg","service_title":"Grooming","background_color":"#00FFA2"}],"Products_details":[{"_id":"5fec1424ea832e2e73c1fc78","img_path":"http://52.25.163.13:3000/api/uploads/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png","product_cate":"Dog_Foot","img_index":9,"show_status":true,"date_and_time":"12/30/2020, 11:16:12 AM","delete_status":false,"updatedAt":"2020-12-30T05:46:12.099Z","createdAt":"2020-12-30T05:46:12.099Z","__v":0},{"_id":"5fec14a5ea832e2e73c1fc79","img_path":"http://52.25.163.13:3000/api/uploads/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png","product_cate":"Cat_Food","img_index":9,"show_status":true,"date_and_time":"12/30/2020, 11:18:21 AM","delete_status":false,"updatedAt":"2020-12-30T05:48:21.363Z","createdAt":"2020-12-30T05:48:21.363Z","__v":0},{"_id":"5fec1573ea832e2e73c1fc7a","img_path":"http://52.25.163.13:3000/api/uploads/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png","product_cate":"Cow_food","img_index":9,"show_status":true,"date_and_time":"12/30/2020, 11:21:47 AM","delete_status":false,"updatedAt":"2020-12-30T05:51:47.787Z","createdAt":"2020-12-30T05:51:47.787Z","__v":0},{"_id":"5fec22eeea832e2e73c1fc7b","img_path":"http://52.25.163.13:3000/api/uploads/template (1).png","product_cate":"Bird_Food","img_index":0,"show_status":true,"date_and_time":"12/30/2020, 12:19:18 PM","delete_status":false,"updatedAt":"2020-12-30T06:49:18.019Z","createdAt":"2020-12-30T06:49:18.019Z","__v":0}],"Puppy_Products_details":[{"_id":"5fec1424ea832e2e73c1fc78","img_path":"http://52.25.163.13:3000/api/uploads/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png","product_cate":"Dog_Foot","img_index":9,"show_status":true,"date_and_time":"12/30/2020, 11:16:12 AM","delete_status":false,"updatedAt":"2020-12-30T05:46:12.099Z","createdAt":"2020-12-30T05:46:12.099Z","__v":0},{"_id":"5fec14a5ea832e2e73c1fc79","img_path":"http://52.25.163.13:3000/api/uploads/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png","product_cate":"Cat_Food","img_index":9,"show_status":true,"date_and_time":"12/30/2020, 11:18:21 AM","delete_status":false,"updatedAt":"2020-12-30T05:48:21.363Z","createdAt":"2020-12-30T05:48:21.363Z","__v":0},{"_id":"5fec1573ea832e2e73c1fc7a","img_path":"http://52.25.163.13:3000/api/uploads/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png","product_cate":"Cow_food","img_index":9,"show_status":true,"date_and_time":"12/30/2020, 11:21:47 AM","delete_status":false,"updatedAt":"2020-12-30T05:51:47.787Z","createdAt":"2020-12-30T05:51:47.787Z","__v":0},{"_id":"5fec22eeea832e2e73c1fc7b","img_path":"http://52.25.163.13:3000/api/uploads/template (1).png","product_cate":"Bird_Food","img_index":0,"show_status":true,"date_and_time":"12/30/2020, 12:19:18 PM","delete_status":false,"updatedAt":"2020-12-30T06:49:18.019Z","createdAt":"2020-12-30T06:49:18.019Z","__v":0}]},"messages":[{"title":"Doctor","message":"Unable to find the doctor near your location can i show the doctor above the location"},{"title":"Product","message":"Unable to find the Product near your location can i show the doctor above the location"},{"title":"sercive","message":"Unable to find the Sercive near your location can i show the doctor above the location"}]}
+     * Data : {"SOS":[{"Number":9876543210},{"Number":9876543211},{"Number":9876543212},{"Number":9876543214}],"LocationDetails":[{"_id":"603e39522c2b43125f8cb809","user_id":"603e388f2c2b43125f8cb808","location_state":"TN","location_country":"India","location_city":"Chennai","location_pin":"600042","location_address":"5-38A, 2nd Main Rd, Ram Nagar, Karnam Street, Karunabigai Colony, Velachery, Chennai, Tamil Nadu 600042, India","location_lat":12.9832535692558,"location_long":80.22351376712322,"location_title":"Home","location_nickname":"park hotel","default_status":true,"date_and_time":"02-03-2021 06:40 PM","mobile_type":"IOS","delete_status":false,"updatedAt":"2021-03-02T13:10:42.571Z","createdAt":"2021-03-02T13:10:42.571Z","__v":0}],"PetDetails":[{"pet_img":[{"pet_img":"http://54.212.108.156:3000/api/uploads/1614864579584.603e388f2c2b43125f8cb8080403185939"},{"pet_img":"http://54.212.108.156:3000/api/uploads/1614864587880.603e388f2c2b43125f8cb8080403185947"}],"_id":"6040dfcb2c2b43125f8cb8b5","user_id":"603e388f2c2b43125f8cb808","pet_name":"jimmy ","pet_type":"Dog","pet_breed":"Golden Retrieve","pet_gender":"Male","pet_color":"white","pet_weight":10.12,"pet_age":"0 years 2 months","pet_dob":"02-01-2021","pet_spayed":true,"pet_purebred":false,"pet_frnd_with_dog":true,"pet_frnd_with_cat":false,"pet_frnd_with_kit":true,"pet_microchipped":true,"pet_tick_free":false,"pet_private_part":false,"vaccinated":true,"last_vaccination_date":"04-02-2021","default_status":true,"date_and_time":"04-03-2021 06:59 PM","mobile_type":"IOS","delete_status":false,"updatedAt":"2021-03-04T13:29:49.575Z","createdAt":"2021-03-04T13:25:31.366Z","__v":0}],"userdetails":{"_id":"603e388f2c2b43125f8cb808","first_name":"Sri","last_name":"ram","user_email":"","user_phone":"1222222221","date_of_reg":"02-03-2021 06:37 PM","user_type":1,"user_status":"complete","otp":123456,"profile_img":"","user_email_verification":false,"fb_token":"de5HE6dVrEixslsoO4vaZD:APA91bHCXR7pZPh_GotF8SfzlBB6r8o8Rrn39YMhDqYI7i3np0sR4zsSPB1Q3GZfEGS_0-Frl0et2vQjuSiXexTDfauEDRc7MA69nhhWbj-GmRmclzuPYQpAgwaVm-oe7KyzBDxCHHGa","device_id":"","device_type":"","mobile_type":"IOS","delete_status":false,"updatedAt":"2021-04-09T07:43:29.794Z","createdAt":"2021-03-02T13:07:27.079Z","__v":0},"Dashboarddata":{"Banner_details":[{"_id":"602e3a1bf62e8d2089fba972","title":"Title 4","img_path":"http://54.212.108.156:3000/api/uploads/SS.jpg"},{"_id":"6035074245c5f677b63c3a68","title":"","img_path":"http://54.212.108.156:3000/api/uploads/1614087999003.jpg"},{"_id":"6035075845c5f677b63c3a69","title":"","img_path":"http://54.212.108.156:3000/api/uploads/1614088020969.jpg"},{"_id":"6035077545c5f677b63c3a6b","title":"","img_path":"http://54.212.108.156:3000/api/uploads/1614088050207.jpg"}],"Doctor_details":[{"_id":"6040832b2c2b43125f8cb843","doctor_name":"Dr .Albert Doctor","doctor_img":"http://54.212.108.156:3000/api/uploads/1614840819938.jpg","specialization":[{"specialization":"Surgeon"},{"specialization":"Internal Medicine Physician"}],"distance":"0.00","clinic_name":"Care Medical Hospital","fav":true,"star_count":5,"review_count":22},{"_id":"6040a24a2c2b43125f8cb866","doctor_name":"Dr.paveen kumar Doctor","doctor_img":"http://54.212.108.156:3000/api/uploads/1614848727515.jpg","specialization":[{"specialization":"Surgeon"},{"specialization":"Internal Medicine Physician"}],"distance":"0.00","clinic_name":"Zen clinic","fav":true,"star_count":5,"review_count":22},{"_id":"603f3e382c2b43125f8cb817","doctor_name":"test","doctor_img":"http://54.212.108.156:3000/api/uploads/1614758959722.png","specialization":[{"specialization":"Family Physician"}],"distance":"310.40","clinic_name":"tre","fav":true,"star_count":5,"review_count":22},{"_id":"603e2a7b2c2b43125f8cb805","doctor_name":"DineshKumar Deva","doctor_img":"http://54.212.108.156:3000/api/uploads/1614688613605.jpeg","specialization":[{"specialization":"Surgeon"},{"specialization":"Internal Medicine Physician"},{"specialization":"Psychiatrist"},{"specialization":"Testing Spef"},{"specialization":"Dermatologist"}],"distance":"8948.52","clinic_name":"Apollo pharmacy","fav":true,"star_count":5,"review_count":22}],"Service_details":[{"_id":"5fe185d61996f651f5133693","service_icon":"http://54.212.108.156:3000/api/uploads/1617889303126.png","service_title":" Dog Walking","background_color":"#F9A826"},{"_id":"5ff7f5171c72093650a13a14","service_icon":"http://54.212.108.156:3000/api/uploads/1617889319529.png","service_title":" Dog Grooming","background_color":"#FF7A7A"},{"_id":"5ff815d4414b1052a09bb2b1","service_icon":"http://54.212.108.156:3000/api/uploads/1617889353269.png","service_title":" Dog Training","background_color":"#9BD152"},{"_id":"602d1fc0562e0916bc9b3245","service_icon":"http://54.212.108.156:3000/api/uploads/1617889386383.png","service_title":"Dog Obedience Training.","background_color":"#009377"},{"_id":"602d1fd0562e0916bc9b3247","service_icon":"http://54.212.108.156:3000/api/uploads/1617889386383.png","service_title":" Pet Sitting","background_color":"#FF0000"},{"_id":"603dc7a01ef90c51d57cf775","service_icon":"http://54.212.108.156:3000/api/uploads/1617889353269.png","service_title":"Hair Cutting","background_color":"#FF6F00"}],"middle_Banner_details":[{"_id":"1231231","title":"banner - 1","img_path":"http://mysalveo.com/api/uploads/images.jpeg"},{"_id":"1231231","title":"banner - 2","img_path":"http://mysalveo.com/api/uploads/images.jpeg"},{"_id":"1231231","title":"banner - 3","img_path":"http://mysalveo.com/api/uploads/images.jpeg"}],"Products_details":[{"_id":"602e11404775fa0735d7bf40","product_img":"http://54.212.108.156:3000/api/uploads/resize-1613548631141238608collar.jpg","cat_name":"PET COLLARS & LEASHES","product_title":"DOGISTA PET PRODUCTS Dog Rope Leash,Brass","product_price":180,"product_discount":0,"product_fav":false,"product_rating":5,"product_review":0},{"_id":"602e467ff62e8d2089fba973","product_img":"http://54.212.108.156:3000/api/uploads/1615955637906.jpeg","cat_name":"Cat Food","product_title":"Cat Food","product_price":1000,"product_discount":0,"product_fav":false,"product_rating":5,"product_review":0},{"_id":"602e46d8f62e8d2089fba974","product_img":"http://54.212.108.156:3000/api/uploads/1615955710860.jpeg","cat_name":"Cow food","product_title":"Cow food","product_price":1000,"product_discount":0,"product_fav":false,"product_rating":5,"product_review":0},{"_id":"602e4734f62e8d2089fba975","product_img":"http://54.212.108.156:3000/api/uploads/1615955852371.jpeg","cat_name":"Bird Food","product_title":"Bird Food","product_price":1000,"product_discount":0,"product_fav":false,"product_rating":5,"product_review":0},{"_id":"602e478af62e8d2089fba976","product_img":"http://54.212.108.156:3000/api/uploads/Product \u2013 2.png","cat_name":"Cat Food","product_title":"Bellotta | Cat Food","product_price":2580,"product_discount":0,"product_fav":false,"product_rating":5,"product_review":0}],"Puppy_Products_details":[{"_id":"602e11404775fa0735d7bf40","product_img":"http://54.212.108.156:3000/api/uploads/resize-1613548631141238608collar.jpg","cat_name":"PET COLLARS & LEASHES","product_title":"DOGISTA PET PRODUCTS Dog Rope Leash,Brass","product_price":180,"product_discount":0,"product_fav":false,"product_rating":5,"product_review":0},{"_id":"602e467ff62e8d2089fba973","product_img":"http://54.212.108.156:3000/api/uploads/1615955637906.jpeg","cat_name":"Cat Food","product_title":"Cat Food","product_price":1000,"product_discount":0,"product_fav":false,"product_rating":5,"product_review":0},{"_id":"602e46d8f62e8d2089fba974","product_img":"http://54.212.108.156:3000/api/uploads/1615955710860.jpeg","cat_name":"Cow food","product_title":"Cow food","product_price":1000,"product_discount":0,"product_fav":false,"product_rating":5,"product_review":0},{"_id":"602e4734f62e8d2089fba975","product_img":"http://54.212.108.156:3000/api/uploads/1615955852371.jpeg","cat_name":"Bird Food","product_title":"Bird Food","product_price":1000,"product_discount":0,"product_fav":false,"product_rating":5,"product_review":0},{"_id":"602e478af62e8d2089fba976","product_img":"http://54.212.108.156:3000/api/uploads/Product \u2013 2.png","cat_name":"Cat Food","product_title":"Bellotta | Cat Food","product_price":2580,"product_discount":0,"product_fav":false,"product_rating":5,"product_review":0}]},"messages":[{"title":"Doctor","message":"Unable to find the doctor near your location can i show the doctor above the location"},{"title":"Product","message":"Unable to find the Product near your location can i show the doctor above the location"},{"title":"sercive","message":"Unable to find the Sercive near your location can i show the doctor above the location"}]}
      * Code : 200
      */
 
     private String Status;
     private String Message;
+    /**
+     * SOS : [{"Number":9876543210},{"Number":9876543211},{"Number":9876543212},{"Number":9876543214}]
+     * LocationDetails : [{"_id":"603e39522c2b43125f8cb809","user_id":"603e388f2c2b43125f8cb808","location_state":"TN","location_country":"India","location_city":"Chennai","location_pin":"600042","location_address":"5-38A, 2nd Main Rd, Ram Nagar, Karnam Street, Karunabigai Colony, Velachery, Chennai, Tamil Nadu 600042, India","location_lat":12.9832535692558,"location_long":80.22351376712322,"location_title":"Home","location_nickname":"park hotel","default_status":true,"date_and_time":"02-03-2021 06:40 PM","mobile_type":"IOS","delete_status":false,"updatedAt":"2021-03-02T13:10:42.571Z","createdAt":"2021-03-02T13:10:42.571Z","__v":0}]
+     * PetDetails : [{"pet_img":[{"pet_img":"http://54.212.108.156:3000/api/uploads/1614864579584.603e388f2c2b43125f8cb8080403185939"},{"pet_img":"http://54.212.108.156:3000/api/uploads/1614864587880.603e388f2c2b43125f8cb8080403185947"}],"_id":"6040dfcb2c2b43125f8cb8b5","user_id":"603e388f2c2b43125f8cb808","pet_name":"jimmy ","pet_type":"Dog","pet_breed":"Golden Retrieve","pet_gender":"Male","pet_color":"white","pet_weight":10.12,"pet_age":"0 years 2 months","pet_dob":"02-01-2021","pet_spayed":true,"pet_purebred":false,"pet_frnd_with_dog":true,"pet_frnd_with_cat":false,"pet_frnd_with_kit":true,"pet_microchipped":true,"pet_tick_free":false,"pet_private_part":false,"vaccinated":true,"last_vaccination_date":"04-02-2021","default_status":true,"date_and_time":"04-03-2021 06:59 PM","mobile_type":"IOS","delete_status":false,"updatedAt":"2021-03-04T13:29:49.575Z","createdAt":"2021-03-04T13:25:31.366Z","__v":0}]
+     * userdetails : {"_id":"603e388f2c2b43125f8cb808","first_name":"Sri","last_name":"ram","user_email":"","user_phone":"1222222221","date_of_reg":"02-03-2021 06:37 PM","user_type":1,"user_status":"complete","otp":123456,"profile_img":"","user_email_verification":false,"fb_token":"de5HE6dVrEixslsoO4vaZD:APA91bHCXR7pZPh_GotF8SfzlBB6r8o8Rrn39YMhDqYI7i3np0sR4zsSPB1Q3GZfEGS_0-Frl0et2vQjuSiXexTDfauEDRc7MA69nhhWbj-GmRmclzuPYQpAgwaVm-oe7KyzBDxCHHGa","device_id":"","device_type":"","mobile_type":"IOS","delete_status":false,"updatedAt":"2021-04-09T07:43:29.794Z","createdAt":"2021-03-02T13:07:27.079Z","__v":0}
+     * Dashboarddata : {"Banner_details":[{"_id":"602e3a1bf62e8d2089fba972","title":"Title 4","img_path":"http://54.212.108.156:3000/api/uploads/SS.jpg"},{"_id":"6035074245c5f677b63c3a68","title":"","img_path":"http://54.212.108.156:3000/api/uploads/1614087999003.jpg"},{"_id":"6035075845c5f677b63c3a69","title":"","img_path":"http://54.212.108.156:3000/api/uploads/1614088020969.jpg"},{"_id":"6035077545c5f677b63c3a6b","title":"","img_path":"http://54.212.108.156:3000/api/uploads/1614088050207.jpg"}],"Doctor_details":[{"_id":"6040832b2c2b43125f8cb843","doctor_name":"Dr .Albert Doctor","doctor_img":"http://54.212.108.156:3000/api/uploads/1614840819938.jpg","specialization":[{"specialization":"Surgeon"},{"specialization":"Internal Medicine Physician"}],"distance":"0.00","clinic_name":"Care Medical Hospital","fav":true,"star_count":5,"review_count":22},{"_id":"6040a24a2c2b43125f8cb866","doctor_name":"Dr.paveen kumar Doctor","doctor_img":"http://54.212.108.156:3000/api/uploads/1614848727515.jpg","specialization":[{"specialization":"Surgeon"},{"specialization":"Internal Medicine Physician"}],"distance":"0.00","clinic_name":"Zen clinic","fav":true,"star_count":5,"review_count":22},{"_id":"603f3e382c2b43125f8cb817","doctor_name":"test","doctor_img":"http://54.212.108.156:3000/api/uploads/1614758959722.png","specialization":[{"specialization":"Family Physician"}],"distance":"310.40","clinic_name":"tre","fav":true,"star_count":5,"review_count":22},{"_id":"603e2a7b2c2b43125f8cb805","doctor_name":"DineshKumar Deva","doctor_img":"http://54.212.108.156:3000/api/uploads/1614688613605.jpeg","specialization":[{"specialization":"Surgeon"},{"specialization":"Internal Medicine Physician"},{"specialization":"Psychiatrist"},{"specialization":"Testing Spef"},{"specialization":"Dermatologist"}],"distance":"8948.52","clinic_name":"Apollo pharmacy","fav":true,"star_count":5,"review_count":22}],"Service_details":[{"_id":"5fe185d61996f651f5133693","service_icon":"http://54.212.108.156:3000/api/uploads/1617889303126.png","service_title":" Dog Walking","background_color":"#F9A826"},{"_id":"5ff7f5171c72093650a13a14","service_icon":"http://54.212.108.156:3000/api/uploads/1617889319529.png","service_title":" Dog Grooming","background_color":"#FF7A7A"},{"_id":"5ff815d4414b1052a09bb2b1","service_icon":"http://54.212.108.156:3000/api/uploads/1617889353269.png","service_title":" Dog Training","background_color":"#9BD152"},{"_id":"602d1fc0562e0916bc9b3245","service_icon":"http://54.212.108.156:3000/api/uploads/1617889386383.png","service_title":"Dog Obedience Training.","background_color":"#009377"},{"_id":"602d1fd0562e0916bc9b3247","service_icon":"http://54.212.108.156:3000/api/uploads/1617889386383.png","service_title":" Pet Sitting","background_color":"#FF0000"},{"_id":"603dc7a01ef90c51d57cf775","service_icon":"http://54.212.108.156:3000/api/uploads/1617889353269.png","service_title":"Hair Cutting","background_color":"#FF6F00"}],"middle_Banner_details":[{"_id":"1231231","title":"banner - 1","img_path":"http://mysalveo.com/api/uploads/images.jpeg"},{"_id":"1231231","title":"banner - 2","img_path":"http://mysalveo.com/api/uploads/images.jpeg"},{"_id":"1231231","title":"banner - 3","img_path":"http://mysalveo.com/api/uploads/images.jpeg"}],"Products_details":[{"_id":"602e11404775fa0735d7bf40","product_img":"http://54.212.108.156:3000/api/uploads/resize-1613548631141238608collar.jpg","cat_name":"PET COLLARS & LEASHES","product_title":"DOGISTA PET PRODUCTS Dog Rope Leash,Brass","product_price":180,"product_discount":0,"product_fav":false,"product_rating":5,"product_review":0},{"_id":"602e467ff62e8d2089fba973","product_img":"http://54.212.108.156:3000/api/uploads/1615955637906.jpeg","cat_name":"Cat Food","product_title":"Cat Food","product_price":1000,"product_discount":0,"product_fav":false,"product_rating":5,"product_review":0},{"_id":"602e46d8f62e8d2089fba974","product_img":"http://54.212.108.156:3000/api/uploads/1615955710860.jpeg","cat_name":"Cow food","product_title":"Cow food","product_price":1000,"product_discount":0,"product_fav":false,"product_rating":5,"product_review":0},{"_id":"602e4734f62e8d2089fba975","product_img":"http://54.212.108.156:3000/api/uploads/1615955852371.jpeg","cat_name":"Bird Food","product_title":"Bird Food","product_price":1000,"product_discount":0,"product_fav":false,"product_rating":5,"product_review":0},{"_id":"602e478af62e8d2089fba976","product_img":"http://54.212.108.156:3000/api/uploads/Product \u2013 2.png","cat_name":"Cat Food","product_title":"Bellotta | Cat Food","product_price":2580,"product_discount":0,"product_fav":false,"product_rating":5,"product_review":0}],"Puppy_Products_details":[{"_id":"602e11404775fa0735d7bf40","product_img":"http://54.212.108.156:3000/api/uploads/resize-1613548631141238608collar.jpg","cat_name":"PET COLLARS & LEASHES","product_title":"DOGISTA PET PRODUCTS Dog Rope Leash,Brass","product_price":180,"product_discount":0,"product_fav":false,"product_rating":5,"product_review":0},{"_id":"602e467ff62e8d2089fba973","product_img":"http://54.212.108.156:3000/api/uploads/1615955637906.jpeg","cat_name":"Cat Food","product_title":"Cat Food","product_price":1000,"product_discount":0,"product_fav":false,"product_rating":5,"product_review":0},{"_id":"602e46d8f62e8d2089fba974","product_img":"http://54.212.108.156:3000/api/uploads/1615955710860.jpeg","cat_name":"Cow food","product_title":"Cow food","product_price":1000,"product_discount":0,"product_fav":false,"product_rating":5,"product_review":0},{"_id":"602e4734f62e8d2089fba975","product_img":"http://54.212.108.156:3000/api/uploads/1615955852371.jpeg","cat_name":"Bird Food","product_title":"Bird Food","product_price":1000,"product_discount":0,"product_fav":false,"product_rating":5,"product_review":0},{"_id":"602e478af62e8d2089fba976","product_img":"http://54.212.108.156:3000/api/uploads/Product \u2013 2.png","cat_name":"Cat Food","product_title":"Bellotta | Cat Food","product_price":2580,"product_discount":0,"product_fav":false,"product_rating":5,"product_review":0}]}
+     * messages : [{"title":"Doctor","message":"Unable to find the doctor near your location can i show the doctor above the location"},{"title":"Product","message":"Unable to find the Product near your location can i show the doctor above the location"},{"title":"sercive","message":"Unable to find the Sercive near your location can i show the doctor above the location"}]
+     */
+
     private DataBean Data;
     private int Code;
-
 
     public String getStatus() {
         return Status;
@@ -25,9 +31,7 @@ public class PetLoverDashboardResponse {
 
     public void setStatus(String Status) {
         this.Status = Status;
-
     }
-
 
     public String getMessage() {
         return Message;
@@ -35,9 +39,7 @@ public class PetLoverDashboardResponse {
 
     public void setMessage(String Message) {
         this.Message = Message;
-
     }
-
 
     public DataBean getData() {
         return Data;
@@ -45,9 +47,7 @@ public class PetLoverDashboardResponse {
 
     public void setData(DataBean Data) {
         this.Data = Data;
-
     }
-
 
     public int getCode() {
         return Code;
@@ -55,26 +55,98 @@ public class PetLoverDashboardResponse {
 
     public void setCode(int Code) {
         this.Code = Code;
-
     }
 
-    public static class DataBean  {
+    public static class DataBean {
         /**
-         * SOS : [{"Number":9876543210},{"Number":9876543211},{"Number":9876543212},{"Number":9876543214}]
-         * LocationDetails : [{"_id":"5fd842ea7aa4cc1c6a1e5638","user_id":"5fd841a67aa4cc1c6a1e5636","location_state":"Tamil Nadu","location_country":"India","location_city":"Iluppaiyur","location_pin":"621006","location_address":"Karatampatti Iluppaiyur road, Iluppaiyur, Tamil Nadu 621006, India","location_lat":11.065114195042826,"location_long":78.63421741873026,"location_title":"Home","location_nickname":"Dk home","default_status":true,"date_and_time":"15-12-2020 10:30 AM","mobile_type":"Android","delete_status":false,"__v":0}]
-         * PetDetails : [{"_id":"5fd842507aa4cc1c6a1e5637","user_id":"5fd841a67aa4cc1c6a1e5636","pet_img":"http://52.25.163.13:3000/api/uploads/5fd841a67aa4cc1c6a1e563615-12-2020 10:29 AMPetfolio1.jpg","pet_name":"DOG","pet_type":"Dog","pet_breed":"Bull dog","pet_gender":"Male","pet_color":"Gray","pet_weight":5,"pet_age":1,"vaccinated":true,"last_vaccination_date":"14-12-2020","default_status":true,"date_and_time":"15-12-2020 10:27 AM","mobile_type":"Android","__v":0},{"_id":"5feaf6186e150222f151a01e","user_id":"5fd841a67aa4cc1c6a1e5636","pet_img":"http://52.25.163.13:3000/api/uploads/5fd841a67aa4cc1c6a1e5636Petfolio1.jpg","pet_name":"DOG Teens","pet_type":"Dog","pet_breed":"German sheperd","pet_gender":"","pet_color":"","pet_weight":0,"pet_age":0,"vaccinated":false,"last_vaccination_date":"","default_status":true,"date_and_time":"29-12-2020 02:55 PM","mobile_type":"Android","updatedAt":"2020-12-29T09:25:44.918Z","createdAt":"2020-12-29T09:25:44.918Z","__v":0}]
-         * userdetails : {"_id":"5fd841a67aa4cc1c6a1e5636","first_name":"Kumar","last_name":"Dk","user_email":"iddineshkumar@gmail.com","user_phone":"6383791451","date_of_reg":"15/12/2020 10:25 AM","user_type":1,"user_status":"complete","otp":425519,"fb_token":"fTBhnOXQSFiib-k7z_v3tq:APA91bEaguNGK8B6wuL1TY4-tjWkmX9ZlIk9pVQZZRf1gxJmDe5JcqEqKAXqPoq6NCNoEm745TShStzXvSJVWjs4OcDnM1EbySmM_nbJW8rrYRI3KNKB_RPtiuS97tnOt512TTc7dyMC","device_id":"","device_type":"","mobile_type":"Android","delete_status":false,"__v":0,"updatedAt":"2020-12-31T05:00:54.817Z"}
-         * Dashboarddata : {"Banner_details":[{"_id":"5fdc49c21e5d8b0eb31c36b3","title":"","img_path":"http://52.25.163.13:3000/api/uploads/Slide1.jpg"}],"Doctor_details":[{"_id":"5fec55a29c25086a03d72d38","doctor_name":"DINESHKUMAR","doctor_img":"http://52.25.163.13:3000/api/uploads/5fec55a29c25086a03d72d3830-12-2020 04:04 PMPetfolio1.jpg","specialization":[{"specialization":"Surgeon"},{"specialization":"Internal Medicine Physician"},{"specialization":"Psychiatrist"}],"distance":"0.00","star_count":4,"review_count":223},{"_id":"5fec58129c25086a03d72d3a","doctor_name":"","doctor_img":"http://52.25.163.13:3000/api/uploads/5fec58129c25086a03d72d3a3012161129","specialization":[{"specialization":"Family Physician"},{"specialization":"Internal Medicine Physician"},{"specialization":"Cardiologist"}],"distance":"268.38","star_count":4,"review_count":223},{"_id":"5fec7215343cb878a26f929f","doctor_name":"dr ram ","doctor_img":"http://52.25.163.13:3000/api/uploads/5fec7215343cb878a26f929f3012180052","specialization":[{"specialization":"Pediatrician"},{"specialization":"Cardiologist"},{"specialization":"Endocrinologist"}],"distance":"268.38","star_count":4,"review_count":223},{"_id":"5fec7766343cb878a26f92a3","doctor_name":"dr Sriram","doctor_img":"http://52.25.163.13:3000/api/uploads/5fec7766343cb878a26f92a33012182054","specialization":[{"specialization":"Family Physician"},{"specialization":"Internal Medicine Physician"},{"specialization":"Psychiatrist"},{"specialization":"Dermatologist"}],"distance":"268.38","star_count":4,"review_count":223},{"_id":"5fecc29ae5e324019968e0a6","doctor_name":"hari","doctor_img":"http://52.25.163.13:3000/api/uploads/5fecc29ae5e324019968e0a630-12-2020 11:42 PMScreenshot_20201230-221005.jpg","specialization":[{"specialization":"Surgeon"},{"specialization":"Internal Medicine Physician"},{"specialization":"Dermatologist"},{"specialization":"Psychiatrist"},{"specialization":"Family Physician"},{"specialization":"Pediatrician"},{"specialization":"Cardiologist"},{"specialization":"Endocrinologist"}],"distance":"268.68","star_count":4,"review_count":223},{"_id":"5fecb55be5e324019968e0a0","doctor_name":"Boss","doctor_img":"http://52.25.163.13:3000/api/uploads/5fecb55be5e324019968e0a030-12-2020 10:44 pmPetfolio1.jpg","specialization":[{"specialization":"Family Physician"},{"specialization":"Pediatrician"},{"specialization":"Cardiologist"},{"specialization":"Endocrinologist"}],"distance":"276.20","star_count":4,"review_count":223}],"Service_details":[{"_id":"123456","service_icon":"http://52.25.163.13:3000/api/uploads/1.jpeg","service_title":"Grooming","background_color":"#00FFA2"},{"_id":"123456","service_icon":"http://52.25.163.13:3000/api/uploads/2.jpeg","service_title":"Bathing","background_color":"#2980B9"},{"_id":"123456","service_icon":"http://52.25.163.13:3000/api/uploads/3.jpeg","service_title":"Training","background_color":"#45B39D"},{"_id":"123456","service_icon":"http://52.25.163.13:3000/api/uploads/4.jpeg","service_title":"Grooming","background_color":"#00FFA2"}],"Products_details":[{"_id":"5fec1424ea832e2e73c1fc78","img_path":"http://52.25.163.13:3000/api/uploads/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png","product_cate":"Dog_Foot","img_index":9,"show_status":true,"date_and_time":"12/30/2020, 11:16:12 AM","delete_status":false,"updatedAt":"2020-12-30T05:46:12.099Z","createdAt":"2020-12-30T05:46:12.099Z","__v":0},{"_id":"5fec14a5ea832e2e73c1fc79","img_path":"http://52.25.163.13:3000/api/uploads/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png","product_cate":"Cat_Food","img_index":9,"show_status":true,"date_and_time":"12/30/2020, 11:18:21 AM","delete_status":false,"updatedAt":"2020-12-30T05:48:21.363Z","createdAt":"2020-12-30T05:48:21.363Z","__v":0},{"_id":"5fec1573ea832e2e73c1fc7a","img_path":"http://52.25.163.13:3000/api/uploads/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png","product_cate":"Cow_food","img_index":9,"show_status":true,"date_and_time":"12/30/2020, 11:21:47 AM","delete_status":false,"updatedAt":"2020-12-30T05:51:47.787Z","createdAt":"2020-12-30T05:51:47.787Z","__v":0},{"_id":"5fec22eeea832e2e73c1fc7b","img_path":"http://52.25.163.13:3000/api/uploads/template (1).png","product_cate":"Bird_Food","img_index":0,"show_status":true,"date_and_time":"12/30/2020, 12:19:18 PM","delete_status":false,"updatedAt":"2020-12-30T06:49:18.019Z","createdAt":"2020-12-30T06:49:18.019Z","__v":0}],"Puppy_Products_details":[{"_id":"5fec1424ea832e2e73c1fc78","img_path":"http://52.25.163.13:3000/api/uploads/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png","product_cate":"Dog_Foot","img_index":9,"show_status":true,"date_and_time":"12/30/2020, 11:16:12 AM","delete_status":false,"updatedAt":"2020-12-30T05:46:12.099Z","createdAt":"2020-12-30T05:46:12.099Z","__v":0},{"_id":"5fec14a5ea832e2e73c1fc79","img_path":"http://52.25.163.13:3000/api/uploads/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png","product_cate":"Cat_Food","img_index":9,"show_status":true,"date_and_time":"12/30/2020, 11:18:21 AM","delete_status":false,"updatedAt":"2020-12-30T05:48:21.363Z","createdAt":"2020-12-30T05:48:21.363Z","__v":0},{"_id":"5fec1573ea832e2e73c1fc7a","img_path":"http://52.25.163.13:3000/api/uploads/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png","product_cate":"Cow_food","img_index":9,"show_status":true,"date_and_time":"12/30/2020, 11:21:47 AM","delete_status":false,"updatedAt":"2020-12-30T05:51:47.787Z","createdAt":"2020-12-30T05:51:47.787Z","__v":0},{"_id":"5fec22eeea832e2e73c1fc7b","img_path":"http://52.25.163.13:3000/api/uploads/template (1).png","product_cate":"Bird_Food","img_index":0,"show_status":true,"date_and_time":"12/30/2020, 12:19:18 PM","delete_status":false,"updatedAt":"2020-12-30T06:49:18.019Z","createdAt":"2020-12-30T06:49:18.019Z","__v":0}]}
-         * messages : [{"title":"Doctor","message":"Unable to find the doctor near your location can i show the doctor above the location"},{"title":"Product","message":"Unable to find the Product near your location can i show the doctor above the location"},{"title":"sercive","message":"Unable to find the Sercive near your location can i show the doctor above the location"}]
+         * _id : 603e388f2c2b43125f8cb808
+         * first_name : Sri
+         * last_name : ram
+         * user_email :
+         * user_phone : 1222222221
+         * date_of_reg : 02-03-2021 06:37 PM
+         * user_type : 1
+         * user_status : complete
+         * otp : 123456
+         * profile_img :
+         * user_email_verification : false
+         * fb_token : de5HE6dVrEixslsoO4vaZD:APA91bHCXR7pZPh_GotF8SfzlBB6r8o8Rrn39YMhDqYI7i3np0sR4zsSPB1Q3GZfEGS_0-Frl0et2vQjuSiXexTDfauEDRc7MA69nhhWbj-GmRmclzuPYQpAgwaVm-oe7KyzBDxCHHGa
+         * device_id :
+         * device_type :
+         * mobile_type : IOS
+         * delete_status : false
+         * updatedAt : 2021-04-09T07:43:29.794Z
+         * createdAt : 2021-03-02T13:07:27.079Z
+         * __v : 0
          */
 
         private UserdetailsBean userdetails;
         private DashboarddataBean Dashboarddata;
-        private List<SOSBean> SOS;
-        private List<LocationDetailsBean> LocationDetails;
-        private List<PetDetailsBean> PetDetails;
-        private List<MessagesBean> messages;
+        /**
+         * Number : 9876543210
+         */
 
+        private List<SOSBean> SOS;
+        /**
+         * _id : 603e39522c2b43125f8cb809
+         * user_id : 603e388f2c2b43125f8cb808
+         * location_state : TN
+         * location_country : India
+         * location_city : Chennai
+         * location_pin : 600042
+         * location_address : 5-38A, 2nd Main Rd, Ram Nagar, Karnam Street, Karunabigai Colony, Velachery, Chennai, Tamil Nadu 600042, India
+         * location_lat : 12.9832535692558
+         * location_long : 80.22351376712322
+         * location_title : Home
+         * location_nickname : park hotel
+         * default_status : true
+         * date_and_time : 02-03-2021 06:40 PM
+         * mobile_type : IOS
+         * delete_status : false
+         * updatedAt : 2021-03-02T13:10:42.571Z
+         * createdAt : 2021-03-02T13:10:42.571Z
+         * __v : 0
+         */
+
+        private List<LocationDetailsBean> LocationDetails;
+        /**
+         * pet_img : [{"pet_img":"http://54.212.108.156:3000/api/uploads/1614864579584.603e388f2c2b43125f8cb8080403185939"},{"pet_img":"http://54.212.108.156:3000/api/uploads/1614864587880.603e388f2c2b43125f8cb8080403185947"}]
+         * _id : 6040dfcb2c2b43125f8cb8b5
+         * user_id : 603e388f2c2b43125f8cb808
+         * pet_name : jimmy
+         * pet_type : Dog
+         * pet_breed : Golden Retrieve
+         * pet_gender : Male
+         * pet_color : white
+         * pet_weight : 10.12
+         * pet_age : 0 years 2 months
+         * pet_dob : 02-01-2021
+         * pet_spayed : true
+         * pet_purebred : false
+         * pet_frnd_with_dog : true
+         * pet_frnd_with_cat : false
+         * pet_frnd_with_kit : true
+         * pet_microchipped : true
+         * pet_tick_free : false
+         * pet_private_part : false
+         * vaccinated : true
+         * last_vaccination_date : 04-02-2021
+         * default_status : true
+         * date_and_time : 04-03-2021 06:59 PM
+         * mobile_type : IOS
+         * delete_status : false
+         * updatedAt : 2021-03-04T13:29:49.575Z
+         * createdAt : 2021-03-04T13:25:31.366Z
+         * __v : 0
+         */
+
+        private List<PetDetailsBean> PetDetails;
+        /**
+         * title : Doctor
+         * message : Unable to find the doctor near your location can i show the doctor above the location
+         */
+
+        private List<MessagesBean> messages;
 
         public UserdetailsBean getUserdetails() {
             return userdetails;
@@ -82,7 +154,6 @@ public class PetLoverDashboardResponse {
 
         public void setUserdetails(UserdetailsBean userdetails) {
             this.userdetails = userdetails;
-
         }
 
         public DashboarddataBean getDashboarddata() {
@@ -93,16 +164,13 @@ public class PetLoverDashboardResponse {
             this.Dashboarddata = Dashboarddata;
         }
 
-
         public List<SOSBean> getSOS() {
             return SOS;
         }
 
         public void setSOS(List<SOSBean> SOS) {
             this.SOS = SOS;
-
         }
-
 
         public List<LocationDetailsBean> getLocationDetails() {
             return LocationDetails;
@@ -110,7 +178,6 @@ public class PetLoverDashboardResponse {
 
         public void setLocationDetails(List<LocationDetailsBean> LocationDetails) {
             this.LocationDetails = LocationDetails;
-
         }
 
         public List<PetDetailsBean> getPetDetails() {
@@ -119,7 +186,6 @@ public class PetLoverDashboardResponse {
 
         public void setPetDetails(List<PetDetailsBean> PetDetails) {
             this.PetDetails = PetDetails;
-
         }
 
         public List<MessagesBean> getMessages() {
@@ -128,29 +194,9 @@ public class PetLoverDashboardResponse {
 
         public void setMessages(List<MessagesBean> messages) {
             this.messages = messages;
-
         }
 
-        public static class UserdetailsBean  {
-            /**
-             * _id : 5fd841a67aa4cc1c6a1e5636
-             * first_name : Kumar
-             * last_name : Dk
-             * user_email : iddineshkumar@gmail.com
-             * user_phone : 6383791451
-             * date_of_reg : 15/12/2020 10:25 AM
-             * user_type : 1
-             * user_status : complete
-             * otp : 425519
-             * fb_token : fTBhnOXQSFiib-k7z_v3tq:APA91bEaguNGK8B6wuL1TY4-tjWkmX9ZlIk9pVQZZRf1gxJmDe5JcqEqKAXqPoq6NCNoEm745TShStzXvSJVWjs4OcDnM1EbySmM_nbJW8rrYRI3KNKB_RPtiuS97tnOt512TTc7dyMC
-             * device_id :
-             * device_type :
-             * mobile_type : Android
-             * delete_status : false
-             * __v : 0
-             * updatedAt : 2020-12-31T05:00:54.817Z
-             */
-
+        public static class UserdetailsBean {
             private String _id;
             private String first_name;
             private String last_name;
@@ -160,14 +206,16 @@ public class PetLoverDashboardResponse {
             private int user_type;
             private String user_status;
             private int otp;
+            private String profile_img;
+            private boolean user_email_verification;
             private String fb_token;
             private String device_id;
             private String device_type;
             private String mobile_type;
             private boolean delete_status;
-            private int __v;
             private String updatedAt;
-
+            private String createdAt;
+            private int __v;
 
             public String get_id() {
                 return _id;
@@ -175,7 +223,6 @@ public class PetLoverDashboardResponse {
 
             public void set_id(String _id) {
                 this._id = _id;
-
             }
 
             public String getFirst_name() {
@@ -184,7 +231,6 @@ public class PetLoverDashboardResponse {
 
             public void setFirst_name(String first_name) {
                 this.first_name = first_name;
-
             }
 
             public String getLast_name() {
@@ -193,7 +239,6 @@ public class PetLoverDashboardResponse {
 
             public void setLast_name(String last_name) {
                 this.last_name = last_name;
-
             }
 
             public String getUser_email() {
@@ -202,7 +247,6 @@ public class PetLoverDashboardResponse {
 
             public void setUser_email(String user_email) {
                 this.user_email = user_email;
-
             }
 
             public String getUser_phone() {
@@ -211,7 +255,6 @@ public class PetLoverDashboardResponse {
 
             public void setUser_phone(String user_phone) {
                 this.user_phone = user_phone;
-
             }
 
             public String getDate_of_reg() {
@@ -220,7 +263,6 @@ public class PetLoverDashboardResponse {
 
             public void setDate_of_reg(String date_of_reg) {
                 this.date_of_reg = date_of_reg;
-
             }
 
             public int getUser_type() {
@@ -229,7 +271,6 @@ public class PetLoverDashboardResponse {
 
             public void setUser_type(int user_type) {
                 this.user_type = user_type;
-
             }
 
             public String getUser_status() {
@@ -238,7 +279,6 @@ public class PetLoverDashboardResponse {
 
             public void setUser_status(String user_status) {
                 this.user_status = user_status;
-
             }
 
             public int getOtp() {
@@ -249,13 +289,28 @@ public class PetLoverDashboardResponse {
                 this.otp = otp;
             }
 
+            public String getProfile_img() {
+                return profile_img;
+            }
+
+            public void setProfile_img(String profile_img) {
+                this.profile_img = profile_img;
+            }
+
+            public boolean isUser_email_verification() {
+                return user_email_verification;
+            }
+
+            public void setUser_email_verification(boolean user_email_verification) {
+                this.user_email_verification = user_email_verification;
+            }
+
             public String getFb_token() {
                 return fb_token;
             }
 
             public void setFb_token(String fb_token) {
                 this.fb_token = fb_token;
-
             }
 
             public String getDevice_id() {
@@ -274,7 +329,6 @@ public class PetLoverDashboardResponse {
                 this.device_type = device_type;
             }
 
-
             public String getMobile_type() {
                 return mobile_type;
             }
@@ -291,15 +345,6 @@ public class PetLoverDashboardResponse {
                 this.delete_status = delete_status;
             }
 
-            public int get__v() {
-                return __v;
-            }
-
-            public void set__v(int __v) {
-                this.__v = __v;
-            }
-
-
             public String getUpdatedAt() {
                 return updatedAt;
             }
@@ -307,15 +352,86 @@ public class PetLoverDashboardResponse {
             public void setUpdatedAt(String updatedAt) {
                 this.updatedAt = updatedAt;
             }
+
+            public String getCreatedAt() {
+                return createdAt;
+            }
+
+            public void setCreatedAt(String createdAt) {
+                this.createdAt = createdAt;
+            }
+
+            public int get__v() {
+                return __v;
+            }
+
+            public void set__v(int __v) {
+                this.__v = __v;
+            }
         }
 
         public static class DashboarddataBean {
-            private List<BannerDetailsBean> Banner_details;
-            private List<DoctorDetailsBean> Doctor_details;
-            private List<ServiceDetailsBean> Service_details;
-            private List<ProductsDetailsBean> Products_details;
-            private List<PuppyProductsDetailsBean> Puppy_Products_details;
+            /**
+             * _id : 602e3a1bf62e8d2089fba972
+             * title : Title 4
+             * img_path : http://54.212.108.156:3000/api/uploads/SS.jpg
+             */
 
+            private List<BannerDetailsBean> Banner_details;
+            /**
+             * _id : 6040832b2c2b43125f8cb843
+             * doctor_name : Dr .Albert Doctor
+             * doctor_img : http://54.212.108.156:3000/api/uploads/1614840819938.jpg
+             * specialization : [{"specialization":"Surgeon"},{"specialization":"Internal Medicine Physician"}]
+             * distance : 0.00
+             * clinic_name : Care Medical Hospital
+             * fav : true
+             * star_count : 5
+             * review_count : 22
+             */
+
+            private List<DoctorDetailsBean> Doctor_details;
+            /**
+             * _id : 5fe185d61996f651f5133693
+             * service_icon : http://54.212.108.156:3000/api/uploads/1617889303126.png
+             * service_title :  Dog Walking
+             * background_color : #F9A826
+             */
+
+            private List<ServiceDetailsBean> Service_details;
+            /**
+             * _id : 1231231
+             * title : banner - 1
+             * img_path : http://mysalveo.com/api/uploads/images.jpeg
+             */
+
+            private List<MiddleBannerDetailsBean> middle_Banner_details;
+            /**
+             * _id : 602e11404775fa0735d7bf40
+             * product_img : http://54.212.108.156:3000/api/uploads/resize-1613548631141238608collar.jpg
+             * cat_name : PET COLLARS & LEASHES
+             * product_title : DOGISTA PET PRODUCTS Dog Rope Leash,Brass
+             * product_price : 180
+             * product_discount : 0
+             * product_fav : false
+             * product_rating : 5
+             * product_review : 0
+             */
+
+            private List<ProductsDetailsBean> Products_details;
+            /**
+             * _id : 602e11404775fa0735d7bf40
+             * product_img : http://54.212.108.156:3000/api/uploads/resize-1613548631141238608collar.jpg
+             * cat_name : PET COLLARS & LEASHES
+             * product_title : DOGISTA PET PRODUCTS Dog Rope Leash,Brass
+             * product_price : 180
+             * product_discount : 0
+             * product_fav : false
+             * product_rating : 5
+             * product_review : 0
+             */
+
+            private List<PuppyProductsDetailsBean> Puppy_Products_details;
 
             public List<BannerDetailsBean> getBanner_details() {
                 return Banner_details;
@@ -323,9 +439,7 @@ public class PetLoverDashboardResponse {
 
             public void setBanner_details(List<BannerDetailsBean> Banner_details) {
                 this.Banner_details = Banner_details;
-
             }
-
 
             public List<DoctorDetailsBean> getDoctor_details() {
                 return Doctor_details;
@@ -333,7 +447,6 @@ public class PetLoverDashboardResponse {
 
             public void setDoctor_details(List<DoctorDetailsBean> Doctor_details) {
                 this.Doctor_details = Doctor_details;
-
             }
 
             public List<ServiceDetailsBean> getService_details() {
@@ -342,7 +455,14 @@ public class PetLoverDashboardResponse {
 
             public void setService_details(List<ServiceDetailsBean> Service_details) {
                 this.Service_details = Service_details;
+            }
 
+            public List<MiddleBannerDetailsBean> getMiddle_Banner_details() {
+                return middle_Banner_details;
+            }
+
+            public void setMiddle_Banner_details(List<MiddleBannerDetailsBean> middle_Banner_details) {
+                this.middle_Banner_details = middle_Banner_details;
             }
 
             public List<ProductsDetailsBean> getProducts_details() {
@@ -351,9 +471,7 @@ public class PetLoverDashboardResponse {
 
             public void setProducts_details(List<ProductsDetailsBean> Products_details) {
                 this.Products_details = Products_details;
-
             }
-
 
             public List<PuppyProductsDetailsBean> getPuppy_Products_details() {
                 return Puppy_Products_details;
@@ -361,20 +479,12 @@ public class PetLoverDashboardResponse {
 
             public void setPuppy_Products_details(List<PuppyProductsDetailsBean> Puppy_Products_details) {
                 this.Puppy_Products_details = Puppy_Products_details;
-
             }
 
             public static class BannerDetailsBean {
-                /**
-                 * _id : 5fdc49c21e5d8b0eb31c36b3
-                 * title :
-                 * img_path : http://52.25.163.13:3000/api/uploads/Slide1.jpg
-                 */
-
                 private String _id;
                 private String title;
                 private String img_path;
-
 
                 public String get_id() {
                     return _id;
@@ -382,9 +492,7 @@ public class PetLoverDashboardResponse {
 
                 public void set_id(String _id) {
                     this._id = _id;
-
                 }
-
 
                 public String getTitle() {
                     return title;
@@ -392,7 +500,6 @@ public class PetLoverDashboardResponse {
 
                 public void setTitle(String title) {
                     this.title = title;
-
                 }
 
                 public String getImg_path() {
@@ -405,22 +512,18 @@ public class PetLoverDashboardResponse {
             }
 
             public static class DoctorDetailsBean {
-                /**
-                 * _id : 5fec55a29c25086a03d72d38
-                 * doctor_name : DINESHKUMAR
-                 * doctor_img : http://52.25.163.13:3000/api/uploads/5fec55a29c25086a03d72d3830-12-2020 04:04 PMPetfolio1.jpg
-                 * specialization : [{"specialization":"Surgeon"},{"specialization":"Internal Medicine Physician"},{"specialization":"Psychiatrist"}]
-                 * distance : 0.00
-                 * star_count : 4
-                 * review_count : 223
-                 */
-
                 private String _id;
                 private String doctor_name;
                 private String doctor_img;
                 private String distance;
+                private String clinic_name;
+                private boolean fav;
                 private int star_count;
                 private int review_count;
+                /**
+                 * specialization : Surgeon
+                 */
+
                 private List<SpecializationBean> specialization;
 
                 public String get_id() {
@@ -429,7 +532,6 @@ public class PetLoverDashboardResponse {
 
                 public void set_id(String _id) {
                     this._id = _id;
-
                 }
 
                 public String getDoctor_name() {
@@ -438,7 +540,6 @@ public class PetLoverDashboardResponse {
 
                 public void setDoctor_name(String doctor_name) {
                     this.doctor_name = doctor_name;
-
                 }
 
                 public String getDoctor_img() {
@@ -447,7 +548,6 @@ public class PetLoverDashboardResponse {
 
                 public void setDoctor_img(String doctor_img) {
                     this.doctor_img = doctor_img;
-
                 }
 
                 public String getDistance() {
@@ -456,7 +556,22 @@ public class PetLoverDashboardResponse {
 
                 public void setDistance(String distance) {
                     this.distance = distance;
+                }
 
+                public String getClinic_name() {
+                    return clinic_name;
+                }
+
+                public void setClinic_name(String clinic_name) {
+                    this.clinic_name = clinic_name;
+                }
+
+                public boolean isFav() {
+                    return fav;
+                }
+
+                public void setFav(boolean fav) {
+                    this.fav = fav;
                 }
 
                 public int getStar_count() {
@@ -465,7 +580,6 @@ public class PetLoverDashboardResponse {
 
                 public void setStar_count(int star_count) {
                     this.star_count = star_count;
-
                 }
 
                 public int getReview_count() {
@@ -474,7 +588,6 @@ public class PetLoverDashboardResponse {
 
                 public void setReview_count(int review_count) {
                     this.review_count = review_count;
-
                 }
 
                 public List<SpecializationBean> getSpecialization() {
@@ -485,11 +598,7 @@ public class PetLoverDashboardResponse {
                     this.specialization = specialization;
                 }
 
-                public static class SpecializationBean{
-                    /**
-                     * specialization : Surgeon
-                     */
-
+                public static class SpecializationBean {
                     private String specialization;
 
                     public String getSpecialization() {
@@ -498,19 +607,11 @@ public class PetLoverDashboardResponse {
 
                     public void setSpecialization(String specialization) {
                         this.specialization = specialization;
-
                     }
                 }
             }
 
             public static class ServiceDetailsBean {
-                /**
-                 * _id : 123456
-                 * service_icon : http://52.25.163.13:3000/api/uploads/1.jpeg
-                 * service_title : Grooming
-                 * background_color : #00FFA2
-                 */
-
                 private String _id;
                 private String service_icon;
                 private String service_title;
@@ -523,7 +624,6 @@ public class PetLoverDashboardResponse {
                 public void set_id(String _id) {
                     this._id = _id;
                 }
-
 
                 public String getService_icon() {
                     return service_icon;
@@ -547,35 +647,13 @@ public class PetLoverDashboardResponse {
 
                 public void setBackground_color(String background_color) {
                     this.background_color = background_color;
-
                 }
             }
 
-            public static class ProductsDetailsBean  {
-                /**
-                 * _id : 5fec1424ea832e2e73c1fc78
-                 * img_path : http://52.25.163.13:3000/api/uploads/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png
-                 * product_cate : Dog_Foot
-                 * img_index : 9
-                 * show_status : true
-                 * date_and_time : 12/30/2020, 11:16:12 AM
-                 * delete_status : false
-                 * updatedAt : 2020-12-30T05:46:12.099Z
-                 * createdAt : 2020-12-30T05:46:12.099Z
-                 * __v : 0
-                 */
-
+            public static class MiddleBannerDetailsBean {
                 private String _id;
+                private String title;
                 private String img_path;
-                private String product_cate;
-                private int img_index;
-                private boolean show_status;
-                private String date_and_time;
-                private boolean delete_status;
-                private String updatedAt;
-                private String createdAt;
-                private int __v;
-
 
                 public String get_id() {
                     return _id;
@@ -583,7 +661,14 @@ public class PetLoverDashboardResponse {
 
                 public void set_id(String _id) {
                     this._id = _id;
+                }
 
+                public String getTitle() {
+                    return title;
+                }
+
+                public void setTitle(String title) {
+                    this.title = title;
                 }
 
                 public String getImg_path() {
@@ -592,110 +677,103 @@ public class PetLoverDashboardResponse {
 
                 public void setImg_path(String img_path) {
                     this.img_path = img_path;
+                }
+            }
 
+            public static class ProductsDetailsBean {
+                private String _id;
+                private String product_img;
+                private String cat_name;
+                private String product_title;
+                private int product_price;
+                private int product_discount;
+                private boolean product_fav;
+                private int product_rating;
+                private int product_review;
+
+                public String get_id() {
+                    return _id;
                 }
 
-                public String getProduct_cate() {
-                    return product_cate;
+                public void set_id(String _id) {
+                    this._id = _id;
                 }
 
-                public void setProduct_cate(String product_cate) {
-                    this.product_cate = product_cate;
-
+                public String getProduct_img() {
+                    return product_img;
                 }
 
-                public int getImg_index() {
-                    return img_index;
+                public void setProduct_img(String product_img) {
+                    this.product_img = product_img;
                 }
 
-                public void setImg_index(int img_index) {
-                    this.img_index = img_index;
-
+                public String getCat_name() {
+                    return cat_name;
                 }
 
-
-                public boolean isShow_status() {
-                    return show_status;
+                public void setCat_name(String cat_name) {
+                    this.cat_name = cat_name;
                 }
 
-                public void setShow_status(boolean show_status) {
-                    this.show_status = show_status;
-
+                public String getProduct_title() {
+                    return product_title;
                 }
 
-
-                public String getDate_and_time() {
-                    return date_and_time;
+                public void setProduct_title(String product_title) {
+                    this.product_title = product_title;
                 }
 
-                public void setDate_and_time(String date_and_time) {
-                    this.date_and_time = date_and_time;
+                public int getProduct_price() {
+                    return product_price;
                 }
 
-
-                public boolean isDelete_status() {
-                    return delete_status;
+                public void setProduct_price(int product_price) {
+                    this.product_price = product_price;
                 }
 
-                public void setDelete_status(boolean delete_status) {
-                    this.delete_status = delete_status;
-
+                public int getProduct_discount() {
+                    return product_discount;
                 }
 
-
-                public String getUpdatedAt() {
-                    return updatedAt;
+                public void setProduct_discount(int product_discount) {
+                    this.product_discount = product_discount;
                 }
 
-                public void setUpdatedAt(String updatedAt) {
-                    this.updatedAt = updatedAt;
-
+                public boolean isProduct_fav() {
+                    return product_fav;
                 }
 
-                public String getCreatedAt() {
-                    return createdAt;
+                public void setProduct_fav(boolean product_fav) {
+                    this.product_fav = product_fav;
                 }
 
-                public void setCreatedAt(String createdAt) {
-                    this.createdAt = createdAt;
-
+                public int getProduct_rating() {
+                    return product_rating;
                 }
 
-                public int get__v() {
-                    return __v;
+                public void setProduct_rating(int product_rating) {
+                    this.product_rating = product_rating;
                 }
 
-                public void set__v(int __v) {
-                    this.__v = __v;
+                public int getProduct_review() {
+                    return product_review;
+                }
 
+                public void setProduct_review(int product_review) {
+                    this.product_review = product_review;
                 }
             }
 
             public static class PuppyProductsDetailsBean {
-                /**
-                 * _id : 5fec1424ea832e2e73c1fc78
-                 * img_path : http://52.25.163.13:3000/api/uploads/0c3b3adb1a7530892e55ef36d3be6cb8 (1).png
-                 * product_cate : Dog_Foot
-                 * img_index : 9
-                 * show_status : true
-                 * date_and_time : 12/30/2020, 11:16:12 AM
-                 * delete_status : false
-                 * updatedAt : 2020-12-30T05:46:12.099Z
-                 * createdAt : 2020-12-30T05:46:12.099Z
-                 * __v : 0
-                 */
-
                 private String _id;
-                private String img_path;
-                private String product_cate;
-                private int img_index;
-                private boolean show_status;
-                private String date_and_time;
-                private boolean delete_status;
-                private String updatedAt;
-                private String createdAt;
-                private int __v;
-
+                private String product_img;
+                private String cat_name;
+                private String product_title;
+                private int product_price;
+                private int product_discount;
+                private boolean product_fav;
+                private int product_rating;
+                private int product_review;
 
                 public String get_id() {
                     return _id;
@@ -703,107 +781,76 @@ public class PetLoverDashboardResponse {
 
                 public void set_id(String _id) {
                     this._id = _id;
-
                 }
 
-                public String getImg_path() {
-                    return img_path;
+                public String getProduct_img() {
+                    return product_img;
                 }
 
-                public void setImg_path(String img_path) {
-                    this.img_path = img_path;
-
+                public void setProduct_img(String product_img) {
+                    this.product_img = product_img;
                 }
 
-
-                public String getProduct_cate() {
-                    return product_cate;
+                public String getCat_name() {
+                    return cat_name;
                 }
 
-                public void setProduct_cate(String product_cate) {
-                    this.product_cate = product_cate;
-
+                public void setCat_name(String cat_name) {
+                    this.cat_name = cat_name;
                 }
 
-
-                public int getImg_index() {
-                    return img_index;
+                public String getProduct_title() {
+                    return product_title;
                 }
 
-                public void setImg_index(int img_index) {
-                    this.img_index = img_index;
-
+                public void setProduct_title(String product_title) {
+                    this.product_title = product_title;
                 }
 
-
-                public boolean isShow_status() {
-                    return show_status;
+                public int getProduct_price() {
+                    return product_price;
                 }
 
-                public void setShow_status(boolean show_status) {
-                    this.show_status = show_status;
-
+                public void setProduct_price(int product_price) {
+                    this.product_price = product_price;
                 }
 
-
-                public String getDate_and_time() {
-                    return date_and_time;
+                public int getProduct_discount() {
+                    return product_discount;
                 }
 
-                public void setDate_and_time(String date_and_time) {
-                    this.date_and_time = date_and_time;
-
+                public void setProduct_discount(int product_discount) {
+                    this.product_discount = product_discount;
                 }
 
-
-                public boolean isDelete_status() {
-                    return delete_status;
+                public boolean isProduct_fav() {
+                    return product_fav;
                 }
 
-                public void setDelete_status(boolean delete_status) {
-                    this.delete_status = delete_status;
-
+                public void setProduct_fav(boolean product_fav) {
+                    this.product_fav = product_fav;
                 }
 
-
-                public String getUpdatedAt() {
-                    return updatedAt;
+                public int getProduct_rating() {
+                    return product_rating;
                 }
 
-                public void setUpdatedAt(String updatedAt) {
-                    this.updatedAt = updatedAt;
-
+                public void setProduct_rating(int product_rating) {
+                    this.product_rating = product_rating;
                 }
 
-
-                public String getCreatedAt() {
-                    return createdAt;
+                public int getProduct_review() {
+                    return product_review;
                 }
 
-                public void setCreatedAt(String createdAt) {
-                    this.createdAt = createdAt;
-
-                }
-
-
-                public int get__v() {
-                    return __v;
-                }
-
-                public void set__v(int __v) {
-                    this.__v = __v;
-
+                public void setProduct_review(int product_review) {
+                    this.product_review = product_review;
                 }
             }
         }
 
         public static class SOSBean {
-            /**
-             * Number : 9876543210
-             */
-
             private long Number;
-
 
             public long getNumber() {
                 return Number;
@@ -811,30 +858,10 @@ public class PetLoverDashboardResponse {
 
             public void setNumber(long Number) {
                 this.Number = Number;
-
             }
         }
 
         public static class LocationDetailsBean {
-            /**
-             * _id : 5fd842ea7aa4cc1c6a1e5638
-             * user_id : 5fd841a67aa4cc1c6a1e5636
-             * location_state : Tamil Nadu
-             * location_country : India
-             * location_city : Iluppaiyur
-             * location_pin : 621006
-             * location_address : Karatampatti Iluppaiyur road, Iluppaiyur, Tamil Nadu 621006, India
-             * location_lat : 11.065114195042826
-             * location_long : 78.63421741873026
-             * location_title : Home
-             * location_nickname : Dk home
-             * default_status : true
-             * date_and_time : 15-12-2020 10:30 AM
-             * mobile_type : Android
-             * delete_status : false
-             * __v : 0
-             */
-
             private String _id;
             private String user_id;
             private String location_state;
@@ -850,8 +877,9 @@ public class PetLoverDashboardResponse {
             private String date_and_time;
             private String mobile_type;
             private boolean delete_status;
+            private String updatedAt;
+            private String createdAt;
             private int __v;
-
 
             public String get_id() {
                 return _id;
@@ -859,9 +887,7 @@ public class PetLoverDashboardResponse {
 
             public void set_id(String _id) {
                 this._id = _id;
-
             }
-
 
             public String getUser_id() {
                 return user_id;
@@ -869,9 +895,7 @@ public class PetLoverDashboardResponse {
 
             public void setUser_id(String user_id) {
                 this.user_id = user_id;
-
             }
-
 
             public String getLocation_state() {
                 return location_state;
@@ -879,9 +903,7 @@ public class PetLoverDashboardResponse {
 
             public void setLocation_state(String location_state) {
                 this.location_state = location_state;
-
             }
-
 
             public String getLocation_country() {
                 return location_country;
@@ -897,9 +919,7 @@ public class PetLoverDashboardResponse {
 
             public void setLocation_city(String location_city) {
                 this.location_city = location_city;
-
             }
-
 
             public String getLocation_pin() {
                 return location_pin;
@@ -907,7 +927,6 @@ public class PetLoverDashboardResponse {
 
             public void setLocation_pin(String location_pin) {
                 this.location_pin = location_pin;
-
             }
 
             public String getLocation_address() {
@@ -925,13 +944,13 @@ public class PetLoverDashboardResponse {
             public void setLocation_lat(double location_lat) {
                 this.location_lat = location_lat;
             }
+
             public double getLocation_long() {
                 return location_long;
             }
 
             public void setLocation_long(double location_long) {
                 this.location_long = location_long;
-
             }
 
             public String getLocation_title() {
@@ -940,7 +959,6 @@ public class PetLoverDashboardResponse {
 
             public void setLocation_title(String location_title) {
                 this.location_title = location_title;
-
             }
 
             public String getLocation_nickname() {
@@ -949,7 +967,6 @@ public class PetLoverDashboardResponse {
 
             public void setLocation_nickname(String location_nickname) {
                 this.location_nickname = location_nickname;
-
             }
 
             public boolean isDefault_status() {
@@ -958,9 +975,7 @@ public class PetLoverDashboardResponse {
 
             public void setDefault_status(boolean default_status) {
                 this.default_status = default_status;
-
             }
-
 
             public String getDate_and_time() {
                 return date_and_time;
@@ -968,7 +983,6 @@ public class PetLoverDashboardResponse {
 
             public void setDate_and_time(String date_and_time) {
                 this.date_and_time = date_and_time;
-
             }
 
             public String getMobile_type() {
@@ -977,7 +991,6 @@ public class PetLoverDashboardResponse {
 
             public void setMobile_type(String mobile_type) {
                 this.mobile_type = mobile_type;
-
             }
 
             public boolean isDelete_status() {
@@ -986,7 +999,22 @@ public class PetLoverDashboardResponse {
 
             public void setDelete_status(boolean delete_status) {
                 this.delete_status = delete_status;
+            }
 
+            public String getUpdatedAt() {
+                return updatedAt;
+            }
+
+            public void setUpdatedAt(String updatedAt) {
+                this.updatedAt = updatedAt;
+            }
+
+            public String getCreatedAt() {
+                return createdAt;
+            }
+
+            public void setCreatedAt(String createdAt) {
+                this.createdAt = createdAt;
             }
 
             public int get__v() {
@@ -995,32 +1023,10 @@ public class PetLoverDashboardResponse {
 
             public void set__v(int __v) {
                 this.__v = __v;
-
             }
         }
 
-        public static class PetDetailsBean  {
-            /**
-             * _id : 5fd842507aa4cc1c6a1e5637
-             * user_id : 5fd841a67aa4cc1c6a1e5636
-             * pet_img : http://52.25.163.13:3000/api/uploads/5fd841a67aa4cc1c6a1e563615-12-2020 10:29 AMPetfolio1.jpg
-             * pet_name : DOG
-             * pet_type : Dog
-             * pet_breed : Bull dog
-             * pet_gender : Male
-             * pet_color : Gray
-             * pet_weight : 5
-             * pet_age : 1
-             * vaccinated : true
-             * last_vaccination_date : 14-12-2020
-             * default_status : true
-             * date_and_time : 15-12-2020 10:27 AM
-             * mobile_type : Android
-             * __v : 0
-             * updatedAt : 2020-12-29T09:25:44.918Z
-             * createdAt : 2020-12-29T09:25:44.918Z
-             */
-
+        public static class PetDetailsBean {
             private String _id;
             private String user_id;
             private String pet_name;
@@ -1030,15 +1036,29 @@ public class PetLoverDashboardResponse {
             private String pet_color;
             private double pet_weight;
             private String pet_age;
+            private String pet_dob;
+            private boolean pet_spayed;
+            private boolean pet_purebred;
+            private boolean pet_frnd_with_dog;
+            private boolean pet_frnd_with_cat;
+            private boolean pet_frnd_with_kit;
+            private boolean pet_microchipped;
+            private boolean pet_tick_free;
+            private boolean pet_private_part;
             private boolean vaccinated;
             private String last_vaccination_date;
             private boolean default_status;
             private String date_and_time;
             private String mobile_type;
-            private int __v;
+            private boolean delete_status;
             private String updatedAt;
             private String createdAt;
+            private int __v;
+            /**
+             * pet_img : http://54.212.108.156:3000/api/uploads/1614864579584.603e388f2c2b43125f8cb8080403185939
+             */
 
+            private List<PetImgBean> pet_img;
 
             public String get_id() {
                 return _id;
@@ -1046,9 +1066,7 @@ public class PetLoverDashboardResponse {
 
             public void set_id(String _id) {
                 this._id = _id;
-
             }
-
 
             public String getUser_id() {
                 return user_id;
@@ -1056,8 +1074,8 @@ public class PetLoverDashboardResponse {
 
             public void setUser_id(String user_id) {
                 this.user_id = user_id;
-
             }
+
             public String getPet_name() {
                 return pet_name;
             }
@@ -1072,9 +1090,7 @@ public class PetLoverDashboardResponse {
 
             public void setPet_type(String pet_type) {
                 this.pet_type = pet_type;
-
             }
-
 
             public String getPet_breed() {
                 return pet_breed;
@@ -1082,9 +1098,7 @@ public class PetLoverDashboardResponse {
 
             public void setPet_breed(String pet_breed) {
                 this.pet_breed = pet_breed;
-
             }
-
 
             public String getPet_gender() {
                 return pet_gender;
@@ -1092,9 +1106,7 @@ public class PetLoverDashboardResponse {
 
             public void setPet_gender(String pet_gender) {
                 this.pet_gender = pet_gender;
-
             }
-
 
             public String getPet_color() {
                 return pet_color;
@@ -1102,9 +1114,7 @@ public class PetLoverDashboardResponse {
 
             public void setPet_color(String pet_color) {
                 this.pet_color = pet_color;
-
             }
-
 
             public double getPet_weight() {
                 return pet_weight;
@@ -1112,9 +1122,7 @@ public class PetLoverDashboardResponse {
 
             public void setPet_weight(double pet_weight) {
                 this.pet_weight = pet_weight;
-
             }
-
 
             public String getPet_age() {
                 return pet_age;
@@ -1122,7 +1130,78 @@ public class PetLoverDashboardResponse {
 
             public void setPet_age(String pet_age) {
                 this.pet_age = pet_age;
+            }
 
+            public String getPet_dob() {
+                return pet_dob;
+            }
+
+            public void setPet_dob(String pet_dob) {
+                this.pet_dob = pet_dob;
+            }
+
+            public boolean isPet_spayed() {
+                return pet_spayed;
+            }
+
+            public void setPet_spayed(boolean pet_spayed) {
+                this.pet_spayed = pet_spayed;
+            }
+
+            public boolean isPet_purebred() {
+                return pet_purebred;
+            }
+
+            public void setPet_purebred(boolean pet_purebred) {
+                this.pet_purebred = pet_purebred;
+            }
+
+            public boolean isPet_frnd_with_dog() {
+                return pet_frnd_with_dog;
+            }
+
+            public void setPet_frnd_with_dog(boolean pet_frnd_with_dog) {
+                this.pet_frnd_with_dog = pet_frnd_with_dog;
+            }
+
+            public boolean isPet_frnd_with_cat() {
+                return pet_frnd_with_cat;
+            }
+
+            public void setPet_frnd_with_cat(boolean pet_frnd_with_cat) {
+                this.pet_frnd_with_cat = pet_frnd_with_cat;
+            }
+
+            public boolean isPet_frnd_with_kit() {
+                return pet_frnd_with_kit;
+            }
+
+            public void setPet_frnd_with_kit(boolean pet_frnd_with_kit) {
+                this.pet_frnd_with_kit = pet_frnd_with_kit;
+            }
+
+            public boolean isPet_microchipped() {
+                return pet_microchipped;
+            }
+
+            public void setPet_microchipped(boolean pet_microchipped) {
+                this.pet_microchipped = pet_microchipped;
+            }
+
+            public boolean isPet_tick_free() {
+                return pet_tick_free;
+            }
+
+            public void setPet_tick_free(boolean pet_tick_free) {
+                this.pet_tick_free = pet_tick_free;
+            }
+
+            public boolean isPet_private_part() {
+                return pet_private_part;
+            }
+
+            public void setPet_private_part(boolean pet_private_part) {
+                this.pet_private_part = pet_private_part;
             }
 
             public boolean isVaccinated() {
@@ -1131,7 +1210,6 @@ public class PetLoverDashboardResponse {
 
             public void setVaccinated(boolean vaccinated) {
                 this.vaccinated = vaccinated;
-
             }
 
             public String getLast_vaccination_date() {
@@ -1140,7 +1218,6 @@ public class PetLoverDashboardResponse {
 
             public void setLast_vaccination_date(String last_vaccination_date) {
                 this.last_vaccination_date = last_vaccination_date;
-
             }
 
             public boolean isDefault_status() {
@@ -1149,7 +1226,6 @@ public class PetLoverDashboardResponse {
 
             public void setDefault_status(boolean default_status) {
                 this.default_status = default_status;
-
             }
 
             public String getDate_and_time() {
@@ -1158,9 +1234,7 @@ public class PetLoverDashboardResponse {
 
             public void setDate_and_time(String date_and_time) {
                 this.date_and_time = date_and_time;
-
             }
-
 
             public String getMobile_type() {
                 return mobile_type;
@@ -1168,9 +1242,31 @@ public class PetLoverDashboardResponse {
 
             public void setMobile_type(String mobile_type) {
                 this.mobile_type = mobile_type;
-
             }
 
+            public boolean isDelete_status() {
+                return delete_status;
+            }
+
+            public void setDelete_status(boolean delete_status) {
+                this.delete_status = delete_status;
+            }
+
+            public String getUpdatedAt() {
+                return updatedAt;
+            }
+
+            public void setUpdatedAt(String updatedAt) {
+                this.updatedAt = updatedAt;
+            }
+
+            public String getCreatedAt() {
+                return createdAt;
+            }
+
+            public void setCreatedAt(String createdAt) {
+                this.createdAt = createdAt;
+            }
 
             public int get__v() {
                 return __v;
@@ -1180,35 +1276,30 @@ public class PetLoverDashboardResponse {
                 this.__v = __v;
             }
 
-
-            public String getUpdatedAt() {
-                return updatedAt;
+            public List<PetImgBean> getPet_img() {
+                return pet_img;
             }
 
-            public void setUpdatedAt(String updatedAt) {
-                this.updatedAt = updatedAt;
-
+            public void setPet_img(List<PetImgBean> pet_img) {
+                this.pet_img = pet_img;
             }
 
-            public String getCreatedAt() {
-                return createdAt;
-            }
+            public static class PetImgBean {
+                private String pet_img;
 
-            public void setCreatedAt(String createdAt) {
-                this.createdAt = createdAt;
+                public String getPet_img() {
+                    return pet_img;
+                }
 
+                public void setPet_img(String pet_img) {
+                    this.pet_img = pet_img;
+                }
             }
         }
 
         public static class MessagesBean {
-            /**
-             * title : Doctor
-             * message : Unable to find the doctor near your location can i show the doctor above the location
-             */
-
             private String title;
             private String message;
-
 
             public String getTitle() {
                 return title;
@@ -1216,9 +1307,7 @@ public class PetLoverDashboardResponse {
 
             public void setTitle(String title) {
                 this.title = title;
-
             }
-
 
             public String getMessage() {
                 return message;
@@ -1226,7 +1315,6 @@ public class PetLoverDashboardResponse {
 
             public void setMessage(String message) {
                 this.message = message;
-
             }
         }
     }

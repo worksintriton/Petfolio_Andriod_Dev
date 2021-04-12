@@ -536,16 +536,16 @@ public class PetHomeFragment extends Fragment implements Serializable,
         rvpuppy_love.setMotionEventSplittingEnabled(false);
         int size =3;
         rvpuppy_love.setItemAnimator(new DefaultItemAnimator());
-        PetLoverDashboardPubbyLoveAdapter petLoverDashboardPubbyLoveAdapter = new PetLoverDashboardPubbyLoveAdapter(mContext, puppyProductsDetailsBeanList, rvpuppy_love, size);
-        rvpuppy_love.setAdapter(petLoverDashboardPubbyLoveAdapter);
+       /* PetLoverDashboardPubbyLoveAdapter petLoverDashboardPubbyLoveAdapter = new PetLoverDashboardPubbyLoveAdapter(mContext, puppyProductsDetailsBeanList, rvpuppy_love, size);
+        rvpuppy_love.setAdapter(petLoverDashboardPubbyLoveAdapter);*/
     }
     private void setViewPuppyLoveSeeMore() {
         rvpuppy_love.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         rvpuppy_love.setMotionEventSplittingEnabled(false);
         int size =puppyProductsDetailsBeanList.size();
         rvpuppy_love.setItemAnimator(new DefaultItemAnimator());
-        PetLoverDashboardPubbyLoveAdapter petLoverDashboardPubbyLoveAdapter = new PetLoverDashboardPubbyLoveAdapter(mContext, puppyProductsDetailsBeanList, rvpuppy_love, size);
-        rvpuppy_love.setAdapter(petLoverDashboardPubbyLoveAdapter);
+        /*PetLoverDashboardPubbyLoveAdapter petLoverDashboardPubbyLoveAdapter = new PetLoverDashboardPubbyLoveAdapter(mContext, puppyProductsDetailsBeanList, rvpuppy_love, size);
+        rvpuppy_love.setAdapter(petLoverDashboardPubbyLoveAdapter);*/
     }
     private void setViewServices(List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ServiceDetailsBean> serviceDetailsResponseList) {
         rvservice.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));

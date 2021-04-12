@@ -43,7 +43,7 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.API;
 import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetCareFragment;
-import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetHomeFragment;
+import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetHomeNewFragment;
 import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetServicesFragment;
 import com.petfolio.infinitus.fragmentpetlover.bottommenu.VendorShopFragment;
 import com.petfolio.infinitus.responsepojo.GetAddressResultResponse;
@@ -80,7 +80,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
     BottomNavigationView bottom_navigation_view;
 
 
-    final Fragment petHomeFragment = new PetHomeFragment();
+    final Fragment petHomeFragment = new PetHomeNewFragment();
     final Fragment petCareFragment = new PetCareFragment();
     final Fragment petServicesFragment = new PetServicesFragment();
     final Fragment vendorShopFragment = new VendorShopFragment();
@@ -111,6 +111,8 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
         ButterKnife.bind(this);
         Log.w(TAG,"onCreate-->");
 
+        bottom_navigation_view.setItemIconTintList(null);
+
         googleApiConnected();
 
 
@@ -134,7 +136,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
                 active = petHomeFragment;
                 bottom_navigation_view.setSelectedItemId(R.id.home);
 
-                loadFragment(new PetHomeFragment());
+                loadFragment(new PetHomeNewFragment());
             }else if(tag.equalsIgnoreCase("2")){
                 active = vendorShopFragment;
                 bottom_navigation_view.setSelectedItemId(R.id.shop);
@@ -212,7 +214,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
                 bottom_navigation_view.setSelectedItemId(R.id.home);
                 // load fragment
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_schedule,new PetHomeFragment());
+                transaction.replace(R.id.frame_schedule,new PetHomeNewFragment());
                 transaction.commitNowAllowingStateLoss();
             }
 
@@ -221,7 +223,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
             bottom_navigation_view.setSelectedItemId(R.id.home);
             // load fragment
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frame_schedule,new PetHomeFragment());
+            transaction.replace(R.id.frame_schedule,new PetHomeNewFragment());
             transaction.commitNowAllowingStateLoss();
         }
     }
@@ -239,7 +241,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawer impleme
         switch (item.getItemId()) {
                 case R.id.home:
                     active_tag = "1";
-                replaceFragment(new PetHomeFragment());
+                replaceFragment(new PetHomeNewFragment());
                 break;
                 case R.id.shop:
                     active_tag = "2";

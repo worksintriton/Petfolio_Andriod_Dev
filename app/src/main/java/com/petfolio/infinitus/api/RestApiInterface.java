@@ -247,7 +247,7 @@ public interface RestApiInterface {
     Call<AddYourPetResponse> addYourPetResponseCall(@Header("Content-Type") String type, @Body AddYourPetRequest addYourPetRequest );
 
     /*Pet lover dashboard*/
-    @POST("userdetails/petlove/mobile/dashboard1")
+    @POST("userdetails/petlove/mobile/dashboardtest")
     Call<PetLoverDashboardResponse> petLoverDashboardResponseCall(@Header("Content-Type") String type, @Body PetLoverDashboardRequest petLoverDashboardRequest);
 
     /*Add location*/

@@ -5,12 +5,102 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/whiteTwo"
+    android:background="@color/new_header_bg"
     app:contentInsetLeft="0dp"
     app:contentInsetStart="0dp"
     app:popupTheme="@style/AppTheme.PopupOverlay"
     app:titleTextAppearance="@style/TitleBarTextAppearance">
+    <LinearLayout
+        android:id="@+id/ll_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        tools:ignore="DisableBaselineAlignment,UselessParent">
+        <LinearLayout
+            android:id="@+id/ll1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_menu_new"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+          >
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:background="@drawable/capsule_bg_new"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/button1button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center"
+                    android:layout_marginStart="5dp"
+                    android:src="@drawable/ic_mappin"
+                    android:scaleType="fitXY"/>
+
+                <TextView
+                    android:id="@+id/txt_location"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Chennai"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/button2button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center"
+                    android:layout_marginEnd="5dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_down_arrow"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end">
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/ic_user_image"
+                    android:scaleType="centerInside"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/img_menu"
@@ -29,7 +119,7 @@
         android:layout_marginStart="10dp"
         android:src="@drawable/mapicn"
         tools:ignore="ContentDescription"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/toolbar_title"
@@ -44,13 +134,15 @@
         android:textColor="@color/new_four_txt_color"
         android:textSize="12sp"
         android:maxLines="1"
-        android:ellipsize="end"/>
+        android:ellipsize="end"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end"
-        android:layout_marginStart="10dp">
+        android:layout_marginStart="10dp"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/img_sos"

@@ -103,10 +103,10 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
     //SessionManager session;
     String name, image_url, phoneNo;
 
-     public TextView toolbar_title;
-     Button btnNotificationPatient;
+    public TextView toolbar_title;
+    Button btnNotificationPatient;
 
-     public Menu menu;
+    public Menu menu;
 
 
 
@@ -168,7 +168,7 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
         frameLayout = view.findViewById(R.id.base_container);
 
 
-         menu = navigationView.getMenu();
+        menu = navigationView.getMenu();
 
 
 
@@ -263,13 +263,13 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
         });
         img_profile.setOnClickListener(v -> {
 
-           Intent intent = new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class);
-           intent.putExtra("fromactivity",TAG);
+            Intent intent = new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class);
+            intent.putExtra("fromactivity",TAG);
             if(PetLoverDashboardActivity.active_tag != null){
                 intent.putExtra("active_tag",PetLoverDashboardActivity.active_tag);
 
             }
-           startActivity(intent);
+            startActivity(intent);
         });
 
 

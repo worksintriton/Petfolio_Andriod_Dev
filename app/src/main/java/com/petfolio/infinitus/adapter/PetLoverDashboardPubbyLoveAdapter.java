@@ -24,17 +24,17 @@ public class PetLoverDashboardPubbyLoveAdapter extends  RecyclerView.Adapter<Rec
 
     private  String TAG = "PetLoverDashboardPubbyLoveAdapter";
     private Context context;
-    List<PetLoverDashboardResponse.DataBean.DashboarddataBean.PuppyProductsDetailsBean> productDetailsResponseList;
-    PetLoverDashboardResponse.DataBean.DashboarddataBean.PuppyProductsDetailsBean currentItem;
+    List<PetLoverDashboardResponse.DataBean.DashboarddataBean.MiddleBannerDetailsBean> middleBannerDetailsBeanList;
+    PetLoverDashboardResponse.DataBean.DashboarddataBean.MiddleBannerDetailsBean currentItem;
 
     int size;
     private RecyclerView recyclerView;
 
 
 
-    public PetLoverDashboardPubbyLoveAdapter(Context context, List<PetLoverDashboardResponse.DataBean.DashboarddataBean.PuppyProductsDetailsBean> productDetailsResponseList, RecyclerView recyclerView, int size) {
-        this.productDetailsResponseList = productDetailsResponseList;
+    public PetLoverDashboardPubbyLoveAdapter(Context context,  List<PetLoverDashboardResponse.DataBean.DashboarddataBean.MiddleBannerDetailsBean> middleBannerDetailsBeanList, RecyclerView recyclerView, int size) {
         this.context = context;
+        this.middleBannerDetailsBeanList = middleBannerDetailsBeanList;
         this.size = size;
         this.recyclerView = recyclerView;
 
@@ -63,7 +63,7 @@ public class PetLoverDashboardPubbyLoveAdapter extends  RecyclerView.Adapter<Rec
     @SuppressLint("SetTextI18n")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
-          currentItem = productDetailsResponseList.get(position);
+          currentItem = middleBannerDetailsBeanList.get(position);
           Log.w(TAG,"getImg_path :"+currentItem.getImg_path());
 
           if (currentItem.getImg_path() != null && !currentItem.getImg_path().isEmpty()) {
@@ -116,7 +116,7 @@ public class PetLoverDashboardPubbyLoveAdapter extends  RecyclerView.Adapter<Rec
 
     @Override
     public int getItemCount() {
-        return Math.min(productDetailsResponseList.size(), size);
+        return Math.min(middleBannerDetailsBeanList.size(), size);
 
 
 

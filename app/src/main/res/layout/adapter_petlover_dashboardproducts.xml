@@ -17,7 +17,7 @@
         <ImageView
             android:id="@+id/img_products_image"
             android:layout_width="match_parent"
-            android:layout_height="130dp"
+            android:layout_height="90dp"
             android:contentDescription="@string/image"
             android:scaleType="fitXY"
             android:src="@drawable/services"

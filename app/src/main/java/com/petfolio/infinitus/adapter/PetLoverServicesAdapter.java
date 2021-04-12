@@ -4,15 +4,22 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -83,8 +90,16 @@ public class PetLoverServicesAdapter extends  RecyclerView.Adapter<RecyclerView.
 
         }
 
+          if(currentItem.getBackground_color() != null) {
+              int color = Color.parseColor(currentItem.getBackground_color());
+              Drawable unwrappedDrawable = AppCompatResources.getDrawable(context, R.drawable.layout_bg_service);
+              Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
+              DrawableCompat.setTint(wrappedDrawable, color);
+              holder.ll_root.setBackgroundResource(R.drawable.layout_bg_service);
+          }
 
-        holder.rl_root.setOnClickListener(new View.OnClickListener() {
+
+        holder.ll_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(serviceDetailsResponseList.get(position).get_id() != null) {
@@ -98,14 +113,6 @@ public class PetLoverServicesAdapter extends  RecyclerView.Adapter<RecyclerView.
 
 
         });
-
-
-
-
-
-
-
-
 
 
     }
@@ -137,7 +144,7 @@ public class PetLoverServicesAdapter extends  RecyclerView.Adapter<RecyclerView.
 
     class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_petlover_servicesname;
-        public RelativeLayout rl_root;
+        public LinearLayout ll_root;
         public ImageView cv_serviceimage;
 
 
@@ -147,7 +154,7 @@ public class PetLoverServicesAdapter extends  RecyclerView.Adapter<RecyclerView.
             super(itemView);
             txt_petlover_servicesname = itemView.findViewById(R.id.txt_petlover_servicesname);
             cv_serviceimage = itemView.findViewById(R.id.cv_serviceimage);
-            rl_root = itemView.findViewById(R.id.rl_root);
+            ll_root = itemView.findViewById(R.id.ll_root);
 
 
 
