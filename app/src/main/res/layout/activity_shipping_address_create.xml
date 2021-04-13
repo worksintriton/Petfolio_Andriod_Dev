@@ -116,7 +116,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/footerView"
-        android:layout_below="@+id/headerView" >
+        android:layout_below="@+id/headerView"
+        android:scrollbars="none"
+        android:fillViewport="true">
 
         <LinearLayout
             android:id="@+id/content"
@@ -147,7 +149,7 @@
                         android:maxLength="25"
                         android:maxLines="1"
                         android:padding="15dp"
-                        android:textColor="@color/black"
+                        android:textColor="@color/new_light_green"
                         android:textColorHint="@color/dark_gray"
                         android:textSize="12sp" />
 
@@ -166,49 +168,41 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/futuramediumbt"
-                        android:hint="Last Name *"
+                        android:hint="Last Name "
                         android:inputType="text"
                         android:maxLength="25"
                         android:maxLines="1"
                         android:padding="15dp"
-                        android:textColor="@color/black"
+                        android:textColor="@color/new_light_green"
+                        android:textColorHint="@color/dark_gray"
+                        android:textSize="12sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:textColorHint="@color/coolGrey"
+                    app:hintTextAppearance="@style/mytext">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_flat_house_build_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:hint="Flat / House / Building No*"
+                        android:inputType="text"
+                        android:maxLength="25"
+                        android:maxLines="1"
+                        android:padding="15dp"
+                        android:textColor="@color/new_light_green"
                         android:textColorHint="@color/dark_gray"
                         android:textSize="12sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    android:id="@+id/txt_alternative_no_label3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/futuramediumbt"
-                    android:text="Flat / House / Building No*"
-                    android:textSize="14sp" />
 
-                <EditText
-                    android:id="@+id/edt_flat_house_build_no"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/new_background_black"
-                    android:fontFamily="@font/futuramediumbt"
-                    android:gravity="start"
-                    android:hint="@string/write_here"
-                    android:inputType="textMultiLine"
-                    android:lines="4"
-                    android:maxLength="150"
-                    android:maxLines="4"
-                    android:minLines="2"
-                    android:padding="15dp"
-                    android:scrollbars="vertical"
-                    android:textAlignment="viewStart"
-                    android:textColorHint="@color/dark_gray"
-                    android:textSize="14sp"
-                    tools:ignore="Autofill,LabelFor" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"

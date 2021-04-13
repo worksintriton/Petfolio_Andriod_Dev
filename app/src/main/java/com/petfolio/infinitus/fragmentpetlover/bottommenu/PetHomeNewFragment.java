@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -142,6 +143,12 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
     @BindView(R.id.txt_seemore_services)
     TextView txt_seemore_services;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_seemore_vets)
+    TextView txt_seemore_vets;
+
+
+
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_products)
@@ -176,11 +183,13 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
     @BindView(R.id.txt_no_puppy_love)
     TextView txt_no_puppy_love;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.headerView)
+    LinearLayout headerView;
 
-
-
-
-
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_content_shop)
+    LinearLayout ll_content_shop;
 
 
 
@@ -239,9 +248,14 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
 
         avi_indicator.setVisibility(View.GONE);
 
+        headerView.setVisibility(View.GONE);
+        ll_content_shop.setVisibility(View.GONE);
+
         txt_doctors.setVisibility(View.GONE);
         txt_services.setVisibility(View.GONE);
         txt_seemore_services.setVisibility(View.GONE);
+        txt_seemore_vets.setVisibility(View.GONE);
+
         txt_products.setVisibility(View.GONE);
         txt_seemore_products.setVisibility(View.GONE);
         txt_puppy_love.setVisibility(View.GONE);
@@ -345,6 +359,8 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
                 Log.w(TAG,"PetLoverDashboardResponse" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
+                        headerView.setVisibility(View.VISIBLE);
+                        ll_content_shop.setVisibility(View.VISIBLE);
 
                         if (response.body().getData().getDashboarddata().getBanner_details() != null && response.body().getData().getDashboarddata().getBanner_details().size()>0) {
                             listHomeBannerResponse = response.body().getData().getDashboarddata().getBanner_details();
@@ -362,6 +378,7 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
                                 rvdoctors.setVisibility(View.VISIBLE);
                                 txt_doctor_norecord.setVisibility(View.GONE);
                                 txt_doctors.setVisibility(View.VISIBLE);
+                                txt_seemore_vets.setVisibility(View.VISIBLE);
                                 setViewDoctors(doctorDetailsResponseList);
 
 

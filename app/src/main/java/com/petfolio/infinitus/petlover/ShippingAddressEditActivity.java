@@ -121,6 +121,10 @@ public class ShippingAddressEditActivity extends AppCompatActivity implements Vi
     LinearLayout ll_cancel;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_cancel)
+    TextView txt_cancel;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.ll_create_addreess)
     LinearLayout ll_create_addreess;
 
@@ -166,6 +170,7 @@ public class ShippingAddressEditActivity extends AppCompatActivity implements Vi
         img_back.setOnClickListener(this);
 
         ll_cancel.setOnClickListener(this);
+        txt_cancel.setOnClickListener(this);
 
         ll_create_addreess.setOnClickListener(this);
 
@@ -245,6 +250,8 @@ public class ShippingAddressEditActivity extends AppCompatActivity implements Vi
                 prodcut_item_count = extras.getInt("prodcut_item_count");
 
                 setView();
+
+                Log.w(TAG,"fromactivity : "+fromactivity);
 
 
         }
@@ -328,17 +335,23 @@ public class ShippingAddressEditActivity extends AppCompatActivity implements Vi
     }
 
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
 
             case R.id.img_back:
-                onBackPressed();
+               // onBackPressed();
+                gotoPreviousActivity();
                 break;
 
             case R.id.ll_cancel:
                 gotoPreviousActivity();
+                break;
+
+                case R.id.txt_cancel:
+                    gotoPreviousActivity();
                 break;
 
             case R.id.ll_create_addreess:
@@ -642,5 +655,9 @@ public class ShippingAddressEditActivity extends AppCompatActivity implements Vi
         return shippingAddressEditRequest;
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        gotoPreviousActivity();
+    }
 }

@@ -22,7 +22,6 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.adapter.PetCompletedAppointmentAdapter;
 import com.petfolio.infinitus.adapter.ShippingAddressListAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
@@ -32,11 +31,9 @@ import com.petfolio.infinitus.interfaces.OnSelectingShipIdListener;
 import com.petfolio.infinitus.requestpojo.ShippingAddrMarkAsLastUsedRequest;
 import com.petfolio.infinitus.requestpojo.ShippingAddrMarkAsLastUsedResponse;
 import com.petfolio.infinitus.requestpojo.ShippingAddressDeleteRequest;
-import com.petfolio.infinitus.requestpojo.ShippingAddressFetchByUserIDRequest;
 import com.petfolio.infinitus.requestpojo.ShippingAddressListingByUserIDRequest;
 import com.petfolio.infinitus.responsepojo.CartDetailsResponse;
 import com.petfolio.infinitus.responsepojo.ShippingAddressDeleteResponse;
-import com.petfolio.infinitus.responsepojo.ShippingAddressFetchByUserIDResponse;
 import com.petfolio.infinitus.responsepojo.ShippingAddressListingByUserIDResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -637,7 +634,15 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
     @Override
     public void OnDeleteShipAddr(String shipid, String first_name, String last_name, String phonum, String alt_phonum, String flat_no, String state, String street, String landmark, String pincode, String address_type, String date, String address_status) {
-
         showWaring(shipid);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(),ShippingAddressActivity.class);
+        intent.putExtra("grand_total",grand_total);
+        startActivity(intent);
+        finish();
     }
 }

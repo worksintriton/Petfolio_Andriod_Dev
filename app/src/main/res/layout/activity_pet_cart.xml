@@ -213,7 +213,7 @@
                 android:layout_gravity="center"
                 android:orientation="vertical"
                 android:id="@+id/ll_cart_is_empty"
-                android:visibility="gone"
+                android:visibility="visible"
                 tools:ignore="UseCompoundDrawables">
                 <ImageView
                     android:layout_width="200dp"
@@ -231,6 +231,23 @@
                     android:textColor="@color/new_green_btn"
                     android:gravity="center"
                     android:fontFamily="@font/futuramediumbt" />
+                <Button
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/btn_shopnow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/new_rounded_corner_btn"
+                    android:fontFamily="@font/futuramediumbt"
+                    android:text="Shop now"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:layout_marginEnd="70dp"
+                    android:layout_marginStart="70dp"
+                    android:textStyle="bold"
+
+                    />
+
 
             </LinearLayout>
         </LinearLayout>
@@ -249,7 +266,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:id="@+id/ll_content_amount">
+            android:id="@+id/ll_content_amount"
+            android:visibility="gone">
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
@@ -397,6 +415,7 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="18sp"
+            android:visibility="gone"
             />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

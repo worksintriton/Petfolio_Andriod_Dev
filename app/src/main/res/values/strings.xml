@@ -221,7 +221,7 @@
     <string name="payment_method">Payment Method</string>
     <string name="order_cost">Order cost</string>
     <string name="address">Address</string>
-    <string name="order_details">Order Details </string>
+    <string name="order_details">Order details </string>
     <string name="allergies_pet_details">Allergies :</string>
     <string name="prescription">Prescription</string>
     <string name="before_given_prescription_details">Before given Prescription Details</string>
@@ -412,7 +412,7 @@
     <string name="text_with_bullet2"> \u2022 Dermatologist</string>
     <string name="text_with_bullet3"> \u2022 Medicine Physician</string>
 
-    <string name="your_cart_is_empty">No products found.</string>
+    <string name="your_cart_is_empty">Your cart is empty!</string>
     <string name="cancel_order">Cancel order</string>
     <string name="track_order">Track order</string>
     <string name="return_order">Return order</string>
@@ -454,7 +454,7 @@
     <string name="discount10">10% or more </string>
     <string name="discount10below">10% and below </string>
     <string name="category">Category</string>
-
+    <string name="view_more">VIEW MORE</string>
 
 
 </resources>

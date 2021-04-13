@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -139,6 +140,7 @@ public class Cart_Adapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder>
     static class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_products_title,txt_discount_amount,txt_original_amount,txt_discount,txt_cart_count;
         public ImageView img_products_image,img_remove_product,img_add_product;
+        public LinearLayout ll_delete;
 
         public ViewHolderOne(View itemView) {
             super(itemView);
@@ -150,6 +152,7 @@ public class Cart_Adapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder>
             txt_cart_count = itemView.findViewById(R.id.txt_cart_count);
             img_remove_product = itemView.findViewById(R.id.img_remove_product);
             img_add_product = itemView.findViewById(R.id.img_add_product);
+            ll_delete = itemView.findViewById(R.id.ll_delete);
 
 
 

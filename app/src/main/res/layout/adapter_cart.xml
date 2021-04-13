@@ -127,7 +127,6 @@
                         android:layout_height="24dp"
                         android:src="@drawable/ic_cart_minus"
                         tools:ignore="ContentDescription" />
-
                     <TextView
                         android:id="@+id/txt_cart_count"
                         android:layout_width="wrap_content"
@@ -140,13 +139,40 @@
                         android:layout_marginEnd="10dp"
                         android:gravity="center"
                         />
-
                     <ImageView
                         android:id="@+id/img_add_product"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_cart_plus"
                         tools:ignore="ContentDescription" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_delete"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="end|center"
+                        android:layout_marginEnd="20dp">
+
+                        <ImageView
+                            android:layout_marginStart="10dp"
+                            android:id="@+id/img_delete"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_baseline_delete_24"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:layout_marginStart="5dp"
+                            android:id="@+id/txt_delete"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/futuramediumbt"
+                            android:text="DELETE"
+                            android:textAllCaps="true"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+                    </LinearLayout>
 
 
                 </LinearLayout>

@@ -114,6 +114,7 @@ public class PetVendorOrderDetailsActivity extends AppCompatActivity implements 
     AVLoadingIndicatorView avi_indicator;
 
     private String _id;
+    private String fromactivity;
 
 
     @SuppressLint({"LogNotTimber", "LongLogTag", "SetTextI18n"})
@@ -126,20 +127,9 @@ public class PetVendorOrderDetailsActivity extends AppCompatActivity implements 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             _id = extras.getString("_id");
-            String fromactivity = extras.getString("fromactivity");
+             fromactivity = extras.getString("fromactivity");
             Log.w(TAG,"_id : "+_id+" fromactivity : "+ fromactivity);
 
-            if(fromactivity != null && fromactivity.equalsIgnoreCase("PetVendorNewOrdersAdapter")){
-                txt_order_status.setText("Booked on");
-                img_order_status.setImageResource(R.drawable.completed);
-            }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetVendorCompletedOrdersAdapter")){
-                txt_order_status.setText("Delivered on");
-                img_order_status.setImageResource(R.drawable.completed);
-            }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetVendorCancelledOrdersAdapter")){
-                txt_order_status.setText("Cancelled on");
-                img_order_status.setImageResource(R.drawable.ic_baseline_cancel_24);
-
-            }
 
 
         }
@@ -235,9 +225,31 @@ public class PetVendorOrderDetailsActivity extends AppCompatActivity implements 
 
                             }
 
-                            if(response.body().getData().getDate_of_booking() != null){
-                                txt_delivered_date.setText(response.body().getData().getDate_of_booking());
+                            if(fromactivity != null && fromactivity.equalsIgnoreCase("PetVendorNewOrdersAdapter")){
+                                txt_order_status.setText("Booked on");
+                                img_order_status.setImageResource(R.drawable.completed);
+                                if(response.body().getData().getDate_of_booking() != null){
+                                    txt_delivered_date.setText(response.body().getData().getDate_of_booking());
+                                }
+                            }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetVendorCompletedOrdersAdapter")){
+                                txt_order_status.setText("Delivered on");
+                                img_order_status.setImageResource(R.drawable.completed);
+                                if(response.body().getData().getVendor_complete_date() != null){
+                                    txt_delivered_date.setText(response.body().getData().getVendor_complete_date());
+                                }
+                            }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetVendorCancelledOrdersAdapter")){
+                                txt_order_status.setText("Cancelled on");
+                                img_order_status.setImageResource(R.drawable.ic_baseline_cancel_24);
+                                if(response.body().getData().getVendor_cancell_date() != null && !response.body().getData().getVendor_cancell_date().isEmpty()){
+                                    txt_delivered_date.setText(response.body().getData().getVendor_cancell_date());
+                                }else if(response.body().getData().getUser_cancell_date() != null && !response.body().getData().getUser_cancell_date().isEmpty()){
+                                    txt_delivered_date.setText(response.body().getData().getUser_cancell_date());
+                                }
+
                             }
+
+
+
 
 
 

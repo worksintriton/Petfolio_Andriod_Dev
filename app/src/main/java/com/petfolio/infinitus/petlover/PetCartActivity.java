@@ -129,6 +129,10 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
     @BindView(R.id.txt_removeall_products)
     TextView txt_removeall_products;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.btn_shopnow)
+    Button btn_shopnow;
+
     String tag;
     String fromactivity;
 
@@ -178,6 +182,13 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                 fetch_cart_details_by_userid_Call();
             }
 
+        btn_shopnow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callDirections("2");
+
+            }
+        });
 
 
         btn_procced_to_buy.setOnClickListener(v -> {

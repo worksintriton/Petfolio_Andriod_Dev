@@ -328,13 +328,13 @@ public class ShippingAddressCreateActivity extends AppCompatActivity implements 
 
             }
 
-            else if(lastname != null && lastname.isEmpty()){
+          /*  else if(lastname != null && lastname.isEmpty()){
                 edt_lastname.setError("Please fill the last name");
                 edt_lastname.requestFocus();
                 //Toasty.warning(getApplicationContext(), "Please Enter the Last Name", Toast.LENGTH_SHORT).show();
                 can_proceed = false;
 
-            }
+            }*/
 
 
             else if(flat_house_build_no != null && flat_house_build_no.isEmpty()){

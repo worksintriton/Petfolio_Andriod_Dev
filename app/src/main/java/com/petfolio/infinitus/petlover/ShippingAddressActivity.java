@@ -881,6 +881,8 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(),PetCartActivity.class));
+        finish();
     }
 
     public void callDirections(String tag){

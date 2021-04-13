@@ -3,6 +3,7 @@ package com.petfolio.infinitus.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,7 @@ public class ShippingAddressListAdapter extends  RecyclerView.Adapter<RecyclerVi
     OnEditShipAddrListener onEditShipAddrListener;
 
     OnDeleteShipAddrListener onDeleteShipAddrListener;
+    private boolean isSelected = true;
 
     public ShippingAddressListAdapter(Context context, List<ShippingAddressListingByUserIDResponse.DataBean> newOrderResponseList, int size,OnSelectingShipIdListener onSelectingShipIdListener,OnEditShipAddrListener onEditShipAddrListener,OnDeleteShipAddrListener onDeleteShipAddrListener) {
         this.newOrderResponseList = newOrderResponseList;
@@ -96,7 +98,6 @@ public class ShippingAddressListAdapter extends  RecyclerView.Adapter<RecyclerVi
 
 
         if(newOrderResponseList.get(position).getUser_mobile()!=null&&!newOrderResponseList.get(position).getUser_mobile().isEmpty()){
-
             holder.txt_phnum.setText(newOrderResponseList.get(position).getUser_mobile());
 
         }
@@ -147,33 +148,44 @@ public class ShippingAddressListAdapter extends  RecyclerView.Adapter<RecyclerVi
 
             holder.txt_dist_pincode_state.setText(landmark + " " + " "+ state +" "+ pincode);
         }
+        Log.w(TAG,"lastSelectedPosition : "+lastSelectedPosition+" position : "+position);
 
-        //since only one radio button is allowed to be selected,
+       //since only one radio button is allowed to be selected,
         // this condition un-checks previous selections
         holder.rb_choose_addr_list.setChecked(lastSelectedPosition == position);
+
+        if(isSelected) {
+            if (newOrderResponseList.get(position).getUser_address_stauts() != null && !newOrderResponseList.get(position).getUser_address_stauts().isEmpty()) {
+                holder.rb_choose_addr_list.setChecked(newOrderResponseList.get(position).getUser_address_stauts().equalsIgnoreCase("Last Used"));
+            }
+        }
+
+
+
+
 
         holder.rb_choose_addr_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isSelected = false;
+               // newOrderResponseList.get(position).setUser_address_type("Last Used");
                 lastSelectedPosition = holder.getAdapterPosition();
                 notifyDataSetChanged();
-
-
-                onSelectingShipIdListener.onSelectShipID(newOrderResponseList.get(position).get_id(),newOrderResponseList.get(position).getUser_first_name(),newOrderResponseList.get(position).getUser_last_name(),newOrderResponseList.get(position).getUser_mobile(),newOrderResponseList.get(position).getUser_alter_mobile(),
-
-                        newOrderResponseList.get(position).getUser_flat_no(),newOrderResponseList.get(position).getUser_state(),newOrderResponseList.get(position).getUser_stree(),newOrderResponseList.get(position).getUser_landmark(),newOrderResponseList.get(position).getUser_picocode(),newOrderResponseList.get(position).getUser_address_type(),newOrderResponseList.get(position).getUser_display_date(),newOrderResponseList.get(position).getUser_address_stauts());
+                onSelectingShipIdListener.onSelectShipID(newOrderResponseList.get(position).get_id(),newOrderResponseList.get(position).getUser_first_name(),newOrderResponseList.get(position).getUser_last_name(),newOrderResponseList.get(position).getUser_mobile(),newOrderResponseList.get(position).getUser_alter_mobile(), newOrderResponseList.get(position).getUser_flat_no(),newOrderResponseList.get(position).getUser_state(),newOrderResponseList.get(position).getUser_stree(),newOrderResponseList.get(position).getUser_landmark(),newOrderResponseList.get(position).getUser_picocode(),newOrderResponseList.get(position).getUser_address_type(),newOrderResponseList.get(position).getUser_display_date(),newOrderResponseList.get(position).getUser_address_stauts());
             }
         });
+
+
+
 
         holder.ll_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 onEditShipAddrListener.OnEditShipAddr(newOrderResponseList.get(position).get_id(),newOrderResponseList.get(position).getUser_first_name(),newOrderResponseList.get(position).getUser_last_name(),newOrderResponseList.get(position).getUser_mobile(),newOrderResponseList.get(position).getUser_alter_mobile(),
-
                         newOrderResponseList.get(position).getUser_flat_no(),newOrderResponseList.get(position).getUser_state(),newOrderResponseList.get(position).getUser_stree(),newOrderResponseList.get(position).getUser_landmark(),newOrderResponseList.get(position).getUser_picocode(),newOrderResponseList.get(position).getUser_address_type(),newOrderResponseList.get(position).getUser_display_date(),newOrderResponseList.get(position).getUser_address_stauts(),newOrderResponseList.get(position).getUser_city());
             }
         });
+
 
 
         holder.ll_delete.setOnClickListener(new View.OnClickListener() {

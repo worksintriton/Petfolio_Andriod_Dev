@@ -4,5 +4,4 @@
     <corners android:radius="24dp" />
     <solid android:color="@color/new_view_more" />
 
-
 </shape>

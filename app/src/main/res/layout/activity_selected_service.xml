@@ -216,8 +216,9 @@
                                 android:layout_marginEnd="5dp"
                                 android:layout_centerVertical="true"
                                 android:contentDescription="@string/image"
-                                android:src="@drawable/ic_baseline_swap_vert_24"
-                                android:scaleType="center" />
+                                android:src="@drawable/ic_sort"
+                                android:scaleType="center"
+                                android:layout_marginStart="10dp"/>
 
                         </RelativeLayout>
 
@@ -252,12 +253,13 @@
                                 android:layout_height="16dp"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginEnd="5dp"
-                                android:layout_marginStart="5dp"
+                                android:layout_marginStart="10dp"
                                 android:layout_toEndOf="@+id/edt_filter"
                                 android:contentDescription="@string/image"
-                                android:src="@drawable/ic_baseline_filter_alt_24"
+                                android:src="@drawable/ic_filter"
                                 android:scaleType="center"
-                                android:layout_centerVertical="true" />
+                                android:layout_centerVertical="true"
+                                />
 
                         </RelativeLayout>
 
