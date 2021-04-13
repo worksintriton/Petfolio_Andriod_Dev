@@ -619,6 +619,10 @@ public interface RestApiInterface {
     @POST("product_cart_detail/remove_product")
     Call<SuccessResponse> remove_product_ResponseCall(@Header("Content-Type") String type, @Body FetchByIdRequest fetchByIdRequest);
 
+    /*Remove Single product*/
+    @POST("product_cart_detail/remove_single_products")
+    Call<SuccessResponse> remove_single_products_ResponseCall(@Header("Content-Type") String type, @Body FetchByIdRequest fetchByIdRequest);
+
     /*Remove all product*/
     @POST("product_cart_detail/remove_overall_products")
     Call<SuccessResponse> remove_overall_products_ResponseCall(@Header("Content-Type") String type, @Body FetchByIdRequest fetchByIdRequest);

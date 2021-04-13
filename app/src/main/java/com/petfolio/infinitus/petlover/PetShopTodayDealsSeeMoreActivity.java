@@ -163,18 +163,16 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
           fromactivity = extras.getString("fromactivity");
             Log.w(TAG,"petTypeId : "+petTypeId+" petBreedTypeId : "+petBreedTypeId+" discount_value : "+discount_value);
 
+        }
         if(fromactivity != null && fromactivity.equalsIgnoreCase("ProductFiltersActivity")){
             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
                 productFiltersResponseCall();
             }
 
-          }else{
-              if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                  todayDealMoreResponseCall();
-              }
-          }
-
-
+        }else{
+            if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                todayDealMoreResponseCall();
+            }
         }
         initResultRecylerView();
 
@@ -249,7 +247,7 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
 
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
-                        Log.w(TAG, "ShopDashboardResponse" + new Gson().toJson(response.body()));
+                        Log.w(TAG, "todayDealMoreResponseCall" + new Gson().toJson(response.body()));
                         if (response.body().getData() != null && response.body().getData().size() > 0) {
                             todayDealsList = response.body().getData();
                             for (int i = 0; i < todayDealsList.size(); i++) {
@@ -314,7 +312,7 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
     private void setView(List<TodayDealMoreResponse.DataBean> data) {
        /* rv_today_deal.setLayoutManager(new GridLayoutManager(this, 2));
         rv_today_deal.setItemAnimator(new DefaultItemAnimator());*/
-        petShopTodayDealsSeeMoreAdapter = new PetShopTodayDealsSeeMoreAdapter(getApplicationContext(), data);
+        petShopTodayDealsSeeMoreAdapter = new PetShopTodayDealsSeeMoreAdapter(getApplicationContext(), data,TAG);
         rv_today_deal.setAdapter(petShopTodayDealsSeeMoreAdapter);
         petShopTodayDealsSeeMoreAdapter.notifyDataSetChanged();
         isLoading = false;

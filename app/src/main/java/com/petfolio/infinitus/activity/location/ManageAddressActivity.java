@@ -74,9 +74,6 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
     @BindView(R.id.txt_no_records)
     TextView txt_no_records;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.txt_savedaddress)
-    TextView txt_savedaddress;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_adddress_list)
@@ -85,6 +82,11 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.ll_add_newaddress)
     LinearLayout ll_add_newaddress;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_savedaddress)
+    TextView txt_savedaddress;
+
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.bottom_navigation_view)

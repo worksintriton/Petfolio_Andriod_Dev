@@ -6,7 +6,7 @@
         <item name="colorAccent">@color/Lightgray</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowLightStatusBar">true</item>
+       <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowBackground">@color/whiteTwo</item>
         <item name="tabBackground">@drawable/tab_background</item>
 
@@ -83,6 +83,12 @@
         <item name="colorAccent">@color/coolGrey</item>
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/futuramediumbt</item>
+    </style>
+
+
+    <style name="switchStyle">
+        <item name="colorControlActivated">@color/new_green_btn</item>
+        <item name="android:colorForeground">@color/new_green_btn</item>
     </style>
 
 

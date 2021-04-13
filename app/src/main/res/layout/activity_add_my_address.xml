@@ -263,6 +263,43 @@
                     tools:ignore="Autofill,LabelFor,TextFields"
                     android:maxLines="1"
                     android:maxLength="25" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
+                    <TextView
+                        android:id="@+id/txt_lbl_setasfault"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="@string/set_as_default"
+                        android:textColor="@color/new_txt_color"
+                        android:textSize="16sp"
+                        tools:ignore="HardcodedText" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end">
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/switchButton_default"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:layout_marginStart="5dp"
+                            style="@style/switchStyle"
+                            android:theme="@style/switchStyle"
+                            app:theme="@style/switchStyle"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
             </LinearLayout>
 
 

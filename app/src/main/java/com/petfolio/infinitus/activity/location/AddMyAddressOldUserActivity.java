@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -127,16 +129,19 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.switchButton_default)
+    SwitchCompat switchButton_default;
+
 
     String userid = "",locationnickname,state = "",country = "",postalcode = "",street;
-
-
 
     AlertDialog.Builder alertDialogBuilder;
     AlertDialog alertDialog;
 
 
     String LocationType = "Home";
+    private boolean defaultstatus = false;
 
 
     @Override
@@ -147,8 +152,6 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
         Log.w(TAG,"onCreate-->");
 
         ButterKnife.bind(this);
-
-
         avi_indicator.setVisibility(View.GONE);
         imgBack.setOnClickListener(this);
         btn_change.setOnClickListener(this);
@@ -218,11 +221,15 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
 
         });
 
-
-
+        switchButton_default.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                defaultstatus = isChecked;
+                Log.w(TAG," defaultstatus : "+defaultstatus);
+            }
+        });
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
     }
@@ -302,9 +309,7 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
         if (can_proceed) {
             if (new ConnectionDetector(AddMyAddressOldUserActivity.this).isNetworkAvailable(AddMyAddressOldUserActivity.this)) {
                 locationAddResponseCall();
-
-
-                }
+            }
 
 
             }
@@ -390,7 +395,7 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
         locationAddRequest.setLocation_long(longtitude);
         locationAddRequest.setLocation_title(LocationType);
         locationAddRequest.setLocation_nickname(edt_pickname.getText().toString());
-        locationAddRequest.setDefault_status(false);
+        locationAddRequest.setDefault_status(defaultstatus);
         locationAddRequest.setDate_and_time(currentDateandTime);
         locationAddRequest.setMobile_type("Android");
 

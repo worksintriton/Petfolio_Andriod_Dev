@@ -82,6 +82,26 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".petlover.myaddresses.MyAddressesListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan"/>
+
+        <activity
+            android:name=".petlover.myaddresses.AddNewShippingAddressActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".petlover.myaddresses.MyAddressEditActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+
         <activity
             android:name=".vendor.VendorUpdateOrderStatusActivity"
             android:screenOrientation="portrait"

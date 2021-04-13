@@ -130,6 +130,10 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
     TextView txt_removeall_products;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_cart_count_badge)
+    TextView txt_cart_count_badge;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_shopnow)
     Button btn_shopnow;
 
@@ -264,6 +268,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                         footerView.setVisibility(View.VISIBLE);
 
                         if(response.body().getData() != null && response.body().getData().size()>0){
+                            txt_cart_count_badge.setText(response.body().getData().size()+"");
                             scrollablContent.setVisibility(View.VISIBLE);
                             ll_content.setVisibility(View.VISIBLE);
                             ll_cart_is_empty.setVisibility(View.GONE);
@@ -363,6 +368,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
         return fetchByIdRequest;
     }
 
+    @SuppressLint("LogNotTimber")
     @Override
     public void addandRemoveProductListener(String id, String name,String threshould,int prodcutcount) {
         if(name != null){
@@ -380,12 +386,23 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                     }
                 }
 
-            }else if(name.equalsIgnoreCase("remove")){
+            }
+            else if(name.equalsIgnoreCase("remove")){
                 productid = id;
                 if(productid != null){
                     if(prodcutcount != 0) {
                         if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
                             remove_product_ResponseCall();
+                        }
+                    }
+                }
+            }
+            else if(name.equalsIgnoreCase("singleproductremove")){
+                productid = id;
+                if(productid != null){
+                    if(prodcutcount != 0) {
+                        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                            remove_single_products_ResponseCall();
                         }
                     }
                 }
@@ -399,6 +416,39 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
         //Creating an object of our api interface
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
         Call<SuccessResponse> call = ApiService.remove_product_ResponseCall(RestUtils.getContentType(),addandRemoveCartRequest());
+
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<SuccessResponse>() {
+            @SuppressLint({"LogNotTimber", "SetTextI18n"})
+            @Override
+            public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
+                avi_indicator.smoothToHide();
+                if (response.body() != null) {
+                    if(200 == response.body().getCode()){
+                        Log.w(TAG,"Remove SuccessResponse" + new Gson().toJson(response.body()));
+                        Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
+                        fetch_cart_details_by_userid_Call();
+                    }
+                }
+            }
+
+
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull  Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"Remove SuccessResponse flr"+t.getMessage());
+            }
+        });
+
+    }
+    public void remove_single_products_ResponseCall(){
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        //Creating an object of our api interface
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<SuccessResponse> call = ApiService.remove_single_products_ResponseCall(RestUtils.getContentType(),addandRemoveCartRequest());
 
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 

@@ -141,22 +141,22 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             cat_id = extras.getString("cat_id");
-
             discount_value = extras.getString("discount_value");
             petTypeId = extras.getString("petTypeId");
             petBreedTypeId = extras.getString("petBreedTypeId");
             fromactivity = extras.getString("fromactivity");
             strCategoryTypeId = extras.getString("strCategoryTypeId");
-            if (fromactivity != null && fromactivity.equalsIgnoreCase("ProductFiltersActivity")) {
-                if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                    productFiltersResponseCall();
-                }
-            }else{
-                if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                    fetctProductByCatResponseCall();
-                }
-            }
 
+
+        }
+        if (fromactivity != null && fromactivity.equalsIgnoreCase("ProductFiltersActivity")) {
+            if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                productFiltersResponseCall();
+            }
+        }else{
+            if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                fetctProductByCatResponseCall();
+            }
         }
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -306,7 +306,7 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
         return fetctProductByCatRequest;
     }
     private void setView(List<FetctProductByCatResponse.DataBean> data) {
-         petShopCategorySeeMoreAdapter = new PetShopCategorySeeMoreAdapter(getApplicationContext(), data);
+         petShopCategorySeeMoreAdapter = new PetShopCategorySeeMoreAdapter(getApplicationContext(), data,TAG,cat_id);
          rv_today_deal.setAdapter(petShopCategorySeeMoreAdapter);
          petShopCategorySeeMoreAdapter.notifyDataSetChanged();
          isLoading = false;

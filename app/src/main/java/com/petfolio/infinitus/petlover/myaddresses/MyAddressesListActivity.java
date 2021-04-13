@@ -1,10 +1,4 @@
-package com.petfolio.infinitus.petlover;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+package com.petfolio.infinitus.petlover.myaddresses;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -20,19 +14,27 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.activity.location.ManageAddressActivity;
 import com.petfolio.infinitus.adapter.ShippingAddressListAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.interfaces.OnDeleteShipAddrListener;
 import com.petfolio.infinitus.interfaces.OnEditShipAddrListener;
 import com.petfolio.infinitus.interfaces.OnSelectingShipIdListener;
+import com.petfolio.infinitus.petlover.PetLoverProfileScreenActivity;
+import com.petfolio.infinitus.petlover.ShippingAddressEditActivity;
 import com.petfolio.infinitus.requestpojo.ShippingAddrMarkAsLastUsedRequest;
 import com.petfolio.infinitus.requestpojo.ShippingAddrMarkAsLastUsedResponse;
 import com.petfolio.infinitus.requestpojo.ShippingAddressDeleteRequest;
 import com.petfolio.infinitus.requestpojo.ShippingAddressListingByUserIDRequest;
-import com.petfolio.infinitus.responsepojo.CartDetailsResponse;
 import com.petfolio.infinitus.responsepojo.ShippingAddressDeleteResponse;
 import com.petfolio.infinitus.responsepojo.ShippingAddressListingByUserIDResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
@@ -47,17 +49,18 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import es.dmoral.toasty.Toasty;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ShippingAddressAddActivity extends AppCompatActivity implements View.OnClickListener, OnSelectingShipIdListener, OnEditShipAddrListener, OnDeleteShipAddrListener {
+public class MyAddressesListActivity extends AppCompatActivity implements View.OnClickListener, OnSelectingShipIdListener, OnEditShipAddrListener, OnDeleteShipAddrListener {
 
-    private String TAG = "ShippingAddressAddActivity";
+    private String TAG = "MyAddressesListActivity";
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
@@ -75,46 +78,30 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
     @BindView(R.id.rv_shipping_address)
     RecyclerView rv_shipping_address;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.ll_add_address)
-    LinearLayout ll_add_address;
+
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.btn_cancel)
-    Button btn_cancel;
+    @BindView(R.id.ll_add_newaddress)
+    LinearLayout ll_add_newaddress;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.btn_use_this_addreess)
-    Button btn_use_this_addreess;
+    @BindView(R.id.txt_savedaddress)
+    TextView txt_savedaddress;
+
 
     String userid,fromactivity;
 
     List<ShippingAddressListingByUserIDResponse.DataBean> dataBeanList;
 
     Dialog dialog;
-
-    String shippid;
-
-    List<CartDetailsResponse.DataBean> Data = new ArrayList<>();
-
-    private int prodouct_total;
-
-    private int shipping_charge;
-
-    private int discount_price;
-
-    private int grand_total;
-
-    private int prodcut_count;
-
-    private int prodcut_item_count;
+    private String shippid;
 
 
     @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shipping_address_add);
+        setContentView(R.layout.activity_my_address_list);
 
         Log.w(TAG,"onCreate ");
 
@@ -128,13 +115,11 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
         Log.w(TAG,"User ID:  "+userid);
 
-        ll_add_address.setOnClickListener(this);
+        ll_add_newaddress.setOnClickListener(this);
 
         img_back.setOnClickListener(this);
 
-        btn_cancel.setOnClickListener(this);
 
-        btn_use_this_addreess.setOnClickListener(this);
 
         Bundle extras = getIntent().getExtras();
 
@@ -144,25 +129,11 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
             Log.w(TAG,"From "+ fromactivity +" : true-->");
 
-            Data = (List<CartDetailsResponse.DataBean>) extras.getSerializable("data");
-
-            prodouct_total = extras.getInt("product_total");
-
-            shipping_charge = extras.getInt("shipping_charge");
-
-            discount_price = extras.getInt("discount_price");
-
-            grand_total = extras.getInt("grand_total");
-
-            prodcut_count = extras.getInt("prodcut_count");
-
-            prodcut_item_count = extras.getInt("prodcut_item_count");
-
 
         }
 
 
-        if (new ConnectionDetector(ShippingAddressAddActivity.this).isNetworkAvailable(ShippingAddressAddActivity.this)) {
+        if (new ConnectionDetector(MyAddressesListActivity.this).isNetworkAvailable(MyAddressesListActivity.this)) {
 
             shippingAddressresponseCall(userid);
 
@@ -180,17 +151,11 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
                 onBackPressed();
                 break;
 
-            case R.id.ll_add_address:
+            case R.id.ll_add_newaddress:
                 gotoShippingaddressCreate();
                 break;
 
-            case R.id.btn_cancel:
-                onBackPressed();
-                break;
 
-            case R.id.btn_use_this_addreess:
-                gotoShippingAddressActivity();
-                break;
         }
 
     }
@@ -206,6 +171,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
         Log.w(TAG,"ShippingAddressListingByUserIDResponse url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<ShippingAddressListingByUserIDResponse>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(@NonNull Call<ShippingAddressListingByUserIDResponse> call, @NonNull Response<ShippingAddressListingByUserIDResponse> response) {
 
@@ -217,15 +183,18 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
                     if(response.body().getCode() == 200){
 
-                        if(response.body().getData()!=null&&!(response.body().getData().isEmpty()))
-                        {
+                        if(response.body().getData()!=null) {
                             dataBeanList = response.body().getData();
 
-                            if(dataBeanList.size()>0)
-                            {
-
+                            if(dataBeanList != null && dataBeanList.size()>0) {
+                                txt_savedaddress.setVisibility(View.VISIBLE);
+                                txt_savedaddress.setText(dataBeanList.size()+" Saved Address");
                                 setView();
-
+                                txt_no_records.setVisibility(View.GONE);
+                            }else{
+                                txt_savedaddress.setVisibility(View.GONE);
+                                txt_no_records.setVisibility(View.VISIBLE);
+                                txt_no_records.setText("No address found");
                             }
 
                         }
@@ -302,28 +271,8 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-
-                        Intent intent = new Intent(ShippingAddressAddActivity.this, ShippingAddressActivity.class);
-
-                        intent.putExtra("fromactivity",TAG);
-
-                        intent.putExtra("data", (Serializable) Data);
-
-                        intent.putExtra("product_total",prodouct_total);
-
-                        intent.putExtra("shipping_charge",shipping_charge);
-
-                        intent.putExtra("discount_price",discount_price);
-
-                        intent.putExtra("grand_total",grand_total);
-
-                        intent.putExtra("prodcut_count",prodcut_count);
-
-                        intent.putExtra("prodcut_item_count",prodcut_item_count);
-
-                        startActivity(intent);
-
                         finish();
+                        startActivity(getIntent());
 
                     }
                     else{
@@ -389,9 +338,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-
                         startActivity(getIntent());
-
                         finish();
 
                     }
@@ -441,7 +388,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
         try{
 
-            dialog = new Dialog(ShippingAddressAddActivity.this);
+            dialog = new Dialog(MyAddressesListActivity.this);
             dialog.setContentView(R.layout.alert_cancel_layout);
             dialog.setCanceledOnTouchOutside(false);
             Button btn_ok = dialog.findViewById(R.id.btn_ok);
@@ -485,7 +432,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
         try{
 
-            dialog = new Dialog(ShippingAddressAddActivity.this);
+            dialog = new Dialog(MyAddressesListActivity.this);
             dialog.setContentView(R.layout.alert_cancel_layout);
             dialog.setCanceledOnTouchOutside(false);
             Button btn_ok = dialog.findViewById(R.id.btn_ok);
@@ -496,7 +443,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
                 @Override
                 public void onClick(View view) {
 
-                    if (new ConnectionDetector(ShippingAddressAddActivity.this).isNetworkAvailable(ShippingAddressAddActivity.this)) {
+                    if (new ConnectionDetector(MyAddressesListActivity.this).isNetworkAvailable(MyAddressesListActivity.this)) {
 
                         deleteshipAddrresponseCall(shippingid);
 
@@ -522,58 +469,24 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
 
     private void setView() {
-        rv_shipping_address.setLayoutManager(new LinearLayoutManager(ShippingAddressAddActivity.this));
+        rv_shipping_address.setLayoutManager(new LinearLayoutManager(MyAddressesListActivity.this));
         rv_shipping_address.setItemAnimator(new DefaultItemAnimator());
-        ShippingAddressListAdapter shippingAddressListAdapter = new ShippingAddressListAdapter(ShippingAddressAddActivity.this,dataBeanList,this,this,this);
+        ShippingAddressListAdapter shippingAddressListAdapter = new ShippingAddressListAdapter(MyAddressesListActivity.this,dataBeanList,this,this,this);
         rv_shipping_address.setAdapter(shippingAddressListAdapter);
-
 
     }
 
     private void gotoShippingaddressCreate() {
-
-        Intent intent = new Intent(ShippingAddressAddActivity.this, ShippingAddressCreateActivity.class);
-
-        intent.putExtra("data", (Serializable) Data);
-
-        intent.putExtra("product_total",prodouct_total);
-
-        intent.putExtra("shipping_charge",shipping_charge);
-
-        intent.putExtra("discount_price",discount_price);
-
-        intent.putExtra("grand_total",grand_total);
-
-        intent.putExtra("prodcut_count",prodcut_count);
-
-        intent.putExtra("prodcut_item_count",prodcut_item_count);
-
-
+        Intent intent = new Intent(MyAddressesListActivity.this, AddNewShippingAddressActivity.class);
         startActivity(intent);
 
     }
 
-    private void gotoShippingAddressActivity() {
-
-        if(shippid!=null&&!shippid.isEmpty()){
-
-            markAsLastUsedResponseCall(shippid);
-
-        }
-
-        else
-        {
-
-            Toasty.warning(ShippingAddressAddActivity.this,"Plz choose shipping address ", Toasty.LENGTH_LONG).show();
-        }
-
-
-    }
 
     @Override
     public void OnEditShipAddr(String shipid, String first_name, String last_name, String phonum, String alt_phonum, String flat_no, String state, String street, String landmark, String pincode, String address_type, String date, String address_status, String city) {
 
-        Intent intent = new Intent(getApplicationContext(), ShippingAddressEditActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MyAddressEditActivity.class);
 
         intent.putExtra("fromactivity", TAG);
 
@@ -605,20 +518,6 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
         intent.putExtra("city",city);
 
-        intent.putExtra("data", (Serializable) Data);
-
-        intent.putExtra("product_total",prodouct_total);
-
-        intent.putExtra("shipping_charge",shipping_charge);
-
-        intent.putExtra("discount_price",discount_price);
-
-        intent.putExtra("grand_total",grand_total);
-
-        intent.putExtra("prodcut_count",prodcut_count);
-
-        intent.putExtra("prodcut_item_count",prodcut_item_count);
-
         startActivity(intent);
 
         finish();
@@ -627,8 +526,12 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
     @Override
     public void onSelectShipID(String shipid, String first_name, String last_name, String phonum, String alt_phonum, String flat_no, String state, String street, String landmark, String pincode, String address_type, String date, String address_status) {
-
         shippid = shipid;
+
+        if(shippid!=null&&!shippid.isEmpty()){
+            showLocationStatusChangeAlert();
+        }
+
     }
 
     @Override
@@ -639,9 +542,50 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(getApplicationContext(),ShippingAddressActivity.class);
-        intent.putExtra("grand_total",grand_total);
-        startActivity(intent);
+        startActivity(new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class));
         finish();
     }
+
+    private void showLocationStatusChangeAlert() {
+
+        try {
+
+            dialog = new Dialog(MyAddressesListActivity.this);
+            dialog.setContentView(R.layout.alert_approve_reject_layout);
+            TextView tvheader = dialog.findViewById(R.id.tvInternetNotConnected);
+            tvheader.setText(R.string.locationstatuschange);
+            Button dialogButtonApprove = dialog.findViewById(R.id.btnApprove);
+            dialogButtonApprove.setText("Yes");
+            Button dialogButtonRejected = dialog.findViewById(R.id.btnReject);
+            dialogButtonRejected.setText("No");
+
+            dialogButtonApprove.setOnClickListener(view -> {
+                dialog.dismiss();
+
+                markAsLastUsedResponseCall(shippid);
+
+
+
+
+            });
+            dialogButtonRejected.setOnClickListener(view -> {
+                // Toasty.info(context, "Rejected Successfully", Toast.LENGTH_SHORT, true).show();
+                dialog.dismiss();
+
+
+
+
+            });
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
 }

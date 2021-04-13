@@ -29,11 +29,12 @@ public class PetShopCategorySeeMoreAdapter extends  RecyclerView.Adapter<Recycle
 
     List<FetctProductByCatResponse.DataBean> data;
     FetctProductByCatResponse.DataBean currentItem;
-    public PetShopCategorySeeMoreAdapter(Context context, List<FetctProductByCatResponse.DataBean> data) {
+    private String fromactivity, cat_id;
+    public PetShopCategorySeeMoreAdapter(Context context, List<FetctProductByCatResponse.DataBean> data,String fromactivity,String cat_id) {
         this.data = data;
         this.context = context;
-
-
+        this.fromactivity = fromactivity;
+        this.cat_id = cat_id;
 
     }
 
@@ -117,6 +118,8 @@ public class PetShopCategorySeeMoreAdapter extends  RecyclerView.Adapter<Recycle
                public void onClick(View v) {
                    Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                    intent.putExtra("productid",data.get(position).get_id());
+                   intent.putExtra("fromactivity",fromactivity);
+                   intent.putExtra("cat_id",cat_id);
                    context.startActivity(intent);
                }
            });

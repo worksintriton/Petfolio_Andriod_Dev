@@ -1,27 +1,19 @@
-package com.petfolio.infinitus.petlover;
+package com.petfolio.infinitus.petlover.myaddresses;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
@@ -29,11 +21,10 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.appUtils.NumericKeyBoardTransformationMethod;
+import com.petfolio.infinitus.petlover.ShippingAddressAddActivity;
 import com.petfolio.infinitus.requestpojo.ShippingAddressCreateRequest;
-import com.petfolio.infinitus.requestpojo.ShippingAddressDeleteRequest;
 import com.petfolio.infinitus.responsepojo.CartDetailsResponse;
 import com.petfolio.infinitus.responsepojo.ShippingAddressCreateResponse;
-import com.petfolio.infinitus.responsepojo.ShippingAddressDeleteResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -46,7 +37,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,9 +45,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ShippingAddressCreateActivity extends AppCompatActivity implements View.OnClickListener{
+public class AddNewShippingAddressActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private String TAG = "ShippingAddressCreateActivity";
+    private String TAG = "AddNewShippingAddressActivity";
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
@@ -189,22 +179,7 @@ public class ShippingAddressCreateActivity extends AppCompatActivity implements 
 
             fromactivity = extras.getString("fromactivity");
 
-            Data = (List<CartDetailsResponse.DataBean>) extras.getSerializable("data");
-
-            prodouct_total = extras.getInt("product_total");
-
-            shipping_charge = extras.getInt("shipping_charge");
-
-            discount_price = extras.getInt("discount_price");
-
-            grand_total = extras.getInt("grand_total");
-
-            prodcut_count = extras.getInt("prodcut_count");
-
-            prodcut_item_count = extras.getInt("prodcut_item_count");
-
-
-        }
+          }
 
 
         rg_addr_type.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -257,24 +232,9 @@ public class ShippingAddressCreateActivity extends AppCompatActivity implements 
     }
 
     private void gotoPreviousActivity() {
-
-        Intent intent = new Intent(ShippingAddressCreateActivity.this,ShippingAddressAddActivity.class);
-
-        intent.putExtra("data", (Serializable) Data);
-
-        intent.putExtra("product_total",prodouct_total);
-
-        intent.putExtra("shipping_charge",shipping_charge);
-
-        intent.putExtra("discount_price",discount_price);
-
-        intent.putExtra("grand_total",grand_total);
-
-        intent.putExtra("prodcut_count",prodcut_count);
-
-        intent.putExtra("prodcut_item_count",prodcut_item_count);
-
+        Intent intent = new Intent(AddNewShippingAddressActivity.this, MyAddressesListActivity.class);
         startActivity(intent);
+        finish();
 
 
     }
@@ -438,35 +398,14 @@ public class ShippingAddressCreateActivity extends AppCompatActivity implements 
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-
-                        Intent intent = new Intent(ShippingAddressCreateActivity.this,ShippingAddressAddActivity.class);
-
-                        intent.putExtra("fromactivity",TAG);
-
-                        intent.putExtra("data", (Serializable) Data);
-
-                        intent.putExtra("product_total",prodouct_total);
-
-                        intent.putExtra("shipping_charge",shipping_charge);
-
-                        intent.putExtra("discount_price",discount_price);
-
-                        intent.putExtra("grand_total",grand_total);
-
-                        intent.putExtra("prodcut_count",prodcut_count);
-
-                        intent.putExtra("prodcut_item_count",prodcut_item_count);
-
-                        startActivity(intent);
-
-                        finish();
+                        gotoPreviousActivity();
 
                     }
                     else{
                         //showErrorLoading(response.body().getMessage());
                         avi_indicator.smoothToHide();
 
-                        Toasty.warning(ShippingAddressCreateActivity.this,"Server Issue",Toasty.LENGTH_LONG).show();
+                        Toasty.warning(AddNewShippingAddressActivity.this,"Server Issue",Toasty.LENGTH_LONG).show();
                     }
                 }
 
@@ -532,5 +471,6 @@ public class ShippingAddressCreateActivity extends AppCompatActivity implements 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+         finish();
     }
 }

@@ -124,6 +124,15 @@ public class Cart_Adapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             }
         });
+        holder.ll_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (data.get(position).getProduct_count() != 0) {
+                    addandRemoveProductListener.addandRemoveProductListener(data.get(position).getProduct_id().get_id(),"singleproductremove",data.get(position).getProduct_id().getThreshould(),data.get(position).getProduct_count());
+                }
+
+            }
+        });
 
 
     }

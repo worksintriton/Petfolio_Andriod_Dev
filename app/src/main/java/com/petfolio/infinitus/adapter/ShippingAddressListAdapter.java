@@ -36,7 +36,7 @@ public class ShippingAddressListAdapter extends  RecyclerView.Adapter<RecyclerVi
 
     ShippingAddressListingByUserIDResponse.DataBean currentItem;
 
-    private int size;
+
 
     String first_name, last_name, state, landmark, pincode;
 
@@ -49,10 +49,9 @@ public class ShippingAddressListAdapter extends  RecyclerView.Adapter<RecyclerVi
     OnDeleteShipAddrListener onDeleteShipAddrListener;
     private boolean isSelected = true;
 
-    public ShippingAddressListAdapter(Context context, List<ShippingAddressListingByUserIDResponse.DataBean> newOrderResponseList, int size,OnSelectingShipIdListener onSelectingShipIdListener,OnEditShipAddrListener onEditShipAddrListener,OnDeleteShipAddrListener onDeleteShipAddrListener) {
+    public ShippingAddressListAdapter(Context context, List<ShippingAddressListingByUserIDResponse.DataBean> newOrderResponseList,OnSelectingShipIdListener onSelectingShipIdListener,OnEditShipAddrListener onEditShipAddrListener,OnDeleteShipAddrListener onDeleteShipAddrListener) {
         this.newOrderResponseList = newOrderResponseList;
         this.context = context;
-        this.size = size;
         this.onSelectingShipIdListener = onSelectingShipIdListener;
         this.onEditShipAddrListener = onEditShipAddrListener;
         this.onDeleteShipAddrListener = onDeleteShipAddrListener;
@@ -204,7 +203,7 @@ public class ShippingAddressListAdapter extends  RecyclerView.Adapter<RecyclerVi
 
     @Override
     public int getItemCount() {
-        return Math.min(newOrderResponseList.size(), size);
+        return newOrderResponseList.size();
 
     }
 

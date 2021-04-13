@@ -144,9 +144,11 @@ public class ManageAddressListAdapter extends  RecyclerView.Adapter<RecyclerView
 
 
         if(locationListResponseList.get(position).isDefault_status()){
-            holder.iv_default_location.setVisibility(View.VISIBLE);
+            holder.iv_default_location.setVisibility(View.GONE);
+            holder.txt_default.setVisibility(View.VISIBLE);
             }else{
                 holder.iv_default_location.setVisibility(View.GONE);
+                holder.txt_default.setVisibility(View.GONE);
             }
 
 
@@ -176,7 +178,7 @@ public class ManageAddressListAdapter extends  RecyclerView.Adapter<RecyclerView
     }
 
     class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_location_title,txt_location_nickname,txt_address;
+        public TextView txt_location_title,txt_location_nickname,txt_address,txt_default;
         public ImageView img_settings,iv_default_location;
         public RelativeLayout rl_root;
 
@@ -191,6 +193,8 @@ public class ManageAddressListAdapter extends  RecyclerView.Adapter<RecyclerView
             img_settings = itemView.findViewById(R.id.img_settings);
             iv_default_location = itemView.findViewById(R.id.iv_default_location);
             rl_root = itemView.findViewById(R.id.rl_root);
+            txt_default = itemView.findViewById(R.id.txt_default);
+
 
 
         }

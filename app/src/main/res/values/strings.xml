@@ -192,12 +192,14 @@
     <string name="change_password">Change Password</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="manage_address">Manage Address</string>
+    <string name="set_locations">Set Locations</string>
+    <string name="my_addresses">My Addresses</string>
 
     <string name="upload_image">Upload Image</string>
 
     <string name="add_a_new_address">Add a new address</string>
     <string name="address_info">TESSDGD dgsdg dgasdg saddagdasg dsgasdg sadgdsgds SGADSGD</string>
-    <string name="saved_address">2 Saved Address</string>
+    <string name="saved_address">Saved Address</string>
 
     <string name="accept">Accept</string>
     <string name="pet_details">Pet Details</string>
@@ -241,7 +243,8 @@
     <string name="home">Home</string>
     <string name="work">Work</string>
     <string name="others">Others</string>
-    <string name="pick_a_name_for_this_location">Pick a name for this location</string>
+    <string name="set_as_default">Set as default</string>
+    <string name="pick_a_name_for_this_location">Pick a nick name for this location</string>
     <string name="city_name">City Name</string>
     <string name="location">Location</string>
     <string name="pincode">Pincode</string>
