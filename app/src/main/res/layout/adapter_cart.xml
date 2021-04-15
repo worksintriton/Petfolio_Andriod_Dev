@@ -20,7 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="5dp"
-            tools:ignore="UselessParent">
+            tools:ignore="UselessParent"
+            android:id="@+id/rl_root">
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_product_cart"
                 android:layout_width="80dp"
@@ -125,7 +126,7 @@
                         android:id="@+id/img_remove_product"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_cart_minus"
+                        android:background="@drawable/ic_cart_minus"
                         tools:ignore="ContentDescription" />
                     <TextView
                         android:id="@+id/txt_cart_count"

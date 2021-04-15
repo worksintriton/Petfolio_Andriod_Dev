@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +30,10 @@ import com.petfolio.infinitus.adapter.Cart_Adapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 
+import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetCareFragment;
+import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetHomeNewFragment;
+import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetServicesFragment;
+import com.petfolio.infinitus.fragmentpetlover.bottommenu.VendorShopFragment;
 import com.petfolio.infinitus.interfaces.AddandRemoveProductListener;
 import com.petfolio.infinitus.requestpojo.FetchByIdRequest;
 import com.petfolio.infinitus.requestpojo.VendorOrderBookingCreateRequest;
@@ -60,7 +65,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PetCartActivity extends AppCompatActivity implements AddandRemoveProductListener, PaymentResultListener {
+public class PetCartActivity extends AppCompatActivity implements AddandRemoveProductListener, PaymentResultListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private String TAG = "PetCartActivity";
 
@@ -137,6 +142,9 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
     @BindView(R.id.btn_shopnow)
     Button btn_shopnow;
 
+
+
+
     String tag;
     String fromactivity;
 
@@ -155,6 +163,9 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
 
     private int product_cart_counts = 0;
     private String threshould;
+
+    private String active_tag;
+    private String cat_id;
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -177,6 +188,8 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
         if (extras != null) {
             productdetails_productid = extras.getString("productid");
             fromactivity = extras.getString("fromactivity");
+            active_tag = extras.getString("active_tag");
+            cat_id = extras.getString("cat_id");
         }
 
 
@@ -221,6 +234,9 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                 }
             });
 
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+
+
 
     }
 
@@ -241,7 +257,18 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
             i.putExtra("productid",productdetails_productid);
             startActivity(i);
             finish();
-        }else{
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetShopTodayDealsSeeMoreActivity")){
+            Intent i = new Intent(PetCartActivity.this, PetShopTodayDealsSeeMoreActivity.class);
+            startActivity(i);
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("ListOfProductsSeeMoreActivity")){
+            Intent i = new Intent(PetCartActivity.this, ListOfProductsSeeMoreActivity.class);
+            i.putExtra("cat_id",cat_id);
+            startActivity(i);
+            finish();
+        }else if(active_tag != null){
+            callDirections(active_tag);
+        } else{
             Intent i = new Intent(PetCartActivity.this, PetLoverDashboardActivity.class);
             startActivity(i);
             finish();
@@ -316,6 +343,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
 
                         }
                         else {
+                            txt_cart_count_badge.setText("0");
                             scrollablContent.setVisibility(View.VISIBLE);
                             ll_content.setVisibility(View.GONE);
                             ll_cart_is_empty.setVisibility(View.VISIBLE);
@@ -729,5 +757,31 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
         intent.putExtra("tag",tag);
         startActivity(intent);
         finish();
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+               callDirections("1");
+                break;
+            case R.id.shop:
+                callDirections("2");
+                break;
+            case R.id.services:
+                callDirections("3");
+                break;
+            case R.id.care:
+                callDirections("4");
+                break;
+            case R.id.community:
+                callDirections("5");
+                break;
+
+            default:
+                return  false;
+        }
+        return true;
     }
 }

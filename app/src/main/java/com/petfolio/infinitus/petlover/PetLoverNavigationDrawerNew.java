@@ -225,8 +225,12 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
         img_notification.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), NotificationActivity.class)));
 
         img_cart.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onClick(View v) {
+                if(PetLoverDashboardActivity.active_tag != null){
+                    Log.w(TAG,"active_tag : "+PetLoverDashboardActivity.active_tag);
+                }
                 startActivity(new Intent(getApplicationContext(), PetCartActivity.class));
             }
         });

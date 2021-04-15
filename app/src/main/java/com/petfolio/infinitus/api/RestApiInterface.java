@@ -12,6 +12,7 @@ import com.petfolio.infinitus.requestpojo.AppoinmentCompleteRequest;
 import com.petfolio.infinitus.requestpojo.AppointmentCheckRequest;
 import com.petfolio.infinitus.requestpojo.AppointmentDetailsRequest;
 import com.petfolio.infinitus.requestpojo.BreedTypeRequest;
+import com.petfolio.infinitus.requestpojo.CartAddProductRequest;
 import com.petfolio.infinitus.requestpojo.CreateHolidayRequest;
 import com.petfolio.infinitus.requestpojo.DocBusInfoUploadRequest;
 import com.petfolio.infinitus.requestpojo.DoctorBusinessInfoUpdateRequest;
@@ -627,6 +628,10 @@ public interface RestApiInterface {
     @POST("product_cart_detail/remove_overall_products")
     Call<SuccessResponse> remove_overall_products_ResponseCall(@Header("Content-Type") String type, @Body FetchByIdRequest fetchByIdRequest);
 
+    /*Remove all product*/
+    @POST("product_cart_detail/cart_add_product")
+    Call<SuccessResponse> cart_add_product_ResponseCall(@Header("Content-Type") String type, @Body CartAddProductRequest cartAddProductRequest);
+
 
     /*Cart page fetch details*/
     @POST("product_cart_detail/fetch_cart_details_by_userid")
@@ -759,6 +764,7 @@ public interface RestApiInterface {
     /* Shop product filter*/
     @POST("product_details/filter")
     Call<ProductSearchResponse> productFiltersResponseCall(@Header("Content-Type") String type, @Body ProductFiltersRequest productFiltersRequest);
+
 
 
 

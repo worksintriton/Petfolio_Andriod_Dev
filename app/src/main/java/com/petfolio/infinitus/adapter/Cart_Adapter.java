@@ -3,6 +3,7 @@ package com.petfolio.infinitus.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,8 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 
 import com.petfolio.infinitus.interfaces.AddandRemoveProductListener;
+import com.petfolio.infinitus.petlover.DoctorClinicDetailsActivity;
+import com.petfolio.infinitus.petlover.ProductDetailsActivity;
 import com.petfolio.infinitus.responsepojo.CartDetailsResponse;
 
 import java.util.List;
@@ -87,19 +91,18 @@ public class Cart_Adapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder>
             holder.txt_cart_count.setText(data.get(position).getProduct_count()+"");
         }
 
-
         if (petImgBeanList != null && petImgBeanList.size() > 0) {
             for (int j = 0; j < petImgBeanList.size(); j++) {
                 petImagePath = petImgBeanList.get(0);
 
             }
         }
-
         if (petImagePath != null && !petImagePath.isEmpty()) {
             Glide.with(context)
                     .load(petImagePath)
                     .into(holder.img_products_image);
-        } else {
+        }
+        else {
             Glide.with(context)
                     .load(APIClient.PROFILE_IMAGE_URL)
                     .into(holder.img_products_image);
@@ -114,7 +117,6 @@ public class Cart_Adapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             }
         });
-
         holder.img_remove_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,6 +126,22 @@ public class Cart_Adapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             }
         });
+
+        if(holder.txt_cart_count.getText().toString() != null && holder.txt_cart_count.getText().toString().equalsIgnoreCase("1")){
+            holder.img_remove_product.setBackgroundResource(R.drawable.ic_baseline_delete_24);
+        }else{
+            holder.img_remove_product.setBackgroundResource(R.drawable.ic_cart_minus);
+        }
+
+
+        if(data.get(position).getProduct_count() == 1){
+            Log.w(TAG,"Product Count  conditions : "+data.get(position).getProduct_count());
+            holder.img_remove_product.setBackgroundResource(R.drawable.ic_baseline_delete_24);
+        }
+        else{
+            holder.img_remove_product.setBackgroundResource(R.drawable.ic_cart_minus);
+        }
+
         holder.ll_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,6 +149,15 @@ public class Cart_Adapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder>
                     addandRemoveProductListener.addandRemoveProductListener(data.get(position).getProduct_id().get_id(),"singleproductremove",data.get(position).getProduct_id().getThreshould(),data.get(position).getProduct_count());
                 }
 
+            }
+        });
+        holder.rl_root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("productid",data.get(position).getProduct_id().get_id());
+                intent.putExtra("fromactivity",TAG);
+                context.startActivity(intent);
             }
         });
 
@@ -150,6 +177,7 @@ public class Cart_Adapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder>
         public TextView txt_products_title,txt_discount_amount,txt_original_amount,txt_discount,txt_cart_count;
         public ImageView img_products_image,img_remove_product,img_add_product;
         public LinearLayout ll_delete;
+        public RelativeLayout rl_root;
 
         public ViewHolderOne(View itemView) {
             super(itemView);
@@ -162,6 +190,7 @@ public class Cart_Adapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder>
             img_remove_product = itemView.findViewById(R.id.img_remove_product);
             img_add_product = itemView.findViewById(R.id.img_add_product);
             ll_delete = itemView.findViewById(R.id.ll_delete);
+            rl_root = itemView.findViewById(R.id.rl_root);
 
 
 

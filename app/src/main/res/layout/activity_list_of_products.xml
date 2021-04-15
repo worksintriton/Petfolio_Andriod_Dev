@@ -50,8 +50,8 @@
                 android:gravity="end"
                 android:layout_marginStart="10dp">
 
-
                 <ImageView
+                    android:id="@+id/img_sos"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="20dp"
@@ -59,18 +59,21 @@
                     tools:ignore="ContentDescription" />
 
                 <ImageView
+                    android:id="@+id/img_notification"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="20dp"
                     android:src="@drawable/ic_notifications"
                     tools:ignore="ContentDescription" />
                 <ImageView
+                    android:id="@+id/img_cart"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_bag"
                     tools:ignore="ContentDescription"
                     android:layout_marginStart="20dp" />
                 <ImageView
+                    android:id="@+id/img_profile"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_user"

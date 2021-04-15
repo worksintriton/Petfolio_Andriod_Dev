@@ -74,6 +74,9 @@
     <color name="new_footer_change_blue">#448ECA</color>
     <color name="new_view_more">#009377</color>
 
+    <color name="selected_dots">#37BFAF</color>
+    <color name="unselected_dots">#B9F1EA</color>
+
 
 
 

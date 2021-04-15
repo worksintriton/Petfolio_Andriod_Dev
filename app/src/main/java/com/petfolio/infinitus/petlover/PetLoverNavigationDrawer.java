@@ -258,7 +258,14 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
         img_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), PetCartActivity.class));
+                if(PetLoverDashboardActivity.active_tag != null){
+                    Log.w(TAG,"active_tag : "+PetLoverDashboardActivity.active_tag);
+                    Intent i = new Intent(getApplicationContext(), PetCartActivity.class);
+                    i.putExtra("active_tag",PetLoverDashboardActivity.active_tag);
+                    startActivity(i);
+                }else {
+                    startActivity(new Intent(getApplicationContext(), PetCartActivity.class));
+                }
             }
         });
         img_profile.setOnClickListener(v -> {

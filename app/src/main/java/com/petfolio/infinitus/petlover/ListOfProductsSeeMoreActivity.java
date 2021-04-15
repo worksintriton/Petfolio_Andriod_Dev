@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -24,8 +25,11 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.adapter.PetShopCategorySeeMoreAdapter;
 import com.petfolio.infinitus.adapter.ProductsSearchAdapter;
 import com.petfolio.infinitus.api.APIClient;
@@ -51,7 +55,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements View.OnClickListener {
+public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private String TAG = "ListOfProductsSeeMoreActivity";
 
@@ -94,6 +98,26 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_search)
     EditText edt_search;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.bottom_navigation_view)
+    BottomNavigationView bottom_navigation_view;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_sos)
+    ImageView img_sos;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_notification)
+    ImageView img_notification;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_cart)
+    ImageView img_cart;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_profile)
+    ImageView img_profile;
 
 
     private String cat_id;
@@ -177,6 +201,12 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
         edt_filter.setOnClickListener(this);
         rl_sort.setOnClickListener(this);
         edt_sort.setOnClickListener(this);
+
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+        img_sos.setOnClickListener(this);
+        img_notification.setOnClickListener(this);
+        img_cart.setOnClickListener(this);
+        img_profile.setOnClickListener(this);
         edt_search.addTextChangedListener(new TextWatcher() {
             @SuppressLint("LogNotTimber")
             @Override
@@ -218,7 +248,14 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        callDirections("2");
+    }
+    public void callDirections(String tag){
+        Intent intent = new Intent(ListOfProductsSeeMoreActivity.this,PetLoverDashboardActivity.class);
+        intent.putExtra("tag",tag);
+        startActivity(intent);
         finish();
+
     }
 
     @SuppressLint("LogNotTimber")
@@ -401,6 +438,27 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
                     best_sellers = 0;
                     high_to_low = 0;
                     low_to_high = 1;
+                break;
+
+            case R.id.img_sos:
+                break;
+            case R.id.img_notification:
+                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+                break;
+            case R.id.img_cart:
+                Intent i = new Intent(getApplicationContext(), PetCartActivity.class);
+                i.putExtra("cat_id",cat_id);
+                i.putExtra("fromactivity",TAG);
+                startActivity(i);
+                break;
+            case R.id.img_profile:
+                Intent intent = new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class);
+                intent.putExtra("fromactivity",TAG);
+                if(PetLoverDashboardActivity.active_tag != null){
+                    intent.putExtra("active_tag",PetLoverDashboardActivity.active_tag);
+
+                }
+                startActivity(intent);
                 break;
 
         }
@@ -670,5 +728,29 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
             return productFiltersRequest;
         }
 
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+                callDirections("1");
+                break;
+            case R.id.shop:
+                callDirections("2");
+                break;
+            case R.id.services:
+                callDirections("3");
+                break;
+            case R.id.care:
+                callDirections("4");
+                break;
+            case R.id.community:
+                callDirections("5");
+                break;
 
+            default:
+                return  false;
+        }
+        return true;
+    }
 }
