@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.petlover.DoctorClinicDetailsActivity;
+import com.petfolio.infinitus.petlover.ProductDetailsActivity;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 
 import java.util.List;
@@ -94,14 +95,10 @@ public class PetLoverShopNewAdapter extends  RecyclerView.Adapter<RecyclerView.V
         holder.ll_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent = new Intent(context, DoctorClinicDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("doctorid",doctorDetailsResponseList.get(position).get_id());
-                intent.putExtra("doctorname",doctorDetailsResponseList.get(position).getDoctor_name());
-                intent.putExtra("reviewcount",doctorDetailsResponseList.get(position).getReview_count());
-                intent.putExtra("starcount",doctorDetailsResponseList.get(position).getStar_count());
-                intent.putExtra("distance",doctorDetailsResponseList.get(position).getDistance());
-                Log.w(TAG,"doctorid :"+doctorDetailsResponseList.get(position).get_id());
-                context.startActivity(intent);*/
+                Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("productid",productDetailsResponseList.get(position).get_id());
+                intent.putExtra("fromactivity",TAG);
+                context.startActivity(intent);
                 }
 
         });

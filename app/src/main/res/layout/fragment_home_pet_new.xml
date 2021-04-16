@@ -20,7 +20,7 @@
                 <LinearLayout
                     android:id="@+id/linear1"
                     android:layout_width="match_parent"
-                    android:layout_height="240dp"
+                    android:layout_height="200dp"
                     android:layout_marginBottom="@dimen/big_margin_value"
                     android:orientation="vertical"
                     tools:ignore="UselessParent"
@@ -36,7 +36,7 @@
                         <androidx.viewpager.widget.ViewPager
                             android:id="@+id/pager"
                             android:layout_width="match_parent"
-                            android:layout_height="150dp"
+                            android:layout_height="120dp"
                             android:background="@color/new_header_bg"/>
 
                         <com.google.android.material.tabs.TabLayout
@@ -69,7 +69,6 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"

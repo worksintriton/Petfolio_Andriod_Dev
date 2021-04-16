@@ -306,6 +306,8 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
             Intent intent = new Intent(ProductDetailsActivity.this,PetCartActivity.class);
             startActivity(intent);
             finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetLoverShopNewAdapter")){
+            callDirections("1");
         }else {
             callDirections("2");
         }
@@ -484,7 +486,6 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
         Log.w(TAG,"cartAddProductRequest"+ "--->" + new Gson().toJson(cartAddProductRequest));
         return cartAddProductRequest;
     }
-
     public void callDirections(String tag){
         Intent intent = new Intent(ProductDetailsActivity.this,PetLoverDashboardActivity.class);
         intent.putExtra("tag",tag);

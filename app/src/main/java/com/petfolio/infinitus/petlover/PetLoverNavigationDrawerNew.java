@@ -105,7 +105,7 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
         Log.w(TAG, "onCreate---->");
 
         inflater = LayoutInflater.from(this);
-        view = inflater.inflate(R.layout.navigation_drawer_layout, null);
+        view = inflater.inflate(R.layout.navigation_drawer_layout_new, null);
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
         name = user.get(SessionManager.KEY_FIRST_NAME);

@@ -157,7 +157,7 @@
         <activity
             android:name=".petlover.PetLoverDashboardActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@style/NewAppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".petlover.BookAppointmentActivity"

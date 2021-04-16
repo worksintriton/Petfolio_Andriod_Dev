@@ -268,6 +268,7 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
         txt_seemore_services.setOnClickListener(this);
         txt_seemore_products.setOnClickListener(this);
         txt_seemore_puppy_love.setOnClickListener(this);
+        txt_seemore_vets.setOnClickListener(this);
 
         return view;
     }
@@ -292,7 +293,7 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
         switch (v.getId()){
 
             case R.id.txt_seemore_services:
-                if(serviceDetailsResponseList != null && serviceDetailsResponseList.size()>0){
+               /* if(serviceDetailsResponseList != null && serviceDetailsResponseList.size()>0){
                     Log.w(TAG,"SERVICE SIZE :"+serviceDetailsResponseList.size());
                     rvservice.setVisibility(View.VISIBLE);
                     txt_services.setVisibility(View.VISIBLE);
@@ -302,11 +303,12 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
                     rvservice.setVisibility(View.GONE);
                     txt_services.setVisibility(View.GONE);
 
-                }
+                }*/
+                callDirections("3");
                 break;
 
             case R.id.txt_seemore_products:
-                if(productDetailsResponseList.size()>0){
+               /* if(productDetailsResponseList.size()>0){
                     rvproducts.setVisibility(View.VISIBLE);
                     txt_products.setVisibility(View.VISIBLE);
                     setViewProductsSeeMore();
@@ -315,7 +317,8 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
                     rvproducts.setVisibility(View.GONE);
                     txt_products.setVisibility(View.GONE);
 
-                }
+                }*/
+                callDirections("2");
                 break;
             case R.id.txt_seemore_puppy_love:
                 if(puppyProductsDetailsBeanList.size()>0){
@@ -328,6 +331,10 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
                     txt_puppy_love.setVisibility(View.GONE);
 
                 }
+                break;
+
+            case R.id.txt_seemore_vets:
+                callDirections("4");
                 break;
 
 
