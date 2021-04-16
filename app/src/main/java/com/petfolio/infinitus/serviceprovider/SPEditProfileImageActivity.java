@@ -349,17 +349,10 @@ public class SPEditProfileImageActivity extends AppCompatActivity implements Vie
 
     @SuppressLint("LogNotTimber")
     private void uploadProfileImage() {
-
         avi_indicator.show();
-
         RestApiInterface apiInterface = APIClient.getImageClient().create(RestApiInterface.class);
-
-
         Call<FileUploadResponse> call = apiInterface.getImageStroeResponse(filePart);
-
-
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
-
         call.enqueue(new Callback<FileUploadResponse>() {
             @Override
             public void onResponse(@NonNull Call<FileUploadResponse> call, @NonNull Response<FileUploadResponse> response) {

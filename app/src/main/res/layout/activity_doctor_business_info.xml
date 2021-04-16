@@ -437,19 +437,41 @@
 
             <!--Add Clinic Address details-->
 
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="wrap_content"
+            <!--Add Clinic Address details-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/futuramediumbt"
-                android:padding="2dp"
-                android:text="@string/clinic_address"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/futuramediumbt"
+                    android:padding="2dp"
+                    android:text="@string/clinic_address"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end" >
+                    <TextView
+                        android:id="@+id/txt_location_change"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/futuralightbt"
+                        android:padding="5dp"
+                        android:text="@string/change"
+                        android:textColor="@color/new_green_btn"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:textStyle="bold"/>
+                </RelativeLayout>
 
-            <!--Clinic Pictures-->
-
+            </LinearLayout>
             <androidx.cardview.widget.CardView
                 android:id="@+id/cdvw_clinic_address"
                 android:layout_width="match_parent"
@@ -460,8 +482,8 @@
                 app:cardPreventCornerOverlap="true"
                 app:cardUseCompatPadding="true">
 
-                <EditText
-                    android:id="@+id/edtx_clinic_addr"
+                <TextView
+                    android:id="@+id/txt_clinic_addr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -470,17 +492,17 @@
                     android:fontFamily="@font/futuramediumbt"
                     android:gravity="start"
                     android:hint="@string/write_here"
-                    android:inputType="textMultiLine"
-                    android:lines="4"
                     android:maxLength="150"
-                    android:maxLines="4"
-                    android:minLines="2"
                     android:padding="15dp"
-                    android:scrollbars="vertical"
                     android:textAlignment="viewStart"
                     android:textColorHint="@color/dark_gray"
                     android:textSize="14sp"
-                    tools:ignore="Autofill,LabelFor" />
+                    tools:ignore="Autofill,LabelFor"
+                    android:inputType="textMultiLine"
+                    android:lines="3"
+                    android:minLines="2"
+                    android:maxLines="3"
+                    android:scrollbars="vertical"/>
 
             </androidx.cardview.widget.CardView>
 
@@ -767,6 +789,86 @@
                 tools:ignore="Autofill,LabelFor"
                 android:maxLength="4"
                 android:maxLines="1"/>
+
+
+            <!--digital signature-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:id="@+id/lldigitalsignature"
+                tools:ignore="UseCompoundDrawables">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/digitalsignature"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/futuramediumbt"/>
+                <ImageView
+                    android:layout_marginStart="10dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/digital_signature"
+                    tools:ignore="ContentDescription" />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/rectangle_corner"
+                android:id="@+id/llheaderdigitalsignature"
+                android:layout_marginTop="10dp">
+                <com.github.gcacace.signaturepad.views.SignaturePad
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:id="@+id/signaturePad"/>
+                <LinearLayout
+                    android:id="@+id/buttons_container"
+                    android:paddingTop="16dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/clear_button"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Clear"
+                        android:enabled="false"
+                        android:fontFamily="@font/futuramediumbt"
+                        tools:ignore="HardcodedText" />
+
+                    <Button
+                        android:id="@+id/save_button"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Save"
+                        android:enabled="false"
+                        android:fontFamily="@font/futuramediumbt"
+                        tools:ignore="HardcodedText" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ivdigitalsignature"
+                    tools:ignore="ContentDescription" />
+            </LinearLayout>
+
 
 
         </LinearLayout>

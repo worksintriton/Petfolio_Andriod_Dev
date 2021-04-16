@@ -35,6 +35,17 @@ public class DoctorBusinessInfoUpdateRequest {
     private String communication_type;
     private int consultancy_fees;
 
+    private String signature;
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+
     public String getMobile_type() {
         return mobile_type;
     }

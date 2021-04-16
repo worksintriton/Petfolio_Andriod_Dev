@@ -118,6 +118,17 @@ public class DoctorDetailsByUserIdResponse {
         private List<GovtIdPicBean> govt_id_pic;
         private List<PhotoIdPicBean> photo_id_pic;
 
+        private String signature;
+
+        public String getSignature() {
+            return signature;
+        }
+
+        public void setSignature(String signature) {
+            this.signature = signature;
+        }
+
+
 
         public String get_id() {
             return _id;

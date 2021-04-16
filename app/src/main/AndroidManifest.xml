@@ -319,36 +319,51 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".activity.location.SetLocationDoctorNewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".activity.location.SetLocationDoctorOldActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+
+
         <activity
             android:name=".petlover.PetAppointmentDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.SliderActivity" />
         <activity
             android:name=".petlover.PetCompletedAppointmentDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".petlover.PetMissedAppointmentDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".petlover.PetNewAppointmentDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".petlover.PetSPNewAppointmentDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".petlover.ProductFiltersActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
 
 
@@ -358,7 +373,13 @@
         <activity
             android:name=".doctor.DoctorBusinessInfoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".doctor.EditDoctorBusinessInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".doctor.DoctorMyCalendarNewUserActivity"

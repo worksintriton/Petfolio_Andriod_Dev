@@ -40,6 +40,15 @@ public class DocBusInfoUploadRequest {
     private String mobile_type;
     private String communication_type;
     private int consultancy_fees;
+    private String signature;
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
 
     public int getConsultancy_fees() {
         return consultancy_fees;
@@ -125,7 +134,7 @@ public class DocBusInfoUploadRequest {
 
 
 
-    public DocBusInfoUploadRequest(String user_id, String dr_title, String dr_name, String clinic_name, String clinic_loc, double clinic_lat, double clinic_long, List<EducationDetailsBean> education_details, List<ExperienceDetailsBean> experience_details, List<SpecializationBean> specialization, List<PetHandledBean> pet_handled, List<ClinicPicBean> clinic_pic, List<CertificatePicBean> certificate_pic, List<GovtIdPicBean> govt_id_pic, List<PhotoIdPicBean> photo_id_pic, boolean profile_status, String profile_verification_status, String date_and_time,String mobile_type,String communication_type,int consultancy_fees) {
+    public DocBusInfoUploadRequest(String user_id, String dr_title, String dr_name, String clinic_name, String clinic_loc, double clinic_lat, double clinic_long, List<EducationDetailsBean> education_details, List<ExperienceDetailsBean> experience_details, List<SpecializationBean> specialization, List<PetHandledBean> pet_handled, List<ClinicPicBean> clinic_pic, List<CertificatePicBean> certificate_pic, List<GovtIdPicBean> govt_id_pic, List<PhotoIdPicBean> photo_id_pic, boolean profile_status, String profile_verification_status, String date_and_time,String mobile_type,String communication_type,int consultancy_fees, String signature) {
         this.user_id = user_id;
         this.dr_title = dr_title;
         this.dr_name = dr_name;
@@ -147,6 +156,7 @@ public class DocBusInfoUploadRequest {
         this.mobile_type = mobile_type;
         this.communication_type = communication_type;
         this.consultancy_fees = consultancy_fees;
+        this.signature = signature;
     }
 
     public String getUser_id() {

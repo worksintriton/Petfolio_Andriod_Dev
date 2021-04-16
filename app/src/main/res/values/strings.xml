@@ -459,5 +459,7 @@
     <string name="category">Category</string>
     <string name="view_more">VIEW MORE</string>
 
+    <string name="digitalsignature">Digital Signature</string>
+
 
 </resources>
