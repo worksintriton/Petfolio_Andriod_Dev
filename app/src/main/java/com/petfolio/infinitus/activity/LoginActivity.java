@@ -37,6 +37,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+    private final String TAG = "LoginActivity";
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_loginheader)
@@ -58,7 +59,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @BindView(R.id.btn_verifyotp)
     Button btn_verifyotp;
 
-    private final String TAG = "LoginActivity";
     Dialog alertDialog;
 
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
