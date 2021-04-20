@@ -94,6 +94,7 @@ import com.petfolio.infinitus.requestpojo.VendorFetchOrderDetailsIdRequest;
 import com.petfolio.infinitus.requestpojo.VendorGetsOrderIdRequest;
 import com.petfolio.infinitus.requestpojo.VendorNewOrderRequest;
 import com.petfolio.infinitus.requestpojo.VendorOrderDetailsRequest;
+import com.petfolio.infinitus.requestpojo.VendorOrderListRequest;
 import com.petfolio.infinitus.requestpojo.VendorOrderRequest;
 import com.petfolio.infinitus.requestpojo.VendorRegisterFormCreateRequest;
 import com.petfolio.infinitus.responsepojo.AddReviewResponse;
@@ -185,6 +186,7 @@ import com.petfolio.infinitus.responsepojo.VendorFetchOrderDetailsResponse;
 import com.petfolio.infinitus.responsepojo.VendorGetsOrderIDResponse;
 import com.petfolio.infinitus.responsepojo.VendorNewOrderResponse;
 import com.petfolio.infinitus.responsepojo.VendorOrderDetailsResponse;
+import com.petfolio.infinitus.responsepojo.VendorOrderListResponse;
 import com.petfolio.infinitus.responsepojo.VendorOrderResponse;
 import com.petfolio.infinitus.responsepojo.VendorReasonListResponse;
 import com.petfolio.infinitus.responsepojo.VendorRegisterFormCreateResponse;
@@ -224,19 +226,19 @@ public interface RestApiInterface {
 
     /*User Staus update*/
     @POST("userdetails/mobile/edit")
-    Call<UserStatusUpdateResponse> userStatusUpdateResponse(@Header("Content-Type") String type, @Body UserStatusUpdateRequest userStatusUpdateRequest );
+    Call<UserStatusUpdateResponse> userStatusUpdateResponse(@Header("Content-Type") String type, @Body UserStatusUpdateRequest userStatusUpdateRequest);
 
     /*Resend otp*/
     @POST("userdetails/mobile/resendotp")
-    Call<ResendOTPResponse> resendOTPResponsecall(@Header("Content-Type") String type, @Body ResendOTPRequest resendOTPRequest );
+    Call<ResendOTPResponse> resendOTPResponsecall(@Header("Content-Type") String type, @Body ResendOTPRequest resendOTPRequest);
 
     /*Login*/
     @POST("userdetails/mobile/login")
-    Call<LoginResponse> loginResponseCall(@Header("Content-Type") String type, @Body LoginRequest loginRequest );
+    Call<LoginResponse> loginResponseCall(@Header("Content-Type") String type, @Body LoginRequest loginRequest);
 
     /*Notification token update*/
     @POST("userdetails/mobile/update/fb_token")
-    Call<FBTokenUpdateResponse>fBTokenUpdateResponseCall(@Header("Content-Type") String type, @Body FBTokenUpdateRequest fbTokenUpdateRequest);
+    Call<FBTokenUpdateResponse> fBTokenUpdateResponseCall(@Header("Content-Type") String type, @Body FBTokenUpdateRequest fbTokenUpdateRequest);
 
     /*Pet Lover*/
     /*dropdown list*/
@@ -245,7 +247,7 @@ public interface RestApiInterface {
 
     /*Add your pet*/
     @POST("petdetails/mobile/create")
-    Call<AddYourPetResponse> addYourPetResponseCall(@Header("Content-Type") String type, @Body AddYourPetRequest addYourPetRequest );
+    Call<AddYourPetResponse> addYourPetResponseCall(@Header("Content-Type") String type, @Body AddYourPetRequest addYourPetRequest);
 
     /*Pet lover dashboard*/
     @POST("userdetails/petlove/mobile/dashboardtest")
@@ -266,66 +268,66 @@ public interface RestApiInterface {
 
     /*Listing all breed by Pet ID*/
     @POST("breedtype/mobile/getlist_id")
-    Call<BreedTypeResponse>breedTypeResponseByPetIdCall(@Header("Content-Type") String type, @Body BreedTypeRequest breedTypeRequest );
+    Call<BreedTypeResponse> breedTypeResponseByPetIdCall(@Header("Content-Type") String type, @Body BreedTypeRequest breedTypeRequest);
 
     /*Pet Details List by User ID*/
     @POST("petdetails/mobile/getlist_id")
-    Call<PetDetailsResponse>petDetailsResponseByUserIdCall(@Header("Content-Type") String type, @Body PetDetailsRequest petDetailsRequest  );
+    Call<PetDetailsResponse> petDetailsResponseByUserIdCall(@Header("Content-Type") String type, @Body PetDetailsRequest petDetailsRequest);
 
     /*Pet Doctor available timeslot*/
     @POST("new_doctortime/get_doc_new1")
-    Call<PetDoctorAvailableTimeResponse>petDoctorAvailableTimeResponseCall(@Header("Content-Type") String type, @Body PetDoctorAvailableTimeRequest petDoctorAvailableTimeRequest   );
+    Call<PetDoctorAvailableTimeResponse> petDoctorAvailableTimeResponseCall(@Header("Content-Type") String type, @Body PetDoctorAvailableTimeRequest petDoctorAvailableTimeRequest);
 
     /*Appointment check */
     @POST("appointments/check")
-    Call<AppointmentCheckResponse>appointmentCheckResponseCall(@Header("Content-Type") String type, @Body AppointmentCheckRequest appointmentCheckRequest);
+    Call<AppointmentCheckResponse> appointmentCheckResponseCall(@Header("Content-Type") String type, @Body AppointmentCheckRequest appointmentCheckRequest);
 
     /*Pet Appointment Create*/
     @POST("appointments/mobile/create")
-    Call<PetAppointmentCreateResponse>petAppointmentCreateResponseCall(@Header("Content-Type") String type, @Body PetAppointmentCreateRequest petAppointmentCreateRequest);
+    Call<PetAppointmentCreateResponse> petAppointmentCreateResponseCall(@Header("Content-Type") String type, @Body PetAppointmentCreateRequest petAppointmentCreateRequest);
 
     /*Pet Current Appointment*/
     @POST("appointments/mobile/plove_getlist/newapp1")
-    Call<PetAppointmentResponse>petAppointmentResponseCall(@Header("Content-Type") String type, @Body PetLoverAppointmentRequest petLoverAppointmentRequest);
+    Call<PetAppointmentResponse> petAppointmentResponseCall(@Header("Content-Type") String type, @Body PetLoverAppointmentRequest petLoverAppointmentRequest);
 
 
     /*Pet Current Appointment*/
     @POST("appointments/mobile/plove_getlist/newapp")
-    Call<PetNewAppointmentResponse>petNewAppointmentResponseCall(@Header("Content-Type") String type, @Body PetLoverAppointmentRequest petLoverAppointmentRequest);
+    Call<PetNewAppointmentResponse> petNewAppointmentResponseCall(@Header("Content-Type") String type, @Body PetLoverAppointmentRequest petLoverAppointmentRequest);
 
     /*Pet Completed Appointment*/
     @POST("appointments/mobile/plove_getlist/comapp1")
-    Call<PetAppointmentResponse>petCompletedAppointmentResponseCall(@Header("Content-Type") String type, @Body PetLoverAppointmentRequest petLoverAppointmentRequest);
+    Call<PetAppointmentResponse> petCompletedAppointmentResponseCall(@Header("Content-Type") String type, @Body PetLoverAppointmentRequest petLoverAppointmentRequest);
 
     /*Pet Cancelled Appointment*/
     @POST("appointments/mobile/plove_getlist/missapp1")
-    Call<PetAppointmentResponse>petMissedAppointmentResponseCall(@Header("Content-Type") String type, @Body PetLoverAppointmentRequest petLoverAppointmentRequest);
+    Call<PetAppointmentResponse> petMissedAppointmentResponseCall(@Header("Content-Type") String type, @Body PetLoverAppointmentRequest petLoverAppointmentRequest);
 
 
     /*Listing Location by ID*/
     @POST("locationdetails/mobile/getlist_id")
-    Call<LocationListAddressResponse>locationListAddressResponseCall(@Header("Content-Type") String type, @Body LocationListAddressRequest locationListAddressRequest  );
+    Call<LocationListAddressResponse> locationListAddressResponseCall(@Header("Content-Type") String type, @Body LocationListAddressRequest locationListAddressRequest);
 
     /*Pet Details List by User ID*/
     @POST("petdetails/mobile/getlist_id")
-    Call<PetListResponse>petListResponseCall(@Header("Content-Type") String type, @Body PetListRequest petListRequest  );
+    Call<PetListResponse> petListResponseCall(@Header("Content-Type") String type, @Body PetListRequest petListRequest);
 
     /*update other information Petdetails Using User id*/
     @POST("petdetails/edit")
-    Call<PetAddImageResponse>petUpdateOtherInformationResponseCall(@Header("Content-Type") String type, @Body PetUpdateOtherInformationRequest petUpdateOtherInformationRequest  );
+    Call<PetAddImageResponse> petUpdateOtherInformationResponseCall(@Header("Content-Type") String type, @Body PetUpdateOtherInformationRequest petUpdateOtherInformationRequest);
 
 
     /*update petimage Petdetails Using User id*/
     @POST("petdetails/edit")
-    Call<PetAddImageResponse>PetAddImageResponseCall(@Header("Content-Type") String type, @Body PetAddImageRequest petAddImageRequest  );
+    Call<PetAddImageResponse> PetAddImageResponseCall(@Header("Content-Type") String type, @Body PetAddImageRequest petAddImageRequest);
 
     /*Edit Petdetails Using User id*/
     @POST("petdetails/edit")
-    Call<PetAddImageResponse>petUpdateResponseCall(@Header("Content-Type") String type, @Body PetEditRequest petEditRequest   );
+    Call<PetAddImageResponse> petUpdateResponseCall(@Header("Content-Type") String type, @Body PetEditRequest petEditRequest);
 
     /*Delete Petdetails Using User id*/
     @POST("petdetails/delete")
-    Call<PetDeleteResponse>petDeleteResponseCall(@Header("Content-Type") String type, @Body PetDeleteRequest petDeleteRequest  );
+    Call<PetDeleteResponse> petDeleteResponseCall(@Header("Content-Type") String type, @Body PetDeleteRequest petDeleteRequest);
 
     /*location list delete*/
     @POST("locationdetails/delete")
@@ -333,41 +335,41 @@ public interface RestApiInterface {
 
     /*Location status change*/
     @POST("locationdetails/default/edit")
-    Call<LocationStatusChangeResponse>locationStatusChangeResponseCall(@Header("Content-Type") String type, @Body LocationStatusChangeRequest locationStatusChangeRequest);
+    Call<LocationStatusChangeResponse> locationStatusChangeResponseCall(@Header("Content-Type") String type, @Body LocationStatusChangeRequest locationStatusChangeRequest);
 
     /*Location update*/
     @POST("locationdetails/edit")
-    Call<LocationUpdateResponse>locationUpdateResponseCall(@Header("Content-Type") String type, @Body LocationUpdateRequest locationUpdateRequest);
+    Call<LocationUpdateResponse> locationUpdateResponseCall(@Header("Content-Type") String type, @Body LocationUpdateRequest locationUpdateRequest);
 
     /*Pet lover review add*/
     @POST("appointments/reviews/update")
-    Call<AddReviewResponse>addReviewResponseCall(@Header("Content-Type") String type, @Body AddReviewRequest addReviewRequest  );
+    Call<AddReviewResponse> addReviewResponseCall(@Header("Content-Type") String type, @Body AddReviewRequest addReviewRequest);
 
     /*SP lover review add*/
     @POST("sp_appointments/reviews/update")
-    Call<AddReviewResponse>spaddReviewResponseCall(@Header("Content-Type") String type, @Body AddReviewRequest addReviewRequest  );
+    Call<AddReviewResponse> spaddReviewResponseCall(@Header("Content-Type") String type, @Body AddReviewRequest addReviewRequest);
 
     /*Shop review add*/
     @POST("product_details/reviews/update")
-    Call<AddReviewResponse>shopaddReviewResponseCall(@Header("Content-Type") String type, @Body AddShopReviewRequest addShopReviewRequest  );
+    Call<AddReviewResponse> shopaddReviewResponseCall(@Header("Content-Type") String type, @Body AddShopReviewRequest addShopReviewRequest);
 
 
     /*Specific service*/
     @POST("service_provider/mobile/servicedetails")
-    Call<SPSpecificServiceDetailsResponse>SPSpecificServiceDetailsResponseCall(@Header("Content-Type") String type, @Body SPSpecificServiceDetailsRequest spSpecificServiceDetailsRequest);
+    Call<SPSpecificServiceDetailsResponse> SPSpecificServiceDetailsResponseCall(@Header("Content-Type") String type, @Body SPSpecificServiceDetailsRequest spSpecificServiceDetailsRequest);
 
     /*Service category list*/
     @POST("service_provider/mobile/service_cat")
-    Call<ServiceCatResponse>ServiceCatResponseCall(@Header("Content-Type") String type, @Body ServiceCatRequest serviceCatRequest );
+    Call<ServiceCatResponse> ServiceCatResponseCall(@Header("Content-Type") String type, @Body ServiceCatRequest serviceCatRequest);
 
     /*Service Details*/
     @POST("service_provider/mobile/sp_fetch_by_id")
-    Call<SPDetailsRepsonse>SPDetailsRepsonseCall(@Header("Content-Type") String type, @Body SPDetailsRequest spDetailsRequest );
+    Call<SPDetailsRepsonse> SPDetailsRepsonseCall(@Header("Content-Type") String type, @Body SPDetailsRequest spDetailsRequest);
 
 
     /*SP available timeslot*/
     @POST("sp_available_time/get_sp_new")
-    Call<SPAvailableTimeResponse>spAvailableTimeResponseCall(@Header("Content-Type") String type, @Body PetDoctorAvailableTimeRequest petDoctorAvailableTimeRequest   );
+    Call<SPAvailableTimeResponse> spAvailableTimeResponseCall(@Header("Content-Type") String type, @Body PetDoctorAvailableTimeRequest petDoctorAvailableTimeRequest);
 
 
     /*Doctor*/
@@ -378,101 +380,101 @@ public interface RestApiInterface {
 
     /*update doctor profile image Using User id*/
     @POST("userdetails/mobile/update/profile")
-    Call<DoctorUpdateProfileImageResponse>DoctorUpdateProfileImageResponseCall(@Header("Content-Type") String type, @Body DoctorUpdateProfileImageRequest doctorUpdateProfileImageRequest  );
+    Call<DoctorUpdateProfileImageResponse> DoctorUpdateProfileImageResponseCall(@Header("Content-Type") String type, @Body DoctorUpdateProfileImageRequest doctorUpdateProfileImageRequest);
 
 
     /*Doctor Business info getby id*/
     @POST("doctordetails/fetch_doctor_user_id")
     Call<DoctorDetailsByUserIdResponse> doctorDetailsByUserIdResponseCall(@Header("Content-Type") String type, @Body DoctorDetailsByUserIdRequest doctorDetailsByUserIdRequest);
 
-   /*Doctor Business info update*/
+    /*Doctor Business info update*/
     @POST("doctordetails/edit")
     Call<DocBusInfoUploadResponse> doctorBusinessInfoUpdateResponseCall(@Header("Content-Type") String type, @Body DoctorBusinessInfoUpdateRequest doctorBusinessInfoUpdateRequest);
 
 
     /*Doctor Create holiday*/
     @POST("holiday/create")
-    Call<CreateHolidayResponse>createHolidayResponseCall(@Header("Content-Type") String type, @Body CreateHolidayRequest createHolidayRequest );
+    Call<CreateHolidayResponse> createHolidayResponseCall(@Header("Content-Type") String type, @Body CreateHolidayRequest createHolidayRequest);
 
     /*Doctor Listing added holidays*/
     @POST("holiday/getlist_id")
-    Call<HolidayListResponse>holidayListResponseCall(@Header("Content-Type") String type, @Body HolidayListRequest holidayListRequest  );
+    Call<HolidayListResponse> holidayListResponseCall(@Header("Content-Type") String type, @Body HolidayListRequest holidayListRequest);
 
     /*Doctor holiday delete*/
     @POST("holiday/delete")
-    Call<HolidayDeleteResponse>holidayDeleteResponseCall(@Header("Content-Type") String type, @Body HolidayDeleteRequest holidayDeleteRequest  );
+    Call<HolidayDeleteResponse> holidayDeleteResponseCall(@Header("Content-Type") String type, @Body HolidayDeleteRequest holidayDeleteRequest);
 
     /*doctor my calendar available days*/
     @POST("new_doctortime/fetch_dates")
-    Call<DoctorMyCalendarAvlDaysResponse>doctorMyCalendarAvlDaysResponseCall(@Header("Content-Type") String type, @Body DoctorMyCalendarAvlDaysRequest doctorMyCalendarAvlDaysRequest);
+    Call<DoctorMyCalendarAvlDaysResponse> doctorMyCalendarAvlDaysResponseCall(@Header("Content-Type") String type, @Body DoctorMyCalendarAvlDaysRequest doctorMyCalendarAvlDaysRequest);
 
     /*doctor my calendar available times*/
     @POST("new_doctortime/get_time_Details")
-    Call<DoctorMyCalendarAvlTimesResponse>doctorMyCalendarAvlTimesResponseCall(@Header("Content-Type") String type, @Body DoctorMyCalendarAvlTimesRequest doctorMyCalendarAvlTimesRequest);
+    Call<DoctorMyCalendarAvlTimesResponse> doctorMyCalendarAvlTimesResponseCall(@Header("Content-Type") String type, @Body DoctorMyCalendarAvlTimesRequest doctorMyCalendarAvlTimesRequest);
 
 
     /*doctor my calendar update*/
     @POST("new_doctortime/update_doc_date")
-    Call<DoctorMyCalendarUpdateDocDateResponse>doctorMyCalendarUpdateDocDateResponseCall(@Header("Content-Type") String type, @Body DoctorMyCalendarUpdateDocDateRequest doctorMyCalendarUpdateDocDateRequest);
+    Call<DoctorMyCalendarUpdateDocDateResponse> doctorMyCalendarUpdateDocDateResponseCall(@Header("Content-Type") String type, @Body DoctorMyCalendarUpdateDocDateRequest doctorMyCalendarUpdateDocDateRequest);
 
     /*Doctor New Appointment*/
     @POST("appointments/mobile/doc_getlist/newapp")
-    Call<DoctorAppointmentsResponse>doctorNewAppointmentResponseCall(@Header("Content-Type") String type, @Body DoctorNewAppointmentRequest doctorNewAppointmentRequest);
+    Call<DoctorAppointmentsResponse> doctorNewAppointmentResponseCall(@Header("Content-Type") String type, @Body DoctorNewAppointmentRequest doctorNewAppointmentRequest);
 
     /*Doctor Completed Appointment*/
     @POST("appointments/mobile/doc_getlist/comapp")
-    Call<DoctorAppointmentsResponse>doctorCompletedAppointmentResponseCall(@Header("Content-Type") String type, @Body DoctorNewAppointmentRequest doctorNewAppointmentRequest);
+    Call<DoctorAppointmentsResponse> doctorCompletedAppointmentResponseCall(@Header("Content-Type") String type, @Body DoctorNewAppointmentRequest doctorNewAppointmentRequest);
 
     /*Doctor Missed Appointment*/
     @POST("appointments/mobile/doc_getlist/missapp")
-    Call<DoctorAppointmentsResponse>doctorMissedAppointmentResponseCall(@Header("Content-Type") String type, @Body DoctorNewAppointmentRequest doctorNewAppointmentRequest);
+    Call<DoctorAppointmentsResponse> doctorMissedAppointmentResponseCall(@Header("Content-Type") String type, @Body DoctorNewAppointmentRequest doctorNewAppointmentRequest);
 
 
     /*Doctor fetch details based on id*/
     @POST("doctordetails/fetch_doctor_id")
-    Call<DoctorDetailsResponse>doctorDetailsResponseCall(@Header("Content-Type") String type, @Body DoctorDetailsRequest doctorDetailsRequest );
+    Call<DoctorDetailsResponse> doctorDetailsResponseCall(@Header("Content-Type") String type, @Body DoctorDetailsRequest doctorDetailsRequest);
 
 
     /*Doctor Check status*/
     @POST("doctordetails/check_status")
-    Call<DoctorCheckStatusResponse>doctorCheckStatusResponseCall(@Header("Content-Type") String type, @Body DoctorCheckStatusRequest doctorCheckStatusRequest );
+    Call<DoctorCheckStatusResponse> doctorCheckStatusResponseCall(@Header("Content-Type") String type, @Body DoctorCheckStatusRequest doctorCheckStatusRequest);
 
     /*Prescriptoin Create*/
     @POST("prescription/create")
-    Call<PrescriptionCreateResponse>prescriptionCreateRequestCall(@Header("Content-Type") String type, @Body PrescriptionCreateRequest prescriptionCreateRequest);
+    Call<PrescriptionCreateResponse> prescriptionCreateRequestCall(@Header("Content-Type") String type, @Body PrescriptionCreateRequest prescriptionCreateRequest);
 
     /*Prescriptoin Details*/
     @POST("prescription/fetch_by_appointment_id")
-    Call<PrescriptionCreateResponse>prescriptionDetailsResponseCall(@Header("Content-Type") String type, @Body PrescriptionDetailsRequest prescriptionDetailsRequest);
+    Call<PrescriptionCreateResponse> prescriptionDetailsResponseCall(@Header("Content-Type") String type, @Body PrescriptionDetailsRequest prescriptionDetailsRequest);
 
     /*Update Appointment Status complete*/
     @POST("appointments/edit")
-    Call<AppoinmentCompleteResponse>appoinmentCompleteResponseCall(@Header("Content-Type") String type, @Body AppoinmentCompleteRequest appoinmentCompleteRequest );
+    Call<AppoinmentCompleteResponse> appoinmentCompleteResponseCall(@Header("Content-Type") String type, @Body AppoinmentCompleteRequest appoinmentCompleteRequest);
 
     /*Update Appointment Status cancel*/
     @POST("appointments/edit")
-    Call<AppoinmentCancelledResponse>appoinmentCancelledResponseCall(@Header("Content-Type") String type, @Body AppoinmentCancelledRequest appoinmentCancelledRequest );
+    Call<AppoinmentCancelledResponse> appoinmentCancelledResponseCall(@Header("Content-Type") String type, @Body AppoinmentCancelledRequest appoinmentCancelledRequest);
 
     /*doctor appointment close conversation*/
     @POST("appointments/edit")
-    Call<AppointmentsUpdateResponse>appoinmentcloseconversationResponseCall(@Header("Content-Type") String type, @Body AppoinmentCloseRequest appoinmentCloseRequest );
+    Call<AppointmentsUpdateResponse> appoinmentcloseconversationResponseCall(@Header("Content-Type") String type, @Body AppoinmentCloseRequest appoinmentCloseRequest);
 
     /*doctor appointment pet no show*/
     @POST("appointments/edit")
-    Call<AppointmentsUpdateResponse>appoinmentpetnoResponseCall(@Header("Content-Type") String type, @Body PetNoShowRequest petNoShowRequest );
+    Call<AppointmentsUpdateResponse> appoinmentpetnoResponseCall(@Header("Content-Type") String type, @Body PetNoShowRequest petNoShowRequest);
 
-   /*doctor appointment start appointment*/
+    /*doctor appointment start appointment*/
     @POST("appointments/edit")
-    Call<AppointmentsUpdateResponse>doctorStartAppointmentResponseCall(@Header("Content-Type") String type, @Body DoctorStartAppointmentRequest doctorStartAppointmentRequest );
+    Call<AppointmentsUpdateResponse> doctorStartAppointmentResponseCall(@Header("Content-Type") String type, @Body DoctorStartAppointmentRequest doctorStartAppointmentRequest);
 
 
     /*Doctor Name and specialization search*/
     @POST("doctordetails/text_search")
-    Call<DoctorSearchResponse>doctorSearchResponseCall(@Header("Content-Type") String type, @Body DoctorSearchRequest doctorSearchRequest);
+    Call<DoctorSearchResponse> doctorSearchResponseCall(@Header("Content-Type") String type, @Body DoctorSearchRequest doctorSearchRequest);
 
     /*Doctor specialization near by and review Filter api*/
     @POST("doctordetails/filter_doctor")
-    Call<FilterDoctorResponse>filterDoctorResponseCall(@Header("Content-Type") String type, @Body FilterDoctorRequest filterDoctorRequest );
+    Call<FilterDoctorResponse> filterDoctorResponseCall(@Header("Content-Type") String type, @Body FilterDoctorRequest filterDoctorRequest);
 
 
 
@@ -489,69 +491,69 @@ public interface RestApiInterface {
 
     /*Service provider register form create*/
     @POST("service_provider/create")
-    Call<ServiceProviderRegisterFormCreateResponse>serviceProviderRegisterFormCreateResponseCall(@Header("Content-Type") String type, @Body ServiceProviderRegisterFormCreateRequest serviceProviderRegisterFormCreateRequest);
+    Call<ServiceProviderRegisterFormCreateResponse> serviceProviderRegisterFormCreateResponseCall(@Header("Content-Type") String type, @Body ServiceProviderRegisterFormCreateRequest serviceProviderRegisterFormCreateRequest);
 
     /*Service provider details by id*/
     @POST("service_provider/getlist_id")
-    Call<ServiceProviderRegisterFormCreateResponse>spDetailsReponseByUserIdCall(@Header("Content-Type") String type, @Body SPDetailsByUserIdRequest spDetailsByUserIdRequest);
+    Call<ServiceProviderRegisterFormCreateResponse> spDetailsReponseByUserIdCall(@Header("Content-Type") String type, @Body SPDetailsByUserIdRequest spDetailsByUserIdRequest);
 
     /*Service provider update*/
     @POST("service_provider/edit")
-    Call<ServiceProviderRegisterFormCreateResponse>spUpdateReponseCall(@Header("Content-Type") String type, @Body ServiceProviderRegisterFormCreateRequest serviceProviderRegisterFormCreateRequest);
+    Call<ServiceProviderRegisterFormCreateResponse> spUpdateReponseCall(@Header("Content-Type") String type, @Body ServiceProviderRegisterFormCreateRequest serviceProviderRegisterFormCreateRequest);
 
 
     /*SP Check status*/
     @POST("service_provider/check_status")
-    Call<SPCheckStatusResponse>SPCheckStatusResponseCall(@Header("Content-Type") String type, @Body SPCheckStatusRequest spCheckStatusRequest );
+    Call<SPCheckStatusResponse> SPCheckStatusResponseCall(@Header("Content-Type") String type, @Body SPCheckStatusRequest spCheckStatusRequest);
 
     /*sp my calendar available days*/
     @POST("sp_available_time/fetch_dates")
-    Call<DoctorMyCalendarAvlDaysResponse>spMyCalendarAvlDaysResponseCall(@Header("Content-Type") String type, @Body SPMyCalendarAvlDaysRequest spMyCalendarAvlDaysRequest);
+    Call<DoctorMyCalendarAvlDaysResponse> spMyCalendarAvlDaysResponseCall(@Header("Content-Type") String type, @Body SPMyCalendarAvlDaysRequest spMyCalendarAvlDaysRequest);
 
     /*sp my calendar available times*/
     @POST("sp_available_time/get_time_Details")
-    Call<DoctorMyCalendarAvlTimesResponse>spMyCalendarAvlTimesResponseCall(@Header("Content-Type") String type, @Body DoctorMyCalendarAvlTimesRequest doctorMyCalendarAvlTimesRequest);
+    Call<DoctorMyCalendarAvlTimesResponse> spMyCalendarAvlTimesResponseCall(@Header("Content-Type") String type, @Body DoctorMyCalendarAvlTimesRequest doctorMyCalendarAvlTimesRequest);
 
     /*sp my calendar update*/
     @POST("sp_available_time/update_doc_date")
-    Call<DoctorMyCalendarUpdateDocDateResponse>spMyCalendarUpdateDocDateResponseCall(@Header("Content-Type") String type, @Body DoctorMyCalendarUpdateDocDateRequest doctorMyCalendarUpdateDocDateRequest);
+    Call<DoctorMyCalendarUpdateDocDateResponse> spMyCalendarUpdateDocDateResponseCall(@Header("Content-Type") String type, @Body DoctorMyCalendarUpdateDocDateRequest doctorMyCalendarUpdateDocDateRequest);
 
 
     /*SP Create holiday*/
     @POST("sp_holiday/create")
-    Call<CreateHolidayResponse>spCreateHolidayResponseCall(@Header("Content-Type") String type, @Body CreateHolidayRequest createHolidayRequest );
+    Call<CreateHolidayResponse> spCreateHolidayResponseCall(@Header("Content-Type") String type, @Body CreateHolidayRequest createHolidayRequest);
 
     /*SP Listing added holidays*/
     @POST("sp_holiday/getlist_id")
-    Call<HolidayListResponse>spHolidayListResponseCall(@Header("Content-Type") String type, @Body HolidayListRequest holidayListRequest  );
+    Call<HolidayListResponse> spHolidayListResponseCall(@Header("Content-Type") String type, @Body HolidayListRequest holidayListRequest);
 
     /*SP holiday delete*/
     @POST("sp_holiday/delete")
-    Call<HolidayDeleteResponse>spHolidayDeleteResponseCall(@Header("Content-Type") String type, @Body HolidayDeleteRequest holidayDeleteRequest  );
+    Call<HolidayDeleteResponse> spHolidayDeleteResponseCall(@Header("Content-Type") String type, @Body HolidayDeleteRequest holidayDeleteRequest);
 
     /*SP Create Appointment*/
     @POST("sp_appointments/mobile/create")
-    Call<SPCreateAppointmentResponse>SPCreateAppointmentResponseCall(@Header("Content-Type") String type, @Body SPCreateAppointmentRequest spCreateAppointmentRequest);
+    Call<SPCreateAppointmentResponse> SPCreateAppointmentResponseCall(@Header("Content-Type") String type, @Body SPCreateAppointmentRequest spCreateAppointmentRequest);
 
     /*SP New Appointment*/
     @POST("sp_appointments/mobile/sp_getlist/newapp")
-    Call<SPAppointmentResponse>spNewAppointmentResponseCall(@Header("Content-Type") String type, @Body SPAppointmentRequest spAppointmentRequest);
+    Call<SPAppointmentResponse> spNewAppointmentResponseCall(@Header("Content-Type") String type, @Body SPAppointmentRequest spAppointmentRequest);
 
     /*SP Completed Appointment*/
     @POST("sp_appointments/mobile/sp_getlist/comapp")
-    Call<SPAppointmentResponse>spCompletedAppointmentResponseCall(@Header("Content-Type") String type, @Body SPAppointmentRequest spAppointmentRequest);
+    Call<SPAppointmentResponse> spCompletedAppointmentResponseCall(@Header("Content-Type") String type, @Body SPAppointmentRequest spAppointmentRequest);
 
     /*SP Missed Appointment*/
     @POST("sp_appointments/mobile/sp_getlist/missapp")
-    Call<SPAppointmentResponse>spMissedAppointmentResponseCall(@Header("Content-Type") String type, @Body SPAppointmentRequest spAppointmentRequest);
+    Call<SPAppointmentResponse> spMissedAppointmentResponseCall(@Header("Content-Type") String type, @Body SPAppointmentRequest spAppointmentRequest);
 
     /*Update Appointment Status complete*/
     @POST("sp_appointments/edit")
-    Call<AppoinmentCompleteResponse>spappoinmentCompleteResponseCall(@Header("Content-Type") String type, @Body AppoinmentCompleteRequest appoinmentCompleteRequest );
+    Call<AppoinmentCompleteResponse> spappoinmentCompleteResponseCall(@Header("Content-Type") String type, @Body AppoinmentCompleteRequest appoinmentCompleteRequest);
 
     /*Update Appointment Status cancel*/
     @POST("sp_appointments/edit")
-    Call<AppoinmentCancelledResponse>spappoinmentCancelledResponseCall(@Header("Content-Type") String type, @Body AppoinmentCancelledRequest appoinmentCancelledRequest );
+    Call<AppoinmentCancelledResponse> spappoinmentCancelledResponseCall(@Header("Content-Type") String type, @Body AppoinmentCancelledRequest appoinmentCancelledRequest);
 
 
 
@@ -559,22 +561,22 @@ public interface RestApiInterface {
 
     /*Service provider register form create*/
     @POST("product_vendor/create")
-    Call<VendorRegisterFormCreateResponse>vendorRegisterFormCreateResponseCall(@Header("Content-Type") String type, @Body VendorRegisterFormCreateRequest vendorRegisterFormCreateRequest );
+    Call<VendorRegisterFormCreateResponse> vendorRegisterFormCreateResponseCall(@Header("Content-Type") String type, @Body VendorRegisterFormCreateRequest vendorRegisterFormCreateRequest);
 
-   /*Service provider register form update*/
+    /*Service provider register form update*/
     @POST("product_vendor/edit")
-    Call<VendorRegisterFormCreateResponse>vendorRegisterFormUpdateResponseCall(@Header("Content-Type") String type, @Body VendorRegisterFormCreateRequest vendorRegisterFormCreateRequest );
+    Call<VendorRegisterFormCreateResponse> vendorRegisterFormUpdateResponseCall(@Header("Content-Type") String type, @Body VendorRegisterFormCreateRequest vendorRegisterFormCreateRequest);
 
 
     /*Vendor Check status*/
     @POST("product_vendor/check_status")
-    Call<SPCheckStatusResponse>VendorCheckStatusResponseCall(@Header("Content-Type") String type, @Body SPCheckStatusRequest spCheckStatusRequest );
+    Call<SPCheckStatusResponse> VendorCheckStatusResponseCall(@Header("Content-Type") String type, @Body SPCheckStatusRequest spCheckStatusRequest);
 
     /*Pet New Appointment Details*/
     @POST("appointments/mobile/fetch_appointment_id")
     Call<PetNewAppointmentDetailsResponse> petNewAppointDetailResponseCall(@Header("Content-Type") String type, @Body PetNewAppointmentDetailsRequest petNewAppointmentDetailsRequest);
 
-   /* SP Appointment Details*/
+    /* SP Appointment Details*/
     @POST("sp_appointments/mobile/fetch_appointment_id")
     Call<SPAppointmentDetailsResponse> spAppointmentDetailsResponse(@Header("Content-Type") String type, @Body AppointmentDetailsRequest appointmentDetailsRequest);
 
@@ -593,11 +595,11 @@ public interface RestApiInterface {
 
     /*Vendor Order*/
     @POST("order_details/getorder_list")
-    Call<VendorOrderResponse>vendorOrderResponseCall(@Header("Content-Type") String type, @Body VendorOrderRequest vendorOrderRequest);
+    Call<VendorOrderResponse> vendorOrderResponseCall(@Header("Content-Type") String type, @Body VendorOrderRequest vendorOrderRequest);
 
     /*shop dashboard list*/
     @POST("product_details/getproductdetails_list")
-    Call<ShopDashboardResponse> shopDashboardResponseCall(@Header("Content-Type") String type,@Body ShopDashboardRequest ShopDashboardRequest);
+    Call<ShopDashboardResponse> shopDashboardResponseCall(@Header("Content-Type") String type, @Body ShopDashboardRequest ShopDashboardRequest);
 
     /*View Todays Deal Products see more*/
     @POST("product_details/today_deal")
@@ -638,7 +640,7 @@ public interface RestApiInterface {
     Call<CartDetailsResponse> fetch_cart_details_by_userid_ResponseCall(@Header("Content-Type") String type, @Body FetchByIdRequest fetchByIdRequest);
 
     /*Vendor booking create*/
-    @POST("vendor_order_booking/create")
+    @POST("vendor_order_booking/create1")
     Call<CartSuccessResponse> vendor_order_booking_create_ResponseCall(@Header("Content-Type") String type, @Body CartDetailsResponse cartDetailsResponse);
 
 
@@ -699,7 +701,7 @@ public interface RestApiInterface {
     @POST("vendor_order_booking/update_status_return")
     Call<VendorAcceptsReturnOrderResponse> update_status_vendor_accept_returnResponseCall(@Header("Content-Type") String type, @Body VendorAcceptReturnOrderRequest vendorAcceptReturnOrderRequest);
 
-  /* User Fetches Last Used Shipping Address */
+    /* User Fetches Last Used Shipping Address */
     @POST("shipping_address/fetch_by_userid")
     Call<ShippingAddressFetchUserResponse> fetch_shipp_addr_ResponseCall(@Header("Content-Type") String type, @Body ShippingAddressFetchUserRequest shippingAddressFetchUserRequest);
 
@@ -733,7 +735,7 @@ public interface RestApiInterface {
     Call<ApplySingleDiscountCalResponse> cal_discount_single_ResponseCall(@Header("Content-Type") String type, @Body ApplySingleDiscountCalRequest applySingleDiscountCalRequest);
 
 
-  /* Single Discount Apply*/
+    /* Single Discount Apply*/
     @POST("product_details/discount_single")
     Call<ApplySingleDiscountResponse> apply_sing_dis_ResponseCall(@Header("Content-Type") String type, @Body ApplySingleDiscountRequest applySingleDiscountRequest);
 
@@ -760,13 +762,12 @@ public interface RestApiInterface {
     @POST("product_details/sort")
     Call<ProductSearchResponse> productSortByResponseCall(@Header("Content-Type") String type, @Body ProductSortByRequest productSortByRequest);
 
-
     /* Shop product filter*/
     @POST("product_details/filter")
     Call<ProductSearchResponse> productFiltersResponseCall(@Header("Content-Type") String type, @Body ProductFiltersRequest productFiltersRequest);
 
-
-
-
+    /*vendor order list*/
+    @POST("vendor_order_group/get_grouped_order_by_vendor")
+    Call<VendorOrderListResponse> get_grouped_order_by_vendor_ResponseCall(@Header("Content-Type") String type, @Body VendorOrderListRequest vendorOrderListRequest);
 
 }

@@ -104,6 +104,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
     public static String cityName;
 
 
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,13 +113,8 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
         Log.w(TAG,"onCreate-->");
 
         bottom_navigation_view.setItemIconTintList(null);
-
         googleApiConnected();
-
-
-
         avi_indicator.setVisibility(View.GONE);
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
 

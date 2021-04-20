@@ -229,6 +229,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".petlover.PetMyOrdrersNewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".petlover.PetCartActivity"
             android:screenOrientation="portrait"
@@ -431,11 +437,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".doctor.EditDoctorBusinessInfoActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.Design.Light.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".doctor.DoctorPrescriptionDetailsActivity"
             android:screenOrientation="portrait"
@@ -544,6 +546,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
+
+
+
         <activity
             android:name=".activity.NotificationActivity"
             android:screenOrientation="portrait"
@@ -600,6 +605,11 @@
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".petlover.PetLoverVendorOrderDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".petlover.PetVendorTrackOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
@@ -616,6 +626,12 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".vendor.VendorOrderDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".vendor.VendorOrderDetailsNewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />

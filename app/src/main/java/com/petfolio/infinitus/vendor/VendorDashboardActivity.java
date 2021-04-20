@@ -18,8 +18,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.petfolio.infinitus.R;
 
-import com.petfolio.infinitus.fragmentvendor.FragmentVendorDashboard;
 
+import com.petfolio.infinitus.fragmentvendor.myorders.FragmentOrdersDashboard;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 
 
@@ -40,7 +40,7 @@ public class VendorDashboardActivity  extends VendorNavigationDrawer implements 
 
     private String TAG = "VendorDashboardActivity";
 
-    final Fragment homeFragment = new FragmentVendorDashboard();
+    final Fragment homeFragment = new FragmentOrdersDashboard();
 
     private String active_tag = "1";
 
@@ -79,7 +79,7 @@ public class VendorDashboardActivity  extends VendorNavigationDrawer implements 
             if(tag.equalsIgnoreCase("1")){
                 active = homeFragment;
                 bottom_navigation_view.setSelectedItemId(R.id.home);
-                loadFragment(new FragmentVendorDashboard());
+                loadFragment(new FragmentOrdersDashboard());
             }else if(tag.equalsIgnoreCase("2")){
                 //active = searchFragment;
                 bottom_navigation_view.setSelectedItemId(R.id.shop);
@@ -145,7 +145,7 @@ public class VendorDashboardActivity  extends VendorNavigationDrawer implements 
                 bottom_navigation_view.setSelectedItemId(R.id.home);
                 // load fragment
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_container,new FragmentVendorDashboard());
+                transaction.replace(R.id.main_container,new FragmentOrdersDashboard());
                 transaction.commit();
             }
 
@@ -154,7 +154,7 @@ public class VendorDashboardActivity  extends VendorNavigationDrawer implements 
             bottom_navigation_view.setSelectedItemId(R.id.home);
             // load fragment
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.main_container,new FragmentVendorDashboard());
+            transaction.replace(R.id.main_container,new FragmentOrdersDashboard());
             transaction.commit();
         }
     }
@@ -171,7 +171,7 @@ public class VendorDashboardActivity  extends VendorNavigationDrawer implements 
 
         switch (item.getItemId()) {
             case R.id.home:
-                replaceFragment(new FragmentVendorDashboard());
+                replaceFragment(new FragmentOrdersDashboard());
                 break;
             case R.id.shop:
                 break;

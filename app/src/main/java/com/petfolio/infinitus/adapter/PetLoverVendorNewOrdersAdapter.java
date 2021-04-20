@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.petlover.PetLoverVendorOrderDetailsActivity;
 import com.petfolio.infinitus.petlover.PetVendorCancelOrderActivity;
 import com.petfolio.infinitus.petlover.PetVendorOrderDetailsActivity;
 import com.petfolio.infinitus.petlover.PetVendorTrackOrderActivity;
@@ -23,16 +24,16 @@ import com.petfolio.infinitus.responsepojo.PetVendorOrderResponse;
 import java.util.List;
 
 
-public class PetVendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class PetLoverVendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final String TAG = "PetVendorNewOrdersAdapter";
+    private final String TAG = "PetLoverVendorNewOrdersAdapter";
     private final List<PetVendorOrderResponse.DataBean> newOrderResponseList;
     private final Context context;
     PetVendorOrderResponse.DataBean currentItem;
     private int size;
 
 
-    public PetVendorNewOrdersAdapter(Context context, List<PetVendorOrderResponse.DataBean> newOrderResponseList, int size) {
+    public PetLoverVendorNewOrdersAdapter(Context context, List<PetVendorOrderResponse.DataBean> newOrderResponseList, int size) {
         this.context = context;
         this.newOrderResponseList = newOrderResponseList;
         this.size = size;
@@ -42,7 +43,7 @@ public class PetVendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerVie
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_pet_new_orders, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_petlover_new_orders, parent, false);
         return new ViewHolderOne(view);
     }
 
@@ -72,13 +73,9 @@ public class PetVendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerVie
         }
         else { if (newOrderResponseList.get(position).getProduct_quantity() == 1) {
                 holder.txt_products_price.setText("\u20B9 " + 0 + " (" + newOrderResponseList.get(position).getProduct_quantity() + " item )");
-            }
-            else {
-                holder.txt_products_price.setText("\u20B9 " + 0 + " (" + newOrderResponseList.get(position).getProduct_quantity() + " items )");
+            } else { holder.txt_products_price.setText("\u20B9 " + 0 + " (" + newOrderResponseList.get(position).getProduct_quantity() + " items )"); } }
 
-            }
 
-        }
         if (newOrderResponseList.get(position).getDate_of_booking() != null) {
             holder.txt_bookedon.setText("Booked on:" + " " + newOrderResponseList.get(position).getDate_of_booking());
 
@@ -98,14 +95,14 @@ public class PetVendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerVie
         holder.txt_order_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, PetVendorOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent i = new Intent(context, PetLoverVendorOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra("_id", newOrderResponseList.get(position).get_id());
                 i.putExtra("fromactivity", TAG);
                 context.startActivity(i);
 
             }
         });
-        holder.txt_track_order.setOnClickListener(new View.OnClickListener() {
+       /* holder.txt_track_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, PetVendorTrackOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -126,7 +123,7 @@ public class PetVendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerVie
 
             }
         });
-
+*/
     }
 
     @Override
@@ -140,7 +137,7 @@ public class PetVendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerVie
     }
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_orderid, txt_producttitle, txt_products_price, txt_bookedon, txt_order_details, txt_track_order, txt_cancell_order;
+        public TextView txt_orderid, txt_producttitle, txt_products_price, txt_bookedon, txt_order_details;
         public ImageView img_products_image;
 
 
@@ -152,10 +149,6 @@ public class PetVendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerVie
             txt_products_price = itemView.findViewById(R.id.txt_products_price);
             txt_bookedon = itemView.findViewById(R.id.txt_bookedon);
             txt_order_details = itemView.findViewById(R.id.txt_order_details);
-            txt_track_order = itemView.findViewById(R.id.txt_track_order);
-            txt_cancell_order = itemView.findViewById(R.id.txt_cancell_order);
-
-
         }
 
 
