@@ -180,7 +180,8 @@
                     android:id="@+id/img_order_status"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:src="@drawable/completed" />
+                    android:src="@drawable/completed"
+                    tools:ignore="ContentDescription" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -210,7 +211,7 @@
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
-                        android:text="Date"
+                        android:text="@string/date"
                         android:textColor="@color/new_sec_txt_color"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -251,126 +252,126 @@
 
             </LinearLayout>
             <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:id="@+id/ll_orderdetails">
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/width_appoitmentdetails"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:maxLines="1"
+                        android:text="Order date"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/txt_order_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:maxLines="1"
+                        android:text="@string/date"
+                        android:textColor="@color/new_sec_txt_color"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/width_appoitmentdetails"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="5dp"
-                        android:orientation="horizontal">
+                        android:ellipsize="end"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:maxLines="1"
+                        android:text="Order #"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
 
-                        <TextView
-                            android:layout_width="@dimen/width_appoitmentdetails"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/futuramediumbt"
-                            android:maxLines="1"
-                            android:text="Order date"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/txt_booking_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:maxLines="1"
+                        android:text="1234ABCD12344321"
+                        android:textColor="@color/new_sec_txt_color"
+                        android:textSize="14sp" />
 
-                        <TextView
-                            android:id="@+id/txt_order_date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/futuramediumbt"
-                            android:maxLines="1"
-                            android:text="19-Aug-2020"
-                            android:textColor="@color/new_sec_txt_color"
-                            android:textSize="14sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:orientation="horizontal">
 
-                    </LinearLayout>
-                    <LinearLayout
+                    <TextView
+                        android:layout_width="@dimen/width_appoitmentdetails"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:maxLines="1"
+                        android:text="@string/payment_method"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/txt_payment_method"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:maxLines="1"
+                        android:text="Online"
+                        android:textColor="@color/new_sec_txt_color"
+                        android:textSize="14sp" />
 
-                        <TextView
-                            android:layout_width="@dimen/width_appoitmentdetails"
-                            android:layout_height="match_parent"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/futuramediumbt"
-                            android:maxLines="1"
-                            android:text="Order #"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/txt_booking_id"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/futuramediumbt"
-                            android:maxLines="1"
-                            android:text="1234ABCD12344321"
-                            android:textColor="@color/new_sec_txt_color"
-                            android:textSize="14sp" />
+                    <TextView
+                        android:layout_width="@dimen/width_appoitmentdetails"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:maxLines="1"
+                        android:text="Order total"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
 
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/txt_total_order_cost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:maxLines="1"
+                        android:text="\u20B9  0"
+                        android:textColor="@color/new_sec_txt_color"
+                        android:textSize="14sp" />
 
-                        <TextView
-                            android:layout_width="@dimen/width_appoitmentdetails"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/futuramediumbt"
-                            android:maxLines="1"
-                            android:text="@string/payment_method"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/txt_payment_method"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/futuramediumbt"
-                            android:maxLines="1"
-                            android:text="Online"
-                            android:textColor="@color/new_sec_txt_color"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="@dimen/width_appoitmentdetails"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/futuramediumbt"
-                            android:maxLines="1"
-                            android:text="Order total"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/txt_total_order_cost"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/futuramediumbt"
-                            android:maxLines="1"
-                            android:text="\u20B9  0"
-                            android:textColor="@color/new_sec_txt_color"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -400,7 +401,7 @@
                         android:textSize="14sp" />
 
                 </LinearLayout>
-                </LinearLayout>
+            </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
@@ -550,7 +551,7 @@
                         android:id="@+id/img_expand_arrow_productdetails"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:src="@drawable/ic_up"
+                        android:src="@drawable/ic_down"
                         tools:ignore="ContentDescription" />
 
                 </RelativeLayout>
@@ -560,11 +561,25 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:id="@+id/ll_productdetails">
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_productdetails"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:visibility="visible"/>
+
+                <TextView
+                    android:id="@+id/txt_no_products"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:text="@string/norecordsfound"
+                    android:textColor="@color/color"
+                    android:textSize="16sp"
+                    android:visibility="gone" />
+
             </LinearLayout>
 
 
@@ -593,8 +608,10 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/new_rounded_corner_btn"
             app:elevation="8dp"
             app:itemBackground="@drawable/selected_state"
@@ -602,10 +619,7 @@
             app:itemIconTint="@color/selector"
             app:itemTextColor="@color/selector"
             app:labelVisibilityMode="labeled"
-            app:menu="@menu/vendor_bottom_navigation"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginBottom="10dp"/>
+            app:menu="@menu/vendor_bottom_navigation" />
 
     </LinearLayout>
 

@@ -16,18 +16,15 @@ import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.petlover.PetVendorCancelOrderActivity;
-import com.petfolio.infinitus.petlover.PetVendorOrderDetailsActivity;
-import com.petfolio.infinitus.petlover.PetVendorTrackOrderActivity;
 import com.petfolio.infinitus.petlover.TrackOrderActivity;
 import com.petfolio.infinitus.responsepojo.PetLoverVendorOrderDetailsResponse;
-import com.petfolio.infinitus.responsepojo.PetVendorOrderResponse;
 
 import java.util.List;
 
 
-public class ProductDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ProductDetailsVendorAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final String TAG = "ProductDetailsAdapter";
+    private final String TAG = "ProductDetailsVendorAdapter";
 
     List<PetLoverVendorOrderDetailsResponse.DataBean.ProductDetailsBean> product_details;
     private final Context context;
@@ -36,7 +33,7 @@ public class ProductDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
 
 
 
-    public ProductDetailsAdapter(Context context,  List<PetLoverVendorOrderDetailsResponse.DataBean.ProductDetailsBean> product_details,String orderid) {
+    public ProductDetailsVendorAdapter(Context context, List<PetLoverVendorOrderDetailsResponse.DataBean.ProductDetailsBean> product_details, String orderid) {
         this.context = context;
         this.product_details = product_details;
         this.orderid = orderid;
@@ -47,7 +44,7 @@ public class ProductDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_product_details, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_product_details_vendor, parent, false);
         return new ViewHolderOne(view);
     }
 

@@ -17,11 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
-import com.petfolio.infinitus.responsepojo.VendorNewOrderResponse;
 import com.petfolio.infinitus.responsepojo.VendorOrderListResponse;
-import com.petfolio.infinitus.vendor.VendorOrderDetailsActivity;
 import com.petfolio.infinitus.vendor.VendorOrderDetailsNewActivity;
-import com.petfolio.infinitus.vendor.VendorUpdateOrderStatusActivity;
 
 import java.util.List;
 
@@ -109,7 +106,7 @@ public class VendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.View
         holder.txt_order_details.setOnClickListener(v -> {
                 Intent i = new Intent(context, VendorOrderDetailsNewActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra("_id",orderResponseListAll.get(position).getV_order_id());
-                i.putExtra("fromactivity",TAG);
+                i.putExtra("fromactivity",fromactivity);
                 context.startActivity(i);
 
         });

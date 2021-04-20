@@ -142,7 +142,7 @@ public class FragmentCompletedOrders extends Fragment  {
                         try {
                             //your method here
                             if(APIClient.VENDOR_ID != null && !APIClient.VENDOR_ID.isEmpty()) {
-                                vendorNewOrderResponseCall(APIClient.VENDOR_ID);
+                                vendorCompleteOrderResponseCall(APIClient.VENDOR_ID);
                             }
 
                         } catch (Exception ignored) {
@@ -158,7 +158,7 @@ public class FragmentCompletedOrders extends Fragment  {
                     public void onRefresh() {
                         if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
                             if (APIClient.VENDOR_ID != null && !APIClient.VENDOR_ID.isEmpty()) {
-                                vendorNewOrderResponseCall(APIClient.VENDOR_ID);
+                                vendorCompleteOrderResponseCall(APIClient.VENDOR_ID);
                             }
                         }
                     }
@@ -203,7 +203,7 @@ public class FragmentCompletedOrders extends Fragment  {
 
                             if(response.body().getData().get_id()!=null&&!(response.body().getData().get_id().isEmpty())){
                                 APIClient.VENDOR_ID = response.body().getData().get_id();
-                                vendorNewOrderResponseCall(response.body().getData().get_id());
+                                vendorCompleteOrderResponseCall(response.body().getData().get_id());
 
                             }
 
@@ -273,7 +273,7 @@ public class FragmentCompletedOrders extends Fragment  {
 
 
     @SuppressLint("LogNotTimber")
-    private void vendorNewOrderResponseCall(String id) {
+    private void vendorCompleteOrderResponseCall(String id) {
        /* avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();*/
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
@@ -330,10 +330,10 @@ public class FragmentCompletedOrders extends Fragment  {
 
                         Log.w(TAG,"Size"+orderResponseListAll.size());
                         Log.w(TAG,"orderResponseListAll : "+new Gson().toJson(orderResponseListAll));
-                        if(orderResponseListAll != null && orderResponseListAll.size()>0){
+                        if(orderResponseList.size() > 0){
                             txt_no_records.setVisibility(View.GONE);
                             rv_completedappointment.setVisibility(View.VISIBLE);
-                            setView(orderResponseListAll);
+                            setView(orderResponseList);
 
                         }
                         else{
@@ -398,7 +398,7 @@ public class FragmentCompletedOrders extends Fragment  {
                         Log.w(TAG, "isLoading? " + isLoading + " currentPage " + CURRENT_PAGE);
                         isLoading = true;
                         if (APIClient.VENDOR_ID != null && !APIClient.VENDOR_ID.isEmpty()) {
-                            vendorNewOrderResponseCall(APIClient.VENDOR_ID);
+                            vendorCompleteOrderResponseCall(APIClient.VENDOR_ID);
                         }
 
                     }

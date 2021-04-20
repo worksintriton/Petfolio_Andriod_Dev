@@ -274,7 +274,6 @@ public class FragementNewOrders extends Fragment {
 
                    if(200 == response.body().getCode()){
                        orderResponseList = response.body().getData();
-
                        for(int i=0;i<orderResponseList.size();i++) {
                            /*
                             * v_order_id : ORDER-1618830809052
@@ -308,10 +307,10 @@ public class FragementNewOrders extends Fragment {
 
                        Log.w(TAG,"Size"+orderResponseListAll.size());
                        Log.w(TAG,"orderResponseListAll : "+new Gson().toJson(orderResponseListAll));
-                       if(orderResponseListAll != null && orderResponseListAll.size()>0){
+                       if(orderResponseList.size() > 0){
                            txt_no_records.setVisibility(View.GONE);
                            rv_newappointment.setVisibility(View.VISIBLE);
-                           setView(orderResponseListAll);
+                           setView(orderResponseList);
 
                        }
                        else{

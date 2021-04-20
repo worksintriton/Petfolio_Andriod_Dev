@@ -283,7 +283,7 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
 
 
                             for(int i=0;i<catListSeeMore.size();i++) {
-                                /**
+                                /*
                                  * _id : 602e11404775fa0735d7bf40
                                  * product_img : http://54.212.108.156:3000/api/uploads/resize-1613548631141238608collar.jpg
                                  * product_title : DOGISTA PET PRODUCTS Dog Rope Leash,Brass

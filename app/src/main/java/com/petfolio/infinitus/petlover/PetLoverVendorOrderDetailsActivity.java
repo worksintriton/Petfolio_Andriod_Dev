@@ -17,14 +17,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.adapter.ProductDetailsAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.requestpojo.VendorOrderDetailsRequest;
-import com.petfolio.infinitus.responsepojo.VendorOrderDetailsResponse;
+import com.petfolio.infinitus.requestpojo.PetLoverVendorOrderDetailsRequest;
+import com.petfolio.infinitus.responsepojo.PetLoverVendorOrderDetailsResponse;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 
 import com.wang.avi.AVLoadingIndicatorView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -128,6 +131,8 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
     @BindView(R.id.img_expand_arrow_shipping)
     ImageView img_expand_arrow_shipping;
 
+
+
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.ll_shippingaddress)
     LinearLayout ll_shippingaddress;
@@ -136,14 +141,27 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
     @BindView(R.id.rv_productdetails)
     RecyclerView rv_productdetails;
 
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_expand_arrow_productdetails)
+    ImageView img_expand_arrow_productdetails;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_productdetails)
+    LinearLayout ll_productdetails;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_no_products)
+    TextView txt_no_products;
+
+
     private String _id;
     private String fromactivity;
 
     private  boolean button1IsVisible = true;
     private  boolean ShippingIsVisible = true;
-
-
-
+    private  boolean productsIsVisible = true;
+    private String orderid;
 
 
     @SuppressLint({"LogNotTimber", "LongLogTag", "SetTextI18n"})
@@ -156,6 +174,7 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             _id = extras.getString("_id");
+            orderid = _id;
              fromactivity = extras.getString("fromactivity");
             Log.w(TAG,"_id : "+_id+" fromactivity : "+ fromactivity);
 
@@ -212,6 +231,26 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
 
             }
         });
+        img_expand_arrow_productdetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.w(TAG, "productsIsVisible : "+productsIsVisible);
+
+                if(productsIsVisible) {
+                    ll_productdetails.setVisibility(View.GONE);
+                    img_expand_arrow_productdetails.setImageResource(R.drawable.ic_up);
+                    productsIsVisible = false;
+                } else {
+                    ll_productdetails.setVisibility(View.VISIBLE);
+                    img_expand_arrow_productdetails.setImageResource(R.drawable.ic_down);
+                    productsIsVisible = true;
+
+                }
+
+
+            }
+        });
 
 
 
@@ -241,13 +280,13 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-        Call<VendorOrderDetailsResponse> call = apiInterface.vendorOrderDetailsResponseCall(RestUtils.getContentType(), vendorOrderDetailsRequest());
+        Call<PetLoverVendorOrderDetailsResponse> call = apiInterface.get_product_list_by_petlover_ResponseCall(RestUtils.getContentType(), petLoverVendorOrderDetailsRequest());
         Log.w(TAG,"vendorOrderDetailsResponseCall url  :%s"+" "+ call.request().url().toString());
 
-        call.enqueue(new Callback<VendorOrderDetailsResponse>() {
+        call.enqueue(new Callback<PetLoverVendorOrderDetailsResponse>() {
             @SuppressLint({"LongLogTag", "LogNotTimber", "SetTextI18n"})
             @Override
-            public void onResponse(@NonNull Call<VendorOrderDetailsResponse> call, @NonNull Response<VendorOrderDetailsResponse> response) {
+            public void onResponse(@NonNull Call<PetLoverVendorOrderDetailsResponse> call, @NonNull Response<PetLoverVendorOrderDetailsResponse> response) {
 
                 Log.w(TAG,"vendorOrderDetailsResponseCall"+ "--->" + new Gson().toJson(response.body()));
 
@@ -258,63 +297,62 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
 
                         if(response.body().getData()!=null){
 
-                            if(response.body().getData().getProduct_name()!=null&&!(response.body().getData().getProduct_name().isEmpty())){
-                                txt_product_title.setText(response.body().getData().getProduct_name());
+                            if(response.body().getData().getOrder_details().getOrder_text() !=null && !response.body().getData().getOrder_details().getOrder_text().isEmpty()){
+                                txt_product_title.setText(response.body().getData().getOrder_details().getOrder_text());
                             }
-                            if(response.body().getData().getProduct_price()!=0){
-                                txt_products_price.setText("\u20B9 "+response.body().getData().getProduct_price());
+                            if(response.body().getData().getOrder_details().getOrder_price()!=0){
+                                txt_products_price.setText("\u20B9 "+response.body().getData().getOrder_details().getOrder_price());
                             }
 
-                            if (response.body().getData().getProduct_price() != 0 && response.body().getData().getProduct_quantity() != 0) {
-                                if (response.body().getData().getProduct_quantity() == 1) {
-                                    txt_products_price.setText("\u20B9 " + response.body().getData().getProduct_price() + " (" + response.body().getData().getProduct_quantity() + " item )");
+                            if (response.body().getData().getOrder_details().getOrder_price() != 0 && response.body().getData().getOrder_details().getOrder_product() != 0) {
+                                if (response.body().getData().getOrder_details().getOrder_product() == 1) {
+                                    txt_products_price.setText("\u20B9 " + response.body().getData().getOrder_details().getOrder_price() + " (" + response.body().getData().getOrder_details().getOrder_product() + " product )");
                                 } else {
-                                    txt_products_price.setText("\u20B9 " + response.body().getData().getProduct_price() + " (" + response.body().getData().getProduct_quantity() + " items )");
+                                    txt_products_price.setText("\u20B9 " + response.body().getData().getOrder_details().getOrder_price() + " (" + response.body().getData().getOrder_details().getOrder_product() + " products )");
 
                                 }
                             }
-                            else { if (response.body().getData().getProduct_quantity() == 1) {
-                                txt_products_price.setText("\u20B9 " + 0 + " (" + response.body().getData().getProduct_quantity() + " item )");
+                            else { if (response.body().getData().getOrder_details().getOrder_product() == 1) {
+                                txt_products_price.setText("\u20B9 " + 0 + " (" + response.body().getData().getOrder_details().getOrder_product() + " product )");
                             } else {
-                                txt_products_price.setText("\u20B9 " + 0 + " (" + response.body().getData().getProduct_quantity() + " items )"); } }
+                                txt_products_price.setText("\u20B9 " + 0 + " (" + response.body().getData().getOrder_details().getOrder_product() + " products )"); } }
 
 
 
 
 
 
-                            if(response.body().getData().getDate_of_booking_display()!=null){
-                                txt_order_date.setText(response.body().getData().getDate_of_booking_display());
+                            if(response.body().getData().getOrder_details().getOrder_booked()!=null){
+                                txt_order_date.setText(response.body().getData().getOrder_details().getOrder_booked());
                             }
-                            if(response.body().getData().getOrder_id()!=null){
-                                txt_booking_id.setText(response.body().getData().getOrder_id());
+                            if(response.body().getData().getOrder_details().getOrder_id()!=null){
+                                txt_booking_id.setText(response.body().getData().getOrder_details().getOrder_id());
+
                             }
-                            if(response.body().getData().getGrand_total() !=0){
-                                txt_total_order_cost.setText("\u20B9 "+response.body().getData().getGrand_total());
+                            if(response.body().getData().getOrder_details().getOrder_price() !=0){
+                                txt_total_order_cost.setText("\u20B9 "+response.body().getData().getOrder_details().getOrder_price());
                             }
-                            if(response.body().getData().getProduct_quantity() !=0){
-                                txt_quantity.setText(""+response.body().getData().getProduct_quantity());
+                            if(response.body().getData().getOrder_details().getOrder_product() !=0){
+                                txt_quantity.setText(""+response.body().getData().getOrder_details().getOrder_product());
                             }
-                            if(response.body().getData().getProduct_quantity() !=0){
-                                txt_quantity.setText(""+response.body().getData().getProduct_quantity());
-                            }
-                            if(response.body().getData().getShipping_details_id() !=null){
-                                txt_shipping_address_name.setText(response.body().getData().getShipping_details_id().getUser_first_name()+" "+response.body().getData().getShipping_details_id().getUser_last_name());
-                                txt_shipping_address_street.setText(response.body().getData().getShipping_details_id().getUser_flat_no()+" ,"+response.body().getData().getShipping_details_id().getUser_stree()+", ");
-                                txt_shipping_address_city.setText(response.body().getData().getShipping_details_id().getUser_city());
-                                txt_shipping_address_state_pincode.setText(response.body().getData().getShipping_details_id().getUser_state()+" - "+response.body().getData().getShipping_details_id().getUser_picocode());
-                               if(response.body().getData().getShipping_details_id().getUser_mobile() != null && !response.body().getData().getShipping_details_id().getUser_mobile().isEmpty()) {
-                                   txt_shipping_address_phone.setText("Phone : " + response.body().getData().getShipping_details_id().getUser_mobile());
+
+                            if(response.body().getData().getShipping_address() !=null){
+                                txt_shipping_address_name.setText(response.body().getData().getShipping_address().getUser_first_name()+" "+response.body().getData().getShipping_address().getUser_last_name());
+                                txt_shipping_address_street.setText(response.body().getData().getShipping_address().getUser_flat_no()+" ,"+response.body().getData().getShipping_address().getUser_stree()+", ");
+                                txt_shipping_address_city.setText(response.body().getData().getShipping_address().getUser_city());
+                                txt_shipping_address_state_pincode.setText(response.body().getData().getShipping_address().getUser_state()+" - "+response.body().getData().getShipping_address().getUser_picocode());
+                               if(response.body().getData().getShipping_address().getUser_mobile() != null && !response.body().getData().getShipping_address().getUser_mobile().isEmpty()) {
+                                   txt_shipping_address_phone.setText("Phone : " + response.body().getData().getShipping_address().getUser_mobile());
                                }
-                                if(response.body().getData().getShipping_details_id().getUser_landmark() != null && !response.body().getData().getShipping_details_id().getUser_landmark().isEmpty()) {
-                                    txt_shipping_address_landmark.setText("Landmark : " + response.body().getData().getShipping_details_id().getUser_landmark());
+                                if(response.body().getData().getShipping_address().getUser_landmark() != null && !response.body().getData().getShipping_address().getUser_landmark().isEmpty()) {
+                                    txt_shipping_address_landmark.setText("Landmark : " + response.body().getData().getShipping_address().getUser_landmark());
                                 }
 
                             }
 
-                            if (response.body().getData().getProdcut_image() != null && !response.body().getData().getProdcut_image().isEmpty()) {
+                            if (response.body().getData().getOrder_details().getOrder_image() != null && !response.body().getData().getOrder_details().getOrder_image().isEmpty()) {
                                 Glide.with(getApplicationContext())
-                                        .load(response.body().getData().getProdcut_image())
+                                        .load(response.body().getData().getOrder_details().getOrder_image())
                                         .into(img_products_image);
                             }
                             else{
@@ -324,29 +362,39 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
 
                             }
 
-                            if(fromactivity != null && fromactivity.equalsIgnoreCase("PetVendorNewOrdersAdapter")){
+                            if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverNewOrders")){
                                 txt_order_status.setText("Booked on");
                                 img_order_status.setImageResource(R.drawable.completed);
-                                if(response.body().getData().getDate_of_booking() != null){
-                                    txt_delivered_date.setText(response.body().getData().getDate_of_booking());
+                                if(response.body().getData().getOrder_details().getOrder_booked() != null){
+                                    txt_delivered_date.setText(response.body().getData().getOrder_details().getOrder_booked());
                                 }
-                            }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetVendorCompletedOrdersAdapter")){
+                            }
+                            else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverCompletedOrders")){
                                 txt_order_status.setText("Delivered on");
                                 img_order_status.setImageResource(R.drawable.completed);
-                                if(response.body().getData().getVendor_complete_date() != null){
-                                    txt_delivered_date.setText(response.body().getData().getVendor_complete_date());
+                                if(response.body().getData().getOrder_details().getOrder_completed() != null){
+                                    txt_delivered_date.setText(response.body().getData().getOrder_details().getOrder_completed());
                                 }
-                            }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetVendorCancelledOrdersAdapter")){
+                            }
+                            else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverCancelledOrders")) {
                                 txt_order_status.setText("Cancelled on");
                                 img_order_status.setImageResource(R.drawable.ic_baseline_cancel_24);
-                                if(response.body().getData().getVendor_cancell_date() != null && !response.body().getData().getVendor_cancell_date().isEmpty()){
-                                    txt_delivered_date.setText(response.body().getData().getVendor_cancell_date());
-                                }else if(response.body().getData().getUser_cancell_date() != null && !response.body().getData().getUser_cancell_date().isEmpty()){
-                                    txt_delivered_date.setText(response.body().getData().getUser_cancell_date());
+                                if (response.body().getData().getOrder_details().getOrder_cancelled() != null && !response.body().getData().getOrder_details().getOrder_cancelled().isEmpty()) {
+                                    txt_delivered_date.setText(response.body().getData().getOrder_details().getOrder_cancelled());
                                 }
+
 
                             }
 
+                            if(response.body().getData().getProduct_details() != null && response.body().getData().getProduct_details().size()>0){
+                                rv_productdetails.setVisibility(View.VISIBLE);
+                                txt_no_products.setVisibility(View.GONE);
+                                setView(response.body().getData().getProduct_details());
+                            }else{
+                                rv_productdetails.setVisibility(View.GONE);
+                                txt_no_products.setVisibility(View.VISIBLE);
+                                txt_no_products.setText("No products found");
+                            }
 
 
 
@@ -365,7 +413,7 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
 
             @SuppressLint({"LongLogTag", "LogNotTimber"})
             @Override
-            public void onFailure(@NonNull Call<VendorOrderDetailsResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<PetLoverVendorOrderDetailsResponse> call, @NonNull Throwable t) {
 
                 avi_indicator.smoothToHide();
                 Log.w(TAG,"VendorOrderDetailsResponse flr"+"--->" + t.getMessage());
@@ -374,19 +422,19 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
 
     }
     @SuppressLint({"LongLogTag", "LogNotTimber"})
-    private VendorOrderDetailsRequest vendorOrderDetailsRequest() {
-        VendorOrderDetailsRequest vendorOrderDetailsRequest = new VendorOrderDetailsRequest();
-        vendorOrderDetailsRequest.set_id(_id);
-        Log.w(TAG,"vendorOrderDetailsRequest"+ "--->" + new Gson().toJson(vendorOrderDetailsRequest));
-        return vendorOrderDetailsRequest;
+    private PetLoverVendorOrderDetailsRequest petLoverVendorOrderDetailsRequest() {
+        PetLoverVendorOrderDetailsRequest petLoverVendorOrderDetailsRequest = new PetLoverVendorOrderDetailsRequest();
+        petLoverVendorOrderDetailsRequest.setOrder_id(_id);
+        Log.w(TAG,"vendorOrderDetailsRequest"+ "--->" + new Gson().toJson(petLoverVendorOrderDetailsRequest));
+        return petLoverVendorOrderDetailsRequest;
     }
 
 
-    private void setView() {
+    private void setView(List<PetLoverVendorOrderDetailsResponse.DataBean.ProductDetailsBean> product_details) {
         rv_productdetails.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rv_productdetails.setItemAnimator(new DefaultItemAnimator());
-      //  ProductDetailsAdapter productDetailsAdapter = new ProductDetailsAdapter(getApplicationContext(), );
-       // rv_productdetails.setAdapter(productDetailsAdapter);
+        ProductDetailsAdapter productDetailsAdapter = new ProductDetailsAdapter(getApplicationContext(),product_details,orderid);
+        rv_productdetails.setAdapter(productDetailsAdapter);
 
     }
 

@@ -461,6 +461,7 @@
 
     <string name="digitalsignature">Digital Signature</string>
     <string name="quantity">Quantity</string>
+    <string name="date">Date</string>
 
 
 </resources>

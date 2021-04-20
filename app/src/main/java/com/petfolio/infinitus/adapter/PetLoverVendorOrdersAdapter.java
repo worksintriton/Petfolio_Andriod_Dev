@@ -16,27 +16,26 @@ import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.petlover.PetLoverVendorOrderDetailsActivity;
-import com.petfolio.infinitus.petlover.PetVendorCancelOrderActivity;
-import com.petfolio.infinitus.petlover.PetVendorOrderDetailsActivity;
-import com.petfolio.infinitus.petlover.PetVendorTrackOrderActivity;
-import com.petfolio.infinitus.responsepojo.PetVendorOrderResponse;
+import com.petfolio.infinitus.responsepojo.PetLoverVendorOrderListResponse;
 
 import java.util.List;
 
 
-public class PetLoverVendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class PetLoverVendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final String TAG = "PetLoverVendorNewOrdersAdapter";
-    private final List<PetVendorOrderResponse.DataBean> newOrderResponseList;
+    private final String TAG = "PetLoverVendorOrdersAdapter";
+    List<PetLoverVendorOrderListResponse.DataBean> orderResponseListAll;
     private final Context context;
-    PetVendorOrderResponse.DataBean currentItem;
-    private int size;
+    PetLoverVendorOrderListResponse.DataBean currentItem;
+    String fromactivity;
 
 
-    public PetLoverVendorNewOrdersAdapter(Context context, List<PetVendorOrderResponse.DataBean> newOrderResponseList, int size) {
+
+    public PetLoverVendorOrdersAdapter(Context context, List<PetLoverVendorOrderListResponse.DataBean> orderResponseListAll, String fromactivity) {
         this.context = context;
-        this.newOrderResponseList = newOrderResponseList;
-        this.size = size;
+        this.orderResponseListAll = orderResponseListAll;
+        this.fromactivity = fromactivity;
+
 
     }
 
@@ -56,33 +55,33 @@ public class PetLoverVendorNewOrdersAdapter extends  RecyclerView.Adapter<Recycl
 
     @SuppressLint("SetTextI18n")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
-        currentItem = newOrderResponseList.get(position);
-        if (newOrderResponseList.get(position).getOrder_id() != null) {
-            holder.txt_orderid.setText(newOrderResponseList.get(position).getOrder_id());
+        currentItem = orderResponseListAll.get(position);
+        if (orderResponseListAll.get(position).getP_order_id() != null) {
+            holder.txt_orderid.setText(orderResponseListAll.get(position).getP_order_id());
         }
-        if (newOrderResponseList.get(position).getProduct_name() != null) {
-            holder.txt_producttitle.setText(newOrderResponseList.get(position).getProduct_name());
+        if (orderResponseListAll.get(position).getP_order_text() != null) {
+            holder.txt_producttitle.setText(orderResponseListAll.get(position).getP_order_text());
         }
-        if (newOrderResponseList.get(position).getProduct_price() != 0 && newOrderResponseList.get(position).getProduct_quantity() != 0) {
-            if (newOrderResponseList.get(position).getProduct_quantity() == 1) {
-                holder.txt_products_price.setText("\u20B9 " + newOrderResponseList.get(position).getProduct_price() + " (" + newOrderResponseList.get(position).getProduct_quantity() + " item )");
+        if (orderResponseListAll.get(position).getP_order_price() != 0 && orderResponseListAll.get(position).getP_order_product_count() != 0) {
+            if (orderResponseListAll.get(position).getP_order_product_count() == 1) {
+                holder.txt_products_price.setText("\u20B9 " + orderResponseListAll.get(position).getP_order_price() + " (" + orderResponseListAll.get(position).getP_order_product_count() + " product )");
             } else {
-                holder.txt_products_price.setText("\u20B9 " + newOrderResponseList.get(position).getProduct_price() + " (" + newOrderResponseList.get(position).getProduct_quantity() + " items )");
+                holder.txt_products_price.setText("\u20B9 " + orderResponseListAll.get(position).getP_order_price() + " (" + orderResponseListAll.get(position).getP_order_product_count() + " products )");
 
             }
         }
-        else { if (newOrderResponseList.get(position).getProduct_quantity() == 1) {
-                holder.txt_products_price.setText("\u20B9 " + 0 + " (" + newOrderResponseList.get(position).getProduct_quantity() + " item )");
-            } else { holder.txt_products_price.setText("\u20B9 " + 0 + " (" + newOrderResponseList.get(position).getProduct_quantity() + " items )"); } }
+        else { if (orderResponseListAll.get(position).getP_order_product_count() == 1) {
+                holder.txt_products_price.setText("\u20B9 " + 0 + " (" + orderResponseListAll.get(position).getP_order_product_count() + " item )");
+            } else { holder.txt_products_price.setText("\u20B9 " + 0 + " (" + orderResponseListAll.get(position).getP_order_product_count() + " items )"); } }
 
 
-        if (newOrderResponseList.get(position).getDate_of_booking() != null) {
-            holder.txt_bookedon.setText("Booked on:" + " " + newOrderResponseList.get(position).getDate_of_booking());
+        if (orderResponseListAll.get(position).getP_order_booked_on() != null) {
+            holder.txt_bookedon.setText("Booked on:" + " " + orderResponseListAll.get(position).getP_order_booked_on());
 
         }
-        if (newOrderResponseList.get(position).getProdcut_image() != null && !newOrderResponseList.get(position).getProdcut_image().isEmpty()) {
+        if (orderResponseListAll.get(position).getP_order_image() != null && !orderResponseListAll.get(position).getP_order_image().isEmpty()) {
             Glide.with(context)
-                    .load(newOrderResponseList.get(position).getProdcut_image())
+                    .load(orderResponseListAll.get(position).getP_order_image())
                     .into(holder.img_products_image);
 
         }
@@ -96,8 +95,8 @@ public class PetLoverVendorNewOrdersAdapter extends  RecyclerView.Adapter<Recycl
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, PetLoverVendorOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("_id", newOrderResponseList.get(position).get_id());
-                i.putExtra("fromactivity", TAG);
+                i.putExtra("_id", orderResponseListAll.get(position).getP_order_id());
+                i.putExtra("fromactivity", fromactivity);
                 context.startActivity(i);
 
             }
@@ -128,7 +127,7 @@ public class PetLoverVendorNewOrdersAdapter extends  RecyclerView.Adapter<Recycl
 
     @Override
     public int getItemCount() {
-        return Math.min(newOrderResponseList.size(), size);
+        return orderResponseListAll.size();
 
     }
     @Override

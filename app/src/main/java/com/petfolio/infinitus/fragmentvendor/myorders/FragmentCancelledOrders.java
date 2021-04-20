@@ -154,7 +154,7 @@ public class FragmentCancelledOrders extends Fragment implements OnAcceptsReturn
                     try {
                         //your method here
                             if(APIClient.VENDOR_ID != null && !APIClient.VENDOR_ID.isEmpty()) {
-                                vendorNewOrderResponseCall(APIClient.VENDOR_ID);
+                                vendorCancelledOrderResponseCall(APIClient.VENDOR_ID);
                             }
 
 
@@ -170,7 +170,7 @@ public class FragmentCancelledOrders extends Fragment implements OnAcceptsReturn
                     public void onRefresh() {
                         if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
                             if (APIClient.VENDOR_ID != null && !APIClient.VENDOR_ID.isEmpty()) {
-                                vendorNewOrderResponseCall(APIClient.VENDOR_ID);
+                                vendorCancelledOrderResponseCall(APIClient.VENDOR_ID);
                             }
                         }
                     }
@@ -211,7 +211,7 @@ public class FragmentCancelledOrders extends Fragment implements OnAcceptsReturn
 
                             if(response.body().getData().get_id()!=null&&!(response.body().getData().get_id().isEmpty())){
                                 APIClient.VENDOR_ID = response.body().getData().get_id();
-                                vendorNewOrderResponseCall(response.body().getData().get_id());
+                                vendorCancelledOrderResponseCall(response.body().getData().get_id());
 
                             }
 
@@ -367,7 +367,7 @@ public class FragmentCancelledOrders extends Fragment implements OnAcceptsReturn
 
 
     @SuppressLint("LogNotTimber")
-    private void vendorNewOrderResponseCall(String id) {
+    private void vendorCancelledOrderResponseCall(String id) {
        /* avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();*/
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
@@ -424,10 +424,10 @@ public class FragmentCancelledOrders extends Fragment implements OnAcceptsReturn
 
                         Log.w(TAG,"Size"+orderResponseListAll.size());
                         Log.w(TAG,"orderResponseListAll : "+new Gson().toJson(orderResponseListAll));
-                        if(orderResponseListAll != null && orderResponseListAll.size()>0){
+                        if(orderResponseList.size() > 0){
                             txt_no_records.setVisibility(View.GONE);
                             rv_missedappointment.setVisibility(View.VISIBLE);
-                            setView(orderResponseListAll);
+                            setView(orderResponseList);
 
                         }
                         else{
@@ -492,7 +492,7 @@ public class FragmentCancelledOrders extends Fragment implements OnAcceptsReturn
                         Log.w(TAG, "isLoading? " + isLoading + " currentPage " + CURRENT_PAGE);
                         isLoading = true;
                         if (APIClient.VENDOR_ID != null && !APIClient.VENDOR_ID.isEmpty()) {
-                            vendorNewOrderResponseCall(APIClient.VENDOR_ID);
+                            vendorCancelledOrderResponseCall(APIClient.VENDOR_ID);
                         }
 
                     }

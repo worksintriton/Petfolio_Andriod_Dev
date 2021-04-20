@@ -188,7 +188,7 @@
                         android:maxLines="1"
                         android:text="@string/track_order"
                         android:textColor="@color/new_orange_bgm_color"
-                        android:textSize="11sp" />
+                        android:textSize="12sp" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -208,7 +208,7 @@
                         android:maxLines="1"
                         android:text="@string/cancel_order"
                         android:textColor="@color/new_light_green"
-                        android:textSize="11sp" />
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 

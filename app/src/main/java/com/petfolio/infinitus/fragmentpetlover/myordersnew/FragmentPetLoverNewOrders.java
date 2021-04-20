@@ -21,17 +21,18 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.adapter.PetLoverVendorNewOrdersAdapter;
-import com.petfolio.infinitus.adapter.PetVendorNewOrdersAdapter;
+import com.petfolio.infinitus.adapter.PetLoverVendorOrdersAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.requestpojo.PetVendorOrderRequest;
+import com.petfolio.infinitus.requestpojo.PetLoverVendorOrderListRequest;
+import com.petfolio.infinitus.responsepojo.PetLoverVendorOrderListResponse;
 import com.petfolio.infinitus.responsepojo.PetVendorOrderResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
@@ -44,7 +45,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentPetLoverNewOrders extends Fragment implements  View.OnClickListener {
+public class FragmentPetLoverNewOrders extends Fragment {
     private final String TAG = "FragmentPetLoverNewOrders";
 
     @SuppressLint("NonConstantResourceId")
@@ -75,8 +76,15 @@ public class FragmentPetLoverNewOrders extends Fragment implements  View.OnClick
 
     SessionManager session;
     String userid = "";
-    private List<PetVendorOrderResponse.DataBean> newOrderResponseList;
     Context mContext;
+
+
+    private List<PetLoverVendorOrderListResponse.DataBean> orderResponseList;
+    private  List<PetLoverVendorOrderListResponse.DataBean> orderResponseListAll = new ArrayList<>();
+
+    public static final int PAGE_START = 1;
+    private int CURRENT_PAGE = PAGE_START;
+    private boolean isLoading = false;
 
 
     public FragmentPetLoverNewOrders() {
@@ -99,7 +107,7 @@ public class FragmentPetLoverNewOrders extends Fragment implements  View.OnClick
 
         avi_indicator.setVisibility(View.GONE);
         btn_load_more.setVisibility(View.GONE);
-        btn_load_more.setOnClickListener(this);
+
 
         session = new SessionManager(getContext());
         HashMap<String, String> user = session.getProfileDetails();
@@ -108,15 +116,15 @@ public class FragmentPetLoverNewOrders extends Fragment implements  View.OnClick
 
       
 
-        if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-            get_order_details_user_id_ResponseCall();
+        if (new ConnectionDetector(getActivity()).isNetworkAvailable(mContext)) {
+            get_grouped_order_by_petlover_ResponseCall();
         }
 
         refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-                            get_order_details_user_id_ResponseCall();
+                        if (new ConnectionDetector(getActivity()).isNetworkAvailable(mContext)) {
+                            get_grouped_order_by_petlover_ResponseCall();
 
                         }
 
@@ -125,7 +133,7 @@ public class FragmentPetLoverNewOrders extends Fragment implements  View.OnClick
         );
 
 
-        final Handler handler = new Handler();
+       /* final Handler handler = new Handler();
         Timer timer = new Timer();
         TimerTask doAsynchronousTask = new TimerTask() {
             @Override
@@ -133,13 +141,16 @@ public class FragmentPetLoverNewOrders extends Fragment implements  View.OnClick
                 handler.post(() -> {
                     try {
                         //your method here
-                        get_order_details_user_id_ResponseCall();
+                        get_grouped_order_by_petlover_ResponseCall();
                     }catch (Exception ignored) {
                     }
                 });
             }
         };
         timer.schedule(doAsynchronousTask, 0, 30000);//you can put 30000(30 secs)
+*/
+
+        initResultRecylerView();
 
         return view;
     }
@@ -147,19 +158,19 @@ public class FragmentPetLoverNewOrders extends Fragment implements  View.OnClick
 
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
-    private void get_order_details_user_id_ResponseCall() {
+    private void get_grouped_order_by_petlover_ResponseCall() {
        /* avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();*/
         mShimmerViewContainer.startShimmerAnimation();
 
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<PetVendorOrderResponse> call = ApiService.get_order_details_user_id_ResponseCall(RestUtils.getContentType(),petVendorOrderRequest());
+        Call<PetLoverVendorOrderListResponse> call = ApiService.get_grouped_order_by_petlover_ResponseCall(RestUtils.getContentType(),petLoverVendorOrderListRequest());
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
-        call.enqueue(new Callback<PetVendorOrderResponse>() {
+        call.enqueue(new Callback<PetLoverVendorOrderListResponse>() {
             @SuppressLint({"LogNotTimber", "SetTextI18n"})
             @Override
-            public void onResponse(@NonNull Call<PetVendorOrderResponse> call, @NonNull Response<PetVendorOrderResponse> response) {
+            public void onResponse(@NonNull Call<PetLoverVendorOrderListResponse> call, @NonNull Response<PetLoverVendorOrderListResponse> response) {
              /*  avi_indicator.smoothToHide();*/
                 mShimmerViewContainer.stopShimmerAnimation();
                 includelayout.setVisibility(View.GONE);
@@ -168,29 +179,57 @@ public class FragmentPetLoverNewOrders extends Fragment implements  View.OnClick
 
 
                if (response.body() != null) {
+                   if(200 == response.body().getCode()){
 
-                   if(200 == response.body().getCode()) {
-                       if (response.body().getData() != null ) {
-                           newOrderResponseList = response.body().getData();
-                           Log.w(TAG, "Size" + newOrderResponseList.size());
-                           Log.w(TAG, "newOrderResponseList : " + new Gson().toJson(newOrderResponseList));
-                           if (response.body().getData().isEmpty()) {
-                               txt_no_records.setVisibility(View.VISIBLE);
-                               txt_no_records.setText("No new orders");
-                               rv_newappointment.setVisibility(View.GONE);
-                               btn_load_more.setVisibility(View.GONE);
-                           } else {
-                               txt_no_records.setVisibility(View.GONE);
-                               rv_newappointment.setVisibility(View.VISIBLE);
-                               if (newOrderResponseList.size() > 3) {
-                                   btn_load_more.setVisibility(View.VISIBLE);
-                               } else {
-                                   btn_load_more.setVisibility(View.GONE);
-                               }
-                               setView();
-                           }
+                       orderResponseList = response.body().getData();
+                       Log.w(TAG,"orderResponseList Size : "+orderResponseList.size());
+
+                       for(int i=0;i<orderResponseList.size();i++) {
+                           /*
+                            * p_order_id : ORDER-1618833408047
+                            * p_user_id : 603e27792c2b43125f8cb802
+                            * p_shipping_address : 60797c16a20ca32d2668a30c
+                            * p_payment_id : pay_H0gNJn2CM7xjO1
+                            * p_vendor_id : 604866a50b3a487571a1c568
+                            * p_order_product_count : 2
+                            * p_order_price : 7200
+                            * p_order_image : http://54.212.108.156:3000/api/uploads/1615541391131.jpeg
+                            * p_order_booked_on : 19-04-2021 12:05 PM
+                            * p_order_status : New
+                            * p_order_text : Food Products
+                            */
+
+                           PetLoverVendorOrderListResponse.DataBean  dataBean = new PetLoverVendorOrderListResponse.DataBean();
+                           dataBean.setP_order_id(orderResponseList.get(i).getP_order_id());
+                           dataBean.setP_user_id(orderResponseList.get(i).getP_user_id());
+                           dataBean.setP_shipping_address(orderResponseList.get(i).getP_shipping_address());
+                           dataBean.setP_payment_id(orderResponseList.get(i).getP_payment_id());
+                           dataBean.setP_vendor_id(orderResponseList.get(i).getP_vendor_id());
+                           dataBean.setP_order_product_count(orderResponseList.get(i).getP_order_product_count());
+                           dataBean.setP_order_price(orderResponseList.get(i).getP_order_price());
+                           dataBean.setP_order_image(orderResponseList.get(i).getP_order_image());
+                           dataBean.setP_order_booked_on(orderResponseList.get(i).getP_order_booked_on());
+                           dataBean.setP_order_status(orderResponseList.get(i).getP_order_status());
+                           dataBean.setP_order_text(orderResponseList.get(i).getP_order_text());
+                           orderResponseListAll.add(dataBean);
+
 
                        }
+
+                       Log.w(TAG,"orderResponseListAll size : "+orderResponseListAll.size());
+                       Log.w(TAG,"orderResponseListAll : "+new Gson().toJson(orderResponseListAll));
+                       if(orderResponseList.size() > 0){
+                           txt_no_records.setVisibility(View.GONE);
+                           rv_newappointment.setVisibility(View.VISIBLE);
+                           setView(orderResponseList);
+
+                       }
+                       else{
+                           txt_no_records.setVisibility(View.VISIBLE);
+                           txt_no_records.setText("No new orders");
+                           rv_newappointment.setVisibility(View.GONE);
+                       }
+
                    }
 
 
@@ -200,7 +239,7 @@ public class FragmentPetLoverNewOrders extends Fragment implements  View.OnClick
 
             @SuppressLint("LogNotTimber")
             @Override
-            public void onFailure(@NonNull Call<PetVendorOrderResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<PetLoverVendorOrderListResponse> call, @NonNull Throwable t) {
              /*   avi_indicator.smoothToHide();*/
                 mShimmerViewContainer.stopShimmerAnimation();
                 includelayout.setVisibility(View.GONE);
@@ -211,42 +250,57 @@ public class FragmentPetLoverNewOrders extends Fragment implements  View.OnClick
 
     }
     @SuppressLint({"LogNotTimber", "LongLogTag"})
-    private PetVendorOrderRequest petVendorOrderRequest() {
+    private PetLoverVendorOrderListRequest petLoverVendorOrderListRequest() {
         /*
-         * user_id : 603e27792c2b43125f8cb802
-         * order_status : New
+         * petlover_id : 603e27792c2b43125f8cb802
+         * status : New
+         * skip_count : 1
          */
-        PetVendorOrderRequest petVendorOrderRequest = new PetVendorOrderRequest();
-        petVendorOrderRequest.setUser_id(userid);
-        petVendorOrderRequest.setOrder_status("New");
-        Log.w(TAG,"petVendorOrderRequest"+ "--->" + new Gson().toJson(petVendorOrderRequest));
-        return petVendorOrderRequest;
+        PetLoverVendorOrderListRequest petLoverVendorOrderListRequest = new PetLoverVendorOrderListRequest();
+        petLoverVendorOrderListRequest.setPetlover_id(userid);
+        petLoverVendorOrderListRequest.setStatus("New");
+        petLoverVendorOrderListRequest.setSkip_count(CURRENT_PAGE);
+        Log.w(TAG,"petLoverVendorOrderListRequest"+ "--->" + new Gson().toJson(petLoverVendorOrderListRequest));
+        return petLoverVendorOrderListRequest;
     }
-    private void setView() {
+    private void initResultRecylerView() {
+        rv_newappointment.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @SuppressLint({"LogNotTimber", "LongLogTag"})
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                if (!isLoading) {
+                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == orderResponseListAll.size() - 1) {
+                        //bottom of list!
+                        CURRENT_PAGE += 1;
+
+                        Log.w(TAG, "isLoading? " + isLoading + " currentPage " + CURRENT_PAGE);
+                        isLoading = true;
+                        get_grouped_order_by_petlover_ResponseCall();
+
+
+                    }
+                }
+            }
+        });
+    }
+    private void setView(List<PetLoverVendorOrderListResponse.DataBean> orderResponseListAll) {
         rv_newappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_newappointment.setItemAnimator(new DefaultItemAnimator());
-        int size = 3;
-        PetLoverVendorNewOrdersAdapter petLoverVendorNewOrdersAdapter = new PetLoverVendorNewOrdersAdapter(mContext, newOrderResponseList,size);
-        rv_newappointment.setAdapter(petLoverVendorNewOrdersAdapter);
-
-    }
-    private void setViewLoadMore() {
-        rv_newappointment.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv_newappointment.setItemAnimator(new DefaultItemAnimator());
-        int size = newOrderResponseList.size();
-        PetLoverVendorNewOrdersAdapter petLoverVendorNewOrdersAdapter = new PetLoverVendorNewOrdersAdapter(mContext, newOrderResponseList,size);
-        rv_newappointment.setAdapter(petLoverVendorNewOrdersAdapter);
-
+        PetLoverVendorOrdersAdapter vendorOrdersAdapter = new PetLoverVendorOrdersAdapter(getContext(), orderResponseListAll,TAG);
+        rv_newappointment.setAdapter(vendorOrdersAdapter);
+        vendorOrdersAdapter.notifyDataSetChanged();
+        isLoading = false;
     }
 
 
 
-
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.btn_load_more) {
-            setViewLoadMore();
-        }
-    }
 }

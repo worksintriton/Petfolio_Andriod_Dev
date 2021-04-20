@@ -1,102 +1,6 @@
 package com.petfolio.infinitus.api;
 
-import com.petfolio.infinitus.requestpojo.AddReviewRequest;
-import com.petfolio.infinitus.requestpojo.AddShopReviewRequest;
-import com.petfolio.infinitus.requestpojo.AddYourPetRequest;
-import com.petfolio.infinitus.requestpojo.ApplyMultiProdDiscountRequest;
-import com.petfolio.infinitus.requestpojo.ApplySingleDiscountCalRequest;
-import com.petfolio.infinitus.requestpojo.ApplySingleDiscountRequest;
-import com.petfolio.infinitus.requestpojo.AppoinmentCancelledRequest;
-import com.petfolio.infinitus.requestpojo.AppoinmentCloseRequest;
-import com.petfolio.infinitus.requestpojo.AppoinmentCompleteRequest;
-import com.petfolio.infinitus.requestpojo.AppointmentCheckRequest;
-import com.petfolio.infinitus.requestpojo.AppointmentDetailsRequest;
-import com.petfolio.infinitus.requestpojo.BreedTypeRequest;
-import com.petfolio.infinitus.requestpojo.CartAddProductRequest;
-import com.petfolio.infinitus.requestpojo.CreateHolidayRequest;
-import com.petfolio.infinitus.requestpojo.DocBusInfoUploadRequest;
-import com.petfolio.infinitus.requestpojo.DoctorBusinessInfoUpdateRequest;
-import com.petfolio.infinitus.requestpojo.DoctorCheckStatusRequest;
-import com.petfolio.infinitus.requestpojo.DoctorDetailsByUserIdRequest;
-import com.petfolio.infinitus.requestpojo.DoctorDetailsRequest;
-import com.petfolio.infinitus.requestpojo.DoctorMyCalendarAvlDaysRequest;
-import com.petfolio.infinitus.requestpojo.DoctorMyCalendarAvlTimesRequest;
-import com.petfolio.infinitus.requestpojo.DoctorMyCalendarUpdateDocDateRequest;
-import com.petfolio.infinitus.requestpojo.DoctorNewAppointmentRequest;
-import com.petfolio.infinitus.requestpojo.DoctorSearchRequest;
-import com.petfolio.infinitus.requestpojo.DoctorStartAppointmentRequest;
-import com.petfolio.infinitus.requestpojo.DoctorUpdateProfileImageRequest;
-import com.petfolio.infinitus.requestpojo.EmailOTPRequest;
-import com.petfolio.infinitus.requestpojo.FBTokenUpdateRequest;
-import com.petfolio.infinitus.requestpojo.FetchByIdRequest;
-import com.petfolio.infinitus.requestpojo.FetctProductByCatRequest;
-import com.petfolio.infinitus.requestpojo.FilterDoctorRequest;
-import com.petfolio.infinitus.requestpojo.HolidayDeleteRequest;
-import com.petfolio.infinitus.requestpojo.HolidayListRequest;
-import com.petfolio.infinitus.requestpojo.LocationAddRequest;
-import com.petfolio.infinitus.requestpojo.LocationDeleteRequest;
-import com.petfolio.infinitus.requestpojo.LocationListAddressRequest;
-import com.petfolio.infinitus.requestpojo.LocationStatusChangeRequest;
-import com.petfolio.infinitus.requestpojo.LocationUpdateRequest;
-import com.petfolio.infinitus.requestpojo.LoginRequest;
-import com.petfolio.infinitus.requestpojo.ManageProductsListRequest;
-import com.petfolio.infinitus.requestpojo.NotificationGetlistRequest;
-import com.petfolio.infinitus.requestpojo.NotificationSendRequest;
-import com.petfolio.infinitus.requestpojo.PetAddImageRequest;
-import com.petfolio.infinitus.requestpojo.PetAppointmentCreateRequest;
-import com.petfolio.infinitus.requestpojo.PetDeleteRequest;
-import com.petfolio.infinitus.requestpojo.PetDetailsRequest;
-import com.petfolio.infinitus.requestpojo.PetDoctorAvailableTimeRequest;
-import com.petfolio.infinitus.requestpojo.PetEditRequest;
-import com.petfolio.infinitus.requestpojo.PetListRequest;
-import com.petfolio.infinitus.requestpojo.PetLoverAppointmentRequest;
-import com.petfolio.infinitus.requestpojo.PetLoverDashboardRequest;
-import com.petfolio.infinitus.requestpojo.PetNewAppointmentDetailsRequest;
-import com.petfolio.infinitus.requestpojo.PetNoShowRequest;
-import com.petfolio.infinitus.requestpojo.PetUpdateOtherInformationRequest;
-import com.petfolio.infinitus.requestpojo.PetVendorOrderRequest;
-import com.petfolio.infinitus.requestpojo.PrescriptionCreateRequest;
-import com.petfolio.infinitus.requestpojo.PrescriptionDetailsRequest;
-import com.petfolio.infinitus.requestpojo.ProductFiltersRequest;
-import com.petfolio.infinitus.requestpojo.ProductSearchRequest;
-import com.petfolio.infinitus.requestpojo.ProductSortByRequest;
-import com.petfolio.infinitus.requestpojo.ProfileUpdateRequest;
-import com.petfolio.infinitus.requestpojo.ResendOTPRequest;
-import com.petfolio.infinitus.requestpojo.SPAppointmentRequest;
-import com.petfolio.infinitus.requestpojo.SPCheckStatusRequest;
-import com.petfolio.infinitus.requestpojo.SPCreateAppointmentRequest;
-import com.petfolio.infinitus.requestpojo.SPDetailsByUserIdRequest;
-import com.petfolio.infinitus.requestpojo.SPDetailsRequest;
-import com.petfolio.infinitus.requestpojo.SPMyCalendarAvlDaysRequest;
-import com.petfolio.infinitus.requestpojo.SPNotificationSendRequest;
-import com.petfolio.infinitus.requestpojo.SPSpecificServiceDetailsRequest;
-import com.petfolio.infinitus.requestpojo.ServiceCatRequest;
-import com.petfolio.infinitus.requestpojo.ShippingAddrMarkAsLastUsedRequest;
-import com.petfolio.infinitus.requestpojo.ShippingAddrMarkAsLastUsedResponse;
-import com.petfolio.infinitus.requestpojo.ShippingAddressCreateRequest;
-import com.petfolio.infinitus.requestpojo.ShippingAddressDeleteRequest;
-import com.petfolio.infinitus.requestpojo.ShippingAddressEditRequest;
-import com.petfolio.infinitus.requestpojo.ShippingAddressFetchByUserIDRequest;
-import com.petfolio.infinitus.requestpojo.ShippingAddressFetchUserRequest;
-import com.petfolio.infinitus.requestpojo.ShippingAddressListingByUserIDRequest;
-import com.petfolio.infinitus.requestpojo.ShopDashboardRequest;
-import com.petfolio.infinitus.requestpojo.SignupRequest;
-import com.petfolio.infinitus.requestpojo.TodayDealMoreRequest;
-import com.petfolio.infinitus.requestpojo.UpdateStatusCancelRequest;
-import com.petfolio.infinitus.requestpojo.UpdateStatusReturnRequest;
-import com.petfolio.infinitus.requestpojo.UserStatusUpdateRequest;
-import com.petfolio.infinitus.requestpojo.ServiceProviderRegisterFormCreateRequest;
-import com.petfolio.infinitus.requestpojo.VendorAcceptReturnOrderRequest;
-import com.petfolio.infinitus.requestpojo.VendorCancelsOrderRequest;
-import com.petfolio.infinitus.requestpojo.VendorConfirmsOrderRequest;
-import com.petfolio.infinitus.requestpojo.VendorDispatchesOrderRequest;
-import com.petfolio.infinitus.requestpojo.VendorFetchOrderDetailsIdRequest;
-import com.petfolio.infinitus.requestpojo.VendorGetsOrderIdRequest;
-import com.petfolio.infinitus.requestpojo.VendorNewOrderRequest;
-import com.petfolio.infinitus.requestpojo.VendorOrderDetailsRequest;
-import com.petfolio.infinitus.requestpojo.VendorOrderListRequest;
-import com.petfolio.infinitus.requestpojo.VendorOrderRequest;
-import com.petfolio.infinitus.requestpojo.VendorRegisterFormCreateRequest;
+import com.petfolio.infinitus.requestpojo.*;
 import com.petfolio.infinitus.responsepojo.AddReviewResponse;
 import com.petfolio.infinitus.responsepojo.AddYourPetResponse;
 import com.petfolio.infinitus.responsepojo.ApplyMultiProdDiscountResponse;
@@ -146,6 +50,8 @@ import com.petfolio.infinitus.responsepojo.PetDetailsResponse;
 import com.petfolio.infinitus.responsepojo.PetDoctorAvailableTimeResponse;
 import com.petfolio.infinitus.responsepojo.PetListResponse;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
+import com.petfolio.infinitus.responsepojo.PetLoverVendorOrderDetailsResponse;
+import com.petfolio.infinitus.responsepojo.PetLoverVendorOrderListResponse;
 import com.petfolio.infinitus.responsepojo.PetNewAppointmentDetailsResponse;
 import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.PetTypeListResponse;
@@ -175,6 +81,7 @@ import com.petfolio.infinitus.responsepojo.SignupResponse;
 import com.petfolio.infinitus.responsepojo.SplashScreenResponse;
 import com.petfolio.infinitus.responsepojo.SuccessResponse;
 import com.petfolio.infinitus.responsepojo.TodayDealMoreResponse;
+import com.petfolio.infinitus.responsepojo.TrackOrderDetailsResponse;
 import com.petfolio.infinitus.responsepojo.UserStatusUpdateResponse;
 import com.petfolio.infinitus.responsepojo.UserTypeListResponse;
 import com.petfolio.infinitus.responsepojo.ServiceProviderRegisterFormCreateResponse;
@@ -188,6 +95,7 @@ import com.petfolio.infinitus.responsepojo.VendorNewOrderResponse;
 import com.petfolio.infinitus.responsepojo.VendorOrderDetailsResponse;
 import com.petfolio.infinitus.responsepojo.VendorOrderListResponse;
 import com.petfolio.infinitus.responsepojo.VendorOrderResponse;
+import com.petfolio.infinitus.responsepojo.VendorOrderUpdateResponse;
 import com.petfolio.infinitus.responsepojo.VendorReasonListResponse;
 import com.petfolio.infinitus.responsepojo.VendorRegisterFormCreateResponse;
 
@@ -769,5 +677,31 @@ public interface RestApiInterface {
     /*vendor order list*/
     @POST("vendor_order_group/get_grouped_order_by_vendor")
     Call<VendorOrderListResponse> get_grouped_order_by_vendor_ResponseCall(@Header("Content-Type") String type, @Body VendorOrderListRequest vendorOrderListRequest);
+
+    /*petlover vendor order list*/
+    @POST("petlover_order_group/get_grouped_order_by_petlover")
+    Call<PetLoverVendorOrderListResponse> get_grouped_order_by_petlover_ResponseCall(@Header("Content-Type") String type, @Body PetLoverVendorOrderListRequest petLoverVendorOrderListRequest);
+
+    /*petlover vendor order details*/
+    @POST("petlover_order_group/get_product_list_by_petlover")
+    Call<PetLoverVendorOrderDetailsResponse> get_product_list_by_petlover_ResponseCall(@Header("Content-Type") String type, @Body PetLoverVendorOrderDetailsRequest petLoverVendorOrderDetailsRequest);
+
+    /*vendor order details*/
+    @POST("vendor_order_group/get_product_list_by_vendor")
+    Call<PetLoverVendorOrderDetailsResponse> get_product_list_by_vendor_ResponseCall(@Header("Content-Type") String type, @Body PetLoverVendorOrderDetailsRequest petLoverVendorOrderDetailsRequest);
+
+    /*vendor single product track order details*/
+    @POST("vendor_order_group/fetch_single_product_detail")
+    Call<TrackOrderDetailsResponse> vendor_fetch_single_product_detail_ResponseCall(@Header("Content-Type") String type, @Body TrackOrderDetailsRequest trackOrderDetailsRequest);
+
+    /*petlover single product track order details*/
+    @POST("petlover_order_group/fetch_single_product_detail")
+    Call<TrackOrderDetailsResponse>petlover_fetch_single_product_detail_ResponseCall(@Header("Content-Type") String type, @Body TrackOrderDetailsRequest trackOrderDetailsRequest);
+
+    /*vendor order update the satus*/
+    @POST("vendor_order_group/update_vendor_status1")
+    Call<VendorOrderUpdateResponse>petlover_fetch_single_product_detail_ResponseCall(@Header("Content-Type") String type, @Body VendorOrderUpdateRequest vendorOrderUpdateRequest);
+
+
 
 }
