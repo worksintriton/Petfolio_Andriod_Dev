@@ -75,10 +75,25 @@ public class PetLoverVendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerV
             } else { holder.txt_products_price.setText("\u20B9 " + 0 + " (" + orderResponseListAll.get(position).getP_order_product_count() + " items )"); } }
 
 
-        if (orderResponseListAll.get(position).getP_order_booked_on() != null) {
-            holder.txt_bookedon.setText("Booked on:" + " " + orderResponseListAll.get(position).getP_order_booked_on());
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverNewOrders")){
+            if (orderResponseListAll.get(position).getP_order_booked_on() != null) {
+                holder.txt_bookedon.setText("Booked on:" + " " + orderResponseListAll.get(position).getP_order_booked_on());
 
+            }
         }
+        else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverCompletedOrders")){
+            if (orderResponseListAll.get(position).getP_order_booked_on() != null) {
+                holder.txt_bookedon.setText("Delivered on:" + " " + orderResponseListAll.get(position).getP_order_booked_on());
+
+            }
+        }
+        else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverCancelledOrders")){
+            if (orderResponseListAll.get(position).getP_order_booked_on() != null) {
+                holder.txt_bookedon.setText("Cancelled on:" + " " + orderResponseListAll.get(position).getP_order_booked_on());
+
+            }
+        }
+
         if (orderResponseListAll.get(position).getP_order_image() != null && !orderResponseListAll.get(position).getP_order_image().isEmpty()) {
             Glide.with(context)
                     .load(orderResponseListAll.get(position).getP_order_image())

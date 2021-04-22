@@ -117,7 +117,8 @@ public class ProductDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, PetVendorCancelOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("_id", product_details.get(position).getProduct_id());
+                i.putExtra("product_id", product_details.get(position).getProduct_id());
+                i.putExtra("orderid", orderid);
                 i.putExtra("fromactivity", TAG);
                 context.startActivity(i);
 

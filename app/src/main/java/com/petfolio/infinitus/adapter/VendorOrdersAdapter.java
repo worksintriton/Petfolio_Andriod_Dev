@@ -56,6 +56,7 @@ public class VendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.View
     @SuppressLint("SetTextI18n")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
         currentItem = orderResponseListAll.get(position);
+
         if(orderResponseListAll.get(position).getV_order_id()!=null&&!(orderResponseListAll.get(position).getV_order_id().isEmpty())){
             holder.txt_orderid.setText(orderResponseListAll.get(position).getV_order_id());
         }
@@ -97,10 +98,27 @@ public class VendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.View
 
         }
 
-        if(orderResponseListAll.get(position).getV_order_booked_on() != null&&!(orderResponseListAll.get(position).getV_order_booked_on().isEmpty())){
-            holder.txt_bookedon.setText("Booked on:"+" "+orderResponseListAll.get(position).getV_order_booked_on());
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("FragementNewOrders")){
+            if (orderResponseListAll.get(position).getV_order_booked_on() != null) {
+                holder.txt_bookedon.setText("Booked on:" + " " + orderResponseListAll.get(position).getV_order_booked_on());
 
+            }
         }
+        else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentCompletedOrders")){
+            if (orderResponseListAll.get(position).getV_order_booked_on() != null) {
+                holder.txt_bookedon.setText("Delivered on:" + " " + orderResponseListAll.get(position).getV_order_booked_on());
+
+            }
+        }
+        else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentCancelledOrders")){
+            if (orderResponseListAll.get(position).getV_order_booked_on() != null) {
+                holder.txt_bookedon.setText("Cancelled on:" + " " + orderResponseListAll.get(position).getV_order_booked_on());
+
+            }
+        }
+
+
+
 
         holder.txt_order_details.setOnClickListener(v -> {
                 Intent i = new Intent(context, VendorOrderDetailsNewActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

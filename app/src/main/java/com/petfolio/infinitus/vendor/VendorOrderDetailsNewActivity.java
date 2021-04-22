@@ -226,11 +226,11 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
 
 
         }
-        scrollablContent.setVisibility(View.GONE);
+     scrollablContent.setVisibility(View.GONE);
 
-        if (new ConnectionDetector(VendorOrderDetailsNewActivity.this).isNetworkAvailable(VendorOrderDetailsNewActivity.this)) {
+     if (new ConnectionDetector(VendorOrderDetailsNewActivity.this).isNetworkAvailable(VendorOrderDetailsNewActivity.this)) {
             vendorOrderDetailsResponseCall();
-        }
+     }
 
         ll_orderdetails.setVisibility(View.GONE);
         ll_shippingaddress.setVisibility(View.GONE);
@@ -491,11 +491,17 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
                                     String productstatus =  response.body().getData().getProduct_details().get(i).getProduct_stauts();
                                     product_id.add(productid);
                                     if(productstatus != null){
-                                        if(productstatus.equalsIgnoreCase("Order Booked")){
-                                            txt_confirmall.setVisibility(View.VISIBLE);
-                                        }else{
+                                        if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentCancelledOrders")) {
                                             txt_confirmall.setVisibility(View.GONE);
+                                        }else{
+                                            if(productstatus.equalsIgnoreCase("Order Booked")){
+                                                txt_confirmall.setVisibility(View.VISIBLE);
+                                            }else{
+                                                txt_confirmall.setVisibility(View.GONE);
+                                            }
                                         }
+
+
                                     }
                                 }
                                 Log.w(TAG,"product_id List : "+new Gson().toJson(product_id));
@@ -544,7 +550,7 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
     private void setView(List<PetLoverVendorOrderDetailsResponse.DataBean.ProductDetailsBean> product_details,boolean status) {
         rv_productdetails.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rv_productdetails.setItemAnimator(new DefaultItemAnimator());
-        ProductDetailsVendorAdapter productDetailsVendorAdapter = new ProductDetailsVendorAdapter(getApplicationContext(),product_details,orderid,this,this,this,status);
+        ProductDetailsVendorAdapter productDetailsVendorAdapter = new ProductDetailsVendorAdapter(getApplicationContext(),product_details,orderid,this,this,this,status,fromactivity);
         rv_productdetails.setAdapter(productDetailsVendorAdapter);
 
     }

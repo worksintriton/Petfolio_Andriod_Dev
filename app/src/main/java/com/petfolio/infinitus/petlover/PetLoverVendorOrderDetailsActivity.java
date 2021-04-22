@@ -1,6 +1,7 @@
 package com.petfolio.infinitus.petlover;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,14 +22,20 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.ProductDetailsAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.requestpojo.PetLoverCancelOrderRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverVendorOrderDetailsRequest;
 import com.petfolio.infinitus.responsepojo.PetLoverVendorOrderDetailsResponse;
+import com.petfolio.infinitus.responsepojo.VendorOrderUpdateResponse;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -156,6 +163,10 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
     TextView txt_no_products;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_cancell_order)
+    TextView txt_cancell_order;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.scrollablContent)
     ScrollView scrollablContent;
 
@@ -167,6 +178,8 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
     private  boolean ShippingIsVisible = true;
     private  boolean productsIsVisible = true;
     private String orderid;
+    private List<PetLoverVendorOrderDetailsResponse.DataBean.ProductDetailsBean> productdetailslist;
+    private List<Integer> product_id = new ArrayList<>();
 
 
     @SuppressLint({"LogNotTimber", "LongLogTag", "SetTextI18n"})
@@ -188,6 +201,7 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
         }
 
         scrollablContent.setVisibility(View.GONE);
+        txt_cancell_order.setVisibility(View.GONE);
 
         if (new ConnectionDetector(PetLoverVendorOrderDetailsActivity.this).isNetworkAvailable(PetLoverVendorOrderDetailsActivity.this)) {
             vendorOrderDetailsResponseCall();
@@ -196,6 +210,7 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
 
         ll_orderdetails.setVisibility(View.GONE);
         ll_shippingaddress.setVisibility(View.GONE);
+
 
         img_expand_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -258,12 +273,19 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
 
             }
         });
+        txt_cancell_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                Intent i = new Intent(getApplicationContext(), PetVendorCancelOrderActivity.class);
+                i.putExtra("orderid", orderid);
+                i.putIntegerArrayListExtra("product_idList", (ArrayList<Integer>) product_id );
+                i.putExtra("fromactivity", fromactivity);
+                i.putExtra("cancelorder", "bulk");
+                startActivity(i);
 
-
-
-
-
+            }
+        });
 
     }
 
@@ -372,6 +394,7 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
 
                             if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverNewOrders")){
                                 txt_order_status.setText("Booked on");
+                                txt_cancell_order.setVisibility(View.VISIBLE);
                                 img_order_status.setImageResource(R.drawable.completed);
                                 if(response.body().getData().getOrder_details().getOrder_booked() != null){
                                     txt_delivered_date.setText(response.body().getData().getOrder_details().getOrder_booked());
@@ -395,6 +418,29 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
                             }
 
                             if(response.body().getData().getProduct_details() != null && response.body().getData().getProduct_details().size()>0){
+                                productdetailslist = response.body().getData().getProduct_details();
+                                Log.w(TAG,"ProductsDetails size : "+productdetailslist.size()+" productdetails "+new Gson().toJson(productdetailslist));
+                                for(int i=0; i<productdetailslist.size();i++){
+                                    int productid = response.body().getData().getProduct_details().get(i).getProduct_id();
+                                    String productstatus =  response.body().getData().getProduct_details().get(i).getProduct_stauts();
+                                    product_id.add(productid);
+                                    if(productstatus != null){
+                                        if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverCancelledOrders")) {
+                                            txt_cancell_order.setVisibility(View.GONE);
+                                        }
+                                       /* else{
+                                            if(productstatus.equalsIgnoreCase("Order Booked")){
+                                                txt_cancell_order.setVisibility(View.VISIBLE);
+                                            }else{
+                                                txt_cancell_order.setVisibility(View.GONE);
+                                            }
+                                        }*/
+
+
+                                    }
+                                }
+                                Log.w(TAG,"product_id List : "+new Gson().toJson(product_id));
+
                                 rv_productdetails.setVisibility(View.VISIBLE);
                                 txt_no_products.setVisibility(View.GONE);
                                 setView(response.body().getData().getProduct_details());
@@ -436,8 +482,6 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
         Log.w(TAG,"vendorOrderDetailsRequest"+ "--->" + new Gson().toJson(petLoverVendorOrderDetailsRequest));
         return petLoverVendorOrderDetailsRequest;
     }
-
-
     private void setView(List<PetLoverVendorOrderDetailsResponse.DataBean.ProductDetailsBean> product_details) {
         rv_productdetails.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rv_productdetails.setItemAnimator(new DefaultItemAnimator());
@@ -445,6 +489,7 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
         rv_productdetails.setAdapter(productDetailsAdapter);
 
     }
+
 
 
 }

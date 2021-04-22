@@ -572,7 +572,8 @@
                     android:textSize="16sp"
                     android:textColor="@color/green"
                     android:fontFamily="@font/futuramediumbt"
-                    android:gravity="end"/>
+                    android:gravity="end"
+                    android:textStyle="bold"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_productdetails"

@@ -27,12 +27,15 @@ import com.petfolio.infinitus.activity.location.PickUpLocationAllowActivity;
 import com.petfolio.infinitus.activity.location.PickUpLocationDenyActivity;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.requestpojo.PetLoverCancelOrderRequest;
+import com.petfolio.infinitus.requestpojo.PetLoverCancelSingleOrderRequest;
 import com.petfolio.infinitus.requestpojo.UpdateStatusCancelRequest;
 import com.petfolio.infinitus.requestpojo.VendorOrderDetailsRequest;
 import com.petfolio.infinitus.responsepojo.DropDownListResponse;
 import com.petfolio.infinitus.responsepojo.PetTypeListResponse;
 import com.petfolio.infinitus.responsepojo.SuccessResponse;
 import com.petfolio.infinitus.responsepojo.VendorOrderDetailsResponse;
+import com.petfolio.infinitus.responsepojo.VendorOrderUpdateResponse;
 import com.petfolio.infinitus.responsepojo.VendorReasonListResponse;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -86,6 +89,11 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
     private Dialog dialog;
 
     String User_cancell_info = "";
+    private String cancelorder;
+
+    ArrayList<Integer> product_idList;
+    private int product_id;
+    private String orderid;
 
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
@@ -103,8 +111,12 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             _id = extras.getString("_id");
+            orderid = extras.getString("orderid");
+            product_id = extras.getInt("product_id");
+            cancelorder = extras.getString("cancelorder");
             Log.w(TAG,"_id : "+_id);
-
+           product_idList = getIntent().getIntegerArrayListExtra("product_idList");
+            Log.w(TAG,"product_idList : "+ new Gson().toJson(product_idList));
 
         }
 
@@ -248,7 +260,12 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
                 @Override
                 public void onClick(View view) {
                     if (new ConnectionDetector(PetVendorCancelOrderActivity.this).isNetworkAvailable(PetVendorCancelOrderActivity.this)) {
-                        update_status_cancelResponseCall();
+                        if(cancelorder != null && cancelorder.equalsIgnoreCase("bulk")){
+                            petlover_update_order_cancel_ResponseCall(product_idList);
+                        }else{
+                            petlover_update_order_cancel_single_ResponseCall();
+                        }
+
 
                     }
 
@@ -356,6 +373,135 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
 
         return updateStatusCancelRequest;
     }
+
+
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    private void petlover_update_order_cancel_ResponseCall(List<Integer> product_id) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<VendorOrderUpdateResponse> call = apiInterface.petlover_update_order_cancel_ResponseCall(RestUtils.getContentType(), petLoverCancelOrderRequest(product_id));
+        Log.w(TAG,"vendor_update_order_confirm_ResponseCall url  :%s"+" "+ call.request().url().toString());
+        call.enqueue(new Callback<VendorOrderUpdateResponse>() {
+            @SuppressLint({"LongLogTag", "LogNotTimber", "SetTextI18n"})
+            @Override
+            public void onResponse(@NonNull Call<VendorOrderUpdateResponse> call, @NonNull Response<VendorOrderUpdateResponse> response) {
+                Log.w(TAG,"vendorOrderDetailsResponseCall"+ "--->" + new Gson().toJson(response.body()));
+                avi_indicator.smoothToHide();
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        dialog.dismiss();
+                        startActivity(new Intent(PetVendorCancelOrderActivity.this,PetMyOrdrersNewActivity.class));
+                        finish();
+
+
+                    }
+
+                }
+
+
+            }
+
+            @SuppressLint({"LongLogTag", "LogNotTimber"})
+            @Override
+            public void onFailure(@NonNull Call<VendorOrderUpdateResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"vendor_update_order_confirm_ResponseCall flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    private PetLoverCancelOrderRequest petLoverCancelOrderRequest(List<Integer> product_id) {
+        /*
+         * order_id : ORDER-1618919599393
+         * product_id : [0,1,2]
+         * date : 20-04-2021 12:47 PM
+         * reject_reason :
+         */
+
+        if(strSelectedReason.equalsIgnoreCase("Other")){
+            edt_comment.setVisibility(View.VISIBLE);
+            User_cancell_info = edt_comment.getText().toString();
+        }else{
+            User_cancell_info = strSelectedReason;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
+
+        PetLoverCancelOrderRequest petLoverCancelOrderRequest = new PetLoverCancelOrderRequest();
+        petLoverCancelOrderRequest.setOrder_id(orderid);
+        petLoverCancelOrderRequest.setProduct_id(product_id);
+        petLoverCancelOrderRequest.setDate(currentDateandTime);
+        petLoverCancelOrderRequest.setReject_reason(User_cancell_info);
+        Log.w(TAG,"petLoverCancelOrderRequest"+ "--->" + new Gson().toJson(petLoverCancelOrderRequest));
+        return petLoverCancelOrderRequest;
+    }
+   @SuppressLint({"LongLogTag", "LogNotTimber"})
+
+    private void petlover_update_order_cancel_single_ResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<VendorOrderUpdateResponse> call = apiInterface.petlover_update_order_cancel_single_ResponseCall(RestUtils.getContentType(), petLoverCancelSingleOrderRequest());
+        Log.w(TAG,"vendor_update_order_confirm_ResponseCall url  :%s"+" "+ call.request().url().toString());
+        call.enqueue(new Callback<VendorOrderUpdateResponse>() {
+            @SuppressLint({"LongLogTag", "LogNotTimber", "SetTextI18n"})
+            @Override
+            public void onResponse(@NonNull Call<VendorOrderUpdateResponse> call, @NonNull Response<VendorOrderUpdateResponse> response) {
+                Log.w(TAG,"vendorOrderDetailsResponseCall"+ "--->" + new Gson().toJson(response.body()));
+                avi_indicator.smoothToHide();
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        dialog.dismiss();
+                        startActivity(new Intent(PetVendorCancelOrderActivity.this,PetMyOrdrersNewActivity.class));
+                        finish();
+
+
+                    }
+
+                }
+
+
+            }
+
+            @SuppressLint({"LongLogTag", "LogNotTimber"})
+            @Override
+            public void onFailure(@NonNull Call<VendorOrderUpdateResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"vendor_update_order_confirm_ResponseCall flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    private PetLoverCancelSingleOrderRequest petLoverCancelSingleOrderRequest() {
+        /*
+         * order_id : ORDER-1618919599393
+         * product_id : 0
+         * date : 20-04-2021 12:47 PM
+         * reject_reason :
+         */
+
+        if(strSelectedReason.equalsIgnoreCase("Other")){
+            edt_comment.setVisibility(View.VISIBLE);
+            User_cancell_info = edt_comment.getText().toString();
+        }else{
+            User_cancell_info = strSelectedReason;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
+
+        PetLoverCancelSingleOrderRequest petLoverCancelSingleOrderRequest = new PetLoverCancelSingleOrderRequest();
+        petLoverCancelSingleOrderRequest.setOrder_id(orderid);
+        petLoverCancelSingleOrderRequest.setProduct_id(product_id);
+        petLoverCancelSingleOrderRequest.setDate(currentDateandTime);
+        petLoverCancelSingleOrderRequest.setReject_reason(User_cancell_info);
+        Log.w(TAG,"petLoverCancelSingleOrderRequest"+ "--->" + new Gson().toJson(petLoverCancelSingleOrderRequest));
+        return petLoverCancelSingleOrderRequest;
+    }
+
 
 
 

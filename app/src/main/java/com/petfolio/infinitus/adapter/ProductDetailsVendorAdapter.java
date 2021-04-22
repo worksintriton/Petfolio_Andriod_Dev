@@ -3,6 +3,7 @@ package com.petfolio.infinitus.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,9 +44,10 @@ public class ProductDetailsVendorAdapter extends  RecyclerView.Adapter<RecyclerV
     private boolean isCheckedReject;
     private boolean isCheckedConfirm;
     boolean status;
+    private String fromactivity;
 
 
-    public ProductDetailsVendorAdapter(Context context, List<PetLoverVendorOrderDetailsResponse.DataBean.ProductDetailsBean> product_details, String orderid, OnItemCheckConfirmStatus onItemCheckConfirmStatus,OnItemCheckRejectStatus onItemCheckRejectStatus, OnItemCheckDispatchStatus onItemCheckDispatchStatus, boolean status) {
+    public ProductDetailsVendorAdapter(Context context, List<PetLoverVendorOrderDetailsResponse.DataBean.ProductDetailsBean> product_details, String orderid, OnItemCheckConfirmStatus onItemCheckConfirmStatus,OnItemCheckRejectStatus onItemCheckRejectStatus, OnItemCheckDispatchStatus onItemCheckDispatchStatus, boolean status,String fromactivity) {
         this.context = context;
         this.product_details = product_details;
         this.orderid = orderid;
@@ -53,6 +55,7 @@ public class ProductDetailsVendorAdapter extends  RecyclerView.Adapter<RecyclerV
         this.onItemCheckRejectStatus = onItemCheckRejectStatus;
         this.onItemCheckDispatchStatus = onItemCheckDispatchStatus;
         this.status = status;
+        this.fromactivity = fromactivity;
 
 
     }
@@ -71,12 +74,13 @@ public class ProductDetailsVendorAdapter extends  RecyclerView.Adapter<RecyclerV
 
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "LongLogTag", "LogNotTimber"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
         currentItem = product_details.get(position);
-       /* if (product_details.get(position).getProduct_id() != null) {
-            holder.txt_orderid.setText(product_details.get(position).getOrder_id());
-        }*/
+        if (orderid != null) {
+            holder.txt_orderid.setText(orderid);
+        }
+
 
 
         if(product_details.get(position).getProduct_stauts() != null ){
@@ -110,6 +114,11 @@ public class ProductDetailsVendorAdapter extends  RecyclerView.Adapter<RecyclerV
 
         }
 
+        Log.w(TAG,"fromactivity : "+fromactivity);
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentCancelledOrders")) {
+            holder.ll_confirm_reject.setVisibility(View.GONE);
+            holder.ll_dispatch.setVisibility(View.GONE);
+        }
 
         if (product_details.get(position).getProduct_name() != null) {
             holder.txt_producttitle.setText(product_details.get(position).getProduct_name());
@@ -125,7 +134,7 @@ public class ProductDetailsVendorAdapter extends  RecyclerView.Adapter<RecyclerV
         else { if (product_details.get(position).getProduct_count() == 1) {
                 holder.txt_products_price.setText("\u20B9 " + 0 + " (" + product_details.get(position).getProduct_count() + " product )");
             }
-            else {
+        else {
                 holder.txt_products_price.setText("\u20B9 " + 0 + " (" + product_details.get(position).getProduct_count() + " products )");
 
             }

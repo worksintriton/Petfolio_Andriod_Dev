@@ -712,7 +712,11 @@ public interface RestApiInterface {
 
    /*pet lover vendor order update the status reject*/
     @POST("vendor_order_group/update_vendor_status4")
-    Call<VendorOrderUpdateResponse>petlover_update_order_reject_ResponseCall(@Header("Content-Type") String type, @Body VendorOrderUpdateRequest vendorOrderUpdateRequest);
+    Call<VendorOrderUpdateResponse>petlover_update_order_cancel_ResponseCall(@Header("Content-Type") String type, @Body PetLoverCancelOrderRequest petLoverCancelOrderRequest);
+
+    /*pet lover vendor order single cancel order*/
+    @POST("vendor_order_group/update_vendor_status5")
+    Call<VendorOrderUpdateResponse>petlover_update_order_cancel_single_ResponseCall(@Header("Content-Type") String type, @Body PetLoverCancelSingleOrderRequest petLoverCancelSingleOrderRequest);
 
 
 

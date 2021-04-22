@@ -563,6 +563,19 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:id="@+id/ll_productdetails">
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/txt_cancell_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cancel_order"
+                    android:textSize="16sp"
+                    android:textColor="@color/red"
+                    android:fontFamily="@font/futuramediumbt"
+                    android:gravity="end"
+                    android:textStyle="bold"/>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_productdetails"
                     android:layout_width="match_parent"
