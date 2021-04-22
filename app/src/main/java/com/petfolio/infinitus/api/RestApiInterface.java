@@ -698,9 +698,21 @@ public interface RestApiInterface {
     @POST("petlover_order_group/fetch_single_product_detail")
     Call<TrackOrderDetailsResponse>petlover_fetch_single_product_detail_ResponseCall(@Header("Content-Type") String type, @Body TrackOrderDetailsRequest trackOrderDetailsRequest);
 
-    /*vendor order update the satus*/
+    /*vendor order update the status confirm*/
     @POST("vendor_order_group/update_vendor_status1")
-    Call<VendorOrderUpdateResponse>petlover_fetch_single_product_detail_ResponseCall(@Header("Content-Type") String type, @Body VendorOrderUpdateRequest vendorOrderUpdateRequest);
+    Call<VendorOrderUpdateResponse>vendor_update_order_confirm_ResponseCall(@Header("Content-Type") String type, @Body VendorOrderUpdateRequest vendorOrderUpdateRequest);
+
+    /*vendor order update the status dispatch*/
+    @POST("vendor_order_group/update_vendor_status2")
+    Call<VendorOrderUpdateResponse>vendor_update_order_dispatch_ResponseCall(@Header("Content-Type") String type, @Body VendorOrderUpdateDispatchRequest vendorOrderUpdateDispatchRequest);
+
+    /*vendor order update the status reject*/
+    @POST("vendor_order_group/update_vendor_status3")
+    Call<VendorOrderUpdateResponse>vendor_update_order_reject_ResponseCall(@Header("Content-Type") String type, @Body VendorOrderUpdateRejectRequest vendorOrderUpdateRequest);
+
+   /*pet lover vendor order update the status reject*/
+    @POST("vendor_order_group/update_vendor_status4")
+    Call<VendorOrderUpdateResponse>petlover_update_order_reject_ResponseCall(@Header("Content-Type") String type, @Body VendorOrderUpdateRequest vendorOrderUpdateRequest);
 
 
 

@@ -244,7 +244,7 @@
                         android:id="@+id/img_expand_arrow"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:src="@drawable/ic_up"
+                        android:src="@drawable/ic_down"
                         tools:ignore="ContentDescription" />
 
                 </RelativeLayout>
@@ -437,7 +437,7 @@
                         android:id="@+id/img_expand_arrow_shipping"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:src="@drawable/ic_up"
+                        android:src="@drawable/ic_down"
                         tools:ignore="ContentDescription" />
 
                 </RelativeLayout>
@@ -551,7 +551,7 @@
                         android:id="@+id/img_expand_arrow_productdetails"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:src="@drawable/ic_down"
+                        android:src="@drawable/ic_up"
                         tools:ignore="ContentDescription" />
 
                 </RelativeLayout>

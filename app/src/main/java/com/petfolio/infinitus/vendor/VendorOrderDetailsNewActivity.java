@@ -1,14 +1,22 @@
 package com.petfolio.infinitus.vendor;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,18 +25,28 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.adapter.ProductDetailsAdapter;
 import com.petfolio.infinitus.adapter.ProductDetailsVendorAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.interfaces.OnItemCheckConfirmStatus;
+import com.petfolio.infinitus.interfaces.OnItemCheckDispatchStatus;
+import com.petfolio.infinitus.interfaces.OnItemCheckRejectStatus;
 import com.petfolio.infinitus.requestpojo.PetLoverVendorOrderDetailsRequest;
+import com.petfolio.infinitus.requestpojo.VendorOrderUpdateDispatchRequest;
+import com.petfolio.infinitus.requestpojo.VendorOrderUpdateRejectRequest;
+import com.petfolio.infinitus.requestpojo.VendorOrderUpdateRequest;
 import com.petfolio.infinitus.responsepojo.PetLoverVendorOrderDetailsResponse;
+import com.petfolio.infinitus.responsepojo.VendorOrderUpdateResponse;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +54,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VendorOrderDetailsNewActivity extends AppCompatActivity implements View.OnClickListener {
+public class VendorOrderDetailsNewActivity extends AppCompatActivity implements View.OnClickListener, OnItemCheckConfirmStatus, OnItemCheckRejectStatus, OnItemCheckDispatchStatus {
 
     private static final String TAG = "VendorOrderDetailsNewActivity" ;
 
@@ -155,6 +173,18 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
     @BindView(R.id.txt_no_products)
     TextView txt_no_products;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_confirmall)
+    TextView txt_confirmall;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.scrollablContent)
+    ScrollView scrollablContent;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.btn_update_status)
+    Button btn_update_status;
+
 
     private String _id;
     private String orderid;
@@ -164,7 +194,18 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
     private  boolean ShippingIsVisible = true;
     private  boolean productsIsVisible = true;
 
+    private List<Integer> product_id = new ArrayList<>();
+    private List<Integer> product_id_confirmList = new ArrayList<>();
+    private List<Integer> product_id_rejectList = new ArrayList<>();
+    private List<Integer> product_id_dispatchList = new ArrayList<>();
+    private List<PetLoverVendorOrderDetailsResponse.DataBean.ProductDetailsBean> productdetailslist;
+    private Dialog alertDialog;
 
+    private boolean isConfirmaAll = false;
+    private boolean isConfirmaAndReject = false;
+    private boolean isConfirmaAndRejectAndDispatch = false;
+    private boolean isConfirmaAndDispatch = false;
+    private boolean isRejectAndDispatch = false;
 
 
 
@@ -185,10 +226,10 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
 
 
         }
+        scrollablContent.setVisibility(View.GONE);
 
         if (new ConnectionDetector(VendorOrderDetailsNewActivity.this).isNetworkAvailable(VendorOrderDetailsNewActivity.this)) {
             vendorOrderDetailsResponseCall();
-
         }
 
         ll_orderdetails.setVisibility(View.GONE);
@@ -202,12 +243,12 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
 
                 if(button1IsVisible) {
                     ll_orderdetails.setVisibility(View.VISIBLE);
-                    img_expand_arrow.setImageResource(R.drawable.ic_down);
+                    img_expand_arrow.setImageResource(R.drawable.ic_up);
                     button1IsVisible = false;
                 }
                 else {
                     ll_orderdetails.setVisibility(View.GONE);
-                    img_expand_arrow.setImageResource(R.drawable.ic_up);
+                    img_expand_arrow.setImageResource(R.drawable.ic_down);
                     button1IsVisible = true;
 
                 }
@@ -223,11 +264,11 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
 
                 if(ShippingIsVisible) {
                     ll_shippingaddress.setVisibility(View.VISIBLE);
-                    img_expand_arrow_shipping.setImageResource(R.drawable.ic_down);
+                    img_expand_arrow_shipping.setImageResource(R.drawable.ic_up);
                     ShippingIsVisible = false;
                 } else {
                     ll_shippingaddress.setVisibility(View.GONE);
-                    img_expand_arrow_shipping.setImageResource(R.drawable.ic_up);
+                    img_expand_arrow_shipping.setImageResource(R.drawable.ic_down);
                     ShippingIsVisible = true;
 
                 }
@@ -243,11 +284,11 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
 
                 if(productsIsVisible) {
                     ll_productdetails.setVisibility(View.GONE);
-                    img_expand_arrow_productdetails.setImageResource(R.drawable.ic_up);
+                    img_expand_arrow_productdetails.setImageResource(R.drawable.ic_down);
                     productsIsVisible = false;
                 } else {
                     ll_productdetails.setVisibility(View.VISIBLE);
-                    img_expand_arrow_productdetails.setImageResource(R.drawable.ic_down);
+                    img_expand_arrow_productdetails.setImageResource(R.drawable.ic_up);
                     productsIsVisible = true;
 
                 }
@@ -255,10 +296,58 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
 
             }
         });
+        txt_confirmall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (txt_confirmall.getText().toString().equalsIgnoreCase("Confirm All")){
+                    txt_confirmall.setText("Clear All");
+                    btn_update_status.setVisibility(View.VISIBLE);
+                    if(productdetailslist != null && productdetailslist.size()>0){
+                        setView(productdetailslist,true);
+                    }
+                    isConfirmaAll = true;
+                }else{
+                    txt_confirmall.setText("Confirm All");
+                    btn_update_status.setVisibility(View.GONE);
+                    setView(productdetailslist,false);
+                    isConfirmaAll = false;
+                }
 
+            }
+        });
+        btn_update_status.setVisibility(View.GONE);
 
+        btn_update_status.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.w(TAG,"product_id list : "+ new Gson().toJson(product_id));
+                if(isConfirmaAll){
+                    vendor_update_order_confirm_ResponseCall(product_id);
+                }
+                else if(product_id_confirmList != null && product_id_confirmList.size()>0 && product_id_rejectList != null &&  product_id_rejectList.size()>0){
+                    isConfirmaAndReject = true;
+                    if(product_id_dispatchList != null &&  product_id_dispatchList.size()>0){
+                        isConfirmaAndRejectAndDispatch = true;
+                    }
+                    vendor_update_order_confirm_ResponseCall(product_id_confirmList);
+                }else if(product_id_rejectList != null &&  product_id_rejectList.size()>0 && product_id_dispatchList != null &&  product_id_dispatchList.size()>0){
+                    isRejectAndDispatch = true;
+                    addCancelReason(product_id_rejectList);
+                }else if(product_id_confirmList != null &&  product_id_confirmList.size()>0 && product_id_dispatchList != null &&  product_id_dispatchList.size()>0){
+                    isConfirmaAndDispatch = true;
+                    vendor_update_order_confirm_ResponseCall(product_id_confirmList);
+                }
+                else if(product_id_confirmList != null && product_id_confirmList.size()>0){
+                    vendor_update_order_confirm_ResponseCall(product_id_confirmList);
+                }else if(product_id_rejectList != null &&  product_id_rejectList.size()>0){
+                    addCancelReason(product_id_rejectList);
 
+                } else if(product_id_dispatchList != null &&  product_id_dispatchList.size()>0){
+                    addDispatch(product_id_dispatchList);
 
+                }
+            }
+        });
 
 
 
@@ -298,8 +387,10 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
+                        scrollablContent.setVisibility(View.VISIBLE);
 
                         if(response.body().getData()!=null){
+
 
                             if(response.body().getData().getOrder_details().getOrder_text() !=null && !response.body().getData().getOrder_details().getOrder_text().isEmpty()){
                                 txt_product_title.setText(response.body().getData().getOrder_details().getOrder_text());
@@ -393,7 +484,23 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
                             if(response.body().getData().getProduct_details() != null && response.body().getData().getProduct_details().size()>0){
                                 rv_productdetails.setVisibility(View.VISIBLE);
                                 txt_no_products.setVisibility(View.GONE);
-                                setView(response.body().getData().getProduct_details());
+                                productdetailslist = response.body().getData().getProduct_details();
+                                Log.w(TAG,"ProductsDetails size : "+productdetailslist.size()+" productdetails "+new Gson().toJson(productdetailslist));
+                                for(int i=0; i<productdetailslist.size();i++){
+                                    int productid = response.body().getData().getProduct_details().get(i).getProduct_id();
+                                    String productstatus =  response.body().getData().getProduct_details().get(i).getProduct_stauts();
+                                    product_id.add(productid);
+                                    if(productstatus != null){
+                                        if(productstatus.equalsIgnoreCase("Order Booked")){
+                                            txt_confirmall.setVisibility(View.VISIBLE);
+                                        }else{
+                                            txt_confirmall.setVisibility(View.GONE);
+                                        }
+                                    }
+                                }
+                                Log.w(TAG,"product_id List : "+new Gson().toJson(product_id));
+                                setView(response.body().getData().getProduct_details(),false);
+
                             }else{
                                 rv_productdetails.setVisibility(View.GONE);
                                 txt_no_products.setVisibility(View.VISIBLE);
@@ -434,12 +541,378 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
     }
 
 
-    private void setView(List<PetLoverVendorOrderDetailsResponse.DataBean.ProductDetailsBean> product_details) {
+    private void setView(List<PetLoverVendorOrderDetailsResponse.DataBean.ProductDetailsBean> product_details,boolean status) {
         rv_productdetails.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rv_productdetails.setItemAnimator(new DefaultItemAnimator());
-        ProductDetailsVendorAdapter productDetailsVendorAdapter = new ProductDetailsVendorAdapter(getApplicationContext(),product_details,orderid);
+        ProductDetailsVendorAdapter productDetailsVendorAdapter = new ProductDetailsVendorAdapter(getApplicationContext(),product_details,orderid,this,this,this,status);
         rv_productdetails.setAdapter(productDetailsVendorAdapter);
 
+    }
+
+
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    @Override
+    public void onItemCheckConfirmStatus(int productid) {
+        product_id_confirmList.add(productid);
+        Log.w(TAG,"onItemCheckConfirmStatus product_id_confirmList : "+new Gson().toJson(product_id_confirmList)+" product_id_rejectList : "+new Gson().toJson(product_id_rejectList));
+        if(product_id_confirmList != null && product_id_confirmList.size()>0){
+            btn_update_status.setVisibility(View.VISIBLE);
+        }else{
+            btn_update_status.setVisibility(View.GONE);
+        }
+
+    }
+
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    @Override
+    public void onItemUncheckConfirmStatus(int productid) {
+        if(product_id_confirmList != null){
+                for (int i = 0; i < product_id_confirmList.size(); i++)
+                    if (product_id_confirmList.get(i).equals(productid)) {
+                        product_id_confirmList.remove(i);
+                        Log.w(TAG, "onItemUncheckConfirmStatus after removing list if" + new Gson().toJson(product_id_confirmList));
+
+                    }
+
+            }
+        if(product_id_confirmList != null && product_id_confirmList.size()>0){
+            btn_update_status.setVisibility(View.VISIBLE);
+        }else{
+            btn_update_status.setVisibility(View.GONE);
+        }
+
+       }
+
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
+    @Override
+    public void onItemCheckRejectStatus(int productid) {
+        product_id_rejectList.add(productid);
+        Log.w(TAG,"onItemCheckRejectStatus product_id_rejectList : "+new Gson().toJson(product_id_rejectList));
+        if(product_id_rejectList != null && product_id_rejectList.size()>0){
+            btn_update_status.setVisibility(View.VISIBLE);
+        }else{
+            btn_update_status.setVisibility(View.GONE);
+        }
+    }
+
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
+    @Override
+    public void onItemUncheckRejectStatus(int productid) {
+        if(product_id_rejectList != null){
+            for (int i = 0; i < product_id_rejectList.size(); i++)
+                if (product_id_rejectList.get(i).equals(productid)) {
+                    product_id_rejectList.remove(i);
+                    Log.w(TAG, "onItemUncheckConfirmStatus after removing list if" + new Gson().toJson(product_id_rejectList));
+
+                }
+
+        }
+        if(product_id_rejectList != null && product_id_rejectList.size()>0){
+            btn_update_status.setVisibility(View.VISIBLE);
+        }else{
+            btn_update_status.setVisibility(View.GONE);
+        }
+
+    }
+
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
+    @Override
+    public void onItemCheckDispatchStatus(int productid) {
+        product_id_dispatchList.add(productid);
+        Log.w(TAG,"onItemCheckDispatchStatus product_id_dispatchList : "+new Gson().toJson(product_id_dispatchList));
+        if(product_id_dispatchList != null && product_id_dispatchList.size()>0){
+            btn_update_status.setVisibility(View.VISIBLE);
+        }else{
+            btn_update_status.setVisibility(View.GONE);
+        }
+
+    }
+
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
+    @Override
+    public void onItemUncheckDispatchStatus(int productid) {
+        if(product_id_dispatchList != null){
+            for (int i = 0; i < product_id_dispatchList.size(); i++)
+                if (product_id_dispatchList.get(i).equals(productid)) {
+                    product_id_dispatchList.remove(i);
+                    Log.w(TAG, "onItemUncheckDispatchStatus after removing list if" + new Gson().toJson(product_id_dispatchList));
+
+                }
+
+        }
+        if(product_id_dispatchList != null && product_id_dispatchList.size()>0){
+            btn_update_status.setVisibility(View.VISIBLE);
+        }else{
+            btn_update_status.setVisibility(View.GONE);
+        }
+
+
+    }
+
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
+    private void addCancelReason(List<Integer> product_id_rejectList) {
+        try {
+
+            Dialog dialog = new Dialog(VendorOrderDetailsNewActivity.this);
+            dialog.setContentView(R.layout.add_trackid_popup);
+            dialog.setCancelable(true);
+            EditText edt_addtrackid = dialog.findViewById(R.id.edt_addtrackid);
+            Button btn_addtrackid = dialog.findViewById(R.id.btn_addtrackid);
+            edt_addtrackid.setHint("Please enter the reason...");
+
+            btn_addtrackid.setOnClickListener(view -> {
+                if(edt_addtrackid.getText().toString() != null &&  !edt_addtrackid.getText().toString().isEmpty()){
+                    dialog.dismiss();
+                    if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                        vendor_update_order_reject_ResponseCall(product_id_rejectList,edt_addtrackid.getText().toString());
+
+                    }
+                }else{
+                    showErrorLoading("Please enter the reason");
+                }
+
+
+            });
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+      
+
+    }
+    private void addDispatch(List<Integer> product_id_dispatchList) {
+        try {
+            Dialog dialog = new Dialog(VendorOrderDetailsNewActivity.this);
+            dialog.setContentView(R.layout.add_trackid_popup);
+            dialog.setCancelable(true);
+            EditText edt_addtrackid = dialog.findViewById(R.id.edt_addtrackid);
+            Button btn_addtrackid = dialog.findViewById(R.id.btn_addtrackid);
+            edt_addtrackid.setHint("Please enter the track id...");
+
+            btn_addtrackid.setOnClickListener(view -> {
+                if(edt_addtrackid.getText().toString() != null &&  !edt_addtrackid.getText().toString().isEmpty()){
+                    dialog.dismiss();
+                    if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                        vendor_update_order_dispatch_ResponseCall(product_id_dispatchList,edt_addtrackid.getText().toString());
+
+                    }
+                }else{
+                    showErrorLoading("Please enter the track id");
+                }
+
+
+            });
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
+
+
+
+    public void showErrorLoading(String errormesage){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(VendorOrderDetailsNewActivity.this);
+        alertDialogBuilder.setMessage(errormesage);
+        alertDialogBuilder.setPositiveButton("ok",
+                (arg0, arg1) -> hideLoading());
+
+
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+    public void hideLoading(){
+        try {
+            alertDialog.dismiss();
+        }catch (Exception ignored){
+
+        }
+    }
+
+
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    private void vendor_update_order_confirm_ResponseCall(List<Integer> product_id) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<VendorOrderUpdateResponse> call = apiInterface.vendor_update_order_confirm_ResponseCall(RestUtils.getContentType(), vendorOrderUpdateRequest(product_id));
+        Log.w(TAG,"vendor_update_order_confirm_ResponseCall url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<VendorOrderUpdateResponse>() {
+            @SuppressLint({"LongLogTag", "LogNotTimber", "SetTextI18n"})
+            @Override
+            public void onResponse(@NonNull Call<VendorOrderUpdateResponse> call, @NonNull Response<VendorOrderUpdateResponse> response) {
+                Log.w(TAG,"vendorOrderDetailsResponseCall"+ "--->" + new Gson().toJson(response.body()));
+                avi_indicator.smoothToHide();
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        if(isConfirmaAndReject){
+                            addCancelReason(product_id_rejectList);
+                        }else if(isConfirmaAndDispatch){
+                            addDispatch(product_id_dispatchList);
+                        }else{
+                            finish();
+                            startActivity(getIntent());
+                        }
+
+
+
+                    }
+
+                }
+
+
+            }
+
+            @SuppressLint({"LongLogTag", "LogNotTimber"})
+            @Override
+            public void onFailure(@NonNull Call<VendorOrderUpdateResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"vendor_update_order_confirm_ResponseCall flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    private VendorOrderUpdateRequest vendorOrderUpdateRequest(List<Integer> product_id) {
+        /*
+         * order_id : ORDER-1618919599393
+         * product_id : [0,1,2]
+         * date : 20-04-2021 12:47 PM
+         */
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
+
+        VendorOrderUpdateRequest vendorOrderUpdateRequest = new VendorOrderUpdateRequest();
+        vendorOrderUpdateRequest.setOrder_id(_id);
+        vendorOrderUpdateRequest.setProduct_id(product_id);
+        vendorOrderUpdateRequest.setDate(currentDateandTime);
+        Log.w(TAG,"vendorOrderUpdateRequest"+ "--->" + new Gson().toJson(vendorOrderUpdateRequest));
+        return vendorOrderUpdateRequest;
+    }
+
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    private void vendor_update_order_reject_ResponseCall(List<Integer> product_id, String rejectReason) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<VendorOrderUpdateResponse> call = apiInterface.vendor_update_order_reject_ResponseCall(RestUtils.getContentType(), vendorOrderUpdateRejectRequest(product_id,rejectReason));
+        Log.w(TAG,"vendor_update_order_confirm_ResponseCall url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<VendorOrderUpdateResponse>() {
+            @SuppressLint({"LongLogTag", "LogNotTimber", "SetTextI18n"})
+            @Override
+            public void onResponse(@NonNull Call<VendorOrderUpdateResponse> call, @NonNull Response<VendorOrderUpdateResponse> response) {
+                Log.w(TAG,"vendorOrderDetailsResponseCall"+ "--->" + new Gson().toJson(response.body()));
+                avi_indicator.smoothToHide();
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        if(isConfirmaAndRejectAndDispatch){
+                            addDispatch(product_id_dispatchList);
+                        }else if(isRejectAndDispatch){
+                            addDispatch(product_id_dispatchList);
+                        }else {
+                            finish();
+                            startActivity(getIntent());
+                        }
+
+                    }
+
+                }
+
+
+            }
+
+            @SuppressLint({"LongLogTag", "LogNotTimber"})
+            @Override
+            public void onFailure(@NonNull Call<VendorOrderUpdateResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"vendor_update_order_confirm_ResponseCall flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    private VendorOrderUpdateRejectRequest vendorOrderUpdateRejectRequest(List<Integer> product_id, String rejectReason) {
+        /*
+         * order_id : ORDER-1618919599393
+         * product_id : [0]
+         * date : 20-04-2021 12:47 PM
+         * reject_reason : we are not having the product currently
+         */
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
+
+        VendorOrderUpdateRejectRequest vendorOrderUpdateRejectRequest = new VendorOrderUpdateRejectRequest();
+        vendorOrderUpdateRejectRequest.setOrder_id(_id);
+        vendorOrderUpdateRejectRequest.setProduct_id(product_id);
+        vendorOrderUpdateRejectRequest.setDate(currentDateandTime);
+        vendorOrderUpdateRejectRequest.setReject_reason(rejectReason);
+        Log.w(TAG,"vendorOrderUpdateRejectRequest"+ "--->" + new Gson().toJson(vendorOrderUpdateRejectRequest));
+        return vendorOrderUpdateRejectRequest;
+    }
+
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    private void vendor_update_order_dispatch_ResponseCall(List<Integer> product_id_dispatchList, String trackid) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<VendorOrderUpdateResponse> call = apiInterface.vendor_update_order_dispatch_ResponseCall(RestUtils.getContentType(), vendorOrderUpdateDispatchRequest(product_id_dispatchList,trackid));
+        Log.w(TAG,"vendor_update_order_confirm_ResponseCall url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<VendorOrderUpdateResponse>() {
+            @SuppressLint({"LongLogTag", "LogNotTimber", "SetTextI18n"})
+            @Override
+            public void onResponse(@NonNull Call<VendorOrderUpdateResponse> call, @NonNull Response<VendorOrderUpdateResponse> response) {
+                Log.w(TAG,"vendorOrderDetailsResponseCall"+ "--->" + new Gson().toJson(response.body()));
+                avi_indicator.smoothToHide();
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        finish();
+                        startActivity(getIntent());
+
+                    }
+
+                }
+
+
+            }
+
+            @SuppressLint({"LongLogTag", "LogNotTimber"})
+            @Override
+            public void onFailure(@NonNull Call<VendorOrderUpdateResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"vendor_update_order_confirm_ResponseCall flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    private VendorOrderUpdateDispatchRequest vendorOrderUpdateDispatchRequest(List<Integer> product_id_dispatchList, String trackid) {
+        /*
+         * order_id : ORDER-1618919599393
+         * product_id : [0]
+         * date : 20-04-2021 12:47 PM
+         * track_id : 1234 tracid
+         */
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
+
+        VendorOrderUpdateDispatchRequest vendorOrderUpdateDispatchRequest = new VendorOrderUpdateDispatchRequest();
+        vendorOrderUpdateDispatchRequest.setOrder_id(_id);
+        vendorOrderUpdateDispatchRequest.setProduct_id(product_id_dispatchList);
+        vendorOrderUpdateDispatchRequest.setDate(currentDateandTime);
+        vendorOrderUpdateDispatchRequest.setTrack_id(trackid);
+        Log.w(TAG,"vendorOrderUpdateDispatchRequest"+ "--->" + new Gson().toJson(vendorOrderUpdateDispatchRequest));
+        return vendorOrderUpdateDispatchRequest;
     }
 
 

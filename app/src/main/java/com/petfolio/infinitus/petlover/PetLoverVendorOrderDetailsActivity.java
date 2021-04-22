@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -154,6 +155,10 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
     @BindView(R.id.txt_no_products)
     TextView txt_no_products;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.scrollablContent)
+    ScrollView scrollablContent;
+
 
     private String _id;
     private String fromactivity;
@@ -182,6 +187,8 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
 
         }
 
+        scrollablContent.setVisibility(View.GONE);
+
         if (new ConnectionDetector(PetLoverVendorOrderDetailsActivity.this).isNetworkAvailable(PetLoverVendorOrderDetailsActivity.this)) {
             vendorOrderDetailsResponseCall();
 
@@ -198,12 +205,12 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
 
                 if(button1IsVisible) {
                     ll_orderdetails.setVisibility(View.VISIBLE);
-                    img_expand_arrow.setImageResource(R.drawable.ic_down);
+                    img_expand_arrow.setImageResource(R.drawable.ic_up);
                     button1IsVisible = false;
                 }
                 else {
                     ll_orderdetails.setVisibility(View.GONE);
-                    img_expand_arrow.setImageResource(R.drawable.ic_up);
+                    img_expand_arrow.setImageResource(R.drawable.ic_down);
                     button1IsVisible = true;
 
                 }
@@ -219,11 +226,11 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
 
                 if(ShippingIsVisible) {
                     ll_shippingaddress.setVisibility(View.VISIBLE);
-                    img_expand_arrow_shipping.setImageResource(R.drawable.ic_down);
+                    img_expand_arrow_shipping.setImageResource(R.drawable.ic_up);
                     ShippingIsVisible = false;
                 } else {
                     ll_shippingaddress.setVisibility(View.GONE);
-                    img_expand_arrow_shipping.setImageResource(R.drawable.ic_up);
+                    img_expand_arrow_shipping.setImageResource(R.drawable.ic_down);
                     ShippingIsVisible = true;
 
                 }
@@ -239,11 +246,11 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
 
                 if(productsIsVisible) {
                     ll_productdetails.setVisibility(View.GONE);
-                    img_expand_arrow_productdetails.setImageResource(R.drawable.ic_up);
+                    img_expand_arrow_productdetails.setImageResource(R.drawable.ic_down);
                     productsIsVisible = false;
                 } else {
                     ll_productdetails.setVisibility(View.VISIBLE);
-                    img_expand_arrow_productdetails.setImageResource(R.drawable.ic_down);
+                    img_expand_arrow_productdetails.setImageResource(R.drawable.ic_up);
                     productsIsVisible = true;
 
                 }
@@ -294,6 +301,7 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
+                        scrollablContent.setVisibility(View.VISIBLE);
 
                         if(response.body().getData()!=null){
 

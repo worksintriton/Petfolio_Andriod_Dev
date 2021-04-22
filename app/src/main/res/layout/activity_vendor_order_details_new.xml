@@ -244,7 +244,7 @@
                         android:id="@+id/img_expand_arrow"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:src="@drawable/ic_up"
+                        android:src="@drawable/ic_down"
                         tools:ignore="ContentDescription" />
 
                 </RelativeLayout>
@@ -437,7 +437,7 @@
                         android:id="@+id/img_expand_arrow_shipping"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:src="@drawable/ic_up"
+                        android:src="@drawable/ic_down"
                         tools:ignore="ContentDescription" />
 
                 </RelativeLayout>
@@ -551,7 +551,7 @@
                         android:id="@+id/img_expand_arrow_productdetails"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:src="@drawable/ic_down"
+                        android:src="@drawable/ic_up"
                         tools:ignore="ContentDescription" />
 
                 </RelativeLayout>
@@ -563,6 +563,17 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:id="@+id/ll_productdetails">
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/txt_confirmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/confirm_all"
+                    android:textSize="16sp"
+                    android:textColor="@color/green"
+                    android:fontFamily="@font/futuramediumbt"
+                    android:gravity="end"/>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_productdetails"
                     android:layout_width="match_parent"
@@ -603,15 +614,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp">
+        <Button
+            android:id="@+id/btn_update_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/new_rounded_corner_btn"
+            android:fontFamily="@font/futuramediumbt"
+            android:text="@string/update_status"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/normal_text_size_for_header"
+            tools:ignore="HardcodedText"
+            android:layout_marginBottom="10dp"/>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/new_rounded_corner_btn"
             app:elevation="8dp"
             app:itemBackground="@drawable/selected_state"
@@ -619,7 +641,8 @@
             app:itemIconTint="@color/selector"
             app:itemTextColor="@color/selector"
             app:labelVisibilityMode="labeled"
-            app:menu="@menu/vendor_bottom_navigation" />
+            app:menu="@menu/vendor_bottom_navigation"
+            android:layout_marginBottom="10dp"/>
 
     </LinearLayout>
 

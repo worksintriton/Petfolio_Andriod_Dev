@@ -6,7 +6,10 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.interfaces.OnItemCheckConfirmStatus;
+import com.petfolio.infinitus.interfaces.OnItemCheckDispatchStatus;
+import com.petfolio.infinitus.interfaces.OnItemCheckRejectStatus;
 import com.petfolio.infinitus.petlover.PetVendorCancelOrderActivity;
 import com.petfolio.infinitus.petlover.TrackOrderActivity;
 import com.petfolio.infinitus.responsepojo.PetLoverVendorOrderDetailsResponse;
@@ -31,12 +37,22 @@ public class ProductDetailsVendorAdapter extends  RecyclerView.Adapter<RecyclerV
     PetLoverVendorOrderDetailsResponse.DataBean.ProductDetailsBean currentItem;
     String orderid;
 
+    OnItemCheckConfirmStatus onItemCheckConfirmStatus;
+    OnItemCheckRejectStatus onItemCheckRejectStatus;
+    OnItemCheckDispatchStatus onItemCheckDispatchStatus;
+    private boolean isCheckedReject;
+    private boolean isCheckedConfirm;
+    boolean status;
 
 
-    public ProductDetailsVendorAdapter(Context context, List<PetLoverVendorOrderDetailsResponse.DataBean.ProductDetailsBean> product_details, String orderid) {
+    public ProductDetailsVendorAdapter(Context context, List<PetLoverVendorOrderDetailsResponse.DataBean.ProductDetailsBean> product_details, String orderid, OnItemCheckConfirmStatus onItemCheckConfirmStatus,OnItemCheckRejectStatus onItemCheckRejectStatus, OnItemCheckDispatchStatus onItemCheckDispatchStatus, boolean status) {
         this.context = context;
         this.product_details = product_details;
         this.orderid = orderid;
+        this.onItemCheckConfirmStatus = onItemCheckConfirmStatus;
+        this.onItemCheckRejectStatus = onItemCheckRejectStatus;
+        this.onItemCheckDispatchStatus = onItemCheckDispatchStatus;
+        this.status = status;
 
 
     }
@@ -61,6 +77,40 @@ public class ProductDetailsVendorAdapter extends  RecyclerView.Adapter<RecyclerV
        /* if (product_details.get(position).getProduct_id() != null) {
             holder.txt_orderid.setText(product_details.get(position).getOrder_id());
         }*/
+
+
+        if(product_details.get(position).getProduct_stauts() != null ){
+           if( product_details.get(position).getProduct_stauts().equalsIgnoreCase("Order Booked")){
+               holder.ll_confirm_reject.setVisibility(View.VISIBLE);
+               holder.ll_dispatch.setVisibility(View.GONE);
+               holder.txt_product_status.setVisibility(View.GONE);
+           }
+           else if(product_details.get(position).getProduct_stauts().equalsIgnoreCase("Order Accept")){
+               holder.ll_confirm_reject.setVisibility(View.GONE);
+               holder.ll_dispatch.setVisibility(View.VISIBLE);
+               holder.txt_product_status.setVisibility(View.GONE);
+           }
+           else if(product_details.get(position).getProduct_stauts().equalsIgnoreCase("Vendor cancelled")){
+               holder.ll_confirm_reject.setVisibility(View.GONE);
+               holder.ll_dispatch.setVisibility(View.GONE);
+               holder.txt_product_status.setVisibility(View.VISIBLE);
+               holder.txt_product_status.setText(product_details.get(position).getProduct_stauts());
+           }else if(product_details.get(position).getProduct_stauts().equalsIgnoreCase("Order Dispatch")){
+               holder.ll_confirm_reject.setVisibility(View.GONE);
+               holder.ll_dispatch.setVisibility(View.GONE);
+               holder.txt_product_status.setVisibility(View.VISIBLE);
+               holder.txt_product_status.setTextColor(context.getResources().getColor(R.color.new_green_btn));
+               holder.txt_product_status.setText(product_details.get(position).getProduct_stauts());
+           }else{
+               holder.ll_confirm_reject.setVisibility(View.GONE);
+               holder.ll_dispatch.setVisibility(View.GONE);
+               holder.txt_product_status.setVisibility(View.GONE);
+           }
+
+
+        }
+
+
         if (product_details.get(position).getProduct_name() != null) {
             holder.txt_producttitle.setText(product_details.get(position).getProduct_name());
         }
@@ -98,6 +148,8 @@ public class ProductDetailsVendorAdapter extends  RecyclerView.Adapter<RecyclerV
 
         }
 
+        holder.ch_confirm.setChecked(status);
+
         holder.txt_track_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,6 +173,78 @@ public class ProductDetailsVendorAdapter extends  RecyclerView.Adapter<RecyclerV
             }
         });
 
+        holder.ch_confirm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    if (holder.ch_confirm.isChecked()) {
+                        holder.ch_reject.setChecked(false);
+                        isCheckedConfirm = true;
+                        isCheckedReject = false;
+                        onItemCheckConfirmStatus.onItemCheckConfirmStatus(product_details.get(position).getProduct_id());
+
+                    }
+
+                }else if (!holder.ch_confirm.isChecked()){
+                    holder.ch_reject.setChecked(true);
+                    isCheckedConfirm = false;
+                    isCheckedReject = true;
+                    onItemCheckConfirmStatus.onItemUncheckConfirmStatus(product_details.get(position).getProduct_id());
+                }
+
+
+
+            }
+        });
+        holder.ch_reject.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    if (holder.ch_reject.isChecked()) {
+                        holder.ch_confirm.setChecked(false);
+                        isCheckedReject = true;
+                        isCheckedConfirm = false;
+                        onItemCheckRejectStatus.onItemCheckRejectStatus(product_details.get(position).getProduct_id());
+
+                    }
+
+                }else if (!holder.ch_reject.isChecked()){
+                    holder.ch_confirm.setChecked(true);
+                    isCheckedReject = false;
+                    isCheckedConfirm = true;
+                    onItemCheckRejectStatus.onItemUncheckRejectStatus(product_details.get(position).getProduct_id());
+
+                }
+
+              /*  if(isChecked){
+                    if (holder.ch_reject.isChecked()) {
+                    }
+
+                }else{
+
+                }
+*/
+            }
+        });
+        holder.ch_dispatch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    if (holder.ch_dispatch.isChecked()) {
+                        onItemCheckDispatchStatus.onItemCheckDispatchStatus(product_details.get(position).getProduct_id());
+                    }else{
+                        onItemCheckDispatchStatus.onItemUncheckDispatchStatus(product_details.get(position).getProduct_id());
+
+                    }
+
+                }
+
+
+
+            }
+        });
+
+
     }
 
     @Override
@@ -134,8 +258,10 @@ public class ProductDetailsVendorAdapter extends  RecyclerView.Adapter<RecyclerV
     }
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_orderid, txt_producttitle, txt_products_price, txt_bookedon, txt_track_order, txt_cancell_order;
+        public TextView txt_orderid, txt_producttitle, txt_products_price, txt_bookedon, txt_track_order, txt_cancell_order,txt_product_status;
         public ImageView img_products_image;
+        public CheckBox ch_confirm,ch_reject,ch_dispatch;
+        public LinearLayout ll_confirm_reject,ll_dispatch;
 
 
         public ViewHolderOne(View itemView) {
@@ -147,6 +273,13 @@ public class ProductDetailsVendorAdapter extends  RecyclerView.Adapter<RecyclerV
             txt_bookedon = itemView.findViewById(R.id.txt_bookedon);
             txt_track_order = itemView.findViewById(R.id.txt_track_order);
             txt_cancell_order = itemView.findViewById(R.id.txt_cancell_order);
+            ch_confirm = itemView.findViewById(R.id.ch_confirm);
+            ch_reject = itemView.findViewById(R.id.ch_reject);
+            ch_dispatch = itemView.findViewById(R.id.ch_dispatch);
+            txt_cancell_order.setVisibility(View.GONE);
+            txt_product_status = itemView.findViewById(R.id.txt_product_status);
+            ll_confirm_reject = itemView.findViewById(R.id.ll_confirm_reject);
+            ll_dispatch = itemView.findViewById(R.id.ll_dispatch);
 
 
         }

@@ -15,8 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.doctor.DoctorMyCalendarNewUserActivity;
-import com.petfolio.infinitus.doctor.DoctorMyCalendarTimeActivity;
+
 import com.petfolio.infinitus.interfaces.OnItemClickSpecialization;
 import com.petfolio.infinitus.responsepojo.DoctorMyCalendarAvlDaysResponse;
 import com.petfolio.infinitus.serviceprovider.SPMyCalendarNewUserActivity;

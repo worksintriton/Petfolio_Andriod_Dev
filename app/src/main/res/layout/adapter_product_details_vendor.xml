@@ -195,7 +195,8 @@
                         android:textColor="@color/new_tri_txt_color"
                         android:textSize="18sp"
                         android:layout_marginStart="5dp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:id="@+id/txt_cancell_order"
@@ -207,7 +208,8 @@
                         android:maxLines="1"
                         android:text="@string/cancel_order"
                         android:textColor="@color/new_light_green"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="gone"/>
 
                 </LinearLayout>
 
@@ -217,37 +219,83 @@
                     android:orientation="horizontal"
                     android:layout_gravity="center"
                     android:layout_marginTop="5dp">
-                    <CheckBox
-                        android:id="@+id/ch_confirm"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:id="@+id/ll_confirm_reject"
+                        android:visibility="visible">
+                        <CheckBox
+                            android:id="@+id/ch_confirm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:id="@+id/txt_confirm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/futuramediumbt"
+                            android:gravity="center_horizontal"
+                            android:text="Confirm"
+                            android:textColor="@color/green"
+                            android:textSize="12sp"
+                            android:layout_marginStart="3dp"/>
+                        <CheckBox
+                            android:id="@+id/ch_reject"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"/>
+                        <TextView
+                            android:id="@+id/txt_reject"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/futuramediumbt"
+                            android:gravity="center_horizontal"
+                            android:text="Reject"
+                            android:textColor="@color/red"
+                            android:textSize="12sp"
+                            android:layout_marginStart="3dp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:id="@+id/ll_dispatch"
+                        android:visibility="gone">
+                        <CheckBox
+                            android:id="@+id/ch_dispatch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:id="@+id/txt_dispatch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/futuramediumbt"
+                            android:gravity="center_horizontal"
+                            android:text="Dispatch"
+                            android:textColor="@color/green"
+                            android:textSize="12sp"
+                            android:layout_marginStart="3dp"/>
+                    </LinearLayout>
                     <TextView
-                        android:id="@+id/txt_confirm"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/txt_product_status"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginStart="10dp"
+                        android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
-                        android:gravity="center_horizontal"
-                        android:text="Confirm"
-                        android:textColor="@color/green"
-                        android:textSize="12sp"
-                        android:layout_marginStart="3dp"/>
-                    <CheckBox
-                        android:id="@+id/ch_reject"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"/>
-                    <TextView
-                        android:id="@+id/txt_reject"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/futuramediumbt"
-                        android:gravity="center_horizontal"
-                        android:text="Reject"
+                        android:maxLines="1"
+                        android:text="@string/orderon"
                         android:textColor="@color/red"
-                        android:textSize="12sp"
-                        android:layout_marginStart="3dp"/>
+                        android:textSize="12sp" />
+
+
+
+
 
                 </LinearLayout>
+
 
 
             </LinearLayout>

@@ -55,7 +55,6 @@ public class VendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.View
 
     @SuppressLint("SetTextI18n")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
-
         currentItem = orderResponseListAll.get(position);
         if(orderResponseListAll.get(position).getV_order_id()!=null&&!(orderResponseListAll.get(position).getV_order_id().isEmpty())){
             holder.txt_orderid.setText(orderResponseListAll.get(position).getV_order_id());
@@ -82,9 +81,9 @@ public class VendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.View
         }
         if(orderResponseListAll.get(position).getV_order_price() != 0 && orderResponseListAll.get(position).getV_order_product_count() != 0) {
             if(orderResponseListAll.get(position).getV_order_product_count() == 1){
-                holder.txt_service_cost.setText("\u20B9 " + orderResponseListAll.get(position).getV_order_price() + " (" + orderResponseListAll.get(position).getV_order_product_count() + " item )");
+                holder.txt_service_cost.setText("\u20B9 " + orderResponseListAll.get(position).getV_order_price() + " (" + orderResponseListAll.get(position).getV_order_product_count() + " product )");
             }else{
-                holder.txt_service_cost.setText("\u20B9 " + orderResponseListAll.get(position).getV_order_price() + " (" + orderResponseListAll.get(position).getV_order_product_count() + " items )");
+                holder.txt_service_cost.setText("\u20B9 " + orderResponseListAll.get(position).getV_order_price() + " (" + orderResponseListAll.get(position).getV_order_product_count() + " products )");
 
             }
         }

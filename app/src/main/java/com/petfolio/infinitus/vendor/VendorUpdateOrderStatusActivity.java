@@ -465,7 +465,6 @@ public class VendorUpdateOrderStatusActivity extends AppCompatActivity implement
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
-
     public void hideLoading(){
         try {
             alertDialog.dismiss();
