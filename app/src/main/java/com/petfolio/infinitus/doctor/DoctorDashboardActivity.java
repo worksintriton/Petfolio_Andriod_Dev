@@ -7,9 +7,14 @@ import androidx.fragment.app.FragmentTransaction;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.petfolio.infinitus.R;
@@ -121,12 +126,13 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
     public void onBackPressed() {
         Log.w(TAG,"tag : "+tag);
         if (bottom_navigation_view.getSelectedItemId() == R.id.home) {
-            new android.app.AlertDialog.Builder(DoctorDashboardActivity.this)
+            showExitAppAlert();
+           /* new android.app.AlertDialog.Builder(DoctorDashboardActivity.this)
                     .setMessage("Are you sure you want to exit?")
                     .setCancelable(false)
                     .setPositiveButton("Yes", (dialog, id) -> DoctorDashboardActivity.this.finishAffinity())
                     .setNegativeButton("No", null)
-                    .show();
+                    .show();*/
         }
         else if(tag != null ){
             Log.w(TAG,"Else IF--->"+"fromactivity : "+fromactivity);
@@ -185,6 +191,40 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
         Fragment fragment = Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.main_container));
         fragment.onActivityResult(requestCode,resultCode,data);
     }
+
+    private void showExitAppAlert() {
+        try {
+
+            dialog = new Dialog(DoctorDashboardActivity.this);
+            dialog.setContentView(R.layout.alert_exit_layout);
+            Button btn_cancel = dialog.findViewById(R.id.btn_cancel);
+            Button btn_exit = dialog.findViewById(R.id.btn_exit);
+
+            btn_exit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    DoctorDashboardActivity.this.finishAffinity();
+                }
+            });
+            btn_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
 
 
 

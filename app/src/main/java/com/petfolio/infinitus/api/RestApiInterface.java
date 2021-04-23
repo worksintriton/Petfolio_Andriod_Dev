@@ -718,6 +718,10 @@ public interface RestApiInterface {
     @POST("vendor_order_group/update_vendor_status5")
     Call<VendorOrderUpdateResponse>petlover_update_order_cancel_single_ResponseCall(@Header("Content-Type") String type, @Body PetLoverCancelSingleOrderRequest petLoverCancelSingleOrderRequest);
 
+    /*pet lover my orders review and update*/
+    @POST("vendor_order_booking/reviews/update")
+    Call<VendorOrderUpdateResponse>petlover_myorders_reviewandupdate_ResponseCall(@Header("Content-Type") String type, @Body PetLoverMyOrdersReviewandUpdateRequest petLoverMyOrdersReviewandUpdateRequest);
+
 
 
 }

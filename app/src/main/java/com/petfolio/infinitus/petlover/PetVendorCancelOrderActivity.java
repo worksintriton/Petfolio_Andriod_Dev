@@ -391,7 +391,9 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         dialog.dismiss();
-                        startActivity(new Intent(PetVendorCancelOrderActivity.this,PetMyOrdrersNewActivity.class));
+                        Intent intent = new Intent(PetVendorCancelOrderActivity.this,PetLoverVendorOrderDetailsActivity.class);
+                        intent.putExtra("_id",orderid);
+                        startActivity(intent);
                         finish();
 
 
@@ -455,7 +457,9 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         dialog.dismiss();
-                        startActivity(new Intent(PetVendorCancelOrderActivity.this,PetMyOrdrersNewActivity.class));
+                        Intent intent = new Intent(PetVendorCancelOrderActivity.this,PetLoverVendorOrderDetailsActivity.class);
+                        intent.putExtra("_id",orderid);
+                        startActivity(intent);
                         finish();
 
 

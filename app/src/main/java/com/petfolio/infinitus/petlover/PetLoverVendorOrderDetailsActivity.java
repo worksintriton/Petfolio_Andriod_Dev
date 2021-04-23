@@ -292,6 +292,7 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(),PetMyOrdrersNewActivity.class));
         finish();
     }
 
@@ -394,7 +395,6 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
 
                             if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverNewOrders")){
                                 txt_order_status.setText("Booked on");
-                                txt_cancell_order.setVisibility(View.VISIBLE);
                                 img_order_status.setImageResource(R.drawable.completed);
                                 if(response.body().getData().getOrder_details().getOrder_booked() != null){
                                     txt_delivered_date.setText(response.body().getData().getOrder_details().getOrder_booked());
@@ -425,19 +425,15 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
                                     String productstatus =  response.body().getData().getProduct_details().get(i).getProduct_stauts();
                                     product_id.add(productid);
                                     if(productstatus != null){
-                                        if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverCancelledOrders")) {
-                                            txt_cancell_order.setVisibility(View.GONE);
+                                        if(productstatus.equalsIgnoreCase("Order Booked")){
+                                            txt_cancell_order.setVisibility(View.VISIBLE);
                                         }
-                                       /* else{
-                                            if(productstatus.equalsIgnoreCase("Order Booked")){
-                                                txt_cancell_order.setVisibility(View.VISIBLE);
-                                            }else{
-                                                txt_cancell_order.setVisibility(View.GONE);
-                                            }
-                                        }*/
-
 
                                     }
+                                }
+
+                                if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverCancelledOrders")) {
+                                    txt_cancell_order.setVisibility(View.GONE);
                                 }
                                 Log.w(TAG,"product_id List : "+new Gson().toJson(product_id));
 

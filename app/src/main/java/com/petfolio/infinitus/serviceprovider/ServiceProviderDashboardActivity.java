@@ -3,9 +3,14 @@ package com.petfolio.infinitus.serviceprovider;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -124,12 +129,13 @@ public class ServiceProviderDashboardActivity extends ServiceProviderNavigationD
     public void onBackPressed() {
         Log.w(TAG,"tag : "+tag);
         if (bottom_navigation_view.getSelectedItemId() == R.id.shop) {
-            new android.app.AlertDialog.Builder(ServiceProviderDashboardActivity.this)
+            showExitAppAlert();
+           /* new android.app.AlertDialog.Builder(ServiceProviderDashboardActivity.this)
                     .setMessage("Are you sure you want to exit?")
                     .setCancelable(false)
                     .setPositiveButton("Yes", (dialog, id) -> ServiceProviderDashboardActivity.this.finishAffinity())
                     .setNegativeButton("No", null)
-                    .show();
+                    .show();*/
         }
         else if(tag != null ){
             Log.w(TAG,"Else IF--->"+"fromactivity : "+fromactivity);
@@ -181,6 +187,7 @@ public class ServiceProviderDashboardActivity extends ServiceProviderNavigationD
         return true;
     }
 
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -190,6 +197,40 @@ public class ServiceProviderDashboardActivity extends ServiceProviderNavigationD
         Fragment fragment = Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.main_container));
         fragment.onActivityResult(requestCode,resultCode,data);
     }
+
+    private void showExitAppAlert() {
+        try {
+
+            dialog = new Dialog(ServiceProviderDashboardActivity.this);
+            dialog.setContentView(R.layout.alert_exit_layout);
+            Button btn_cancel = dialog.findViewById(R.id.btn_cancel);
+            Button btn_exit = dialog.findViewById(R.id.btn_exit);
+
+            btn_exit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    ServiceProviderDashboardActivity.this.finishAffinity();
+                }
+            });
+            btn_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
 
 
 

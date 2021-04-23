@@ -82,14 +82,14 @@ public class PetLoverVendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerV
             }
         }
         else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverCompletedOrders")){
-            if (orderResponseListAll.get(position).getP_order_booked_on() != null) {
-                holder.txt_bookedon.setText("Delivered on:" + " " + orderResponseListAll.get(position).getP_order_booked_on());
+            if (orderResponseListAll.get(position).getP_completed_date() != null) {
+                holder.txt_bookedon.setText("Delivered on:" + " " + orderResponseListAll.get(position).getP_completed_date());
 
             }
         }
         else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverCancelledOrders")){
-            if (orderResponseListAll.get(position).getP_order_booked_on() != null) {
-                holder.txt_bookedon.setText("Cancelled on:" + " " + orderResponseListAll.get(position).getP_order_booked_on());
+            if (orderResponseListAll.get(position).getP_cancelled_date() != null) {
+                holder.txt_bookedon.setText("Cancelled on:" + " " + orderResponseListAll.get(position).getP_cancelled_date());
 
             }
         }

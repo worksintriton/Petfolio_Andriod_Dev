@@ -44,9 +44,11 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.interfaces.SoSCallListener;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
+import com.petfolio.infinitus.vendor.VendorNavigationDrawer;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -188,7 +190,8 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
                 case R.id.nav_item_six:
                     return true;
                 case R.id.nav_item_seven:
-                    confirmLogoutDialog();
+                   // confirmLogoutDialog();
+                    showLogOutAppAlert();
                     return true;
 
 
@@ -421,6 +424,41 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
             sosPhonenumber = String.valueOf(phonenumber);
         }
     }
+
+    private void showLogOutAppAlert() {
+        try {
+
+            dialog = new Dialog(PetLoverNavigationDrawerNew.this);
+            dialog.setContentView(R.layout.alert_logout_layout);
+            Button btn_no = dialog.findViewById(R.id.btn_no);
+            Button btn_yes = dialog.findViewById(R.id.btn_yes);
+
+            btn_yes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    gotoLogout();
+
+                }
+            });
+            btn_no.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
 
 
 }

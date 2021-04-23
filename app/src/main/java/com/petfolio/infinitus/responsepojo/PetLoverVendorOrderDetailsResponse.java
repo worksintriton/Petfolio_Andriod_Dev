@@ -4,19 +4,20 @@ import java.util.List;
 
 public class PetLoverVendorOrderDetailsResponse {
 
+
     /**
      * Status : Success
-     * Message : Petlover Product Grouped
-     * Data : {"order_details":{"order_id":"ORDER-1618903034255","order_product":3,"order_status":"New","order_text":"Food Products","order_payment_id":"pay_H15cw93CgwR6dD","order_price":2230,"order_booked":"20-04-2021 12:47 PM","order_image":"http://54.212.108.156:3000/api/uploads/1617366791516.jpeg","order_cancelled":"","order_completed":""},"shipping_address":{"_id":"60797c16a20ca32d2668a30c","user_id":"603e27792c2b43125f8cb802","user_first_name":"DINESHKUMAR","user_last_name":"Deva","user_flat_no":"4/3","user_stree":"Marriyamman Kovil street","user_landmark":"","user_picocode":"621006","user_state":"TAMILNADU","user_city":"TRICHY","user_mobile":"9842670813","user_alter_mobile":"","user_address_stauts":"Last Used","user_address_type":"Home","user_display_date":"16-04-2021","updatedAt":"2021-04-16T11:59:18.437Z","createdAt":"2021-04-16T11:59:18.437Z","__v":0},"product_details":[{"product_id":0,"product_image":"http://54.212.108.156:3000/api/uploads/1617366791516.jpeg","product_name":"Acana Classic Prairie Poultry Dog Food 2 Kg","product_count":2,"product_price":800,"product_discount":0,"product_total_price":1600,"product_total_discount":0,"product_stauts":"Order Booked","product_booked":"20-04-2021 12:47 PM"},{"product_id":1,"product_image":"http://54.212.108.156:3000/api/uploads/resize-1613548631141238608collar.jpg","product_name":"DOGISTA PET PRODUCTS Dog Rope Leash,Brass","product_count":3,"product_price":180,"product_discount":0,"product_total_price":540,"product_total_discount":0,"product_stauts":"Order Booked","product_booked":"20-04-2021 12:47 PM"},{"product_id":2,"product_image":"http://54.212.108.156:3000/api/uploads/1618154867933.jpg","product_name":"DROOLS  CAT ADULT \u2013 MACKEREL TASTY DRY FOOD","product_count":2,"product_price":45,"product_discount":1,"product_total_price":90,"product_total_discount":2,"product_stauts":"Order Booked","product_booked":"20-04-2021 12:47 PM"}]}
+     * Message : Vendor Product Grouped
+     * Data : {"order_details":{"order_id":"ORDER-1619068388640","order_product":4,"order_status":"Cancelled","order_text":"Food Products","order_payment_id":"pay_H1qa3DlDt40yjQ","order_price":571,"order_booked":"22-04-2021 10:43 AM","order_image":"http://54.212.108.156:3000/api/uploads/1617098535464.jpeg","order_cancelled":"","order_completed":""},"shipping_address":{"_id":"60797c16a20ca32d2668a30c","user_id":"603e27792c2b43125f8cb802","user_first_name":"DINESHKUMAR","user_last_name":"Deva","user_flat_no":"4/3","user_stree":"Marriyamman Kovil street","user_landmark":"","user_picocode":"621006","user_state":"TAMILNADU","user_city":"TRICHY","user_mobile":"9842670813","user_alter_mobile":"","user_address_stauts":"Last Used","user_address_type":"Home","user_display_date":"16-04-2021","updatedAt":"2021-04-16T11:59:18.437Z","createdAt":"2021-04-16T11:59:18.437Z","__v":0},"product_details":[{"product_id":0,"product_image":"http://54.212.108.156:3000/api/uploads/1617098535464.jpeg","product_name":"Pedigree","product_count":1,"product_price":100,"product_discount":0,"product_total_price":100,"product_total_discount":0,"product_stauts":"Order Cancelled","product_booked":"22-04-2021 10:43 AM"},{"product_id":1,"product_image":"http://54.212.108.156:3000/api/uploads/1616648074881.jpeg","product_name":"Cow","product_count":1,"product_price":72,"product_discount":20,"product_total_price":72,"product_total_discount":20,"product_stauts":"Order Cancelled","product_booked":"22-04-2021 10:43 AM"},{"product_id":2,"product_image":"http://54.212.108.156:3000/api/uploads/1615541442124.jpeg","product_name":"CAT FOOD 2","product_count":1,"product_price":319,"product_discount":2,"product_total_price":319,"product_total_discount":2,"product_stauts":"Order Cancelled","product_booked":"22-04-2021 10:43 AM"},{"product_id":3,"product_image":"http://54.212.108.156:3000/api/uploads/1615541391131.jpeg","product_name":"DOG FOOD 2","product_count":1,"product_price":80,"product_discount":20,"product_total_price":80,"product_total_discount":20,"product_stauts":"Order Cancelled","product_booked":"22-04-2021 10:43 AM"}]}
      * Code : 200
      */
 
     private String Status;
     private String Message;
     /**
-     * order_details : {"order_id":"ORDER-1618903034255","order_product":3,"order_status":"New","order_text":"Food Products","order_payment_id":"pay_H15cw93CgwR6dD","order_price":2230,"order_booked":"20-04-2021 12:47 PM","order_image":"http://54.212.108.156:3000/api/uploads/1617366791516.jpeg","order_cancelled":"","order_completed":""}
+     * order_details : {"order_id":"ORDER-1619068388640","order_product":4,"order_status":"Cancelled","order_text":"Food Products","order_payment_id":"pay_H1qa3DlDt40yjQ","order_price":571,"order_booked":"22-04-2021 10:43 AM","order_image":"http://54.212.108.156:3000/api/uploads/1617098535464.jpeg","order_cancelled":"","order_completed":""}
      * shipping_address : {"_id":"60797c16a20ca32d2668a30c","user_id":"603e27792c2b43125f8cb802","user_first_name":"DINESHKUMAR","user_last_name":"Deva","user_flat_no":"4/3","user_stree":"Marriyamman Kovil street","user_landmark":"","user_picocode":"621006","user_state":"TAMILNADU","user_city":"TRICHY","user_mobile":"9842670813","user_alter_mobile":"","user_address_stauts":"Last Used","user_address_type":"Home","user_display_date":"16-04-2021","updatedAt":"2021-04-16T11:59:18.437Z","createdAt":"2021-04-16T11:59:18.437Z","__v":0}
-     * product_details : [{"product_id":0,"product_image":"http://54.212.108.156:3000/api/uploads/1617366791516.jpeg","product_name":"Acana Classic Prairie Poultry Dog Food 2 Kg","product_count":2,"product_price":800,"product_discount":0,"product_total_price":1600,"product_total_discount":0,"product_stauts":"Order Booked","product_booked":"20-04-2021 12:47 PM"},{"product_id":1,"product_image":"http://54.212.108.156:3000/api/uploads/resize-1613548631141238608collar.jpg","product_name":"DOGISTA PET PRODUCTS Dog Rope Leash,Brass","product_count":3,"product_price":180,"product_discount":0,"product_total_price":540,"product_total_discount":0,"product_stauts":"Order Booked","product_booked":"20-04-2021 12:47 PM"},{"product_id":2,"product_image":"http://54.212.108.156:3000/api/uploads/1618154867933.jpg","product_name":"DROOLS  CAT ADULT \u2013 MACKEREL TASTY DRY FOOD","product_count":2,"product_price":45,"product_discount":1,"product_total_price":90,"product_total_discount":2,"product_stauts":"Order Booked","product_booked":"20-04-2021 12:47 PM"}]
+     * product_details : [{"product_id":0,"product_image":"http://54.212.108.156:3000/api/uploads/1617098535464.jpeg","product_name":"Pedigree","product_count":1,"product_price":100,"product_discount":0,"product_total_price":100,"product_total_discount":0,"product_stauts":"Order Cancelled","product_booked":"22-04-2021 10:43 AM"},{"product_id":1,"product_image":"http://54.212.108.156:3000/api/uploads/1616648074881.jpeg","product_name":"Cow","product_count":1,"product_price":72,"product_discount":20,"product_total_price":72,"product_total_discount":20,"product_stauts":"Order Cancelled","product_booked":"22-04-2021 10:43 AM"},{"product_id":2,"product_image":"http://54.212.108.156:3000/api/uploads/1615541442124.jpeg","product_name":"CAT FOOD 2","product_count":1,"product_price":319,"product_discount":2,"product_total_price":319,"product_total_discount":2,"product_stauts":"Order Cancelled","product_booked":"22-04-2021 10:43 AM"},{"product_id":3,"product_image":"http://54.212.108.156:3000/api/uploads/1615541391131.jpeg","product_name":"DOG FOOD 2","product_count":1,"product_price":80,"product_discount":20,"product_total_price":80,"product_total_discount":20,"product_stauts":"Order Cancelled","product_booked":"22-04-2021 10:43 AM"}]
      */
 
     private DataBean Data;
@@ -56,14 +57,14 @@ public class PetLoverVendorOrderDetailsResponse {
 
     public static class DataBean {
         /**
-         * order_id : ORDER-1618903034255
-         * order_product : 3
-         * order_status : New
+         * order_id : ORDER-1619068388640
+         * order_product : 4
+         * order_status : Cancelled
          * order_text : Food Products
-         * order_payment_id : pay_H15cw93CgwR6dD
-         * order_price : 2230
-         * order_booked : 20-04-2021 12:47 PM
-         * order_image : http://54.212.108.156:3000/api/uploads/1617366791516.jpeg
+         * order_payment_id : pay_H1qa3DlDt40yjQ
+         * order_price : 571
+         * order_booked : 22-04-2021 10:43 AM
+         * order_image : http://54.212.108.156:3000/api/uploads/1617098535464.jpeg
          * order_cancelled :
          * order_completed :
          */
@@ -93,15 +94,15 @@ public class PetLoverVendorOrderDetailsResponse {
         private ShippingAddressBean shipping_address;
         /**
          * product_id : 0
-         * product_image : http://54.212.108.156:3000/api/uploads/1617366791516.jpeg
-         * product_name : Acana Classic Prairie Poultry Dog Food 2 Kg
-         * product_count : 2
-         * product_price : 800
+         * product_image : http://54.212.108.156:3000/api/uploads/1617098535464.jpeg
+         * product_name : Pedigree
+         * product_count : 1
+         * product_price : 100
          * product_discount : 0
-         * product_total_price : 1600
+         * product_total_price : 100
          * product_total_discount : 0
-         * product_stauts : Order Booked
-         * product_booked : 20-04-2021 12:47 PM
+         * product_stauts : Order Cancelled
+         * product_booked : 22-04-2021 10:43 AM
          */
 
         private List<ProductDetailsBean> product_details;

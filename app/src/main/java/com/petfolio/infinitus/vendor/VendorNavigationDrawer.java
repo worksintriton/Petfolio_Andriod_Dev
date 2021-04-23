@@ -1,15 +1,20 @@
 package com.petfolio.infinitus.vendor;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -26,9 +31,11 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
 import com.petfolio.infinitus.activity.NotificationActivity;
 
+import com.petfolio.infinitus.serviceprovider.ServiceProviderDashboardActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -72,6 +79,7 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
 
     String emailid = "";
     private SessionManager session;
+    private Dialog dialog;
 
 
     @Override
@@ -184,7 +192,8 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
                     case R.id.nav_item_seven:
                         return true;
                     case R.id.nav_item_eight:
-                        confirmLogoutDialog();
+                        showLogOutAppAlert();
+                        //confirmLogoutDialog();
                         return true;
 
 
@@ -311,12 +320,39 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
         alertDialog.show();
 
     }
+    private void showLogOutAppAlert() {
+        try {
+
+            dialog = new Dialog(VendorNavigationDrawer.this);
+            dialog.setContentView(R.layout.alert_logout_layout);
+            Button btn_no = dialog.findViewById(R.id.btn_no);
+            Button btn_yes = dialog.findViewById(R.id.btn_yes);
+
+            btn_yes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    gotoLogout();
+
+                }
+            });
+            btn_no.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
 
 
 
 
-
-
+    }
 
     private void gotoLogout() {
         session.logoutUser();
@@ -325,8 +361,6 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
         finish();
 
     }
-
-
 
     @Override
     protected void onResume() {
@@ -357,10 +391,6 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
 
 
     }
-
-
-
-
 
 
 }

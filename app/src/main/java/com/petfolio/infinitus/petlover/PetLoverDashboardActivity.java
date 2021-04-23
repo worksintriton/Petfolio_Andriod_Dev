@@ -4,10 +4,13 @@ package com.petfolio.infinitus.petlover;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
@@ -16,6 +19,8 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -102,6 +107,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
     private double latitude;
     private double longitude;
     public static String cityName;
+    private Dialog dialog;
 
 
     @SuppressLint("LogNotTimber")
@@ -194,12 +200,13 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
     public void onBackPressed() {
         Log.w(TAG,"tag : "+tag);
         if (bottom_navigation_view.getSelectedItemId() == R.id.home) {
-            new android.app.AlertDialog.Builder(PetLoverDashboardActivity.this)
+            showExitAppAlert();
+          /*  new android.app.AlertDialog.Builder(PetLoverDashboardActivity.this)
                     .setMessage("Are you sure you want to exit?")
                     .setCancelable(false)
                     .setPositiveButton("Yes", (dialog, id) -> PetLoverDashboardActivity.this.finishAffinity())
                     .setNegativeButton("No", null)
-                    .show();
+                    .show();*/
         }
         else if(tag != null ){
             Log.w(TAG,"Else IF--->"+"fromactivity : "+fromactivity);
@@ -511,6 +518,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
 
         String key = API.MAP_KEY;
         service.getAddressResultResponseCall(latlngs, key).enqueue(new Callback<GetAddressResultResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NotNull Call<GetAddressResultResponse> call, @NotNull Response<GetAddressResultResponse> response) {
                 //avi_indicator.smoothToHide();
@@ -613,6 +621,41 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
             }
         });
     }
+
+
+    private void showExitAppAlert() {
+        try {
+
+            dialog = new Dialog(PetLoverDashboardActivity.this);
+            dialog.setContentView(R.layout.alert_exit_layout);
+            Button btn_cancel = dialog.findViewById(R.id.btn_cancel);
+            Button btn_exit = dialog.findViewById(R.id.btn_exit);
+
+            btn_exit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    PetLoverDashboardActivity.this.finishAffinity();
+                }
+            });
+            btn_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
 
 
 }

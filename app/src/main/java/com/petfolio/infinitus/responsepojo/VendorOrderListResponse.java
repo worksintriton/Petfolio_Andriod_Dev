@@ -7,7 +7,7 @@ public class VendorOrderListResponse {
     /**
      * Status : Success
      * Message : Vendor Order Grouped
-     * Data : [{"v_order_id":"ORDER-1618830809052","v_user_id":"603e27792c2b43125f8cb802","v_shipping_address":"60797c16a20ca32d2668a30c","v_payment_id":"pay_H0gNJn2CM7xjO1","v_vendor_id":"604866a50b3a487571a1c568","v_order_product_count":1,"v_order_price":960,"v_order_image":"http://54.212.108.156:3000/api/uploads/1615541391131.jpeg","v_order_booked_on":"19-04-2021 12:05 PM","v_order_status":"New","v_order_text":"Food Products"},{"v_order_id":"ORDER-1618830842057","v_user_id":"603e27792c2b43125f8cb802","v_shipping_address":"60797c16a20ca32d2668a30c","v_payment_id":"pay_H0gNJn2CM7xjO1","v_vendor_id":"604866a50b3a487571a1c568","v_order_product_count":1,"v_order_price":960,"v_order_image":"http://54.212.108.156:3000/api/uploads/1615541391131.jpeg","v_order_booked_on":"19-04-2021 12:05 PM","v_order_status":"New","v_order_text":"Food Products"}]
+     * Data : [{"v_order_id":"ORDER-1619076762955","v_user_id":"603e27792c2b43125f8cb802","v_shipping_address":"60797c16a20ca32d2668a30c","v_payment_id":"pay_H1sxV6iyVkk4Sn","v_vendor_id":"604866a50b3a487571a1c568","v_order_product_count":1,"v_order_price":72,"v_order_image":"http://54.212.108.156:3000/api/uploads/1616648074881.jpeg","v_order_booked_on":"22-04-2021 01:02 PM","v_order_status":"New","v_order_text":"Food Products","v_cancelled_date":"","v_completed_date":""},{"v_order_id":"ORDER-1619076782906","v_user_id":"603e27792c2b43125f8cb802","v_shipping_address":"60797c16a20ca32d2668a30c","v_payment_id":"pay_H1sxsKBMrqCMXR","v_vendor_id":"604866a50b3a487571a1c568","v_order_product_count":1,"v_order_price":72,"v_order_image":"http://54.212.108.156:3000/api/uploads/1616648074881.jpeg","v_order_booked_on":"22-04-2021 01:03 PM","v_order_status":"New","v_order_text":"Food Products","v_cancelled_date":"","v_completed_date":""},{"v_order_id":"ORDER-1619082840164","v_user_id":"603e27792c2b43125f8cb802","v_shipping_address":"60797c16a20ca32d2668a30c","v_payment_id":"pay_H1ugW8Vubw8hWE","v_vendor_id":"604866a50b3a487571a1c568","v_order_product_count":3,"v_order_price":790,"v_order_image":"http://54.212.108.156:3000/api/uploads/1616648074881.jpeg","v_order_booked_on":"22-04-2021 02:43 PM","v_order_status":"New","v_order_text":"Food Products","v_cancelled_date":"","v_completed_date":""},{"v_order_id":"ORDER-1619085183358","v_user_id":"603e27792c2b43125f8cb802","v_shipping_address":"60797c16a20ca32d2668a30c","v_payment_id":"pay_H1vLlOtTIIEGZM","v_vendor_id":"604866a50b3a487571a1c568","v_order_product_count":4,"v_order_price":643,"v_order_image":"http://54.212.108.156:3000/api/uploads/1616648074881.jpeg","v_order_booked_on":"22-04-2021 03:23 PM","v_order_status":"New","v_order_text":"Food Products","v_cancelled_date":"","v_completed_date":""}]
      * Code : 200
      */
 
@@ -15,17 +15,19 @@ public class VendorOrderListResponse {
     private String Message;
     private int Code;
     /**
-     * v_order_id : ORDER-1618830809052
+     * v_order_id : ORDER-1619076762955
      * v_user_id : 603e27792c2b43125f8cb802
      * v_shipping_address : 60797c16a20ca32d2668a30c
-     * v_payment_id : pay_H0gNJn2CM7xjO1
+     * v_payment_id : pay_H1sxV6iyVkk4Sn
      * v_vendor_id : 604866a50b3a487571a1c568
      * v_order_product_count : 1
-     * v_order_price : 960
-     * v_order_image : http://54.212.108.156:3000/api/uploads/1615541391131.jpeg
-     * v_order_booked_on : 19-04-2021 12:05 PM
+     * v_order_price : 72
+     * v_order_image : http://54.212.108.156:3000/api/uploads/1616648074881.jpeg
+     * v_order_booked_on : 22-04-2021 01:02 PM
      * v_order_status : New
      * v_order_text : Food Products
+     * v_cancelled_date :
+     * v_completed_date :
      */
 
     private List<DataBean> Data;
@@ -74,6 +76,8 @@ public class VendorOrderListResponse {
         private String v_order_booked_on;
         private String v_order_status;
         private String v_order_text;
+        private String v_cancelled_date;
+        private String v_completed_date;
 
         public String getV_order_id() {
             return v_order_id;
@@ -161,6 +165,22 @@ public class VendorOrderListResponse {
 
         public void setV_order_text(String v_order_text) {
             this.v_order_text = v_order_text;
+        }
+
+        public String getV_cancelled_date() {
+            return v_cancelled_date;
+        }
+
+        public void setV_cancelled_date(String v_cancelled_date) {
+            this.v_cancelled_date = v_cancelled_date;
+        }
+
+        public String getV_completed_date() {
+            return v_completed_date;
+        }
+
+        public void setV_completed_date(String v_completed_date) {
+            this.v_completed_date = v_completed_date;
         }
     }
 }

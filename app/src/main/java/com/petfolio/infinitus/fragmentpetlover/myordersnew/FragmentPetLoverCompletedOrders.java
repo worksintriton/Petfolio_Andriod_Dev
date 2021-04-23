@@ -302,7 +302,7 @@ public class FragmentPetLoverCompletedOrders extends Fragment implements AddRevi
     @SuppressLint({"LogNotTimber", "LongLogTag"})
     private AddShopReviewRequest addShopReviewRequest(String id, String userfeedback, String userrate) {
 
-        /**
+        /*
          * order_id : 5fd30a701978e618628c966c
          * user_feedback :
          * user_rate : 0

@@ -1,11 +1,14 @@
 package com.petfolio.infinitus.doctor;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -33,11 +37,13 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
 import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.petlover.PetLoverEditProfileActivity;
+import com.petfolio.infinitus.petlover.PetLoverNavigationDrawerNew;
 import com.petfolio.infinitus.petlover.PetLoverProfileScreenActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 //import com.petfolio.infinitus.sessionmanager.SessionManager;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -80,6 +86,7 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
 
     String emailid = "";
     private SessionManager session;
+    private Dialog dialog;
 
 
     @Override
@@ -167,6 +174,7 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
         }*/
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 item.setChecked(true);
@@ -198,7 +206,8 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
                     case R.id.nav_item_seven:
                         return true;
                     case R.id.nav_item_eight:
-                        confirmLogoutDialog();
+                       // confirmLogoutDialog();
+                        showLogOutAppAlert();
                         return true;
 
 
@@ -368,6 +377,40 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
         }catch (Exception e){
             e.printStackTrace();
         }
+
+
+    }
+
+    private void showLogOutAppAlert() {
+        try {
+
+            dialog = new Dialog(DoctorNavigationDrawer.this);
+            dialog.setContentView(R.layout.alert_logout_layout);
+            Button btn_no = dialog.findViewById(R.id.btn_no);
+            Button btn_yes = dialog.findViewById(R.id.btn_yes);
+
+            btn_yes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    gotoLogout();
+
+                }
+            });
+            btn_no.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
 
 
     }

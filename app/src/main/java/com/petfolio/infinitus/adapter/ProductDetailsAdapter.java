@@ -125,7 +125,14 @@ public class ProductDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
             }
         });
 
-    }
+        if(product_details.get(position).getProduct_stauts().equalsIgnoreCase("Order Cancelled")){
+            holder.txt_cancell_order.setVisibility(View.GONE);
+            holder.txt_product_status.setVisibility(View.VISIBLE);
+            holder.txt_product_status.setText(product_details.get(position).getProduct_stauts());
+        }
+
+
+        }
 
     @Override
     public int getItemCount() {
@@ -138,7 +145,7 @@ public class ProductDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
     }
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_orderid, txt_producttitle, txt_products_price, txt_bookedon, txt_track_order, txt_cancell_order;
+        public TextView txt_orderid, txt_producttitle, txt_products_price, txt_bookedon, txt_track_order, txt_cancell_order,txt_product_status;
         public ImageView img_products_image;
 
 
@@ -151,6 +158,8 @@ public class ProductDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
             txt_bookedon = itemView.findViewById(R.id.txt_bookedon);
             txt_track_order = itemView.findViewById(R.id.txt_track_order);
             txt_cancell_order = itemView.findViewById(R.id.txt_cancell_order);
+            txt_product_status = itemView.findViewById(R.id.txt_product_status);
+            txt_product_status.setVisibility(View.GONE);
 
 
         }

@@ -105,14 +105,14 @@ public class VendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.View
             }
         }
         else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentCompletedOrders")){
-            if (orderResponseListAll.get(position).getV_order_booked_on() != null) {
-                holder.txt_bookedon.setText("Delivered on:" + " " + orderResponseListAll.get(position).getV_order_booked_on());
+            if (orderResponseListAll.get(position).getV_completed_date() != null) {
+                holder.txt_bookedon.setText("Delivered on:" + " " + orderResponseListAll.get(position).getV_completed_date());
 
             }
         }
         else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentCancelledOrders")){
-            if (orderResponseListAll.get(position).getV_order_booked_on() != null) {
-                holder.txt_bookedon.setText("Cancelled on:" + " " + orderResponseListAll.get(position).getV_order_booked_on());
+            if (orderResponseListAll.get(position).getV_cancelled_date() != null) {
+                holder.txt_bookedon.setText("Cancelled on:" + " " + orderResponseListAll.get(position).getV_cancelled_date());
 
             }
         }
