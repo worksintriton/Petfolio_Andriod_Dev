@@ -163,7 +163,7 @@ public class FragmentCancelledOrders extends Fragment implements OnAcceptsReturn
                 });
             }
         };
-        timer.schedule(doAsynchronousTask, 0, 30000);//you can put 30000(30 secs)
+        timer.schedule(doAsynchronousTask, 0, 45000);//you can put 30000(30 secs)
 
         refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                     @Override

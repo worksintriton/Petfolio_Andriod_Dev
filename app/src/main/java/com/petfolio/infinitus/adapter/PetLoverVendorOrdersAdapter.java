@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.interfaces.AddReviewListener;
+import com.petfolio.infinitus.interfaces.AddandReviewListener;
 import com.petfolio.infinitus.petlover.PetLoverVendorOrderDetailsActivity;
 import com.petfolio.infinitus.responsepojo.PetLoverVendorOrderListResponse;
 
@@ -28,13 +31,16 @@ public class PetLoverVendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerV
     private final Context context;
     PetLoverVendorOrderListResponse.DataBean currentItem;
     String fromactivity;
+    private AddandReviewListener addReviewListener;
 
 
 
-    public PetLoverVendorOrdersAdapter(Context context, List<PetLoverVendorOrderListResponse.DataBean> orderResponseListAll, String fromactivity) {
+
+    public PetLoverVendorOrdersAdapter(Context context, List<PetLoverVendorOrderListResponse.DataBean> orderResponseListAll, String fromactivity,AddandReviewListener addReviewListener) {
         this.context = context;
         this.orderResponseListAll = orderResponseListAll;
         this.fromactivity = fromactivity;
+        this.addReviewListener = addReviewListener;
 
 
     }
@@ -86,6 +92,14 @@ public class PetLoverVendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerV
                 holder.txt_bookedon.setText("Delivered on:" + " " + orderResponseListAll.get(position).getP_completed_date());
 
             }
+            if(orderResponseListAll.get(position).getP_user_rate() == 0){
+                holder.btn_add_review.setVisibility(View.VISIBLE);
+            }else{
+                holder.btn_add_review.setVisibility(View.GONE);
+
+            }
+            holder.btn_add_review.setOnClickListener(v -> addReviewListener.addReviewListener(orderResponseListAll.get(position).getP_order_id(),orderResponseListAll.get(position).getP_user_rate(),orderResponseListAll.get(position).getP_user_feedback()));
+
         }
         else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverCancelledOrders")){
             if (orderResponseListAll.get(position).getP_cancelled_date() != null) {
@@ -153,6 +167,7 @@ public class PetLoverVendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerV
     static class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_orderid, txt_producttitle, txt_products_price, txt_bookedon, txt_order_details;
         public ImageView img_products_image;
+        public Button btn_add_review;
 
 
         public ViewHolderOne(View itemView) {
@@ -163,6 +178,9 @@ public class PetLoverVendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerV
             txt_products_price = itemView.findViewById(R.id.txt_products_price);
             txt_bookedon = itemView.findViewById(R.id.txt_bookedon);
             txt_order_details = itemView.findViewById(R.id.txt_order_details);
+            btn_add_review = itemView.findViewById(R.id.btn_add_review);
+            btn_add_review.setVisibility(View.GONE);
+
         }
 
 

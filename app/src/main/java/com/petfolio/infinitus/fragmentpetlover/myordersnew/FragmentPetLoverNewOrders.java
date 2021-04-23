@@ -24,6 +24,7 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.PetLoverVendorOrdersAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.interfaces.AddandReviewListener;
 import com.petfolio.infinitus.requestpojo.PetLoverVendorOrderListRequest;
 import com.petfolio.infinitus.responsepojo.PetLoverVendorOrderListResponse;
 import com.petfolio.infinitus.responsepojo.PetVendorOrderResponse;
@@ -45,7 +46,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentPetLoverNewOrders extends Fragment {
+public class FragmentPetLoverNewOrders extends Fragment implements AddandReviewListener {
     private final String TAG = "FragmentPetLoverNewOrders";
 
     @SuppressLint("NonConstantResourceId")
@@ -85,6 +86,7 @@ public class FragmentPetLoverNewOrders extends Fragment {
     public static final int PAGE_START = 1;
     private int CURRENT_PAGE = PAGE_START;
     private boolean isLoading = false;
+    boolean isfirst = false;
 
 
     public FragmentPetLoverNewOrders() {
@@ -114,7 +116,8 @@ public class FragmentPetLoverNewOrders extends Fragment {
         userid = user.get(SessionManager.KEY_ID);
         Log.w(TAG," userid : "+userid);
 
-      
+        Log.w(TAG,"isfist"+isfirst);
+
 
         if (new ConnectionDetector(getActivity()).isNetworkAvailable(mContext)) {
             get_grouped_order_by_petlover_ResponseCall();
@@ -129,8 +132,7 @@ public class FragmentPetLoverNewOrders extends Fragment {
                         }
 
                     }
-                }
-        );
+                });
 
 
        /* final Handler handler = new Handler();
@@ -150,7 +152,36 @@ public class FragmentPetLoverNewOrders extends Fragment {
         timer.schedule(doAsynchronousTask, 0, 30000);//you can put 30000(30 secs)
 */
 
-        initResultRecylerView();
+       Log.w(TAG,"isfist after "+isfirst);
+
+        rv_newappointment.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @SuppressLint({"LogNotTimber", "LongLogTag"})
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                if (!isLoading) {
+                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == orderResponseListAll.size() - 1) {
+                        //bottom of list!
+                        CURRENT_PAGE += 1;
+
+                        Log.w(TAG, "isLoading? " + isLoading + " currentPage " + CURRENT_PAGE);
+                        isLoading = true;
+                        get_grouped_order_by_petlover_ResponseCall();
+
+
+                    }
+                }
+            }
+        });
+
 
         return view;
     }
@@ -180,6 +211,7 @@ public class FragmentPetLoverNewOrders extends Fragment {
 
                if (response.body() != null) {
                    if(200 == response.body().getCode()){
+                       isfirst = true;
 
                        orderResponseList = response.body().getData();
                        Log.w(TAG,"orderResponseList Size : "+orderResponseList.size());
@@ -218,10 +250,10 @@ public class FragmentPetLoverNewOrders extends Fragment {
 
                        Log.w(TAG,"orderResponseListAll size : "+orderResponseListAll.size());
                        Log.w(TAG,"orderResponseListAll : "+new Gson().toJson(orderResponseListAll));
-                       if(orderResponseList.size() > 0){
+                       if(orderResponseListAll.size() > 0){
                            txt_no_records.setVisibility(View.GONE);
                            rv_newappointment.setVisibility(View.VISIBLE);
-                           setView(orderResponseList);
+                           setView(orderResponseListAll);
 
                        }
                        else{
@@ -263,44 +295,19 @@ public class FragmentPetLoverNewOrders extends Fragment {
         Log.w(TAG,"petLoverVendorOrderListRequest"+ "--->" + new Gson().toJson(petLoverVendorOrderListRequest));
         return petLoverVendorOrderListRequest;
     }
-    private void initResultRecylerView() {
-        rv_newappointment.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
 
-            @SuppressLint({"LogNotTimber", "LongLogTag"})
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-
-                if (!isLoading) {
-                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == orderResponseListAll.size() - 1) {
-                        //bottom of list!
-                        CURRENT_PAGE += 1;
-
-                        Log.w(TAG, "isLoading? " + isLoading + " currentPage " + CURRENT_PAGE);
-                        isLoading = true;
-                        get_grouped_order_by_petlover_ResponseCall();
-
-
-                    }
-                }
-            }
-        });
-    }
     private void setView(List<PetLoverVendorOrderListResponse.DataBean> orderResponseListAll) {
         rv_newappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_newappointment.setItemAnimator(new DefaultItemAnimator());
-        PetLoverVendorOrdersAdapter vendorOrdersAdapter = new PetLoverVendorOrdersAdapter(getContext(), orderResponseListAll,TAG);
+        PetLoverVendorOrdersAdapter vendorOrdersAdapter = new PetLoverVendorOrdersAdapter(getContext(), orderResponseListAll,TAG,this);
         rv_newappointment.setAdapter(vendorOrdersAdapter);
         vendorOrdersAdapter.notifyDataSetChanged();
         isLoading = false;
     }
 
 
+    @Override
+    public void addReviewListener(String id, int userrate, String userfeedback) {
 
+    }
 }

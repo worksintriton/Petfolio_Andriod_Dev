@@ -481,7 +481,7 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
     private void setView(List<PetLoverVendorOrderDetailsResponse.DataBean.ProductDetailsBean> product_details) {
         rv_productdetails.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rv_productdetails.setItemAnimator(new DefaultItemAnimator());
-        ProductDetailsAdapter productDetailsAdapter = new ProductDetailsAdapter(getApplicationContext(),product_details,orderid);
+        ProductDetailsAdapter productDetailsAdapter = new ProductDetailsAdapter(getApplicationContext(),product_details,orderid,fromactivity);
         rv_productdetails.setAdapter(productDetailsAdapter);
 
     }

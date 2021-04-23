@@ -5,13 +5,10 @@
     android:id="@+id/ll_new"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
-
-        <RelativeLayout
+    <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:ignore="UselessParent">
-
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_pet"
                 android:layout_width="80dp"
@@ -250,7 +247,6 @@
                 android:textSize="12sp" />
 
         </RelativeLayout>
-
 
 </LinearLayout>
 

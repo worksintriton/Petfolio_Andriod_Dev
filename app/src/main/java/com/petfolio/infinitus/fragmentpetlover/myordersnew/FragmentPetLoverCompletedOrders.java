@@ -33,12 +33,15 @@ import com.petfolio.infinitus.adapter.PetVendorCompletedOrdersAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.interfaces.AddReviewListener;
+import com.petfolio.infinitus.interfaces.AddandReviewListener;
 import com.petfolio.infinitus.requestpojo.AddShopReviewRequest;
+import com.petfolio.infinitus.requestpojo.PetLoverMyOrdersReviewandUpdateRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverVendorOrderListRequest;
 import com.petfolio.infinitus.requestpojo.PetVendorOrderRequest;
 import com.petfolio.infinitus.responsepojo.AddReviewResponse;
 import com.petfolio.infinitus.responsepojo.PetLoverVendorOrderListResponse;
 import com.petfolio.infinitus.responsepojo.PetVendorOrderResponse;
+import com.petfolio.infinitus.responsepojo.VendorOrderUpdateResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -57,7 +60,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentPetLoverCompletedOrders extends Fragment implements AddReviewListener {
+public class FragmentPetLoverCompletedOrders extends Fragment implements AddandReviewListener {
     private final String TAG = "FragmentPetLoverCompletedOrders";
 
     @SuppressLint("NonConstantResourceId")
@@ -99,7 +102,7 @@ public class FragmentPetLoverCompletedOrders extends Fragment implements AddRevi
     Dialog alertDialog;
 
     Context mContext;
-    private String userrate;
+    private int userrate;
 
     private List<PetLoverVendorOrderListResponse.DataBean> orderResponseList;
     private final List<PetLoverVendorOrderListResponse.DataBean> orderResponseListAll = new ArrayList<>();
@@ -213,15 +216,10 @@ public class FragmentPetLoverCompletedOrders extends Fragment implements AddRevi
 
 
 
-    @SuppressLint({"LongLogTag", "LogNotTimber"})
-    @Override
-    public void addReviewListener(String id, String userrate, String userfeedback, String appointment_for) {
-        Log.w(TAG,"addReviewListener : "+"id : "+id+" userrate : "+userrate+" userfeedback : "+userfeedback+" appointment_for : "+appointment_for);
-        showAddReview(id,appointment_for);
-    }
+
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
-    private void showAddReview(String id,String appointment_for) {
+    private void showAddReview(String id, int user_rate, String userfeedback) {
         try {
             Dialog dialog = new Dialog(mContext);
             dialog.setContentView(R.layout.addreview_popup_layout);
@@ -231,15 +229,15 @@ public class FragmentPetLoverCompletedOrders extends Fragment implements AddRevi
             Button btn_addreview = dialog.findViewById(R.id.btn_addreview);
 
             ratingBar.setOnRatingBarChangeListener((ratingBar1, rating, fromUser) -> {
-                userrate = String.valueOf(rating);
-                Log.w(TAG,"onRatingChanged userrate : "+userrate);
+                userrate = (int) rating;
+                Log.w(TAG,"onRatingChanged userrate : "+ this.userrate);
             });
 
             btn_addreview.setOnClickListener(view -> {
-                if(userrate != null){
+                if(userrate != 0){
                     dialog.dismiss();
-                    if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-                            addReviewResponseCall(id, edt_addreview.getText().toString(), userrate);
+                    if (new ConnectionDetector(getActivity()).isNetworkAvailable(mContext)) {
+                        addReviewResponseCall(id, edt_addreview.getText().toString(), userrate);
                     }
                 }else{
                     showErrorLoading("Please choose a star.");
@@ -259,16 +257,16 @@ public class FragmentPetLoverCompletedOrders extends Fragment implements AddRevi
 
     }
     @SuppressLint({"LogNotTimber", "LongLogTag"})
-    private void addReviewResponseCall(String id, String userfeedback, String userrate) {
+    private void addReviewResponseCall(String id, String userfeedback, int userrate) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-        Call<AddReviewResponse> call = apiInterface.shopaddReviewResponseCall(RestUtils.getContentType(), addShopReviewRequest(id,userfeedback,userrate));
+        Call<VendorOrderUpdateResponse> call = apiInterface.petlover_myorders_reviewandupdate_ResponseCall(RestUtils.getContentType(), petLoverMyOrdersReviewandUpdateRequest(id,userfeedback,userrate));
         Log.w(TAG,"addReviewResponseCall url  :%s"+" "+ call.request().url().toString());
 
-        call.enqueue(new Callback<AddReviewResponse>() {
+        call.enqueue(new Callback<VendorOrderUpdateResponse>() {
             @Override
-            public void onResponse(@NonNull Call<AddReviewResponse> call, @NonNull Response<AddReviewResponse> response) {
+            public void onResponse(@NonNull Call<VendorOrderUpdateResponse> call, @NonNull Response<VendorOrderUpdateResponse> response) {
 
                 Log.w(TAG,"AddReviewResponse"+ "--->" + new Gson().toJson(response.body()));
 
@@ -291,7 +289,7 @@ public class FragmentPetLoverCompletedOrders extends Fragment implements AddRevi
 
             @SuppressLint("LongLogTag")
             @Override
-            public void onFailure(@NonNull Call<AddReviewResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<VendorOrderUpdateResponse> call, @NonNull Throwable t) {
 
                 avi_indicator.smoothToHide();
                 Log.w(TAG,"AddReviewResponse flr"+"--->" + t.getMessage());
@@ -300,7 +298,7 @@ public class FragmentPetLoverCompletedOrders extends Fragment implements AddRevi
 
     }
     @SuppressLint({"LogNotTimber", "LongLogTag"})
-    private AddShopReviewRequest addShopReviewRequest(String id, String userfeedback, String userrate) {
+    private PetLoverMyOrdersReviewandUpdateRequest petLoverMyOrdersReviewandUpdateRequest(String id, String userfeedback, int userrate) {
 
         /*
          * order_id : 5fd30a701978e618628c966c
@@ -308,35 +306,26 @@ public class FragmentPetLoverCompletedOrders extends Fragment implements AddRevi
          * user_rate : 0
          */
 
-        AddShopReviewRequest addShopReviewRequest = new AddShopReviewRequest();
-        addShopReviewRequest.setOrder_id(id);
+        PetLoverMyOrdersReviewandUpdateRequest petLoverMyOrdersReviewandUpdateRequest = new PetLoverMyOrdersReviewandUpdateRequest();
+        petLoverMyOrdersReviewandUpdateRequest.setOrder_id(id);
         if(userfeedback != null){
-            addShopReviewRequest.setUser_feedback(userfeedback);
+            petLoverMyOrdersReviewandUpdateRequest.setUser_feedback(userfeedback);
 
         }else{
-            addShopReviewRequest.setUser_feedback("");
-
-        }if(userrate != null){
-            addShopReviewRequest.setUser_rate(userrate);
-
-        }else{
-            addShopReviewRequest.setUser_rate("");
+            petLoverMyOrdersReviewandUpdateRequest.setUser_feedback("");
 
         }
-        Log.w(TAG,"addShopReviewRequest"+ "--->" + new Gson().toJson(addShopReviewRequest));
-        return addShopReviewRequest;
+        petLoverMyOrdersReviewandUpdateRequest.setUser_rate(userrate);
+        Log.w(TAG,"addShopReviewRequest"+ "--->" + new Gson().toJson(petLoverMyOrdersReviewandUpdateRequest));
+        return petLoverMyOrdersReviewandUpdateRequest;
     }
 
     private void showAddReviewSuccess() {
         try {
-
             Dialog dialog = new Dialog(mContext);
             dialog.setContentView(R.layout.addreview_review_success_layout);
             dialog.setCancelable(false);
-
             Button btn_back = dialog.findViewById(R.id.btn_back);
-
-
             btn_back.setOnClickListener(view -> {
                 dialog.dismiss();
                 if (new ConnectionDetector(getActivity()).isNetworkAvailable(mContext)) {
@@ -492,11 +481,15 @@ public class FragmentPetLoverCompletedOrders extends Fragment implements AddRevi
     private void setView(List<PetLoverVendorOrderListResponse.DataBean> orderResponseListAll) {
         rv_completedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_completedappointment.setItemAnimator(new DefaultItemAnimator());
-        PetLoverVendorOrdersAdapter vendorOrdersAdapter = new PetLoverVendorOrdersAdapter(getContext(), orderResponseListAll,TAG);
+        PetLoverVendorOrdersAdapter vendorOrdersAdapter = new PetLoverVendorOrdersAdapter(getContext(), orderResponseListAll,TAG,this);
         rv_completedappointment.setAdapter(vendorOrdersAdapter);
         vendorOrdersAdapter.notifyDataSetChanged();
         isLoading = false;
     }
 
 
+    @Override
+    public void addReviewListener(String id, int userrate, String userfeedback) {
+        showAddReview(id,userrate,userfeedback);
+    }
 }

@@ -4,10 +4,11 @@ import java.util.List;
 
 public class PetLoverVendorOrderListResponse {
 
+
     /**
      * Status : Success
      * Message : Petlover Order Grouped
-     * Data : [{"p_order_id":"ORDER-1619076762955","p_user_id":"603e27792c2b43125f8cb802","p_shipping_address":"60797c16a20ca32d2668a30c","p_payment_id":"pay_H1sxV6iyVkk4Sn","p_vendor_id":"604866a50b3a487571a1c568","p_order_product_count":1,"p_order_price":72,"p_order_image":"http://54.212.108.156:3000/api/uploads/1616648074881.jpeg","p_order_booked_on":"22-04-2021 01:02 PM","p_order_status":"New","p_order_text":"Food Products","p_cancelled_date":"","p_completed_date":""},{"p_order_id":"ORDER-1619076782906","p_user_id":"603e27792c2b43125f8cb802","p_shipping_address":"60797c16a20ca32d2668a30c","p_payment_id":"pay_H1sxsKBMrqCMXR","p_vendor_id":"604866a50b3a487571a1c568","p_order_product_count":1,"p_order_price":72,"p_order_image":"http://54.212.108.156:3000/api/uploads/1616648074881.jpeg","p_order_booked_on":"22-04-2021 01:03 PM","p_order_status":"New","p_order_text":"Food Products","p_cancelled_date":"","p_completed_date":""},{"p_order_id":"ORDER-1619082840164","p_user_id":"603e27792c2b43125f8cb802","p_shipping_address":"60797c16a20ca32d2668a30c","p_payment_id":"pay_H1ugW8Vubw8hWE","p_vendor_id":"604866a50b3a487571a1c568","p_order_product_count":3,"p_order_price":790,"p_order_image":"http://54.212.108.156:3000/api/uploads/1616648074881.jpeg","p_order_booked_on":"22-04-2021 02:43 PM","p_order_status":"New","p_order_text":"Food Products","p_cancelled_date":"","p_completed_date":""},{"p_order_id":"ORDER-1619084989791","p_user_id":"603e27792c2b43125f8cb802","p_shipping_address":"60797c16a20ca32d2668a30c","p_payment_id":"pay_H1vIMd2BHTrsVR","p_vendor_id":"602a2061b3c2dd2c152d77d8","p_order_product_count":3,"p_order_price":27160,"p_order_image":"http://54.212.108.156:3000/api/uploads/1615955637906.jpeg","p_order_booked_on":"22-04-2021 03:19 pm","p_order_status":"New","p_order_text":"Food Products","p_cancelled_date":"","p_completed_date":""},{"p_order_id":"ORDER-1619085183358","p_user_id":"603e27792c2b43125f8cb802","p_shipping_address":"60797c16a20ca32d2668a30c","p_payment_id":"pay_H1vLlOtTIIEGZM","p_vendor_id":"604866a50b3a487571a1c568","p_order_product_count":4,"p_order_price":643,"p_order_image":"http://54.212.108.156:3000/api/uploads/1616648074881.jpeg","p_order_booked_on":"22-04-2021 03:23 PM","p_order_status":"New","p_order_text":"Food Products","p_cancelled_date":"","p_completed_date":""}]
+     * Data : [{"p_order_id":"ORDER-1619163505840","p_user_id":"603e27792c2b43125f8cb802","p_shipping_address":"60797c16a20ca32d2668a30c","p_payment_id":"pay_H2Hag4i3PqJZeq","p_vendor_id":"604866a50b3a487571a1c568","p_order_product_count":4,"p_order_price":571,"p_order_image":"http://54.212.108.156:3000/api/uploads/1616648074881.jpeg","p_order_booked_on":"23-04-2021 01:08 PM","p_order_status":"New","p_order_text":"Food Products","p_cancelled_date":"","p_completed_date":"","p_user_feedback":"","p_user_rate":0}]
      * Code : 200
      */
 
@@ -15,19 +16,21 @@ public class PetLoverVendorOrderListResponse {
     private String Message;
     private int Code;
     /**
-     * p_order_id : ORDER-1619076762955
+     * p_order_id : ORDER-1619163505840
      * p_user_id : 603e27792c2b43125f8cb802
      * p_shipping_address : 60797c16a20ca32d2668a30c
-     * p_payment_id : pay_H1sxV6iyVkk4Sn
+     * p_payment_id : pay_H2Hag4i3PqJZeq
      * p_vendor_id : 604866a50b3a487571a1c568
-     * p_order_product_count : 1
-     * p_order_price : 72
+     * p_order_product_count : 4
+     * p_order_price : 571
      * p_order_image : http://54.212.108.156:3000/api/uploads/1616648074881.jpeg
-     * p_order_booked_on : 22-04-2021 01:02 PM
+     * p_order_booked_on : 23-04-2021 01:08 PM
      * p_order_status : New
      * p_order_text : Food Products
      * p_cancelled_date :
      * p_completed_date :
+     * p_user_feedback :
+     * p_user_rate : 0
      */
 
     private List<DataBean> Data;
@@ -78,6 +81,8 @@ public class PetLoverVendorOrderListResponse {
         private String p_order_text;
         private String p_cancelled_date;
         private String p_completed_date;
+        private String p_user_feedback;
+        private int p_user_rate;
 
         public String getP_order_id() {
             return p_order_id;
@@ -181,6 +186,22 @@ public class PetLoverVendorOrderListResponse {
 
         public void setP_completed_date(String p_completed_date) {
             this.p_completed_date = p_completed_date;
+        }
+
+        public String getP_user_feedback() {
+            return p_user_feedback;
+        }
+
+        public void setP_user_feedback(String p_user_feedback) {
+            this.p_user_feedback = p_user_feedback;
+        }
+
+        public int getP_user_rate() {
+            return p_user_rate;
+        }
+
+        public void setP_user_rate(int p_user_rate) {
+            this.p_user_rate = p_user_rate;
         }
     }
 }

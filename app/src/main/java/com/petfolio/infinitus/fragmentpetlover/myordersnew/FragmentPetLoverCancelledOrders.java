@@ -25,6 +25,7 @@ import com.petfolio.infinitus.adapter.PetLoverVendorOrdersAdapter;
 import com.petfolio.infinitus.adapter.PetVendorCancelledOrdersAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.interfaces.AddandReviewListener;
 import com.petfolio.infinitus.requestpojo.PetLoverVendorOrderListRequest;
 import com.petfolio.infinitus.requestpojo.PetVendorOrderRequest;
 import com.petfolio.infinitus.responsepojo.PetLoverVendorOrderListResponse;
@@ -47,7 +48,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentPetLoverCancelledOrders extends Fragment  {
+public class FragmentPetLoverCancelledOrders extends Fragment implements AddandReviewListener {
     private final String TAG = "FragmentPetLoverCancelledOrders";
 
     @SuppressLint("NonConstantResourceId")
@@ -309,11 +310,15 @@ public class FragmentPetLoverCancelledOrders extends Fragment  {
     private void setView(List<PetLoverVendorOrderListResponse.DataBean> orderResponseListAll) {
         rv_missedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_missedappointment.setItemAnimator(new DefaultItemAnimator());
-        PetLoverVendorOrdersAdapter vendorOrdersAdapter = new PetLoverVendorOrdersAdapter(getContext(), orderResponseListAll,TAG);
+        PetLoverVendorOrdersAdapter vendorOrdersAdapter = new PetLoverVendorOrdersAdapter(getContext(), orderResponseListAll,TAG,this);
         rv_missedappointment.setAdapter(vendorOrdersAdapter);
         vendorOrdersAdapter.notifyDataSetChanged();
         isLoading = false;
     }
 
 
+    @Override
+    public void addReviewListener(String id, int userrate, String userfeedback) {
+
+    }
 }

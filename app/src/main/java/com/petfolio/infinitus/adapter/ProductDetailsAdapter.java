@@ -33,13 +33,15 @@ public class ProductDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
     private final Context context;
     PetLoverVendorOrderDetailsResponse.DataBean.ProductDetailsBean currentItem;
     String orderid;
+    String fromactivity;
 
 
 
-    public ProductDetailsAdapter(Context context,  List<PetLoverVendorOrderDetailsResponse.DataBean.ProductDetailsBean> product_details,String orderid) {
+    public ProductDetailsAdapter(Context context,  List<PetLoverVendorOrderDetailsResponse.DataBean.ProductDetailsBean> product_details,String orderid, String fromactivity) {
         this.context = context;
         this.product_details = product_details;
         this.orderid = orderid;
+        this.fromactivity = fromactivity;
 
 
     }
@@ -64,6 +66,11 @@ public class ProductDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
        /* if (product_details.get(position).getProduct_id() != null) {
             holder.txt_orderid.setText(product_details.get(position).getOrder_id());
         }*/
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverCompletedOrders")){
+            holder.txt_cancell_order.setVisibility(View.INVISIBLE);
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverCancelledOrders")){
+            holder.txt_cancell_order.setVisibility(View.INVISIBLE);
+        }
         if (product_details.get(position).getProduct_name() != null) {
             holder.txt_producttitle.setText(product_details.get(position).getProduct_name());
         }

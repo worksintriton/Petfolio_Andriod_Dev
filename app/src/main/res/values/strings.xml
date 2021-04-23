@@ -463,6 +463,8 @@
     <string name="quantity">Quantity</string>
     <string name="date">Date</string>
     <string name="confirm_all">Confirm All</string>
+    <string name="payment_successful">Payment successful</string>
+    <string name="back_to_shop">Back to shop</string>
 
 
 </resources>

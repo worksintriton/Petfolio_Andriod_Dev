@@ -45,6 +45,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -522,10 +523,10 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
                     if(200 == response.body().getCode()){
                         Log.w(TAG,"SuccessResponse "+new Gson().toJson(response.body().getData()));
 
-                        Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
-                        callDirections("2");
+                       // Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
+                        //callDirections("2");
 
-
+                        showPaymentSuccessalert();
 
 
                     }
@@ -891,4 +892,32 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
         startActivity(intent);
         finish();
     }
+
+    private void showPaymentSuccessalert() {
+        try {
+
+            dialog = new Dialog(ShippingAddressActivity.this);
+            dialog.setCancelable(false);
+            dialog.setContentView(R.layout.alert_payment_success_layout);
+            Button btn_back_to_shop = dialog.findViewById(R.id.btn_back_to_shop);
+
+            btn_back_to_shop.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    callDirections("2");
+                }
+            });
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
 }

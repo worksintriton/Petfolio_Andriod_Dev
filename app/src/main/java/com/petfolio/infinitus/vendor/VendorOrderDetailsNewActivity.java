@@ -661,13 +661,13 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
 
             Dialog dialog = new Dialog(VendorOrderDetailsNewActivity.this);
             dialog.setContentView(R.layout.add_trackid_popup);
-            dialog.setCancelable(true);
+            dialog.setCancelable(false);
             EditText edt_addtrackid = dialog.findViewById(R.id.edt_addtrackid);
             Button btn_addtrackid = dialog.findViewById(R.id.btn_addtrackid);
             edt_addtrackid.setHint("Please enter the reason...");
 
             btn_addtrackid.setOnClickListener(view -> {
-                if(edt_addtrackid.getText().toString() != null &&  !edt_addtrackid.getText().toString().isEmpty()){
+                if(!edt_addtrackid.getText().toString().isEmpty()){
                     dialog.dismiss();
                     if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
                         vendor_update_order_reject_ResponseCall(product_id_rejectList,edt_addtrackid.getText().toString());
@@ -693,7 +693,7 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
         try {
             Dialog dialog = new Dialog(VendorOrderDetailsNewActivity.this);
             dialog.setContentView(R.layout.add_trackid_popup);
-            dialog.setCancelable(true);
+            dialog.setCancelable(false);
             EditText edt_addtrackid = dialog.findViewById(R.id.edt_addtrackid);
             Button btn_addtrackid = dialog.findViewById(R.id.btn_addtrackid);
             edt_addtrackid.setHint("Please enter the track id...");

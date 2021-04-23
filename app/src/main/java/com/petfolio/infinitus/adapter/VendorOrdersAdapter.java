@@ -109,6 +109,7 @@ public class VendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.View
                 holder.txt_bookedon.setText("Delivered on:" + " " + orderResponseListAll.get(position).getV_completed_date());
 
             }
+
         }
         else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentCancelledOrders")){
             if (orderResponseListAll.get(position).getV_cancelled_date() != null) {
