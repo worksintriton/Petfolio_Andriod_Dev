@@ -2,12 +2,17 @@ package com.petfolio.infinitus.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,8 +21,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.interfaces.ManageProductsDealsListener;
 import com.petfolio.infinitus.interfaces.OnItemCheckProduct;
 import com.petfolio.infinitus.responsepojo.ManageProductsListResponse;
+import com.petfolio.infinitus.vendor.EditManageProdcutsActivity;
 
 import java.util.List;
 
@@ -35,11 +42,14 @@ public class ManageProductsListAdapter extends  RecyclerView.Adapter<RecyclerVie
    private final OnItemCheckProduct onItemCheckProduct;
     int count = 0;
 
-    public ManageProductsListAdapter(Context context, List<ManageProductsListResponse.DataBean> manageProductsListResponseList, boolean showCheckbox,OnItemCheckProduct onItemCheckProduct) {
+    ManageProductsDealsListener manageProductsDealsListener;
+
+    public ManageProductsListAdapter(Context context, List<ManageProductsListResponse.DataBean> manageProductsListResponseList, boolean showCheckbox,OnItemCheckProduct onItemCheckProduct,ManageProductsDealsListener manageProductsDealsListener) {
         this.context = context;
         this.manageProductsListResponseList = manageProductsListResponseList;
         this.showCheckbox = showCheckbox;
         this.onItemCheckProduct = onItemCheckProduct;
+        this.manageProductsDealsListener = manageProductsDealsListener;
     }
 
     @NonNull
@@ -135,6 +145,54 @@ public class ManageProductsListAdapter extends  RecyclerView.Adapter<RecyclerVie
         });
 
 
+        holder.img_prodsettings.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(context, v);
+
+
+                //Inflating the Popup using xml file
+                popup.getMenuInflater().inflate(R.menu.popup_manageproducts_menu, popup.getMenu());
+                if(!manageProductsListResponseList.get(position).isToday_deal()){
+                    final Menu menu = popup.getMenu();
+                    menu.removeItem(R.id.menu_delete);
+                }
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        String titleName = String.valueOf(item.getTitle());
+                        if(titleName.equalsIgnoreCase("Edit")){
+                            Intent i = new Intent(context, EditManageProdcutsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            i.putExtra("productid",manageProductsListResponseList.get(position).getProduct_id());
+                            i.putExtra("producttitle",manageProductsListResponseList.get(position).getProduct_name());
+                            i.putExtra("productprice",manageProductsListResponseList.get(position).getProduct_price());
+                            i.putExtra("productthreshold",manageProductsListResponseList.get(position).getPet_threshold());
+                            context.startActivity(i);
+
+                        } else if(titleName.equalsIgnoreCase("Clear Deals")){
+                            if(manageProductsListResponseList.get(position).isToday_deal()){
+                              manageProductsDealsListener.manageProductsDealsListener(manageProductsListResponseList.get(position).isToday_deal(),manageProductsListResponseList.get(position).getProduct_id());
+                            }
+                            else{
+                                final Menu menu = popup.getMenu();
+                                menu.removeItem(R.id.menu_delete);
+                                /*if(item.getItemId() == R.id.menu_delete){
+                                    item.setVisible(false);
+                                }*/
+
+                            }
+
+
+                        }
+                        return true;
+                    }
+                });
+
+                popup.show();//showing popup menu
+            }
+        });
 
 
     }
@@ -170,6 +228,8 @@ public class ManageProductsListAdapter extends  RecyclerView.Adapter<RecyclerVie
             txt_prod_name = itemView.findViewById(R.id.txt_prod_name);
             txt_prod_price = itemView.findViewById(R.id.txt_prod_price);
             img_expand_arrow = itemView.findViewById(R.id.img_expand_arrow);
+            txt_deal_status = itemView.findViewById(R.id.txt_deal_status);
+
             include_vendor_productlist_childview = itemView.findViewById(R.id.include_vendor_productlist_childview);
             include_vendor_productlist_childview.setVisibility(View.GONE);
 
@@ -177,11 +237,10 @@ public class ManageProductsListAdapter extends  RecyclerView.Adapter<RecyclerVie
             txt_age = include_vendor_productlist_childview.findViewById(R.id.txt_age);
             txt_pet_breed = include_vendor_productlist_childview.findViewById(R.id.txt_pet_breed);
             txt_threshold = include_vendor_productlist_childview.findViewById(R.id.txt_threshold);
-            txt_deal_status = include_vendor_productlist_childview.findViewById(R.id.txt_deal_status);
             txt_deal_status.setVisibility(View.GONE);
             checkBox = itemView.findViewById(R.id.checkBox);
 
-            img_prodsettings.setVisibility(View.GONE);
+            img_prodsettings.setVisibility(View.VISIBLE);
 
             if(showCheckbox){
                 checkBox.setVisibility(View.VISIBLE);

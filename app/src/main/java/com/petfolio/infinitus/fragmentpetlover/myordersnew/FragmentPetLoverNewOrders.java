@@ -206,6 +206,10 @@ public class FragmentPetLoverNewOrders extends Fragment implements AddandReviewL
                             * p_order_booked_on : 19-04-2021 12:05 PM
                             * p_order_status : New
                             * p_order_text : Food Products
+                            * p_cancelled_date :
+                            * p_completed_date :
+                            * p_user_feedback :
+                            * p_user_rate : 0
                             */
 
                            PetLoverVendorOrderListResponse.DataBean  dataBean = new PetLoverVendorOrderListResponse.DataBean();
@@ -220,6 +224,10 @@ public class FragmentPetLoverNewOrders extends Fragment implements AddandReviewL
                            dataBean.setP_order_booked_on(orderResponseList.get(i).getP_order_booked_on());
                            dataBean.setP_order_status(orderResponseList.get(i).getP_order_status());
                            dataBean.setP_order_text(orderResponseList.get(i).getP_order_text());
+                           dataBean.setP_cancelled_date(orderResponseList.get(i).getP_cancelled_date());
+                           dataBean.setP_completed_date(orderResponseList.get(i).getP_completed_date());
+                           dataBean.setP_user_feedback(orderResponseList.get(i).getP_user_feedback());
+                           dataBean.setP_user_rate(orderResponseList.get(i).getP_user_rate());
                            orderResponseListAll.add(dataBean);
 
 

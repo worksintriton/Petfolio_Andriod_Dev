@@ -74,6 +74,40 @@ public class PetLoverDoctorNewAdapter extends  RecyclerView.Adapter<RecyclerView
               holder.txt_clinicname.setText(currentItem.getClinic_name());
           }
 
+          Log.w(TAG,"Rating : "+currentItem.getStar_count());
+
+          if(currentItem.getStar_count() == 1){
+              holder.hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+              holder.hand_img2.setBackgroundResource(R.drawable.ic_logo_graycolor);
+              holder.hand_img3.setBackgroundResource(R.drawable.ic_logo_graycolor);
+              holder.hand_img4.setBackgroundResource(R.drawable.ic_logo_graycolor);
+              holder.hand_img5.setBackgroundResource(R.drawable.ic_logo_graycolor);
+          } else if(currentItem.getStar_count() == 2){
+              holder.hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+              holder.hand_img2.setBackgroundResource(R.drawable.ic_logo_color);
+              holder.hand_img3.setBackgroundResource(R.drawable.ic_logo_graycolor);
+              holder.hand_img4.setBackgroundResource(R.drawable.ic_logo_graycolor);
+              holder.hand_img5.setBackgroundResource(R.drawable.ic_logo_graycolor);
+          }else if(currentItem.getStar_count() == 3){
+              holder.hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+              holder.hand_img2.setBackgroundResource(R.drawable.ic_logo_color);
+              holder.hand_img3.setBackgroundResource(R.drawable.ic_logo_color);
+              holder.hand_img4.setBackgroundResource(R.drawable.ic_logo_graycolor);
+              holder.hand_img5.setBackgroundResource(R.drawable.ic_logo_graycolor);
+          }else if(currentItem.getStar_count() == 4){
+              holder.hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+              holder.hand_img2.setBackgroundResource(R.drawable.ic_logo_color);
+              holder.hand_img3.setBackgroundResource(R.drawable.ic_logo_color);
+              holder.hand_img4.setBackgroundResource(R.drawable.ic_logo_color);
+              holder.hand_img5.setBackgroundResource(R.drawable.ic_logo_graycolor);
+          } else if(currentItem.getStar_count() == 5){
+              holder.hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+              holder.hand_img2.setBackgroundResource(R.drawable.ic_logo_color);
+              holder.hand_img3.setBackgroundResource(R.drawable.ic_logo_color);
+              holder.hand_img4.setBackgroundResource(R.drawable.ic_logo_color);
+              holder.hand_img5.setBackgroundResource(R.drawable.ic_logo_color);
+          }
+
           if(currentItem.isFav()){
               Glide.with(context)
                       .load(R.drawable.ic_fav)
@@ -143,6 +177,7 @@ public class PetLoverDoctorNewAdapter extends  RecyclerView.Adapter<RecyclerView
     class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_doctors_name,txt_clinicname;
         public ImageView img_doctors_image,img_fav;
+        public ImageView hand_img1,hand_img2,hand_img3,hand_img4,hand_img5;
         public LinearLayout ll_root;
         public RelativeLayout rl_doctor;
 
@@ -157,6 +192,11 @@ public class PetLoverDoctorNewAdapter extends  RecyclerView.Adapter<RecyclerView
             ll_root = itemView.findViewById(R.id.ll_root);
             img_doctors_image = itemView.findViewById(R.id.img_doctors_image);
             img_fav = itemView.findViewById(R.id.img_fav);
+            hand_img1 = itemView.findViewById(R.id.hand_img1);
+            hand_img2 = itemView.findViewById(R.id.hand_img2);
+            hand_img3 = itemView.findViewById(R.id.hand_img3);
+            hand_img4 = itemView.findViewById(R.id.hand_img4);
+            hand_img5 = itemView.findViewById(R.id.hand_img5);
 
 
 

@@ -55,10 +55,46 @@ public class PetLoverShopNewAdapter extends  RecyclerView.Adapter<RecyclerView.V
 
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "LogNotTimber"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
           currentItem = productDetailsResponseList.get(position);
-          if(currentItem.getProduct_title() != null){
+
+          Log.w(TAG,"rating : "+ currentItem.getProduct_rating());
+        if(currentItem.getProduct_rating() == 1){
+            holder.hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img2.setBackgroundResource(R.drawable.ic_logo_graycolor);
+            holder.hand_img3.setBackgroundResource(R.drawable.ic_logo_graycolor);
+            holder.hand_img4.setBackgroundResource(R.drawable.ic_logo_graycolor);
+            holder.hand_img5.setBackgroundResource(R.drawable.ic_logo_graycolor);
+        } else if(currentItem.getProduct_rating() == 2){
+            holder.hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img2.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img3.setBackgroundResource(R.drawable.ic_logo_graycolor);
+            holder.hand_img4.setBackgroundResource(R.drawable.ic_logo_graycolor);
+            holder.hand_img5.setBackgroundResource(R.drawable.ic_logo_graycolor);
+        }else if(currentItem.getProduct_rating() == 3){
+            holder.hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img2.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img3.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img4.setBackgroundResource(R.drawable.ic_logo_graycolor);
+            holder.hand_img5.setBackgroundResource(R.drawable.ic_logo_graycolor);
+        }else if(currentItem.getProduct_rating() == 4){
+            holder.hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img2.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img3.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img4.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img5.setBackgroundResource(R.drawable.ic_logo_graycolor);
+        } else if(currentItem.getProduct_rating() == 5){
+            holder.hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img2.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img3.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img4.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img5.setBackgroundResource(R.drawable.ic_logo_color);
+        }
+
+
+
+        if(currentItem.getProduct_title() != null){
               holder.txt_products_title.setText(currentItem.getProduct_title());
           } if(currentItem.getCat_name() != null){
               holder.txt_category_title.setText(currentItem.getCat_name());
@@ -121,6 +157,7 @@ public class PetLoverShopNewAdapter extends  RecyclerView.Adapter<RecyclerView.V
     class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_products_title,txt_category_title,txt_products_price;
         public ImageView img_products_image,img_fav;
+        public ImageView hand_img1,hand_img2,hand_img3,hand_img4,hand_img5;
         public LinearLayout ll_root;
         public RelativeLayout rl_shop;
 
@@ -136,6 +173,11 @@ public class PetLoverShopNewAdapter extends  RecyclerView.Adapter<RecyclerView.V
             img_products_image = itemView.findViewById(R.id.img_products_image);
             img_fav = itemView.findViewById(R.id.img_fav);
             txt_products_price = itemView.findViewById(R.id.txt_products_price);
+            hand_img1 = itemView.findViewById(R.id.hand_img1);
+            hand_img2 = itemView.findViewById(R.id.hand_img2);
+            hand_img3 = itemView.findViewById(R.id.hand_img3);
+            hand_img4 = itemView.findViewById(R.id.hand_img4);
+            hand_img5 = itemView.findViewById(R.id.hand_img5);
 
 
 

@@ -47,6 +47,7 @@
         tools:ignore="AllowBackup,UnusedAttribute"
         tools:replace="android:allowBackup,icon,theme,label,name">
 
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -82,31 +83,32 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".petlover.myaddresses.MyAddressesListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan"/>
-
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".petlover.myaddresses.AddNewShippingAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".petlover.myaddresses.MyAddressEditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-
-
         <activity
             android:name=".vendor.VendorUpdateOrderStatusActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
+
+        <activity android:name=".vendor.EditManageProdcutsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".petlover.PetOtherInformationsActivity"
             android:screenOrientation="portrait"
@@ -141,9 +143,7 @@
             android:name=".activity.VerifyEmailOtpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
-
-        <!-- Pet Lover -->
+            android:windowSoftInputMode="adjustPan" /> <!-- Pet Lover -->
         <activity
             android:name=".petlover.AddYourPetActivity"
             android:screenOrientation="portrait"
@@ -229,7 +229,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".petlover.PetMyOrdrersNewActivity"
             android:screenOrientation="portrait"
@@ -325,21 +324,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".activity.location.SetLocationDoctorNewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".activity.location.SetLocationDoctorOldActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-
-
-
         <activity
             android:name=".petlover.PetAppointmentDetailsActivity"
             android:screenOrientation="portrait"
@@ -370,18 +364,12 @@
             android:name=".petlover.ProductFiltersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
-
-
-
-
-        <!-- Doctor -->
+            android:windowSoftInputMode="adjustPan" /> <!-- Doctor -->
         <activity
             android:name=".doctor.DoctorBusinessInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".doctor.EditDoctorBusinessInfoActivity"
             android:screenOrientation="portrait"
@@ -437,7 +425,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".doctor.DoctorPrescriptionDetailsActivity"
             android:screenOrientation="portrait"
@@ -452,10 +439,7 @@
             android:name=".doctor.DoctorAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
-
-
-        <!-- Service Provider -->
+            android:windowSoftInputMode="adjustPan" /> <!-- Service Provider -->
         <activity
             android:name=".serviceprovider.ServiceProviderRegisterFormActivity"
             android:screenOrientation="portrait"
@@ -546,9 +530,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
-
-
         <activity
             android:name=".activity.NotificationActivity"
             android:screenOrientation="portrait"
@@ -634,7 +615,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".vendor.VendorOrderDetailsNewActivity"
             android:screenOrientation="portrait"
@@ -645,12 +625,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
-        <activity android:name=".petlover.SearchActivity"
+        <activity
+            android:name=".petlover.SearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
 
         <receiver
             android:name=".receiver.SmsBroadcastListener"
@@ -686,8 +665,7 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
-        </provider>
-        <!-- Add your API key here -->
+        </provider> <!-- Add your API key here -->
         <meta-data
             android:name="com.razorpay.ApiKey"
             android:value="rzp_test_zioohqmxDjJJtd" />

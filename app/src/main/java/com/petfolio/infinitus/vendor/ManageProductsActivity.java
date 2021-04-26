@@ -34,15 +34,19 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.ManageProductsListAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.interfaces.ManageProductsDealsListener;
 import com.petfolio.infinitus.interfaces.OnItemCheckProduct;
 import com.petfolio.infinitus.requestpojo.ApplyMultiProdDiscountRequest;
 import com.petfolio.infinitus.requestpojo.ApplySingleDiscountCalRequest;
 import com.petfolio.infinitus.requestpojo.ApplySingleDiscountRequest;
 import com.petfolio.infinitus.requestpojo.ManageProductsListRequest;
+import com.petfolio.infinitus.requestpojo.PetLoverMyOrdersReviewandUpdateRequest;
+import com.petfolio.infinitus.requestpojo.TodayDealsClearRequest;
 import com.petfolio.infinitus.responsepojo.ApplyMultiProdDiscountResponse;
 import com.petfolio.infinitus.responsepojo.ApplySingleDiscountCalResponse;
 import com.petfolio.infinitus.responsepojo.ApplySingleDiscountResponse;
 import com.petfolio.infinitus.responsepojo.ManageProductsListResponse;
+import com.petfolio.infinitus.responsepojo.VendorOrderUpdateResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -64,7 +68,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ManageProductsActivity extends AppCompatActivity implements View.OnClickListener, OnItemCheckProduct {
+public class ManageProductsActivity extends AppCompatActivity implements View.OnClickListener, OnItemCheckProduct, ManageProductsDealsListener {
 
     private String TAG = "ManageProductsActivity";
 
@@ -349,7 +353,7 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
     private void setView() {
         rv_manage_productlist.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rv_manage_productlist.setItemAnimator(new DefaultItemAnimator());
-        ManageProductsListAdapter manageProductsListAdapter = new ManageProductsListAdapter(getApplicationContext(), manageProductsListResponseList,showCheckbox,this);
+        ManageProductsListAdapter manageProductsListAdapter = new ManageProductsListAdapter(getApplicationContext(), manageProductsListResponseList,showCheckbox,this,this);
         rv_manage_productlist.setAdapter(manageProductsListAdapter);
 
 
@@ -900,4 +904,98 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
         }
     }
 
+    @SuppressLint("LogNotTimber")
+    @Override
+    public void manageProductsDealsListener(boolean status, String productid) {
+        Log.w(TAG,"status : "+status+" productid : "+productid);
+        if(status){
+            clearTodayDealsResponseCall(status,productid);
+        }
+
+    }
+
+
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
+    private void clearTodayDealsResponseCall(boolean status, String productid) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<VendorOrderUpdateResponse> call = apiInterface.clearTodayDealsResponseCall(RestUtils.getContentType(), todayDealsClearRequest(status,productid));
+        Log.w(TAG,"addReviewResponseCall url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<VendorOrderUpdateResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<VendorOrderUpdateResponse> call, @NonNull Response<VendorOrderUpdateResponse> response) {
+
+                Log.w(TAG,"AddReviewResponse"+ "--->" + new Gson().toJson(response.body()));
+
+                avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        showClearDealsSuccess(response.body().getMessage());
+
+
+
+                    }
+                    else{
+                        showErrorLoading(response.body().getMessage());
+                    }
+                }
+
+
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onFailure(@NonNull Call<VendorOrderUpdateResponse> call, @NonNull Throwable t) {
+
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"AddReviewResponse flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
+    private TodayDealsClearRequest todayDealsClearRequest(boolean status, String productid) {
+
+        /*
+         * _id : 602e11404775fa0735d7bf40
+         * status : false
+         */
+
+        TodayDealsClearRequest todayDealsClearRequest = new TodayDealsClearRequest();
+        todayDealsClearRequest.set_id(productid);
+        todayDealsClearRequest.setStatus(false);
+        Log.w(TAG,"todayDealsClearRequest"+ "--->" + new Gson().toJson(todayDealsClearRequest));
+        return todayDealsClearRequest;
+    }
+
+    private void showClearDealsSuccess(String message) {
+        try {
+            Dialog dialog = new Dialog(ManageProductsActivity.this);
+            dialog.setContentView(R.layout.addreview_review_success_layout);
+            dialog.setCancelable(false);
+            Button btn_back = dialog.findViewById(R.id.btn_back);
+            TextView txt_success = dialog.findViewById(R.id.txt_success);
+            txt_success.setText(message);
+            btn_back.setOnClickListener(view -> {
+                dialog.dismiss();
+                if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                    getlist_from_vendor_id_ResponseCall();
+                }
+
+
+            });
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
 }

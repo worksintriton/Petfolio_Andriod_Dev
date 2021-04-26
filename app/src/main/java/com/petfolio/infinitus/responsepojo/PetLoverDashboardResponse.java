@@ -518,7 +518,7 @@ public class PetLoverDashboardResponse{
                 private String distance;
                 private String clinic_name;
                 private boolean fav;
-                private int star_count;
+                private double star_count;
                 private int review_count;
                 /**
                  * specialization : Surgeon
@@ -574,11 +574,11 @@ public class PetLoverDashboardResponse{
                     this.fav = fav;
                 }
 
-                public int getStar_count() {
+                public double getStar_count() {
                     return star_count;
                 }
 
-                public void setStar_count(int star_count) {
+                public void setStar_count(double star_count) {
                     this.star_count = star_count;
                 }
 

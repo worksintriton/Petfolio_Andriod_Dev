@@ -132,6 +132,31 @@ public class ProductDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
             }
         });
 
+
+        if(product_details.get(position).getProduct_stauts() != null ){
+            if( product_details.get(position).getProduct_stauts().equalsIgnoreCase("Order Booked")){
+                holder.txt_cancell_order.setVisibility(View.VISIBLE);
+                holder.txt_product_status.setVisibility(View.GONE);
+            } else if(product_details.get(position).getProduct_stauts().equalsIgnoreCase("Order Accept")){
+                holder.txt_cancell_order.setVisibility(View.GONE);
+                holder.txt_product_status.setVisibility(View.VISIBLE);
+                holder.txt_product_status.setTextColor(context.getResources().getColor(R.color.new_green_btn));
+                holder.txt_product_status.setText(product_details.get(position).getProduct_stauts());
+            } else if(product_details.get(position).getProduct_stauts().equalsIgnoreCase("Vendor cancelled")){
+                holder.txt_cancell_order.setVisibility(View.GONE);
+                holder.txt_product_status.setVisibility(View.VISIBLE);
+                holder.txt_product_status.setText(product_details.get(position).getProduct_stauts());
+            }else if(product_details.get(position).getProduct_stauts().equalsIgnoreCase("Order Dispatch")){
+                holder.txt_cancell_order.setVisibility(View.GONE);
+                holder.txt_product_status.setVisibility(View.VISIBLE);
+                holder.txt_product_status.setTextColor(context.getResources().getColor(R.color.new_green_btn));
+                holder.txt_product_status.setText(product_details.get(position).getProduct_stauts());
+            }
+
+
+        }
+
+
         if(product_details.get(position).getProduct_stauts().equalsIgnoreCase("Order Cancelled")){
             holder.txt_cancell_order.setVisibility(View.GONE);
             holder.txt_product_status.setVisibility(View.VISIBLE);

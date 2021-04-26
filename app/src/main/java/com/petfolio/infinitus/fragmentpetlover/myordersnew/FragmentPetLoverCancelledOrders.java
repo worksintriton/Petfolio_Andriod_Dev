@@ -217,6 +217,10 @@ public class FragmentPetLoverCancelledOrders extends Fragment implements AddandR
                             dataBean.setP_order_booked_on(orderResponseList.get(i).getP_order_booked_on());
                             dataBean.setP_order_status(orderResponseList.get(i).getP_order_status());
                             dataBean.setP_order_text(orderResponseList.get(i).getP_order_text());
+                            dataBean.setP_cancelled_date(orderResponseList.get(i).getP_cancelled_date());
+                            dataBean.setP_completed_date(orderResponseList.get(i).getP_completed_date());
+                            dataBean.setP_user_feedback(orderResponseList.get(i).getP_user_feedback());
+                            dataBean.setP_user_rate(orderResponseList.get(i).getP_user_rate());
                             orderResponseListAll.add(dataBean);
 
 

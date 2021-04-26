@@ -117,13 +117,13 @@
                         android:id="@+id/hand_img1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_logo_color"
+                        android:background="@drawable/ic_logo_color"
                         tools:ignore="ContentDescription" />
                     <ImageView
                         android:id="@+id/hand_img2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_logo_color"
+                        android:background="@drawable/ic_logo_color"
                         android:layout_marginStart="5dp"
                         tools:ignore="ContentDescription" />
 
@@ -131,21 +131,21 @@
                         android:id="@+id/hand_img3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_logo_color"
+                        android:background="@drawable/ic_logo_color"
                         android:layout_marginStart="5dp"
                         tools:ignore="ContentDescription" />
                     <ImageView
                         android:id="@+id/hand_img4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_logo_color"
+                        android:background="@drawable/ic_logo_color"
                         android:layout_marginStart="5dp"
                         tools:ignore="ContentDescription" />
                     <ImageView
                         android:id="@+id/hand_img5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_logo_graycolor"
+                        android:background="@drawable/ic_logo_graycolor"
                         android:layout_marginStart="5dp"
                         tools:ignore="ContentDescription"/>
 
