@@ -111,8 +111,4 @@ public class PetMyOrdrersNewActivity extends AppCompatActivity  {
             return mFragmentTitleList.get(position);
         }
     }
-
-
-
-
 }

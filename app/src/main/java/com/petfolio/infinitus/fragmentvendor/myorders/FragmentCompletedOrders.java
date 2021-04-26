@@ -3,10 +3,7 @@ package com.petfolio.infinitus.fragmentvendor.myorders;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,15 +22,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.adapter.VendorCompletedOrdersAdapter;
 import com.petfolio.infinitus.adapter.VendorOrdersAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.requestpojo.VendorGetsOrderIdRequest;
-import com.petfolio.infinitus.requestpojo.VendorNewOrderRequest;
 import com.petfolio.infinitus.requestpojo.VendorOrderListRequest;
 import com.petfolio.infinitus.responsepojo.VendorGetsOrderIDResponse;
-import com.petfolio.infinitus.responsepojo.VendorNewOrderResponse;
 import com.petfolio.infinitus.responsepojo.VendorOrderListResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -43,9 +37,6 @@ import com.wang.avi.AVLoadingIndicatorView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -82,7 +73,8 @@ public class FragmentCompletedOrders extends Fragment  {
 
 
     SessionManager session;
-    String type = "",username = "",userid = "";
+    String username = "";
+    String userid = "";
     private Context mContext;
 
     private ShimmerFrameLayout mShimmerViewContainer;
@@ -90,9 +82,15 @@ public class FragmentCompletedOrders extends Fragment  {
 
     private List<VendorOrderListResponse.DataBean> orderResponseList;
     private final List<VendorOrderListResponse.DataBean> orderResponseListAll = new ArrayList<>();
+
+
+    VendorOrdersAdapter vendorOrdersAdapter;
+    private LinearLayoutManager linearLayoutManager;
     public static final int PAGE_START = 1;
     private int CURRENT_PAGE = PAGE_START;
-    private boolean isLoading = false;
+    private boolean isLoading = true;
+    private int pastVisibleItem,visibleItemCount,totalItemCount,previousTotal =0;
+    private final int viewThreshold = 5;
 
     public FragmentCompletedOrders() {
 
@@ -104,7 +102,6 @@ public class FragmentCompletedOrders extends Fragment  {
                              Bundle savedInstanceState) {
         Log.w(TAG,"onCreateView");
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         View view = inflater.inflate(R.layout.fragment_vendor_completed_orders, container, false);
 
         ButterKnife.bind(this, view);
@@ -125,48 +122,42 @@ public class FragmentCompletedOrders extends Fragment  {
 
         Log.w(TAG,"userid"+userid +"username :"+username);
 
-      
+        if (APIClient.VENDOR_ID.isEmpty()) {
+            if (new ConnectionDetector(getActivity()).isNetworkAvailable(mContext)) {
+                getVendorOrderIDResponseCall(userid);
 
-        if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-            getVendorOrderIDResponseCall(userid);
+            }
+        }
+
+        linearLayoutManager = new LinearLayoutManager(getActivity());
+        rv_completedappointment.setHasFixedSize(true);
+        rv_completedappointment.setItemAnimator(new DefaultItemAnimator());
+        rv_completedappointment.setLayoutManager(linearLayoutManager);
+        orderResponseListAll.clear();
+
+        if (new ConnectionDetector(getActivity()).isNetworkAvailable(mContext)) {
+            CURRENT_PAGE = 1;
+            if (APIClient.VENDOR_ID != null && !APIClient.VENDOR_ID.isEmpty()) {
+                vendorCompleteOrderResponseCall(APIClient.VENDOR_ID);
+            }
 
         }
 
-        final Handler handler = new Handler();
-        Timer timer = new Timer();
-        TimerTask doAsynchronousTask = new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(new Runnable() {
-                    public void run() {
-                        try {
-                            //your method here
-                            if(APIClient.VENDOR_ID != null && !APIClient.VENDOR_ID.isEmpty()) {
-                                vendorCompleteOrderResponseCall(APIClient.VENDOR_ID);
-                            }
-
-                        } catch (Exception ignored) {
-                        }
-                    }
-                });
-            }
-        };
-        timer.schedule(doAsynchronousTask, 0, 45000);//you can put 30000(30 secs)
-
-        refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-                            if (APIClient.VENDOR_ID != null && !APIClient.VENDOR_ID.isEmpty()) {
-                                vendorCompleteOrderResponseCall(APIClient.VENDOR_ID);
-                            }
-                        }
-                    }
+        refresh_layout.setOnRefreshListener(() -> {
+            if (new ConnectionDetector(getActivity()).isNetworkAvailable(mContext)) {
+                CURRENT_PAGE = 1;
+                previousTotal = 0;
+                orderResponseListAll.clear();
+                if (APIClient.VENDOR_ID != null && !APIClient.VENDOR_ID.isEmpty()) {
+                    vendorCompleteOrderResponseCall(APIClient.VENDOR_ID);
                 }
-        );
+
+
+            }
+
+        });
 
         initResultRecylerView();
-
 
 
 
@@ -323,6 +314,10 @@ public class FragmentCompletedOrders extends Fragment  {
                             dataBean.setV_order_booked_on(orderResponseList.get(i).getV_order_booked_on());
                             dataBean.setV_order_status(orderResponseList.get(i).getV_order_status());
                             dataBean.setV_order_text(orderResponseList.get(i).getV_order_text());
+                            dataBean.setV_cancelled_date(orderResponseList.get(i).getV_cancelled_date());
+                            dataBean.setV_completed_date(orderResponseList.get(i).getV_completed_date());
+                            dataBean.setV_user_feedback(orderResponseList.get(i).getV_user_feedback());
+                            dataBean.setV_user_rate(orderResponseList.get(i).getV_user_rate());
                             orderResponseListAll.add(dataBean);
 
 
@@ -333,15 +328,19 @@ public class FragmentCompletedOrders extends Fragment  {
                         if(orderResponseList.size() > 0){
                             txt_no_records.setVisibility(View.GONE);
                             rv_completedappointment.setVisibility(View.VISIBLE);
-                            setView(orderResponseList);
+                            setView(orderResponseListAll);
 
                         }
                         else{
-                            txt_no_records.setVisibility(View.VISIBLE);
-                            txt_no_records.setText("No complete orders");
-                            rv_completedappointment.setVisibility(View.GONE);
-                        }
+                            if (CURRENT_PAGE == 1) {
+                                txt_no_records.setVisibility(View.VISIBLE);
+                                txt_no_records.setText("No new orders");
+                            } else {
+                                rv_completedappointment.setVisibility(View.VISIBLE);
+                                setView(orderResponseListAll);
+                            }
 
+                        }
                     }
 
 
@@ -376,44 +375,42 @@ public class FragmentCompletedOrders extends Fragment  {
         Log.w(TAG,"vendorNewOrderRequest"+ "--->" + new Gson().toJson(vendorOrderListRequest));
         return vendorOrderListRequest;
     }
+    private void setView(List<VendorOrderListResponse.DataBean> orderResponseListAll) {
+        vendorOrdersAdapter = new VendorOrdersAdapter(getContext(), orderResponseListAll,TAG);
+        rv_completedappointment.setAdapter(vendorOrdersAdapter);
+        isLoading = true;
+    }
+
     private void initResultRecylerView() {
         rv_completedappointment.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @SuppressLint("LogNotTimber")
-            @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                visibleItemCount = linearLayoutManager.getChildCount();
+                totalItemCount = linearLayoutManager.getItemCount();
+                pastVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
+                if (dy > 0) {
+                    if (isLoading) {
+                        if (totalItemCount > previousTotal) {
 
-                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                            isLoading = false;
+                            previousTotal = totalItemCount;
+                        }
+                    }
 
-                if (!isLoading) {
-                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == orderResponseListAll.size() - 1) {
-                        //bottom of list!
-                        CURRENT_PAGE += 1;
-
-                        Log.w(TAG, "isLoading? " + isLoading + " currentPage " + CURRENT_PAGE);
-                        isLoading = true;
+                    if (!isLoading && (totalItemCount - visibleItemCount) <= (pastVisibleItem+viewThreshold)) {
+                        CURRENT_PAGE = CURRENT_PAGE + 1;
                         if (APIClient.VENDOR_ID != null && !APIClient.VENDOR_ID.isEmpty()) {
                             vendorCompleteOrderResponseCall(APIClient.VENDOR_ID);
                         }
-
+                        isLoading = true;
                     }
                 }
+
             }
         });
     }
-    private void setView(List<VendorOrderListResponse.DataBean> orderResponseListAll) {
-        rv_completedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv_completedappointment.setItemAnimator(new DefaultItemAnimator());
-        VendorOrdersAdapter vendorOrdersAdapter = new VendorOrdersAdapter(getContext(), orderResponseListAll,TAG);
-        rv_completedappointment.setAdapter(vendorOrdersAdapter);
-        vendorOrdersAdapter.notifyDataSetChanged();
-        isLoading = false;
-    }
+
 
 
 

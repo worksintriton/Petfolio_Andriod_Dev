@@ -3,6 +3,7 @@ package com.petfolio.infinitus.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +54,7 @@ public class VendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.View
 
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "LogNotTimber"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
         currentItem = orderResponseListAll.get(position);
 
@@ -98,28 +99,27 @@ public class VendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.View
 
         }
 
+        Log.w(TAG,"fromactivity  : "+fromactivity);
+
         if(fromactivity != null && fromactivity.equalsIgnoreCase("FragementNewOrders")){
             if (orderResponseListAll.get(position).getV_order_booked_on() != null) {
                 holder.txt_bookedon.setText("Booked on:" + " " + orderResponseListAll.get(position).getV_order_booked_on());
 
             }
         }
-        else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentCompletedOrders")){
+         if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentCompletedOrders")){
             if (orderResponseListAll.get(position).getV_completed_date() != null) {
                 holder.txt_bookedon.setText("Delivered on:" + " " + orderResponseListAll.get(position).getV_completed_date());
 
             }
 
         }
-        else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentCancelledOrders")){
+         if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentCancelledOrders")){
             if (orderResponseListAll.get(position).getV_cancelled_date() != null) {
                 holder.txt_bookedon.setText("Cancelled on:" + " " + orderResponseListAll.get(position).getV_cancelled_date());
 
             }
         }
-
-
-
 
         holder.txt_order_details.setOnClickListener(v -> {
                 Intent i = new Intent(context, VendorOrderDetailsNewActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

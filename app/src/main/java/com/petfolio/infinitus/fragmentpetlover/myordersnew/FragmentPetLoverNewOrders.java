@@ -3,7 +3,6 @@ package com.petfolio.infinitus.fragmentpetlover.myordersnew;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,18 +26,13 @@ import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.interfaces.AddandReviewListener;
 import com.petfolio.infinitus.requestpojo.PetLoverVendorOrderListRequest;
 import com.petfolio.infinitus.responsepojo.PetLoverVendorOrderListResponse;
-import com.petfolio.infinitus.responsepojo.PetVendorOrderResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -79,15 +73,16 @@ public class FragmentPetLoverNewOrders extends Fragment implements AddandReviewL
     String userid = "";
     Context mContext;
 
-
+    PetLoverVendorOrdersAdapter petLoverVendorOrdersAdapter;
     private List<PetLoverVendorOrderListResponse.DataBean> orderResponseList;
-    private  List<PetLoverVendorOrderListResponse.DataBean> orderResponseListAll = new ArrayList<>();
+    private final List<PetLoverVendorOrderListResponse.DataBean> orderResponseListAll = new ArrayList<>();
 
+    private LinearLayoutManager linearLayoutManager;
     public static final int PAGE_START = 1;
     private int CURRENT_PAGE = PAGE_START;
-    private boolean isLoading = false;
-    boolean isfirst = false;
-
+    private boolean isLoading = true;
+    private int pastVisibleItem,visibleItemCount,totalItemCount,previousTotal =0;
+    private final int viewThreshold = 5;
 
     public FragmentPetLoverNewOrders() {
 
@@ -114,28 +109,34 @@ public class FragmentPetLoverNewOrders extends Fragment implements AddandReviewL
         session = new SessionManager(getContext());
         HashMap<String, String> user = session.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
-        Log.w(TAG," userid : "+userid);
 
-        Log.w(TAG,"isfist"+isfirst);
 
+
+        linearLayoutManager = new LinearLayoutManager(getActivity());
+        rv_newappointment.setHasFixedSize(true);
+        rv_newappointment.setItemAnimator(new DefaultItemAnimator());
+        rv_newappointment.setLayoutManager(linearLayoutManager);
+        orderResponseListAll.clear();
 
         if (new ConnectionDetector(getActivity()).isNetworkAvailable(mContext)) {
+            CURRENT_PAGE = 1;
             get_grouped_order_by_petlover_ResponseCall();
         }
 
-        refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        if (new ConnectionDetector(getActivity()).isNetworkAvailable(mContext)) {
-                            get_grouped_order_by_petlover_ResponseCall();
+        refresh_layout.setOnRefreshListener(() -> {
+            if (new ConnectionDetector(getActivity()).isNetworkAvailable(mContext)) {
+                CURRENT_PAGE = 1;
+                previousTotal = 0;
+                orderResponseListAll.clear();
+                get_grouped_order_by_petlover_ResponseCall();
 
-                        }
+            }
 
-                    }
-                });
+        });
 
+        initResultRecylerView();
 
-       /* final Handler handler = new Handler();
+        /*final Handler handler = new Handler();
         Timer timer = new Timer();
         TimerTask doAsynchronousTask = new TimerTask() {
             @Override
@@ -143,44 +144,17 @@ public class FragmentPetLoverNewOrders extends Fragment implements AddandReviewL
                 handler.post(() -> {
                     try {
                         //your method here
+                        CURRENT_PAGE = 1;
+                        previousTotal = 0;
+                        orderResponseListAll.clear();
                         get_grouped_order_by_petlover_ResponseCall();
                     }catch (Exception ignored) {
                     }
                 });
             }
         };
-        timer.schedule(doAsynchronousTask, 0, 30000);//you can put 30000(30 secs)
-*/
+        timer.schedule(doAsynchronousTask, 0, 60000);//you can put 30000(30 secs)*/
 
-       Log.w(TAG,"isfist after "+isfirst);
-
-        rv_newappointment.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @SuppressLint({"LogNotTimber", "LongLogTag"})
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-
-                if (!isLoading) {
-                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == orderResponseListAll.size() - 1) {
-                        //bottom of list!
-                        CURRENT_PAGE += 1;
-
-                        Log.w(TAG, "isLoading? " + isLoading + " currentPage " + CURRENT_PAGE);
-                        isLoading = true;
-                        get_grouped_order_by_petlover_ResponseCall();
-
-
-                    }
-                }
-            }
-        });
 
 
         return view;
@@ -188,7 +162,10 @@ public class FragmentPetLoverNewOrders extends Fragment implements AddandReviewL
 
 
 
-    @SuppressLint({"LogNotTimber", "LongLogTag"})
+
+
+
+     @SuppressLint({"LogNotTimber", "LongLogTag"})
     private void get_grouped_order_by_petlover_ResponseCall() {
        /* avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();*/
@@ -206,12 +183,12 @@ public class FragmentPetLoverNewOrders extends Fragment implements AddandReviewL
                 mShimmerViewContainer.stopShimmerAnimation();
                 includelayout.setVisibility(View.GONE);
                 refresh_layout.setRefreshing(false);
+
                 Log.w(TAG,"PetVendorOrderResponse"+ "--->" + new Gson().toJson(response.body()));
-
-
                if (response.body() != null) {
+
                    if(200 == response.body().getCode()){
-                       isfirst = true;
+
 
                        orderResponseList = response.body().getData();
                        Log.w(TAG,"orderResponseList Size : "+orderResponseList.size());
@@ -249,23 +226,25 @@ public class FragmentPetLoverNewOrders extends Fragment implements AddandReviewL
                        }
 
                        Log.w(TAG,"orderResponseListAll size : "+orderResponseListAll.size());
-                       Log.w(TAG,"orderResponseListAll : "+new Gson().toJson(orderResponseListAll));
-                       if(orderResponseListAll.size() > 0){
+                      // Log.w(TAG,"orderResponseListAll : "+new Gson().toJson(orderResponseListAll));
+                       if(orderResponseList.size() > 0){
                            txt_no_records.setVisibility(View.GONE);
                            rv_newappointment.setVisibility(View.VISIBLE);
                            setView(orderResponseListAll);
 
                        }
                        else{
-                           txt_no_records.setVisibility(View.VISIBLE);
-                           txt_no_records.setText("No new orders");
-                           rv_newappointment.setVisibility(View.GONE);
+                           if (CURRENT_PAGE == 1) {
+                               txt_no_records.setVisibility(View.VISIBLE);
+                               txt_no_records.setText("No new orders");
+                           } else {
+                               rv_newappointment.setVisibility(View.VISIBLE);
+                               setView(orderResponseListAll);
+                           }
+
                        }
 
                    }
-
-
-
                 }
             }
 
@@ -297,14 +276,37 @@ public class FragmentPetLoverNewOrders extends Fragment implements AddandReviewL
     }
 
     private void setView(List<PetLoverVendorOrderListResponse.DataBean> orderResponseListAll) {
-        rv_newappointment.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv_newappointment.setItemAnimator(new DefaultItemAnimator());
-        PetLoverVendorOrdersAdapter vendorOrdersAdapter = new PetLoverVendorOrdersAdapter(getContext(), orderResponseListAll,TAG,this);
-        rv_newappointment.setAdapter(vendorOrdersAdapter);
-        vendorOrdersAdapter.notifyDataSetChanged();
-        isLoading = false;
+        petLoverVendorOrdersAdapter = new PetLoverVendorOrdersAdapter(getContext(), orderResponseListAll, TAG, this);
+        rv_newappointment.setAdapter(petLoverVendorOrdersAdapter);
+        isLoading = true;
     }
+    private void initResultRecylerView() {
+        rv_newappointment.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                visibleItemCount = linearLayoutManager.getChildCount();
+                totalItemCount = linearLayoutManager.getItemCount();
+                pastVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
+                if (dy > 0) {
+                    if (isLoading) {
+                        if (totalItemCount > previousTotal) {
 
+                            isLoading = false;
+                            previousTotal = totalItemCount;
+                        }
+                    }
+
+                    if (!isLoading && (totalItemCount - visibleItemCount) <= (pastVisibleItem+viewThreshold)) {
+                        CURRENT_PAGE = CURRENT_PAGE + 1;
+                        get_grouped_order_by_petlover_ResponseCall();
+                        isLoading = true;
+                    }
+                }
+
+            }
+        });
+    }
 
     @Override
     public void addReviewListener(String id, int userrate, String userfeedback) {

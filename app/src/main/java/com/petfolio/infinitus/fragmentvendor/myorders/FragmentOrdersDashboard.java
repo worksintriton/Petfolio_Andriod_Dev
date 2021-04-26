@@ -17,6 +17,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -24,6 +25,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
@@ -71,6 +73,10 @@ public class FragmentOrdersDashboard extends Fragment  {
     @BindView(R.id.viewPager)
     ViewPager viewPager;
 
+
+
+
+
     private SharedPreferences preferences;
     private Context mContext;
     private String userid;
@@ -110,7 +116,7 @@ public class FragmentOrdersDashboard extends Fragment  {
 
 
         if(userid != null){
-            if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
+            if (new ConnectionDetector(getActivity()).isNetworkAvailable(mContext)) {
                 VendorCheckStatusResponseCall();
             }
         }
@@ -201,9 +207,11 @@ public class FragmentOrdersDashboard extends Fragment  {
                                     Log.w(TAG,"isDoctorStatus else : "+isDoctorStatus);
 
                                     if(isDoctorStatus){
+
                                         if(viewPager != null) {
                                             setupViewPager(viewPager);
                                             tablayout.setupWithViewPager(viewPager);
+
                                         }
                                     }
 
@@ -230,6 +238,13 @@ public class FragmentOrdersDashboard extends Fragment  {
         });
 
     }
+
+    private void setupViewPagerCancelled(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager(),3);
+        adapter.addFragment(new FragmentCancelledOrders(), "Cancelled");
+        viewPager.setAdapter(adapter);
+    }
+
     private SPCheckStatusRequest spCheckStatusRequest() {
         SPCheckStatusRequest spCheckStatusRequest = new SPCheckStatusRequest();
         spCheckStatusRequest.setUser_id(userid);

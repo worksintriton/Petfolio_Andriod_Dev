@@ -3,10 +3,7 @@ package com.petfolio.infinitus.fragmentvendor.myorders;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,13 +32,9 @@ import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -50,7 +43,7 @@ import retrofit2.Response;
 
 
 public class FragementNewOrders extends Fragment {
-    private String TAG = "FragementNewOrders";
+    private final String TAG = "FragementNewOrders";
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
@@ -71,10 +64,9 @@ public class FragementNewOrders extends Fragment {
 
 
     SessionManager session;
-    String type = "",username = "",userid = "";
-    private SharedPreferences preferences;
+    String username = "";
+    String userid = "";
     private Context mContext;
-    private Dialog dialog;
     Dialog alertDialog;
 
     private ShimmerFrameLayout mShimmerViewContainer;
@@ -83,9 +75,13 @@ public class FragementNewOrders extends Fragment {
     private List<VendorOrderListResponse.DataBean> orderResponseList;
     private final List<VendorOrderListResponse.DataBean> orderResponseListAll = new ArrayList<>();
 
+    VendorOrdersAdapter vendorOrdersAdapter;
+    private LinearLayoutManager linearLayoutManager;
     public static final int PAGE_START = 1;
     private int CURRENT_PAGE = PAGE_START;
-    private boolean isLoading = false;
+    private boolean isLoading = true;
+    private int pastVisibleItem,visibleItemCount,totalItemCount,previousTotal =0;
+    private final int viewThreshold = 5;
 
     public FragementNewOrders() { }
 
@@ -95,7 +91,6 @@ public class FragementNewOrders extends Fragment {
                              Bundle savedInstanceState) {
         Log.w(TAG,"onCreateView");
 
-        preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         View view = inflater.inflate(R.layout.fragment_vendor_new_orders, container, false);
 
         ButterKnife.bind(this, view);
@@ -117,48 +112,44 @@ public class FragementNewOrders extends Fragment {
         Log.w(TAG,"userid"+userid +"username :"+username);
 
 
-        if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
+        if (APIClient.VENDOR_ID.isEmpty()) {
+            if (new ConnectionDetector(getActivity()).isNetworkAvailable(mContext)) {
+                getVendorOrderIDResponseCall(userid);
 
-           // vendorNewOrderRsponseCall();
+            }
+        }
 
-            getVendorOrderIDResponseCall(userid);
+        linearLayoutManager = new LinearLayoutManager(getActivity());
+        rv_newappointment.setHasFixedSize(true);
+        rv_newappointment.setItemAnimator(new DefaultItemAnimator());
+        rv_newappointment.setLayoutManager(linearLayoutManager);
+        orderResponseListAll.clear();
+
+        if (new ConnectionDetector(getActivity()).isNetworkAvailable(mContext)) {
+            CURRENT_PAGE = 1;
+            if (APIClient.VENDOR_ID != null && !APIClient.VENDOR_ID.isEmpty()) {
+                vendorNewOrderResponseCall(APIClient.VENDOR_ID);
+            }
 
         }
 
-        final Handler handler = new Handler();
-        Timer timer = new Timer();
-        TimerTask doAsynchronousTask = new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(() -> {
-                    try {
-                        //your method here
-                        if (APIClient.VENDOR_ID != null && !APIClient.VENDOR_ID.isEmpty()) {
-                            vendorNewOrderResponseCall(APIClient.VENDOR_ID);
-                        }
-
-                    }catch (Exception ignored) {
-                    }
-                });
-            }
-        };
-        timer.schedule(doAsynchronousTask, 0, 45000);//you can put 30000(30 secs)
-
-        refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-                            if(APIClient.VENDOR_ID != null && !APIClient.VENDOR_ID.isEmpty()) {
-                                vendorNewOrderResponseCall(APIClient.VENDOR_ID);
-                            }
-
-                        }
-
-                    }
+        refresh_layout.setOnRefreshListener(() -> {
+            if (new ConnectionDetector(getActivity()).isNetworkAvailable(mContext)) {
+                CURRENT_PAGE = 1;
+                previousTotal = 0;
+                orderResponseListAll.clear();
+                if (APIClient.VENDOR_ID != null && !APIClient.VENDOR_ID.isEmpty()) {
+                    vendorNewOrderResponseCall(APIClient.VENDOR_ID);
                 }
-        );
+
+
+            }
+
+        });
 
         initResultRecylerView();
+
+
 
 
         return view;
@@ -228,7 +219,7 @@ public class FragementNewOrders extends Fragment {
     }
 
     public void showErrorLoading(String errormesage){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext);
         alertDialogBuilder.setMessage(errormesage);
         alertDialogBuilder.setPositiveButton("ok",
                 (arg0, arg1) -> hideLoading());
@@ -287,6 +278,10 @@ public class FragementNewOrders extends Fragment {
                             * v_order_booked_on : 19-04-2021 12:05 PM
                             * v_order_status : New
                             * v_order_text : Food Products
+                            * v_cancelled_date :
+                            * v_completed_date :
+                            * v_user_feedback :
+                            * v_user_rate : 0
                             */
                            VendorOrderListResponse.DataBean  dataBean = new VendorOrderListResponse.DataBean();
                            dataBean.setV_order_id(orderResponseList.get(i).getV_order_id());
@@ -300,6 +295,10 @@ public class FragementNewOrders extends Fragment {
                            dataBean.setV_order_booked_on(orderResponseList.get(i).getV_order_booked_on());
                            dataBean.setV_order_status(orderResponseList.get(i).getV_order_status());
                            dataBean.setV_order_text(orderResponseList.get(i).getV_order_text());
+                           dataBean.setV_cancelled_date(orderResponseList.get(i).getV_cancelled_date());
+                           dataBean.setV_completed_date(orderResponseList.get(i).getV_completed_date());
+                           dataBean.setV_user_feedback(orderResponseList.get(i).getV_user_feedback());
+                           dataBean.setV_user_rate(orderResponseList.get(i).getV_user_rate());
                            orderResponseListAll.add(dataBean);
 
 
@@ -310,13 +309,18 @@ public class FragementNewOrders extends Fragment {
                        if(orderResponseList.size() > 0){
                            txt_no_records.setVisibility(View.GONE);
                            rv_newappointment.setVisibility(View.VISIBLE);
-                           setView(orderResponseList);
+                           setView(orderResponseListAll);
 
                        }
                        else{
-                           txt_no_records.setVisibility(View.VISIBLE);
-                           txt_no_records.setText("No new orders");
-                           rv_newappointment.setVisibility(View.GONE);
+                           if (CURRENT_PAGE == 1) {
+                               txt_no_records.setVisibility(View.VISIBLE);
+                               txt_no_records.setText("No new orders");
+                           } else {
+                               rv_newappointment.setVisibility(View.VISIBLE);
+                               setView(orderResponseListAll);
+                           }
+
                        }
 
                    }
@@ -353,44 +357,41 @@ public class FragementNewOrders extends Fragment {
         Log.w(TAG,"vendorNewOrderRequest"+ "--->" + new Gson().toJson(vendorOrderListRequest));
         return vendorOrderListRequest;
     }
+    private void setView(List<VendorOrderListResponse.DataBean> orderResponseListAll) {
+        vendorOrdersAdapter = new VendorOrdersAdapter(getContext(), orderResponseListAll,TAG);
+        rv_newappointment.setAdapter(vendorOrdersAdapter);
+        isLoading = true;
+    }
     private void initResultRecylerView() {
         rv_newappointment.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @SuppressLint("LogNotTimber")
-            @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                visibleItemCount = linearLayoutManager.getChildCount();
+                totalItemCount = linearLayoutManager.getItemCount();
+                pastVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
+                if (dy > 0) {
+                    if (isLoading) {
+                        if (totalItemCount > previousTotal) {
 
-                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                            isLoading = false;
+                            previousTotal = totalItemCount;
+                        }
+                    }
 
-                if (!isLoading) {
-                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == orderResponseListAll.size() - 1) {
-                        //bottom of list!
-                        CURRENT_PAGE += 1;
-
-                        Log.w(TAG, "isLoading? " + isLoading + " currentPage " + CURRENT_PAGE);
-                        isLoading = true;
+                    if (!isLoading && (totalItemCount - visibleItemCount) <= (pastVisibleItem+viewThreshold)) {
+                        CURRENT_PAGE = CURRENT_PAGE + 1;
                         if (APIClient.VENDOR_ID != null && !APIClient.VENDOR_ID.isEmpty()) {
                             vendorNewOrderResponseCall(APIClient.VENDOR_ID);
                         }
-
+                        isLoading = true;
                     }
                 }
+
             }
         });
     }
-    private void setView(List<VendorOrderListResponse.DataBean> orderResponseListAll) {
-        rv_newappointment.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv_newappointment.setItemAnimator(new DefaultItemAnimator());
-        VendorOrdersAdapter vendorOrdersAdapter = new VendorOrdersAdapter(getContext(), orderResponseListAll,TAG);
-        rv_newappointment.setAdapter(vendorOrdersAdapter);
-        vendorOrdersAdapter.notifyDataSetChanged();
-        isLoading = false;
-    }
+
 
 
 

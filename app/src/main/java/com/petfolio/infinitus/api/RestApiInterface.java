@@ -114,7 +114,6 @@ public interface RestApiInterface {
     @GET("splashscreen/getlist")
     Call<SplashScreenResponse> splashScreenResponseCall(@Header("Content-Type") String type);
 
-
     /*user types list*/
     @GET("usertype/mobile/getlist")
     Call<UserTypeListResponse> userTypeListResponseCall(@Header("Content-Type") String type);

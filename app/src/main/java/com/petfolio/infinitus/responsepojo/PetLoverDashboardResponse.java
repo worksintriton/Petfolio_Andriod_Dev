@@ -688,7 +688,7 @@ public class PetLoverDashboardResponse{
                 private int product_price;
                 private int product_discount;
                 private boolean product_fav;
-                private int product_rating;
+                private double product_rating;
                 private int product_review;
 
                 public String get_id() {
@@ -747,11 +747,11 @@ public class PetLoverDashboardResponse{
                     this.product_fav = product_fav;
                 }
 
-                public int getProduct_rating() {
+                public double getProduct_rating() {
                     return product_rating;
                 }
 
-                public void setProduct_rating(int product_rating) {
+                public void setProduct_rating(double product_rating) {
                     this.product_rating = product_rating;
                 }
 
@@ -772,7 +772,7 @@ public class PetLoverDashboardResponse{
                 private int product_price;
                 private int product_discount;
                 private boolean product_fav;
-                private int product_rating;
+                private double product_rating;
                 private int product_review;
 
                 public String get_id() {
@@ -831,11 +831,11 @@ public class PetLoverDashboardResponse{
                     this.product_fav = product_fav;
                 }
 
-                public int getProduct_rating() {
+                public double getProduct_rating() {
                     return product_rating;
                 }
 
-                public void setProduct_rating(int product_rating) {
+                public void setProduct_rating(double product_rating) {
                     this.product_rating = product_rating;
                 }
 

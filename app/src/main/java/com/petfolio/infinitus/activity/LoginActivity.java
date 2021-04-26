@@ -151,7 +151,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             startActivity(intent);
                         }
 
-                    } else {
+                    }
+                    else {
                         showErrorLoading(response.body().getMessage());
                     }
                 }

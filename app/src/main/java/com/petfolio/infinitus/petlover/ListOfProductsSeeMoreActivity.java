@@ -173,6 +173,11 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
 
 
         }
+        rv_today_deal.setHasFixedSize(true);
+        gridLayoutManager = new GridLayoutManager(this, 2);
+        rv_today_deal.setLayoutManager(gridLayoutManager);
+        rv_today_deal.setItemAnimator(new DefaultItemAnimator());
+
         if (fromactivity != null && fromactivity.equalsIgnoreCase("ProductFiltersActivity")) {
             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
                 productFiltersResponseCall();
@@ -188,10 +193,7 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
                 onBackPressed();
             }
         });
-        rv_today_deal.setHasFixedSize(true);
-        gridLayoutManager = new GridLayoutManager(this, 2);
-        rv_today_deal.setLayoutManager(gridLayoutManager);
-        rv_today_deal.setItemAnimator(new DefaultItemAnimator());
+
 
 
 
