@@ -339,8 +339,8 @@ public class TrackOrderActivity extends AppCompatActivity implements View.OnClic
                                                 if (prodcutTrackDetailsBeanList.get(i).isStatus()) {
                                                     ll_order_reject_bypetlover.setVisibility(View.VISIBLE);
                                                     txt_order_reject_date_petlover.setText(" " + prodcutTrackDetailsBeanList.get(i).getDate());
-                                                   // txt_order_reject_date_reason.setText(response.body().getData().getUser_cancell_info());
-                                                   // txt_order_reject_date_petlover.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+                                                    txt_order_vendor_reject_date_reason.setText(prodcutTrackDetailsBeanList.get(i).getText());
+                                                    txt_order_vendor_reject_date_reason.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
                                                     img_vendor_order_rejected_bypetlover.setImageResource(R.drawable.ic_baseline_check_circle_24);
 
                                                 } else {
@@ -353,7 +353,8 @@ public class TrackOrderActivity extends AppCompatActivity implements View.OnClic
                                                 if (prodcutTrackDetailsBeanList.get(i).isStatus()) {
                                                     ll_order_reject.setVisibility(View.VISIBLE);
                                                     txt_order_reject_date.setText(" " + prodcutTrackDetailsBeanList.get(i).getDate());
-                                                   // txt_order_reject_date.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+                                                    txt_order_vendor_reject_date_reason.setText(prodcutTrackDetailsBeanList.get(i).getText());
+                                                    txt_order_vendor_reject_date_reason.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
                                                     img_vendor_order_rejected.setImageResource(R.drawable.ic_baseline_check_circle_24);
 
 

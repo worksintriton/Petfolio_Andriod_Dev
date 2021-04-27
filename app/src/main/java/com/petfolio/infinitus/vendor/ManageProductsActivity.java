@@ -41,6 +41,7 @@ import com.petfolio.infinitus.requestpojo.ApplySingleDiscountCalRequest;
 import com.petfolio.infinitus.requestpojo.ApplySingleDiscountRequest;
 import com.petfolio.infinitus.requestpojo.ManageProductsListRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverMyOrdersReviewandUpdateRequest;
+import com.petfolio.infinitus.requestpojo.ProductEditRequest;
 import com.petfolio.infinitus.requestpojo.TodayDealsClearRequest;
 import com.petfolio.infinitus.responsepojo.ApplyMultiProdDiscountResponse;
 import com.petfolio.infinitus.responsepojo.ApplySingleDiscountCalResponse;
@@ -921,13 +922,13 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
         Call<VendorOrderUpdateResponse> call = apiInterface.clearTodayDealsResponseCall(RestUtils.getContentType(), todayDealsClearRequest(status,productid));
-        Log.w(TAG,"addReviewResponseCall url  :%s"+" "+ call.request().url().toString());
+        Log.w(TAG,"clearTodayDealsResponseCall url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<VendorOrderUpdateResponse>() {
             @Override
             public void onResponse(@NonNull Call<VendorOrderUpdateResponse> call, @NonNull Response<VendorOrderUpdateResponse> response) {
 
-                Log.w(TAG,"AddReviewResponse"+ "--->" + new Gson().toJson(response.body()));
+                Log.w(TAG,"clearTodayDealsResponseCall"+ "--->" + new Gson().toJson(response.body()));
 
                 avi_indicator.smoothToHide();
 
@@ -951,7 +952,7 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
             public void onFailure(@NonNull Call<VendorOrderUpdateResponse> call, @NonNull Throwable t) {
 
                 avi_indicator.smoothToHide();
-                Log.w(TAG,"AddReviewResponse flr"+"--->" + t.getMessage());
+                Log.w(TAG,"clearTodayDealsResponseCall flr"+"--->" + t.getMessage());
             }
         });
 
@@ -998,4 +999,8 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
 
 
     }
+
+
+
+
 }

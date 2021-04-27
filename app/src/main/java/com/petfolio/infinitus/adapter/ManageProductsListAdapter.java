@@ -169,6 +169,7 @@ public class ManageProductsListAdapter extends  RecyclerView.Adapter<RecyclerVie
                             i.putExtra("producttitle",manageProductsListResponseList.get(position).getProduct_name());
                             i.putExtra("productprice",manageProductsListResponseList.get(position).getProduct_price());
                             i.putExtra("productthreshold",manageProductsListResponseList.get(position).getPet_threshold());
+                            i.putExtra("productdesc",manageProductsListResponseList.get(position).getProduct_desc());
                             context.startActivity(i);
 
                         } else if(titleName.equalsIgnoreCase("Clear Deals")){

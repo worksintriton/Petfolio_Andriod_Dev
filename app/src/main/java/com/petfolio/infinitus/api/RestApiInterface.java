@@ -725,6 +725,10 @@ public interface RestApiInterface {
     @POST("product_details/mark_deal")
     Call<VendorOrderUpdateResponse>clearTodayDealsResponseCall(@Header("Content-Type") String type, @Body TodayDealsClearRequest todayDealsClearRequest);
 
+    /*Product details edit*/
+    @POST("product_details/mobile/edit_product")
+    Call<VendorOrderUpdateResponse>productEditResponseCall(@Header("Content-Type") String type, @Body ProductEditRequest productEditRequest);
+
 
 
 }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/care"
+        android:title="PetCare"
+        android:icon="@drawable/petcare_selector"/>
+
+    <item
+        android:id="@+id/services"
+        android:title="Pet Service"
+        android:icon="@drawable/service_selector"/>
+
+    <item
+        android:id="@+id/home"
+        android:title="Home"
+        android:icon="@drawable/selector"/>
+
+    <item
+        android:id="@+id/shop"
+        android:title="Shop"
+        android:icon="@drawable/shop_selector"/>
+
+    <item
+        android:id="@+id/community"
+        android:title="Community"
+        android:icon="@drawable/community_selector"/>
+
+</menu>

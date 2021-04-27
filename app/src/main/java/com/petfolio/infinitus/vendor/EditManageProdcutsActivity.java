@@ -1,26 +1,42 @@
 package com.petfolio.infinitus.vendor;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.appUtils.NumericKeyBoardTransformationMethod;
 import com.petfolio.infinitus.petlover.AddYourPetActivity;
+import com.petfolio.infinitus.requestpojo.ProductEditRequest;
+import com.petfolio.infinitus.responsepojo.VendorOrderUpdateResponse;
 import com.petfolio.infinitus.utils.ConnectionDetector;
+import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EditManageProdcutsActivity extends AppCompatActivity {
 
+    private String TAG = "EditManageProdcutsActivity";
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
     ImageView img_back;
@@ -49,8 +65,10 @@ public class EditManageProdcutsActivity extends AppCompatActivity {
     @BindView(R.id.btn_update)
     Button btn_update;
 
-    private String productid,producttitle,productthreshold;
+    private String productid,producttitle,productthreshold,productdesc;
     private int productprice;
+    private Dialog alertDialog;
+
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -58,6 +76,9 @@ public class EditManageProdcutsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_manage_prodcuts);
         ButterKnife.bind(this);
+
+        edt_product_thresould.setTransformationMethod(new NumericKeyBoardTransformationMethod());
+
 
         avi_indicator.setVisibility(View.GONE);
 
@@ -68,6 +89,7 @@ public class EditManageProdcutsActivity extends AppCompatActivity {
             producttitle = extras.getString("producttitle");
             productprice = extras.getInt("productprice");
             productthreshold = extras.getString("productthreshold");
+            productdesc = extras.getString("productdesc");
 
             if(producttitle != null){
                 edt_product_title.setText(producttitle);
@@ -78,6 +100,8 @@ public class EditManageProdcutsActivity extends AppCompatActivity {
             }
             if(productthreshold != null){
                 edt_product_thresould.setText(productthreshold);
+            }if(productdesc != null){
+                edt_product_descriptions.setText(productdesc);
             }
 
             btn_update.setOnClickListener(new View.OnClickListener() {
@@ -130,7 +154,7 @@ public class EditManageProdcutsActivity extends AppCompatActivity {
 
         if (can_proceed) {
             if (new ConnectionDetector(EditManageProdcutsActivity.this).isNetworkAvailable(EditManageProdcutsActivity.this)) {
-
+                productEditResponseCall();
             }
 
         }
@@ -144,5 +168,86 @@ public class EditManageProdcutsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
+    private void productEditResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<VendorOrderUpdateResponse> call = apiInterface.productEditResponseCall(RestUtils.getContentType(), productEditRequest());
+        Log.w(TAG,"productEditResponseCall url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<VendorOrderUpdateResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<VendorOrderUpdateResponse> call, @NonNull Response<VendorOrderUpdateResponse> response) {
+
+                Log.w(TAG,"productEditResponseCall"+ "--->" + new Gson().toJson(response.body()));
+
+                avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
+                        startActivity(new Intent(getApplicationContext(),ManageProductsActivity.class));
+                        finish();
+                    }
+                    else{
+                        showErrorLoading(response.body().getMessage());
+                    }
+                }
+
+
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onFailure(@NonNull Call<VendorOrderUpdateResponse> call, @NonNull Throwable t) {
+
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"productEditResponseCall flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
+    private ProductEditRequest productEditRequest() {
+
+        /*
+         * _id : 6034d66598fa826140f6a3a3
+         * cost : 100
+         * threshould : 100
+         * product_name : Cat Food
+         * product_discription : This is cat lunch.......
+         */
+
+
+        ProductEditRequest productEditRequest = new ProductEditRequest();
+        productEditRequest.set_id(productid);
+        productEditRequest.setCost(Integer.parseInt(edt_product_price.getText().toString()));
+        productEditRequest.setThreshould(edt_product_thresould.getText().toString());
+        productEditRequest.setProduct_name(edt_product_title.getText().toString());
+        productEditRequest.setProduct_discription(edt_product_descriptions.getText().toString());
+        Log.w(TAG,"productEditRequest"+ "--->" + new Gson().toJson(productEditRequest));
+        return productEditRequest;
+    }
+
+    public void showErrorLoading(String errormesage){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(errormesage);
+        alertDialogBuilder.setPositiveButton("ok",
+                (arg0, arg1) -> hideLoading());
+
+
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+    public void hideLoading(){
+        try {
+            alertDialog.dismiss();
+        }catch (Exception ignored){
+
+        }
     }
 }

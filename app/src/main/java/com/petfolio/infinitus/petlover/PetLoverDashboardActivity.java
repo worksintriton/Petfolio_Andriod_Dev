@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -81,7 +82,9 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
     AVLoadingIndicatorView avi_indicator;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.bottom_navigation_view)
+    @BindView(R.id.include_petlover_footer)
+    View include_petlover_footer;
+
     BottomNavigationView bottom_navigation_view;
 
 
@@ -118,6 +121,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
         ButterKnife.bind(this);
         Log.w(TAG,"onCreate-->");
 
+        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
         bottom_navigation_view.setItemIconTintList(null);
         googleApiConnected();
         avi_indicator.setVisibility(View.GONE);
@@ -259,6 +263,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
                     replaceFragment(new PetCareFragment());
                     break;
             case R.id.community:
+                     showComingSoonAlert();
                     active_tag = "5";
                     break;
 
@@ -655,6 +660,35 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
 
 
     }
+
+    private void showComingSoonAlert() {
+
+        try {
+
+            Dialog dialog = new Dialog(PetLoverDashboardActivity.this);
+            dialog.setContentView(R.layout.alert_comingsoon_layout);
+            dialog.setCanceledOnTouchOutside(false);
+
+            ImageView img_close = dialog.findViewById(R.id.img_close);
+            img_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+
+                }
+            });
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
 
 
 
