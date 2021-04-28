@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ll_new"
+    android:id="@+id/ll_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -162,7 +162,7 @@
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
                         android:text="@string/order_details"
-                        android:textColor="@color/new_green_btn"
+                        android:textColor="@color/blue"
                         android:textSize="12sp"
                         android:visibility="visible" />
 

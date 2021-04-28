@@ -322,6 +322,8 @@ public class TrackOrderActivity extends AppCompatActivity implements View.OnClic
                                                    // txt_order_transit_date.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
                                                     img_vendor_order_dispatched.setImageResource(R.drawable.completed);
                                                     img_vendor_order_transit.setImageResource(R.drawable.completed);
+                                                    txt_order_dispatch_packdetails.setVisibility(View.VISIBLE);
+                                                    txt_order_dispatch_packdetails.setText(prodcutTrackDetailsBeanList.get(i).getText());
 
 
                                                 } else {

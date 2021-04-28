@@ -334,7 +334,7 @@ public class FragmentCompletedOrders extends Fragment  {
                         else{
                             if (CURRENT_PAGE == 1) {
                                 txt_no_records.setVisibility(View.VISIBLE);
-                                txt_no_records.setText("No new orders");
+                                txt_no_records.setText("No completed orders");
                             } else {
                                 rv_completedappointment.setVisibility(View.VISIBLE);
                                 setView(orderResponseListAll);
@@ -364,7 +364,7 @@ public class FragmentCompletedOrders extends Fragment  {
     private VendorOrderListRequest vendorOrderListRequest(String id) {
         /*
          * vendor_id : 604866a50b3a487571a1c568
-         * order_status : New
+         * order_status : Complete
          * skip_count : 1
          */
 

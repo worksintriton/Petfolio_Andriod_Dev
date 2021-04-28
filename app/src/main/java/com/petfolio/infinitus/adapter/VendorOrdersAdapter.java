@@ -74,8 +74,7 @@ public class VendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.View
                     .load(orderResponseListAll.get(position).getV_order_image())
                     .into(holder.img_pet_imge);
 
-        }
-        else{
+        } else{
             Glide.with(context)
                     .load(APIClient.PROFILE_IMAGE_URL)
                     .into(holder.img_pet_imge);
@@ -128,6 +127,13 @@ public class VendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.View
                 context.startActivity(i);
 
         });
+         holder.ll_root.setOnClickListener(v -> {
+                Intent i = new Intent(context, VendorOrderDetailsNewActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("_id",orderResponseListAll.get(position).getV_order_id());
+                i.putExtra("fromactivity",fromactivity);
+                context.startActivity(i);
+
+        });
         holder.btn_update_status.setOnClickListener(v -> {
              /*   Intent i = new Intent(context, VendorUpdateOrderStatusActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra("order_id",orderResponseListAll.get(position).get_id());
@@ -159,7 +165,7 @@ public class VendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.View
     static class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_orderid,txt_producttitle,txt_service_cost,txt_bookedon,txt_order_details;
         public ImageView img_pet_imge;
-        public LinearLayout ll_new;
+        public LinearLayout ll_root;
         public Button btn_update_status;
 
         public ViewHolderOne(View itemView) {
@@ -169,7 +175,7 @@ public class VendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.View
             txt_producttitle = itemView.findViewById(R.id.txt_producttitle);
             txt_service_cost = itemView.findViewById(R.id.txt_service_cost);
             txt_bookedon = itemView.findViewById(R.id.txt_bookedon);
-            ll_new = itemView.findViewById(R.id.ll_new);
+            ll_root = itemView.findViewById(R.id.ll_root);
             txt_order_details = itemView.findViewById(R.id.txt_order_details);
             btn_update_status = itemView.findViewById(R.id.btn_update_status);
 

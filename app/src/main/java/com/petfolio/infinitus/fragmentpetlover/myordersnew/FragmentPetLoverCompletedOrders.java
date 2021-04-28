@@ -312,6 +312,9 @@ public class FragmentPetLoverCompletedOrders extends Fragment implements AddandR
             btn_back.setOnClickListener(view -> {
                 dialog.dismiss();
                 if (new ConnectionDetector(getActivity()).isNetworkAvailable(mContext)) {
+                    CURRENT_PAGE = 1;
+                    previousTotal = 0;
+                    orderResponseListAll.clear();
                     get_grouped_order_by_petlover_ResponseCall();
                 }
 

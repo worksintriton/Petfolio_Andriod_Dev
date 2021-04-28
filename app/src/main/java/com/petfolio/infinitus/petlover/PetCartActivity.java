@@ -313,26 +313,26 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                                 txt_lbl_subtotal.setText("Subtotal ( "+response.body().getProdcut_item_count()+" items)" );
                             }
                             if(response.body().getProdouct_total() != 0){
-                                txt_sub_total.setText(response.body().getProdouct_total()+" \u20B9 ");
+                                txt_sub_total.setText(" \u20B9 "+response.body().getProdouct_total());
                             }else{
-                                txt_sub_total.setText(0+ "\u20B9 ");
+                                txt_sub_total.setText("\u20B9 "+0);
 
                             }
                             if(response.body().getDiscount_price() != 0){
-                                txt_discount_amount.setText(response.body().getDiscount_price()+" \u20B9 ");
+                                txt_discount_amount.setText(" \u20B9 "+response.body().getDiscount_price());
                             }else{
-                                txt_discount_amount.setText(0+" \u20B9 ");
+                                txt_discount_amount.setText(" \u20B9 "+0);
                             }
                             if(response.body().getShipping_charge() != 0){
-                                txt_shipping_amount.setText(response.body().getShipping_charge()+" \u20B9 ");
+                                txt_shipping_amount.setText(" \u20B9 "+response.body().getShipping_charge());
                             }else{
-                                txt_shipping_amount.setText(0+" \u20B9 ");
+                                txt_shipping_amount.setText(" \u20B9 "+0);
 
                             }
                             if(response.body().getGrand_total() != 0){
-                                txt_total_amount.setText(response.body().getGrand_total()+" \u20B9 ");
+                                txt_total_amount.setText(" \u20B9 "+response.body().getGrand_total());
                             }else{
-                                txt_total_amount.setText(0+" \u20B9 ");
+                                txt_total_amount.setText(" \u20B9 "+0);
 
                             }
 

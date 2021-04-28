@@ -84,6 +84,7 @@ public class ProductDetailsVendorAdapter extends  RecyclerView.Adapter<RecyclerV
 
 
         if(product_details.get(position).getProduct_stauts() != null ){
+            Log.w(TAG,"Product_stauts : "+product_details.get(position).getProduct_stauts());
            if( product_details.get(position).getProduct_stauts().equalsIgnoreCase("Order Booked")){
                holder.ll_confirm_reject.setVisibility(View.VISIBLE);
                holder.ll_dispatch.setVisibility(View.GONE);
@@ -105,11 +106,13 @@ public class ProductDetailsVendorAdapter extends  RecyclerView.Adapter<RecyclerV
                holder.txt_product_status.setVisibility(View.VISIBLE);
                holder.txt_product_status.setTextColor(context.getResources().getColor(R.color.new_green_btn));
                holder.txt_product_status.setText(product_details.get(position).getProduct_stauts());
-           }else{
+           }else if(product_details.get(position).getProduct_stauts().equalsIgnoreCase("Order Cancelled")){
                holder.ll_confirm_reject.setVisibility(View.GONE);
                holder.ll_dispatch.setVisibility(View.GONE);
-               holder.txt_product_status.setVisibility(View.GONE);
-           }
+               holder.txt_product_status.setVisibility(View.VISIBLE);
+               holder.txt_product_status.setText(product_details.get(position).getProduct_stauts());
+            }
+
 
 
         }

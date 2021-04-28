@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -130,18 +131,18 @@ public class PetLoverVendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerV
 
             }
         });
-       /* holder.txt_track_order.setOnClickListener(new View.OnClickListener() {
+        holder.ll_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, PetVendorTrackOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("_id", newOrderResponseList.get(position).get_id());
-                i.putExtra("fromactivity", TAG);
+                Intent i = new Intent(context, PetLoverVendorOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("_id", orderResponseListAll.get(position).getP_order_id());
+                i.putExtra("fromactivity", fromactivity);
                 context.startActivity(i);
 
 
             }
         });
-        holder.txt_cancell_order.setOnClickListener(new View.OnClickListener() {
+       /* holder.txt_cancell_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, PetVendorCancelOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -150,8 +151,8 @@ public class PetLoverVendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerV
                 context.startActivity(i);
 
             }
-        });
-*/
+        });*/
+
     }
 
     @Override
@@ -168,6 +169,7 @@ public class PetLoverVendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerV
         public TextView txt_orderid, txt_producttitle, txt_products_price, txt_bookedon, txt_order_details;
         public ImageView img_products_image;
         public Button btn_add_review;
+        public LinearLayout ll_root;
 
 
         public ViewHolderOne(View itemView) {
@@ -179,6 +181,7 @@ public class PetLoverVendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerV
             txt_bookedon = itemView.findViewById(R.id.txt_bookedon);
             txt_order_details = itemView.findViewById(R.id.txt_order_details);
             btn_add_review = itemView.findViewById(R.id.btn_add_review);
+            ll_root = itemView.findViewById(R.id.ll_root);
             btn_add_review.setVisibility(View.GONE);
 
         }
