@@ -428,7 +428,7 @@ public class FragmentCancelledOrders extends Fragment implements OnAcceptsReturn
                         else{
                             if (CURRENT_PAGE == 1) {
                                 txt_no_records.setVisibility(View.VISIBLE);
-                                txt_no_records.setText("No new orders");
+                                txt_no_records.setText("No cancelled orders");
                             } else {
                                 rv_missedappointment.setVisibility(View.VISIBLE);
                                 setView(orderResponseListAll);

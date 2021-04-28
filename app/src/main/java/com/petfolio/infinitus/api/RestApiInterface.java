@@ -687,7 +687,7 @@ public interface RestApiInterface {
 
     /*vendor order details*/
     @POST("vendor_order_group/get_product_list_by_vendor")
-    Call<PetLoverVendorOrderDetailsResponse> get_product_list_by_vendor_ResponseCall(@Header("Content-Type") String type, @Body PetLoverVendorOrderDetailsRequest petLoverVendorOrderDetailsRequest);
+    Call<PetLoverVendorOrderDetailsResponse> get_product_list_by_vendor_ResponseCall(@Header("Content-Type") String type, @Body VendorOrderDetailsListRequest vendorOrderDetailsListRequest);
 
     /*vendor single product track order details*/
     @POST("vendor_order_group/fetch_single_product_detail")

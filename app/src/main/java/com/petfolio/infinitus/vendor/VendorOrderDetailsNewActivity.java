@@ -32,6 +32,7 @@ import com.petfolio.infinitus.interfaces.OnItemCheckConfirmStatus;
 import com.petfolio.infinitus.interfaces.OnItemCheckDispatchStatus;
 import com.petfolio.infinitus.interfaces.OnItemCheckRejectStatus;
 import com.petfolio.infinitus.requestpojo.PetLoverVendorOrderDetailsRequest;
+import com.petfolio.infinitus.requestpojo.VendorOrderDetailsListRequest;
 import com.petfolio.infinitus.requestpojo.VendorOrderUpdateDispatchRequest;
 import com.petfolio.infinitus.requestpojo.VendorOrderUpdateRejectRequest;
 import com.petfolio.infinitus.requestpojo.VendorOrderUpdateRequest;
@@ -229,7 +230,9 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
      scrollablContent.setVisibility(View.GONE);
 
      if (new ConnectionDetector(VendorOrderDetailsNewActivity.this).isNetworkAvailable(VendorOrderDetailsNewActivity.this)) {
-            vendorOrderDetailsResponseCall();
+         if (APIClient.VENDOR_ID != null && !APIClient.VENDOR_ID.isEmpty()) {
+            vendorOrderDetailsResponseCall(APIClient.VENDOR_ID);
+         }
      }
 
         ll_orderdetails.setVisibility(View.GONE);
@@ -369,11 +372,11 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
     }
 
     @SuppressLint({"LongLogTag", "LogNotTimber"})
-    private void vendorOrderDetailsResponseCall() {
+    private void vendorOrderDetailsResponseCall(String vendorId) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-        Call<PetLoverVendorOrderDetailsResponse> call = apiInterface.get_product_list_by_vendor_ResponseCall(RestUtils.getContentType(), petLoverVendorOrderDetailsRequest());
+        Call<PetLoverVendorOrderDetailsResponse> call = apiInterface.get_product_list_by_vendor_ResponseCall(RestUtils.getContentType(), vendorOrderDetailsListRequest(vendorId));
         Log.w(TAG,"vendorOrderDetailsResponseCall url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<PetLoverVendorOrderDetailsResponse>() {
@@ -539,11 +542,12 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
 
     }
     @SuppressLint({"LongLogTag", "LogNotTimber"})
-    private PetLoverVendorOrderDetailsRequest petLoverVendorOrderDetailsRequest() {
-        PetLoverVendorOrderDetailsRequest petLoverVendorOrderDetailsRequest = new PetLoverVendorOrderDetailsRequest();
-        petLoverVendorOrderDetailsRequest.setOrder_id(_id);
-        Log.w(TAG,"vendorOrderDetailsRequest"+ "--->" + new Gson().toJson(petLoverVendorOrderDetailsRequest));
-        return petLoverVendorOrderDetailsRequest;
+    private VendorOrderDetailsListRequest vendorOrderDetailsListRequest(String vendorId) {
+        VendorOrderDetailsListRequest vendorOrderDetailsListRequest = new VendorOrderDetailsListRequest();
+        vendorOrderDetailsListRequest.setOrder_id(_id);
+        vendorOrderDetailsListRequest.setVendor_id(vendorId);
+        Log.w(TAG,"vendorOrderDetailsListRequest"+ "--->" + new Gson().toJson(vendorOrderDetailsListRequest));
+        return vendorOrderDetailsListRequest;
     }
 
 
