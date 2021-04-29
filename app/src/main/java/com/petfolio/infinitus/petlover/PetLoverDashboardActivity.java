@@ -158,7 +158,8 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
             } else if(tag.equalsIgnoreCase("5")){
                 bottom_navigation_view.setSelectedItemId(R.id.community);
             }
-        }else{
+        }
+        else{
             bottom_navigation_view.setSelectedItemId(R.id.home);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_schedule, active, active_tag);

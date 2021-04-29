@@ -271,6 +271,8 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
         android:background="@color/bg_white">
+
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
         android:layout_width="match_parent"

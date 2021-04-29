@@ -168,11 +168,12 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
                 });
             }
         };
-        timer.schedule(doAsynchronousTask, 0, 30000);//you can put 30000(30 secs)
+        timer.schedule(doAsynchronousTask, 0, 60000);//you can put 30000(30 secs)
 
         txt_seemore_todaydeals.setOnClickListener(v -> {
             Intent intent =new Intent(mContext, PetShopTodayDealsSeeMoreActivity.class);
             intent.putExtra("from","");
+            intent.putExtra("tag","2");
             startActivity(intent);
         });
 

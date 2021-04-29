@@ -2,6 +2,7 @@ package com.petfolio.infinitus.vendor;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -359,6 +360,7 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        //startActivity(new Intent(getApplicationContext(),VendorDashboardActivity.class));
         finish();
     }
 
@@ -570,6 +572,11 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
         }else{
             btn_update_status.setVisibility(View.GONE);
         }
+        if(product_id_rejectList != null && product_id_rejectList.size()>0 || product_id_confirmList != null && product_id_confirmList.size()>0){
+            btn_update_status.setVisibility(View.VISIBLE);
+        }else{
+            btn_update_status.setVisibility(View.GONE);
+        }
 
     }
 
@@ -585,11 +592,14 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
                     }
 
             }
-        if(product_id_confirmList != null && product_id_confirmList.size()>0){
+        if(product_id_rejectList != null && product_id_rejectList.size()>0 || product_id_confirmList != null && product_id_confirmList.size()>0){
             btn_update_status.setVisibility(View.VISIBLE);
-        }else{
+        }
+        else{
             btn_update_status.setVisibility(View.GONE);
         }
+
+
 
        }
 
@@ -598,11 +608,12 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
     public void onItemCheckRejectStatus(int productid) {
         product_id_rejectList.add(productid);
         Log.w(TAG,"onItemCheckRejectStatus product_id_rejectList : "+new Gson().toJson(product_id_rejectList));
-        if(product_id_rejectList != null && product_id_rejectList.size()>0){
+        if(product_id_rejectList != null && product_id_rejectList.size()>0 || product_id_confirmList != null && product_id_confirmList.size()>0){
             btn_update_status.setVisibility(View.VISIBLE);
         }else{
             btn_update_status.setVisibility(View.GONE);
         }
+
     }
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
@@ -617,11 +628,12 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
                 }
 
         }
-        if(product_id_rejectList != null && product_id_rejectList.size()>0){
+        if(product_id_rejectList != null && product_id_rejectList.size()>0 || product_id_confirmList != null && product_id_confirmList.size()>0){
             btn_update_status.setVisibility(View.VISIBLE);
         }else{
             btn_update_status.setVisibility(View.GONE);
         }
+
 
     }
 
@@ -641,6 +653,7 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
     @Override
     public void onItemUncheckDispatchStatus(int productid) {
+        Log.w(TAG,"onItemUncheckDispatchStatus : "+productid);
         if(product_id_dispatchList != null){
             for (int i = 0; i < product_id_dispatchList.size(); i++)
                 if (product_id_dispatchList.get(i).equals(productid)) {
@@ -805,6 +818,7 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
         vendorOrderUpdateRequest.setOrder_id(_id);
         vendorOrderUpdateRequest.setProduct_id(product_id);
         vendorOrderUpdateRequest.setDate(currentDateandTime);
+        vendorOrderUpdateRequest.setVendor_id(APIClient.VENDOR_ID);
         Log.w(TAG,"vendorOrderUpdateRequest"+ "--->" + new Gson().toJson(vendorOrderUpdateRequest));
         return vendorOrderUpdateRequest;
     }
@@ -857,6 +871,7 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
          * product_id : [0]
          * date : 20-04-2021 12:47 PM
          * reject_reason : we are not having the product currently
+         * vendor_id
          */
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
@@ -866,6 +881,7 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
         vendorOrderUpdateRejectRequest.setProduct_id(product_id);
         vendorOrderUpdateRejectRequest.setDate(currentDateandTime);
         vendorOrderUpdateRejectRequest.setReject_reason(rejectReason);
+        vendorOrderUpdateRejectRequest.setVendor_id(APIClient.VENDOR_ID);
         Log.w(TAG,"vendorOrderUpdateRejectRequest"+ "--->" + new Gson().toJson(vendorOrderUpdateRejectRequest));
         return vendorOrderUpdateRejectRequest;
     }
@@ -912,6 +928,7 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
          * product_id : [0]
          * date : 20-04-2021 12:47 PM
          * track_id : 1234 tracid
+         * vendor_id
          */
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
@@ -921,6 +938,7 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
         vendorOrderUpdateDispatchRequest.setProduct_id(product_id_dispatchList);
         vendorOrderUpdateDispatchRequest.setDate(currentDateandTime);
         vendorOrderUpdateDispatchRequest.setTrack_id(trackid);
+        vendorOrderUpdateDispatchRequest.setVendor_id(APIClient.VENDOR_ID);
         Log.w(TAG,"vendorOrderUpdateDispatchRequest"+ "--->" + new Gson().toJson(vendorOrderUpdateDispatchRequest));
         return vendorOrderUpdateDispatchRequest;
     }

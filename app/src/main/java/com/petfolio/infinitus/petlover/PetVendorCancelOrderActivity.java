@@ -116,7 +116,7 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
             cancelorder = extras.getString("cancelorder");
             Log.w(TAG,"_id : "+_id);
            product_idList = getIntent().getIntegerArrayListExtra("product_idList");
-            Log.w(TAG,"product_idList : "+ new Gson().toJson(product_idList));
+            Log.w(TAG,"product_idList : "+ new Gson().toJson(product_idList)+" cancelorder :"+cancelorder);
 
         }
 
@@ -381,12 +381,12 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
         Call<VendorOrderUpdateResponse> call = apiInterface.petlover_update_order_cancel_ResponseCall(RestUtils.getContentType(), petLoverCancelOrderRequest(product_id));
-        Log.w(TAG,"vendor_update_order_confirm_ResponseCall url  :%s"+" "+ call.request().url().toString());
+        Log.w(TAG,"petlover_update_order_cancel_ResponseCall url  :%s"+" "+ call.request().url().toString());
         call.enqueue(new Callback<VendorOrderUpdateResponse>() {
             @SuppressLint({"LongLogTag", "LogNotTimber", "SetTextI18n"})
             @Override
             public void onResponse(@NonNull Call<VendorOrderUpdateResponse> call, @NonNull Response<VendorOrderUpdateResponse> response) {
-                Log.w(TAG,"vendorOrderDetailsResponseCall"+ "--->" + new Gson().toJson(response.body()));
+                Log.w(TAG,"petlover_update_order_cancel_ResponseCall"+ "--->" + new Gson().toJson(response.body()));
                 avi_indicator.smoothToHide();
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){

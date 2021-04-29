@@ -25,6 +25,7 @@ import com.petfolio.infinitus.interfaces.OnItemCheckRejectStatus;
 import com.petfolio.infinitus.petlover.PetVendorCancelOrderActivity;
 import com.petfolio.infinitus.petlover.TrackOrderActivity;
 import com.petfolio.infinitus.responsepojo.PetLoverVendorOrderDetailsResponse;
+import com.petfolio.infinitus.vendor.VendorTrackOrderActivity;
 
 import java.util.List;
 
@@ -165,7 +166,7 @@ public class ProductDetailsVendorAdapter extends  RecyclerView.Adapter<RecyclerV
         holder.txt_track_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, TrackOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent i = new Intent(context, VendorTrackOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra("_id", product_details.get(position).getProduct_id());
                 i.putExtra("orderid", orderid);
                 i.putExtra("fromactivity", TAG);
@@ -248,6 +249,10 @@ public class ProductDetailsVendorAdapter extends  RecyclerView.Adapter<RecyclerV
                         onItemCheckDispatchStatus.onItemUncheckDispatchStatus(product_details.get(position).getProduct_id());
 
                     }
+
+                }
+                else{
+                    onItemCheckDispatchStatus.onItemUncheckDispatchStatus(product_details.get(position).getProduct_id());
 
                 }
 
