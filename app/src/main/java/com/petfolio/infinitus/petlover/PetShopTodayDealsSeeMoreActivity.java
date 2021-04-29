@@ -35,6 +35,10 @@ import com.petfolio.infinitus.adapter.PetShopTodayDealsSeeMoreAdapter;
 import com.petfolio.infinitus.adapter.ProductsSearchAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetCareFragment;
+import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetHomeNewFragment;
+import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetServicesFragment;
+import com.petfolio.infinitus.fragmentpetlover.bottommenu.VendorShopFragment;
 import com.petfolio.infinitus.requestpojo.ProductFiltersRequest;
 import com.petfolio.infinitus.requestpojo.ProductSearchRequest;
 import com.petfolio.infinitus.requestpojo.ProductSortByRequest;
@@ -101,8 +105,14 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
 
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.bottom_navigation_view)
+    @BindView(R.id.include_petlover_footer)
+    View include_petlover_footer;
+
     BottomNavigationView bottom_navigation_view;
+
+    /*@SuppressLint("NonConstantResourceId")
+    @BindView(R.id.bottom_navigation_view)
+    BottomNavigationView bottom_navigation_view;*/
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_sos)
@@ -149,6 +159,7 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
     private String petBreedTypeId = "";
     private String strCategoryTypeId = "";
     private String fromactivity;
+    private String tag;
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -180,12 +191,13 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
+            tag = extras.getString("tag");
           discount_value = extras.getString("discount_value");
           petTypeId = extras.getString("petTypeId");
           petBreedTypeId = extras.getString("petBreedTypeId");
           strCategoryTypeId = extras.getString("strCategoryTypeId");
           fromactivity = extras.getString("fromactivity");
-            Log.w(TAG,"petTypeId : "+petTypeId+" petBreedTypeId : "+petBreedTypeId+" discount_value : "+discount_value);
+            Log.w(TAG,"petTypeId : "+petTypeId+" petBreedTypeId : "+petBreedTypeId+" discount_value : "+discount_value+" tag : "+tag);
 
         }
         if(fromactivity != null && fromactivity.equalsIgnoreCase("ProductFiltersActivity")){
@@ -205,7 +217,11 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
         rl_sort.setOnClickListener(this);
         edt_sort.setOnClickListener(this);
 
+
+        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
         bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+
         img_sos.setOnClickListener(this);
         img_notification.setOnClickListener(this);
         img_cart.setOnClickListener(this);
@@ -249,7 +265,21 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
             }
         });
 
-
+       Log.w(TAG," tag : "+tag);
+    /*    if(tag != null){
+            if(tag.equalsIgnoreCase("1")){
+                bottom_navigation_view.setSelectedItemId(R.id.home);
+            }else if(tag.equalsIgnoreCase("2")){
+                //bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
+                bottom_navigation_view.setSelectedItemId(R.id.shop);
+            }else if(tag.equalsIgnoreCase("3")){
+                bottom_navigation_view.setSelectedItemId(R.id.services);
+            }else if(tag.equalsIgnoreCase("4")){
+                bottom_navigation_view.setSelectedItemId(R.id.care);
+            } else if(tag.equalsIgnoreCase("5")){
+                bottom_navigation_view.setSelectedItemId(R.id.community);
+            }
+        }*/
 
 
 

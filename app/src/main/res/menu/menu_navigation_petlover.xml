@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/care"
-        android:title="PetCare"
+        android:title="Pet Care"
         android:icon="@drawable/petcare_selector"/>
 
     <item

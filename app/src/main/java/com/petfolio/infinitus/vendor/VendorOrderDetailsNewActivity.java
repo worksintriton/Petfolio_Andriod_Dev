@@ -360,8 +360,13 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        //startActivity(new Intent(getApplicationContext(),VendorDashboardActivity.class));
-        finish();
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("FragementNewOrders")) {
+            startActivity(new Intent(getApplicationContext(), VendorDashboardActivity.class));
+            finish();
+        }else {
+            finish();
+        }
+
     }
 
     @SuppressLint("NonConstantResourceId")

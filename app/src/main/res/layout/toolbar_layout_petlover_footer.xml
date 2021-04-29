@@ -8,7 +8,7 @@
     android:orientation="horizontal">
 
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+   <!-- <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +17,40 @@
         app:itemTextColor="@color/color"
         app:labelVisibilityMode="labeled"
         android:layout_alignParentBottom="true"
-        tools:ignore="ObsoleteLayoutParam" />
+        tools:ignore="ObsoleteLayoutParam" />-->
+
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_view1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="8dp"
+        app:itemIconSize="20dp"
+        app:menu="@menu/menu_navigation_petlover"
+        android:background="?android:attr/windowBackground"
+        app:itemIconTint="@color/selector"
+        app:itemTextColor="@color/color"
+        app:labelVisibilityMode="labeled"
+        android:visibility="gone"/>
+
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:background="?android:attr/windowBackground"
+        android:fitsSystemWindows="true"
+        app:itemIconTint="@color/selector"
+        app:itemTextColor="@color/color"
+        app:labelVisibilityMode="labeled"
+        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
+        app:menu="@menu/menu_navigation_petlover"
+        tools:ignore="MissingClass" />
 
 
 </LinearLayout>

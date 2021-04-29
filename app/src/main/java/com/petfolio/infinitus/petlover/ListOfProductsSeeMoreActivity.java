@@ -98,9 +98,15 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_search)
     EditText edt_search;
-
+/*
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.bottom_navigation_view)
+    BottomNavigationView bottom_navigation_view;*/
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_footer)
+    View include_petlover_footer;
+
     BottomNavigationView bottom_navigation_view;
 
     @SuppressLint("NonConstantResourceId")
@@ -204,7 +210,10 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
         rl_sort.setOnClickListener(this);
         edt_sort.setOnClickListener(this);
 
+        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
         bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+
         img_sos.setOnClickListener(this);
         img_notification.setOnClickListener(this);
         img_cart.setOnClickListener(this);

@@ -461,7 +461,15 @@
         app:itemBackground="@drawable/selected_state"
         app:itemIconTint="@color/selector"
         app:itemTextColor="@color/selector"
-        app:labelVisibilityMode="labeled" />
+        app:labelVisibilityMode="labeled"
+        android:visibility="gone"/>
+
+        <include
+            android:id="@+id/include_petlover_footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/toolbar_layout_petlover_footer" />
+
 
     </LinearLayout>
 

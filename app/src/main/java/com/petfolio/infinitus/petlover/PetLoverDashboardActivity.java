@@ -141,7 +141,6 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
             if(tag.equalsIgnoreCase("1")){
                 active = petHomeFragment;
                 bottom_navigation_view.setSelectedItemId(R.id.home);
-
                 loadFragment(new PetHomeNewFragment());
             }else if(tag.equalsIgnoreCase("2")){
                 active = vendorShopFragment;
