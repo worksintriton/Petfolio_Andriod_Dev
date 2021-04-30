@@ -184,6 +184,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
     private String fromactivity;
     private String cat_id;
     private int productqty;
+    private String tag;
 
     @SuppressLint({"LogNotTimber", "SetTextI18n"})
     @Override
@@ -206,6 +207,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
             productid = extras.getString("productid");
             cat_id = extras.getString("cat_id");
             fromactivity = extras.getString("fromactivity");
+            tag = extras.getString("tag");
         }
         if(userid != null && productid != null){
             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
@@ -292,6 +294,22 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
         img_notification.setOnClickListener(this);
         img_cart.setOnClickListener(this);
         img_profile.setOnClickListener(this);
+
+        Log.w(TAG," tag test : "+tag);
+        if(tag != null){
+            if(tag.equalsIgnoreCase("1")){
+                bottom_navigation_view.setSelectedItemId(R.id.home);
+            }else if(tag.equalsIgnoreCase("2")){
+                bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
+                //bottom_navigation_view.setSelectedItemId(R.id.shop);
+            }else if(tag.equalsIgnoreCase("3")){
+                bottom_navigation_view.setSelectedItemId(R.id.services);
+            }else if(tag.equalsIgnoreCase("4")){
+                bottom_navigation_view.setSelectedItemId(R.id.care);
+            } else if(tag.equalsIgnoreCase("5")){
+                bottom_navigation_view.setSelectedItemId(R.id.community);
+            }
+        }
 
 
     }

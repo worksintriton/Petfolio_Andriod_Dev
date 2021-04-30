@@ -265,13 +265,13 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
             }
         });
 
-       Log.w(TAG," tag : "+tag);
-    /*    if(tag != null){
+       Log.w(TAG," tag test : "+tag);
+        if(tag != null){
             if(tag.equalsIgnoreCase("1")){
                 bottom_navigation_view.setSelectedItemId(R.id.home);
             }else if(tag.equalsIgnoreCase("2")){
-                //bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
-                bottom_navigation_view.setSelectedItemId(R.id.shop);
+                bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
+                //bottom_navigation_view.setSelectedItemId(R.id.shop);
             }else if(tag.equalsIgnoreCase("3")){
                 bottom_navigation_view.setSelectedItemId(R.id.services);
             }else if(tag.equalsIgnoreCase("4")){
@@ -279,7 +279,7 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
             } else if(tag.equalsIgnoreCase("5")){
                 bottom_navigation_view.setSelectedItemId(R.id.community);
             }
-        }*/
+        }
 
 
 
@@ -374,7 +374,7 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
     private void setView(List<TodayDealMoreResponse.DataBean> data) {
        /* rv_today_deal.setLayoutManager(new GridLayoutManager(this, 2));
         rv_today_deal.setItemAnimator(new DefaultItemAnimator());*/
-        petShopTodayDealsSeeMoreAdapter = new PetShopTodayDealsSeeMoreAdapter(getApplicationContext(), data,TAG);
+        petShopTodayDealsSeeMoreAdapter = new PetShopTodayDealsSeeMoreAdapter(getApplicationContext(), data,TAG,tag);
         rv_today_deal.setAdapter(petShopTodayDealsSeeMoreAdapter);
         petShopTodayDealsSeeMoreAdapter.notifyDataSetChanged();
         isLoading = false;

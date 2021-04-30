@@ -33,11 +33,13 @@ public class PetShopTodayDealsSeeMoreAdapter extends  RecyclerView.Adapter<Recyc
 
     TodayDealMoreResponse.DataBean currentItem;
     private String fromactivity;
+    private String tag;
 
-    public PetShopTodayDealsSeeMoreAdapter(Context context, List<TodayDealMoreResponse.DataBean> data,String fromactivity) {
+    public PetShopTodayDealsSeeMoreAdapter(Context context, List<TodayDealMoreResponse.DataBean> data,String fromactivity, String tag) {
         this.context = context;
         this.data = data;
         this.fromactivity = fromactivity;
+        this.tag=tag;
     }
 
     @NonNull
@@ -121,6 +123,7 @@ public class PetShopTodayDealsSeeMoreAdapter extends  RecyclerView.Adapter<Recyc
                Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                intent.putExtra("productid",data.get(position).get_id());
                intent.putExtra("fromactivity",fromactivity);
+               intent.putExtra("tag",tag);
                context.startActivity(intent);
            });
     }
