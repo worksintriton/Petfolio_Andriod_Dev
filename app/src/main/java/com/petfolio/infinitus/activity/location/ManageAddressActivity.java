@@ -61,7 +61,8 @@ import retrofit2.Response;
 
 public class ManageAddressActivity extends AppCompatActivity implements View.OnClickListener, LocationDeleteListener, LocationDefaultListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
-    private static final String TAG = "ManageAddressActivity" ;
+    private static final String TAG = "ManageAddressActivity";
+
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
     ImageView img_back;

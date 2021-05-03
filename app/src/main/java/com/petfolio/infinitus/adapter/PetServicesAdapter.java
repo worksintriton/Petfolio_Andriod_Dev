@@ -80,14 +80,14 @@ public class PetServicesAdapter extends  RecyclerView.Adapter<RecyclerView.ViewH
                       Glide.with(context)
                               .load(currentItem.getImage())
                               .centerCrop()
-                              .apply(new RequestOptions().override(150, 250))
+                              .apply(new RequestOptions().override(150, 200))
                               //.load(R.drawable.logo)
                               .into(holder.img_petservice);
                   }else{
                       Glide.with(context)
                               .load(APIClient.PROFILE_IMAGE_URL)
                               .centerCrop()
-                              .apply(new RequestOptions().override(150, 250))
+                              .apply(new RequestOptions().override(150, 200))
                               //.load(R.drawable.logo)
                               .into(holder.img_petservice);
 
@@ -102,14 +102,14 @@ public class PetServicesAdapter extends  RecyclerView.Adapter<RecyclerView.ViewH
                       Glide.with(context)
                               .load(currentItem.getImage())
                               .centerCrop()
-                              .apply(new RequestOptions().override(150, 270))
+                              .apply(new RequestOptions().override(150, 220))
                               //.load(R.drawable.logo)
                               .into(holder.img_petservice);
                   }else{
                       Glide.with(context)
                               .load(APIClient.PROFILE_IMAGE_URL)
                               .centerCrop()
-                              .apply(new RequestOptions().override(150, 270))
+                              .apply(new RequestOptions().override(150, 220))
                               //.load(R.drawable.logo)
                               .into(holder.img_petservice);
                   }
@@ -125,7 +125,7 @@ public class PetServicesAdapter extends  RecyclerView.Adapter<RecyclerView.ViewH
                           Glide.with(context)
                                   .load(currentItem.getImage())
                                   .centerCrop()
-                                  .apply(new RequestOptions().override(150, 270))
+                                  .apply(new RequestOptions().override(150, 220))
                                   //.load(R.drawable.logo)
                                   .into(holder.img_petservice);
                       }else {
@@ -133,7 +133,7 @@ public class PetServicesAdapter extends  RecyclerView.Adapter<RecyclerView.ViewH
                           Glide.with(context)
                                   .load(APIClient.PROFILE_IMAGE_URL)
                                   .centerCrop()
-                                  .apply(new RequestOptions().override(150, 270))
+                                  .apply(new RequestOptions().override(150, 220))
                                   //.load(R.drawable.logo)
                                   .into(holder.img_petservice);
                       }
@@ -148,13 +148,13 @@ public class PetServicesAdapter extends  RecyclerView.Adapter<RecyclerView.ViewH
                           Glide.with(context)
                                   .load(currentItem.getImage())
                                   .centerCrop()
-                                  .apply(new RequestOptions().override(150, 260))
+                                  .apply(new RequestOptions().override(150, 210))
                                   .into(holder.img_petservice);
                       }else{
                           Glide.with(context)
                                   .load(APIClient.PROFILE_IMAGE_URL)
                                   .centerCrop()
-                                  .apply(new RequestOptions().override(150, 260))
+                                  .apply(new RequestOptions().override(150, 210))
                                   .into(holder.img_petservice);
                       }
 

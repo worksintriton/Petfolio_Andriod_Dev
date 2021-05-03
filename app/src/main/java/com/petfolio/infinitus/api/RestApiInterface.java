@@ -74,7 +74,6 @@ import com.petfolio.infinitus.responsepojo.ShippingAddressCreateResponse;
 import com.petfolio.infinitus.responsepojo.ShippingAddressDeleteResponse;
 import com.petfolio.infinitus.responsepojo.ShippingAddressEditResponse;
 import com.petfolio.infinitus.responsepojo.ShippingAddressFetchByUserIDResponse;
-import com.petfolio.infinitus.responsepojo.ShippingAddressFetchUserResponse;
 import com.petfolio.infinitus.responsepojo.ShippingAddressListingByUserIDResponse;
 import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
 import com.petfolio.infinitus.responsepojo.SignupResponse;
@@ -608,13 +607,9 @@ public interface RestApiInterface {
     @POST("vendor_order_booking/update_status_return")
     Call<VendorAcceptsReturnOrderResponse> update_status_vendor_accept_returnResponseCall(@Header("Content-Type") String type, @Body VendorAcceptReturnOrderRequest vendorAcceptReturnOrderRequest);
 
-    /* User Fetches Last Used Shipping Address */
-    @POST("shipping_address/fetch_by_userid")
-    Call<ShippingAddressFetchUserResponse> fetch_shipp_addr_ResponseCall(@Header("Content-Type") String type, @Body ShippingAddressFetchUserRequest shippingAddressFetchUserRequest);
-
 
     /* User Fetches Shipping Address By ID */
-    @POST("shipping_address/fetch_by_userid")
+    @POST("shipping_address/fetch_by_userid1")
     Call<ShippingAddressFetchByUserIDResponse> fetch_shipp_addr_ResponseCall(@Header("Content-Type") String type, @Body ShippingAddressFetchByUserIDRequest shippingAddressFetchByUserIDRequest);
 
     /* User lists Shipping Address By ID */
@@ -728,6 +723,13 @@ public interface RestApiInterface {
     /*Product details edit*/
     @POST("product_details/mobile/edit_product")
     Call<VendorOrderUpdateResponse>productEditResponseCall(@Header("Content-Type") String type, @Body ProductEditRequest productEditRequest);
+
+
+    /*Appointment reschedule API*/
+    @POST("appointments/reshedule_appointment")
+    Call<SuccessResponse>rescheduleResponseCall(@Header("Content-Type") String type, @Body RescheduleAppointmentRequest rescheduleAppointmentRequest);
+
+
 
 
 

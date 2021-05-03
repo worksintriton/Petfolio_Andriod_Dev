@@ -294,6 +294,17 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
                         b.putDouble("lon", lon);
                         i.putExtras(b);
                         startActivity(i);
+                    }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PickUpLocationAddNewAddressActivity")){
+                        Log.w(TAG,"else if-->"+fromactivity);
+
+                        Intent i = new Intent(PlacesSearchActivity.this, PickUpLocationAddNewAddressActivity.class);
+                        i.putExtra("cityname",selectedPlaceName);
+                        i.putExtra("placesearchactivity","placesearchactivity");
+                        Bundle b = new Bundle();
+                        b.putDouble("lat", lat);
+                        b.putDouble("lon", lon);
+                        i.putExtras(b);
+                        startActivity(i);
                     }
                     else if(fromactivity != null && fromactivity.equalsIgnoreCase("SetLocationDoctorNewActivity")){
                         Log.w(TAG,"else if-->"+fromactivity);

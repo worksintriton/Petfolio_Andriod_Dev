@@ -151,6 +151,17 @@
                     android:textColor="@color/new_light_green"
                     android:textSize="16sp" />
             </LinearLayout>
+            <TextView
+                android:id="@+id/txt_savedaddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/futuramediumbt"
+                android:maxLines="1"
+                android:text="@string/saved_address"
+                android:textColor="@color/new_sec_txt_color"
+                android:textSize="16sp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

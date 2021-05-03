@@ -123,11 +123,12 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:fontFamily="@font/futuramediumbt"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:text="225/1, Sample ABCD Nagar Main Road"
                 android:textSize="14sp"
                 android:textStyle="normal"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"/>
             <TextView
                 android:id="@+id/txt_dist_pincode_state"
                 android:layout_width="match_parent"
@@ -138,7 +139,8 @@
                 android:maxLines="1"
                 android:text="Salem, 636009, TamilNadu"
                 android:textSize="14sp"
-                android:textStyle="normal" />
+                android:textStyle="normal"
+                android:visibility="gone"/>
             <TextView
                 android:id="@+id/txt_user_city"
                 android:layout_width="match_parent"

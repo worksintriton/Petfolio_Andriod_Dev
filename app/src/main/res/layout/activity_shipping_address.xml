@@ -273,17 +273,7 @@
 
                         </LinearLayout>
 
-                        <TextView
-                            android:layout_marginTop="5dp"
-                            android:id="@+id/txt_street"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/futuramediumbt"
-                            android:maxLines="1"
-                            android:text="225/1, Sample ABCD Nagar Main Road"
-                            android:textSize="14sp"
-                            android:textStyle="normal" />
+
                         <TextView
                             android:layout_marginTop="5dp"
                             android:id="@+id/txt_dist_pincode_state"
@@ -304,6 +294,18 @@
                             android:fontFamily="@font/futuramediumbt"
                             android:maxLines="1"
                             android:text="chennai"
+                            android:textSize="14sp"
+                            android:textStyle="normal" />
+
+                        <TextView
+                            android:layout_marginTop="5dp"
+                            android:id="@+id/txt_street"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/futuramediumbt"
+                            android:maxLines="2"
+                            android:text="225/1, Sample ABCD Nagar Main Road"
                             android:textSize="14sp"
                             android:textStyle="normal" />
 

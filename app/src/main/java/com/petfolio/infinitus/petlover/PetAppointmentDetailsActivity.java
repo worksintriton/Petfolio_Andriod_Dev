@@ -174,6 +174,14 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
     TextView txt_appointment_date;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_dr_pets_handled)
+    TextView txt_dr_pets_handled;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.btn_reschedule_appointment)
+    Button btn_reschedule_appointment;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.include_petlover_footer)
     View include_petlover_footer;
 
@@ -197,6 +205,8 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
     private List<PetNewAppointmentDetailsResponse.DataBean.PetIdBean.PetImgBean> pet_image;
     private String petAgeandMonth;
 
+    private String concatenatedStarNames = "";
+
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
     @Override
@@ -204,6 +214,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_petappointment_details);
         ButterKnife.bind(this);
+
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -223,6 +234,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
         img_videocall.setVisibility(View.GONE);
         btn_add_review.setVisibility(View.GONE);
         btn_prescriptiondetails.setVisibility(View.GONE);
+        btn_reschedule_appointment.setVisibility(View.GONE);
 
 
         bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
@@ -393,6 +405,46 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                             start_appointment_status = response.body().getData().getStart_appointment_status();
                             setView(usrname, usr_image, servname, pet_name, pet_type, breed, gender, colour, weight, order_date, orderid, payment_method, order_cost, vaccinated, addr);
                         }
+
+                        if(response.body().getData().getAppoinment_status() != null && response.body().getData().getAppoinment_status().equalsIgnoreCase("Incomplete")){
+                            Log.w(TAG,"userid : "+response.body().getData().getDoc_business_info().get(0).getUser_id()+" _id  : "+response.body().getData().getDoc_business_info().get(0).get_id());
+
+                            if(response.body().getData().getReshedule_status() != null && response.body().getData().getReshedule_status().isEmpty()){
+                                btn_reschedule_appointment.setVisibility(View.VISIBLE);
+                                btn_reschedule_appointment.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Intent intent = new Intent(PetAppointmentDetailsActivity.this,PetAppointment_Doctor_Date_Time_Activity.class);
+                                        intent.putExtra("doctorid",response.body().getData().getDoc_business_info().get(0).getUser_id());
+                                        intent.putExtra("fromactivity",TAG);
+                                        intent.putExtra("serviceamount",response.body().getData().getService_amount());
+                                        intent.putExtra("communicationtype",response.body().getData().getCommunication_type());
+                                        intent.putExtra("bookingdate",response.body().getData().getBooking_date());
+                                        intent.putExtra("bookingtime",response.body().getData().getBooking_time());
+                                        intent.putExtra("bookingdateandtime",response.body().getData().getBooking_date_time());
+                                        intent.putExtra("id",response.body().getData().get_id());
+                                        startActivity(intent);
+                                        Log.w(TAG,"userid : "+response.body().getData().getDoc_business_info().get(0).getUser_id()+" _id  : "+response.body().getData().getDoc_business_info().get(0).get_id());
+                                    }
+                                });
+
+                            }
+                        }
+                        else{
+                            btn_reschedule_appointment.setVisibility(View.GONE);
+
+                        }
+
+                        if(response.body().getData().getDoc_business_info().get(0).getPet_handled() != null){
+                            for (int i = 0; i < response.body().getData().getDoc_business_info().get(0).getPet_handled().size(); i++) {
+                                concatenatedStarNames += response.body().getData().getDoc_business_info().get(0).getPet_handled().get(i).getPet_handled();
+                                if (i < response.body().getData().getDoc_business_info().get(0).getPet_handled().size() - 1) concatenatedStarNames += ", ";
+                            }
+                            txt_dr_pets_handled.setText(concatenatedStarNames);
+                            Log.w(TAG," concatenatedStarNames : "+concatenatedStarNames);
+
+                        }
+
                     }
 
 

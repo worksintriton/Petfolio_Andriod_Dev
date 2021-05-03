@@ -485,8 +485,8 @@ public class MyAddressesListActivity extends AppCompatActivity implements View.O
     private void setView() {
         rv_shipping_address.setLayoutManager(new LinearLayoutManager(MyAddressesListActivity.this));
         rv_shipping_address.setItemAnimator(new DefaultItemAnimator());
-        ShippingAddressListAdapter shippingAddressListAdapter = new ShippingAddressListAdapter(MyAddressesListActivity.this,dataBeanList,this,this,this);
-        rv_shipping_address.setAdapter(shippingAddressListAdapter);
+        //ShippingAddressListAdapter shippingAddressListAdapter = new ShippingAddressListAdapter(MyAddressesListActivity.this,dataBeanList,this,this,this);
+      //  rv_shipping_address.setAdapter(shippingAddressListAdapter);
 
     }
 
@@ -539,7 +539,7 @@ public class MyAddressesListActivity extends AppCompatActivity implements View.O
     }
 
     @Override
-    public void onSelectShipID(String shipid, String first_name, String last_name, String phonum, String alt_phonum, String flat_no, String state, String street, String landmark, String pincode, String address_type, String date, String address_status) {
+    public void onSelectShipID(String shipid) {
         shippid = shipid;
 
         if(shippid!=null&&!shippid.isEmpty()){
@@ -549,7 +549,7 @@ public class MyAddressesListActivity extends AppCompatActivity implements View.O
     }
 
     @Override
-    public void OnDeleteShipAddr(String shipid, String first_name, String last_name, String phonum, String alt_phonum, String flat_no, String state, String street, String landmark, String pincode, String address_type, String date, String address_status) {
+    public void OnDeleteShipAddr(String shipid) {
         showWaring(shipid);
     }
 

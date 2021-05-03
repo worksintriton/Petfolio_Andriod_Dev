@@ -185,10 +185,6 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
             doctorname = extras.getString("doctorname");
             distance = extras.getString("distance");
             fromactivity = extras.getString("fromactivity");
-
-
-
-
             Log.w(TAG,"Bundle "+" doctorid : "+doctorid+ "fromactivity : "+fromactivity);
         }
 
@@ -352,7 +348,8 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
                            txt_dr_specialization.setText(concatenatedStarNames);
                            Log.w(TAG," concatenatedStarNames : "+concatenatedStarNames);
 
-                       }if(response.body().getData().getEducation_details() != null){
+                       }
+                       if(response.body().getData().getEducation_details() != null){
                            for (int i = 0; i < response.body().getData().getEducation_details().size(); i++) {
                                education += response.body().getData().getEducation_details().get(i).getEducation();
                                if (i < response.body().getData().getEducation_details().size() - 1) education += ", ";

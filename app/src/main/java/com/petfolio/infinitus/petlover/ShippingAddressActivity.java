@@ -290,48 +290,46 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
                         {
                             dataBeanList = response.body().getData();
 
-                            if(dataBeanList.getUser_address_stauts()!=null&&!dataBeanList.getUser_address_stauts().isEmpty())
-                            {
-
-                                Log.w(TAG, "Status" + dataBeanList.getUser_address_stauts());
-
-                                if(dataBeanList.getUser_address_stauts().equals("Last Used")){
+                            if(dataBeanList!=null) {
+                                if(dataBeanList.isDefault_status()){
 
                                     Log.w(TAG,"true-->");
 
                                     shipid = dataBeanList.get_id();
 
-                                    first_name = dataBeanList.getUser_first_name();
+                                    first_name =  dataBeanList.getUser_id().getFirst_name();
 
-                                    last_name = dataBeanList.getUser_last_name();
+                                    last_name = dataBeanList.getUser_id().getLast_name();
+                                    if(last_name!= null){
+                                        name = first_name + " " + last_name;
+                                    }else{
+                                        name = first_name;
+                                    }
 
-                                    name = first_name + " " + last_name;
 
-                                    phonum = dataBeanList.getUser_mobile();
 
-                                    alt_phonum = dataBeanList.getUser_alter_mobile();
+                                    phonum = dataBeanList.getUser_id().getUser_phone();
 
-                                    flat_no = dataBeanList.getUser_flat_no();
 
-                                    state = dataBeanList.getUser_state();
 
-                                    street = dataBeanList.getUser_stree();
+                                    state = dataBeanList.getLocation_state();
 
-                                    landmark = dataBeanList.getUser_landmark();
+                                    street = dataBeanList.getLocation_address();
 
-                                    pincode  = dataBeanList.getUser_picocode();
+                                    landmark = dataBeanList.getLocation_nickname();
 
-                                    address_type = dataBeanList.getUser_address_type();
+                                    pincode  = dataBeanList.getLocation_pin();
+                                    address_type = dataBeanList.getLocation_title();
+
 
                                     Log.w(TAG, "address_type"+address_type);
 
-                                    date = dataBeanList.getUser_display_date();
 
-                                    address_status = dataBeanList.getUser_address_stauts();
 
-                                    city = dataBeanList.getUser_city();
+                                    city = dataBeanList.getLocation_city();
 
-                                    landmark_pincode = landmark +" , "+state +" , "+ pincode;
+                                  //  landmark_pincode = landmark +" , "+state +" , "+ pincode;
+                                    landmark_pincode = landmark;
 
                                     setView();
 
@@ -343,8 +341,6 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
 
                                 }
-
-
                                 else {
 
                                     showNoAddressAlert();

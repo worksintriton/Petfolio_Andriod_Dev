@@ -3,6 +3,8 @@ package com.petfolio.infinitus.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,23 +20,31 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.petfolio.infinitus.R;
 
+import com.petfolio.infinitus.activity.location.EditMyAddressActivity;
+import com.petfolio.infinitus.activity.location.EditShippingAddresssActivity;
 import com.petfolio.infinitus.interfaces.OnDeleteShipAddrListener;
 import com.petfolio.infinitus.interfaces.OnEditShipAddrListener;
 import com.petfolio.infinitus.interfaces.OnSelectingShipIdListener;
+import com.petfolio.infinitus.petlover.DoctorClinicDetailsActivity;
+import com.petfolio.infinitus.responsepojo.LocationListAddressResponse;
 import com.petfolio.infinitus.responsepojo.ShippingAddressListingByUserIDResponse;
 
 
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 
 public class ShippingAddressListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private  String TAG = "ShippingAddressListAdapter";
-    private List<ShippingAddressListingByUserIDResponse.DataBean> newOrderResponseList;
+
+    private List<LocationListAddressResponse.DataBean> addressList;
+
 
     private Context context;
 
-    ShippingAddressListingByUserIDResponse.DataBean currentItem;
+    LocationListAddressResponse.DataBean currentItem;
 
 
 
@@ -49,9 +59,9 @@ public class ShippingAddressListAdapter extends  RecyclerView.Adapter<RecyclerVi
     OnDeleteShipAddrListener onDeleteShipAddrListener;
     private boolean isSelected = true;
 
-    public ShippingAddressListAdapter(Context context, List<ShippingAddressListingByUserIDResponse.DataBean> newOrderResponseList,OnSelectingShipIdListener onSelectingShipIdListener,OnEditShipAddrListener onEditShipAddrListener,OnDeleteShipAddrListener onDeleteShipAddrListener) {
-        this.newOrderResponseList = newOrderResponseList;
+    public ShippingAddressListAdapter(Context context, List<LocationListAddressResponse.DataBean> addressList,OnSelectingShipIdListener onSelectingShipIdListener,OnEditShipAddrListener onEditShipAddrListener,OnDeleteShipAddrListener onDeleteShipAddrListener) {
         this.context = context;
+        this.addressList = addressList;
         this.onSelectingShipIdListener = onSelectingShipIdListener;
         this.onEditShipAddrListener = onEditShipAddrListener;
         this.onDeleteShipAddrListener = onDeleteShipAddrListener;
@@ -76,77 +86,68 @@ public class ShippingAddressListAdapter extends  RecyclerView.Adapter<RecyclerVi
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
 
-        currentItem = newOrderResponseList.get(position);
+        currentItem = addressList.get(position);
 
-        if(newOrderResponseList.get(position).getUser_first_name()!=null&&!newOrderResponseList.get(position).getUser_first_name().isEmpty()){
+        if(addressList.get(position).getLocation_nickname()!=null&&!addressList.get(position).getLocation_nickname().isEmpty()){
 
-            first_name = newOrderResponseList.get(position).getUser_first_name();
-
-        }
-
-        if(newOrderResponseList.get(position).getUser_last_name()!=null&&!newOrderResponseList.get(position).getUser_last_name().isEmpty()){
-
-            last_name = newOrderResponseList.get(position).getUser_last_name();
-
-        }
-
-        if(first_name!=null&&last_name!=null){
-
-            holder.txt_username.setText(first_name + " " + last_name);
-        }
-
-
-        if(newOrderResponseList.get(position).getUser_mobile()!=null&&!newOrderResponseList.get(position).getUser_mobile().isEmpty()){
-            holder.txt_phnum.setText(newOrderResponseList.get(position).getUser_mobile());
-
-        }
-
-        if(newOrderResponseList.get(position).getUser_address_type()!=null&&!newOrderResponseList.get(position).getUser_address_type().isEmpty()){
-
-            holder.txt_addrs_type.setText(newOrderResponseList.get(position).getUser_address_type());
-
-        }
-
-        if(newOrderResponseList.get(position).getUser_display_date()!=null&&!newOrderResponseList.get(position).getUser_display_date().isEmpty()){
-
-            holder.txt_date.setText(newOrderResponseList.get(position).getUser_display_date());
-
-        }
-
-        if(newOrderResponseList.get(position).getUser_city()!=null&&!newOrderResponseList.get(position).getUser_city().isEmpty()){
-
-            holder.txt_user_city.setText(newOrderResponseList.get(position).getUser_city());
-
-        }
-        if(newOrderResponseList.get(position).getUser_state()!=null&&!newOrderResponseList.get(position).getUser_state().isEmpty()){
-
-            state = newOrderResponseList.get(position).getUser_state();
-
-        }
-
-        if(newOrderResponseList.get(position).getUser_stree()!=null&&!newOrderResponseList.get(position).getUser_stree().isEmpty()){
-
-            holder.txt_street.setText(newOrderResponseList.get(position).getUser_stree());
-
-        }
-
-        if(newOrderResponseList.get(position).getUser_landmark()!=null&&!newOrderResponseList.get(position).getUser_landmark().isEmpty()){
-
-           landmark = newOrderResponseList.get(position).getUser_landmark();
-
-        }
-
-        if(newOrderResponseList.get(position).getUser_landmark()!=null&&!newOrderResponseList.get(position).getUser_landmark().isEmpty()){
-
-           pincode = newOrderResponseList.get(position).getUser_picocode();
+            first_name = addressList.get(position).getLocation_nickname();
 
         }
 
 
-        if(landmark!=null&&pincode!=null&&state!=null){
+        if(first_name!=null){
+            holder.txt_username.setText(first_name);
+        }
+
+
+
+
+        if(addressList.get(position).getLocation_title()!=null && !addressList.get(position).getLocation_title().isEmpty()){
+
+            holder.txt_addrs_type.setText(addressList.get(position).getLocation_title());
+
+        }
+
+        if(addressList.get(position).getDate_and_time()!=null && !addressList.get(position).getDate_and_time().isEmpty()){
+
+            holder.txt_date.setText(addressList.get(position).getDate_and_time());
+
+        }
+
+        if(addressList.get(position).getLocation_city()!=null && !addressList.get(position).getLocation_city().isEmpty()){
+
+            holder.txt_user_city.setText(addressList.get(position).getLocation_city());
+
+        }
+        if(addressList.get(position).getLocation_state()!=null && !addressList.get(position).getLocation_state().isEmpty()){
+
+            state = addressList.get(position).getLocation_state();
+
+        }
+
+        if(addressList.get(position).getLocation_address()!=null && !addressList.get(position).getLocation_address().isEmpty()){
+
+            holder.txt_street.setText(addressList.get(position).getLocation_address());
+
+        }
+
+        if(addressList.get(position).getLocation_nickname()!=null && !addressList.get(position).getLocation_nickname().isEmpty()){
+
+           landmark = addressList.get(position).getLocation_nickname();
+
+        }
+
+        if(addressList.get(position).getLocation_pin()!=null && !addressList.get(position).getLocation_pin().isEmpty()){
+
+           pincode = addressList.get(position).getLocation_pin();
+
+        }
+
+
+        /*if(landmark!=null&&pincode!=null&&state!=null){
 
             holder.txt_dist_pincode_state.setText(landmark + " " + " "+ state +" "+ pincode);
-        }
+        }*/
         Log.w(TAG,"lastSelectedPosition : "+lastSelectedPosition+" position : "+position);
 
        //since only one radio button is allowed to be selected,
@@ -154,8 +155,8 @@ public class ShippingAddressListAdapter extends  RecyclerView.Adapter<RecyclerVi
         holder.rb_choose_addr_list.setChecked(lastSelectedPosition == position);
 
         if(isSelected) {
-            if (newOrderResponseList.get(position).getUser_address_stauts() != null && !newOrderResponseList.get(position).getUser_address_stauts().isEmpty()) {
-                holder.rb_choose_addr_list.setChecked(newOrderResponseList.get(position).getUser_address_stauts().equalsIgnoreCase("Last Used"));
+            if (addressList.get(position).isDefault_status()) {
+                holder.rb_choose_addr_list.setChecked(addressList.get(position).isDefault_status());
             }
         }
 
@@ -170,7 +171,7 @@ public class ShippingAddressListAdapter extends  RecyclerView.Adapter<RecyclerVi
                // newOrderResponseList.get(position).setUser_address_type("Last Used");
                 lastSelectedPosition = holder.getAdapterPosition();
                 notifyDataSetChanged();
-                onSelectingShipIdListener.onSelectShipID(newOrderResponseList.get(position).get_id(),newOrderResponseList.get(position).getUser_first_name(),newOrderResponseList.get(position).getUser_last_name(),newOrderResponseList.get(position).getUser_mobile(),newOrderResponseList.get(position).getUser_alter_mobile(), newOrderResponseList.get(position).getUser_flat_no(),newOrderResponseList.get(position).getUser_state(),newOrderResponseList.get(position).getUser_stree(),newOrderResponseList.get(position).getUser_landmark(),newOrderResponseList.get(position).getUser_picocode(),newOrderResponseList.get(position).getUser_address_type(),newOrderResponseList.get(position).getUser_display_date(),newOrderResponseList.get(position).getUser_address_stauts());
+                onSelectingShipIdListener.onSelectShipID(addressList.get(position).get_id());
             }
         });
 
@@ -180,8 +181,28 @@ public class ShippingAddressListAdapter extends  RecyclerView.Adapter<RecyclerVi
         holder.ll_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onEditShipAddrListener.OnEditShipAddr(newOrderResponseList.get(position).get_id(),newOrderResponseList.get(position).getUser_first_name(),newOrderResponseList.get(position).getUser_last_name(),newOrderResponseList.get(position).getUser_mobile(),newOrderResponseList.get(position).getUser_alter_mobile(),
-                        newOrderResponseList.get(position).getUser_flat_no(),newOrderResponseList.get(position).getUser_state(),newOrderResponseList.get(position).getUser_stree(),newOrderResponseList.get(position).getUser_landmark(),newOrderResponseList.get(position).getUser_picocode(),newOrderResponseList.get(position).getUser_address_type(),newOrderResponseList.get(position).getUser_display_date(),newOrderResponseList.get(position).getUser_address_stauts(),newOrderResponseList.get(position).getUser_city());
+
+                Intent i = new Intent(context, EditShippingAddresssActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("id",addressList.get(position).get_id());
+                i.putExtra("userid",addressList.get(position).getUser_id());
+                i.putExtra("cityname",addressList.get(position).getLocation_city());
+                i.putExtra("state",addressList.get(position).getLocation_state());
+                i.putExtra("country",addressList.get(position).getLocation_country());
+                i.putExtra("address",addressList.get(position).getLocation_address());
+                i.putExtra("pincode",addressList.get(position).getLocation_pin());
+                i.putExtra("nickname",addressList.get(position).getLocation_nickname());
+                i.putExtra("locationtype",addressList.get(position).getLocation_title());
+                i.putExtra("defaultstatus",addressList.get(position).isDefault_status());
+                Bundle b = new Bundle();
+                b.putDouble("lat", addressList.get(position).getLocation_lat());
+                b.putDouble("lon", addressList.get(position).getLocation_long());
+                i.putExtras(b);
+                Log.w(TAG,"cityname-->"+addressList.get(position).getLocation_city());
+                context.startActivity(i);
+
+
+
+                //onEditShipAddrListener.OnEditShipAddr(newOrderResponseList.get(position).get_id(),newOrderResponseList.get(position).getUser_first_name(),newOrderResponseList.get(position).getUser_last_name(),newOrderResponseList.get(position).getUser_mobile(),newOrderResponseList.get(position).getUser_alter_mobile(), newOrderResponseList.get(position).getUser_flat_no(),newOrderResponseList.get(position).getUser_state(),newOrderResponseList.get(position).getUser_stree(),newOrderResponseList.get(position).getUser_landmark(),newOrderResponseList.get(position).getUser_picocode(),newOrderResponseList.get(position).getUser_address_type(),newOrderResponseList.get(position).getUser_display_date(),newOrderResponseList.get(position).getUser_address_stauts(),newOrderResponseList.get(position).getUser_city());
             }
         });
 
@@ -190,10 +211,13 @@ public class ShippingAddressListAdapter extends  RecyclerView.Adapter<RecyclerVi
         holder.ll_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!addressList.get(position).isDefault_status()){
+                    onDeleteShipAddrListener.OnDeleteShipAddr(addressList.get(position).get_id());
+                }else{
+                    Toasty.warning(context, "Default location cannot be deleted.", Toast.LENGTH_SHORT, true).show();
 
-                onDeleteShipAddrListener.OnDeleteShipAddr(newOrderResponseList.get(position).get_id(),newOrderResponseList.get(position).getUser_first_name(),newOrderResponseList.get(position).getUser_last_name(),newOrderResponseList.get(position).getUser_mobile(),newOrderResponseList.get(position).getUser_alter_mobile(),
+                }
 
-                        newOrderResponseList.get(position).getUser_flat_no(),newOrderResponseList.get(position).getUser_state(),newOrderResponseList.get(position).getUser_stree(),newOrderResponseList.get(position).getUser_landmark(),newOrderResponseList.get(position).getUser_picocode(),newOrderResponseList.get(position).getUser_address_type(),newOrderResponseList.get(position).getUser_display_date(),newOrderResponseList.get(position).getUser_address_stauts());
 
             }
         });
@@ -203,7 +227,7 @@ public class ShippingAddressListAdapter extends  RecyclerView.Adapter<RecyclerVi
 
     @Override
     public int getItemCount() {
-        return newOrderResponseList.size();
+        return addressList.size();
 
     }
 

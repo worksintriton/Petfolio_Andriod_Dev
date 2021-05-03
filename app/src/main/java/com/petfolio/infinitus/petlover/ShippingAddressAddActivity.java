@@ -22,17 +22,20 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.activity.location.PickUpLocationAddNewAddressActivity;
 import com.petfolio.infinitus.adapter.ShippingAddressListAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.interfaces.OnDeleteShipAddrListener;
 import com.petfolio.infinitus.interfaces.OnEditShipAddrListener;
 import com.petfolio.infinitus.interfaces.OnSelectingShipIdListener;
+import com.petfolio.infinitus.requestpojo.LocationListAddressRequest;
 import com.petfolio.infinitus.requestpojo.ShippingAddrMarkAsLastUsedRequest;
 import com.petfolio.infinitus.requestpojo.ShippingAddrMarkAsLastUsedResponse;
 import com.petfolio.infinitus.requestpojo.ShippingAddressDeleteRequest;
 import com.petfolio.infinitus.requestpojo.ShippingAddressListingByUserIDRequest;
 import com.petfolio.infinitus.responsepojo.CartDetailsResponse;
+import com.petfolio.infinitus.responsepojo.LocationListAddressResponse;
 import com.petfolio.infinitus.responsepojo.ShippingAddressDeleteResponse;
 import com.petfolio.infinitus.responsepojo.ShippingAddressListingByUserIDResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
@@ -68,6 +71,10 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
     TextView txt_no_records;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_savedaddress)
+    TextView txt_savedaddress;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
     ImageView img_back;
 
@@ -89,7 +96,6 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
     String userid,fromactivity;
 
-    List<ShippingAddressListingByUserIDResponse.DataBean> dataBeanList;
 
     Dialog dialog;
 
@@ -108,6 +114,8 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
     private int prodcut_count;
 
     private int prodcut_item_count;
+    private List<LocationListAddressResponse.DataBean> addressList;
+    private List<ShippingAddressListingByUserIDResponse.DataBean> dataBeanList;
 
 
     @SuppressLint("LogNotTimber")
@@ -161,12 +169,17 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
         }
 
+        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+            locationListAddressResponseCall();
+        }
 
-        if (new ConnectionDetector(ShippingAddressAddActivity.this).isNetworkAvailable(ShippingAddressAddActivity.this)) {
+
+
+       /* if (new ConnectionDetector(ShippingAddressAddActivity.this).isNetworkAvailable(ShippingAddressAddActivity.this)) {
 
             shippingAddressresponseCall(userid);
 
-        }
+        }*/
 
     }
 
@@ -197,7 +210,6 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
     @SuppressLint("LogNotTimber")
     private void shippingAddressresponseCall(String userid) {
-
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
@@ -491,7 +503,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
             Button btn_ok = dialog.findViewById(R.id.btn_ok);
             Button btn_cancel = dialog.findViewById(R.id.btn_cancel);
             TextView txt_msg = dialog.findViewById(R.id.txt_text_message);
-            txt_msg.setText("Are you sure want to delete");
+            txt_msg.setText(R.string.deletemsg);
             btn_ok.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -524,7 +536,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
     private void setView() {
         rv_shipping_address.setLayoutManager(new LinearLayoutManager(ShippingAddressAddActivity.this));
         rv_shipping_address.setItemAnimator(new DefaultItemAnimator());
-        ShippingAddressListAdapter shippingAddressListAdapter = new ShippingAddressListAdapter(ShippingAddressAddActivity.this,dataBeanList,this,this,this);
+        ShippingAddressListAdapter shippingAddressListAdapter = new ShippingAddressListAdapter(ShippingAddressAddActivity.this,addressList,this,this,this);
         rv_shipping_address.setAdapter(shippingAddressListAdapter);
 
 
@@ -532,7 +544,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
     private void gotoShippingaddressCreate() {
 
-        Intent intent = new Intent(ShippingAddressAddActivity.this, ShippingAddressCreateActivity.class);
+        Intent intent = new Intent(ShippingAddressAddActivity.this, PickUpLocationAddNewAddressActivity.class);
 
         intent.putExtra("data", (Serializable) Data);
 
@@ -626,13 +638,13 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
     }
 
     @Override
-    public void onSelectShipID(String shipid, String first_name, String last_name, String phonum, String alt_phonum, String flat_no, String state, String street, String landmark, String pincode, String address_type, String date, String address_status) {
+    public void onSelectShipID(String shipid) {
 
         shippid = shipid;
     }
 
     @Override
-    public void OnDeleteShipAddr(String shipid, String first_name, String last_name, String phonum, String alt_phonum, String flat_no, String state, String street, String landmark, String pincode, String address_type, String date, String address_status) {
+    public void OnDeleteShipAddr(String shipid) {
         showWaring(shipid);
     }
 
@@ -643,5 +655,65 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
         intent.putExtra("grand_total",grand_total);
         startActivity(intent);
         finish();
+    }
+
+    private void locationListAddressResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<LocationListAddressResponse> call = apiInterface.locationListAddressResponseCall(RestUtils.getContentType(), locationListAddressRequest());
+        Log.w(TAG,"locationListAddressResponseCall url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<LocationListAddressResponse>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(@NonNull Call<LocationListAddressResponse> call, @NonNull Response<LocationListAddressResponse> response) {
+
+                Log.w(TAG,"locationListAddressResponseCall"+ "--->" + new Gson().toJson(response.body()));
+
+                avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        if(response.body().getData() != null && response.body().getData().isEmpty()){
+                            txt_no_records.setVisibility(View.VISIBLE);
+                            txt_no_records.setText("No new address");
+                            rv_shipping_address.setVisibility(View.GONE);
+                            txt_savedaddress.setVisibility(View.GONE);
+                        }
+                        else{
+                            txt_no_records.setVisibility(View.GONE);
+                            rv_shipping_address.setVisibility(View.VISIBLE);
+                            txt_savedaddress.setVisibility(View.VISIBLE);
+                            if(response.body().getData() != null) {
+                                addressList = response.body().getData();
+                            }
+                            txt_savedaddress.setText(addressList.size()+" Saved Address");
+                            setView();
+                        }
+
+
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<LocationListAddressResponse> call, @NonNull Throwable t) {
+
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"locationListAddressResponseCall flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    private LocationListAddressRequest locationListAddressRequest() {
+        LocationListAddressRequest locationListAddressRequest = new LocationListAddressRequest();
+        locationListAddressRequest.setUser_id(userid);
+        Log.w(TAG,"locationListAddressRequest"+ "--->" + new Gson().toJson(locationListAddressRequest));
+        return locationListAddressRequest;
     }
 }

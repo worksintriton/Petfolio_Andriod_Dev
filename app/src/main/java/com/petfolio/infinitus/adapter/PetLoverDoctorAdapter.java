@@ -107,7 +107,6 @@ public class PetLoverDoctorAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
         holder.ll_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(context, DoctorClinicDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("doctorid",doctorDetailsResponseList.get(position).get_id());
                 intent.putExtra("doctorname",doctorDetailsResponseList.get(position).getDoctor_name());
