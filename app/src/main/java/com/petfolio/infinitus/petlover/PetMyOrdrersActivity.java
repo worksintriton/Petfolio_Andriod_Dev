@@ -55,37 +55,7 @@ public class PetMyOrdrersActivity extends AppCompatActivity  {
         img_back.setOnClickListener(v -> onBackPressed());
 
 
-      /*  String active_tag = "1";
-        if(active_tag != null){
-            if(active_tag.equalsIgnoreCase("3")) {
-                bottom_navigation_view.setSelectedItemId(R.id.services);
-            }else if(active_tag.equalsIgnoreCase("4")) {
-                bottom_navigation_view.setSelectedItemId(R.id.care);
-            }
-        }
-        bottom_navigation_view.setOnNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.home:
-                    callDirections("1");
-                    break;
-                case R.id.shop:
-                    callDirections("2");
-                    break;
-                case R.id.services:
-                    callDirections("3");
-                    break;
-                case R.id.care:
-                    callDirections("4");
-                    break;
-                case R.id.community:
-                    callDirections("5");
-                    break;
 
-                default:
-                    return false;
-            }
-            return  true;
-        });*/
 
     }
 

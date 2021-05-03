@@ -174,8 +174,11 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
     TextView txt_appointment_date;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.bottom_navigation_view)
+    @BindView(R.id.include_petlover_footer)
+    View include_petlover_footer;
+
     BottomNavigationView bottom_navigation_view;
+
 
     String appointment_id;
     String appoinment_status;
@@ -220,8 +223,12 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
         img_videocall.setVisibility(View.GONE);
         btn_add_review.setVisibility(View.GONE);
         btn_prescriptiondetails.setVisibility(View.GONE);
-        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
 
+
+        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());

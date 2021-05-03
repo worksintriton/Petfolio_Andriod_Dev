@@ -8,32 +8,19 @@
     android:orientation="horizontal">
 
 
-   <!-- <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
-        app:menu="@menu/menu_navigation_petlover"
-        app:itemTextColor="@color/color"
-        app:labelVisibilityMode="labeled"
-        android:layout_alignParentBottom="true"
-        tools:ignore="ObsoleteLayoutParam" />-->
-
-
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:elevation="8dp"
         app:itemIconSize="20dp"
-        app:menu="@menu/menu_navigation_petlover"
-        android:background="?android:attr/windowBackground"
+        app:menu="@menu/bottom_navigation"
+        android:background="@drawable/new_rounded_corner_btn"
+        app:itemBackground="@drawable/selected_state"
         app:itemIconTint="@color/selector"
-        app:itemTextColor="@color/color"
+        app:itemTextColor="@color/selector"
         app:labelVisibilityMode="labeled"
         android:visibility="gone"/>
-
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

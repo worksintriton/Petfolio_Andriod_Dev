@@ -309,6 +309,9 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
             } else if(tag.equalsIgnoreCase("5")){
                 bottom_navigation_view.setSelectedItemId(R.id.community);
             }
+        }else{
+            bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
+
         }
 
 

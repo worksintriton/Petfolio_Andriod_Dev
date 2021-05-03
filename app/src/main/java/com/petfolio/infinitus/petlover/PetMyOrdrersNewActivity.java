@@ -4,8 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -15,9 +18,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.fragmentpetlover.myorders.FragmentPetCancelledOrders;
-import com.petfolio.infinitus.fragmentpetlover.myorders.FragmentPetCompletedOrders;
-import com.petfolio.infinitus.fragmentpetlover.myorders.FragmentPetNewOrders;
 import com.petfolio.infinitus.fragmentpetlover.myordersnew.FragmentPetLoverCancelledOrders;
 import com.petfolio.infinitus.fragmentpetlover.myordersnew.FragmentPetLoverCompletedOrders;
 import com.petfolio.infinitus.fragmentpetlover.myordersnew.FragmentPetLoverNewOrders;
@@ -29,19 +29,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
-public class PetMyOrdrersNewActivity extends AppCompatActivity  {
-    private  String TAG = "PetMyOrdrersNewActivity";
+public class PetMyOrdrersNewActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+    private final String TAG = "PetMyOrdrersNewActivity";
+
+
 
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.avi_indicator)
-    AVLoadingIndicatorView avi_indicator;
+    @BindView(R.id.tablayout)
+    TabLayout tablayout;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.bottom_navigation_view)
+    @BindView(R.id.viewPager)
+    ViewPager viewPager;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_back)
+    ImageView img_back;
+
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_footer)
+    View include_petlover_footer;
+
     BottomNavigationView bottom_navigation_view;
-
 
     @SuppressLint({"LogNotTimber", "NonConstantResourceId"})
     @Override
@@ -49,12 +62,17 @@ public class PetMyOrdrersNewActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_myorders);
         Log.w(TAG,"onCreate");
-        TabLayout tabLayout = findViewById(R.id.tablayout);
-        ViewPager viewPager = findViewById(R.id.viewPager);
-        ImageView img_back = findViewById(R.id.img_back);
+        ButterKnife.bind(this);
+
         setupViewPager(viewPager);
-        tabLayout.setupWithViewPager(viewPager);
+        tablayout.setupWithViewPager(viewPager);
         img_back.setOnClickListener(v -> onBackPressed());
+
+        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
+
 
 
     }
@@ -81,6 +99,32 @@ public class PetMyOrdrersNewActivity extends AppCompatActivity  {
         intent.putExtra("tag",tag);
         startActivity(intent);
         finish();
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+                callDirections("1");
+                break;
+            case R.id.shop:
+                callDirections("2");
+                break;
+            case R.id.services:
+                callDirections("3");
+                break;
+            case R.id.care:
+                callDirections("4");
+                break;
+            case R.id.community:
+                callDirections("5");
+                break;
+
+            default:
+                return  false;
+        }
+        return true;
     }
 
     static class ViewPagerAdapter extends FragmentPagerAdapter {

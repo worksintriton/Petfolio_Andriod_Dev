@@ -56,7 +56,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SelectedServiceActivity extends AppCompatActivity implements View.OnClickListener, SoSCallListener {
+public class SelectedServiceActivity extends AppCompatActivity implements View.OnClickListener, SoSCallListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
 
     private String TAG = "SelectedServiceActivity";
@@ -111,7 +111,9 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
 
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.bottom_navigation_view)
+    @BindView(R.id.include_petlover_footer)
+    View include_petlover_footer;
+
     BottomNavigationView bottom_navigation_view;
 
     @SuppressLint("NonConstantResourceId")
@@ -149,6 +151,11 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
         ButterKnife.bind(this);
         Log.w(TAG,"onCreate");
         avi_indicator.setVisibility(View.GONE);
+
+        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+        bottom_navigation_view.getMenu().findItem(R.id.services).setChecked(true);
 
 
 
@@ -505,5 +512,10 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
         } catch (Exception ignored) {
 
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
     }
 }

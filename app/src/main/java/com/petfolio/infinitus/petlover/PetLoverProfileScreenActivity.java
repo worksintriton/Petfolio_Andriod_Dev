@@ -117,7 +117,9 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
     LinearLayout ll_add;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.bottom_navigation_view)
+    @BindView(R.id.include_petlover_footer)
+    View include_petlover_footer;
+
     BottomNavigationView bottom_navigation_view;
 
     @SuppressLint("NonConstantResourceId")
@@ -249,15 +251,21 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
             catid = extras.getString("catid");
             from = extras.getString("from");
         }
+
+        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
         if(active_tag != null){
             if(active_tag.equalsIgnoreCase("3")) {
-                bottom_navigation_view.setSelectedItemId(R.id.services);
+                bottom_navigation_view.getMenu().findItem(R.id.services).setChecked(true);
+
             }else if(active_tag.equalsIgnoreCase("4")) {
-                bottom_navigation_view.setSelectedItemId(R.id.care);
+                bottom_navigation_view.getMenu().findItem(R.id.care).setChecked(true);
+
             }
 
         }
-        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
 
 
 
@@ -272,7 +280,8 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
             intent.putExtra("doctorname",doctorname);
             intent.putExtra("distance",distance);
             startActivity(intent);
-        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("SelectedServiceActivity")){
+        }
+        else if(fromactivity != null && fromactivity.equalsIgnoreCase("SelectedServiceActivity")){
             Intent intent = new Intent(getApplicationContext(),SelectedServiceActivity.class);
             intent.putExtra("catid",catid);
             intent.putExtra("from",from);

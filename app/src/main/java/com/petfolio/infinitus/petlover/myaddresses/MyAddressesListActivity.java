@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.location.ManageAddressActivity;
@@ -29,6 +31,8 @@ import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.interfaces.OnDeleteShipAddrListener;
 import com.petfolio.infinitus.interfaces.OnEditShipAddrListener;
 import com.petfolio.infinitus.interfaces.OnSelectingShipIdListener;
+import com.petfolio.infinitus.petlover.ListOfProductsSeeMoreActivity;
+import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinitus.petlover.PetLoverProfileScreenActivity;
 import com.petfolio.infinitus.petlover.ShippingAddressEditActivity;
 import com.petfolio.infinitus.requestpojo.ShippingAddrMarkAsLastUsedRequest;
@@ -58,7 +62,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MyAddressesListActivity extends AppCompatActivity implements View.OnClickListener, OnSelectingShipIdListener, OnEditShipAddrListener, OnDeleteShipAddrListener {
+public class MyAddressesListActivity extends AppCompatActivity implements View.OnClickListener, OnSelectingShipIdListener, OnEditShipAddrListener, OnDeleteShipAddrListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private String TAG = "MyAddressesListActivity";
 
@@ -87,6 +91,12 @@ public class MyAddressesListActivity extends AppCompatActivity implements View.O
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_savedaddress)
     TextView txt_savedaddress;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_footer)
+    View include_petlover_footer;
+
+    BottomNavigationView bottom_navigation_view;
 
 
     String userid,fromactivity;
@@ -132,6 +142,10 @@ public class MyAddressesListActivity extends AppCompatActivity implements View.O
 
         }
 
+        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+        bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
 
         if (new ConnectionDetector(MyAddressesListActivity.this).isNetworkAvailable(MyAddressesListActivity.this)) {
 
@@ -585,6 +599,39 @@ public class MyAddressesListActivity extends AppCompatActivity implements View.O
 
 
 
+
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+                callDirections("1");
+                break;
+            case R.id.shop:
+                callDirections("2");
+                break;
+            case R.id.services:
+                callDirections("3");
+                break;
+            case R.id.care:
+                callDirections("4");
+                break;
+            case R.id.community:
+                callDirections("5");
+                break;
+
+            default:
+                return  false;
+        }
+        return true;
+    }
+
+    public void callDirections(String tag){
+        Intent intent = new Intent(getApplicationContext(), PetLoverDashboardActivity.class);
+        intent.putExtra("tag",tag);
+        startActivity(intent);
+        finish();
 
     }
 

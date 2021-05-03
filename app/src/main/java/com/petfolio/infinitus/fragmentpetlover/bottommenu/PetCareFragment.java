@@ -98,32 +98,38 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     Runnable runnable;
     private TextView headertitle;
 
-
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_communicationtype)
     TextView txt_communicationtype;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.switchButton_communcationtype)
     SwitchCompat switchButton_communcationtype;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_no_records)
     TextView txt_no_records;
 
     Dialog dialog;
     private String userid;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
-
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_nearbydoctors)
     RecyclerView rv_nearbydoctors;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_totaldrs)
     TextView txt_totaldrs;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_filter)
     TextView txt_filter;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_search)
     EditText edt_search;
 

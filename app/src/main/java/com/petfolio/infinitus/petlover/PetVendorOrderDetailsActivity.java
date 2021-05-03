@@ -3,6 +3,7 @@ package com.petfolio.infinitus.petlover;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
@@ -26,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PetVendorOrderDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+public class PetVendorOrderDetailsActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "PetVendorOrderDetailsActivity" ;
 
@@ -102,9 +104,6 @@ public class PetVendorOrderDetailsActivity extends AppCompatActivity implements 
     @BindView(R.id.txt_shipping_address_landmark)
     TextView txt_shipping_address_landmark;
 
-
-
-
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_order_status)
     ImageView img_order_status;
@@ -112,6 +111,12 @@ public class PetVendorOrderDetailsActivity extends AppCompatActivity implements 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_footer)
+    View include_petlover_footer;
+
+    BottomNavigationView bottom_navigation_view;
 
     private String _id;
     private String fromactivity;
@@ -124,6 +129,13 @@ public class PetVendorOrderDetailsActivity extends AppCompatActivity implements 
         setContentView(R.layout.activity_pet_vendor_order_details);
         ButterKnife.bind(this);
         img_back.setOnClickListener(this);
+
+        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+        bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
+
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             _id = extras.getString("_id");
@@ -283,6 +295,8 @@ public class PetVendorOrderDetailsActivity extends AppCompatActivity implements 
     }
 
 
-
-
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
+    }
 }

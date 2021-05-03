@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.ProductDetailsAdapter;
@@ -43,7 +45,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "PetLoverVendorOrderDetailsActivity" ;
 
@@ -170,6 +172,12 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
     @BindView(R.id.scrollablContent)
     ScrollView scrollablContent;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_footer)
+    View include_petlover_footer;
+
+    BottomNavigationView bottom_navigation_view;
+
 
     private String _id;
     private String fromactivity;
@@ -199,6 +207,11 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
 
 
         }
+
+        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+        bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
 
         scrollablContent.setVisibility(View.GONE);
         txt_cancell_order.setVisibility(View.GONE);
@@ -487,5 +500,8 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
     }
 
 
-
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
+    }
 }

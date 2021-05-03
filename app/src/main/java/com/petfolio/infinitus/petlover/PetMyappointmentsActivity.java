@@ -57,7 +57,9 @@ public class PetMyappointmentsActivity extends AppCompatActivity implements Bott
     private String TAG = "PetMyappointmentsActivity";
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.bottom_navigation_view)
+    @BindView(R.id.include_petlover_footer)
+    View include_petlover_footer;
+
     BottomNavigationView bottom_navigation_view;
 
     @SuppressLint("NonConstantResourceId")
@@ -113,12 +115,16 @@ public class PetMyappointmentsActivity extends AppCompatActivity implements Bott
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
         img_back.setOnClickListener(v -> onBackPressed());
-        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
 
         img_sos.setOnClickListener(this);
         img_notification.setOnClickListener(this);
         img_cart.setOnClickListener(this);
         img_profile.setOnClickListener(this);
+
+        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
 
     }
 

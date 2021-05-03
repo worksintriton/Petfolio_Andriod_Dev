@@ -28,6 +28,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.List;
 
+import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -176,9 +177,16 @@ public class PetCompletedAppointmentDetailsActivity extends AppCompatActivity im
         //Extract the data…
         appointment_id = bundle.getString("appointment_id");
 
-        BottomNavigationView bottom_navigation_view = findViewById(R.id.bottom_navigation_view);
 
+
+
+        View include_petlover_footer = findViewById(R.id.include_petlover_footer);
+
+
+        BottomNavigationView  bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
         bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+        bottom_navigation_view.getMenu().findItem(R.id.care).setChecked(true);
 
         if (new ConnectionDetector(PetCompletedAppointmentDetailsActivity.this).isNetworkAvailable(PetCompletedAppointmentDetailsActivity.this)) {
             petNewAppointmentResponseCall();

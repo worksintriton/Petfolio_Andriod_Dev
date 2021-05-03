@@ -217,6 +217,9 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
             RadioButton radioButton = rglocationtype.findViewById(radioButtonID);
             LocationType = (String) radioButton.getText();
             Log.w(TAG,"selectedRadioButton" + LocationType);
+            if (LocationType != null && LocationType.equalsIgnoreCase("new")) {
+
+            }
 
 
         });

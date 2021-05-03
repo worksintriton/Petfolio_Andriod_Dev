@@ -122,7 +122,9 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
     ImageView img_back;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.bottom_navigation_view)
+    @BindView(R.id.include_petlover_footer)
+    View include_petlover_footer;
+
     BottomNavigationView bottom_navigation_view;
 
 
@@ -197,6 +199,10 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
         img_cart.setOnClickListener(this);
         img_profile.setOnClickListener(this);
 
+        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.getMenu().findItem(R.id.care).setChecked(true);
+
 
 
         if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
@@ -207,7 +213,7 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
         }
 
         if(fromactivity != null && fromactivity.equalsIgnoreCase("PetCareFragment")){
-            bottom_navigation_view.setSelectedItemId(R.id.care);
+            bottom_navigation_view.getMenu().findItem(R.id.care).setChecked(true);
         }
 
 

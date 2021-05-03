@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -21,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.location.PickUpLocationAllowActivity;
@@ -56,7 +58,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PetVendorCancelOrderActivity extends AppCompatActivity implements View.OnClickListener {
+public class PetVendorCancelOrderActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "PetVendorCancelOrderActivity" ;
 
@@ -76,11 +78,15 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
     @BindView(R.id.edt_comment)
     EditText edt_comment;
 
-
-
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_footer)
+    View include_petlover_footer;
+
+    BottomNavigationView bottom_navigation_view;
 
     private List<DropDownListResponse.DataBean.SpecialzationBean> petSpecilaziationList;
     private String _id;
@@ -106,6 +112,11 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
         img_back.setOnClickListener(this);
 
         edt_comment.setVisibility(View.GONE);
+
+        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+        bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
 
 
         Bundle extras = getIntent().getExtras();
@@ -507,6 +518,8 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
     }
 
 
-
-
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
+    }
 }

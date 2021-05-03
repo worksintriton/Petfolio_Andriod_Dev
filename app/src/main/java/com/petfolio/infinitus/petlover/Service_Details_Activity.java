@@ -60,7 +60,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Service_Details_Activity extends AppCompatActivity implements View.OnClickListener, SoSCallListener {
+public class Service_Details_Activity extends AppCompatActivity implements View.OnClickListener, SoSCallListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private String TAG = "Service_Details_Activity";
 
@@ -117,7 +117,9 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
     Button btn_book_now;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.bottom_navigation_view)
+    @BindView(R.id.include_petlover_footer)
+    View include_petlover_footer;
+
     BottomNavigationView bottom_navigation_view;
 
 
@@ -185,6 +187,12 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
         img_notification.setOnClickListener(this);
         img_cart.setOnClickListener(this);
         img_profile.setOnClickListener(this);
+
+        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+        bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
+
 
         SessionManager session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
@@ -533,5 +541,10 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
             sosPhonenumber = String.valueOf(phonenumber);
         }
 
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
     }
 }

@@ -197,23 +197,11 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
-
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:elevation="8dp"
-        app:itemIconSize="20dp"
-        app:menu="@menu/bottom_navigation"
-        android:background="@drawable/new_rounded_corner_btn"
-        android:layout_marginBottom="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:itemBackground="@drawable/selected_state"
-        app:itemIconTint="@color/selector"
-        app:itemTextColor="@color/selector"
-        app:labelVisibilityMode="labeled" />
+        <include
+            android:id="@+id/include_petlover_footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/toolbar_layout_petlover_footer" />
 
     </LinearLayout>
 

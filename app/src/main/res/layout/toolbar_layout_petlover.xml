@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/new_header_bg"
-    android:orientation="horizontal"
-    android:gravity="center">
+    android:background="@color/whiteTwo"
+    android:orientation="horizontal">
 
 
     <ImageView
@@ -13,21 +12,30 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginStart="5dp"
-        android:background="@drawable/back_arrow_white"
+        android:src="@drawable/back"
         tools:ignore="ContentDescription" />
+
+
+    <ImageView
+        android:layout_width="14dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/mapicn"
+        tools:ignore="ContentDescription"
+        android:visibility="visible"/>
 
     <TextView
         android:id="@+id/toolbar_title"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="26dp"
         android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
         android:drawablePadding="5dp"
         android:fontFamily="@font/futuramediumbt"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:text="@string/current_location"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"/>
+        android:textColor="@color/new_four_txt_color"
+        android:textSize="12sp" />
 
     <LinearLayout
         android:layout_width="match_parent"

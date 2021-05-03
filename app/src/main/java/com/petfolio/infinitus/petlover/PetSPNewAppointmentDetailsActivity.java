@@ -235,11 +235,13 @@ public class PetSPNewAppointmentDetailsActivity extends AppCompatActivity implem
 
 
         img_videocall=findViewById(R.id.img_videocall);
+        View include_petlover_footer = findViewById(R.id.include_petlover_footer);
 
-
-        BottomNavigationView bottom_navigation_view = findViewById(R.id.bottom_navigation_view);
-
+        BottomNavigationView bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
         bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+        bottom_navigation_view.getMenu().findItem(R.id.services).setChecked(true);
+
 
 
         if (new ConnectionDetector(PetSPNewAppointmentDetailsActivity.this).isNetworkAvailable(PetSPNewAppointmentDetailsActivity.this)) {

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="80dp">
+    android:layout_marginBottom="15dp">
 
     <LinearLayout
         android:id="@+id/headerView"
@@ -58,13 +58,13 @@
 
     </LinearLayout>
 
-    <ScrollView
+   <!-- <ScrollView
         android:id="@+id/scrollablContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/footerView"
         android:layout_below="@+id/headerView"
-        android:fillViewport="true">
+        android:fillViewport="true">-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,7 +72,9 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_above="@+id/footerView"
+            android:layout_below="@+id/headerView">
 
 
             <LinearLayout
@@ -177,12 +179,12 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_nearbydoctors"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="10dp" />
 
 
         </LinearLayout>
-    </ScrollView>
+    <!--</ScrollView>-->
 
     <LinearLayout
         android:id="@+id/footerView"

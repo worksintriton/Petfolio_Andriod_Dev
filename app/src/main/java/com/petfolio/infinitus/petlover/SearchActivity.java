@@ -44,7 +44,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SearchActivity extends AppCompatActivity implements View.OnClickListener {
+public class SearchActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private String TAG = "SearchActivity";
 
@@ -74,7 +74,9 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private List<ProductSearchResponse.DataBean> productSearchResponseCall;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.bottom_navigation_view)
+    @BindView(R.id.include_petlover_footer)
+    View include_petlover_footer;
+
     BottomNavigationView bottom_navigation_view;
 
     final Fragment petHomeFragment = new PetHomeFragment();
@@ -99,6 +101,12 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
         img_back.setOnClickListener(this);
         avi_indicator.setVisibility(View.GONE);
+
+        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+        bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
+
         if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
             productSearchResponseCall(searchString);
         }
@@ -238,9 +246,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-
-
-
-
-
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
+    }
 }

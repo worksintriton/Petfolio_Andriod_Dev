@@ -3,6 +3,7 @@ package com.petfolio.infinitus.petlover;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
@@ -32,7 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PetVendorTrackOrderActivity extends AppCompatActivity implements View.OnClickListener {
+public class PetVendorTrackOrderActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "PetVendorTrackOrderActivity" ;
 
@@ -166,6 +168,12 @@ public class PetVendorTrackOrderActivity extends AppCompatActivity implements Vi
     @BindView(R.id.ll_order_reject)
     LinearLayout ll_order_reject;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_footer)
+    View include_petlover_footer;
+
+    BottomNavigationView bottom_navigation_view;
+
 
     private String _id;
     private List<VendorOrderDetailsResponse.DataBean.ProdcutTrackDetailsBean> prodcutTrackDetailsBeanList;
@@ -185,6 +193,11 @@ public class PetVendorTrackOrderActivity extends AppCompatActivity implements Vi
         txt_order_reject_date_reason.setText("");
         txt_order_dispatch_date.setText(" ");
         txt_order_transit_date.setText(" ");
+
+        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+        bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
 
 
 
@@ -403,6 +416,8 @@ public class PetVendorTrackOrderActivity extends AppCompatActivity implements Vi
     }
 
 
-
-
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
+    }
 }

@@ -79,9 +79,8 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
     RecyclerView rv_today_deal;
 
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_back)
-    ImageView img_back;
+
+
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rl_sort)
@@ -108,13 +107,17 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
     @BindView(R.id.include_petlover_footer)
     View include_petlover_footer;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_header)
+    View include_petlover_header;
+
     BottomNavigationView bottom_navigation_view;
 
     /*@SuppressLint("NonConstantResourceId")
     @BindView(R.id.bottom_navigation_view)
     BottomNavigationView bottom_navigation_view;*/
 
-    @SuppressLint("NonConstantResourceId")
+   /* @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_sos)
     ImageView img_sos;
 
@@ -128,7 +131,7 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_profile)
-    ImageView img_profile;
+    ImageView img_profile;*/
 
 
 
@@ -175,8 +178,15 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
         String userid = user.get(SessionManager.KEY_ID);
         Log.w(TAG, "customerid-->" + userid);
 
+     ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+     ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+     ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+     ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+     ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+     TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+     toolbar_title.setText(getResources().getString(R.string.shop));
 
-        img_back.setOnClickListener(new View.OnClickListener() {
+     img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();

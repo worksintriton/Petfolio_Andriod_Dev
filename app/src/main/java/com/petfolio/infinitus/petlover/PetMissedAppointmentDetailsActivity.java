@@ -167,6 +167,11 @@ public class PetMissedAppointmentDetailsActivity extends AppCompatActivity imple
 
 
         txt_address=findViewById(R.id.txt_address);
+        View include_petlover_footer = findViewById(R.id.include_petlover_footer);
+        BottomNavigationView bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
 
         Bundle bundle = getIntent().getExtras();
 

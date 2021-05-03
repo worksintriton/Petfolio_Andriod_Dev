@@ -681,22 +681,11 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation_view"
+        <include
+            android:id="@+id/include_petlover_footer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/new_rounded_corner_btn"
-            app:elevation="20dp"
-            app:itemBackground="@drawable/selected_state"
-            app:itemIconSize="20dp"
-            app:itemIconTint="@color/selector"
-            app:itemTextColor="@color/selector"
-            app:labelVisibilityMode="labeled"
-            app:menu="@menu/bottom_navigation" />
-
+            layout="@layout/toolbar_layout_petlover_footer" />
     </LinearLayout>
 
     <com.wang.avi.AVLoadingIndicatorView
