@@ -98,6 +98,7 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
     private List<LocationListAddressResponse.DataBean> addressList;
     private Dialog dialog;
     Dialog alertDialog;
+    private String fromactivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +120,11 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
 
         if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
            locationListAddressResponseCall();
+        }
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            fromactivity = extras.getString("fromactivity");
         }
 
 
@@ -147,8 +153,13 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class));
-        finish();
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("PetLoverNavigationDrawerNew")){
+            startActivity(new Intent(getApplicationContext(), PetLoverDashboardActivity.class));
+            finish();
+        }else {
+            startActivity(new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class));
+            finish();
+        }
     }
 
 

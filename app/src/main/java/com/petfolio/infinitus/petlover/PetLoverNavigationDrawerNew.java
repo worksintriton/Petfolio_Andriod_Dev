@@ -19,9 +19,11 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -39,18 +41,29 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
 import com.petfolio.infinitus.activity.NotificationActivity;
+import com.petfolio.infinitus.activity.location.ManageAddressActivity;
 import com.petfolio.infinitus.adapter.PetLoverSOSAdapter;
 import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.interfaces.SoSCallListener;
+import com.petfolio.infinitus.requestpojo.ShippingAddressFetchByUserIDRequest;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
+import com.petfolio.infinitus.responsepojo.ShippingAddressFetchByUserIDResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
+import com.petfolio.infinitus.utils.RestUtils;
 import com.petfolio.infinitus.vendor.VendorNavigationDrawer;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class PetLoverNavigationDrawerNew extends AppCompatActivity implements View.OnClickListener,
@@ -96,6 +109,9 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
     private static final int REQUEST_PHONE_CALL =1 ;
     private String sosPhonenumber;
 
+    public View toolbar_layout;
+    TextView txt_location;
+
 
 
 
@@ -108,6 +124,8 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
 
         inflater = LayoutInflater.from(this);
         view = inflater.inflate(R.layout.navigation_drawer_layout_new, null);
+
+
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
         name = user.get(SessionManager.KEY_FIRST_NAME);
@@ -160,8 +178,6 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
 
         TextView nav_header_edit = header.findViewById(R.id.nav_header_edit);
         nav_header_edit.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(),PetLoverEditProfileActivity.class)));
-
-
         navigationView.setNavigationItemSelectedListener(menuItem -> {
             //Closing drawer on item click
             drawerLayout.closeDrawers();
@@ -185,6 +201,7 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
                     return true;
 
                 case R.id.nav_item_five:
+                    gotoMedicalHistory();
                     return true;
 
                 case R.id.nav_item_six:
@@ -205,28 +222,45 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
 
     }
 
+    private void gotoMedicalHistory() {
+        Intent intent = new Intent(getApplicationContext(),MedicalHistoryActivity.class);
+        startActivity(intent);
+    }
+
 
     private void initToolBar(View view) {
         toolbar = view.findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        drawerImg = toolbar.findViewById(R.id.img_menu);
 
+        toolbar_layout = view.findViewById(R.id.include_petlover_header);
 
+        txt_location = toolbar_layout.findViewById(R.id.txt_location);
+        drawerImg = toolbar_layout.findViewById(R.id.img_menu);
+
+        LinearLayout ll_location = toolbar_layout.findViewById(R.id.ll_location);
+        ll_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ManageAddressActivity.class);
+                intent.putExtra("fromactivity",TAG);
+                startActivity(intent);
+
+            }
+        });
+
+       /*
         toolbar_title = toolbar.findViewById(R.id.toolbar_title);
         toolbar_title.setText("Home " );
-
         ImageView img_sos = toolbar.findViewById(R.id.img_sos);
         ImageView img_notification = toolbar.findViewById(R.id.img_notification);
         ImageView img_cart = toolbar.findViewById(R.id.img_cart);
         ImageView img_profile = toolbar.findViewById(R.id.img_profile);
-
         img_sos.setOnClickListener(v -> {
             Log.w(TAG,"SOSLIST"+new Gson().toJson(APIClient.sosList));
             showSOSAlert(APIClient.sosList);
 
         });
         img_notification.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), NotificationActivity.class)));
-
         img_cart.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("LogNotTimber")
             @Override
@@ -246,7 +280,7 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
 
             }
            startActivity(intent);
-        });
+        });*/
 
 
         toggleView();
@@ -458,6 +492,8 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
 
 
     }
+
+
 
 
 

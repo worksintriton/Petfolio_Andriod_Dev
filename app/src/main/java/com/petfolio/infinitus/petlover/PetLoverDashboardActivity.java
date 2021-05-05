@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -48,18 +49,29 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.API;
+import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetCareFragment;
 import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetHomeNewFragment;
 import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetServicesFragment;
 import com.petfolio.infinitus.fragmentpetlover.bottommenu.VendorShopFragment;
+import com.petfolio.infinitus.requestpojo.ShippingAddressFetchByUserIDRequest;
 import com.petfolio.infinitus.responsepojo.GetAddressResultResponse;
+import com.petfolio.infinitus.responsepojo.ShippingAddressFetchByUserIDResponse;
 import com.petfolio.infinitus.service.GPSTracker;
+import com.petfolio.infinitus.sessionmanager.SessionManager;
+import com.petfolio.infinitus.utils.ConnectionDetector;
+import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -84,6 +96,10 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.include_petlover_footer)
     View include_petlover_footer;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_location)
+    TextView txt_location;
 
     BottomNavigationView bottom_navigation_view;
 
@@ -111,6 +127,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
     private double longitude;
     public static String cityName;
     private Dialog dialog;
+    private String userid;
 
 
     @SuppressLint("LogNotTimber")
@@ -125,6 +142,12 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
         bottom_navigation_view.setItemIconTintList(null);
         googleApiConnected();
         avi_indicator.setVisibility(View.GONE);
+
+
+        SessionManager session = new SessionManager(getApplicationContext());
+        HashMap<String, String> user = session.getProfileDetails();
+        userid = user.get(SessionManager.KEY_ID);
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
 
@@ -133,6 +156,9 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
             specialization = extras.getString("specialization");
 
 
+        }
+        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+            shippingAddressresponseCall();
         }
 
         tag = getIntent().getStringExtra("tag");
@@ -289,8 +315,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
                 break;
         }
 
-        Log.w(TAG,"onActivityResult--->");
-        Log.w(TAG,"resultCode---->"+resultCode+"requestCode: "+requestCode);
+
 
         Fragment fragment = Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.frame_schedule));
         fragment.onActivityResult(requestCode,resultCode,data);
@@ -327,7 +352,6 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
                     if(latitude != 0 && longitude != 0){
                         LatLng latLng = new LatLng(latitude,longitude);
                         getAddressResultResponse(latLng);
-                        Log.w(TAG, "getLatandLong--->" + "latitude" + " " + latitude + "longitude" + " " + longitude);
 
 
                     }
@@ -391,7 +415,6 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
         latitude = mLastLocation.getLatitude();
         longitude = mLastLocation.getLongitude();
 
-        Log.w(TAG,"onLocationChanged : "+" latitude : "+latitude+ " longitude : "+longitude);
 
 
 
@@ -471,7 +494,6 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
                                 @SuppressLint({"LongLogTag", "LogNotTimber"})
                                 public void run() {
                                     //do something
-                                    Log.w(TAG, "getMyLocation-->");
                                     if(getApplicationContext() != null) {
                                         if(latitude != 0 && longitude != 0) {
                                             LatLng latLng = new LatLng(latitude,longitude);
@@ -502,7 +524,6 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
     }
 
     private void getAddressResultResponse(LatLng latLng) {
-        Log.w(TAG,"GetAddressResultResponse-->"+latLng);
         //avi_indicator.setVisibility(View.VISIBLE);
         // avi_indicator.smoothToShow();
         Retrofit retrofit = new Retrofit.Builder()
@@ -512,12 +533,9 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
 
         API service = retrofit.create(API.class);
         String strlatlng = String.valueOf(latLng);
-        Log.w(TAG,"getAddressResultResponse strlatlng-->"+strlatlng);
         String newString = strlatlng.replace("lat/lng:", "");
-        Log.w(TAG,"getAddressResultResponse latlng=="+newString);
 
         String latlngs = newString.trim().replaceAll("\\(", "").replaceAll("\\)","").trim();
-        Log.w(TAG,"getAddressResultResponse latlngs=="+latlngs);
 
 
 
@@ -530,7 +548,6 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
                 Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
 
-                Log.w(TAG,"GetAddressResultResponse" + new Gson().toJson(response.body()));
 
 
                 if(response.body() != null) {
@@ -546,7 +563,6 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
                         String[] splitData = placesname.split("\\s", 2);
                         String code = splitData[0];
                         currentplacename = splitData[1];
-                        Log.w(TAG, "code-->" + code + "currentplacename : " + currentplacename);
                     }
 
 
@@ -559,32 +575,25 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
                     getAddressResultResponseList = response.body().getResults();
                     if (getAddressResultResponseList.size() > 0) {
                         String AddressLine = getAddressResultResponseList.get(0).getFormatted_address();
-                        Log.w(TAG, "FormateedAddress-->" + AddressLine);
 
                     }
                     List<GetAddressResultResponse.ResultsBean.AddressComponentsBean> addressComponentsBeanList = response.body().getResults().get(0).getAddress_components();
                     if(addressComponentsBeanList != null) {
                         if (addressComponentsBeanList.size() > 0) {
                             for (int i = 0; i < addressComponentsBeanList.size(); i++) {
-                                Log.w(TAG, "addressComponentsBeanList size : " + addressComponentsBeanList.size());
 
                                 for (int j = 0; j < addressComponentsBeanList.get(i).getTypes().size(); j++) {
-                                    Log.w(TAG, "getTypes size : " + addressComponentsBeanList.get(i).getTypes().size());
 
-                                    Log.w(TAG, "TYPES-->" + addressComponentsBeanList.get(i).getTypes());
                                     List<String> typesList = addressComponentsBeanList.get(i).getTypes();
 
                                     if (typesList.contains("postal_code")) {
                                         postalCode = addressComponentsBeanList.get(i).getShort_name();
                                        String PostalCode = postalCode;
-                                        Log.w(TAG, "Postal Short name ---->" + postalCode);
 
                                     }
                                     if (typesList.contains("locality")) {
                                        String CityName = addressComponentsBeanList.get(i).getLong_name();
                                         localityName = addressComponentsBeanList.get(i).getShort_name();
-                                        Log.w(TAG, "Locality Short name ---->" + localityName);
-                                        Log.w(TAG, "Locality City  short name ---->" + cityName);
 
 
                                     }
@@ -592,12 +601,10 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
                                     if (typesList.contains("administrative_area_level_2")) {
                                         cityName = addressComponentsBeanList.get(i).getShort_name();
                                         //  CityName = cityName;
-                                        Log.w(TAG, "City  short name ---->" + cityName);
 
                                     }
                                     if (typesList.contains("sublocality_level_1")) {
                                         sublocalityName = addressComponentsBeanList.get(i).getShort_name();
-                                        Log.w(TAG, "sublocality_level_1  short name ---->" + cityName);
 
                                     }
 
@@ -605,10 +612,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
 
                             }
 
-                                if (cityName != null && !cityName.isEmpty()) {
-                                    toolbar_title.setText(cityName);
 
-                                }
 
 
 
@@ -688,6 +692,82 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
 
 
     }
+
+    @SuppressLint("LogNotTimber")
+    private void shippingAddressresponseCall() {
+
+        avi_indicator.setVisibility(View.VISIBLE);
+
+        avi_indicator.smoothToShow();
+
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+
+        Call<ShippingAddressFetchByUserIDResponse> call = apiInterface.fetch_shipp_addr_ResponseCall(RestUtils.getContentType(), shippingAddressFetchByUserIDRequest());
+
+        Log.w(TAG,"ShippingAddressFetchByUserIDResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<ShippingAddressFetchByUserIDResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ShippingAddressFetchByUserIDResponse> call, @NonNull Response<ShippingAddressFetchByUserIDResponse> response) {
+
+                Log.w(TAG,"ShippingAddressFetchByUserIDResponse"+ "--->" + new Gson().toJson(response.body()));
+
+                avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200) {
+                        if(response.body().getData()!=null){
+                            ShippingAddressFetchByUserIDResponse.DataBean dataBeanList = response.body().getData();
+
+                            if(dataBeanList!=null) {
+                                if(dataBeanList.isDefault_status()){
+                                    Log.w(TAG,"true-->");
+                                    String city = dataBeanList.getLocation_city();
+                                    if(city !=null){
+                                        txt_location.setText(city);
+                                    }
+
+                                }
+
+
+                            }
+
+                        }
+                    }
+
+
+
+                }
+
+
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ShippingAddressFetchByUserIDResponse> call, @NonNull Throwable t) {
+
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"ShippingAddressFetchByUserIDResponse flr"+"--->" + t.getMessage());
+            }
+        });
+
+
+    }
+    @SuppressLint("LogNotTimber")
+    private ShippingAddressFetchByUserIDRequest shippingAddressFetchByUserIDRequest() {
+        /*
+         * user_id : 6048589d0b3a487571a1c567
+         */
+
+        ShippingAddressFetchByUserIDRequest shippingAddressFetchByUserIDRequest = new ShippingAddressFetchByUserIDRequest();
+        shippingAddressFetchByUserIDRequest.setUser_id(userid);
+
+        Log.w(TAG,"shippingAddressFetchByUserIDRequest"+ "--->" + new Gson().toJson(shippingAddressFetchByUserIDRequest));
+        return shippingAddressFetchByUserIDRequest;
+    }
+
+
 
 
 

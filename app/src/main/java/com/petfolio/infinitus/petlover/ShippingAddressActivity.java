@@ -197,7 +197,6 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
             prodcut_item_count = extras.getInt("prodcut_item_count");
 
             if (new ConnectionDetector(ShippingAddressActivity.this).isNetworkAvailable(ShippingAddressActivity.this)) {
-
                 shippingAddressresponseCall(userid);
 
             }
@@ -410,19 +409,13 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
 
     }
-
     @SuppressLint("LogNotTimber")
     private ShippingAddressFetchByUserIDRequest shippingAddressFetchByUserIDRequest(String userid) {
-
-
-        /**
+        /*
          * user_id : 6048589d0b3a487571a1c567
          */
-
-
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
-
         ShippingAddressFetchByUserIDRequest shippingAddressFetchByUserIDRequest = new ShippingAddressFetchByUserIDRequest();
         shippingAddressFetchByUserIDRequest.setUser_id(userid);
 

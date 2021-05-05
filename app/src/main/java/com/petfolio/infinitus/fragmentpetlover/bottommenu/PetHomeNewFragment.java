@@ -148,8 +148,6 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
     TextView txt_seemore_vets;
 
 
-
-
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_products)
     TextView txt_products;
@@ -191,8 +189,6 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
     @BindView(R.id.ll_content_shop)
     LinearLayout ll_content_shop;
 
-
-
     private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.BannerDetailsBean> listHomeBannerResponse;
     private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.DoctorDetailsBean> doctorDetailsResponseList;
     private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ServiceDetailsBean> serviceDetailsResponseList;
@@ -211,6 +207,8 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
     private String title;
     private String doctornotavlmsg;
     private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.MiddleBannerDetailsBean> middleBannerDetailsBeanList;
+
+
 
 
     public PetHomeNewFragment() {

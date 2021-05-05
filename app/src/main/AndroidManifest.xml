@@ -71,6 +71,11 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".petlover.MedicalHistoryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".petlover.ShippingAddressCreateActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
@@ -303,6 +308,11 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.location.PickUpLocationAllowActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.location.AddMyAddressShippingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />

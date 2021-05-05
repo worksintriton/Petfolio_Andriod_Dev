@@ -42,12 +42,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.API;
+import com.petfolio.infinitus.responsepojo.CartDetailsResponse;
 import com.petfolio.infinitus.responsepojo.GetAddressResultResponse;
 import com.petfolio.infinitus.service.GPSTracker;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -71,7 +74,7 @@ public class PickUpLocationShippingAddressEditActivity extends FragmentActivity 
     LocationRequest mLocationRequest;
     private GoogleMap mMap;
 
-    String TAG = "PickUpLocationEditActivity";
+    String TAG = "PickUpLocationShippingAddressEditActivity";
 
 
     @SuppressLint("NonConstantResourceId")
@@ -108,6 +111,14 @@ public class PickUpLocationShippingAddressEditActivity extends FragmentActivity 
     private boolean defaultstatus;
     private String placesearchactivity;
 
+    List<CartDetailsResponse.DataBean> Data = new ArrayList<>();
+    private int prodouct_total;
+    private int shipping_charge;
+    private int discount_price;
+    private int grand_total;
+    private int prodcut_count;
+    private int prodcut_item_count;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +145,13 @@ public class PickUpLocationShippingAddressEditActivity extends FragmentActivity 
             placesearchactivity = extras.getString("placesearchactivity");
             Log.w(TAG,"fromactivity if : "+fromactivity+"placesearchactivity : "+placesearchactivity);
 
+            Data = (List<CartDetailsResponse.DataBean>) extras.getSerializable("data");
+            prodouct_total = extras.getInt("product_total");
+            shipping_charge = extras.getInt("shipping_charge");
+            discount_price = extras.getInt("discount_price");
+            grand_total = extras.getInt("grand_total");
+            prodcut_count = extras.getInt("prodcut_count");
+            prodcut_item_count = extras.getInt("prodcut_item_count");
 
         }else{
             fromactivity  = TAG;
@@ -152,6 +170,14 @@ public class PickUpLocationShippingAddressEditActivity extends FragmentActivity 
             intent.putExtra("locationtype",LocationType);
             intent.putExtra("defaultstatus",defaultstatus);
             intent.putExtra("fromactivity",TAG);
+
+            intent.putExtra("data", (Serializable) Data);
+            intent.putExtra("product_total",prodouct_total);
+            intent.putExtra("shipping_charge",shipping_charge);
+            intent.putExtra("discount_price",discount_price);
+            intent.putExtra("grand_total",grand_total);
+            intent.putExtra("prodcut_count",prodcut_count);
+            intent.putExtra("prodcut_item_count",prodcut_item_count);
             startActivity(intent);
         });
 
@@ -184,7 +210,7 @@ public class PickUpLocationShippingAddressEditActivity extends FragmentActivity 
 
         btn_setpickuppoint.setOnClickListener(v -> {
             if(CityName != null){
-                   Intent intent = new Intent(PickUpLocationShippingAddressEditActivity.this,EditMyAddressActivity.class);
+                   Intent intent = new Intent(PickUpLocationShippingAddressEditActivity.this,EditShippingAddresssActivity.class);
                     intent.putExtra("latlng",strlatlng);
                     intent.putExtra("cityname",CityName);
                     intent.putExtra("address",AddressLine);
@@ -196,9 +222,14 @@ public class PickUpLocationShippingAddressEditActivity extends FragmentActivity 
                     intent.putExtra("defaultstatus",defaultstatus);
                     intent.putExtra("lat",latitude);
                     intent.putExtra("lon",longitude);
-
-
                     intent.putExtra("fromactivity",fromactivity);
+                    intent.putExtra("data", (Serializable) Data);
+                    intent.putExtra("product_total",prodouct_total);
+                    intent.putExtra("shipping_charge",shipping_charge);
+                    intent.putExtra("discount_price",discount_price);
+                    intent.putExtra("grand_total",grand_total);
+                    intent.putExtra("prodcut_count",prodcut_count);
+                    intent.putExtra("prodcut_item_count",prodcut_item_count);
                     startActivity(intent);
             }else{
                 Toasty.warning(PickUpLocationShippingAddressEditActivity.this,"Please select citynmae",Toasty.LENGTH_SHORT).show();

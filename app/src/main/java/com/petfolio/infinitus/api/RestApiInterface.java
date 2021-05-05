@@ -40,6 +40,7 @@ import com.petfolio.infinitus.responsepojo.LocationStatusChangeResponse;
 import com.petfolio.infinitus.responsepojo.LocationUpdateResponse;
 import com.petfolio.infinitus.responsepojo.LoginResponse;
 import com.petfolio.infinitus.responsepojo.ManageProductsListResponse;
+import com.petfolio.infinitus.responsepojo.MedicalHistoryResponse;
 import com.petfolio.infinitus.responsepojo.NotificationGetlistResponse;
 import com.petfolio.infinitus.responsepojo.NotificationSendResponse;
 import com.petfolio.infinitus.responsepojo.PetAddImageResponse;
@@ -279,7 +280,6 @@ public interface RestApiInterface {
 
 
     /*Doctor*/
-
     /*Doctor Business info create*/
     @POST("doctordetails/create")
     Call<DocBusInfoUploadResponse> docsBusInfoUpldResponse(@Header("Content-Type") String type, @Body DocBusInfoUploadRequest docBusInfoUploadRequest);
@@ -728,6 +728,10 @@ public interface RestApiInterface {
     /*Appointment reschedule API*/
     @POST("appointments/reshedule_appointment")
     Call<SuccessResponse>rescheduleResponseCall(@Header("Content-Type") String type, @Body RescheduleAppointmentRequest rescheduleAppointmentRequest);
+
+   /*Appointments medical history*/
+    @POST("appointments/medical_history")
+    Call<MedicalHistoryResponse>medicalHistoryResponseCall(@Header("Content-Type") String type, @Body MedicalHistoryRequest medicalHistoryRequest);
 
 
 

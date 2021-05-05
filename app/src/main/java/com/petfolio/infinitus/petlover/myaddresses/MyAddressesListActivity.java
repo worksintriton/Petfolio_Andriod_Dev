@@ -498,9 +498,9 @@ public class MyAddressesListActivity extends AppCompatActivity implements View.O
 
 
     @Override
-    public void OnEditShipAddr(String shipid, String first_name, String last_name, String phonum, String alt_phonum, String flat_no, String state, String street, String landmark, String pincode, String address_type, String date, String address_status, String city) {
+    public void OnEditShipAddr(int position){
 
-        Intent intent = new Intent(getApplicationContext(), MyAddressEditActivity.class);
+      /*  Intent intent = new Intent(getApplicationContext(), MyAddressEditActivity.class);
 
         intent.putExtra("fromactivity", TAG);
 
@@ -534,7 +534,7 @@ public class MyAddressesListActivity extends AppCompatActivity implements View.O
 
         startActivity(intent);
 
-        finish();
+        finish();*/
 
     }
 

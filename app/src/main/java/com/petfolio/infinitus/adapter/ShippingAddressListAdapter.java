@@ -181,6 +181,7 @@ public class ShippingAddressListAdapter extends  RecyclerView.Adapter<RecyclerVi
         holder.ll_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+/*
 
                 Intent i = new Intent(context, EditShippingAddresssActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra("id",addressList.get(position).get_id());
@@ -199,10 +200,11 @@ public class ShippingAddressListAdapter extends  RecyclerView.Adapter<RecyclerVi
                 i.putExtras(b);
                 Log.w(TAG,"cityname-->"+addressList.get(position).getLocation_city());
                 context.startActivity(i);
+*/
 
 
 
-                //onEditShipAddrListener.OnEditShipAddr(newOrderResponseList.get(position).get_id(),newOrderResponseList.get(position).getUser_first_name(),newOrderResponseList.get(position).getUser_last_name(),newOrderResponseList.get(position).getUser_mobile(),newOrderResponseList.get(position).getUser_alter_mobile(), newOrderResponseList.get(position).getUser_flat_no(),newOrderResponseList.get(position).getUser_state(),newOrderResponseList.get(position).getUser_stree(),newOrderResponseList.get(position).getUser_landmark(),newOrderResponseList.get(position).getUser_picocode(),newOrderResponseList.get(position).getUser_address_type(),newOrderResponseList.get(position).getUser_display_date(),newOrderResponseList.get(position).getUser_address_stauts(),newOrderResponseList.get(position).getUser_city());
+                onEditShipAddrListener.OnEditShipAddr(position);
             }
         });
 

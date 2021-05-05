@@ -26,12 +26,15 @@ import com.petfolio.infinitus.adapter.PlacesResultsAdapter;
 import com.petfolio.infinitus.api.API;
 import com.petfolio.infinitus.interfaces.PlacesNameListener;
 import com.petfolio.infinitus.responsepojo.AddressResultsResponse;
+import com.petfolio.infinitus.responsepojo.CartDetailsResponse;
 import com.petfolio.infinitus.responsepojo.PlacesResultsResponse;
 import com.wang.avi.AVLoadingIndicatorView;
 
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -82,6 +85,14 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
     private String id,userid,locationnickname,LocationType;
     private boolean defaultstatus;
 
+    List<CartDetailsResponse.DataBean> Data = new ArrayList<>();
+    private int prodouct_total;
+    private int shipping_charge;
+    private int discount_price;
+    private int grand_total;
+    private int prodcut_count;
+    private int prodcut_item_count;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +115,14 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
             locationnickname = extras.getString("nickname");
             LocationType = extras.getString("locationtype");
             defaultstatus = extras.getBoolean("defaultstatus");
+
+            Data = (List<CartDetailsResponse.DataBean>) extras.getSerializable("data");
+            prodouct_total = extras.getInt("product_total");
+            shipping_charge = extras.getInt("shipping_charge");
+            discount_price = extras.getInt("discount_price");
+            grand_total = extras.getInt("grand_total");
+            prodcut_count = extras.getInt("prodcut_count");
+            prodcut_item_count = extras.getInt("prodcut_item_count");
 
         }
 
@@ -304,6 +323,17 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
                         b.putDouble("lat", lat);
                         b.putDouble("lon", lon);
                         i.putExtras(b);
+                        i.putExtra("id",id);
+                        i.putExtra("userid",userid);
+                        i.putExtra("nickname",locationnickname);
+
+                        i.putExtra("data", (Serializable) Data);
+                        i.putExtra("product_total",prodouct_total);
+                        i.putExtra("shipping_charge",shipping_charge);
+                        i.putExtra("discount_price",discount_price);
+                        i.putExtra("grand_total",grand_total);
+                        i.putExtra("prodcut_count",prodcut_count);
+                        i.putExtra("prodcut_item_count",prodcut_item_count);
                         startActivity(i);
                     }
                     else if(fromactivity != null && fromactivity.equalsIgnoreCase("SetLocationDoctorNewActivity")){
@@ -348,6 +378,27 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
                         b.putDouble("lat", lat);
                         b.putDouble("lon", lon);
                         i.putExtras(b);
+                        startActivity(i);
+                    }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PickUpLocationShippingAddressEditActivity")) {
+                        Log.w(TAG,"else if-->"+fromactivity);
+                        Intent i = new Intent(PlacesSearchActivity.this, PickUpLocationShippingAddressEditActivity.class);
+                        i.putExtra("cityname",selectedPlaceName);
+                        i.putExtra("placesearchactivity","placesearchactivity");
+                        Bundle b = new Bundle();
+                        b.putDouble("lat", lat);
+                        b.putDouble("lon", lon);
+                        i.putExtras(b);
+                        i.putExtra("id",id);
+                        i.putExtra("userid",userid);
+                        i.putExtra("nickname",locationnickname);
+
+                        i.putExtra("data", (Serializable) Data);
+                        i.putExtra("product_total",prodouct_total);
+                        i.putExtra("shipping_charge",shipping_charge);
+                        i.putExtra("discount_price",discount_price);
+                        i.putExtra("grand_total",grand_total);
+                        i.putExtra("prodcut_count",prodcut_count);
+                        i.putExtra("prodcut_item_count",prodcut_item_count);
                         startActivity(i);
                     }
                     else{

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/rl_vendorlist_child"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/light_green_bgm"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="5dp">
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/futuramediumbt"
+        android:maxLines="1"
+        android:text="Allergies"
+        android:textColor="@color/new_txt_color"
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/txt_allergies"
+        android:layout_marginStart="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/futuramediumbt"
+        android:maxLines="1"
+        android:text="@string/user_name"
+        android:textColor="@color/new_txt_color"
+        android:textSize="16sp" />
+</LinearLayout>
+<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/futuramediumbt"
+                android:maxLines="1"
+                android:text="Vaccination"
+                android:textColor="@color/new_txt_color"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/txt_vaccination"
+                android:layout_marginStart="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/futuramediumbt"
+                android:maxLines="1"
+                android:text="@string/user_name"
+                android:textColor="@color/new_txt_color"
+                android:textSize="16sp" />
+        </LinearLayout>
+<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/futuramediumbt"
+                android:maxLines="1"
+                android:text="Diagnosis"
+                android:textColor="@color/new_txt_color"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/txt_diagnosis"
+                android:layout_marginStart="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/futuramediumbt"
+                android:maxLines="1"
+                android:text="@string/user_name"
+                android:textColor="@color/new_txt_color"
+                android:textSize="16sp" />
+        </LinearLayout>
+<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/futuramediumbt"
+                android:maxLines="1"
+                android:text="Prescription"
+                android:textColor="@color/new_txt_color"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/txt_prescription"
+                android:layout_marginStart="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/futuramediumbt"
+                android:maxLines="1"
+                android:text="@string/user_name"
+                android:textColor="@color/new_txt_color"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+
+
+
+
+
+
+    </LinearLayout>
+</LinearLayout>

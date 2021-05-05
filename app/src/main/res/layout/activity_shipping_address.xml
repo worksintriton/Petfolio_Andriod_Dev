@@ -156,7 +156,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:fontFamily="@font/futuramediumbt"
-                    android:text="Change / Add Address"
+                    android:text="Change or Add Address"
                     android:textColor="@color/new_light_green"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -307,14 +307,16 @@
                             android:maxLines="2"
                             android:text="225/1, Sample ABCD Nagar Main Road"
                             android:textSize="14sp"
-                            android:textStyle="normal" />
+                            android:textStyle="normal"
+                            android:layout_marginBottom="10dp"/>
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginBottom="10dp"
                             android:orientation="horizontal"
-                            android:layout_marginTop="10dp">
+                            android:layout_marginTop="10dp"
+                            android:visibility="gone">
 
                             <LinearLayout
                                 android:id="@+id/ll_edit"
