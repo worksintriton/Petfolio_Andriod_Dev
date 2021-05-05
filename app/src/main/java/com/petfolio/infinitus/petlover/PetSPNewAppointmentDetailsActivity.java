@@ -46,6 +46,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -59,7 +61,6 @@ public class PetSPNewAppointmentDetailsActivity extends AppCompatActivity implem
     AVLoadingIndicatorView avi_indicator;
 
 
-    ImageView img_back;
 
 
     ImageView img_user;
@@ -129,12 +130,35 @@ public class PetSPNewAppointmentDetailsActivity extends AppCompatActivity implem
     private String userid;
     private boolean isVaildDate;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_header)
+    View include_petlover_header;
+
     @SuppressLint("LongLogTag")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_sp_new_appointment_details);
+        ButterKnife.bind(this);
+
         avi_indicator=findViewById(R.id.avi_indicator);
+
+
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.appointment));
+
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                onBackPressed();
+            }
+        });
 
         SessionManager session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
@@ -172,7 +196,6 @@ public class PetSPNewAppointmentDetailsActivity extends AppCompatActivity implem
 
 
 
-        img_back=findViewById(R.id.img_back);
 
 
         img_user =findViewById(R.id.img_user);
@@ -465,13 +488,7 @@ public class PetSPNewAppointmentDetailsActivity extends AppCompatActivity implem
             txt_address.setText(addr);
         }
 
-        img_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                onBackPressed();
-            }
-        });
 
         img_videocall.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("LongLogTag")

@@ -91,9 +91,6 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
     @BindView(R.id.video)
     CheckBox video;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_back)
-    ImageView img_back;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_doctoravailabeslottime)
@@ -153,6 +150,10 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
     @BindView(R.id.datePickerTimeline)
     DatePickerTimeline datePickerTimeline ;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_header)
+    View include_petlover_header;
+
     private List<PetDoctorAvailableTimeResponse.DataBean> doctorDateAvailabilityResponseList;
     private List<PetDoctorAvailableTimeResponse.DataBean.TimesBean> timesBeanList;
     private String petid,allergies,probleminfo;
@@ -180,6 +181,15 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         Log.w(TAG,"onCreateView");
 
         ButterKnife.bind(this);
+
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.appointment));
+
 
         avi_indicator.setVisibility(View.GONE);
 

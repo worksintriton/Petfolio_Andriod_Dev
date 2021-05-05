@@ -12,12 +12,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -41,6 +44,7 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.API;
 import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
+import com.petfolio.infinitus.petlover.PetShopTodayDealsSeeMoreActivity;
 import com.petfolio.infinitus.responsepojo.GetAddressResultResponse;
 import com.petfolio.infinitus.service.GPSTracker;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -59,7 +63,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class PickUpLocationDenyActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener {
+        LocationListener, BottomNavigationView.OnNavigationItemSelectedListener {
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
@@ -67,9 +71,6 @@ public class PickUpLocationDenyActivity extends FragmentActivity implements OnMa
     LocationRequest mLocationRequest;
     private GoogleMap mMap;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.toolbar_title)
-    TextView toolbar_title;
 
 
 
@@ -77,9 +78,7 @@ public class PickUpLocationDenyActivity extends FragmentActivity implements OnMa
     @BindView(R.id.btn_setpickuppoint)
     Button btn_setpickuppoint;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.imgBack)
-    ImageView imgBack;
+
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.imgLocationPinUp)
@@ -111,7 +110,13 @@ public class PickUpLocationDenyActivity extends FragmentActivity implements OnMa
     String CityName, AddressLine ,PostalCode;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.bottom_navigation_view)
+    @BindView(R.id.include_petlover_footer)
+    View include_petlover_footer;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_header)
+    View include_petlover_header;
+
     BottomNavigationView bottom_navigation_view;
 
     private String fromactivity;
@@ -123,6 +128,20 @@ public class PickUpLocationDenyActivity extends FragmentActivity implements OnMa
         setContentView(R.layout.activity_pick_up_location_deny);
 
         ButterKnife.bind(this);
+
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.pickup_location));
+
+        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
+
 
         imgLocationPinUp.setVisibility(View.GONE);
 
@@ -146,7 +165,7 @@ public class PickUpLocationDenyActivity extends FragmentActivity implements OnMa
         });
 
         avi_indicator.setVisibility(View.GONE);
-        imgBack.setOnClickListener(v -> onBackPressed());
+        img_back.setOnClickListener(v -> onBackPressed());
 
 
 
@@ -700,5 +719,37 @@ public class PickUpLocationDenyActivity extends FragmentActivity implements OnMa
         });
     }
 
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+                callDirections("1");
+                break;
+            case R.id.shop:
+                callDirections("2");
+                break;
+            case R.id.services:
+                callDirections("3");
+                break;
+            case R.id.care:
+                callDirections("4");
+                break;
+            case R.id.community:
+                callDirections("5");
+                break;
+
+            default:
+                return  false;
+        }
+        return true;
+    }
+    public void callDirections(String tag){
+        Intent intent = new Intent(getApplicationContext(),PetLoverDashboardActivity.class);
+        intent.putExtra("tag",tag);
+        startActivity(intent);
+        finish();
+
+    }
 
 }

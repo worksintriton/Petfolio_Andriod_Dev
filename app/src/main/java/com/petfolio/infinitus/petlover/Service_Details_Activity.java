@@ -64,9 +64,6 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
 
     private String TAG = "Service_Details_Activity";
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_back)
-    ImageView img_back;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
@@ -124,20 +121,8 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
 
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_sos)
-    ImageView img_sos;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_notification)
-    ImageView img_notification;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_cart)
-    ImageView img_cart;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_profile)
-    ImageView img_profile;
+    @BindView(R.id.include_petlover_header)
+    View include_petlover_header;
 
 
     private String active_tag;
@@ -175,10 +160,18 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_details);
-
-
         ButterKnife.bind(this);
         Log.w(TAG,"onCreate");
+
+
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.service_details));
+
         avi_indicator.setVisibility(View.GONE);
 
         img_back.setOnClickListener(this);

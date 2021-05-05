@@ -68,9 +68,7 @@ import retrofit2.Response;
 public class PetLoverProfileScreenActivity extends AppCompatActivity implements View.OnClickListener, PetDeleteListener, BottomNavigationView.OnNavigationItemSelectedListener, SoSCallListener {
     private  String TAG = "PetLoverProfileScreenActivity";
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_back)
-    ImageView img_back;
+
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_usrname)
@@ -127,28 +125,21 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
     TextView txt_edit_profile;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_profile)
-    ImageView img_profile;
+    @BindView(R.id.img_profile1)
+    ImageView img_profile1;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_edit_image)
     TextView txt_edit_image;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_sos)
-    ImageView img_sos;
+
+
+
+
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_notification)
-    ImageView img_notification;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_cart)
-    ImageView img_cart;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_profile1)
-    ImageView img_profile1;
+    @BindView(R.id.include_petlover_header)
+    View include_petlover_header;
 
 
 
@@ -175,6 +166,16 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
         setContentView(R.layout.activity_pet_lover_profile_screen);
         ButterKnife.bind(this);
 
+
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.profile));
+
+
         Log.w(TAG,"onCreate : ");
         avi_indicator.setVisibility(View.GONE);
         ll_add.setVisibility(View.GONE);
@@ -199,11 +200,11 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
         if(profileimage != null && !profileimage.isEmpty()){
             Glide.with(PetLoverProfileScreenActivity.this)
                     .load(profileimage)
-                    .into(img_profile);
+                    .into(img_profile1);
         }else{
             Glide.with(PetLoverProfileScreenActivity.this)
                     .load(R.drawable.upload)
-                    .into(img_profile);
+                    .into(img_profile1);
 
         }
 

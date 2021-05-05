@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="15dp"
-    android:layout_marginEnd="10dp"
     android:background="@color/bg_white">
 
     <LinearLayout
@@ -13,74 +11,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_header"
+        <include
+            android:id="@+id/include_petlover_header"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/whiteTwo"
-            app:contentInsetLeft="0dp"
-            app:contentInsetStart="0dp"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:titleTextAppearance="@style/TitleBarTextAppearance">
-
-            <ImageView
-                android:id="@+id/img_back"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/back"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/txt_toolbar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:fontFamily="@font/futuramediumbt"
-                android:text="@string/set_locations"
-                android:textColor="@color/new_txt_color"
-                android:textSize="18sp" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:gravity="end">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_sos"
-                    tools:ignore="ContentDescription" />
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_notifications"
-                    tools:ignore="ContentDescription" />
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_bag"
-                    tools:ignore="ContentDescription" />
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="20dp"
-
-                    android:src="@drawable/ic_user"
-                    tools:ignore="ContentDescription" />
-            </LinearLayout>
-
-
-        </androidx.appcompat.widget.Toolbar>
+            android:layout_height="50dp"
+            layout="@layout/toolbar_layout_petlover_header" />
 
     </LinearLayout>
 
@@ -96,7 +31,9 @@
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="10dp">
 
             <TextView
                 android:id="@+id/txt_no_records"
@@ -173,19 +110,11 @@
                 app:srcCompat="@drawable/addaddr" />
         </LinearLayout>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation_view"
+        <include
+            android:id="@+id/include_petlover_footer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_curve"
-            android:theme="@style/Widget.BottomNavigationView"
-            app:elevation="8dp"
-            app:itemBackground="@drawable/selected_state"
-            app:itemIconSize="20dp"
-            app:itemIconTint="@color/selector"
-            app:itemTextColor="@color/selector"
-            app:labelVisibilityMode="labeled"
-            app:menu="@menu/bottom_navigation" />
+            layout="@layout/toolbar_layout_petlover_footer" />
 
 
     </LinearLayout>

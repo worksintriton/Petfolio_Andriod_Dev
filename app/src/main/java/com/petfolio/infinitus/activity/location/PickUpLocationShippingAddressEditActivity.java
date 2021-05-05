@@ -85,9 +85,6 @@ public class PickUpLocationShippingAddressEditActivity extends FragmentActivity 
     @BindView(R.id.btn_setpickuppoint)
     Button btn_setpickuppoint;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_back)
-    ImageView imgBack;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.imgLocationPinUp)
@@ -101,6 +98,10 @@ public class PickUpLocationShippingAddressEditActivity extends FragmentActivity 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_searchlocationaddress)
     TextView tv_searchlocationaddress;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_header)
+    View include_petlover_header;
 
 
     private double latitude = 0, longitude = 0;
@@ -126,6 +127,14 @@ public class PickUpLocationShippingAddressEditActivity extends FragmentActivity 
         setContentView(R.layout.activity_pick_up_location_allow);
 
         ButterKnife.bind(this);
+
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.pickup_location));
 
         imgLocationPinUp.setVisibility(View.GONE);
 
@@ -182,7 +191,7 @@ public class PickUpLocationShippingAddressEditActivity extends FragmentActivity 
         });
 
         avi_indicator.setVisibility(View.GONE);
-        imgBack.setOnClickListener(v -> onBackPressed());
+        img_back.setOnClickListener(v -> onBackPressed());
 
 
 

@@ -29,6 +29,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,7 +42,6 @@ public class PetCompletedAppointmentDetailsActivity extends AppCompatActivity im
     AVLoadingIndicatorView avi_indicator;
 
 
-    ImageView img_back;
 
 
     ImageView img_user;
@@ -92,6 +92,10 @@ public class PetCompletedAppointmentDetailsActivity extends AppCompatActivity im
 
     TextView txt_address;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_header)
+    View include_petlover_header;
+
 
     String appointment_id;
 
@@ -104,11 +108,28 @@ public class PetCompletedAppointmentDetailsActivity extends AppCompatActivity im
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_completed_appointment_details);
 
+        ButterKnife.bind(this);
+
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.appointment));
+
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                onBackPressed();
+            }
+        });
+
 
         avi_indicator=findViewById(R.id.avi_indicator);
 
 
-        img_back=findViewById(R.id.img_back);
 
 
         img_user =findViewById(R.id.img_user);
@@ -400,13 +421,6 @@ public class PetCompletedAppointmentDetailsActivity extends AppCompatActivity im
             txt_address.setText(addr);
         }
 
-        img_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                onBackPressed();
-            }
-        });
 
     }
 

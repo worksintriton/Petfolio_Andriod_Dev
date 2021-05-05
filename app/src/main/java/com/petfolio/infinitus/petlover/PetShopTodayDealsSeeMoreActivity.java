@@ -113,26 +113,6 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
 
     BottomNavigationView bottom_navigation_view;
 
-    /*@SuppressLint("NonConstantResourceId")
-    @BindView(R.id.bottom_navigation_view)
-    BottomNavigationView bottom_navigation_view;*/
-
-   /* @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_sos)
-    ImageView img_sos;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_notification)
-    ImageView img_notification;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_cart)
-    ImageView img_cart;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_profile)
-    ImageView img_profile;*/
-
 
 
 

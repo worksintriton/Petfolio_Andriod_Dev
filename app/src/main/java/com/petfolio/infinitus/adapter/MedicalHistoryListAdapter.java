@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.interfaces.ManageProductsDealsListener;
 import com.petfolio.infinitus.interfaces.OnItemCheckProduct;
+import com.petfolio.infinitus.interfaces.PrescriptionListener;
 import com.petfolio.infinitus.responsepojo.ManageProductsListResponse;
 import com.petfolio.infinitus.responsepojo.MedicalHistoryResponse;
 import com.petfolio.infinitus.vendor.EditManageProdcutsActivity;
@@ -40,11 +42,12 @@ public class MedicalHistoryListAdapter extends  RecyclerView.Adapter<RecyclerVie
 
     int count = 0;
 
-    ManageProductsDealsListener manageProductsDealsListener;
+    PrescriptionListener prescriptionListener;
 
-    public MedicalHistoryListAdapter(Context context,List<MedicalHistoryResponse.DataBean> data) {
+    public MedicalHistoryListAdapter(Context context,List<MedicalHistoryResponse.DataBean> data, PrescriptionListener prescriptionListener) {
         this.context = context;
         this.data = data;
+        this.prescriptionListener = prescriptionListener;
 
     }
 
@@ -73,6 +76,18 @@ public class MedicalHistoryListAdapter extends  RecyclerView.Adapter<RecyclerVie
         } if(data.get(position).getAppointment_date() != null) {
             holder.txt_date.setText(data.get(position).getAppointment_date());
         }
+        if(data.get(position).getAllergies() != null){
+            holder.txt_allergies.setText(": "+data.get(position).getAllergies());
+        } if(data.get(position).isVacination()){
+            holder.txt_vaccination.setText(": Yes");
+        }else{
+            holder.txt_vaccination.setText(": No");
+        }
+        if(data.get(position).getPrescrip_type() != null){
+            holder.txt_prescription.setText(": "+data.get(position).getPrescrip_type());
+        }if(data.get(position).getCommunication_type() != null){
+            holder.txt_communicationtype.setText(": "+data.get(position).getCommunication_type());
+        }
         if (data.get(position).getVet_image() != null && !data.get(position).getVet_image().isEmpty()) {
             Glide.with(context)
                     .load(data.get(position).getVet_image())
@@ -92,13 +107,20 @@ public class MedicalHistoryListAdapter extends  RecyclerView.Adapter<RecyclerVie
 
         });
         if (currentSelectedPosition == position) {
-           // holder.include_vendor_productlist_childview.setVisibility(View.VISIBLE);
+            holder.include_medical_history_childview.setVisibility(View.VISIBLE);
             holder.img_expand_arrow.setImageResource(R.drawable.ic_up);
         }
         else {
-            //holder.include_vendor_productlist_childview.setVisibility(View.GONE);
+            holder.include_medical_history_childview.setVisibility(View.GONE);
             holder.img_expand_arrow.setImageResource(R.drawable.ic_down);
         }
+
+        holder.ll_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                prescriptionListener.prescriptionListener(data.get(position).getAppointement_id());
+            }
+        });
 
 
 
@@ -126,7 +148,9 @@ public class MedicalHistoryListAdapter extends  RecyclerView.Adapter<RecyclerVie
     class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_veterinarian_name,txt_pet_name,txt_date;
         public ImageView img_medical_image,img_expand_arrow;
-       // public View include_vendor_productlist_childview;
+        public View include_medical_history_childview;
+        public TextView txt_allergies,txt_vaccination,txt_communicationtype,txt_prescription;
+        public LinearLayout ll_download;
 
         public ViewHolderOne(View itemView) {
             super(itemView);
@@ -136,10 +160,14 @@ public class MedicalHistoryListAdapter extends  RecyclerView.Adapter<RecyclerVie
             img_expand_arrow = itemView.findViewById(R.id.img_expand_arrow);
             txt_date = itemView.findViewById(R.id.txt_date);
 
-           /* include_vendor_productlist_childview = itemView.findViewById(R.id.include_vendor_productlist_childview);
-            include_vendor_productlist_childview.setVisibility(View.GONE);
+            include_medical_history_childview = itemView.findViewById(R.id.include_medical_history_childview);
+            include_medical_history_childview.setVisibility(View.GONE);
+            txt_allergies = include_medical_history_childview.findViewById(R.id.txt_allergies);
+            txt_vaccination = include_medical_history_childview.findViewById(R.id.txt_vaccination);
+            txt_communicationtype = include_medical_history_childview.findViewById(R.id.txt_communicationtype);
+            txt_prescription = include_medical_history_childview.findViewById(R.id.txt_prescription);
+            ll_download = include_medical_history_childview.findViewById(R.id.ll_download);
 
-           */
 
 
 

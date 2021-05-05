@@ -107,20 +107,10 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
     BottomNavigationView bottom_navigation_view;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_sos)
-    ImageView img_sos;
+    @BindView(R.id.include_petlover_header)
+    View include_petlover_header;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_notification)
-    ImageView img_notification;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_cart)
-    ImageView img_cart;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_profile)
-    ImageView img_profile;
 
 
     private String cat_id;
@@ -176,6 +166,14 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
 
 
         }
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.shop));
+
         rv_today_deal.setHasFixedSize(true);
         gridLayoutManager = new GridLayoutManager(this, 2);
         rv_today_deal.setLayoutManager(gridLayoutManager);

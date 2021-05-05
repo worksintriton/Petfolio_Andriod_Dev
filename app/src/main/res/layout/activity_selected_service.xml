@@ -9,89 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="5dp"
         android:orientation="vertical"
         tools:ignore="UseCompoundDrawables">
-        <LinearLayout
+        <include
+            android:id="@+id/include_petlover_header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/whiteTwo"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:layout_height="50dp"
+            layout="@layout/toolbar_layout_petlover_header" />
 
-
-            <ImageView
-                android:id="@+id/img_back"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="5dp"
-                android:src="@drawable/back"
-                tools:ignore="ContentDescription" />
-
-
-            <ImageView
-                android:layout_width="14dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="10dp"
-                android:src="@drawable/mapicn"
-                tools:ignore="ContentDescription"
-                android:visibility="visible"/>
-
-            <TextView
-                android:id="@+id/txt_currentlocation"
-                android:layout_width="110dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:drawablePadding="5dp"
-                android:fontFamily="@font/futuramediumbt"
-                android:gravity="center_vertical"
-                android:text="@string/current_location"
-                android:textColor="@color/new_four_txt_color"
-                android:textSize="12sp"
-                android:maxLines="1"
-                android:ellipsize="end"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:layout_marginStart="10dp">
-
-                <ImageView
-                    android:id="@+id/img_sos"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_sos"
-                    tools:ignore="ContentDescription" />
-
-                <ImageView
-                    android:id="@+id/img_notification"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_notifications"
-                    tools:ignore="ContentDescription" />
-                <ImageView
-                    android:id="@+id/img_cart"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_bag"
-                    tools:ignore="ContentDescription"
-                    android:layout_marginStart="20dp" />
-                <ImageView
-                    android:id="@+id/img_profile"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_user"
-                    tools:ignore="ContentDescription"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="10dp" />
-            </LinearLayout>
-
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

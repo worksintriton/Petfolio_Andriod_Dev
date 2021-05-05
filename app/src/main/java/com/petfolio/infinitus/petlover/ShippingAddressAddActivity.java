@@ -82,9 +82,6 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
     @BindView(R.id.txt_savedaddress)
     TextView txt_savedaddress;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_back)
-    ImageView img_back;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_shipping_address)
@@ -101,6 +98,10 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_use_this_addreess)
     Button btn_use_this_addreess;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_header)
+    View include_petlover_header;
 
     String userid,fromactivity;
 
@@ -135,6 +136,16 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
         Log.w(TAG,"onCreate ");
 
         ButterKnife.bind(this);
+
+
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.shipping_address));
+
 
         SessionManager session = new SessionManager(getApplicationContext());
 

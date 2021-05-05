@@ -61,9 +61,6 @@ public class PetReturnOrderActivity extends AppCompatActivity implements View.On
 
     String TAG = "PetReturnOrderActivity";
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_back)
-    ImageView img_back;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_products_image)
@@ -105,6 +102,10 @@ public class PetReturnOrderActivity extends AppCompatActivity implements View.On
 
     BottomNavigationView bottom_navigation_view;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_header)
+    View include_petlover_header;
+
     private RemotePDFViewPager remotePDFViewPager;
     private PDFPagerAdapter pdfPagerAdapter;
     LinearLayout pdfLayout;
@@ -127,6 +128,14 @@ public class PetReturnOrderActivity extends AppCompatActivity implements View.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_return_order);
         ButterKnife.bind(this);
+
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.return_product));
 
         img_back.setOnClickListener(this);
         edt_comment.setVisibility(View.GONE);

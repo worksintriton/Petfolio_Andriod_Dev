@@ -5,25 +5,25 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/bg_white"
-    android:orientation="vertical"
-    android:layout_marginStart="15dp"
-    android:layout_marginEnd="10dp">
+    android:orientation="vertical">
     <LinearLayout
         android:id="@+id/headerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/new_header_bg">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_header"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/whiteTwo"
             app:contentInsetLeft="0dp"
             app:contentInsetStart="0dp"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:titleTextAppearance="@style/TitleBarTextAppearance">
+            app:titleTextAppearance="@style/TitleBarTextAppearance"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="10dp">
 
             <ImageView
                 android:id="@+id/img_back"
@@ -31,7 +31,7 @@
                 android:layout_height="25dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/back"
+                android:src="@drawable/back_arrow_white"
                 tools:ignore="ContentDescription"
                 android:layout_marginTop="10dp"/>
 
@@ -42,9 +42,10 @@
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/cart"
-                android:textColor="@color/new_txt_color"
+                android:textColor="@color/white"
                 android:textSize="@dimen/big_txt_size"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:textStyle="bold"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -152,7 +153,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="10dp">
             <LinearLayout
                 android:id="@+id/ll_content"
                 android:layout_width="match_parent"

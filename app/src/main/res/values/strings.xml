@@ -380,6 +380,8 @@
     <string name="consultation_fees">Consultation Fee</string>
     <string name="notification">Notification</string>
 
+    <string name="service_details">Service Details</string>
+
     <string name="Discount">Discount</string>
 
 
@@ -466,6 +468,8 @@
     <string name="confirm_all">Confirm All</string>
     <string name="payment_successful">Payment successful</string>
     <string name="back_to_shop">Back to shop</string>
+    <string name="return_product">Return product</string>
+    <string name="shipping_address">Shipping Address</string>
 
 
 </resources>

@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,14 +36,18 @@ import com.petfolio.infinitus.adapter.ManagePetListMedicalHistoryAdapter;
 import com.petfolio.infinitus.adapter.MedicalHistoryListAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.doctor.DoctorPrescriptionDetailsActivity;
 import com.petfolio.infinitus.interfaces.PetDeleteListener;
 
+import com.petfolio.infinitus.interfaces.PrescriptionListener;
 import com.petfolio.infinitus.requestpojo.MedicalHistoryRequest;
 import com.petfolio.infinitus.requestpojo.PetDeleteRequest;
 import com.petfolio.infinitus.requestpojo.PetListRequest;
+import com.petfolio.infinitus.requestpojo.PrescriptionDetailsRequest;
 import com.petfolio.infinitus.responsepojo.MedicalHistoryResponse;
 import com.petfolio.infinitus.responsepojo.PetDeleteResponse;
 import com.petfolio.infinitus.responsepojo.PetListResponse;
+import com.petfolio.infinitus.responsepojo.PrescriptionCreateResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -49,17 +55,23 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
+import es.voghdev.pdfviewpager.library.RemotePDFViewPager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MedicalHistoryActivity extends AppCompatActivity implements View.OnClickListener, PetDeleteListener, BottomNavigationView.OnNavigationItemSelectedListener {
+public class MedicalHistoryActivity extends AppCompatActivity implements View.OnClickListener, PetDeleteListener, BottomNavigationView.OnNavigationItemSelectedListener, PrescriptionListener {
     private  String TAG = "MedicalHistoryActivity";
 
     @SuppressLint("NonConstantResourceId")
@@ -117,6 +129,9 @@ public class MedicalHistoryActivity extends AppCompatActivity implements View.On
     private static final int REQUEST_PHONE_CALL =1 ;
     private String sosPhonenumber;
     private String active_tag;
+    private String pdfUrl;
+    private String url;
+    private String petid;
 
 
     @Override
@@ -201,8 +216,7 @@ public class MedicalHistoryActivity extends AppCompatActivity implements View.On
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-
+        startActivity(new Intent(getApplicationContext(),PetLoverDashboardActivity.class));
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -250,6 +264,12 @@ public class MedicalHistoryActivity extends AppCompatActivity implements View.On
                             txt_no_records.setVisibility(View.GONE);
                             rv_pet.setVisibility(View.VISIBLE);
                             petList = response.body().getData();
+                            for(int i=0;i<petList.size();i++){
+                                petid = petList.get(0).get_id();
+                            }
+                            if(petid != null){
+                                medicalHistoryResponseCall(petid);
+                            }
                             setView();
 
                         }
@@ -395,13 +415,137 @@ public class MedicalHistoryActivity extends AppCompatActivity implements View.On
     private void setViewMedicalHistory(List<MedicalHistoryResponse.DataBean> data) {
         rv_medical_history.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rv_medical_history.setItemAnimator(new DefaultItemAnimator());
-        MedicalHistoryListAdapter medicalHistoryListAdapter = new MedicalHistoryListAdapter(getApplicationContext(), data);
+        MedicalHistoryListAdapter medicalHistoryListAdapter = new MedicalHistoryListAdapter(getApplicationContext(), data,this);
         rv_medical_history.setAdapter(medicalHistoryListAdapter);
 
     }
 
 
+    @Override
+    public void prescriptionListener(String appointmentid) {
+        if(appointmentid != null){
+            prescriptionDetailsResponseCall(appointmentid);
+        }
+    }
+
+    private void prescriptionDetailsResponseCall(String appointmentid) {
+          avi_indicator.setVisibility(View.VISIBLE);
+          avi_indicator.smoothToShow();
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<PrescriptionCreateResponse> call = ApiService.prescriptionDetailsResponseCall(RestUtils.getContentType(),prescriptionDetailsRequest(appointmentid));
+        Log.w(TAG,"url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<PrescriptionCreateResponse>() {
+            @SuppressLint({"SetJavaScriptEnabled", "LogNotTimber"})
+            @Override
+            public void onResponse(@NonNull Call<PrescriptionCreateResponse> call, @NonNull Response<PrescriptionCreateResponse> response) {
+              avi_indicator.smoothToHide();
+                Log.w(TAG,"PrescriptionCreateResponse"+ "--->" + new Gson().toJson(response.body()));
+
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+
+                        if(response.body().getData()!=null){
+
+
+                            if(response.body().getData().getPrescription_data() != null){
+                                pdfUrl = response.body().getData().getPDF_format();
+
+
+                                try
+                                {
+                                    Log.w(TAG,"pdfUrl : "+pdfUrl);
+                                    if(pdfUrl != null) {
+
+                                        url = pdfUrl;
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(pdfUrl)));
 
 
 
+
+                                    }
+
+
+
+
+
+                                }
+                                catch (Exception e)
+                                {
+                                }
+                            }
+
+                        }
+
+
+                    }
+
+                }
+
+
+            }
+
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onFailure(@NonNull Call<PrescriptionCreateResponse> call, @NonNull Throwable t) {
+                //               avi_indicator.smoothToHide();
+
+                Log.w(TAG,"PrescriptionCreateResponseflr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+   /* private void setPdfUrl(String pdfurl) {
+
+        //Create a RemotePDFViewPager object
+        remotePDFViewPager = new RemotePDFViewPager(MedicalHistoryActivity.this, pdfurl, this);
+
+    }*/
+    private PrescriptionDetailsRequest prescriptionDetailsRequest(String appointmentid) {
+        /*
+         * Appointment_ID
+         */
+
+
+        PrescriptionDetailsRequest prescriptionDetailsRequest = new PrescriptionDetailsRequest();
+        prescriptionDetailsRequest.setAppointment_ID(appointmentid);
+        Log.w(TAG,"prescriptionDetailsRequest"+ "--->" + new Gson().toJson(prescriptionDetailsRequest));
+        return prescriptionDetailsRequest;
+    }
+
+    public void downloadPdfContent(String urlToDownload){
+
+        try {
+
+            String fileName="xyz";
+            String fileExtension=".pdf";
+
+//           download pdf file.
+
+            URL url = new URL(urlToDownload);
+            HttpURLConnection c = (HttpURLConnection) url.openConnection();
+            c.setRequestMethod("GET");
+            c.setDoOutput(true);
+            c.connect();
+            String PATH = Environment.getExternalStorageDirectory() + "/mydownload/";
+            File file = new File(PATH);
+            file.mkdirs();
+            File outputFile = new File(file, fileName+fileExtension);
+            FileOutputStream fos = new FileOutputStream(outputFile);
+            InputStream is = c.getInputStream();
+            byte[] buffer = new byte[1024];
+            int len1 = 0;
+            while ((len1 = is.read(buffer)) != -1) {
+                fos.write(buffer, 0, len1);
+            }
+            fos.close();
+            is.close();
+
+            System.out.println("--pdf downloaded--ok--"+urlToDownload);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+    }
 }

@@ -70,13 +70,6 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
     String TAG = "AddMyAddressOldUserActivity";
 
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.toolbar_title)
-    TextView toolbar_title;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.imgBack)
-    ImageView imgBack;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_cityname_title)
@@ -133,6 +126,10 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
     @BindView(R.id.switchButton_default)
     SwitchCompat switchButton_default;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_header)
+    View include_petlover_header;
+
 
     String userid = "",locationnickname,state = "",country = "",postalcode = "",street;
 
@@ -152,8 +149,17 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
         Log.w(TAG,"onCreate-->");
 
         ButterKnife.bind(this);
+
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.pickup_location));
+
         avi_indicator.setVisibility(View.GONE);
-        imgBack.setOnClickListener(this);
+        img_back.setOnClickListener(this);
         btn_change.setOnClickListener(this);
         btn_savethislocation.setOnClickListener(this);
 

@@ -72,16 +72,15 @@ public class PickUpLocationAddNewAddressActivity extends FragmentActivity implem
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
+
+    String TAG = "PickUpLocationAddNewAddressActivity";
+
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     private GoogleMap mMap;
-
-    String TAG = "PickUpLocationAddNewAddressActivity";
-
-
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_setpickuppoint)
@@ -113,6 +112,10 @@ public class PickUpLocationAddNewAddressActivity extends FragmentActivity implem
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_header)
+    View include_petlover_header;
+
 
 
     String CityName, AddressLine ,PostalCode;
@@ -142,6 +145,16 @@ public class PickUpLocationAddNewAddressActivity extends FragmentActivity implem
         setContentView(R.layout.activity_pick_up_location_allow);
 
         ButterKnife.bind(this);
+
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.choose_location));
+
+
 
         imgLocationPinUp.setVisibility(View.GONE);
 

@@ -100,10 +100,7 @@
 
         </LinearLayout>
 
-
-
-
-       <include
+        <include
             android:id="@+id/include_medical_history_childview"
             layout="@layout/adapter_medical_history_child_view" />
 

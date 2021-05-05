@@ -178,9 +178,7 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
     @BindView(R.id.edt_comment)
     EditText edt_comment;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_back)
-    ImageView img_back;
+
 
 
     @SuppressLint("NonConstantResourceId")
@@ -198,6 +196,10 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edt_petage)
     EditText edt_petage;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_header)
+    View include_petlover_header;
 
     private List<PetTypeListResponse.DataBean.UsertypedataBean> usertypedataBeanList;
     private String strPetType;
@@ -262,6 +264,14 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_service_book_appointment);
 
         ButterKnife.bind(this);
+
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.appointment));
 
         txt_pettype.setVisibility(View.GONE);
         txt_petbreed.setVisibility(View.GONE);

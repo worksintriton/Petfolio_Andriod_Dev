@@ -43,10 +43,6 @@ public class PetVendorTrackOrderActivity extends AppCompatActivity implements Vi
     TextView txt_no_records;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_back)
-    ImageView img_back;
-
-    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_products_image)
     ImageView img_products_image;
 
@@ -174,6 +170,10 @@ public class PetVendorTrackOrderActivity extends AppCompatActivity implements Vi
 
     BottomNavigationView bottom_navigation_view;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_header)
+    View include_petlover_header;
+
 
     private String _id;
     private List<VendorOrderDetailsResponse.DataBean.ProdcutTrackDetailsBean> prodcutTrackDetailsBeanList;
@@ -185,6 +185,15 @@ public class PetVendorTrackOrderActivity extends AppCompatActivity implements Vi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_vendor_track_order_status);
         ButterKnife.bind(this);
+
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.track_order));
+
         img_back.setOnClickListener(this);
 
         txt_booked_date.setText(" ");

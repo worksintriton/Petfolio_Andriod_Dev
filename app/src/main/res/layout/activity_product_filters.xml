@@ -9,18 +9,19 @@
     <LinearLayout
         android:id="@+id/headerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
-        tools:ignore="UseCompoundDrawables">
+        tools:ignore="UseCompoundDrawables"
+        android:background="@color/new_header_bg"
+        android:gravity="center_vertical">
 
         <ImageView
             android:id="@+id/img_back"
-            android:layout_width="25dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:background="@drawable/ic_baseline_arrow_back_ios_24"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/back_arrow_white"
             tools:ignore="ContentDescription" />
 
         <TextView
@@ -28,8 +29,10 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/futuramediumbt"
             android:text="@string/filters"
-            android:textColor="@color/new_txt_color"
-            android:textSize="@dimen/big_txt_size"  />
+            android:textColor="@color/white"
+            android:textSize="@dimen/big_txt_size"
+            android:textStyle="bold"
+            android:layout_marginStart="10dp"/>
 
 
     </LinearLayout>

@@ -68,9 +68,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
     AVLoadingIndicatorView avi_indicator;
 
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_back)
-    ImageView img_back;
+
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_user)
@@ -187,6 +185,10 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
 
     BottomNavigationView bottom_navigation_view;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_header)
+    View include_petlover_header;
+
 
     String appointment_id;
     String appoinment_status;
@@ -214,6 +216,18 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_petappointment_details);
         ButterKnife.bind(this);
+
+
+
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.appointment));
+
+        img_back.setOnClickListener(v -> onBackPressed());
 
 
         Bundle extras = getIntent().getExtras();
@@ -578,7 +592,6 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
             txt_address.setText(addr);
         }
 
-        img_back.setOnClickListener(v -> onBackPressed());
 
         img_videocall.setOnClickListener(v -> {
             Log.w(TAG,"Start_appointment_status : "+start_appointment_status);

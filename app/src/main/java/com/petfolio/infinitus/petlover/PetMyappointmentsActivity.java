@@ -70,26 +70,6 @@ public class PetMyappointmentsActivity extends AppCompatActivity implements Bott
     @BindView(R.id.tablayout)
     TabLayout tabLayout;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_back)
-    ImageView img_back;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_sos)
-    ImageView img_sos;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_notification)
-    ImageView img_notification;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_cart)
-    ImageView img_cart;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_profile)
-    ImageView img_profile;
-
 
 
 
@@ -104,6 +84,10 @@ public class PetMyappointmentsActivity extends AppCompatActivity implements Bott
     private static final int REQUEST_PHONE_CALL =1 ;
     private String sosPhonenumber;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_header)
+    View include_petlover_header;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +95,14 @@ public class PetMyappointmentsActivity extends AppCompatActivity implements Bott
         setContentView(R.layout.activity_pet_myappointments);
         ButterKnife.bind(this);
         Log.w(TAG,"onCreate");
+
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.my_appointments));
 
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);

@@ -66,9 +66,7 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
     @BindView(R.id.spr_reason)
     Spinner spr_reason;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_back)
-    ImageView img_back;
+
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_cancel_order)
@@ -101,6 +99,10 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
     private int product_id;
     private String orderid;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_header)
+    View include_petlover_header;
+
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
     @Override
@@ -108,6 +110,14 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_vendor_cancel_order);
         ButterKnife.bind(this);
+
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.cancel_order));
 
         img_back.setOnClickListener(this);
 

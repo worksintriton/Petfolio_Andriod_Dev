@@ -74,23 +74,27 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 public class AddYourPetImageOlduserActivity extends AppCompatActivity implements View.OnClickListener {
     private  String TAG = "AddYourPetImageOlduserActivity";
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
     ImageView img_back;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_skip)
     TextView txt_skip;
 
-
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_pet_imge)
     ImageView img_pet_imge;
 
-
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_uploadpetimage)
     TextView txt_uploadpetimage;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_continue)
     Button btn_continue;
 

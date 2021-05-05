@@ -17,7 +17,7 @@
             android:id="@+id/toolbar_header3"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/whiteTwo"
+            android:background="@color/new_header_bg"
             app:contentInsetLeft="0dp"
             app:contentInsetStart="0dp"
             app:popupTheme="@style/AppTheme.PopupOverlay"
@@ -30,7 +30,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="15dp"
-                android:src="@drawable/back"
+                android:src="@drawable/back_arrow_white"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -40,8 +40,9 @@
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/choose_location"
-                android:textColor="@color/new_txt_color"
-                android:textSize="16sp" />
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

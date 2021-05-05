@@ -46,10 +46,7 @@ import retrofit2.Response;
 
 public class DoctorPrescriptionDetailsActivity extends AppCompatActivity implements DownloadFile.Listener{
     EditText etdoctorcomments;
-
-
     String TAG = "DoctorPrescriptionDetailsActivity";
-
     AVLoadingIndicatorView avi_indicator;
     AlertDialog.Builder alertDialogBuilder;
     AlertDialog alertDialog;
@@ -248,14 +245,12 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity impleme
         });
 
     }
-
     private void setPdfUrl(String pdfurl) {
 
         //Create a RemotePDFViewPager object
         remotePDFViewPager = new RemotePDFViewPager(DoctorPrescriptionDetailsActivity.this, pdfurl, this);
 
     }
-
     private PrescriptionDetailsRequest prescriptionDetailsRequest() {
         /*
           * Appointment_ID

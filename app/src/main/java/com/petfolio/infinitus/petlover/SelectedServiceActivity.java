@@ -86,35 +86,15 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
     TextView txt_no_records;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.txt_currentlocation)
-    TextView txt_currentlocation;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_back)
-    ImageView img_back;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_sos)
-    ImageView img_sos;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_notification)
-    ImageView img_notification;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_cart)
-    ImageView img_cart;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_profile)
-    ImageView img_profile;
-
-
-    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.include_petlover_footer)
     View include_petlover_footer;
 
     BottomNavigationView bottom_navigation_view;
+
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_header)
+    View include_petlover_header;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rl_filters)
@@ -150,6 +130,16 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
 
         ButterKnife.bind(this);
         Log.w(TAG,"onCreate");
+
+
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.service_details));
+
         avi_indicator.setVisibility(View.GONE);
 
         bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
@@ -177,9 +167,6 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
         Log.w(TAG,"selectedprice : "+selectedprice);
 
 
-        if(PetLoverDashboardActivity.cityName != null){
-            txt_currentlocation.setText(PetLoverDashboardActivity.cityName);
-        }
 
         Log.w(TAG," userid : "+userid+ " catid : "+catid+" from : "+from);
 
