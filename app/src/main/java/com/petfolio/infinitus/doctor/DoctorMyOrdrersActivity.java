@@ -1,10 +1,9 @@
-package com.petfolio.infinitus.petlover;
+package com.petfolio.infinitus.doctor;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,10 +19,13 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.fragmentpetlover.myorders.FragmentPetCancelledOrders;
-import com.petfolio.infinitus.fragmentpetlover.myorders.FragmentPetCompletedOrders;
-import com.petfolio.infinitus.fragmentpetlover.myorders.FragmentPetNewOrders;
-import com.wang.avi.AVLoadingIndicatorView;
+import com.petfolio.infinitus.fragmentdoctor.myorders.FragmentDoctorCancelledOrders;
+import com.petfolio.infinitus.fragmentdoctor.myorders.FragmentDoctorCompletedOrders;
+import com.petfolio.infinitus.fragmentdoctor.myorders.FragmentDoctorNewOrders;
+import com.petfolio.infinitus.fragmentpetlover.myordersnew.FragmentPetLoverCancelledOrders;
+import com.petfolio.infinitus.fragmentpetlover.myordersnew.FragmentPetLoverCompletedOrders;
+import com.petfolio.infinitus.fragmentpetlover.myordersnew.FragmentPetLoverNewOrders;
+import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -33,56 +35,57 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PetMyOrdrersActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
-    private final String TAG = "PetMyOrdrersActivity";
+public class DoctorMyOrdrersActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+    private final String TAG = "DoctorMyOrdrersActivity";
+
+
 
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.avi_indicator)
-    AVLoadingIndicatorView avi_indicator;
+    @BindView(R.id.tablayout)
+    TabLayout tablayout;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.include_petlover_footer)
-    View include_petlover_footer;
+    @BindView(R.id.viewPager)
+    ViewPager viewPager;
+
+
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_doctor_footer)
+    View include_doctor_footer;
 
     BottomNavigationView bottom_navigation_view;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.include_petlover_header)
-    View include_petlover_header;
+    @BindView(R.id.include_doctor_header)
+    View include_doctor_header;
 
 
     @SuppressLint({"LogNotTimber", "NonConstantResourceId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pet_myorders);
-        ButterKnife.bind(this);
+        setContentView(R.layout.activity_doctor_myorders);
         Log.w(TAG,"onCreate");
+        ButterKnife.bind(this);
 
 
-
-        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
-        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
-        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
-        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
-        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
-        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        ImageView img_back = include_doctor_header.findViewById(R.id.img_back);
+        ImageView img_notification = include_doctor_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_doctor_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_doctor_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_doctor_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.my_orders));
 
-        TabLayout tabLayout = findViewById(R.id.tablayout);
-        ViewPager viewPager = findViewById(R.id.viewPager);
         setupViewPager(viewPager);
-
-
-        tabLayout.setupWithViewPager(viewPager);
+        tablayout.setupWithViewPager(viewPager);
         img_back.setOnClickListener(v -> onBackPressed());
 
-
-        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view = include_doctor_footer.findViewById(R.id.bottom_navigation_view);
         bottom_navigation_view.setItemIconTintList(null);
         bottom_navigation_view.setOnNavigationItemSelectedListener(this);
-
+        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
 
 
 
@@ -90,28 +93,29 @@ public class PetMyOrdrersActivity extends AppCompatActivity implements BottomNav
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FragmentPetNewOrders(), "New");
-        adapter.addFragment(new FragmentPetCompletedOrders(), "Completed");
-         adapter.addFragment(new FragmentPetCancelledOrders(), "Cancelled");
+        adapter.addFragment(new FragmentDoctorNewOrders(), "New");
+        adapter.addFragment(new FragmentDoctorCompletedOrders(), "Completed");
+         adapter.addFragment(new FragmentDoctorCancelledOrders(), "Cancelled");
         viewPager.setAdapter(adapter);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(PetMyOrdrersActivity.this, PetLoverDashboardActivity.class);
+        Intent i = new Intent(DoctorMyOrdrersActivity.this, DoctorDashboardActivity.class);
         startActivity(i);
         finish();
     }
 
 
     public void callDirections(String tag){
-        Intent intent = new Intent(getApplicationContext(), PetLoverDashboardActivity.class);
+        Intent intent = new Intent(getApplicationContext(), DoctorDashboardActivity.class);
         intent.putExtra("tag",tag);
         startActivity(intent);
         finish();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -121,14 +125,9 @@ public class PetMyOrdrersActivity extends AppCompatActivity implements BottomNav
             case R.id.shop:
                 callDirections("2");
                 break;
-            case R.id.services:
-                callDirections("3");
-                break;
-            case R.id.care:
-                callDirections("4");
-                break;
+
             case R.id.community:
-                callDirections("5");
+                callDirections("3");
                 break;
 
             default:
@@ -165,8 +164,4 @@ public class PetMyOrdrersActivity extends AppCompatActivity implements BottomNav
             return mFragmentTitleList.get(position);
         }
     }
-
-
-
-
 }

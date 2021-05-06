@@ -38,41 +38,16 @@ public class PlacesResultsAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
 
 
     private PlacesNameListener placesNameListener;
+    private String fromactivity;
 
 
 
-    public PlacesResultsAdapter(Context context, List<PlacesResultsResponse.PredictionsBean> predictionsBeanList, RecyclerView inbox_list, PlacesSearchActivity placesSearchActivity) {
+    public PlacesResultsAdapter(Context context, List<PlacesResultsResponse.PredictionsBean> predictionsBeanList, PlacesSearchActivity placesSearchActivity,String fromactivity) {
         this.predictionsBeanList = predictionsBeanList;
         this.context = context;
+        this.placesNameListener = (PlacesNameListener)placesSearchActivity;
+        this.fromactivity = fromactivity;
 
-       this.placesNameListener = (PlacesNameListener)placesSearchActivity;
-
-
-
-        final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) inbox_list.getLayoutManager();
-        inbox_list.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                assert linearLayoutManager != null;
-                totalItemCount = linearLayoutManager.getItemCount();
-                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
-
-            }
-        });
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-
-                handler.postDelayed(this, 120000); //now is every 2 minutes
-                Log.i("Timer","Timer");
-            }
-        }, 120000);
     }
 
     @NonNull
@@ -108,7 +83,7 @@ public class PlacesResultsAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
             holder.ll_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                placesNameListener.selectedPlacesName(predictionsBeanList.get(position).getDescription(),predictionsBeanList.get(position).getStructured_formatting().getMain_text());
+                placesNameListener.selectedPlacesName(predictionsBeanList.get(position).getDescription(),predictionsBeanList.get(position).getStructured_formatting().getMain_text(),fromactivity);
                 }
 
 

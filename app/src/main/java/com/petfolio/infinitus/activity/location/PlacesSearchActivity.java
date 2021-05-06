@@ -227,7 +227,7 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
     private void setViewPlacesResulsts() {
         rv_placesresults.setLayoutManager(new LinearLayoutManager(this));
         rv_placesresults.setItemAnimator(new DefaultItemAnimator());
-        PlacesResultsAdapter placesResultsAdapter = new PlacesResultsAdapter(mContext, predictionsBeanList, rv_placesresults,PlacesSearchActivity.this);
+        PlacesResultsAdapter placesResultsAdapter = new PlacesResultsAdapter(mContext, predictionsBeanList,PlacesSearchActivity.this,fromactivity);
         rv_placesresults.setAdapter(placesResultsAdapter);
 
           }
@@ -238,9 +238,12 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
         finish();
     }
 
+    @SuppressLint("LogNotTimber")
     @Override
-    public void selectedPlacesName(String PlacesName,String selectedPlaceName) {
+    public void selectedPlacesName(String PlacesName,String selectedPlaceName,String fromactivity1) {
         addressResponseCall(PlacesName,selectedPlaceName);
+        fromactivity = fromactivity1;
+        Log.w(TAG,"selectedPlacesName : "+fromactivity);
     }
 
     private void addressResponseCall(String PlacesName, String selectedPlaceName) {
@@ -313,7 +316,8 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
                         b.putDouble("lon", lon);
                         i.putExtras(b);
                         startActivity(i);
-                    }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PickUpLocationAddNewAddressActivity")){
+                    }
+                    else if(fromactivity != null && fromactivity.equalsIgnoreCase("PickUpLocationAddNewAddressActivity")){
                         Log.w(TAG,"else if-->"+fromactivity);
 
                         Intent i = new Intent(PlacesSearchActivity.this, PickUpLocationAddNewAddressActivity.class);
@@ -326,7 +330,6 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
                         i.putExtra("id",id);
                         i.putExtra("userid",userid);
                         i.putExtra("nickname",locationnickname);
-
                         i.putExtra("data", (Serializable) Data);
                         i.putExtra("product_total",prodouct_total);
                         i.putExtra("shipping_charge",shipping_charge);
@@ -334,6 +337,30 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
                         i.putExtra("grand_total",grand_total);
                         i.putExtra("prodcut_count",prodcut_count);
                         i.putExtra("prodcut_item_count",prodcut_item_count);
+                        i.putExtra("fromactivity",fromactivity);
+                        startActivity(i);
+                    }
+                    else if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorCartActivity")){
+                        Log.w(TAG,"else if-->"+fromactivity);
+
+                        Intent i = new Intent(PlacesSearchActivity.this, PickUpLocationAddNewAddressActivity.class);
+                        i.putExtra("cityname",selectedPlaceName);
+                        i.putExtra("placesearchactivity","placesearchactivity");
+                        Bundle b = new Bundle();
+                        b.putDouble("lat", lat);
+                        b.putDouble("lon", lon);
+                        i.putExtras(b);
+                        i.putExtra("id",id);
+                        i.putExtra("userid",userid);
+                        i.putExtra("nickname",locationnickname);
+                        i.putExtra("data", (Serializable) Data);
+                        i.putExtra("product_total",prodouct_total);
+                        i.putExtra("shipping_charge",shipping_charge);
+                        i.putExtra("discount_price",discount_price);
+                        i.putExtra("grand_total",grand_total);
+                        i.putExtra("prodcut_count",prodcut_count);
+                        i.putExtra("prodcut_item_count",prodcut_item_count);
+                        i.putExtra("fromactivity",fromactivity);
                         startActivity(i);
                     }
                     else if(fromactivity != null && fromactivity.equalsIgnoreCase("SetLocationDoctorNewActivity")){

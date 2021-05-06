@@ -195,9 +195,15 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
                         return true;
 
                     case R.id.nav_item_three:
+                        gotoProfile();
+                        return true;
+
+                    case R.id.nav_item_four:
+                        gotoMyOrders();
                         return true;
 
                     case R.id.nav_item_five:
+
                         return true;
 
                     case R.id.nav_item_six:
@@ -217,6 +223,16 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
             }
         });
 
+    }
+
+    private void gotoProfile() {
+        Intent intent = new Intent(getApplicationContext(),DoctorProfileScreenActivity.class);
+        startActivity(intent);
+    }
+
+    private void gotoMyOrders() {
+        Intent intent = new Intent(getApplicationContext(),DoctorMyOrdrersActivity.class);
+        startActivity(intent);
     }
 
 

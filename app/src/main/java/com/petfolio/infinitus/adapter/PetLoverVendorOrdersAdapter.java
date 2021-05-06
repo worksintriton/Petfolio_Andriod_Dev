@@ -82,13 +82,13 @@ public class PetLoverVendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerV
             } else { holder.txt_products_price.setText("\u20B9 " + 0 + " (" + orderResponseListAll.get(position).getP_order_product_count() + " items )"); } }
 
 
-        if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverNewOrders")){
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentDoctorNewOrders")){
             if (orderResponseListAll.get(position).getP_order_booked_on() != null) {
                 holder.txt_bookedon.setText("Booked on:" + " " + orderResponseListAll.get(position).getP_order_booked_on());
 
             }
         }
-        else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverCompletedOrders")){
+        else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentDoctorCompletedOrders")){
             if (orderResponseListAll.get(position).getP_completed_date() != null) {
                 holder.txt_bookedon.setText("Delivered on:" + " " + orderResponseListAll.get(position).getP_completed_date());
 
@@ -102,7 +102,7 @@ public class PetLoverVendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerV
             holder.btn_add_review.setOnClickListener(v -> addReviewListener.addReviewListener(orderResponseListAll.get(position).getP_order_id(),orderResponseListAll.get(position).getP_user_rate(),orderResponseListAll.get(position).getP_user_feedback()));
 
         }
-        else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverCancelledOrders")){
+        else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentDoctorCancelledOrders")){
             if (orderResponseListAll.get(position).getP_cancelled_date() != null) {
                 holder.txt_bookedon.setText("Cancelled on:" + " " + orderResponseListAll.get(position).getP_cancelled_date());
 

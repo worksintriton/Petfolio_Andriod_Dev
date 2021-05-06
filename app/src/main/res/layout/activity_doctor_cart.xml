@@ -53,13 +53,6 @@
                 android:gravity="end"
                 android:layout_marginStart="10dp">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_sos"
-                    tools:ignore="ContentDescription"
-                    android:layout_marginTop="10dp"/>
 
                 <ImageView
                     android:layout_width="24dp"
@@ -441,6 +434,8 @@
         </LinearLayout>
 
         <Button
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
             android:id="@+id/btn_procced_to_buy"
             android:layout_width="match_parent"
@@ -470,10 +465,10 @@
         android:visibility="gone"/>
 
         <include
-            android:id="@+id/include_petlover_footer"
+            android:id="@+id/include_doctor_footer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            layout="@layout/toolbar_layout_petlover_footer" />
+            layout="@layout/toolbar_layout_doctor_footer" />
 
 
     </LinearLayout>

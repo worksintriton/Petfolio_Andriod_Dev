@@ -119,6 +119,7 @@ public class PickUpLocationShippingAddressEditActivity extends FragmentActivity 
     private int grand_total;
     private int prodcut_count;
     private int prodcut_item_count;
+    private String state,country,pincode;
 
 
     @Override
@@ -161,6 +162,13 @@ public class PickUpLocationShippingAddressEditActivity extends FragmentActivity 
             grand_total = extras.getInt("grand_total");
             prodcut_count = extras.getInt("prodcut_count");
             prodcut_item_count = extras.getInt("prodcut_item_count");
+
+            CityName = extras.getString("cityname");
+            state = extras.getString("state");
+            country = extras.getString("country");
+            AddressLine = extras.getString("address");
+            pincode = extras.getString("pincode");
+
 
         }else{
             fromactivity  = TAG;
@@ -676,7 +684,30 @@ public class PickUpLocationShippingAddressEditActivity extends FragmentActivity 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(),EditShippingAddresssActivity.class));
+
+        Intent intent = new Intent(getApplicationContext(),EditShippingAddresssActivity.class);
+        intent.putExtra("id",id);
+        intent.putExtra("userid",userid);
+        intent.putExtra("nickname",locationnickname);
+        intent.putExtra("locationtype",LocationType);
+        intent.putExtra("cityname",CityName);
+        intent.putExtra("state",state);
+        intent.putExtra("country",country);
+        intent.putExtra("address",AddressLine);
+        intent.putExtra("pincode",pincode);
+        intent.putExtra("locationtype",LocationType);
+        intent.putExtra("defaultstatus",defaultstatus);
+        intent.putExtra("lat",latitude);
+        intent.putExtra("lon",longitude);
+        intent.putExtra("fromactivity",TAG);
+        intent.putExtra("data", (Serializable) Data);
+        intent.putExtra("product_total",prodouct_total);
+        intent.putExtra("shipping_charge",shipping_charge);
+        intent.putExtra("discount_price",discount_price);
+        intent.putExtra("grand_total",grand_total);
+        intent.putExtra("prodcut_count",prodcut_count);
+        intent.putExtra("prodcut_item_count",prodcut_item_count);
+        startActivity(intent);
         finish();
 
     }

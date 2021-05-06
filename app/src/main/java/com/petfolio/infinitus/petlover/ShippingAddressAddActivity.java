@@ -145,6 +145,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
         ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
         TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.shipping_address));
+        img_sos.setVisibility(View.GONE);
 
 
         SessionManager session = new SessionManager(getApplicationContext());
@@ -695,6 +696,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
         intent.putExtra("grand_total",grand_total);
         intent.putExtra("prodcut_count",prodcut_count);
         intent.putExtra("prodcut_item_count",prodcut_item_count);
+        intent.putExtra("fromactivity",fromactivity);
         startActivity(intent);
 
     }
@@ -782,6 +784,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
         i.putExtra("grand_total",grand_total);
         i.putExtra("prodcut_count",prodcut_count);
         i.putExtra("prodcut_item_count",prodcut_item_count);
+        i.putExtra("fromactivity",fromactivity);
         startActivity(i);
         finish();
     }

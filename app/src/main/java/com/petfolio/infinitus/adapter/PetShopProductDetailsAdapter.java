@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.petlover.ListOfProductsSeeMoreActivity;
 import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
+import com.petfolio.infinitus.doctor.shop.DoctorListOfProductsSeeMoreActivity;
 
 import java.util.List;
 
@@ -28,11 +29,13 @@ public class PetShopProductDetailsAdapter extends  RecyclerView.Adapter<Recycler
     List<ShopDashboardResponse.DataBean.ProductDetailsBean.ProductListBean> productList;
 
     ShopDashboardResponse.DataBean.ProductDetailsBean currentItem;
+    String fromactivity;
 
-    public PetShopProductDetailsAdapter(Context context, List<ShopDashboardResponse.DataBean.ProductDetailsBean> product_details, List<ShopDashboardResponse.DataBean.ProductDetailsBean.ProductListBean> productList) {
+    public PetShopProductDetailsAdapter(Context context, List<ShopDashboardResponse.DataBean.ProductDetailsBean> product_details, List<ShopDashboardResponse.DataBean.ProductDetailsBean.ProductListBean> productList, String fromactivity) {
         this.context = context;
         this.product_details = product_details;
         this.productList = productList;
+        this.fromactivity = fromactivity;
 
 
 
@@ -67,7 +70,7 @@ public class PetShopProductDetailsAdapter extends  RecyclerView.Adapter<Recycler
         }
         holder.rv_productdetails.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         holder.rv_productdetails.setItemAnimator(new DefaultItemAnimator());
-        PetShopProductDetailsImageAdapter petShopProductDetailsAdapter = new PetShopProductDetailsImageAdapter(context,product_details.get(position).getProduct_list());
+        PetShopProductDetailsImageAdapter petShopProductDetailsAdapter = new PetShopProductDetailsImageAdapter(context,product_details.get(position).getProduct_list(),fromactivity);
         holder.rv_productdetails.setAdapter(petShopProductDetailsAdapter);
     }
 
@@ -94,10 +97,18 @@ public class PetShopProductDetailsAdapter extends  RecyclerView.Adapter<Recycler
             txt_seemore_products = itemView.findViewById(R.id.txt_seemore_products);
 
             txt_seemore_products.setOnClickListener(v -> {
-                if(product_details.get(getAdapterPosition()).getProduct_list() != null && product_details.get(getAdapterPosition()).getProduct_list().size()>0) {
-                    Intent intent = new Intent(context, ListOfProductsSeeMoreActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("cat_id",product_details.get(getAdapterPosition()).getCat_id());
-                    context.startActivity(intent);
+                if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorShopFragment")){
+                    if(product_details.get(getAdapterPosition()).getProduct_list() != null && product_details.get(getAdapterPosition()).getProduct_list().size()>0) {
+                        Intent intent = new Intent(context, DoctorListOfProductsSeeMoreActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("cat_id", product_details.get(getAdapterPosition()).getCat_id());
+                        context.startActivity(intent);
+                    }
+                }else {
+                    if(product_details.get(getAdapterPosition()).getProduct_list() != null && product_details.get(getAdapterPosition()).getProduct_list().size()>0) {
+                        Intent intent = new Intent(context, ListOfProductsSeeMoreActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("cat_id", product_details.get(getAdapterPosition()).getCat_id());
+                        context.startActivity(intent);
+                    }
 
                 }
 

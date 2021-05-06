@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.doctor.shop.DoctorProductDetailsActivity;
 import com.petfolio.infinitus.petlover.ProductDetailsActivity;
 import com.petfolio.infinitus.petlover.SelectedServiceActivity;
 import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
@@ -120,11 +121,20 @@ public class PetShopTodayDealsSeeMoreAdapter extends  RecyclerView.Adapter<Recyc
             holder.txt_review_count.setText("0");
         }
         holder.ll_root.setOnClickListener(v -> {
-               Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-               intent.putExtra("productid",data.get(position).get_id());
-               intent.putExtra("fromactivity",fromactivity);
-               intent.putExtra("tag",tag);
-               context.startActivity(intent);
+            if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorShopTodayDealsSeeMoreActivity")){
+                Intent intent = new Intent(context, DoctorProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("productid",data.get(position).get_id());
+                intent.putExtra("fromactivity",fromactivity);
+                intent.putExtra("tag",tag);
+                context.startActivity(intent);
+            }else{
+                Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("productid",data.get(position).get_id());
+                intent.putExtra("fromactivity",fromactivity);
+                intent.putExtra("tag",tag);
+                context.startActivity(intent);
+            }
+
            });
     }
 

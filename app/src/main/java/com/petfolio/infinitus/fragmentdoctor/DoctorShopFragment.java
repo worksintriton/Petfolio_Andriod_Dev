@@ -1,4 +1,4 @@
-package com.petfolio.infinitus.fragmentpetlover.bottommenu;
+package com.petfolio.infinitus.fragmentdoctor;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -32,14 +31,14 @@ import com.petfolio.infinitus.adapter.PetShopTodayDealsAdapter;
 import com.petfolio.infinitus.adapter.ViewPagerShopDashboardAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
-import com.petfolio.infinitus.petlover.PetShopTodayDealsSeeMoreActivity;
-import com.petfolio.infinitus.petlover.SearchActivity;
+import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
+import com.petfolio.infinitus.doctor.shop.SearchDoctorActivity;
 import com.petfolio.infinitus.requestpojo.ShopDashboardRequest;
 import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
+import com.petfolio.infinitus.doctor.shop.DoctorShopTodayDealsSeeMoreActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.Serializable;
@@ -55,10 +54,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class VendorShopFragment extends Fragment implements Serializable,View.OnClickListener  {
+public class DoctorShopFragment extends Fragment implements Serializable,View.OnClickListener  {
 
 
-    private String TAG = "VendorShopFragment";
+    private String TAG = "DoctorShopFragment";
     int currentPage = 0;
     Timer timer;
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
@@ -123,7 +122,7 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
     private String userid;
 
 
-    public VendorShopFragment() {
+    public DoctorShopFragment() {
         // Required empty public constructor
     }
 
@@ -171,13 +170,13 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
         timer.schedule(doAsynchronousTask, 0, 60000);//you can put 30000(30 secs)
 
         txt_seemore_todaydeals.setOnClickListener(v -> {
-            Intent intent =new Intent(mContext, PetShopTodayDealsSeeMoreActivity.class);
+            Intent intent =new Intent(mContext, DoctorShopTodayDealsSeeMoreActivity.class);
             intent.putExtra("from","");
             intent.putExtra("tag","2");
             startActivity(intent);
         });
 
-        rl_search.setOnClickListener(v -> startActivity(new Intent(mContext, SearchActivity.class)));
+        rl_search.setOnClickListener(v -> startActivity(new Intent(mContext, SearchDoctorActivity.class)));
 
 
         return view;
@@ -207,7 +206,7 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
     }
 
     public void callDirections(String tag){
-        Intent intent = new Intent(mContext, PetLoverDashboardActivity.class);
+        Intent intent = new Intent(mContext, DoctorDashboardActivity.class);
         intent.putExtra("tag",tag);
         startActivity(intent);
 
@@ -339,7 +338,7 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
         final Handler handler = new Handler();
         final Runnable Update =  new Runnable() {
             public void run() {
-                if (currentPage == VendorShopFragment.this.listHomeBannerResponse.size()) {
+                if (currentPage == DoctorShopFragment.this.listHomeBannerResponse.size()) {
                     currentPage = 0;
                 }
                 viewPager.setCurrentItem(currentPage++, false);
@@ -362,7 +361,7 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
     private void setView(List<ShopDashboardResponse.DataBean.TodaySpecialBean> today_special) {
         rv_today_deal.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         rv_today_deal.setItemAnimator(new DefaultItemAnimator());
-        PetShopTodayDealsAdapter petShopTodayDealsAdapter = new PetShopTodayDealsAdapter(mContext,today_special,TAG);
+        PetShopTodayDealsAdapter petShopTodayDealsAdapter = new PetShopTodayDealsAdapter(mContext, today_special,TAG);
         rv_today_deal.setAdapter(petShopTodayDealsAdapter);
 
     }

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.doctor.shop.DoctorProductDetailsActivity;
 import com.petfolio.infinitus.petlover.ProductDetailsActivity;
 import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
 
@@ -30,11 +31,14 @@ public class PetShopProductDetailsImageAdapter extends  RecyclerView.Adapter<Rec
     List<ShopDashboardResponse.DataBean.ProductDetailsBean.ProductListBean> productList;
 
     ShopDashboardResponse.DataBean.ProductDetailsBean.ProductListBean currentItem;
+    String fromactivity;
 
 
-    public PetShopProductDetailsImageAdapter(Context context,List<ShopDashboardResponse.DataBean.ProductDetailsBean.ProductListBean> productList) {
+    public PetShopProductDetailsImageAdapter(Context context,List<ShopDashboardResponse.DataBean.ProductDetailsBean.ProductListBean> productList,String fromactivity) {
         this.context = context;
         this.productList = productList;
+        this.fromactivity = fromactivity;
+
 
 
 
@@ -116,9 +120,16 @@ public class PetShopProductDetailsImageAdapter extends  RecyclerView.Adapter<Rec
         holder.ll_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("productid",productListBean.get_id());
-                context.startActivity(intent);
+                if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorShopFragment")){
+                    Intent intent = new Intent(context, DoctorProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("productid",productListBean.get_id());
+                    context.startActivity(intent);
+                }else{
+                    Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("productid",productListBean.get_id());
+                    context.startActivity(intent);
+                }
+
             }
         });
 
@@ -129,7 +140,7 @@ public class PetShopProductDetailsImageAdapter extends  RecyclerView.Adapter<Rec
 
     @Override
     public int getItemCount() {
-        Log.e("status","size"+ productList.size());
+
         return productList.size();
 
     }

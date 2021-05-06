@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.doctor.shop.DoctorProductDetailsActivity;
 import com.petfolio.infinitus.petlover.ProductDetailsActivity;
 import com.petfolio.infinitus.responsepojo.FetctProductByCatResponse;
 import com.petfolio.infinitus.responsepojo.ProductSearchResponse;
@@ -119,11 +120,20 @@ public class ProductsSearchAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
         holder.ll_root.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
-                   Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                   intent.putExtra("productid",productSearchResponseCall.get(position).get_id());
-                   intent.putExtra("cat_id",cat_id);
-                   intent.putExtra("fromactivity",activityname);
-                   context.startActivity(intent);
+                   if(activityname != null && activityname.equalsIgnoreCase("SearchDoctorActivity")){
+                       Intent intent = new Intent(context, DoctorProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                       intent.putExtra("productid",productSearchResponseCall.get(position).get_id());
+                       intent.putExtra("cat_id",cat_id);
+                       intent.putExtra("fromactivity",activityname);
+                       context.startActivity(intent);
+                   }else{
+                       Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                       intent.putExtra("productid",productSearchResponseCall.get(position).get_id());
+                       intent.putExtra("cat_id",cat_id);
+                       intent.putExtra("fromactivity",activityname);
+                       context.startActivity(intent);
+                   }
+
                }
            });
 

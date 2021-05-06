@@ -378,6 +378,11 @@ public class EditShippingAddresssActivity extends FragmentActivity implements On
                 intent.putExtra("id",id);
                 intent.putExtra("userid",userid);
                 intent.putExtra("nickname",locationnickname);
+                intent.putExtra("cityname",CityName);
+                intent.putExtra("state",state);
+                intent.putExtra("country",country);
+                intent.putExtra("address",AddressLine);
+                intent.putExtra("pincode",pincode);
                 intent.putExtra("locationtype",LocationType);
                 intent.putExtra("defaultstatus",defaultstatus);
                 intent.putExtra("lat",latitude);
@@ -390,7 +395,12 @@ public class EditShippingAddresssActivity extends FragmentActivity implements On
                 intent.putExtra("grand_total",grand_total);
                 intent.putExtra("prodcut_count",prodcut_count);
                 intent.putExtra("prodcut_item_count",prodcut_item_count);
+
+
+
+
                startActivity(intent);
+               finish();
                 break;
             case  R.id.btn_savethislocation:
                 saveLocationValidator();

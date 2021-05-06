@@ -1,12 +1,4 @@
-package com.petfolio.infinitus.petlover;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
+package com.petfolio.infinitus.doctor.shop;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -22,6 +14,14 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
@@ -31,6 +31,9 @@ import com.petfolio.infinitus.adapter.RelatedProductsAdapter;
 import com.petfolio.infinitus.adapter.ViewPagerProductDetailsAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
+
+import com.petfolio.infinitus.doctor.DoctorProfileScreenActivity;
 import com.petfolio.infinitus.requestpojo.CartAddProductRequest;
 import com.petfolio.infinitus.requestpojo.FetchByIdRequest;
 import com.petfolio.infinitus.responsepojo.FetchProductByIdResponse;
@@ -52,9 +55,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProductDetailsActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class DoctorProductDetailsActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
-    private final String TAG = "ProductDetailsActivity";
+    private final String TAG = "DoctorProductDetailsActivity";
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
@@ -146,14 +149,14 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
     BottomNavigationView bottom_navigation_view;*/
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.include_petlover_footer)
-    View include_petlover_footer;
+    @BindView(R.id.include_doctor_footer)
+    View include_doctor_footer;
 
     BottomNavigationView bottom_navigation_view;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.include_petlover_header)
-    View include_petlover_header;
+    @BindView(R.id.include_doctor_header)
+    View include_doctor_header;
 
 
 
@@ -175,11 +178,11 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
     private int productqty;
     private String tag;
 
-    @SuppressLint({"LogNotTimber", "SetTextI18n"})
+    @SuppressLint({"LogNotTimber", "SetTextI18n", "LongLogTag"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_details);
+        setContentView(R.layout.activity_doctor_product_details);
         Log.w(TAG,"onCreate -->");
         ButterKnife.bind(this);
         avi_indicator.setVisibility(View.GONE);
@@ -187,12 +190,11 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
         scrollablContent.setVisibility(View.GONE);
         footerView.setVisibility(View.GONE);
 
-        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
-        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
-        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
-        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
-        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
-        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        ImageView img_back = include_doctor_header.findViewById(R.id.img_back);
+        ImageView img_notification = include_doctor_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_doctor_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_doctor_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_doctor_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.product_details));
 
 
@@ -284,11 +286,11 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
         });
 
 
-        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view = include_doctor_footer.findViewById(R.id.bottom_navigation_view);
         bottom_navigation_view.setItemIconTintList(null);
         bottom_navigation_view.setOnNavigationItemSelectedListener(this);
 
-        img_sos.setOnClickListener(this);
+
         img_notification.setOnClickListener(this);
         img_cart.setOnClickListener(this);
         img_profile.setOnClickListener(this);
@@ -296,16 +298,12 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
         Log.w(TAG," tag test : "+tag);
         if(tag != null){
             if(tag.equalsIgnoreCase("1")){
-                bottom_navigation_view.setSelectedItemId(R.id.home);
+                bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
             }else if(tag.equalsIgnoreCase("2")){
                 bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
                 //bottom_navigation_view.setSelectedItemId(R.id.shop);
-            }else if(tag.equalsIgnoreCase("3")){
-                bottom_navigation_view.setSelectedItemId(R.id.services);
-            }else if(tag.equalsIgnoreCase("4")){
-                bottom_navigation_view.setSelectedItemId(R.id.care);
-            } else if(tag.equalsIgnoreCase("5")){
-                bottom_navigation_view.setSelectedItemId(R.id.community);
+            } else if(tag.equalsIgnoreCase("3")){
+                bottom_navigation_view.getMenu().findItem(R.id.community).setChecked(true);
             }
         }else{
             bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
@@ -318,21 +316,21 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(fromactivity != null && fromactivity.equalsIgnoreCase("SearchActivity")){
-            Intent intent = new Intent(ProductDetailsActivity.this,SearchActivity.class);
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("SearchDoctorActivity")){
+            Intent intent = new Intent(DoctorProductDetailsActivity.this, SearchDoctorActivity.class);
             startActivity(intent);
             finish();
-        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("ListOfProductsSeeMoreActivity")){
-            Intent intent = new Intent(ProductDetailsActivity.this,ListOfProductsSeeMoreActivity.class);
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorListOfProductsSeeMoreActivity")){
+            Intent intent = new Intent(DoctorProductDetailsActivity.this, DoctorListOfProductsSeeMoreActivity.class);
             intent.putExtra("cat_id",cat_id);
             startActivity(intent);
             finish();
-        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetShopTodayDealsSeeMoreActivity")){
-            Intent intent = new Intent(ProductDetailsActivity.this,PetShopTodayDealsSeeMoreActivity.class);
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorShopTodayDealsSeeMoreActivity")){
+            Intent intent = new Intent(DoctorProductDetailsActivity.this, DoctorShopTodayDealsSeeMoreActivity.class);
             startActivity(intent);
             finish();
         }else if(fromactivity != null && fromactivity.equalsIgnoreCase("Cart_Adapter")){
-            Intent intent = new Intent(ProductDetailsActivity.this,PetCartActivity.class);
+            Intent intent = new Intent(DoctorProductDetailsActivity.this, DoctorCartActivity.class);
             startActivity(intent);
             finish();
         }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetLoverShopNewAdapter")){
@@ -342,7 +340,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
         }
     }
 
-    @SuppressLint("LogNotTimber")
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
     public void fetch_product_by_id_ResponseCall(){
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -353,7 +351,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<FetchProductByIdResponse>() {
-            @SuppressLint("LogNotTimber")
+            @SuppressLint({"LogNotTimber", "LongLogTag"})
             @Override
             public void onResponse(@NonNull Call<FetchProductByIdResponse> call, @NonNull Response<FetchProductByIdResponse> response) {
                 avi_indicator.smoothToHide();
@@ -465,7 +463,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
         if(threshould != null && !threshould.isEmpty() ){
             if(threshould.equalsIgnoreCase("0")){
                 txt_products_quantity.setText("Out Of Stock");
-                txt_products_quantity.setTextColor(ContextCompat.getColor(ProductDetailsActivity.this, R.color.vermillion));
+                txt_products_quantity.setTextColor(ContextCompat.getColor(DoctorProductDetailsActivity.this, R.color.vermillion));
                 img_add_product.setVisibility(View.GONE);
                 txt_cart_count.setVisibility(View.GONE);
                 img_remove_product.setVisibility(View.GONE);
@@ -476,7 +474,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
                 img_remove_product.setVisibility(View.VISIBLE);
                 btn_add_to_cart.setVisibility(View.VISIBLE);
                 txt_products_quantity.setText("Prodcut Quantity : "+threshould);
-                txt_products_quantity.setTextColor(ContextCompat.getColor(ProductDetailsActivity.this, R.color.black));
+                txt_products_quantity.setTextColor(ContextCompat.getColor(DoctorProductDetailsActivity.this, R.color.black));
 
             }
 
@@ -490,7 +488,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
         }*/
     }
 
-    @SuppressLint("LogNotTimber")
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
     private FetchByIdRequest fetchByIdRequest() {
         /*
          * user_id : 603e27792c2b43125f8cb802
@@ -502,8 +500,9 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
         Log.w(TAG,"fetchByIdRequest"+ "--->" + new Gson().toJson(fetchByIdRequest));
         return fetchByIdRequest;
     }
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
     private CartAddProductRequest cartAddProductRequest() {
-        /**
+        /*
          * user_id : 603e27792c2b43125f8cb802
          * product_id : 602e4940f62e8d2089fba978
          * count : 3
@@ -516,14 +515,14 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
         return cartAddProductRequest;
     }
     public void callDirections(String tag){
-        Intent intent = new Intent(ProductDetailsActivity.this,PetLoverDashboardActivity.class);
+        Intent intent = new Intent(DoctorProductDetailsActivity.this, DoctorDashboardActivity.class);
         intent.putExtra("tag",tag);
         startActivity(intent);
         finish();
 
     }
 
-    @SuppressLint("LogNotTimber")
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
     public void remove_product_ResponseCall(){
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -534,7 +533,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<SuccessResponse>() {
-            @SuppressLint({"LogNotTimber", "SetTextI18n"})
+            @SuppressLint({"LogNotTimber", "SetTextI18n", "LongLogTag"})
             @Override
             public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
                 avi_indicator.smoothToHide();
@@ -550,7 +549,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
             }
 
 
-            @SuppressLint("LogNotTimber")
+            @SuppressLint({"LogNotTimber", "LongLogTag"})
             @Override
             public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull  Throwable t) {
                 avi_indicator.smoothToHide();
@@ -559,6 +558,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
         });
 
     }
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
     public void cart_add_product_ResponseCall(){
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -576,7 +576,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
 
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
-                        Intent intent = new Intent(getApplicationContext(),PetCartActivity.class);
+                        Intent intent = new Intent(getApplicationContext(),DoctorCartActivity.class);
                         intent.putExtra("productid",productid);
                         intent.putExtra("fromactivity",TAG);
                         startActivity(intent);
@@ -597,7 +597,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
     }
 
 
-    @SuppressLint("LogNotTimber")
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
     public void add_product_ResponseCall(){
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -608,7 +608,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<SuccessResponse>() {
-            @SuppressLint({"LogNotTimber", "SetTextI18n"})
+            @SuppressLint({"LogNotTimber", "SetTextI18n", "LongLogTag"})
             @Override
             public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
                 avi_indicator.smoothToHide();
@@ -660,14 +660,9 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
             case R.id.shop:
                 callDirections("2");
                 break;
-            case R.id.services:
-                callDirections("3");
-                break;
-            case R.id.care:
-                callDirections("4");
-                break;
+
             case R.id.community:
-                callDirections("5");
+                callDirections("3");
                 break;
 
             default:
@@ -680,23 +675,22 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.img_sos:
-                break;
+
                 case R.id.img_notification:
                     startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
                 break;
                 case R.id.img_cart:
-                    Intent i = new Intent(getApplicationContext(), PetCartActivity.class);
+                    Intent i = new Intent(getApplicationContext(), DoctorCartActivity.class);
                     i.putExtra("productid",productid);
                     i.putExtra("cat_id",cat_id);
                     i.putExtra("fromactivity",TAG);
                     startActivity(i);
                     break;
                 case R.id.img_profile:
-                    Intent intent = new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), DoctorProfileScreenActivity.class);
                     intent.putExtra("fromactivity",TAG);
-                    if(PetLoverDashboardActivity.active_tag != null){
-                        intent.putExtra("active_tag",PetLoverDashboardActivity.active_tag);
+                    if(DoctorDashboardActivity.active_tag != null){
+                        intent.putExtra("active_tag",DoctorDashboardActivity.active_tag);
 
                     }
                     startActivity(intent);

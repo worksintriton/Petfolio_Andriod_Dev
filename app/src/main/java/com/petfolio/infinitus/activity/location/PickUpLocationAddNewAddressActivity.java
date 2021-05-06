@@ -153,6 +153,7 @@ public class PickUpLocationAddNewAddressActivity extends FragmentActivity implem
         ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
         TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.choose_location));
+        img_sos.setVisibility(View.GONE);
 
 
 
@@ -190,7 +191,7 @@ public class PickUpLocationAddNewAddressActivity extends FragmentActivity implem
             intent.putExtra("grand_total",grand_total);
             intent.putExtra("prodcut_count",prodcut_count);
             intent.putExtra("prodcut_item_count",prodcut_item_count);
-            intent.putExtra("fromactivity",TAG);
+            intent.putExtra("fromactivity",fromactivity);
            /* intent.putExtra("id",id);
             intent.putExtra("userid",userid);*/
             startActivity(intent);
@@ -283,8 +284,7 @@ public class PickUpLocationAddNewAddressActivity extends FragmentActivity implem
                     latitude = locationResult.getLastLocation().getLatitude();
                     longitude = locationResult.getLastLocation().getLongitude();
 
-                    Log.e("status","checking MapReady---> " + latitude);
-                    Log.e("status","checking MapReady lng---> " + longitude);
+
 
                     LatLng sourcePoint = new LatLng(latitude, longitude);
                     googleMap.addMarker(new MarkerOptions().position(sourcePoint).icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin)));
@@ -454,9 +454,6 @@ public class PickUpLocationAddNewAddressActivity extends FragmentActivity implem
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin));
-
-        Log.e("status","checking OnLocation---> " + location.getLatitude());
-        Log.e("status","checking OnLocation lng---> " + location.getLongitude());
 
 
         LocationManager locationManager = (LocationManager)
@@ -680,6 +677,7 @@ public class PickUpLocationAddNewAddressActivity extends FragmentActivity implem
         intent.putExtra("grand_total",grand_total);
         intent.putExtra("prodcut_count",prodcut_count);
         intent.putExtra("prodcut_item_count",prodcut_item_count);
+        intent.putExtra("fromactivity",fromactivity);
         startActivity(intent);
         finish();
     }

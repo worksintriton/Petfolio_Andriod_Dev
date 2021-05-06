@@ -56,12 +56,16 @@ import retrofit2.Response;
 public class FragmentDoctorDashboard extends Fragment  {
 
     private   String TAG = "FragmentDoctorDashboard";
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tablayout)
     TabLayout tablayout;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.viewPager)
     ViewPager viewPager;
 

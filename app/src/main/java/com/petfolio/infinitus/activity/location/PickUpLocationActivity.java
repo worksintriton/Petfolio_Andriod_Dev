@@ -244,8 +244,7 @@ public class PickUpLocationActivity extends FragmentActivity implements OnMapRea
                     latitude = locationResult.getLastLocation().getLatitude();
                     longitude = locationResult.getLastLocation().getLongitude();
 
-                    Log.e("status","checking MapReady---> " + latitude);
-                    Log.e("status","checking MapReady lng---> " + longitude);
+
 
                     LatLng sourcePoint = new LatLng(latitude, longitude);
                     googleMap.addMarker(new MarkerOptions().position(sourcePoint).icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin)));
@@ -416,8 +415,6 @@ public class PickUpLocationActivity extends FragmentActivity implements OnMapRea
         markerOptions.position(latLng);
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin));
 
-        Log.e("status","checking OnLocation---> " + location.getLatitude());
-        Log.e("status","checking OnLocation lng---> " + location.getLongitude());
 
 
         LocationManager locationManager = (LocationManager)

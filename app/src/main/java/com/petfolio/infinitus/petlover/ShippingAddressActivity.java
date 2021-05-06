@@ -21,8 +21,11 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.activity.location.PickUpLocationAddNewAddressActivity;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
+import com.petfolio.infinitus.doctor.shop.DoctorCartActivity;
 import com.petfolio.infinitus.requestpojo.ShippingAddressDeleteRequest;
 import com.petfolio.infinitus.requestpojo.ShippingAddressFetchByUserIDRequest;
 import com.petfolio.infinitus.responsepojo.CartDetailsResponse;
@@ -170,6 +173,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
         ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
         TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.shipping_address));
+        img_sos.setVisibility(View.GONE);
 
         SessionManager session = new SessionManager(getApplicationContext());
 
@@ -623,98 +627,56 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
 
     private void gotoShippingaddresslist() {
-
         Intent intent = new Intent(ShippingAddressActivity.this, ShippingAddressAddActivity.class);
-
         intent.putExtra("data", (Serializable) Data);
-
         intent.putExtra("product_total",prodouct_total);
-
         intent.putExtra("shipping_charge",shipping_charge);
-
         intent.putExtra("discount_price",discount_price);
-
         intent.putExtra("grand_total",grand_total);
-
         intent.putExtra("prodcut_count",prodcut_count);
-
         intent.putExtra("prodcut_item_count",prodcut_item_count);
-
+        intent.putExtra("fromactivity",fromactivity);
         startActivity(intent);
     }
 
     private void gotoShippingaddressEdit() {
-
         Intent intent = new Intent(getApplicationContext(), ShippingAddressEditActivity.class);
-
         intent.putExtra("fromactivity", TAG);
-
         intent.putExtra("shipid",shipid);
-
         intent.putExtra("first_name",first_name);
-
         intent.putExtra("last_name",last_name);
-
         intent.putExtra("phonum",phonum);
-
         intent.putExtra("alt_phonum",alt_phonum);
-
         intent.putExtra("flat_no",flat_no);
-
         intent.putExtra("state",state);
-
         intent.putExtra("street",street);
-
         intent.putExtra("landmark",landmark);
-
         intent.putExtra("pincode",pincode);
-
         intent.putExtra("address_type",address_type);
-
         intent.putExtra("date",date);
-
         intent.putExtra("city",city);
-
         intent.putExtra("address_status",address_status);
-
         intent.putExtra("data", (Serializable) Data);
-
         intent.putExtra("product_total",prodouct_total);
-
         intent.putExtra("shipping_charge",shipping_charge);
-
         intent.putExtra("discount_price",discount_price);
-
         intent.putExtra("grand_total",grand_total);
-
         intent.putExtra("prodcut_count",prodcut_count);
-
         intent.putExtra("prodcut_item_count",prodcut_item_count);
-
         startActivity(intent);
-
         finish();
 
     }
 
     private void gotoShippingaddressCreate() {
-
-        Intent intent = new Intent(ShippingAddressActivity.this, ShippingAddressCreateActivity.class);
-
+        Intent intent = new Intent(ShippingAddressActivity.this, PickUpLocationAddNewAddressActivity.class);
         intent.putExtra("data", (Serializable) Data);
-
         intent.putExtra("product_total",prodouct_total);
-
         intent.putExtra("shipping_charge",shipping_charge);
-
         intent.putExtra("discount_price",discount_price);
-
         intent.putExtra("grand_total",grand_total);
-
         intent.putExtra("prodcut_count",prodcut_count);
-
         intent.putExtra("prodcut_item_count",prodcut_item_count);
-
         startActivity(intent);
 
     }
@@ -881,8 +843,14 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(),PetCartActivity.class));
-        finish();
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorCartActivity")){
+            startActivity(new Intent(getApplicationContext(), DoctorCartActivity.class));
+            finish();
+        }else{
+            startActivity(new Intent(getApplicationContext(),PetCartActivity.class));
+            finish();
+        }
+
     }
 
     public void callDirections(String tag){
@@ -904,7 +872,15 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
                 @Override
                 public void onClick(View view) {
                     dialog.dismiss();
-                    callDirections("2");
+                    if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorCartActivity")){
+                        Intent intent = new Intent(getApplicationContext(), DoctorDashboardActivity.class);
+                        intent.putExtra("tag","2");
+                        startActivity(intent);
+                        finish();
+                    }else {
+                        callDirections("2");
+                    }
+
                 }
             });
             Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

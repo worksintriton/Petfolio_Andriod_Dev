@@ -3,31 +3,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/whiteTwo"
+    android:background="@color/bg_white"
     android:orientation="vertical"
     android:id="@+id/main_container">
 
 
-    <include layout="@layout/doctor_content_home" />
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:indicatorColor="@color/new_green_btn"
+        app:indicatorName="LineSpinFadeLoaderIndicator" />
 
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation_view"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_marginBottom="40dp">
+
+        <FrameLayout
+            android:id="@+id/frame_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+    <LinearLayout
+        android:id="@+id/footerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/rounded_curve"
-        app:elevation="8dp"
-        app:itemBackground="@drawable/selected_state"
-        app:itemIconTint="@color/selector"
-        app:itemTextColor="@color/selector"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/doctor_bottom_navigation" />
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include_doctor_footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/toolbar_layout_doctor_footer" />
 
 
+    </LinearLayout>
 
 
 </RelativeLayout>

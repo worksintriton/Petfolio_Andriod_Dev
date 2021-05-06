@@ -1,13 +1,11 @@
-package com.petfolio.infinitus.petlover;
+package com.petfolio.infinitus.doctor.shop;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.util.Log;
 import android.view.MenuItem;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,7 +16,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,14 +26,12 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.Cart_Adapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-
-import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetCareFragment;
-import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetHomeNewFragment;
-import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetServicesFragment;
-import com.petfolio.infinitus.fragmentpetlover.bottommenu.VendorShopFragment;
+import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
 import com.petfolio.infinitus.interfaces.AddandRemoveProductListener;
+
+
+import com.petfolio.infinitus.petlover.ShippingAddressActivity;
 import com.petfolio.infinitus.requestpojo.FetchByIdRequest;
-import com.petfolio.infinitus.requestpojo.VendorOrderBookingCreateRequest;
 import com.petfolio.infinitus.responsepojo.CartDetailsResponse;
 import com.petfolio.infinitus.responsepojo.CartSuccessResponse;
 import com.petfolio.infinitus.responsepojo.SuccessResponse;
@@ -47,9 +42,7 @@ import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
 import com.wang.avi.AVLoadingIndicatorView;
 
-
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -65,24 +58,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PetCartActivity extends AppCompatActivity implements AddandRemoveProductListener, PaymentResultListener, BottomNavigationView.OnNavigationItemSelectedListener {
+public class DoctorCartActivity extends AppCompatActivity implements AddandRemoveProductListener, PaymentResultListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
-    private String TAG = "PetCartActivity";
+    private String TAG = "DoctorCartActivity";
 
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
-/*
+
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.bottom_navigation_view)
-    BottomNavigationView bottom_navigation_view;
-*/
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.include_petlover_footer)
-    View include_petlover_footer;
+    @BindView(R.id.include_doctor_footer)
+    View include_doctor_footer;
 
     BottomNavigationView bottom_navigation_view;
 
@@ -179,7 +167,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pet_cart);
+        setContentView(R.layout.activity_doctor_cart);
         ButterKnife.bind(this);
         Log.w(TAG,"onCreate");
 
@@ -244,7 +232,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
 
 
 
-        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view = include_doctor_footer.findViewById(R.id.bottom_navigation_view);
         bottom_navigation_view.setItemIconTintList(null);
         bottom_navigation_view.setOnNavigationItemSelectedListener(this);
         bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
@@ -266,24 +254,24 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(fromactivity != null && fromactivity.equalsIgnoreCase("ProductDetailsActivity")){
-            Intent i = new Intent(PetCartActivity.this, ProductDetailsActivity.class);
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorProductDetailsActivity")){
+            Intent i = new Intent(DoctorCartActivity.this, DoctorProductDetailsActivity.class);
             i.putExtra("productid",productdetails_productid);
             startActivity(i);
             finish();
-        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetShopTodayDealsSeeMoreActivity")){
-            Intent i = new Intent(PetCartActivity.this, PetShopTodayDealsSeeMoreActivity.class);
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorShopTodayDealsSeeMoreActivity")){
+            Intent i = new Intent(DoctorCartActivity.this, DoctorShopTodayDealsSeeMoreActivity.class);
             startActivity(i);
             finish();
-        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("ListOfProductsSeeMoreActivity")){
-            Intent i = new Intent(PetCartActivity.this, ListOfProductsSeeMoreActivity.class);
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorListOfProductsSeeMoreActivity")){
+            Intent i = new Intent(DoctorCartActivity.this, DoctorListOfProductsSeeMoreActivity.class);
             i.putExtra("cat_id",cat_id);
             startActivity(i);
             finish();
         }else if(active_tag != null){
             callDirections(active_tag);
         } else{
-            Intent i = new Intent(PetCartActivity.this, PetLoverDashboardActivity.class);
+            Intent i = new Intent(DoctorCartActivity.this, DoctorDashboardActivity.class);
             startActivity(i);
             finish();
         }
@@ -767,7 +755,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
     }
 
     public void callDirections(String tag){
-        Intent intent = new Intent(getApplicationContext(), PetLoverDashboardActivity.class);
+        Intent intent = new Intent(getApplicationContext(), DoctorDashboardActivity.class);
         intent.putExtra("tag",tag);
         startActivity(intent);
         finish();
@@ -783,14 +771,9 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
             case R.id.shop:
                 callDirections("2");
                 break;
-            case R.id.services:
-                callDirections("3");
-                break;
-            case R.id.care:
-                callDirections("4");
-                break;
+
             case R.id.community:
-                callDirections("5");
+                callDirections("3");
                 break;
 
             default:
