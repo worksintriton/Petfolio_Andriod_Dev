@@ -23,7 +23,7 @@ public class DoctorEditGovtIDListAdapter extends RecyclerView.Adapter<DoctorEdit
     Context context;
     private List<DoctorDetailsByUserIdResponse.DataBean.GovtIdPicBean> govtIdPicBeansEdit;
     private List<DoctorBusinessInfoUpdateRequest.GovtIdPicBean> govt_id_pic;
-
+    String extension;
 
 
     View view;
@@ -53,9 +53,27 @@ public class DoctorEditGovtIDListAdapter extends RecyclerView.Adapter<DoctorEdit
 
         if (govtIdPicBean.getGovt_id_pic()!= null) {
 
+            String uri = govtIdPicBean.getGovt_id_pic();
+            if(uri.contains(".")) {
+                extension = uri.substring(uri.lastIndexOf("."));
 
+                Log.w("extension",extension);
+            }
 
         }
+
+        if (extension.equals(".png")||extension.equals(".jpg")||(extension.equals(".jpeg"))) {
+            Glide.with(context)
+                    .load(govtIdPicBean.getGovt_id_pic())
+                    .into(holder.pdf_file);
+
+        }
+
+        else {
+
+            holder.pdf_file.setImageResource(R.drawable.pdf_icon);
+        }
+
 
         holder.removeImg.setOnClickListener(view -> {
             govtIdPicBeansEdit.remove(position);

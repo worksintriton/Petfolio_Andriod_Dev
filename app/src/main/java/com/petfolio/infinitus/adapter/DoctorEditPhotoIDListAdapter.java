@@ -23,8 +23,7 @@ public class DoctorEditPhotoIDListAdapter extends RecyclerView.Adapter<DoctorEdi
     Context context;
     private List<DoctorDetailsByUserIdResponse.DataBean.PhotoIdPicBean> photoIdPicBeansEdit;
     private List<DoctorBusinessInfoUpdateRequest.PhotoIdPicBean> photo_id_pic;
-
-
+    String extension;
 
     View view;
 
@@ -53,9 +52,27 @@ public class DoctorEditPhotoIDListAdapter extends RecyclerView.Adapter<DoctorEdi
 
         if (photoIdPicBean.getPhoto_id_pic()!= null) {
 
+            String uri = photoIdPicBean.getPhoto_id_pic();
+            if(uri.contains(".")) {
+                extension = uri.substring(uri.lastIndexOf("."));
 
+                Log.w("extension",extension);
+            }
 
         }
+
+        if (extension.equals(".png")||extension.equals(".jpg")||(extension.equals(".jpeg"))) {
+            Glide.with(context)
+                    .load(photoIdPicBean.getPhoto_id_pic())
+                    .into(holder.pdf_file);
+
+        }
+
+        else {
+
+            holder.pdf_file.setImageResource(R.drawable.pdf_icon);
+        }
+
 
         holder.removeImg.setOnClickListener(view -> {
             photoIdPicBeansEdit.remove(position);

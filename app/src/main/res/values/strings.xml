@@ -471,5 +471,27 @@
     <string name="return_product">Return product</string>
     <string name="shipping_address">Shipping Address</string>
 
+    <string name="_1">1</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="dr_nancy_david">Dr. Nancy David</string>
+    <string name="pet_vet_clinic">Pet Vet Clinic</string>
+    <string name="fee">Fee</string>
+    <string name="_10">10</string>
+    <string name="years">Years</string>
+    <string name="km">KM Away</string>
+    <string name="about_vet">About Vet</string>
+    <string name="make_an_appointment">Make an Appointment</string>
+    <string name="bathing">Bathing</string>
+    <string name="_1a_anna_nagar_main_road_chennai">1A, Anna Nagar Main Road, Chennai</string>
+
+    <string name="desc_content">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam see more</string>
+    <string name="inr_300_00">INR 300.00</string>
+
+    <string name="_20_off">20% off</string>
+
+    <string name="pedigree_adult_dry_chicken_treat_500gms">Pedigree Adult Dry Chicken Treat 500gms</string>
+    <string name="sunshine_pet_food">Sunshine Pet Food</string>
+    <string name="product_description">Product Description</string>
+
 
 </resources>

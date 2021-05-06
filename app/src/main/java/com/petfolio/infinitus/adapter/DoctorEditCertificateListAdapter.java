@@ -23,8 +23,7 @@ public class DoctorEditCertificateListAdapter extends RecyclerView.Adapter<Docto
     Context context;
     private List<DoctorDetailsByUserIdResponse.DataBean.CertificatePicBean> certificatePicBeansEdit;
     private List<DoctorBusinessInfoUpdateRequest.CertificatePicBean> certificate_pic;
-
-
+    String extension;
 
     View view;
 
@@ -53,9 +52,27 @@ public class DoctorEditCertificateListAdapter extends RecyclerView.Adapter<Docto
 
         if (certificatePicBean.getCertificate_pic()!= null) {
 
+            String uri = certificatePicBean.getCertificate_pic();
+            if(uri.contains(".")) {
+                extension = uri.substring(uri.lastIndexOf("."));
 
+                Log.w("extension",extension);
+            }
 
         }
+
+        if (extension.equals(".png")||extension.equals(".jpg")||(extension.equals(".jpeg"))) {
+            Glide.with(context)
+                    .load(certificatePicBean.getCertificate_pic())
+                    .into(holder.pdf_file);
+
+        }
+
+        else {
+
+            holder.pdf_file.setImageResource(R.drawable.pdf_icon);
+        }
+
 
         holder.removeImg.setOnClickListener(view -> {
             certificatePicBeansEdit.remove(position);

@@ -2,6 +2,7 @@ package com.petfolio.infinitus.adapter;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.requestpojo.ServiceProviderRegisterFormCreateRequest;
 import com.petfolio.infinitus.requestpojo.VendorRegisterFormCreateRequest;
@@ -20,7 +22,7 @@ public class VendorAddCertPdfAdapter extends RecyclerView.Adapter<VendorAddCertP
     Context context;
     List<VendorRegisterFormCreateRequest.CertifiBean> bus_certif_list;
     View view;
-
+    String extension;
     public VendorAddCertPdfAdapter(Context context, List<VendorRegisterFormCreateRequest.CertifiBean> bus_certif_list) {
         this.context = context;
         this.bus_certif_list = bus_certif_list;
@@ -37,10 +39,32 @@ public class VendorAddCertPdfAdapter extends RecyclerView.Adapter<VendorAddCertP
     @Override
     public void onBindViewHolder(@NonNull AddImageListHolder holder, final int position) {
         final VendorRegisterFormCreateRequest.CertifiBean certificatePicBean = bus_certif_list.get(position);
+
         if (certificatePicBean.getCertifi()!= null) {
 
+            String uri = certificatePicBean.getCertifi();
+            if(uri.contains(".")) {
+                extension = uri.substring(uri.lastIndexOf("."));
+
+                Log.w("extension",extension);
+            }
 
         }
+
+        if (extension.equals(".png")||extension.equals(".jpg")||(extension.equals(".jpeg"))) {
+            Glide.with(context)
+                    .load(certificatePicBean.getCertifi())
+                    .into(holder.certificate_pics_1);
+
+        }
+
+        else {
+
+            holder.certificate_pics_1.setImageResource(R.drawable.pdf_icon);
+        }
+
+
+
 
         holder.removeImg.setOnClickListener(view -> {
             bus_certif_list.remove(position);
@@ -58,7 +82,7 @@ public class VendorAddCertPdfAdapter extends RecyclerView.Adapter<VendorAddCertP
         ImageView removeImg,certificate_pics_1;
         public AddImageListHolder(View itemView) {
             super(itemView);
-            certificate_pics_1 = itemView.findViewById(R.id.certificate_pics_1);
+            certificate_pics_1 = itemView.findViewById(R.id.pdf_file);
             removeImg = itemView.findViewById(R.id.close);
         }
     }

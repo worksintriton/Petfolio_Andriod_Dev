@@ -22,6 +22,7 @@ public class EditPhotoIDPdfAdapter extends RecyclerView.Adapter<EditPhotoIDPdfAd
     Context context;
     List< DocBusInfoUploadRequest.PhotoIdPicBean> photoIdPicBeans;
     View view;
+    String extension;
 
     public EditPhotoIDPdfAdapter(Context context, List<DocBusInfoUploadRequest.PhotoIdPicBean> photoIdPicBeans) {
         this.context = context;
@@ -39,17 +40,30 @@ public class EditPhotoIDPdfAdapter extends RecyclerView.Adapter<EditPhotoIDPdfAd
     @Override
     public void onBindViewHolder(@NonNull AddImageListHolder holder, final int position) {
         final DocBusInfoUploadRequest.PhotoIdPicBean photoIdPicBean = photoIdPicBeans.get(position);
+
         if (photoIdPicBean.getPhoto_id_pic()!= null) {
-            Log.w(TAG,"photoIdPicBean.getPhoto_id_pic() : "+photoIdPicBean.getPhoto_id_pic());
-           /* holder.pdf_file.setVisibility(View.VISIBLE);
-            Glide.with(context)
-                    .load(R.drawable.pdf_icon)
-                    .into(holder.pdf_file);*/
 
+            String uri = photoIdPicBean.getPhoto_id_pic();
+            if(uri.contains(".")) {
+                extension = uri.substring(uri.lastIndexOf("."));
 
-        }else{
-           // holder.pdf_file.setVisibility(View.GONE);
+                Log.w("extension",extension);
+            }
+
         }
+
+        if (extension.equals(".png")||extension.equals(".jpg")||(extension.equals(".jpeg"))) {
+            Glide.with(context)
+                    .load(photoIdPicBean.getPhoto_id_pic())
+                    .into(holder.pdf_file);
+
+        }
+
+        else {
+
+            holder.pdf_file.setImageResource(R.drawable.pdf_icon);
+        }
+
 
         holder.removeImg.setOnClickListener(view -> {
             photoIdPicBeans.remove(position);

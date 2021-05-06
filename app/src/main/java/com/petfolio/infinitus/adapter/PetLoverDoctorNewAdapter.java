@@ -20,7 +20,6 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.petlover.DoctorClinicDetailsActivity;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
