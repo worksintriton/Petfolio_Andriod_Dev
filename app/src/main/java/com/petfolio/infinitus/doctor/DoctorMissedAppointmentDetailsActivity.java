@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
@@ -25,11 +28,13 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DoctorMissedAppointmentDetailsActivity extends AppCompatActivity {
+public class DoctorMissedAppointmentDetailsActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "DrMissedAppDetailsAct";
 
@@ -100,10 +105,18 @@ public class DoctorMissedAppointmentDetailsActivity extends AppCompatActivity {
     TextView txt_petlastvaccinatedage;
     private List<PetNewAppointmentDetailsResponse.DataBean.PetIdBean.PetImgBean> pet_image;
 
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_doctor_footer)
+    View include_doctor_footer;
+
+    BottomNavigationView bottom_navigation_view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_missedx_appointment_details);
+        ButterKnife.bind(this);
 
         avi_indicator=findViewById(R.id.avi_indicator);
 
@@ -182,6 +195,12 @@ public class DoctorMissedAppointmentDetailsActivity extends AppCompatActivity {
         if (new ConnectionDetector(DoctorMissedAppointmentDetailsActivity.this).isNetworkAvailable(DoctorMissedAppointmentDetailsActivity.this)) {
             petNewAppointmentResponseCall();
         }
+
+
+        bottom_navigation_view = include_doctor_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
     }
 
     @SuppressLint("LogNotTimber")
@@ -399,5 +418,32 @@ public class DoctorMissedAppointmentDetailsActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+                callDirections("1");
+                break;
+            case R.id.shop:
+                callDirections("2");
+                break;
+
+            case R.id.community:
+                callDirections("3");
+                break;
+
+            default:
+                return  false;
+        }
+        return true;
+    }
+
+    public void callDirections(String tag){
+        Intent intent = new Intent(getApplicationContext(), DoctorDashboardActivity.class);
+        intent.putExtra("tag",tag);
+        startActivity(intent);
+        finish();
     }
 }

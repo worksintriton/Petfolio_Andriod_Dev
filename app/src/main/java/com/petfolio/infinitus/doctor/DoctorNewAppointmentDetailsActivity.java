@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
@@ -39,11 +41,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
+public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "DoctorNewAppointmentDetailsActivity";
 
@@ -123,10 +127,18 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
     TextView txt_appointment_date;
     private List<PetNewAppointmentDetailsResponse.DataBean.PetIdBean.PetImgBean> pet_image;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_doctor_footer)
+    View include_doctor_footer;
+
+    BottomNavigationView bottom_navigation_view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_new_appointment_details);
+
+        ButterKnife.bind(this);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -150,6 +162,11 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
 
         avi_indicator=findViewById(R.id.avi_indicator);
         txt_appointment_date =findViewById(R.id.txt_appointment_date);
+
+        bottom_navigation_view = include_doctor_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
 
 
 
@@ -716,6 +733,32 @@ public class DoctorNewAppointmentDetailsActivity extends AppCompatActivity {
         }catch (ParseException e1){
             e1.printStackTrace();
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+                callDirections("1");
+                break;
+            case R.id.shop:
+                callDirections("2");
+                break;
+
+            case R.id.community:
+                callDirections("3");
+                break;
+
+            default:
+                return  false;
+        }
+        return true;
+    }
+    public void callDirections(String tag){
+        Intent intent = new Intent(getApplicationContext(), DoctorDashboardActivity.class);
+        intent.putExtra("tag",tag);
+        startActivity(intent);
+        finish();
     }
 
 }

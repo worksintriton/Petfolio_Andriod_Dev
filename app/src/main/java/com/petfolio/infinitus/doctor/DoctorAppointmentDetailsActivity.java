@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
@@ -47,7 +49,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DoctorAppointmentDetailsActivity extends AppCompatActivity {
+public class DoctorAppointmentDetailsActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "DoctorAppointmentDetailsActivity";
 
@@ -161,6 +163,12 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity {
     @BindView(R.id.txt_appointment_date)
     TextView txt_appointment_date;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_doctor_footer)
+    View include_doctor_footer;
+
+    BottomNavigationView bottom_navigation_view;
+
 
     String appointment_id;
 
@@ -229,6 +237,11 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity {
             img_videocall.setVisibility(View.GONE);
 
         }
+
+        bottom_navigation_view = include_doctor_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
 
 
 
@@ -731,4 +744,30 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+                callDirections("1");
+                break;
+            case R.id.shop:
+                callDirections("2");
+                break;
+
+            case R.id.community:
+                callDirections("3");
+                break;
+
+            default:
+                return  false;
+        }
+        return true;
+    }
+
+    public void callDirections(String tag){
+        Intent intent = new Intent(getApplicationContext(), DoctorDashboardActivity.class);
+        intent.putExtra("tag",tag);
+        startActivity(intent);
+        finish();
+    }
 }

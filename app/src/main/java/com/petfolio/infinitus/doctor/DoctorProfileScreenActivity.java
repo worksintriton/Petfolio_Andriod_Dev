@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -25,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
@@ -59,7 +61,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DoctorProfileScreenActivity extends AppCompatActivity implements View.OnClickListener {
+public class DoctorProfileScreenActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
     private  String TAG = "DoctorProfileScreenActivity";
 
     @SuppressLint("NonConstantResourceId")
@@ -135,6 +137,14 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
     TextView txt_clinic_address;
 
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_doctor_footer)
+    View include_doctor_footer;
+
+    BottomNavigationView bottom_navigation_view;
+
+
+
 
 
     private SessionManager session;
@@ -207,6 +217,12 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
         txt_edit_profile.setOnClickListener(this);
         txt_edit_image.setOnClickListener(this);
         txt_edit_doc_business_info.setOnClickListener(this);
+
+
+        bottom_navigation_view = include_doctor_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
 
 
     }
@@ -411,4 +427,29 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
 
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+                callDirections("1");
+                break;
+            case R.id.shop:
+                callDirections("2");
+                break;
+
+            case R.id.community:
+                callDirections("3");
+                break;
+
+            default:
+                return  false;
+        }
+        return true;
+    }
+    public void callDirections(String tag){
+        Intent intent = new Intent(getApplicationContext(), DoctorDashboardActivity.class);
+        intent.putExtra("tag",tag);
+        startActivity(intent);
+        finish();
+    }
 }
