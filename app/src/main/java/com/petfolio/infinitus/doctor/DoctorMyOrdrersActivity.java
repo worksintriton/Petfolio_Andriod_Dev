@@ -22,10 +22,7 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.fragmentdoctor.myorders.FragmentDoctorCancelledOrders;
 import com.petfolio.infinitus.fragmentdoctor.myorders.FragmentDoctorCompletedOrders;
 import com.petfolio.infinitus.fragmentdoctor.myorders.FragmentDoctorNewOrders;
-import com.petfolio.infinitus.fragmentpetlover.myordersnew.FragmentPetLoverCancelledOrders;
-import com.petfolio.infinitus.fragmentpetlover.myordersnew.FragmentPetLoverCompletedOrders;
-import com.petfolio.infinitus.fragmentpetlover.myordersnew.FragmentPetLoverNewOrders;
-import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
+
 
 import org.jetbrains.annotations.NotNull;
 

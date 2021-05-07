@@ -19,6 +19,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,6 +30,7 @@ import android.provider.OpenableColumns;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -50,6 +53,7 @@ import com.petfolio.infinitus.adapter.ViewPagerPetlistAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.appUtils.FileUtil;
+import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
 import com.petfolio.infinitus.requestpojo.AddYourPetRequest;
 import com.petfolio.infinitus.requestpojo.BreedTypeRequest;
 import com.petfolio.infinitus.requestpojo.DocBusInfoUploadRequest;
@@ -251,6 +255,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     Timer timer;
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000;
+    private Dialog dialog;
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -1243,7 +1248,8 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         if(response.body().getMessage() != null){
-                            showSuceessLoading(response.body().getMessage());
+                            showPaymentSuccessalert(response.body().getMessage());
+                           // showSuceessLoading(response.body().getMessage());
 
                         }
 
@@ -1391,6 +1397,42 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
         }
     }
+
+
+    private void showPaymentSuccessalert(String message) {
+        try {
+
+            dialog = new Dialog(BookAppointmentActivity.this);
+            dialog.setCancelable(false);
+            dialog.setContentView(R.layout.alert_appointment_payment_success_layout);
+            TextView txt_success_msg = dialog.findViewById(R.id.txt_success_msg);
+            txt_success_msg.setText(message);
+            Button btn_ok = dialog.findViewById(R.id.btn_ok);
+
+            btn_ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    Intent intent = new Intent(getApplicationContext(), PetLoverDashboardActivity.class);
+                    startActivity(intent);
+                    finish();
+
+
+
+                }
+            });
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
 
     private void notificationSendResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
