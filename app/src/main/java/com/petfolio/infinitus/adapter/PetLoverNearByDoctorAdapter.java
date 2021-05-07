@@ -31,24 +31,17 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
 
     private Context context;
 
-
-
-
-
-
-
     private List<DoctorSearchResponse.DataBean> doctorDetailsResponseList;
     DoctorSearchResponse.DataBean currentItem;
 
+    private int communication_type;
+    private String searchString ;
 
-
-
-
-
-
-    public PetLoverNearByDoctorAdapter(Context context, List<DoctorSearchResponse.DataBean> doctorDetailsResponseList) {
+    public PetLoverNearByDoctorAdapter(Context context, List<DoctorSearchResponse.DataBean> doctorDetailsResponseList,int communication_type,String searchString) {
         this.doctorDetailsResponseList = doctorDetailsResponseList;
         this.context = context;
+        this.communication_type = communication_type;
+        this.searchString = searchString;
 
     }
 
@@ -120,6 +113,8 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
                 intent.putExtra("starcount",doctorDetailsResponseList.get(position).getStar_count());
                 intent.putExtra("distance",doctorDetailsResponseList.get(position).getDistance());
                 intent.putExtra("fromactivity", "PetCareFragment");
+                intent.putExtra("communication_type", communication_type);
+                intent.putExtra("searchString", searchString);
                 Log.w(TAG,"doctorid :"+doctorDetailsResponseList.get(position).getUser_id());
                 context.startActivity(intent);
                 }

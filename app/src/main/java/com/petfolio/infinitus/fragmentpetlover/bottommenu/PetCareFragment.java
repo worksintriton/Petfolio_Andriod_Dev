@@ -171,7 +171,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "LogNotTimber"})
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.w(TAG,"onCreateView-->");
@@ -188,6 +188,12 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
             reviewcount = getArguments().getInt("reviewcount");
             specialization = getArguments().getString("specialization");
             Log.w(TAG,"fromactivity : "+fromactivity+" reviewcount : "+reviewcount+" specialization : "+specialization);
+
+            searchString = getArguments().getString("searchString");
+            communication_type = getArguments().getInt("communication_type");
+            Log.w(TAG," communication_type : "+communication_type+" searchString : "+searchString);
+
+
 
             }
 
@@ -368,7 +374,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     private void setViewDoctors(List<DoctorSearchResponse.DataBean> doctorDetailsResponseList) {
         rv_nearbydoctors.setLayoutManager(new LinearLayoutManager(mContext));
         rv_nearbydoctors.setItemAnimator(new DefaultItemAnimator());
-        PetLoverNearByDoctorAdapter petLoverNearByDoctorAdapter = new PetLoverNearByDoctorAdapter(mContext, doctorDetailsResponseList);
+        PetLoverNearByDoctorAdapter petLoverNearByDoctorAdapter = new PetLoverNearByDoctorAdapter(mContext, doctorDetailsResponseList,communication_type,searchString);
         rv_nearbydoctors.setAdapter(petLoverNearByDoctorAdapter);
     }
     private DoctorSearchRequest doctorSearchRequest(String searchString, int communication_type) {

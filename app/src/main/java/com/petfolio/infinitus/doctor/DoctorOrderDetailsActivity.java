@@ -24,7 +24,7 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.ProductDetailsAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.petlover.PetVendorCancelOrderActivity;
+import com.petfolio.infinitus.doctor.shop.DoctorCancelOrderActivity;
 import com.petfolio.infinitus.requestpojo.PetLoverVendorOrderDetailsRequest;
 import com.petfolio.infinitus.responsepojo.PetLoverVendorOrderDetailsResponse;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -296,7 +296,7 @@ public class DoctorOrderDetailsActivity extends AppCompatActivity implements Vie
             @Override
             public void onClick(View view) {
 
-                Intent i = new Intent(getApplicationContext(), PetVendorCancelOrderActivity.class);
+                Intent i = new Intent(getApplicationContext(), DoctorCancelOrderActivity.class);
                 i.putExtra("orderid", orderid);
                 i.putIntegerArrayListExtra("product_idList", (ArrayList<Integer>) product_id );
                 i.putExtra("fromactivity", fromactivity);

@@ -19,11 +19,9 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.doctor.shop.DoctorCancelOrderActivity;
 import com.petfolio.infinitus.doctor.shop.DoctorTrackOrderActivity;
 import com.petfolio.infinitus.petlover.PetVendorCancelOrderActivity;
-import com.petfolio.infinitus.petlover.PetVendorOrderDetailsActivity;
-import com.petfolio.infinitus.petlover.PetVendorTrackOrderActivity;
+
 import com.petfolio.infinitus.petlover.TrackOrderActivity;
 import com.petfolio.infinitus.responsepojo.PetLoverVendorOrderDetailsResponse;
-import com.petfolio.infinitus.responsepojo.PetVendorOrderResponse;
 
 import java.util.List;
 
@@ -155,7 +153,7 @@ public class ProductDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
                         Intent i = new Intent(context, DoctorCancelOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         i.putExtra("product_id", product_details.get(position).getProduct_id());
                         i.putExtra("orderid", orderid);
-                        i.putExtra("fromactivity", TAG);
+                        i.putExtra("fromactivity", fromactivity);
                         context.startActivity(i);
                     }else{
                         Intent i = new Intent(context, PetVendorCancelOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

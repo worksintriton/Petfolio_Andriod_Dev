@@ -27,7 +27,7 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
-import com.petfolio.infinitus.petlover.PetLoverVendorOrderDetailsActivity;
+import com.petfolio.infinitus.doctor.DoctorOrderDetailsActivity;
 import com.petfolio.infinitus.petlover.PetMyOrdrersActivity;
 import com.petfolio.infinitus.requestpojo.PetLoverCancelOrderRequest;
 import com.petfolio.infinitus.requestpojo.PetLoverCancelSingleOrderRequest;
@@ -94,6 +94,7 @@ public class DoctorCancelOrderActivity extends AppCompatActivity implements View
     ArrayList<Integer> product_idList;
     private int product_id;
     private String orderid;
+    private String fromactivity;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.include_doctor_header)
@@ -130,7 +131,8 @@ public class DoctorCancelOrderActivity extends AppCompatActivity implements View
             orderid = extras.getString("orderid");
             product_id = extras.getInt("product_id");
             cancelorder = extras.getString("cancelorder");
-            Log.w(TAG,"_id : "+_id);
+            fromactivity = extras.getString("fromactivity");
+            Log.w(TAG,"_id : "+_id+" fromactivity : "+fromactivity);
            product_idList = getIntent().getIntegerArrayListExtra("product_idList");
             Log.w(TAG,"product_idList : "+ new Gson().toJson(product_idList)+" cancelorder :"+cancelorder);
 
@@ -407,8 +409,9 @@ public class DoctorCancelOrderActivity extends AppCompatActivity implements View
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         dialog.dismiss();
-                        Intent intent = new Intent(DoctorCancelOrderActivity.this, PetLoverVendorOrderDetailsActivity.class);
+                        Intent intent = new Intent(DoctorCancelOrderActivity.this, DoctorOrderDetailsActivity.class);
                         intent.putExtra("_id",orderid);
+                        intent.putExtra("fromactivity",fromactivity);
                         startActivity(intent);
                         finish();
 
@@ -473,8 +476,9 @@ public class DoctorCancelOrderActivity extends AppCompatActivity implements View
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         dialog.dismiss();
-                        Intent intent = new Intent(DoctorCancelOrderActivity.this,PetLoverVendorOrderDetailsActivity.class);
+                        Intent intent = new Intent(DoctorCancelOrderActivity.this,DoctorOrderDetailsActivity.class);
                         intent.putExtra("_id",orderid);
+                        intent.putExtra("fromactivity",fromactivity);
                         startActivity(intent);
                         finish();
 

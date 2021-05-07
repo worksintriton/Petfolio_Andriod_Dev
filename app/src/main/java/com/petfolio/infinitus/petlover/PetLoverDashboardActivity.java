@@ -129,6 +129,8 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
     private Dialog dialog;
     private String userid;
 
+    private int communication_type;
+    private String searchString ;
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -154,6 +156,11 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
             fromactivity = extras.getString("fromactivity");
             reviewcount = extras.getInt("reviewcount");
             specialization = extras.getString("specialization");
+
+            communication_type = extras.getInt("communication_type");
+            searchString = extras.getString("searchString");
+            Log.w(TAG,"Bundle "+" communication_type : "+communication_type+ "searchString : "+searchString);
+
 
 
         }
@@ -195,11 +202,11 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
 
 
 
+    @SuppressLint("LogNotTimber")
     private void loadFragment(Fragment fragment) {
         Bundle bundle = new Bundle();
         if(fromactivity != null){
             Log.w(TAG,"fromactivity loadFragment : "+fromactivity);
-
             if(fromactivity.equalsIgnoreCase("FiltersActivity")) {
                 bundle.putString("fromactivity", fromactivity);
                 bundle.putString("specialization", specialization);
@@ -214,6 +221,9 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
                 transaction.commitAllowingStateLoss();
             }
         }else {
+            Log.w(TAG,"Else communication_type : "+communication_type+" searchString : "+searchString);
+            bundle.putString("searchString", searchString);
+            bundle.putInt("communication_type", communication_type);
 
             // set Fragmentclass Arguments
             fragment.setArguments(bundle);

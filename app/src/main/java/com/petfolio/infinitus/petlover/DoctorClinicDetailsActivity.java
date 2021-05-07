@@ -161,6 +161,10 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
     private String communicationtype;
     private int Doctor_exp;
 
+    private int communication_type;
+    private String searchString ;
+
+
     List<DoctorDetailsResponse.DataBean.SpecializationBean> specializationBeanList;
 
     List<DoctorDetailsResponse.DataBean.PetHandledBean> petHandledBeanList;
@@ -205,7 +209,11 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
             doctorname = extras.getString("doctorname");
             distance = extras.getString("distance");
             fromactivity = extras.getString("fromactivity");
+            communication_type = extras.getInt("communication_type");
+            searchString = extras.getString("searchString");
+
             Log.w(TAG,"Bundle "+" doctorid : "+doctorid+ "fromactivity : "+fromactivity);
+            Log.w(TAG,"Bundle "+" communication_type : "+communication_type+ "searchString : "+searchString);
         }
 
         ll_book_now.setOnClickListener(this);
@@ -525,6 +533,8 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
     public void callDirections(String tag){
         Intent intent = new Intent(DoctorClinicDetailsActivity.this,PetLoverDashboardActivity.class);
         intent.putExtra("tag",tag);
+        intent.putExtra("communication_type",communication_type);
+        intent.putExtra("searchString",searchString);
         startActivity(intent);
         finish();
 
