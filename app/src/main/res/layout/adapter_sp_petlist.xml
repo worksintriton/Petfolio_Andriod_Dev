@@ -8,41 +8,34 @@
     android:layout_width="100dp"
     android:layout_marginEnd="10dp"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
-    app:cardBackgroundColor="@color/new_red"
-    app:cardCornerRadius="10dp"
-    app:cardPreventCornerOverlap="true"
-    app:cardUseCompatPadding="true">
+    android:layout_marginBottom="10dp">
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/new_rounded_corner_btn_red"
+        android:orientation="horizontal">
 
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/txt_petname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center">
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/futuramediumbt"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:text="@string/pet_name"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
 
 
-
-            <TextView
-                android:id="@+id/txt_petname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/futuramediumbt"
-                android:padding="5dp"
-                android:text="@string/pet_name"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="5dp"
-                android:gravity="center"/>
-
-
-        </LinearLayout>
+    </LinearLayout>
 
 
 

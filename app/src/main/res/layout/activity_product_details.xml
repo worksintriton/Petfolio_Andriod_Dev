@@ -25,14 +25,14 @@
 
         <RelativeLayout
             android:id="@+id/rl_back"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:background="@drawable/new_orange_bg">
 
             <ImageView
                 android:id="@+id/img_back"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_centerInParent="true"
                 android:src="@drawable/new_arrow"
                 tools:ignore="ContentDescription" />
@@ -73,8 +73,8 @@
 
             <ImageView
                 android:id="@+id/img_fav"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
                 android:src="@drawable/heart_gray"
@@ -119,15 +119,15 @@
 
                 <ImageView
                     android:id="@+id/img_remove_product"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center"
                     android:src="@drawable/new_minus_png"
                     tools:ignore="ContentDescription" />
 
                 <RelativeLayout
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_marginStart="10dp"
                     android:background="@drawable/layout_bg">
@@ -148,8 +148,8 @@
 
                 <ImageView
                     android:id="@+id/img_add_product"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center"
                     android:layout_marginStart="10dp"
                     android:src="@drawable/new_plus_png"
@@ -198,6 +198,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="gone"
+        android:layout_gravity="center"
         app:indicatorColor="@color/new_light_green"
         app:indicatorName="LineSpinFadeLoaderIndicator" />
 

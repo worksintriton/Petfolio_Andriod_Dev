@@ -59,6 +59,8 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements B
 
     private final String TAG = "DoctorProductDetailsActivity";
 
+    String prod_type ="";
+
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
@@ -402,7 +404,7 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements B
     private void setView(List<FetchProductByIdResponse.ProductDetailsBean.ProductRelatedBean> product_related) {
         rv_relatedproducts.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
         rv_relatedproducts.setItemAnimator(new DefaultItemAnimator());
-        RelatedProductsAdapter relatedProductsAdapter = new RelatedProductsAdapter(getApplicationContext(), product_related);
+        RelatedProductsAdapter relatedProductsAdapter = new RelatedProductsAdapter(getApplicationContext(), product_related, prod_type,true);
         rv_relatedproducts.setAdapter(relatedProductsAdapter);
 
     }

@@ -2,13 +2,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/cl_root"
     tools:context=".petlover.DoctorClinicDetailsActivity"
     android:fitsSystemWindows="true"
     android:layout_height="match_parent">
 
     <!-- Main Content -->
 
-    <include layout="@layout/content_doctor_details" />
+    <include
+        layout="@layout/content_doctor_details"
+       />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_header"
@@ -27,14 +30,14 @@
 
         <RelativeLayout
             android:id="@+id/rl_back"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:background="@drawable/new_orange_bg">
 
             <ImageView
                 android:id="@+id/img_back"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_centerInParent="true"
                 android:src="@drawable/new_arrow"
                 tools:ignore="ContentDescription" />
@@ -75,8 +78,8 @@
 
             <ImageView
                 android:id="@+id/img_fav"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
                 android:src="@drawable/ic_fav"
@@ -98,7 +101,9 @@
         android:textSize="16sp"
         android:visibility="gone" />
 
-    <include layout="@layout/doctor_bottom_sheet" />
+    <include
+        layout="@layout/doctor_bottom_sheet"
+     />
 
 
     <LinearLayout
@@ -109,7 +114,8 @@
         android:layout_gravity="bottom"
         android:layout_marginTop="20dp"
         android:background="@drawable/new_rectagle_bgm_trans"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <LinearLayout
             android:id="@+id/ll_book_now"

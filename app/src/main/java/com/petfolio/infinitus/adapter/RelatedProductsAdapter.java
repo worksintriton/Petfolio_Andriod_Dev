@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,22 +31,22 @@ public class RelatedProductsAdapter extends  RecyclerView.Adapter<RecyclerView.V
 
     List<FetchProductByIdResponse.ProductDetailsBean.ProductRelatedBean> product_related;
     FetchProductByIdResponse.ProductDetailsBean.ProductRelatedBean currentItem;
+    String prod_type;
+    boolean check;
 
 
-
-
-    public RelatedProductsAdapter(Context context, List<FetchProductByIdResponse.ProductDetailsBean.ProductRelatedBean> product_related) {
+    public RelatedProductsAdapter(Context context, List<FetchProductByIdResponse.ProductDetailsBean.ProductRelatedBean> product_related, String prod_type, boolean b) {
         this.product_related = product_related;
         this.context = context;
-
-
+        this.prod_type=prod_type;
+        this.check=b;
 
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_shop_todaysdeal, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_shop_card, parent, false);
         return new ViewHolderOne(view);
     }
 
@@ -60,59 +61,97 @@ public class RelatedProductsAdapter extends  RecyclerView.Adapter<RecyclerView.V
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
         currentItem = product_related.get(position);
-        holder.txt_products_title.setText(product_related.get(position).getProduct_title());
-        if(product_related.get(position).getProduct_price() != 0){
-            holder.txt_products_price.setText("\u20B9 "+product_related.get(position).getProduct_price());
-            }
 
-        if(product_related.get(position).isProduct_fav()){
-            holder.img_like.setVisibility(View.VISIBLE);
-            holder.img_dislike.setVisibility(View.GONE);
+        Log.w(TAG,"rating : "+ currentItem.getProduct_rating());
+        if(currentItem.getProduct_rating() == 1){
+            holder.hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img2.setBackgroundResource(R.drawable.ic_logo_graycolor);
+            holder.hand_img3.setBackgroundResource(R.drawable.ic_logo_graycolor);
+            holder.hand_img4.setBackgroundResource(R.drawable.ic_logo_graycolor);
+            holder.hand_img5.setBackgroundResource(R.drawable.ic_logo_graycolor);
+        } else if(currentItem.getProduct_rating() == 2){
+            holder.hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img2.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img3.setBackgroundResource(R.drawable.ic_logo_graycolor);
+            holder.hand_img4.setBackgroundResource(R.drawable.ic_logo_graycolor);
+            holder.hand_img5.setBackgroundResource(R.drawable.ic_logo_graycolor);
+        }else if(currentItem.getProduct_rating() == 3){
+            holder.hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img2.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img3.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img4.setBackgroundResource(R.drawable.ic_logo_graycolor);
+            holder.hand_img5.setBackgroundResource(R.drawable.ic_logo_graycolor);
+        }else if(currentItem.getProduct_rating() == 4){
+            holder.hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img2.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img3.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img4.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img5.setBackgroundResource(R.drawable.ic_logo_graycolor);
+        } else if(currentItem.getProduct_rating() == 5){
+            holder.hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img2.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img3.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img4.setBackgroundResource(R.drawable.ic_logo_color);
+            holder.hand_img5.setBackgroundResource(R.drawable.ic_logo_color);
+        }
+
+
+
+        if(currentItem.getProduct_title() != null){
+            holder.txt_products_title.setText(currentItem.getProduct_title());
+        }
+
+        if(check){
+
+
+        }
+
+        else {
+
+            if(prod_type != null&&!prod_type.isEmpty()){
+                holder.txt_category_title.setText(prod_type);
+            }
+        }
+
+        if(currentItem.getProduct_price() != 0){
+            holder.txt_products_price.setText("INR "+currentItem.getProduct_price());
+        }else{
+            holder.txt_products_price.setText("INR 0");
+        }
+
+        if(currentItem.isProduct_fav()){
+            Glide.with(context)
+                    .load(R.drawable.ic_fav)
+                    .into(holder.img_fav);
+        }else{
+            Glide.with(context)
+                    .load(R.drawable.heart_gray)
+                    .into(holder.img_fav);
+        }
+
+
+        if (currentItem.getProduct_img() != null && !currentItem.getProduct_img().isEmpty()) {
+            Glide.with(context)
+                    .load(currentItem.getProduct_img())
+                    .into(holder.img_products_image);
 
         }
         else{
-            holder.img_dislike.setVisibility(View.VISIBLE);
-            holder.img_like.setVisibility(View.GONE);
-
-
-
-        }
-
-        Log.w(TAG,"discount : "+product_related.get(position).getProduct_discount());
-
-
-        if(product_related.get(position).getProduct_discount() != 0){
-            holder.txt_products_offer.setVisibility(View.VISIBLE);
-            holder.txt_products_offer.setText(product_related.get(position).getProduct_discount()+" % off");
-        }else{
-            holder.txt_products_offer.setVisibility(View.GONE);
+            Glide.with(context)
+                    .load(APIClient.PROFILE_IMAGE_URL)
+                    .into(holder.img_products_image);
 
         }
-
-        if (product_related.get(position).getProduct_img() != null && !product_related.get(position).getProduct_img().isEmpty()) {
-
-                Glide.with(context)
-                        .load(product_related.get(position).getProduct_img())
-                        .into(holder.img_products_image);
-
-            }
-           else{
-                Glide.with(context)
-                        .load(APIClient.PROFILE_IMAGE_URL)
-                        .into(holder.img_products_image);
-
-            }
-
         holder.ll_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("productid",product_related.get(position).get_id());
+                intent.putExtra("fromactivity",TAG);
                 context.startActivity(intent);
             }
+
         });
-
-
 
 
 
@@ -129,24 +168,29 @@ public class RelatedProductsAdapter extends  RecyclerView.Adapter<RecyclerView.V
         return position;
     }
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_products_title,txt_products_price,txt_products_offer,txt_star_rating,txt_review_count;
-        public ImageView img_products_image,img_like,img_dislike;
-        LinearLayout ll_root;
+
+        public TextView txt_products_title,txt_category_title,txt_products_price;
+        public ImageView img_products_image,img_fav;
+        public ImageView hand_img1,hand_img2,hand_img3,hand_img4,hand_img5;
+        public LinearLayout ll_root;
+        public RelativeLayout rl_shop;
+
 
 
         public ViewHolderOne(View itemView) {
             super(itemView);
             txt_products_title = itemView.findViewById(R.id.txt_products_title);
-            txt_products_price = itemView.findViewById(R.id.txt_products_price);
-            txt_products_offer = itemView.findViewById(R.id.txt_products_offer);
-            txt_star_rating = itemView.findViewById(R.id.txt_star_rating);
-            txt_review_count = itemView.findViewById(R.id.txt_review_count);
+            txt_category_title = itemView.findViewById(R.id.txt_category_title);
+            rl_shop = itemView.findViewById(R.id.rl_shop);
             ll_root = itemView.findViewById(R.id.ll_root);
             img_products_image = itemView.findViewById(R.id.img_products_image);
-            img_like = itemView.findViewById(R.id.img_like);
-            img_dislike = itemView.findViewById(R.id.img_dislike);
-
-
+            img_fav = itemView.findViewById(R.id.img_fav);
+            txt_products_price = itemView.findViewById(R.id.txt_products_price);
+            hand_img1 = itemView.findViewById(R.id.hand_img1);
+            hand_img2 = itemView.findViewById(R.id.hand_img2);
+            hand_img3 = itemView.findViewById(R.id.hand_img3);
+            hand_img4 = itemView.findViewById(R.id.hand_img4);
+            hand_img5 = itemView.findViewById(R.id.hand_img5);
 
         }
 

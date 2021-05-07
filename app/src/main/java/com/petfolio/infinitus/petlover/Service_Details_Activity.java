@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -19,21 +20,33 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.adapter.DoctorClinicSpecTypesListAdapter;
 import com.petfolio.infinitus.adapter.PetLoverSOSAdapter;
+import com.petfolio.infinitus.adapter.SPDetails_SpecTypesListAdapter;
 import com.petfolio.infinitus.adapter.ViewPagerClinicDetailsAdapter;
 import com.petfolio.infinitus.adapter.ViewPagerSPDetailsGalleryAdapter;
 import com.petfolio.infinitus.api.APIClient;
@@ -41,11 +54,13 @@ import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.interfaces.SoSCallListener;
 import com.petfolio.infinitus.requestpojo.SPDetailsRequest;
 import com.petfolio.infinitus.requestpojo.SPSpecificServiceDetailsRequest;
+import com.petfolio.infinitus.responsepojo.DoctorDetailsResponse;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 import com.petfolio.infinitus.responsepojo.SPDetailsRepsonse;
 import com.petfolio.infinitus.responsepojo.SPSpecificServiceDetailsResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
+import com.petfolio.infinitus.utils.GridSpacingItemDecoration;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -60,10 +75,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Service_Details_Activity extends AppCompatActivity implements View.OnClickListener, SoSCallListener, BottomNavigationView.OnNavigationItemSelectedListener {
+public class Service_Details_Activity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
 
     private String TAG = "Service_Details_Activity";
 
+    // BottomSheetBehavior variable
+    @SuppressWarnings("rawtypes")
+    public BottomSheetBehavior bottomSheetBehavior;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
@@ -74,7 +92,11 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
     TextView txt_sp_companyname;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.txt_sp_name)
+    @BindView(R.id.rl_back)
+    RelativeLayout rl_back;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_spname)
     TextView txt_sp_name;
 
     @SuppressLint("NonConstantResourceId")
@@ -93,37 +115,37 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
     @BindView(R.id.txt_distance)
     TextView txt_distance;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.txt_review_count)
-    TextView txt_review_count;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.txt_star_rating)
-    TextView txt_star_rating;
+    @BindView(R.id.ll_book_now)
+    LinearLayout ll_book_now;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_selectedserviceimage)
-    ImageView img_selectedserviceimage;
+    @BindView(R.id.rv_speclist)
+    RecyclerView rv_speclist;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_dr_consultationfees)
+    TextView txt_dr_consultationfees;
+
+
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.txt_sp_spname)
+//    TextView txt_sp_spname;
+//
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.txt_serv_name)
+//    TextView txt_serv_name;
+//
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_selected_servicesname)
     TextView txt_selected_servicesname;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.btn_book_now)
-    Button btn_book_now;
+    @BindView(R.id.img_selectedserviceimage)
+    ImageView img_selectedserviceimage;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.include_petlover_footer)
-    View include_petlover_footer;
-
-    BottomNavigationView bottom_navigation_view;
-
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.include_petlover_header)
-    View include_petlover_header;
-
+    SPDetails_SpecTypesListAdapter spDetails_specTypesListAdapter;
 
     private String active_tag;
 
@@ -144,18 +166,42 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
     private String servicetime;
     private int serviceamount;
 
-    private Dialog dialog;
-    private static final int REQUEST_PHONE_CALL =1 ;
-    private String sosPhonenumber;
+
     private String serviceprovidingcompanyname = "";
     private String spprovidername = "";
     private int ratingcount;
-    private int comments;
+
     private int distance;
     private String location;
-    private String selectedServiceImagepath;
 
+    private SupportMapFragment mapFragment;
+    private double latitude;
+    private double longitude;
+    private GoogleMap mMap;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.hand_img1)
+    ImageView hand_img1;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.hand_img2)
+    ImageView hand_img2;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.hand_img3)
+    ImageView hand_img3;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.hand_img4)
+    ImageView hand_img4;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.hand_img5)
+    ImageView hand_img5;
+
+    List<SPDetailsRepsonse.DataBean.BusSpecListBean> specializationBeanList;
+
+    String serv_name,selectedServiceImagepath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -164,27 +210,12 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
         Log.w(TAG,"onCreate");
 
 
-        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
-        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
-        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
-        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
-        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
-        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
-        toolbar_title.setText(getResources().getString(R.string.service_details));
+
 
         avi_indicator.setVisibility(View.GONE);
 
-        img_back.setOnClickListener(this);
-        btn_book_now.setOnClickListener(this);
-        img_sos.setOnClickListener(this);
-        img_notification.setOnClickListener(this);
-        img_cart.setOnClickListener(this);
-        img_profile.setOnClickListener(this);
-
-        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
-        bottom_navigation_view.setItemIconTintList(null);
-        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
-        bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
+        rl_back.setOnClickListener(this);
+        ll_book_now.setOnClickListener(this);
 
 
         SessionManager session = new SessionManager(getApplicationContext());
@@ -206,60 +237,86 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
             }
         }
 
-        bottom_navigation_view.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @SuppressLint("NonConstantResourceId")
+        setBottomSheet();
+
+
+        if (mapFragment == null) {
+            mapFragment = SupportMapFragment.newInstance();
+            mapFragment.getMapAsync(this);
+        }
+
+
+    }
+
+
+    /**
+     * method to setup the bottomsheet
+     */
+    private void setBottomSheet() {
+
+        bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.bottomSheetLayoutsp));
+
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+
+        bottomSheetBehavior.setHideable(false);
+
+        bottomSheetBehavior.setFitToContents(false);
+
+        bottomSheetBehavior.setHalfExpandedRatio(0.7f);
+
+
+        // Capturing the callbacks for bottom sheet
+        bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @SuppressLint("LogNotTimber")
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.home:
-
-                        active_tag = "1";
-                        callDirections(active_tag);
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        Log.w("Bottom Sheet Behaviour", "STATE_COLLAPSED");
+                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
                         break;
-                    case R.id.shop:
-                        active_tag = "2";
-                        callDirections(active_tag);
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        Log.w("Bottom Sheet Behaviour", "STATE_DRAGGING");
                         break;
-
-
-                    case R.id.services:
-                        active_tag = "3";
-                        callDirections(active_tag);
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        Log.w("Bottom Sheet Behaviour", "STATE_EXPANDED");
+                        //  bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
                         break;
-                    case R.id.care:
-                        active_tag = "4";
-                        callDirections(active_tag);
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        Log.w("Bottom Sheet Behaviour", "STATE_HIDDEN");
                         break;
-                    case R.id.community:
-                        active_tag = "5";
-                        callDirections(active_tag);
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        Log.w("Bottom Sheet Behaviour", "STATE_SETTLING");
                         break;
-
+                    case BottomSheetBehavior.STATE_HALF_EXPANDED:
+                        Log.w("Bottom Sheet Behaviour", "STATE_HALF_EXPANDED");
+                        break;
                 }
-                return true;
+
+
             }
 
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+
+            }
+
+
         });
-
-
     }
 
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.img_back:
+            case R.id.rl_back:
                 onBackPressed();
                 break;
-                case R.id.btn_book_now:
+                case R.id.ll_book_now:
                 gotoSPAvailableTimeActivity();
                 break;
-            case R.id.img_sos:
-                goto_SOS();
-                break;
-            case R.id.img_profile:
-                goto_Profile();
-                break;
+
         }
     }
     public void callDirections(String tag){
@@ -318,24 +375,75 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
                         if(response.body().getData().getRating() != 0) {
                              ratingcount = response.body().getData().getRating();
                         }
-                        if(response.body().getData().getComments() != 0) {
-                             comments = response.body().getData().getComments();
-                        }
+//                        if(response.body().getData().getComments() != 0) {
+//                             comments = response.body().getData().getComments();
+//                        }
                         if(response.body().getData().getDistance() != 0) {
                              distance = response.body().getData().getDistance();
                         }
                         if( response.body().getData().getSp_loc() != null) {
                              location = response.body().getData().getSp_loc();
+
+                            latitude = response.body().getData().getSp_lat();
+
+                            longitude = response.body().getData().getSp_long();
+
+                            Log.w(TAG,"latitude"+ latitude );
+
+                            Log.w(TAG,"longitude"+ longitude );
+
+                            // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+                            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                                    .findFragmentById(R.id.map);
+                            assert mapFragment != null;
+                            mapFragment.getMapAsync(Service_Details_Activity.this);
+
                         }
                         if(response.body().getDetails().getImage_path() != null) {
                             selectedServiceImagepath = response.body().getDetails().getImage_path();
                         }
+
+
+
                         if(response.body().getDetails().getTitle() != null) {
                             selectedServiceTitle = response.body().getDetails().getTitle();
                         }
                         if(response.body().getDetails().getAmount() != 0) {
                             serviceamount = response.body().getDetails().getAmount();
+
+                            txt_dr_consultationfees.setText("INR "+serviceamount);
+
+
                         }
+
+                        if(response.body().getDetails().getTitle() != null) {
+
+                            serv_name = response.body().getDetails().getTitle();
+                        }
+
+                        if(serv_name != null && !serv_name.isEmpty()){
+                            txt_selected_servicesname.setText(serv_name);
+
+                        }
+
+                        if(selectedServiceImagepath != null && !selectedServiceImagepath.isEmpty()){
+                            Glide.with(Service_Details_Activity.this)
+                                    .load(selectedServiceImagepath)
+                                    .into(img_selectedserviceimage);
+
+                        }
+
+                        else {
+
+                            img_selectedserviceimage.setImageResource(R.drawable.services);
+                        }
+
+
+
+                        if(response.body().getDetails().getTime() != null) {
+                            servicetime = response.body().getDetails().getTime();
+                        }
+
                         if(response.body().getDetails().getTime() != null) {
                             servicetime = response.body().getDetails().getTime();
                         }
@@ -347,18 +455,49 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
                             txt_sp_companyname.setText(serviceprovidingcompanyname);
                         }
                         if(spprovidername != null && !spprovidername.isEmpty()){
-                            txt_sp_name.setText(serviceprovidingcompanyname);
+                            txt_sp_name.setText(spprovidername);
                         }
-                        if(ratingcount != 0 ){
-                            txt_review_count.setText(ratingcount+"");
-                        }if(comments != 0 ){
-                            txt_star_rating.setText(comments+"");
+                        if(ratingcount != 0 ) {
+
+                            if(ratingcount == 1){
+                                hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+                                hand_img2.setBackgroundResource(R.drawable.ic_logo_graycolor);
+                                hand_img3.setBackgroundResource(R.drawable.ic_logo_graycolor);
+                                hand_img4.setBackgroundResource(R.drawable.ic_logo_graycolor);
+                                hand_img5.setBackgroundResource(R.drawable.ic_logo_graycolor);
+                            } else if(ratingcount == 2){
+                                hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+                                hand_img2.setBackgroundResource(R.drawable.ic_logo_color);
+                                hand_img3.setBackgroundResource(R.drawable.ic_logo_graycolor);
+                                hand_img4.setBackgroundResource(R.drawable.ic_logo_graycolor);
+                                hand_img5.setBackgroundResource(R.drawable.ic_logo_graycolor);
+                            }else if(ratingcount == 3){
+                                hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+                                hand_img2.setBackgroundResource(R.drawable.ic_logo_color);
+                                hand_img3.setBackgroundResource(R.drawable.ic_logo_color);
+                                hand_img4.setBackgroundResource(R.drawable.ic_logo_graycolor);
+                                hand_img5.setBackgroundResource(R.drawable.ic_logo_graycolor);
+                            }else if(ratingcount == 4){
+                                hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+                                hand_img2.setBackgroundResource(R.drawable.ic_logo_color);
+                                hand_img3.setBackgroundResource(R.drawable.ic_logo_color);
+                                hand_img4.setBackgroundResource(R.drawable.ic_logo_color);
+                                hand_img5.setBackgroundResource(R.drawable.ic_logo_graycolor);
+                            } else if(ratingcount == 5){
+                                hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+                                hand_img2.setBackgroundResource(R.drawable.ic_logo_color);
+                                hand_img3.setBackgroundResource(R.drawable.ic_logo_color);
+                                hand_img4.setBackgroundResource(R.drawable.ic_logo_color);
+                                hand_img5.setBackgroundResource(R.drawable.ic_logo_color);
+                            }
+
+
                         }
                         if(location != null && !location.isEmpty()){
-                            txt_place.setText(serviceprovidingcompanyname);
+                            txt_place.setText(location);
                         }
                         if(distance != 0 ){
-                            txt_distance.setText(distance+" km away");
+                            txt_distance.setText(distance+"");
                         }
 
 
@@ -374,22 +513,21 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
 
                         }
 
-                        if (selectedServiceImagepath != null && !selectedServiceImagepath.isEmpty()) {
+                        if(response.body().getData().getBus_spec_list() != null&&response.body().getData().getBus_spec_list().size()>0){
 
-                            Glide.with(getApplicationContext())
-                                    .load(selectedServiceImagepath)
-                                    .into(img_selectedserviceimage);
+                            // specializationBeanList = new ArrayList<>();
+
+                            specializationBeanList=response.body().getData().getBus_spec_list();
+
+                            Log.w(TAG,"SpecilaziationList : "+new Gson().toJson(specializationBeanList));
+
+                            setSpecList(specializationBeanList);
+
+
 
                         }
-                        else{
-                            Glide.with(getApplicationContext())
-                                    .load(APIClient.PROFILE_IMAGE_URL)
-                                    .into(img_selectedserviceimage);
 
-                        }
-                        if(selectedServiceTitle != null && !selectedServiceTitle.isEmpty()){
-                            txt_selected_servicesname.setText(selectedServiceTitle);
-                        }
+
 
 
 
@@ -450,94 +588,55 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
         return spDetailsRequest;
     }
 
-    private void goto_Profile() {
-        Intent intent = new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class);
-        intent.putExtra("fromactivity",TAG);
-        intent.putExtra("spid",spid);
-        intent.putExtra("catid",catid);
-        intent.putExtra("from",from);
-        startActivity(intent);
-    }
-    private void goto_SOS() {
-        showSOSAlert(APIClient.sosList);
-    }
-    private void showSOSAlert(List<PetLoverDashboardResponse.DataBean.SOSBean> sosList) {
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera.
+     * In this case, we just add a marker near Sydney, Australia.
+     * If Google Play services is not installed on the device.
+     * This method will only be triggered once the user has installed
+     Google Play services and returned to the app.
+     */
 
-        try {
-
-            dialog = new Dialog(Service_Details_Activity.this);
-            dialog.setContentView(R.layout.sos_popup_layout);
-            RecyclerView rv_sosnumbers = (RecyclerView)dialog.findViewById(R.id.rv_sosnumbers);
-            Button btn_call = (Button)dialog.findViewById(R.id.btn_call);
-            TextView txt_no_records = (TextView)dialog.findViewById(R.id.txt_no_records);
-            ImageView img_close = (ImageView)dialog.findViewById(R.id.img_close);
-            img_close.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
-            if(sosList != null && sosList.size()>0){
-                rv_sosnumbers.setVisibility(View.VISIBLE);
-                btn_call.setVisibility(View.VISIBLE);
-                txt_no_records.setVisibility(View.GONE);
-                rv_sosnumbers.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                rv_sosnumbers.setItemAnimator(new DefaultItemAnimator());
-                PetLoverSOSAdapter petLoverSOSAdapter = new PetLoverSOSAdapter(getApplicationContext(), sosList,this);
-                rv_sosnumbers.setAdapter(petLoverSOSAdapter);
-            }else{
-                rv_sosnumbers.setVisibility(View.GONE);
-                btn_call.setVisibility(View.GONE);
-                txt_no_records.setVisibility(View.VISIBLE);
-                txt_no_records.setText("No phone numbers");
-
-            }
-
-            btn_call.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(Service_Details_Activity.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
-                    }
-                    else
-                    {
-                        gotoPhone();
-                    }
-
-                }
-            });
-
-
-
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.show();
-
-
-        } catch (WindowManager.BadTokenException e) {
-            e.printStackTrace();
-        }
-
-
-
-
-    }
-    private void gotoPhone() {
-        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + sosPhonenumber));
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        startActivity(intent);
-    }
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     @Override
-    public void soSCallListener(long phonenumber) {
-        if(phonenumber != 0){
-            sosPhonenumber = String.valueOf(phonenumber);
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        // Add a marker in Sydney and move the camera
+        Log.w(TAG,"Map latitude"+ latitude );
+
+        Log.w(TAG,"Map longitude"+ longitude );
+
+        if(latitude!=0&&longitude!=0){
+
+            LatLng currentLocation = new LatLng(latitude, longitude);
+
+            mMap.addMarker(new
+                    MarkerOptions().position(currentLocation));
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,15));
+            // Zoom in, animating the camera.
+            mMap.animateCamera(CameraUpdateFactory.zoomIn());
+            // Zoom out to zoom level 10, animating with a duration of 2 seconds.
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+
         }
 
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+
+
+    private void setSpecList(List<SPDetailsRepsonse.DataBean.BusSpecListBean> specializationBeanList) {
+
+        int spanCount = 2; // 3 columns
+        int spacing = 0; // 50px
+        boolean includeEdge = true;
+        rv_speclist.setLayoutManager(new GridLayoutManager(this, 2));
+        rv_speclist.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
+        rv_speclist.setItemAnimator(new DefaultItemAnimator());
+        spDetails_specTypesListAdapter = new SPDetails_SpecTypesListAdapter(Service_Details_Activity.this, specializationBeanList);
+        rv_speclist.setAdapter(spDetails_specTypesListAdapter);
+
     }
+
 }

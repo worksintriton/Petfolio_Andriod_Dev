@@ -11,13 +11,10 @@
     android:layout_marginBottom="10dp">
 
 
-
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_gravity="center"
             tools:ignore="UselessParent">
 
 
@@ -26,7 +23,6 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="end|center"
-                android:layout_marginStart="10dp"
                 android:layout_marginEnd="5dp"
                 android:contentDescription="@string/image"
                 android:src="@drawable/new_check" />

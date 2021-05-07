@@ -6,31 +6,25 @@ import android.os.Bundle;
 
 import android.os.Handler;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.adapter.RelatedProductsAdapter;
 import com.petfolio.infinitus.adapter.ViewPagerProductDetailsAdapter;
 import com.petfolio.infinitus.api.APIClient;
@@ -80,6 +74,10 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
     @BindView(R.id.txt_products_title)
     TextView txt_products_title;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_prod_type)
+    TextView txt_prod_type;
+
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_products_price)
@@ -89,13 +87,13 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
     @BindView(R.id.txt_discount)
     TextView txt_discount;
 
-//    @SuppressLint("NonConstantResourceId")
-//    @BindView(R.id.txt_products_quantity)
-//    TextView txt_products_quantity;
-
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_product_desc)
     TextView txt_product_desc;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_products_quantity)
+    TextView txt_products_quantity;
 
 
     @SuppressLint("NonConstantResourceId")
@@ -165,6 +163,8 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.hand_img5)
     ImageView hand_img5;
+
+    String prod_type;
 
 
     @Override
@@ -383,7 +383,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                             String  product_discription = response.body().getProduct_details().getProduct_discription();
                             int product_cart_count = response.body().getProduct_details().getProduct_cart_count();
                             threshould = response.body().getProduct_details().getThreshould();
-
+                            prod_type = response.body().getProduct_details().getCat_id().getProduct_cate();
                             if(response.body().getProduct_details().getProduct_img() != null && response.body().getProduct_details().getProduct_img().size()>0){
                                 viewpageData(response.body().getProduct_details().getProduct_img());
                             }
@@ -391,7 +391,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                                 setView(response.body().getProduct_details().getProduct_related());
 
                             }
-                            setUIData(product_title,product_review,product_rating,product_price,product_discount,product_discription,product_cart_count,threshould);
+                            setUIData(product_title,product_review,product_rating,product_price,product_discount,product_discription,product_cart_count,threshould,prod_type);
 
 
 
@@ -415,7 +415,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
     private void setView(List<FetchProductByIdResponse.ProductDetailsBean.ProductRelatedBean> product_related) {
         rv_relatedproducts.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
         rv_relatedproducts.setItemAnimator(new DefaultItemAnimator());
-        RelatedProductsAdapter relatedProductsAdapter = new RelatedProductsAdapter(getApplicationContext(), product_related);
+        RelatedProductsAdapter relatedProductsAdapter = new RelatedProductsAdapter(getApplicationContext(), product_related,prod_type, false);
         rv_relatedproducts.setAdapter(relatedProductsAdapter);
 
     }
@@ -444,7 +444,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
     }
 
     @SuppressLint("SetTextI18n")
-    private void setUIData(String product_title,int product_review, double product_rating, int product_price, int product_discount, String product_discription, int product_cart_count, String threshould) {
+    private void setUIData(String product_title, int product_review, double product_rating, int product_price, int product_discount, String product_discription, int product_cart_count, String threshould, String prod_type) {
 
         //product_cart_counts = product_cart_count;
 
@@ -500,33 +500,37 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
         }else{
             rl_discount.setVisibility(View.GONE);
         }
-//        if(threshould != null && !threshould.isEmpty() ){
-//            if(threshould.equalsIgnoreCase("0")){
-//                txt_products_quantity.setText("Out Of Stock");
-//                txt_products_quantity.setTextColor(ContextCompat.getColor(ProductDetailsActivity.this, R.color.vermillion));
-//                img_add_product.setVisibility(View.GONE);
-//                txt_cart_count.setVisibility(View.GONE);
-//                img_remove_product.setVisibility(View.GONE);
-//                ll_add_to_cart.setVisibility(View.GONE);
-//            }else{
-//                img_add_product.setVisibility(View.VISIBLE);
-//                txt_cart_count.setVisibility(View.VISIBLE);
-//                img_remove_product.setVisibility(View.VISIBLE);
-//                ll_add_to_cart.setVisibility(View.VISIBLE);
-//                txt_products_quantity.setText("Prodcut Quantity : "+threshould);
-//                txt_products_quantity.setTextColor(ContextCompat.getColor(ProductDetailsActivity.this, R.color.black));
-//
-//            }
-//
-//
-//        }
+        if(threshould != null && !threshould.isEmpty() ){
+            if(threshould.equalsIgnoreCase("0")){
+                txt_products_quantity.setText("Out Of Stock");
+                txt_products_quantity.setTextColor(ContextCompat.getColor(ProductDetailsActivity.this, R.color.vermillion));
+                img_add_product.setVisibility(View.GONE);
+                txt_cart_count.setVisibility(View.GONE);
+                img_remove_product.setVisibility(View.GONE);
+                ll_add_to_cart.setVisibility(View.GONE);
+            }else{
+                img_add_product.setVisibility(View.VISIBLE);
+                txt_cart_count.setVisibility(View.VISIBLE);
+                img_remove_product.setVisibility(View.VISIBLE);
+                ll_add_to_cart.setVisibility(View.VISIBLE);
+                txt_products_quantity.setText("Prodcut Quantity : "+threshould);
+                txt_products_quantity.setTextColor(ContextCompat.getColor(ProductDetailsActivity.this, R.color.black));
+
+            }
+
+
+        }
         if(product_discription != null && !product_discription.isEmpty()){
             txt_product_desc.setText(product_discription);
         }
 
-        if(product_cart_count != 0){
-            txt_cart_count.setText(product_cart_count+"");
+        if(prod_type != null && !prod_type.isEmpty()){
+            txt_prod_type.setText(prod_type);
         }
+
+       /* if(product_cart_count != 0){
+            txt_cart_count.setText(product_cart_count+"");
+        }*/
     }
 
     @SuppressLint("LogNotTimber")
