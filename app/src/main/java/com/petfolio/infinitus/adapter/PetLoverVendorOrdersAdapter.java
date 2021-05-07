@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.doctor.DoctorOrderDetailsActivity;
 import com.petfolio.infinitus.interfaces.AddReviewListener;
 import com.petfolio.infinitus.interfaces.AddandReviewListener;
 import com.petfolio.infinitus.petlover.PetLoverVendorOrderDetailsActivity;
@@ -124,20 +125,49 @@ public class PetLoverVendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerV
         holder.txt_order_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, PetLoverVendorOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("_id", orderResponseListAll.get(position).getP_order_id());
-                i.putExtra("fromactivity", fromactivity);
-                context.startActivity(i);
+                if(fromactivity != null) {
+                    if (fromactivity.equalsIgnoreCase("FragmentDoctorNewOrders") || fromactivity.equalsIgnoreCase("FragmentDoctorCompletedOrders") || fromactivity.equalsIgnoreCase("FragmentDoctorCancelledOrders")) {
+                        Intent i = new Intent(context, DoctorOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.putExtra("_id", orderResponseListAll.get(position).getP_order_id());
+                        i.putExtra("fromactivity", fromactivity);
+                        context.startActivity(i);
+                    } else{
+                        Intent i = new Intent(context, PetLoverVendorOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.putExtra("_id", orderResponseListAll.get(position).getP_order_id());
+                        i.putExtra("fromactivity", fromactivity);
+                        context.startActivity(i);
+                    }
+                }else{
+                    Intent i = new Intent(context, PetLoverVendorOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("_id", orderResponseListAll.get(position).getP_order_id());
+                    i.putExtra("fromactivity", fromactivity);
+                    context.startActivity(i);
+                }
+
 
             }
         });
         holder.ll_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, PetLoverVendorOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("_id", orderResponseListAll.get(position).getP_order_id());
-                i.putExtra("fromactivity", fromactivity);
-                context.startActivity(i);
+                if(fromactivity != null) {
+                    if (fromactivity.equalsIgnoreCase("FragmentDoctorNewOrders") || fromactivity.equalsIgnoreCase("FragmentDoctorCompletedOrders") || fromactivity.equalsIgnoreCase("FragmentDoctorCancelledOrders")) {
+                        Intent i = new Intent(context, DoctorOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.putExtra("_id", orderResponseListAll.get(position).getP_order_id());
+                        i.putExtra("fromactivity", fromactivity);
+                        context.startActivity(i);
+                    } else{
+                        Intent i = new Intent(context, PetLoverVendorOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.putExtra("_id", orderResponseListAll.get(position).getP_order_id());
+                        i.putExtra("fromactivity", fromactivity);
+                        context.startActivity(i);
+                    }
+                }else{
+                    Intent i = new Intent(context, PetLoverVendorOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("_id", orderResponseListAll.get(position).getP_order_id());
+                    i.putExtra("fromactivity", fromactivity);
+                    context.startActivity(i);
+                }
 
 
             }

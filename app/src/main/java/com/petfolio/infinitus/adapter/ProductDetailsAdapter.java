@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.doctor.shop.DoctorCancelOrderActivity;
+import com.petfolio.infinitus.doctor.shop.DoctorTrackOrderActivity;
 import com.petfolio.infinitus.petlover.PetVendorCancelOrderActivity;
 import com.petfolio.infinitus.petlover.PetVendorOrderDetailsActivity;
 import com.petfolio.infinitus.petlover.PetVendorTrackOrderActivity;
@@ -67,9 +69,16 @@ public class ProductDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
        /* if (product_details.get(position).getProduct_id() != null) {
             holder.txt_orderid.setText(product_details.get(position).getOrder_id());
         }*/
+
+        Log.w(TAG,"fromactivity : "+fromactivity);
         if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverCompletedOrders")){
             holder.txt_cancell_order.setVisibility(View.INVISIBLE);
         }else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverCancelledOrders")){
+            holder.txt_cancell_order.setVisibility(View.INVISIBLE);
+        }
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentDoctorCompletedOrders")){
+            holder.txt_cancell_order.setVisibility(View.INVISIBLE);
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentDoctorCancelledOrders")){
             holder.txt_cancell_order.setVisibility(View.INVISIBLE);
         }
         if (product_details.get(position).getProduct_name() != null) {
@@ -112,11 +121,28 @@ public class ProductDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
         holder.txt_track_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, TrackOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("_id", product_details.get(position).getProduct_id());
-                i.putExtra("orderid", orderid);
-                i.putExtra("fromactivity", TAG);
-                context.startActivity(i);
+                if(fromactivity != null) {
+                    if (fromactivity.equalsIgnoreCase("FragmentDoctorNewOrders") || fromactivity.equalsIgnoreCase("FragmentDoctorCompletedOrders") || fromactivity.equalsIgnoreCase("FragmentDoctorCancelledOrders")) {
+                        Intent i = new Intent(context, DoctorTrackOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.putExtra("_id", product_details.get(position).getProduct_id());
+                        i.putExtra("orderid", orderid);
+                        i.putExtra("fromactivity", TAG);
+                        context.startActivity(i);
+                    }else {
+                        Intent i = new Intent(context, TrackOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.putExtra("_id", product_details.get(position).getProduct_id());
+                        i.putExtra("orderid", orderid);
+                        i.putExtra("fromactivity", TAG);
+                        context.startActivity(i);
+                    }
+                }else{
+                    Intent i = new Intent(context, TrackOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("_id", product_details.get(position).getProduct_id());
+                    i.putExtra("orderid", orderid);
+                    i.putExtra("fromactivity", TAG);
+                    context.startActivity(i);
+                }
+
 
 
             }
@@ -124,11 +150,28 @@ public class ProductDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
         holder.txt_cancell_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, PetVendorCancelOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("product_id", product_details.get(position).getProduct_id());
-                i.putExtra("orderid", orderid);
-                i.putExtra("fromactivity", TAG);
-                context.startActivity(i);
+                if(fromactivity != null) {
+                    if (fromactivity.equalsIgnoreCase("FragmentDoctorNewOrders")) {
+                        Intent i = new Intent(context, DoctorCancelOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.putExtra("product_id", product_details.get(position).getProduct_id());
+                        i.putExtra("orderid", orderid);
+                        i.putExtra("fromactivity", TAG);
+                        context.startActivity(i);
+                    }else{
+                        Intent i = new Intent(context, PetVendorCancelOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.putExtra("product_id", product_details.get(position).getProduct_id());
+                        i.putExtra("orderid", orderid);
+                        i.putExtra("fromactivity", TAG);
+                        context.startActivity(i);
+                    }
+                }else{
+                    Intent i = new Intent(context, PetVendorCancelOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("product_id", product_details.get(position).getProduct_id());
+                    i.putExtra("orderid", orderid);
+                    i.putExtra("fromactivity", TAG);
+                    context.startActivity(i);
+                }
+
 
             }
         });

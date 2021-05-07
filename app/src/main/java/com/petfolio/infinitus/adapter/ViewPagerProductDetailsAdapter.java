@@ -51,8 +51,8 @@ public class ViewPagerProductDetailsAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup view, int position) {
-        View itemView = inflater.inflate(R.layout.viewpager_productdetails, view, false);
-        ImageView imageView = itemView.findViewById(R.id.img_products_image);
+        View itemView = inflater.inflate(R.layout.sliding_image_banner_new, view, false);
+        ImageView imageView = itemView.findViewById(R.id.itemImage);
 
 
         try {

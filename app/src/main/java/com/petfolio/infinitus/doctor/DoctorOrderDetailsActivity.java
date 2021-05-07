@@ -24,7 +24,6 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.ProductDetailsAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.petlover.PetMyOrdrersNewActivity;
 import com.petfolio.infinitus.petlover.PetVendorCancelOrderActivity;
 import com.petfolio.infinitus.requestpojo.PetLoverVendorOrderDetailsRequest;
 import com.petfolio.infinitus.responsepojo.PetLoverVendorOrderDetailsResponse;
@@ -312,7 +311,7 @@ public class DoctorOrderDetailsActivity extends AppCompatActivity implements Vie
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(), PetMyOrdrersNewActivity.class));
+        startActivity(new Intent(getApplicationContext(), DoctorMyOrdrersActivity.class));
         finish();
     }
 
@@ -509,6 +508,28 @@ public class DoctorOrderDetailsActivity extends AppCompatActivity implements Vie
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+        switch (item.getItemId()) {
+            case R.id.home:
+                callDirections("1");
+                break;
+            case R.id.shop:
+                callDirections("2");
+                break;
+
+            case R.id.community:
+                callDirections("3");
+                break;
+
+            default:
+                return  false;
+        }
+        return true;
+    }
+
+    public void callDirections(String tag){
+        Intent intent = new Intent(getApplicationContext(), DoctorDashboardActivity.class);
+        intent.putExtra("tag",tag);
+        startActivity(intent);
+        finish();
     }
 }

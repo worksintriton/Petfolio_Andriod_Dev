@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
-    app:cardCornerRadius="16dp"
-    app:cardPreventCornerOverlap="false"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#fff">
+    android:layout_height="170dp"
+    android:background="#fff"
+    app:cardCornerRadius="16dp"
+    app:cardPreventCornerOverlap="false">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/new_yellow_bgm">
 
-        <com.github.siyamed.shapeimageview.mask.PorterShapeImageView
+        <ImageView
             android:id="@+id/itemImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="1"
+            android:layout_width="200dp"
+            android:layout_height="170dp"
             android:layout_centerInParent="true"
-            android:scaleType="fitXY"
+            android:alpha="1"
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_pedigree"
-            app:siShape="@drawable/rounded_rect" />
+            android:contentDescription="@string/image_description" />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

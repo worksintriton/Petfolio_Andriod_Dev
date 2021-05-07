@@ -713,6 +713,17 @@
             android:windowSoftInputMode="adjustPan" />
 
         <activity
+            android:name=".doctor.shop.DoctorTrackOrderActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".doctor.shop.DoctorCancelOrderActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
             android:name=".doctor.DoctorMyOrdrersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar"

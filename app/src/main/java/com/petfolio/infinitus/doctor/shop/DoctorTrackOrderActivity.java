@@ -1,6 +1,7 @@
-package com.petfolio.infinitus.petlover;
+package com.petfolio.infinitus.doctor.shop;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -19,10 +20,9 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
 import com.petfolio.infinitus.requestpojo.TrackOrderDetailsRequest;
-import com.petfolio.infinitus.requestpojo.VendorOrderDetailsRequest;
 import com.petfolio.infinitus.responsepojo.TrackOrderDetailsResponse;
-import com.petfolio.infinitus.responsepojo.VendorOrderDetailsResponse;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -35,9 +35,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TrackOrderActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
+public class DoctorTrackOrderActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
-    private static final String TAG = "TrackOrderActivity" ;
+    private static final String TAG = "DoctorTrackOrderActivity" ;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_no_records)
@@ -170,14 +170,14 @@ public class TrackOrderActivity extends AppCompatActivity implements View.OnClic
     LinearLayout ll_order_reject;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.include_petlover_footer)
-    View include_petlover_footer;
+    @BindView(R.id.include_doctor_footer)
+    View include_doctor_footer;
 
     BottomNavigationView bottom_navigation_view;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.include_petlover_header)
-    View include_petlover_header;
+    @BindView(R.id.include_doctor_header)
+    View include_doctor_header;
 
 
     private int _id;
@@ -190,16 +190,15 @@ public class TrackOrderActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_track_order_status);
+        setContentView(R.layout.activity_doctor_track_order_status);
         ButterKnife.bind(this);
 
 
-        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
-        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
-        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
-        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
-        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
-        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        ImageView img_back = include_doctor_header.findViewById(R.id.img_back);
+        ImageView img_notification = include_doctor_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_doctor_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_doctor_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_doctor_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.track_order));
 
         img_back.setOnClickListener(this);
@@ -211,7 +210,7 @@ public class TrackOrderActivity extends AppCompatActivity implements View.OnClic
         txt_order_dispatch_date.setText(" ");
         txt_order_transit_date.setText(" ");
 
-        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view = include_doctor_footer.findViewById(R.id.bottom_navigation_view);
         bottom_navigation_view.setItemIconTintList(null);
         bottom_navigation_view.setOnNavigationItemSelectedListener(this);
         bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
@@ -225,7 +224,7 @@ public class TrackOrderActivity extends AppCompatActivity implements View.OnClic
             fromactivity = extras.getString("fromactivity");
             Log.w(TAG,"_id : "+_id);
         }
-        if (new ConnectionDetector(TrackOrderActivity.this).isNetworkAvailable(TrackOrderActivity.this)) {
+        if (new ConnectionDetector(DoctorTrackOrderActivity.this).isNetworkAvailable(DoctorTrackOrderActivity.this)) {
             petlover_fetch_single_product_detail_ResponseCall();
         }
 
@@ -438,6 +437,28 @@ public class TrackOrderActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+        switch (item.getItemId()) {
+            case R.id.home:
+                callDirections("1");
+                break;
+            case R.id.shop:
+                callDirections("2");
+                break;
+
+            case R.id.community:
+                callDirections("3");
+                break;
+
+            default:
+                return  false;
+        }
+        return true;
+    }
+
+    public void callDirections(String tag){
+        Intent intent = new Intent(getApplicationContext(), DoctorDashboardActivity.class);
+        intent.putExtra("tag",tag);
+        startActivity(intent);
+        finish();
     }
 }

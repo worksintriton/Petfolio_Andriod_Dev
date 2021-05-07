@@ -1,16 +1,9 @@
 package com.petfolio.infinitus.petlover;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+
 import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
@@ -18,11 +11,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
@@ -52,7 +56,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProductDetailsActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class ProductDetailsActivity extends AppCompatActivity implements View.OnClickListener{
 
     private final String TAG = "ProductDetailsActivity";
 
@@ -68,23 +72,14 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
     @BindView(R.id.tabDots)
     TabLayout tabLayout;
 
-
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_back)
+    RelativeLayout rl_back;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_products_title)
     TextView txt_products_title;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.txt_review_count)
-    TextView txt_review_count;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.txt_star_rating)
-    TextView txt_star_rating;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_share)
-    ImageView img_share;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_products_price)
@@ -94,9 +89,9 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
     @BindView(R.id.txt_discount)
     TextView txt_discount;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.txt_products_quantity)
-    TextView txt_products_quantity;
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.txt_products_quantity)
+//    TextView txt_products_quantity;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_product_desc)
@@ -121,43 +116,12 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
 
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.btn_add_to_cart)
-    Button btn_add_to_cart;
+    @BindView(R.id.ll_add_to_cart)
+    LinearLayout ll_add_to_cart;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.ll_discount)
-    LinearLayout ll_discount;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.footerView)
-    LinearLayout footerView;
-
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.ll_product_title)
-    LinearLayout ll_product_title;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.scrollablContent)
-    ScrollView scrollablContent;
-
-   /* @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.bottom_navigation_view)
-    BottomNavigationView bottom_navigation_view;*/
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.include_petlover_footer)
-    View include_petlover_footer;
-
-    BottomNavigationView bottom_navigation_view;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.include_petlover_header)
-    View include_petlover_header;
-
-
-
-
+    @BindView(R.id.rl_discount)
+    RelativeLayout rl_discount;
 
 
     int currentPage = 0;
@@ -175,28 +139,43 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
     private int productqty;
     private String tag;
 
-    @SuppressLint({"LogNotTimber", "SetTextI18n"})
+        // BottomSheetBehavior variable
+    private BottomSheetBehavior bottomSheetBehavior;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_cart_label)
+    TextView txt_cart_label;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.hand_img1)
+    ImageView hand_img1;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.hand_img2)
+    ImageView hand_img2;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.hand_img3)
+    ImageView hand_img3;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.hand_img4)
+    ImageView hand_img4;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.hand_img5)
+    ImageView hand_img5;
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
-        Log.w(TAG,"onCreate -->");
+
         ButterKnife.bind(this);
         avi_indicator.setVisibility(View.GONE);
-        ll_product_title.setVisibility(View.GONE);
-        scrollablContent.setVisibility(View.GONE);
-        footerView.setVisibility(View.GONE);
 
-        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
-        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
-        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
-        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
-        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
-        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
-        toolbar_title.setText(getResources().getString(R.string.product_details));
-
-
-        img_back.setOnClickListener(v -> onBackPressed());
+        rl_back.setOnClickListener(v -> onBackPressed());
         SessionManager sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
@@ -221,13 +200,13 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
                     product_cart_counts--;
                     txt_cart_count.setText(product_cart_counts+"");
                     if(product_cart_counts == 1){
-                        btn_add_to_cart.setText("Add to cart");
+                        txt_cart_label.setText("Add to cart");
                     }else{
-                        btn_add_to_cart.setText("Go to cart");
+                        txt_cart_label.setText("Go to cart");
                     }
 
                 }else{
-                    btn_add_to_cart.setText("Add to cart");
+                    txt_cart_label.setText("Add to cart");
                 }
             }
 
@@ -250,15 +229,15 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
 
                         product_cart_counts++;
                         if(threshould != null){
-                             productqty = Integer.parseInt(threshould);
+                            productqty = Integer.parseInt(threshould);
                             if(product_cart_counts > productqty){
                                 Toasty.warning(getApplicationContext(), "You can buy only up to "+productqty+" quantity of this product", Toast.LENGTH_SHORT, true).show();
                             }else{
                                 if(product_cart_counts != 1){
                                     txt_cart_count.setText(product_cart_counts+"");
-                                    btn_add_to_cart.setText("Go to cart");
+                                    txt_cart_label.setText("Go to cart");
                                 }else{
-                                    btn_add_to_cart.setText("Add to cart");
+                                    txt_cart_label.setText("Add to cart");
                                 }
 
                             }
@@ -277,42 +256,77 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
             }
 
         });
-        btn_add_to_cart.setOnClickListener(v -> {
+        ll_add_to_cart.setOnClickListener(v -> {
             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
                 cart_add_product_ResponseCall();
             }
         });
 
 
-        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
-        bottom_navigation_view.setItemIconTintList(null);
-        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
 
-        img_sos.setOnClickListener(this);
-        img_notification.setOnClickListener(this);
-        img_cart.setOnClickListener(this);
-        img_profile.setOnClickListener(this);
 
-        Log.w(TAG," tag test : "+tag);
-        if(tag != null){
-            if(tag.equalsIgnoreCase("1")){
-                bottom_navigation_view.setSelectedItemId(R.id.home);
-            }else if(tag.equalsIgnoreCase("2")){
-                bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
-                //bottom_navigation_view.setSelectedItemId(R.id.shop);
-            }else if(tag.equalsIgnoreCase("3")){
-                bottom_navigation_view.setSelectedItemId(R.id.services);
-            }else if(tag.equalsIgnoreCase("4")){
-                bottom_navigation_view.setSelectedItemId(R.id.care);
-            } else if(tag.equalsIgnoreCase("5")){
-                bottom_navigation_view.setSelectedItemId(R.id.community);
+
+        setBottomSheet();
+
+
+    }
+
+
+    /**
+     * method to setup the bottomsheet
+     */
+    private void setBottomSheet() {
+
+        bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.bottomSheetLayout));
+
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+
+        bottomSheetBehavior.setHideable(false);
+
+        bottomSheetBehavior.setFitToContents(false);
+
+        bottomSheetBehavior.setHalfExpandedRatio(0.7f);
+
+
+        // Capturing the callbacks for bottom sheet
+        bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        Log.w("Bottom Sheet Behaviour", "STATE_COLLAPSED");
+                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+                        break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        Log.w("Bottom Sheet Behaviour", "STATE_DRAGGING");
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        Log.w("Bottom Sheet Behaviour", "STATE_EXPANDED");
+                        //  bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+                        break;
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        Log.w("Bottom Sheet Behaviour", "STATE_HIDDEN");
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        Log.w("Bottom Sheet Behaviour", "STATE_SETTLING");
+                        break;
+                    case BottomSheetBehavior.STATE_HALF_EXPANDED:
+                        Log.w("Bottom Sheet Behaviour", "STATE_HALF_EXPANDED");
+                        break;
+                }
+
+
             }
-        }else{
-            bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
 
-        }
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
 
 
+            }
+
+
+        });
     }
 
     @Override
@@ -359,9 +373,6 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
                 avi_indicator.smoothToHide();
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
-                        ll_product_title.setVisibility(View.VISIBLE);
-                        scrollablContent.setVisibility(View.VISIBLE);
-                        footerView.setVisibility(View.VISIBLE);
                         Log.w(TAG,"FetchProductByIdResponse" + new Gson().toJson(response.body()));
                         if(response.body().getProduct_details() != null){
                             String product_title = response.body().getProduct_details().getProduct_title();
@@ -376,11 +387,11 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
                             if(response.body().getProduct_details().getProduct_img() != null && response.body().getProduct_details().getProduct_img().size()>0){
                                 viewpageData(response.body().getProduct_details().getProduct_img());
                             }
-                             if(response.body().getProduct_details().getProduct_related() != null && response.body().getProduct_details().getProduct_related().size()>0){
-                                 setView(response.body().getProduct_details().getProduct_related());
+                            if(response.body().getProduct_details().getProduct_related() != null && response.body().getProduct_details().getProduct_related().size()>0){
+                                setView(response.body().getProduct_details().getProduct_related());
 
                             }
-                             setUIData(product_title,product_review,product_rating,product_price,product_discount,product_discription,product_cart_count,threshould);
+                            setUIData(product_title,product_review,product_rating,product_price,product_discount,product_discription,product_cart_count,threshould);
 
 
 
@@ -440,54 +451,82 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
         if(product_title != null && !product_title.isEmpty()){
             txt_products_title.setText(product_title);
         }
-        if(product_review != 0 ){
-            txt_review_count.setText(product_review+"");
-        }else{
-            txt_review_count.setText("0");
-        }
+
         if(product_rating != 0 ){
-            txt_star_rating.setText(product_rating+"");
-        }else{
-            txt_star_rating.setText("0");
-        }
-        if(product_price != 0 ){
-            txt_products_price.setText("\u20B9 "+product_price);
 
-        }else{
-            txt_products_price.setText("\u20B9 "+0);
-        }
-        if(product_discount != 0 ){
-            ll_discount.setVisibility(View.VISIBLE);
-            txt_discount.setText(product_discount+" % discount");
-        }else{
-            ll_discount.setVisibility(View.GONE);
-        }
-        if(threshould != null && !threshould.isEmpty() ){
-            if(threshould.equalsIgnoreCase("0")){
-                txt_products_quantity.setText("Out Of Stock");
-                txt_products_quantity.setTextColor(ContextCompat.getColor(ProductDetailsActivity.this, R.color.vermillion));
-                img_add_product.setVisibility(View.GONE);
-                txt_cart_count.setVisibility(View.GONE);
-                img_remove_product.setVisibility(View.GONE);
-                btn_add_to_cart.setVisibility(View.GONE);
-            }else{
-                img_add_product.setVisibility(View.VISIBLE);
-                txt_cart_count.setVisibility(View.VISIBLE);
-                img_remove_product.setVisibility(View.VISIBLE);
-                btn_add_to_cart.setVisibility(View.VISIBLE);
-                txt_products_quantity.setText("Prodcut Quantity : "+threshould);
-                txt_products_quantity.setTextColor(ContextCompat.getColor(ProductDetailsActivity.this, R.color.black));
-
+            if(product_rating == 1){
+                hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+                hand_img2.setBackgroundResource(R.drawable.ic_logo_graycolor);
+                hand_img3.setBackgroundResource(R.drawable.ic_logo_graycolor);
+                hand_img4.setBackgroundResource(R.drawable.ic_logo_graycolor);
+                hand_img5.setBackgroundResource(R.drawable.ic_logo_graycolor);
+            } else if(product_rating == 2){
+                hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+                hand_img2.setBackgroundResource(R.drawable.ic_logo_color);
+                hand_img3.setBackgroundResource(R.drawable.ic_logo_graycolor);
+                hand_img4.setBackgroundResource(R.drawable.ic_logo_graycolor);
+                hand_img5.setBackgroundResource(R.drawable.ic_logo_graycolor);
+            }else if(product_rating == 3){
+                hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+                hand_img2.setBackgroundResource(R.drawable.ic_logo_color);
+                hand_img3.setBackgroundResource(R.drawable.ic_logo_color);
+                hand_img4.setBackgroundResource(R.drawable.ic_logo_graycolor);
+                hand_img5.setBackgroundResource(R.drawable.ic_logo_graycolor);
+            }else if(product_rating == 4){
+                hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+                hand_img2.setBackgroundResource(R.drawable.ic_logo_color);
+                hand_img3.setBackgroundResource(R.drawable.ic_logo_color);
+                hand_img4.setBackgroundResource(R.drawable.ic_logo_color);
+                hand_img5.setBackgroundResource(R.drawable.ic_logo_graycolor);
+            } else if(product_rating == 5){
+                hand_img1.setBackgroundResource(R.drawable.ic_logo_color);
+                hand_img2.setBackgroundResource(R.drawable.ic_logo_color);
+                hand_img3.setBackgroundResource(R.drawable.ic_logo_color);
+                hand_img4.setBackgroundResource(R.drawable.ic_logo_color);
+                hand_img5.setBackgroundResource(R.drawable.ic_logo_color);
             }
 
 
         }
+        if(product_price != 0 ){
+            txt_products_price.setText("INR "+product_price);
+
+        }else{
+            txt_products_price.setText("INR "+0);
+        }
+        if(product_discount != 0 ){
+            rl_discount.setVisibility(View.VISIBLE);
+            txt_discount.setText(product_discount+" % off");
+        }else{
+            rl_discount.setVisibility(View.GONE);
+        }
+//        if(threshould != null && !threshould.isEmpty() ){
+//            if(threshould.equalsIgnoreCase("0")){
+//                txt_products_quantity.setText("Out Of Stock");
+//                txt_products_quantity.setTextColor(ContextCompat.getColor(ProductDetailsActivity.this, R.color.vermillion));
+//                img_add_product.setVisibility(View.GONE);
+//                txt_cart_count.setVisibility(View.GONE);
+//                img_remove_product.setVisibility(View.GONE);
+//                ll_add_to_cart.setVisibility(View.GONE);
+//            }else{
+//                img_add_product.setVisibility(View.VISIBLE);
+//                txt_cart_count.setVisibility(View.VISIBLE);
+//                img_remove_product.setVisibility(View.VISIBLE);
+//                ll_add_to_cart.setVisibility(View.VISIBLE);
+//                txt_products_quantity.setText("Prodcut Quantity : "+threshould);
+//                txt_products_quantity.setTextColor(ContextCompat.getColor(ProductDetailsActivity.this, R.color.black));
+//
+//            }
+//
+//
+//        }
         if(product_discription != null && !product_discription.isEmpty()){
             txt_product_desc.setText(product_discription);
         }
-       /* if(product_cart_count != 0){
+
+        if(product_cart_count != 0){
             txt_cart_count.setText(product_cart_count+"");
-        }*/
+        }
     }
 
     @SuppressLint("LogNotTimber")
@@ -650,58 +689,15 @@ public class ProductDetailsActivity extends AppCompatActivity implements BottomN
 
     }
 
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.home:
-                callDirections("1");
-                break;
-            case R.id.shop:
-                callDirections("2");
-                break;
-            case R.id.services:
-                callDirections("3");
-                break;
-            case R.id.care:
-                callDirections("4");
-                break;
-            case R.id.community:
-                callDirections("5");
-                break;
-
-            default:
-                return  false;
-        }
-        return true;
-    }
 
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.img_sos:
-                break;
-                case R.id.img_notification:
-                    startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
-                break;
-                case R.id.img_cart:
-                    Intent i = new Intent(getApplicationContext(), PetCartActivity.class);
-                    i.putExtra("productid",productid);
-                    i.putExtra("cat_id",cat_id);
-                    i.putExtra("fromactivity",TAG);
-                    startActivity(i);
-                    break;
-                case R.id.img_profile:
-                    Intent intent = new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class);
-                    intent.putExtra("fromactivity",TAG);
-                    if(PetLoverDashboardActivity.active_tag != null){
-                        intent.putExtra("active_tag",PetLoverDashboardActivity.active_tag);
 
-                    }
-                    startActivity(intent);
-                break;
         }
 
     }
+
 }
+

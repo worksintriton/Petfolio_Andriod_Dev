@@ -18,7 +18,6 @@ import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.doctor.shop.DoctorProductDetailsActivity;
 import com.petfolio.infinitus.petlover.ProductDetailsActivity;
-import com.petfolio.infinitus.responsepojo.FetctProductByCatResponse;
 import com.petfolio.infinitus.responsepojo.ProductSearchResponse;
 
 import java.util.List;
@@ -63,7 +62,7 @@ public class ProductsSearchAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
         }
         if(productSearchResponseCall.get(position).getProduct_price() != 0){
             holder.txt_products_price.setText("\u20B9 "+productSearchResponseCall.get(position).getProduct_price());
-            }
+        }
 
 
         if(productSearchResponseCall.get(position).isProduct_fav()){
@@ -92,17 +91,17 @@ public class ProductsSearchAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
 
         if (productSearchResponseCall.get(position).getProduct_img() != null && !productSearchResponseCall.get(position).getProduct_img().isEmpty()) {
 
-                Glide.with(context)
-                        .load(productSearchResponseCall.get(position).getProduct_img())
-                        .into(holder.img_products_image);
+            Glide.with(context)
+                    .load(productSearchResponseCall.get(position).getProduct_img())
+                    .into(holder.img_products_image);
 
-            }
-           else{
-                Glide.with(context)
-                        .load(R.drawable.app_logo)
-                        .into(holder.img_products_image);
+        }
+        else{
+            Glide.with(context)
+                    .load(R.drawable.app_logo)
+                    .into(holder.img_products_image);
 
-            }
+        }
 
         if(currentItem.getProduct_rating() != 0){
             holder.txt_star_rating.setText(currentItem.getProduct_rating()+"");
@@ -118,24 +117,24 @@ public class ProductsSearchAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
 
 
         holder.ll_root.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View v) {
-                   if(activityname != null && activityname.equalsIgnoreCase("SearchDoctorActivity")){
-                       Intent intent = new Intent(context, DoctorProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                       intent.putExtra("productid",productSearchResponseCall.get(position).get_id());
-                       intent.putExtra("cat_id",cat_id);
-                       intent.putExtra("fromactivity",activityname);
-                       context.startActivity(intent);
-                   }else{
-                       Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                       intent.putExtra("productid",productSearchResponseCall.get(position).get_id());
-                       intent.putExtra("cat_id",cat_id);
-                       intent.putExtra("fromactivity",activityname);
-                       context.startActivity(intent);
-                   }
+            @Override
+            public void onClick(View v) {
+                if(activityname != null && activityname.equalsIgnoreCase("SearchDoctorActivity")){
+                    Intent intent = new Intent(context, DoctorProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("productid",productSearchResponseCall.get(position).get_id());
+                    intent.putExtra("cat_id",cat_id);
+                    intent.putExtra("fromactivity",activityname);
+                    context.startActivity(intent);
+                }else{
+                    Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("productid",productSearchResponseCall.get(position).get_id());
+                    intent.putExtra("cat_id",cat_id);
+                    intent.putExtra("fromactivity",activityname);
+                    context.startActivity(intent);
+                }
 
-               }
-           });
+            }
+        });
 
 
 

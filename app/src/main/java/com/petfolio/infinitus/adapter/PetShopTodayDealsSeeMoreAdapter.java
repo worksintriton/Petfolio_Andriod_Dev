@@ -18,8 +18,6 @@ import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.doctor.shop.DoctorProductDetailsActivity;
 import com.petfolio.infinitus.petlover.ProductDetailsActivity;
-import com.petfolio.infinitus.petlover.SelectedServiceActivity;
-import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
 import com.petfolio.infinitus.responsepojo.TodayDealMoreResponse;
 
 import java.util.List;
@@ -96,17 +94,17 @@ public class PetShopTodayDealsSeeMoreAdapter extends  RecyclerView.Adapter<Recyc
         }
 
         if (data.get(position).getProduct_img() != null && !data.get(position).getProduct_img().isEmpty()) {
-               Glide.with(context)
-                        .load(data.get(position).getProduct_img())
-                        .into(holder.img_products_image);
+            Glide.with(context)
+                    .load(data.get(position).getProduct_img())
+                    .into(holder.img_products_image);
 
-            }
+        }
         else{
-                Glide.with(context)
-                        .load(R.drawable.app_logo)
-                        .into(holder.img_products_image);
+            Glide.with(context)
+                    .load(R.drawable.app_logo)
+                    .into(holder.img_products_image);
 
-            }
+        }
 
         if(currentItem.getProduct_rating() != 0){
             holder.txt_star_rating.setText(currentItem.getProduct_rating()+"");
@@ -135,7 +133,7 @@ public class PetShopTodayDealsSeeMoreAdapter extends  RecyclerView.Adapter<Recyc
                 context.startActivity(intent);
             }
 
-           });
+        });
     }
 
     @Override

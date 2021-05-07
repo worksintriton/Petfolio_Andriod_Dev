@@ -19,7 +19,6 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.petlover.ProductDetailsActivity;
 import com.petfolio.infinitus.responsepojo.FetchProductByIdResponse;
-import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
 
 import java.util.List;
 

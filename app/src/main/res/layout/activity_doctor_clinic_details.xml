@@ -10,9 +10,96 @@
 
     <include layout="@layout/content_doctor_details" />
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_header"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@android:color/transparent"
+        android:visibility="visible"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:titleTextAppearance="@style/TitleBarTextAppearance">
 
-    <include
-        layout="@layout/doctor_bottom_sheet" />
+        <RelativeLayout
+            android:id="@+id/rl_back"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/new_orange_bg">
+
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/new_arrow"
+                tools:ignore="ContentDescription" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:gravity="end">
+
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/ic_sos"
+                android:visibility="invisible"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/ic_notifications"
+                android:visibility="invisible"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/ic_bag"
+                android:visibility="invisible"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/img_fav"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/ic_fav"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/txt_no_records"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/norecordsfound"
+        android:textColor="@color/color"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <include layout="@layout/doctor_bottom_sheet" />
+
 
     <LinearLayout
         android:id="@+id/footerView"
@@ -25,6 +112,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/ll_book_now"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -86,7 +174,6 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_marginStart="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/new_rounded_corner_btn_red"
                 android:gravity="center"
@@ -117,6 +204,16 @@
 
 
     </LinearLayout>
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:indicatorColor="@color/green"
+        app:indicatorName="LineSpinFadeLoaderIndicator" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
