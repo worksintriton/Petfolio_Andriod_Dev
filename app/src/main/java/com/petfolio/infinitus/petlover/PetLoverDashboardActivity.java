@@ -706,9 +706,8 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
     @SuppressLint("LogNotTimber")
     private void shippingAddressresponseCall() {
 
-        avi_indicator.setVisibility(View.VISIBLE);
-
-        avi_indicator.smoothToShow();
+       /* avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();*/
 
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
 
@@ -722,7 +721,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
 
                 Log.w(TAG,"ShippingAddressFetchByUserIDResponse"+ "--->" + new Gson().toJson(response.body()));
 
-                avi_indicator.smoothToHide();
+              //  avi_indicator.smoothToHide();
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200) {
@@ -757,7 +756,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
             @Override
             public void onFailure(@NonNull Call<ShippingAddressFetchByUserIDResponse> call, @NonNull Throwable t) {
 
-                avi_indicator.smoothToHide();
+              //  avi_indicator.smoothToHide();
                 Log.w(TAG,"ShippingAddressFetchByUserIDResponse flr"+"--->" + t.getMessage());
             }
         });

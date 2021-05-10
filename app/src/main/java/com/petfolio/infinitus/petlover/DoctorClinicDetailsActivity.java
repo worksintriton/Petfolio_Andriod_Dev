@@ -211,7 +211,6 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_clinic_details);
-
         ButterKnife.bind(this);
 
 

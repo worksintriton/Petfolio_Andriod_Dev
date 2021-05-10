@@ -138,7 +138,11 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
         ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
         ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
         TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        img_sos.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
         toolbar_title.setText(getResources().getString(R.string.service_details));
+
+
 
         avi_indicator.setVisibility(View.GONE);
 
@@ -163,8 +167,11 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
             Count_value_end = extras.getInt("Count_value_end");
             distance = extras.getInt("distance");
             selectedprice = extras.getString("selectedprice");
-        }
-        Log.w(TAG,"selectedprice : "+selectedprice);
+            distance = extras.getInt("distanceit");
+
+
+           }
+        Log.w(TAG,"selectedprice : "+selectedprice+" distance  : "+distance);
 
 
 
@@ -334,7 +341,7 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
     private void setViewListedSP(List<SPSpecificServiceDetailsResponse.DataBean.ServiceProviderBean> serviceProviderList) {
         rv_nearbyservices.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rv_nearbyservices.setItemAnimator(new DefaultItemAnimator());
-        SelectedServiceProviderAdapter doctorNewAppointmentAdapter = new SelectedServiceProviderAdapter(getApplicationContext(), serviceProviderList,catid,from);
+        SelectedServiceProviderAdapter doctorNewAppointmentAdapter = new SelectedServiceProviderAdapter(getApplicationContext(), serviceProviderList,catid,from,distance,reviewcount,Count_value_start,Count_value_end);
         rv_nearbyservices.setAdapter(doctorNewAppointmentAdapter);
 
     }
@@ -395,6 +402,10 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
         intent.putExtra("fromactivity",TAG);
         intent.putExtra("catid",catid);
         intent.putExtra("from",from);
+        intent.putExtra("distanceit",distance);
+        intent.putExtra("reviewcount",reviewcount);
+        intent.putExtra("Count_value_start",Count_value_start);
+        intent.putExtra("Count_value_end",Count_value_end);
         startActivity(intent);
     }
 

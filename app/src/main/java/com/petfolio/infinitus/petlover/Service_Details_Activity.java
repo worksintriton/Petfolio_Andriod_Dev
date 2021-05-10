@@ -171,7 +171,6 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
     private String spprovidername = "";
     private int ratingcount;
 
-    private int distance;
     private String location;
 
     private SupportMapFragment mapFragment;
@@ -202,6 +201,13 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
     List<SPDetailsRepsonse.DataBean.BusSpecListBean> specializationBeanList;
 
     String serv_name,selectedServiceImagepath;
+
+
+    private int distance;
+    private int reviewcount;
+    private int Count_value_start;
+    private int Count_value_end;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -227,6 +233,12 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
             spid = extras.getString("spid");
             catid = extras.getString("catid");
             from = extras.getString("from");
+
+            distance = extras.getInt("distance");
+            reviewcount = extras.getInt("reviewcount");
+            Count_value_start = extras.getInt("Count_value_start");
+            Count_value_end = extras.getInt("Count_value_end");
+
         }
 
         Log.w(TAG," userid : "+userid+ " spid : "+spid+" catid : "+catid+" from : "+from);
@@ -343,6 +355,10 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
         intent.putExtra("spid",spid);
         intent.putExtra("catid",catid);
         intent.putExtra("from",from);
+        intent.putExtra("distance",distance);
+        intent.putExtra("reviewcount",reviewcount);
+        intent.putExtra("Count_value_start",Count_value_start);
+        intent.putExtra("Count_value_end",Count_value_end);
         startActivity(intent);
         finish();
     }

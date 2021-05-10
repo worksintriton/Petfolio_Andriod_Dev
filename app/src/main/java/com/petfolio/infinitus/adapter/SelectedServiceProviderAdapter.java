@@ -35,13 +35,23 @@ public class SelectedServiceProviderAdapter extends  RecyclerView.Adapter<Recycl
     List<SPSpecificServiceDetailsResponse.DataBean.ServiceProviderBean> serviceProviderList;
     private String catid;
 
+    private int distance;
+    private int reviewcount;
+    private int Count_value_start;
+    private int Count_value_end;
 
 
-    public SelectedServiceProviderAdapter(Context context, List<SPSpecificServiceDetailsResponse.DataBean.ServiceProviderBean> serviceProviderList,String catid,String from) {
+
+    public SelectedServiceProviderAdapter(Context context, List<SPSpecificServiceDetailsResponse.DataBean.ServiceProviderBean> serviceProviderList,String catid,String from,int distance,int reviewcount,int Count_value_start,int Count_value_end) {
         this.serviceProviderList = serviceProviderList;
         this.context = context;
         this.catid = catid;
         this.from = from;
+        this.distance = distance;
+        this.reviewcount = reviewcount;
+        this.Count_value_start = Count_value_start;
+        this.Count_value_end = Count_value_end;
+
     }
 
     @NonNull
@@ -112,6 +122,10 @@ public class SelectedServiceProviderAdapter extends  RecyclerView.Adapter<Recycl
                 i.putExtra("spid",serviceProviderList.get(position).get_id());
                 i.putExtra("catid",catid);
                 i.putExtra("from",from);
+                i.putExtra("distance",distance);
+                i.putExtra("reviewcount",reviewcount);
+                i.putExtra("Count_value_start",Count_value_start);
+                i.putExtra("Count_value_end",Count_value_end);
                 context.startActivity(i);
 
             }
@@ -124,7 +138,10 @@ public class SelectedServiceProviderAdapter extends  RecyclerView.Adapter<Recycl
                 i.putExtra("spid",serviceProviderList.get(position).get_id());
                 i.putExtra("catid",catid);
                 i.putExtra("from",from);
-
+                i.putExtra("distance",distance);
+                i.putExtra("reviewcount",reviewcount);
+                i.putExtra("Count_value_start",Count_value_start);
+                i.putExtra("Count_value_end",Count_value_end);
                 context.startActivity(i);
 
             }

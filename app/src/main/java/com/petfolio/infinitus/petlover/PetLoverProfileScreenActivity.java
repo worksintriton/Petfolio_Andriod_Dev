@@ -159,6 +159,11 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
     private String sosPhonenumber;
     private String active_tag;
 
+    private int distanceit ;
+    private int reviewcount;
+    private int Count_value_start;
+    private int Count_value_end;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -246,6 +251,14 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
             /*SelectedServiceActivity*/
             catid = extras.getString("catid");
             from = extras.getString("from");
+            distanceit = extras.getInt("distanceit");
+            reviewcount = extras.getInt("reviewcount");
+            Count_value_start = extras.getInt("Count_value_start");
+            Count_value_end = extras.getInt("Count_value_end");
+
+
+
+
 
             /*Service_Details_Activity*/
             spid = extras.getString("spid");
@@ -286,6 +299,10 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
             Intent intent = new Intent(getApplicationContext(),SelectedServiceActivity.class);
             intent.putExtra("catid",catid);
             intent.putExtra("from",from);
+            intent.putExtra("distanceit",distanceit);
+            intent.putExtra("reviewcount",reviewcount);
+            intent.putExtra("Count_value_start",Count_value_start);
+            intent.putExtra("Count_value_end",Count_value_end);
             startActivity(intent);
         }else if(fromactivity != null && fromactivity.equalsIgnoreCase("Service_Details_Activity")){
             Intent intent = new Intent(getApplicationContext(),Service_Details_Activity.class);
@@ -299,8 +316,7 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
         }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetServiceAppointment_Doctor_Date_Time_Activity")){
             Intent intent = new Intent(getApplicationContext(),PetServiceAppointment_Doctor_Date_Time_Activity.class);
             startActivity(intent);
-        }
-        else if(active_tag != null){
+        } else if(active_tag != null){
             callDirections(active_tag);
         }else{
             Intent intent = new Intent(getApplicationContext(), PetLoverDashboardActivity.class);
