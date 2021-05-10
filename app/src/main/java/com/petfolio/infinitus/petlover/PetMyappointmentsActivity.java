@@ -108,6 +108,8 @@ public class PetMyappointmentsActivity extends AppCompatActivity implements Bott
         tabLayout.setupWithViewPager(viewPager);
         img_back.setOnClickListener(v -> onBackPressed());
 
+        img_sos.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
         img_sos.setOnClickListener(this);
         img_notification.setOnClickListener(this);
         img_cart.setOnClickListener(this);

@@ -45,7 +45,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.api.API;
+import com.petfolio.infinitus.petlover.PetLoverProfileScreenActivity;
 import com.petfolio.infinitus.responsepojo.GetAddressResultResponse;
 import com.petfolio.infinitus.service.GPSTracker;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -132,17 +134,6 @@ public class PickUpLocationActivity extends FragmentActivity implements OnMapRea
         setContentView(R.layout.activity_pick_up_location_allow);
 
         ButterKnife.bind(this);
-        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
-        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
-        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
-        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
-        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
-        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
-        toolbar_title.setText(getResources().getString(R.string.choose_location));
-
-
-        imgLocationPinUp.setVisibility(View.GONE);
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             fromactivity = extras.getString("fromactivity");
@@ -154,6 +145,36 @@ public class PickUpLocationActivity extends FragmentActivity implements OnMapRea
             Log.w(TAG,"fromactivity else: "+fromactivity);
 
         }
+
+
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.choose_location));
+
+
+        img_sos.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
+        img_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+            }
+        });
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class));
+                intent.putExtra("fromactivity",TAG);
+                startActivity(intent);
+            }
+        });
+
+
+        imgLocationPinUp.setVisibility(View.GONE);
 
 
 

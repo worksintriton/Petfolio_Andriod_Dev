@@ -34,9 +34,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 
+import com.petfolio.infinitus.petlover.PetLoverProfileScreenActivity;
 import com.petfolio.infinitus.requestpojo.LocationUpdateRequest;
 import com.petfolio.infinitus.responsepojo.LocationUpdateResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
@@ -126,7 +128,7 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
 
     Marker mCurrLocationMarker;
 
-    String CityName = "", AddressLine = "";
+    String cityname = "", address = "";
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
@@ -149,10 +151,10 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
     AlertDialog alertDialog;
 
 
-    String LocationType = "Home";
+    String locationtype = "Home";
     private String pincode;
     private boolean defaultstatus = true;
-    private String locationnickname;
+    private String nickname;
     private String id;
 
 
@@ -165,20 +167,14 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
 
         ButterKnife.bind(this);
 
-        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
-        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
-        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
-        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
-        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
-        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
-        toolbar_title.setText(getResources().getString(R.string.edit_address));
+
 
         SessionManager sessionManager = new SessionManager(EditMyAddressActivity.this);
         HashMap<String, String> user = sessionManager.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
         Log.w(TAG,"userid--->"+userid);
         avi_indicator.setVisibility(View.GONE);
-        img_back.setOnClickListener(this);
+      
         btn_change.setOnClickListener(this);
         btn_savethislocation.setOnClickListener(this);
 
@@ -210,13 +206,13 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
             
             id = extras.getString("id");
             userid = extras.getString("userid");
-            CityName = extras.getString("cityname");
+            cityname = extras.getString("cityname");
             state = extras.getString("state");
             country = extras.getString("country");
-            AddressLine = extras.getString("address");
+            address = extras.getString("address");
             pincode = extras.getString("pincode");
-            locationnickname = extras.getString("nickname");
-            LocationType = extras.getString("locationtype");
+            nickname = extras.getString("nickname");
+            locationtype = extras.getString("locationtype");
             defaultstatus = extras.getBoolean("defaultstatus");
             latitude = extras.getDouble("lat");
             longtitude = extras.getDouble("lon");
@@ -227,8 +223,8 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
                 switchButton_default.setClickable(false);
             }
 
-            if(locationnickname != null){
-                edt_pickname.setText(locationnickname);
+            if(nickname != null){
+                edt_pickname.setText(nickname);
 
             }if(pincode != null){
                 txt_pincode.setText(pincode);
@@ -236,32 +232,32 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
             }
 
 
-            if(locationnickname != null && !locationnickname.isEmpty()){
-                edt_pickname.setText(locationnickname);
+            if(nickname != null && !nickname.isEmpty()){
+                edt_pickname.setText(nickname);
             }
 
 
 
-            txt_cityname.setText(CityName);
-            txt_cityname_title.setText(CityName);
-            if(AddressLine != null && !AddressLine.isEmpty()){
-                txt_address.setText(AddressLine);
-                txt_location.setText(AddressLine);
+            txt_cityname.setText(cityname);
+            txt_cityname_title.setText(cityname);
+            if(address != null && !address.isEmpty()){
+                txt_address.setText(address);
+                txt_location.setText(address);
 
             }
 
 
 
-            if(LocationType != null){
-                if(LocationType.equalsIgnoreCase("Home")){
-                    LocationType = "Home";
+            if(locationtype != null){
+                if(locationtype.equalsIgnoreCase("Home")){
+                    locationtype = "Home";
                     radioButton_Home.setChecked(true);
 
-                }else if(LocationType.equalsIgnoreCase("Work")){
-                    LocationType = "Work";
+                }else if(locationtype.equalsIgnoreCase("Work")){
+                    locationtype = "Work";
                     radioButton_Work.setChecked(true);
-                }else if(LocationType.equalsIgnoreCase("Others")){
-                    LocationType = "Others";
+                }else if(locationtype.equalsIgnoreCase("Others")){
+                    locationtype = "Others";
                     radioButton_Others.setChecked(true);
 
                 }
@@ -272,11 +268,50 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
         }
 
 
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.edit_address));
+
+        img_back.setOnClickListener(this);
+        img_sos.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
+        img_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+            }
+        });
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class);
+                intent.putExtra("id",id);
+                intent.putExtra("userid",userid);
+                intent.putExtra("nickname",nickname);
+                intent.putExtra("locationtype",locationtype);
+                intent.putExtra("defaultstatus",defaultstatus);
+                intent.putExtra("lat",latitude);
+                intent.putExtra("lon",longtitude);
+                intent.putExtra("pincode",pincode);
+                intent.putExtra("cityname",cityname);
+                intent.putExtra("address",address);
+                intent.putExtra("fromactivity",TAG);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
+
         rglocationtype.setOnCheckedChangeListener((group, checkedId) -> {
             int radioButtonID = rglocationtype.getCheckedRadioButtonId();
             RadioButton radioButton = rglocationtype.findViewById(radioButtonID);
-            LocationType = (String) radioButton.getText();
-            Log.w(TAG,"selectedRadioButton" + LocationType);
+            locationtype = (String) radioButton.getText();
+            Log.w(TAG,"selectedRadioButton" + locationtype);
 
 
         });
@@ -352,8 +387,8 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
                Intent intent = new Intent(getApplicationContext(),PickUpLocationEditActivity.class);
                 intent.putExtra("id",id);
                 intent.putExtra("userid",userid);
-                intent.putExtra("nickname",locationnickname);
-                intent.putExtra("locationtype",LocationType);
+                intent.putExtra("nickname",nickname);
+                intent.putExtra("locationtype",locationtype);
                 intent.putExtra("defaultstatus",defaultstatus);
                 intent.putExtra("lat",latitude);
                 intent.putExtra("lon",longtitude);
@@ -464,12 +499,12 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
         locationUpdateRequest.setUser_id(userid);
         locationUpdateRequest.setLocation_state(state);
         locationUpdateRequest.setLocation_country(country);
-        locationUpdateRequest.setLocation_city(CityName);
+        locationUpdateRequest.setLocation_city(cityname);
         locationUpdateRequest.setLocation_pin(pincode);
-        locationUpdateRequest.setLocation_address(AddressLine);
+        locationUpdateRequest.setLocation_address(address);
         locationUpdateRequest.setLocation_lat(latitude);
         locationUpdateRequest.setLocation_long(longtitude);
-        locationUpdateRequest.setLocation_title(LocationType);
+        locationUpdateRequest.setLocation_title(locationtype);
         locationUpdateRequest.setLocation_nickname(edt_pickname.getText().toString());
         locationUpdateRequest.setDefault_status(defaultstatus);
         locationUpdateRequest.setDate_and_time(currentDateandTime);

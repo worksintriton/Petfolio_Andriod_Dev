@@ -47,6 +47,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.adapter.AddImageListAdapter;
 import com.petfolio.infinitus.adapter.ViewPagerClinicDetailsAdapter;
 import com.petfolio.infinitus.adapter.ViewPagerPetlistAdapter;
@@ -264,22 +265,6 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         setContentView(R.layout.activity_book_appointment);
 
         ButterKnife.bind(this);
-
-        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
-        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
-        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
-        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
-        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
-        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
-        toolbar_title.setText(getResources().getString(R.string.appointment));
-
-        txt_pettype.setVisibility(View.GONE);
-        txt_petbreed.setVisibility(View.GONE);
-        cv_pet_img.setVisibility(View.GONE);
-        rv_upload_pet_images.setVisibility(View.GONE);
-        img_pet_imge.setVisibility(View.VISIBLE);
-        rl_petbreed.setVisibility(View.GONE);
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             doctorid = extras.getString("doctorid");
@@ -293,6 +278,42 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
             communicationtype = extras.getString("communicationtype");
             Log.w(TAG,"Bundle "+" doctorid : "+doctorid+" selectedTimeSlot : "+selectedTimeSlot+"communicationtype : "+communicationtype+" amount : "+amount);
         }
+
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.appointment));
+
+        img_sos.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
+
+        img_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+            }
+        });
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class);
+                intent.putExtra("doctorid",doctorid);
+                intent.putExtra("fromactivity",TAG);
+                startActivity(intent);
+            }
+        });
+
+        txt_pettype.setVisibility(View.GONE);
+        txt_petbreed.setVisibility(View.GONE);
+        cv_pet_img.setVisibility(View.GONE);
+        rv_upload_pet_images.setVisibility(View.GONE);
+        img_pet_imge.setVisibility(View.VISIBLE);
+        rl_petbreed.setVisibility(View.GONE);
+
+
         radioButton_online.setVisibility(View.GONE);
         radioButton_visit.setVisibility(View.GONE);
 

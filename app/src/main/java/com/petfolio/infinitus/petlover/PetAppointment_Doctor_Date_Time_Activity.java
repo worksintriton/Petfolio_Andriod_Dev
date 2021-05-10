@@ -36,6 +36,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.adapter.PetMyCalendarAvailableAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
@@ -182,34 +183,6 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
         ButterKnife.bind(this);
 
-        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
-        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
-        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
-        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
-        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
-        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
-        toolbar_title.setText(getResources().getString(R.string.appointment));
-
-
-        avi_indicator.setVisibility(View.GONE);
-
-
-
-
-
-        SessionManager sessionManager = new SessionManager(getApplicationContext());
-        HashMap<String, String> user = sessionManager.getProfileDetails();
-        userid = user.get(SessionManager.KEY_ID);
-
-
-        Log.w(TAG,"userid :"+userid);
-
-
-
-
-
-
-
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -238,6 +211,55 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
             Log.w(TAG,"petid-->"+petid+ "allergies : "+allergies+"  probleminfo : "+probleminfo+" selectedAppointmentType : "+selectedAppointmentType+" communicationtype : "+communicationtype);
 
         }
+
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.appointment));
+
+
+        img_sos.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
+        avi_indicator.setVisibility(View.GONE);
+
+
+        img_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+            }
+        });
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class);
+                intent.putExtra("doctorid",doctorid);
+                intent.putExtra("fromactivity",TAG);
+                startActivity(intent);
+            }
+        });
+
+
+
+
+
+        SessionManager sessionManager = new SessionManager(getApplicationContext());
+        HashMap<String, String> user = sessionManager.getProfileDetails();
+        userid = user.get(SessionManager.KEY_ID);
+
+
+        Log.w(TAG,"userid :"+userid);
+
+
+
+
+
+
+
+
 
 
         Date c = Calendar.getInstance().getTime();

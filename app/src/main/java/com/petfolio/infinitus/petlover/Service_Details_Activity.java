@@ -241,7 +241,7 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
 
         }
 
-        Log.w(TAG," userid : "+userid+ " spid : "+spid+" catid : "+catid+" from : "+from);
+        Log.w(TAG," userid : "+userid+ " spid : "+spid+" catid : "+catid+" from : "+from+" distance : "+distance);
 
         if(spid != null && userid != null) {
             if (new ConnectionDetector(Service_Details_Activity.this).isNetworkAvailable(Service_Details_Activity.this)) {
@@ -346,11 +346,13 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
         intent.putExtra("selectedServiceTitle",selectedServiceTitle);
         intent.putExtra("serviceamount",serviceamount);
         intent.putExtra("servicetime",servicetime);
+        intent.putExtra("distance",distance);
         startActivity(intent);
     }
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        Log.w(TAG,"distance : "+distance);
         Intent intent = new Intent(getApplicationContext(),SelectedServiceActivity.class);
         intent.putExtra("spid",spid);
         intent.putExtra("catid",catid);
@@ -361,6 +363,7 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
         intent.putExtra("Count_value_end",Count_value_end);
         startActivity(intent);
         finish();
+
     }
     @SuppressLint("LogNotTimber")
     private void SPDetailsRepsonseCall() {

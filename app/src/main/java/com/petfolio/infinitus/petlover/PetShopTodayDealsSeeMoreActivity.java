@@ -166,6 +166,8 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
      TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
      toolbar_title.setText(getResources().getString(R.string.shop));
 
+    img_sos.setVisibility(View.GONE);
+
      img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -181,7 +183,7 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            tag = extras.getString("tag");
+          tag = extras.getString("tag");
           discount_value = extras.getString("discount_value");
           petTypeId = extras.getString("petTypeId");
           petBreedTypeId = extras.getString("petBreedTypeId");
@@ -211,6 +213,7 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
         bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
         bottom_navigation_view.setItemIconTintList(null);
         bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+        bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
 
         img_sos.setOnClickListener(this);
         img_notification.setOnClickListener(this);
@@ -258,16 +261,16 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
        Log.w(TAG," tag test : "+tag);
         if(tag != null){
             if(tag.equalsIgnoreCase("1")){
-                bottom_navigation_view.setSelectedItemId(R.id.home);
+                bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
             }else if(tag.equalsIgnoreCase("2")){
                 bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
                 //bottom_navigation_view.setSelectedItemId(R.id.shop);
             }else if(tag.equalsIgnoreCase("3")){
-                bottom_navigation_view.setSelectedItemId(R.id.services);
+                bottom_navigation_view.getMenu().findItem(R.id.services).setChecked(true);
             }else if(tag.equalsIgnoreCase("4")){
-                bottom_navigation_view.setSelectedItemId(R.id.care);
+                bottom_navigation_view.getMenu().findItem(R.id.care).setChecked(true);
             } else if(tag.equalsIgnoreCase("5")){
-                bottom_navigation_view.setSelectedItemId(R.id.community);
+                bottom_navigation_view.getMenu().findItem(R.id.community).setChecked(true);
             }
         }
 

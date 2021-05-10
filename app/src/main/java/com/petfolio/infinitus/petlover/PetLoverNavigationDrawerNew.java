@@ -438,7 +438,6 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
 
     }
     private void gotoMyOrders() {
-      //  startActivity(new Intent(getApplicationContext(),PetMyOrdrersActivity.class));
         startActivity(new Intent(getApplicationContext(),PetMyOrdrersNewActivity.class));
 
     }

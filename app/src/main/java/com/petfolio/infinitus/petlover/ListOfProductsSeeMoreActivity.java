@@ -174,6 +174,8 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
         TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.shop));
 
+        img_sos.setVisibility(View.GONE);
+
         rv_today_deal.setHasFixedSize(true);
         gridLayoutManager = new GridLayoutManager(this, 2);
         rv_today_deal.setLayoutManager(gridLayoutManager);

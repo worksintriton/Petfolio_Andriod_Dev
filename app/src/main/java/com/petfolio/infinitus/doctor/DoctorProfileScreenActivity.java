@@ -161,6 +161,7 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000;
     private String profileimage;
+    private String fromactivity;
 
 
     @Override
@@ -182,6 +183,11 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
         profileimage = user.get(SessionManager.KEY_PROFILE_IMAGE);
 
         Log.w(TAG,"session profileimage : "+profileimage);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            fromactivity = extras.getString("fromactivity");
+        }
 
 
         txt_usrname.setText(name);
@@ -230,8 +236,14 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(), DoctorDashboardActivity.class));
-        finish();
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorNavigationDrawer")){
+            startActivity(new Intent(getApplicationContext(), DoctorDashboardActivity.class));
+            finish();
+        }else{
+            startActivity(new Intent(getApplicationContext(), DoctorDashboardActivity.class));
+            finish();
+        }
+
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -251,7 +263,7 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
                 startActivity(new Intent(getApplicationContext(), EditDoctorBusinessInfoActivity.class));
                 break;
                 case R.id.txt_manage_address:
-                    //gotoManageAddress();
+                    gotoManageAddress();
                 break;
                 case R.id.txt_change_password:
                 break;
@@ -305,10 +317,6 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
 
 
     }
-
-
-
-
 
 
     @SuppressLint("LogNotTimber")

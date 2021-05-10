@@ -59,7 +59,8 @@
                     android:layout_marginStart="20dp"
                     android:src="@drawable/ic_sos"
                     tools:ignore="ContentDescription"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"/>
 
                 <ImageView
                     android:layout_width="24dp"
@@ -67,7 +68,8 @@
                     android:layout_marginStart="20dp"
                     android:src="@drawable/ic_notifications"
                     tools:ignore="ContentDescription"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"/>
 
 
                 <ImageView
@@ -101,6 +103,7 @@
                     android:textStyle="bold"
                     android:text="0"/>
                 <ImageView
+                    android:id="@+id/img_profile"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_user"

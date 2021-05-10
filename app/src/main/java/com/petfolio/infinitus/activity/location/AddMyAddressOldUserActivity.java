@@ -35,8 +35,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.petlover.PetLoverProfileScreenActivity;
 import com.petfolio.infinitus.requestpojo.LocationAddRequest;
 import com.petfolio.infinitus.responsepojo.LocationAddResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
@@ -139,6 +141,7 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
 
     String LocationType = "Home";
     private boolean defaultstatus = false;
+    private String PostalCode;
 
 
     @Override
@@ -150,33 +153,13 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
 
         ButterKnife.bind(this);
 
-        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
-        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
-        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
-        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
-        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
-        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
-        toolbar_title.setText(getResources().getString(R.string.pickup_location));
-
-        avi_indicator.setVisibility(View.GONE);
-        img_back.setOnClickListener(this);
-        btn_change.setOnClickListener(this);
-        btn_savethislocation.setOnClickListener(this);
-
-        edt_cityname.setEnabled(false);
-        edt_pincode.setEnabled(false);
-        edt_location.setEnabled(false);
-
-
-
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
 
             latlng = String.valueOf(getIntent().getSerializableExtra("latlng"));
-           Log.w(TAG,"latlng-->"+getIntent().getSerializableExtra("latlng"));
+            Log.w(TAG,"latlng-->"+getIntent().getSerializableExtra("latlng"));
 
-             String newString = latlng.replace("lat/lng:", "");
+            String newString = latlng.replace("lat/lng:", "");
             Log.w(TAG,"latlng=="+newString);
 
             String latlngs = newString.trim().replaceAll("\\(", "").replaceAll("\\)","").trim();
@@ -196,7 +179,7 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
 
             CityName = extras.getString("cityname");
             AddressLine = extras.getString("address");
-            String postalCode = extras.getString("PostalCode");
+            PostalCode = extras.getString("PostalCode");
 
 
             userid = extras.getString("userid");
@@ -205,13 +188,61 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
             edt_cityname.setText(CityName);
             txt_cityname_title.setText(CityName);
             txt_address.setText(AddressLine);
-            edt_pincode.setText(postalCode);
+            edt_pincode.setText(PostalCode);
 
 
 
 
 
         }
+
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.pickup_location));
+
+        img_sos.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
+
+
+
+        img_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+            }
+        });
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class));
+                intent.putExtra("latlng",latlng);
+                intent.putExtra("CityName",CityName);
+                intent.putExtra("AddressLine",AddressLine);
+                intent.putExtra("PostalCode",PostalCode);
+                intent.putExtra("userid",userid);
+                intent.putExtra("nickname",locationnickname);
+                intent.putExtra("fromactivity",TAG);
+                startActivity(intent);
+            }
+        });
+
+        avi_indicator.setVisibility(View.GONE);
+        img_back.setOnClickListener(this);
+        btn_change.setOnClickListener(this);
+        btn_savethislocation.setOnClickListener(this);
+
+        edt_cityname.setEnabled(false);
+        edt_pincode.setEnabled(false);
+        edt_location.setEnabled(false);
+
+
+
+
+
 
         SessionManager session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();

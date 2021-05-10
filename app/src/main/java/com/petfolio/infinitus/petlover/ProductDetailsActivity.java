@@ -350,7 +350,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
             startActivity(intent);
             finish();
         }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetLoverShopNewAdapter")){
-            callDirections("1");
+            callDirections("2");
         }else {
             callDirections("2");
         }
@@ -619,11 +619,13 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
-                        Intent intent = new Intent(getApplicationContext(),PetCartActivity.class);
+                        Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
+
+                        /*  Intent intent = new Intent(getApplicationContext(),PetCartActivity.class);
                         intent.putExtra("productid",productid);
                         intent.putExtra("fromactivity",TAG);
                         startActivity(intent);
-                        finish();
+                        finish();*/
                     }
                 }
             }

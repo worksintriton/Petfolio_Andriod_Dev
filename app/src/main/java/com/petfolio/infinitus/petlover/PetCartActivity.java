@@ -150,6 +150,10 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
     @BindView(R.id.btn_shopnow)
     Button btn_shopnow;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_profile)
+    ImageView img_profile;
+
 
 
 
@@ -214,11 +218,15 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
 
             }
         });
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class));
+            }
+        });
 
 
         btn_procced_to_buy.setOnClickListener(v -> {
-
-
             if(grand_total!=0){
 
                 Intent i = new Intent(getApplicationContext(), ShippingAddressActivity.class);

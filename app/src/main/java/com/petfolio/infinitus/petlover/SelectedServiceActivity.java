@@ -167,7 +167,6 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
             Count_value_end = extras.getInt("Count_value_end");
             distance = extras.getInt("distance");
             selectedprice = extras.getString("selectedprice");
-            distance = extras.getInt("distanceit");
 
 
            }
@@ -402,7 +401,7 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
         intent.putExtra("fromactivity",TAG);
         intent.putExtra("catid",catid);
         intent.putExtra("from",from);
-        intent.putExtra("distanceit",distance);
+        intent.putExtra("distance",distance);
         intent.putExtra("reviewcount",reviewcount);
         intent.putExtra("Count_value_start",Count_value_start);
         intent.putExtra("Count_value_end",Count_value_end);

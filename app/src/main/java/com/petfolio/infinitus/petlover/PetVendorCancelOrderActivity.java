@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.activity.location.PickUpLocationAllowActivity;
 import com.petfolio.infinitus.activity.location.PickUpLocationDenyActivity;
 import com.petfolio.infinitus.api.APIClient;
@@ -111,6 +112,19 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
         setContentView(R.layout.activity_pet_vendor_cancel_order);
         ButterKnife.bind(this);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            _id = extras.getString("_id");
+            orderid = extras.getString("orderid");
+            product_id = extras.getInt("product_id");
+            cancelorder = extras.getString("cancelorder");
+            Log.w(TAG,"_id : "+_id);
+            product_idList = getIntent().getIntegerArrayListExtra("product_idList");
+            Log.w(TAG,"product_idList : "+ new Gson().toJson(product_idList)+" cancelorder :"+cancelorder);
+
+        }
+
+
         ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
         ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
         ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
@@ -121,7 +135,29 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
 
         img_back.setOnClickListener(this);
 
+        img_sos.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
         edt_comment.setVisibility(View.GONE);
+
+        img_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+            }
+        });
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class);
+                intent.putExtra("_id",_id);
+                intent.putExtra("orderid",orderid);
+                intent.putExtra("product_id",product_id);
+                intent.putExtra("cancelorder",cancelorder);
+                intent.putExtra("product_idList",product_idList);
+                intent.putExtra("fromactivity",TAG);
+                startActivity(intent);
+            }
+        });
 
         bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
         bottom_navigation_view.setItemIconTintList(null);
@@ -129,17 +165,6 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
         bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
 
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            _id = extras.getString("_id");
-            orderid = extras.getString("orderid");
-            product_id = extras.getInt("product_id");
-            cancelorder = extras.getString("cancelorder");
-            Log.w(TAG,"_id : "+_id);
-           product_idList = getIntent().getIntegerArrayListExtra("product_idList");
-            Log.w(TAG,"product_idList : "+ new Gson().toJson(product_idList)+" cancelorder :"+cancelorder);
-
-        }
 
         if (new ConnectionDetector(PetVendorCancelOrderActivity.this).isNetworkAvailable(PetVendorCancelOrderActivity.this)) {
             vendorReasonListResponseCall();

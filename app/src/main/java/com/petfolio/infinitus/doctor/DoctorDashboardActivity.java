@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
@@ -28,13 +29,20 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 
+import com.petfolio.infinitus.api.APIClient;
+import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.fragmentdoctor.DoctorShopFragment;
 import com.petfolio.infinitus.fragmentdoctor.FragmentDoctorDashboard;
 
+import com.petfolio.infinitus.requestpojo.ShippingAddressFetchByUserIDRequest;
+import com.petfolio.infinitus.responsepojo.ShippingAddressFetchByUserIDResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 
+import com.petfolio.infinitus.utils.ConnectionDetector;
+import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
 
@@ -46,6 +54,9 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements Serializable, BottomNavigationView.OnNavigationItemSelectedListener{
@@ -63,6 +74,10 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
 
 
     BottomNavigationView bottom_navigation_view;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_location)
+    TextView txt_location;
 
 
     final Fragment fragmentDoctorDashboard = new FragmentDoctorDashboard();
@@ -106,6 +121,10 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
         SessionManager session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
+
+        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+            shippingAddressresponseCall();
+        }
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -303,6 +322,74 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
 
 
     }
+
+    @SuppressLint("LogNotTimber")
+    private void shippingAddressresponseCall() {
+        /* avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();*/
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<ShippingAddressFetchByUserIDResponse> call = apiInterface.fetch_shipp_addr_ResponseCall(RestUtils.getContentType(), shippingAddressFetchByUserIDRequest());
+        Log.w(TAG,"ShippingAddressFetchByUserIDResponse url  :%s"+" "+ call.request().url().toString());
+        call.enqueue(new Callback<ShippingAddressFetchByUserIDResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ShippingAddressFetchByUserIDResponse> call, @NonNull Response<ShippingAddressFetchByUserIDResponse> response) {
+                Log.w(TAG,"ShippingAddressFetchByUserIDResponse"+ "--->" + new Gson().toJson(response.body()));
+                //  avi_indicator.smoothToHide();
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200) {
+                        if(response.body().getData()!=null){
+                            ShippingAddressFetchByUserIDResponse.DataBean dataBeanList = response.body().getData();
+
+                            if(dataBeanList!=null) {
+                                if(dataBeanList.isDefault_status()){
+                                    Log.w(TAG,"true-->");
+                                    String city = dataBeanList.getLocation_city();
+                                    if(city !=null){
+                                        txt_location.setText(city);
+                                    }
+
+                                }
+
+
+                            }
+
+                        }
+                    }
+
+
+
+                }
+
+
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ShippingAddressFetchByUserIDResponse> call, @NonNull Throwable t) {
+
+                //  avi_indicator.smoothToHide();
+                Log.w(TAG,"ShippingAddressFetchByUserIDResponse flr"+"--->" + t.getMessage());
+            }
+        });
+
+
+    }
+    @SuppressLint("LogNotTimber")
+    private ShippingAddressFetchByUserIDRequest shippingAddressFetchByUserIDRequest() {
+        /*
+         * user_id : 6048589d0b3a487571a1c567
+         */
+
+        ShippingAddressFetchByUserIDRequest shippingAddressFetchByUserIDRequest = new ShippingAddressFetchByUserIDRequest();
+        shippingAddressFetchByUserIDRequest.setUser_id(userid);
+
+        Log.w(TAG,"shippingAddressFetchByUserIDRequest"+ "--->" + new Gson().toJson(shippingAddressFetchByUserIDRequest));
+        return shippingAddressFetchByUserIDRequest;
+    }
+
+
+
 
 
 

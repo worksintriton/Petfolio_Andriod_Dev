@@ -1,12 +1,4 @@
-package com.petfolio.infinitus.activity.location;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+package com.petfolio.infinitus.doctor;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -24,10 +16,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.NotificationActivity;
+import com.petfolio.infinitus.activity.location.PickUpLocationActivity;
 import com.petfolio.infinitus.adapter.ManageAddressListAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
@@ -46,7 +46,6 @@ import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
-
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -60,9 +59,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ManageAddressActivity extends AppCompatActivity implements View.OnClickListener, LocationDeleteListener, LocationDefaultListener, BottomNavigationView.OnNavigationItemSelectedListener {
+public class ManageAddressDoctorActivity extends AppCompatActivity implements View.OnClickListener, LocationDeleteListener, LocationDefaultListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
-    private static final String TAG = "ManageAddressActivity";
+    private static final String TAG = "ManageAddressDoctorActivity";
 
 
 
@@ -89,7 +88,7 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
 
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.include_petlover_footer)
+    @BindView(R.id.include_doctor_footer)
     View include_petlover_footer;
 
     @SuppressLint("NonConstantResourceId")
@@ -105,10 +104,11 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
     Dialog alertDialog;
     private String fromactivity;
 
+    @SuppressLint("LongLogTag")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manage_address);
+        setContentView(R.layout.activity_manage_address_doctor);
         ButterKnife.bind(this);
 
 
@@ -182,7 +182,7 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
     }
 
     private void gotoAddNewAddress() {
-        Intent intent = new Intent(getApplicationContext(),PickUpLocationActivity.class);
+        Intent intent = new Intent(getApplicationContext(), PickUpLocationActivity.class);
         startActivity(intent);
     }
 
@@ -287,7 +287,7 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
 
         try {
 
-            dialog = new Dialog(ManageAddressActivity.this);
+            dialog = new Dialog(ManageAddressDoctorActivity.this);
             dialog.setContentView(R.layout.alert_approve_reject_layout);
             TextView tvheader = dialog.findViewById(R.id.tvInternetNotConnected);
             tvheader.setText(R.string.deletemsg);
@@ -378,7 +378,7 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
 
         try {
 
-            dialog = new Dialog(ManageAddressActivity.this);
+            dialog = new Dialog(ManageAddressDoctorActivity.this);
             dialog.setContentView(R.layout.alert_approve_reject_layout);
             TextView tvheader = dialog.findViewById(R.id.tvInternetNotConnected);
             tvheader.setText(R.string.locationstatuschange);

@@ -3,6 +3,7 @@ package com.petfolio.infinitus.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,9 @@ public class SelectedServiceProviderAdapter extends  RecyclerView.Adapter<Recycl
 
     @SuppressLint("SetTextI18n")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
+
+
+        Log.w(TAG,"distance : "+distance);
 
         currentItem = serviceProviderList.get(position);
         holder.txt_serv_offer.setVisibility(View.GONE);

@@ -43,6 +43,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.adapter.AddImageListAdapter;
 import com.petfolio.infinitus.adapter.ViewPagerPetlistAdapter;
 import com.petfolio.infinitus.api.APIClient;
@@ -256,6 +257,7 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
     Timer timer;
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000;
+    private int distance;
 
     @SuppressLint("LongLogTag")
     @Override
@@ -272,6 +274,34 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
         ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
         TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.appointment));
+
+        img_sos.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
+
+        img_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+            }
+        });
+
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class);
+                intent.putExtra("spid",spid);
+                intent.putExtra("catid",catid);
+                intent.putExtra("from",from);
+                intent.putExtra("spuserid",spuserid);
+                intent.putExtra("selectedServiceTitle",selectedServiceTitle);
+                intent.putExtra("serviceamount",serviceamount);
+                intent.putExtra("servicetime",servicetime);
+                intent.putExtra("distance",distance);
+                intent.putExtra("fromactivity",TAG);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         txt_pettype.setVisibility(View.GONE);
         txt_petbreed.setVisibility(View.GONE);
@@ -294,6 +324,7 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
             servicetime = extras.getString("servicetime");
             SP_ava_Date = extras.getString("SP_ava_Date");
             selectedTimeSlot = extras.getString("selectedTimeSlot");
+            distance = extras.getInt("distance");
             Log.w(TAG,"spid : "+spid +" catid : "+catid+" from : "+from+" serviceamount : "+serviceamount+" servicetime : "+servicetime+" SP_ava_Date : "+SP_ava_Date+" selectedTimeSlot : "+selectedTimeSlot);
 
             if(selectedServiceTitle != null){
@@ -1150,7 +1181,9 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
         intent.putExtra("selectedServiceTitle",selectedServiceTitle);
         intent.putExtra("serviceamount",serviceamount);
         intent.putExtra("servicetime",servicetime);
+        intent.putExtra("distance",distance);
         startActivity(intent);
+        finish();
 
 
 

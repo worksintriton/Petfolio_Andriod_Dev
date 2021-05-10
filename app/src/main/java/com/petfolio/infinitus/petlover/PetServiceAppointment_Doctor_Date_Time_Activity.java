@@ -154,7 +154,7 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.include_petlover_header)
     View include_petlover_header;
-
+    private int distance;
 
 
     @Override
@@ -172,6 +172,9 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
         ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
         TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.appointment));
+
+        img_sos.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
 
         avi_indicator.setVisibility(View.GONE);
 
@@ -209,7 +212,9 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
             selectedServiceTitle = extras.getString("selectedServiceTitle");
             serviceamount = extras.getInt("serviceamount");
             servicetime = extras.getString("servicetime");
+            distance = extras.getInt("distance");
             Log.w(TAG,"spid : "+spid +" catid : "+catid+" from : "+from);
+            Log.w(TAG,"distance : "+distance);
         }
 
 
@@ -516,15 +521,18 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
         Intent intent = new Intent(getApplicationContext(),Service_Details_Activity.class);
         intent.putExtra("spid",spid);
         intent.putExtra("catid",catid);
         intent.putExtra("from",from);
+        intent.putExtra("spuserid",spuserid);
+        intent.putExtra("selectedServiceTitle",selectedServiceTitle);
+        intent.putExtra("serviceamount",serviceamount);
+        intent.putExtra("servicetime",servicetime);
+        intent.putExtra("distance",distance);
         startActivity(intent);
-
-
-
+        finish();
+        Log.w(TAG,"distance : "+distance);
     }
 
 
@@ -550,6 +558,7 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
         intent.putExtra("servicetime",servicetime);
         intent.putExtra("SP_ava_Date",SP_ava_Date);
         intent.putExtra("selectedTimeSlot",selectedTimeSlot);
+        intent.putExtra("distance",distance);
         Log.w(TAG,"gotoServiceBookAppoinment : "+"SP_ava_Date : "+SP_ava_Date);
         startActivity(intent);
 
@@ -572,6 +581,14 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
             case R.id.img_profile:
                 Intent intent = new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class);
                 intent.putExtra("fromactivity",TAG);
+                intent.putExtra("spid",spid);
+                intent.putExtra("catid",catid);
+                intent.putExtra("from",from);
+                intent.putExtra("spuserid",spuserid);
+                intent.putExtra("selectedServiceTitle",selectedServiceTitle);
+                intent.putExtra("serviceamount",serviceamount);
+                intent.putExtra("servicetime",servicetime);
+                intent.putExtra("distance",distance);
                 startActivity(intent);
                 break;
         }

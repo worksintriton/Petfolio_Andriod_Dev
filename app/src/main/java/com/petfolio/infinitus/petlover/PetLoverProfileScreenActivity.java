@@ -34,7 +34,10 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
 import com.petfolio.infinitus.activity.NotificationActivity;
+import com.petfolio.infinitus.activity.location.AddMyAddressOldUserActivity;
+import com.petfolio.infinitus.activity.location.EditMyAddressActivity;
 import com.petfolio.infinitus.activity.location.ManageAddressActivity;
+import com.petfolio.infinitus.activity.location.PickUpLocationActivity;
 import com.petfolio.infinitus.adapter.ManagePetListAdapter;
 import com.petfolio.infinitus.adapter.PetLoverSOSAdapter;
 import com.petfolio.infinitus.api.APIClient;
@@ -55,6 +58,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -149,7 +153,7 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
     private Dialog dialog;
     private String profileimage;
     private String fromactivity;
-    private String doctorid,doctorname,distance;
+    private String doctorid,doctorname,strdistance;
 
     private String catid;
     private String spid;
@@ -159,10 +163,25 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
     private String sosPhonenumber;
     private String active_tag;
 
-    private int distanceit ;
+    private int distance;
     private int reviewcount;
     private int Count_value_start;
     private int Count_value_end;
+    private String spuserid;
+    private String _id;
+
+    ArrayList<Integer> product_idList;
+    private int product_id;
+    private String orderid;
+    private String cancelorder;
+    private String latlng,CityName,AddressLine,PostalCode,nickname;
+
+    String locationtype;
+    private String pincode,cityname,address;
+    private boolean defaultstatus;
+    private String id;
+    double latitude, longtitude;
+
 
 
     @Override
@@ -179,6 +198,8 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
         ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
         TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.profile));
+        img_cart.setVisibility(View.GONE);
+
 
 
         Log.w(TAG,"onCreate : ");
@@ -245,25 +266,54 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
             /*DoctorClinicDetailsActivity*/
             doctorid = extras.getString("doctorid");
             doctorname = extras.getString("doctorname");
-            distance = extras.getString("distance");
+            strdistance = extras.getString("distance");
             Log.w(TAG,"fromactivity : "+fromactivity+" active_tag : "+active_tag);
 
             /*SelectedServiceActivity*/
             catid = extras.getString("catid");
             from = extras.getString("from");
-            distanceit = extras.getInt("distanceit");
+            distance = extras.getInt("distance");
             reviewcount = extras.getInt("reviewcount");
             Count_value_start = extras.getInt("Count_value_start");
             Count_value_end = extras.getInt("Count_value_end");
-
-
-
-
 
             /*Service_Details_Activity*/
             spid = extras.getString("spid");
             catid = extras.getString("catid");
             from = extras.getString("from");
+
+            spuserid = extras.getString("spuserid");
+            _id = extras.getString("_id");
+
+            Log.w(TAG,"distance : "+distance);
+
+            _id = extras.getString("_id");
+            orderid = extras.getString("orderid");
+            product_id = extras.getInt("product_id");
+            cancelorder = extras.getString("cancelorder");
+            Log.w(TAG,"_id : "+_id);
+            product_idList = getIntent().getIntegerArrayListExtra("product_idList");
+
+
+            latlng = extras.getString("latlng");
+            CityName = extras.getString("CityName");
+            AddressLine = extras.getString("AddressLine");
+            PostalCode = extras.getString("PostalCode");
+            nickname = extras.getString("nickname");
+
+            id = extras.getString("id");
+            locationtype = extras.getString("locationtype");
+            defaultstatus = extras.getBoolean("defaultstatus");
+            latitude = extras.getDouble("lat");
+            longtitude = extras.getDouble("lon");
+            pincode = extras.getString("pincode");
+            cityname = extras.getString("cityname");
+            address = extras.getString("address");
+
+
+
+
+
         }
 
         bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
@@ -294,28 +344,105 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
             intent.putExtra("doctorname",doctorname);
             intent.putExtra("distance",distance);
             startActivity(intent);
+            finish();
         }
         else if(fromactivity != null && fromactivity.equalsIgnoreCase("SelectedServiceActivity")){
             Intent intent = new Intent(getApplicationContext(),SelectedServiceActivity.class);
             intent.putExtra("catid",catid);
             intent.putExtra("from",from);
-            intent.putExtra("distanceit",distanceit);
+            intent.putExtra("distance",distance);
             intent.putExtra("reviewcount",reviewcount);
             intent.putExtra("Count_value_start",Count_value_start);
             intent.putExtra("Count_value_end",Count_value_end);
             startActivity(intent);
+            finish();
         }else if(fromactivity != null && fromactivity.equalsIgnoreCase("Service_Details_Activity")){
             Intent intent = new Intent(getApplicationContext(),Service_Details_Activity.class);
             intent.putExtra("spid",spid);
             intent.putExtra("catid",catid);
             intent.putExtra("from",from);
             startActivity(intent);
+            finish();
         }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetMyappointmentsActivity")){
             Intent intent = new Intent(getApplicationContext(),PetMyappointmentsActivity.class);
             startActivity(intent);
+            finish();
         }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetServiceAppointment_Doctor_Date_Time_Activity")){
             Intent intent = new Intent(getApplicationContext(),PetServiceAppointment_Doctor_Date_Time_Activity.class);
+            intent.putExtra("spuserid",spuserid);
+            intent.putExtra("spid",spid);
+            intent.putExtra("catid",catid);
+            intent.putExtra("distance",distance);
             startActivity(intent);
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("ManageAddressActivity")){
+            Intent intent = new Intent(getApplicationContext(),ManageAddressActivity.class);
+            startActivity(intent);
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetMyOrdrersNewActivity")){
+            Intent intent = new Intent(getApplicationContext(),PetMyOrdrersNewActivity.class);
+            startActivity(intent);
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("ServiceBookAppointmentActivity")){
+            Intent intent = new Intent(getApplicationContext(),ServiceBookAppointmentActivity.class);
+            intent.putExtra("spuserid",spuserid);
+            intent.putExtra("spid",spid);
+            intent.putExtra("catid",catid);
+            intent.putExtra("distance",distance);
+            startActivity(intent);
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetAppointment_Doctor_Date_Time_Activity")){
+            Intent intent = new Intent(getApplicationContext(),PetAppointment_Doctor_Date_Time_Activity.class);
+            intent.putExtra("doctorid",doctorid);
+            startActivity(intent);
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("BookAppointmentActivity")){
+            Intent intent = new Intent(getApplicationContext(),BookAppointmentActivity.class);
+            intent.putExtra("doctorid",doctorid);
+            startActivity(intent);
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetLoverVendorOrderDetailsActivity")){
+            Intent intent = new Intent(getApplicationContext(),PetLoverVendorOrderDetailsActivity.class);
+            intent.putExtra("_id",_id);
+            startActivity(intent);
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetVendorCancelOrderActivity")){
+            Intent intent = new Intent(getApplicationContext(),PetVendorCancelOrderActivity.class);
+            intent.putExtra("_id",_id);
+            intent.putExtra("orderid",orderid);
+            intent.putExtra("product_id",product_id);
+            intent.putExtra("cancelorder",cancelorder);
+            intent.putExtra("product_idList",product_idList);
+            startActivity(intent);
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PickUpLocationActivity")){
+            Intent intent = new Intent(getApplicationContext(), PickUpLocationActivity.class);
+            startActivity(intent);
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("AddMyAddressOldUserActivity")){
+            Intent intent = new Intent(getApplicationContext(), AddMyAddressOldUserActivity.class);
+            intent.putExtra("latlng",latlng);
+            intent.putExtra("CityName",CityName);
+            intent.putExtra("AddressLine",AddressLine);
+            intent.putExtra("PostalCode",PostalCode);
+            intent.putExtra("userid",userid);
+            intent.putExtra("nickname",nickname);
+            startActivity(intent);
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("EditMyAddressActivity")){
+            Intent intent = new Intent(getApplicationContext(), EditMyAddressActivity.class);
+            intent.putExtra("id",id);
+            intent.putExtra("userid",userid);
+            intent.putExtra("nickname",nickname);
+            intent.putExtra("locationtype",locationtype);
+            intent.putExtra("defaultstatus",defaultstatus);
+            intent.putExtra("lat",latitude);
+            intent.putExtra("lon",longtitude);
+            intent.putExtra("pincode",pincode);
+            intent.putExtra("cityname",cityname);
+            intent.putExtra("address",address);
+            startActivity(intent);
+            finish();
         } else if(active_tag != null){
             callDirections(active_tag);
         }else{

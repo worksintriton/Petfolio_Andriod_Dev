@@ -19,6 +19,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.fragmentpetlover.myordersnew.FragmentPetLoverCancelledOrders;
 import com.petfolio.infinitus.fragmentpetlover.myordersnew.FragmentPetLoverCompletedOrders;
 import com.petfolio.infinitus.fragmentpetlover.myordersnew.FragmentPetLoverNewOrders;
@@ -75,6 +76,23 @@ public class PetMyOrdrersNewActivity extends AppCompatActivity implements Bottom
         ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
         TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.my_orders));
+
+        img_sos.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
+        img_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+            }
+        });
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class);
+                intent.putExtra("fromactivity",TAG);
+                startActivity(intent);
+            }
+        });
 
         setupViewPager(viewPager);
         tablayout.setupWithViewPager(viewPager);
