@@ -38,6 +38,7 @@ import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 
+import com.petfolio.infinitus.doctor.DoctorProfileScreenActivity;
 import com.petfolio.infinitus.petlover.PetLoverProfileScreenActivity;
 import com.petfolio.infinitus.requestpojo.LocationUpdateRequest;
 import com.petfolio.infinitus.responsepojo.LocationUpdateResponse;
@@ -156,8 +157,10 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
     private boolean defaultstatus = true;
     private String nickname;
     private String id;
+    private String fromactivity;
 
 
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -201,9 +204,8 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
 
 
             }
-
-
-            
+            fromactivity = extras.getString("fromactivity");
+            Log.w(TAG," fromactivity : "+fromactivity);
             id = extras.getString("id");
             userid = extras.getString("userid");
             cityname = extras.getString("cityname");
@@ -245,9 +247,6 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
                 txt_location.setText(address);
 
             }
-
-
-
             if(locationtype != null){
                 if(locationtype.equalsIgnoreCase("Home")){
                     locationtype = "Home";
@@ -288,20 +287,38 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
         img_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class);
-                intent.putExtra("id",id);
-                intent.putExtra("userid",userid);
-                intent.putExtra("nickname",nickname);
-                intent.putExtra("locationtype",locationtype);
-                intent.putExtra("defaultstatus",defaultstatus);
-                intent.putExtra("lat",latitude);
-                intent.putExtra("lon",longtitude);
-                intent.putExtra("pincode",pincode);
-                intent.putExtra("cityname",cityname);
-                intent.putExtra("address",address);
-                intent.putExtra("fromactivity",TAG);
-                startActivity(intent);
-                finish();
+                if(fromactivity != null && fromactivity.equalsIgnoreCase("ManageAddressDoctorActivity")){
+                    Intent intent = new Intent(getApplicationContext(), DoctorProfileScreenActivity.class);
+                    intent.putExtra("id",id);
+                    intent.putExtra("userid",userid);
+                    intent.putExtra("nickname",nickname);
+                    intent.putExtra("locationtype",locationtype);
+                    intent.putExtra("defaultstatus",defaultstatus);
+                    intent.putExtra("lat",latitude);
+                    intent.putExtra("lon",longtitude);
+                    intent.putExtra("pincode",pincode);
+                    intent.putExtra("cityname",cityname);
+                    intent.putExtra("address",address);
+                    intent.putExtra("fromactivity",TAG);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    Intent intent = new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class);
+                    intent.putExtra("id",id);
+                    intent.putExtra("userid",userid);
+                    intent.putExtra("nickname",nickname);
+                    intent.putExtra("locationtype",locationtype);
+                    intent.putExtra("defaultstatus",defaultstatus);
+                    intent.putExtra("lat",latitude);
+                    intent.putExtra("lon",longtitude);
+                    intent.putExtra("pincode",pincode);
+                    intent.putExtra("cityname",cityname);
+                    intent.putExtra("address",address);
+                    intent.putExtra("fromactivity",TAG);
+                    startActivity(intent);
+                    finish();
+                }
+
             }
         });
 

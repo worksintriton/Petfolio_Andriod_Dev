@@ -166,7 +166,7 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
                     return true;
 
                 case R.id.nav_item_three:
-                    gotoMyAppointments();
+                    gotoManageServices();
                     return true;
 
                 case R.id.nav_item_four:
@@ -177,9 +177,9 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
 
                 case R.id.nav_item_six:
                     return true;
-                case R.id.nav_item_seven:
-
-                    return true;
+//                case R.id.nav_item_seven:
+//
+//                    return true;
                 case R.id.nav_item_eight:
                     //confirmLogoutDialog();
                     showLogOutAppAlert();
@@ -286,8 +286,10 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
     }
 
 
-    private void gotoMyAppointments() {
+    private void gotoManageServices() {
 
+        Intent i = new Intent(ServiceProviderNavigationDrawer.this, SPProfileScreenActivity.class);
+        startActivity(i);
     }
 
 

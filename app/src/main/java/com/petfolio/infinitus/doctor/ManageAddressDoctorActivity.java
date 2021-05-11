@@ -33,8 +33,6 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.interfaces.LocationDefaultListener;
 import com.petfolio.infinitus.interfaces.LocationDeleteListener;
-import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
-import com.petfolio.infinitus.petlover.PetLoverProfileScreenActivity;
 import com.petfolio.infinitus.requestpojo.LocationDeleteRequest;
 import com.petfolio.infinitus.requestpojo.LocationListAddressRequest;
 import com.petfolio.infinitus.requestpojo.LocationStatusChangeRequest;
@@ -61,7 +59,7 @@ import retrofit2.Response;
 
 public class ManageAddressDoctorActivity extends AppCompatActivity implements View.OnClickListener, LocationDeleteListener, LocationDefaultListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
-    private static final String TAG = "ManageAddressDoctorActivity";
+    private String TAG = "ManageAddressDoctorActivity";
 
 
 
@@ -169,7 +167,7 @@ public class ManageAddressDoctorActivity extends AppCompatActivity implements Vi
                 gotoAddNewAddress();
                 break;
                 case R.id.img_profile:
-                    Intent  intent = new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class);
+                    Intent  intent = new Intent(getApplicationContext(),DoctorProfileScreenActivity.class);
                     intent.putExtra("fromactivity",TAG);
                     startActivity(intent);
                 break;
@@ -183,22 +181,24 @@ public class ManageAddressDoctorActivity extends AppCompatActivity implements Vi
 
     private void gotoAddNewAddress() {
         Intent intent = new Intent(getApplicationContext(), PickUpLocationActivity.class);
+        intent.putExtra("fromactivity",TAG);
         startActivity(intent);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(fromactivity != null && fromactivity.equalsIgnoreCase("PetLoverNavigationDrawerNew")){
-            startActivity(new Intent(getApplicationContext(), PetLoverDashboardActivity.class));
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorNavigationDrawer")){
+            startActivity(new Intent(getApplicationContext(), DoctorDashboardActivity.class));
             finish();
         }else {
-            startActivity(new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class));
+            startActivity(new Intent(getApplicationContext(), DoctorDashboardActivity.class));
             finish();
         }
     }
 
 
+    @SuppressLint("LogNotTimber")
     private void locationListAddressResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -207,7 +207,7 @@ public class ManageAddressDoctorActivity extends AppCompatActivity implements Vi
         Log.w(TAG,"locationListAddressResponseCall url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<LocationListAddressResponse>() {
-            @SuppressLint("SetTextI18n")
+            @SuppressLint({"SetTextI18n", "LogNotTimber"})
             @Override
             public void onResponse(@NonNull Call<LocationListAddressResponse> call, @NonNull Response<LocationListAddressResponse> response) {
 
@@ -263,7 +263,7 @@ public class ManageAddressDoctorActivity extends AppCompatActivity implements Vi
     private void setView() {
         rv_adddress_list.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rv_adddress_list.setItemAnimator(new DefaultItemAnimator());
-        ManageAddressListAdapter manageAddressListAdapter = new ManageAddressListAdapter(getApplicationContext(), addressList, rv_adddress_list,this,this);
+        ManageAddressListAdapter manageAddressListAdapter = new ManageAddressListAdapter(getApplicationContext(), addressList,this,this,TAG);
         rv_adddress_list.setAdapter(manageAddressListAdapter);
 
     }
@@ -503,14 +503,9 @@ public class ManageAddressDoctorActivity extends AppCompatActivity implements Vi
             case R.id.shop:
                 callDirections("2");
                 break;
-            case R.id.services:
-                callDirections("3");
-                break;
-            case R.id.care:
-                callDirections("4");
-                break;
+
             case R.id.community:
-                callDirections("5");
+                callDirections("3");
                 break;
 
             default:
@@ -519,7 +514,7 @@ public class ManageAddressDoctorActivity extends AppCompatActivity implements Vi
         return true;
     }
     public void callDirections(String tag){
-        Intent intent = new Intent(getApplicationContext(), PetLoverDashboardActivity.class);
+        Intent intent = new Intent(getApplicationContext(), DoctorDashboardActivity.class);
         intent.putExtra("tag",tag);
         startActivity(intent);
         finish();

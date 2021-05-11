@@ -47,6 +47,7 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.api.API;
+import com.petfolio.infinitus.doctor.ManageAddressDoctorActivity;
 import com.petfolio.infinitus.petlover.PetLoverProfileScreenActivity;
 import com.petfolio.infinitus.responsepojo.GetAddressResultResponse;
 import com.petfolio.infinitus.service.GPSTracker;
@@ -138,7 +139,7 @@ public class PickUpLocationActivity extends FragmentActivity implements OnMapRea
         if (extras != null) {
             fromactivity = extras.getString("fromactivity");
             placesearchactivity = extras.getString("placesearchactivity");
-            Log.w(TAG,"fromactivity if : "+fromactivity+"placesearchactivity : "+placesearchactivity);
+            Log.w(TAG,"fromactivity if : "+fromactivity+"  placesearchactivity : "+placesearchactivity);
 
         }else{
             fromactivity  = TAG;
@@ -651,8 +652,14 @@ public class PickUpLocationActivity extends FragmentActivity implements OnMapRea
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(PickUpLocationActivity.this, ManageAddressActivity.class));
-        finish();
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("ManageAddressDoctorActivity")){
+            startActivity(new Intent(PickUpLocationActivity.this, ManageAddressDoctorActivity.class));
+            finish();
+        }else{
+            startActivity(new Intent(PickUpLocationActivity.this, ManageAddressActivity.class));
+            finish();
+        }
+
     }
 
     private void getAddressResultResponse(LatLng latLng) {

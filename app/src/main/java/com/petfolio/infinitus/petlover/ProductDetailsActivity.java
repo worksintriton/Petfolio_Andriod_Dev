@@ -1,12 +1,17 @@
 package com.petfolio.infinitus.petlover;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -26,6 +31,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.RelatedProductsAdapter;
+import com.petfolio.infinitus.adapter.VendorBusinessGalleryListAdapter;
 import com.petfolio.infinitus.adapter.ViewPagerProductDetailsAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
@@ -121,6 +127,10 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
     @BindView(R.id.rl_discount)
     RelativeLayout rl_discount;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_view_details)
+    TextView txt_view_details;
+
 
     int currentPage = 0;
     Timer timer;
@@ -166,6 +176,11 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
     String prod_type;
 
+    Dialog dialog;
+
+    String business_name, vendor_name, bussiness_reg, business_location;
+
+    List<FetchProductByIdResponse.VendorDetailsBean.BussinessGalleryBean> bussinessGalleryBeans;
 
     @Override
     protected void onCreate (Bundle savedInstanceState){
@@ -186,6 +201,17 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
             fromactivity = extras.getString("fromactivity");
             tag = extras.getString("tag");
         }
+
+        txt_view_details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                showVendorDetails();
+
+            }
+        });
+
+
         if(userid != null && productid != null){
             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
                 fetch_product_by_id_ResponseCall();
@@ -271,6 +297,72 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
     }
 
+    private void showVendorDetails() {
+
+        try {
+
+            dialog = new Dialog(ProductDetailsActivity.this);
+
+            dialog.setContentView(R.layout.vendor_details_view_popup_layout);
+
+            TextView txt_business_name = dialog.findViewById(R.id.txt_business_name);
+
+            TextView txt_vendor_name = dialog.findViewById(R.id.txt_vendor_name);
+
+            TextView txt_bussiness_reg = dialog.findViewById(R.id.txt_bussiness_reg);
+
+            TextView txt_business_location = dialog.findViewById(R.id.txt_business_location);
+
+            Button btn_confirm = dialog.findViewById(R.id.btn_confirm);
+
+            RecyclerView rv_businessimg =  dialog.findViewById(R.id.rv_businessimg);
+
+            TextView txt_no_records = dialog.findViewById(R.id.txt_no_records);
+            ImageView img_close = dialog.findViewById(R.id.img_close);
+            img_close.setOnClickListener(v -> dialog.dismiss());
+            btn_confirm.setOnClickListener(v -> dialog.dismiss());
+
+            if(business_name != null && !business_name.isEmpty() ){
+
+                txt_business_name.setText(business_name);
+            }
+
+            if(vendor_name != null && !vendor_name.isEmpty() ){
+
+                txt_vendor_name.setText(vendor_name);
+            }
+
+            if(bussiness_reg != null && !bussiness_reg.isEmpty() ){
+
+                txt_bussiness_reg.setText(bussiness_reg);
+            }
+
+            if(bottomSheetBehavior != null && !business_location.isEmpty() ){
+
+                txt_business_location.setText(business_location);
+            }
+
+            if(bussinessGalleryBeans != null && bussinessGalleryBeans.size()>0 ){
+
+                rv_businessimg.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+                rv_businessimg.setItemAnimator(new DefaultItemAnimator());
+                VendorBusinessGalleryListAdapter businessGalleryListAdapter = new VendorBusinessGalleryListAdapter(getApplicationContext(), bussinessGalleryBeans);
+                rv_businessimg.setAdapter(businessGalleryListAdapter);
+
+
+            }
+
+
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     /**
      * method to setup the bottomsheet
@@ -350,7 +442,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
             startActivity(intent);
             finish();
         }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetLoverShopNewAdapter")){
-            callDirections("2");
+            callDirections("1");
         }else {
             callDirections("2");
         }
@@ -384,6 +476,17 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                             int product_cart_count = response.body().getProduct_details().getProduct_cart_count();
                             threshould = response.body().getProduct_details().getThreshould();
                             prod_type = response.body().getProduct_details().getCat_id().getProduct_cate();
+
+                            business_name = response.body().getVendor_details().getBussiness_name();
+
+                            vendor_name = response.body().getVendor_details().getUser_name();
+
+                            bussiness_reg = response.body().getVendor_details().getBusiness_reg();
+
+                            business_location = response.body().getVendor_details().getBussiness_loc();
+
+                            bussinessGalleryBeans = response.body().getVendor_details().getBussiness_gallery();
+
                             if(response.body().getProduct_details().getProduct_img() != null && response.body().getProduct_details().getProduct_img().size()>0){
                                 viewpageData(response.body().getProduct_details().getProduct_img());
                             }
@@ -619,13 +722,11 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
-                        Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
-
-                        /*  Intent intent = new Intent(getApplicationContext(),PetCartActivity.class);
+                        Intent intent = new Intent(getApplicationContext(),PetCartActivity.class);
                         intent.putExtra("productid",productid);
                         intent.putExtra("fromactivity",TAG);
                         startActivity(intent);
-                        finish();*/
+                        finish();
                     }
                 }
             }

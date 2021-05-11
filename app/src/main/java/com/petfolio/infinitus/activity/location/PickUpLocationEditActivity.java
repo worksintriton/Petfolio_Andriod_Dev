@@ -41,7 +41,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.api.API;
+import com.petfolio.infinitus.doctor.DoctorProfileScreenActivity;
 import com.petfolio.infinitus.responsepojo.GetAddressResultResponse;
 import com.petfolio.infinitus.service.GPSTracker;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -102,7 +104,7 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
     String strlatlng = "";
     String CityName, AddressLine ,PostalCode;
     private String fromactivity;
-    private String id,userid,locationnickname,LocationType;
+    private String id,userid,nickname,locationtype;
     private boolean defaultstatus;
     private String placesearchactivity;
 
@@ -114,15 +116,6 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
 
         ButterKnife.bind(this);
 
-        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
-        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
-        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
-        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
-        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
-        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
-        toolbar_title.setText(getResources().getString(R.string.pickup_location));
-
-        imgLocationPinUp.setVisibility(View.GONE);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -131,8 +124,8 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
             Log.w(TAG,"fromactivity if : "+fromactivity);
             id = extras.getString("id");
             userid = extras.getString("userid");
-            locationnickname = extras.getString("nickname");
-            LocationType = extras.getString("locationtype");
+            nickname = extras.getString("nickname");
+            locationtype = extras.getString("locationtype");
             defaultstatus = extras.getBoolean("defaultstatus");
             latitude = extras.getDouble("lat");
             longitude = extras.getDouble("lon");
@@ -147,6 +140,42 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
 
         }
 
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.pickup_location));
+
+        img_sos.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
+
+        img_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+            }
+        });
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               /* Intent intent = new Intent(getApplicationContext(), DoctorProfileScreenActivity.class);
+                intent.putExtra("id",id);
+                intent.putExtra("userid",userid);
+                intent.putExtra("nickname",nickname);
+                intent.putExtra("locationtype",locationtype);
+                intent.putExtra("defaultstatus",defaultstatus);
+                intent.putExtra("lat",latitude);
+                intent.putExtra("lon",longitude);
+                startActivity(intent);*/
+            }
+        });
+
+
+        imgLocationPinUp.setVisibility(View.GONE);
+
+
 
 
 
@@ -154,8 +183,8 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
             Intent intent = new Intent(PickUpLocationEditActivity.this, PlacesSearchActivity.class);
             intent.putExtra("id",id);
             intent.putExtra("userid",userid);
-            intent.putExtra("nickname",locationnickname);
-            intent.putExtra("locationtype",LocationType);
+            intent.putExtra("nickname",nickname);
+            intent.putExtra("locationtype",locationtype);
             intent.putExtra("defaultstatus",defaultstatus);
             intent.putExtra("fromactivity",TAG);
             startActivity(intent);
@@ -197,8 +226,8 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
                     intent.putExtra("pincode",PostalCode);
                     intent.putExtra("id",id);
                     intent.putExtra("userid",userid);
-                    intent.putExtra("nickname",locationnickname);
-                    intent.putExtra("locationtype",LocationType);
+                    intent.putExtra("nickname",nickname);
+                    intent.putExtra("locationtype",locationtype);
                     intent.putExtra("defaultstatus",defaultstatus);
                     intent.putExtra("lat",latitude);
                     intent.putExtra("lon",longitude);

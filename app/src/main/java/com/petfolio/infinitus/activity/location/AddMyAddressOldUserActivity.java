@@ -142,6 +142,7 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
     String LocationType = "Home";
     private boolean defaultstatus = false;
     private String PostalCode;
+    private String fromactivity;
 
 
     @Override
@@ -184,6 +185,9 @@ public class AddMyAddressOldUserActivity extends FragmentActivity implements OnM
 
             userid = extras.getString("userid");
             locationnickname = extras.getString("nickname");
+            fromactivity = extras.getString("fromactivity");
+
+            Log.w(TAG,"fromactivity : "+fromactivity);
 
             edt_cityname.setText(CityName);
             txt_cityname_title.setText(CityName);

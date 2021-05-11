@@ -50,14 +50,16 @@ public class ManageAddressListAdapter extends  RecyclerView.Adapter<RecyclerView
 
     private LocationDeleteListener locationDeleteListener;
     private LocationDefaultListener locationDefaultListener;
+    String fromactivity;
 
 
 
-    public ManageAddressListAdapter(Context context, List<LocationListAddressResponse.DataBean> locationListResponseList, RecyclerView inbox_list,LocationDeleteListener locationDeleteListener,LocationDefaultListener locationDefaultListener) {
-        this.locationListResponseList = locationListResponseList;
+    public ManageAddressListAdapter(Context context, List<LocationListAddressResponse.DataBean> locationListResponseList,LocationDeleteListener locationDeleteListener,LocationDefaultListener locationDefaultListener,String fromactivity) {
         this.context = context;
+        this.locationListResponseList = locationListResponseList;
         this.locationDeleteListener = locationDeleteListener;
         this.locationDefaultListener = locationDefaultListener;
+        this.fromactivity = fromactivity;
 
     }
 
@@ -114,6 +116,7 @@ public class ManageAddressListAdapter extends  RecyclerView.Adapter<RecyclerView
                             i.putExtra("nickname",locationListResponseList.get(position).getLocation_nickname());
                             i.putExtra("locationtype",locationListResponseList.get(position).getLocation_title());
                             i.putExtra("defaultstatus",locationListResponseList.get(position).isDefault_status());
+                            i.putExtra("fromactivity",fromactivity);
                             Bundle b = new Bundle();
                             b.putDouble("lat", locationListResponseList.get(position).getLocation_lat());
                             b.putDouble("lon", locationListResponseList.get(position).getLocation_long());

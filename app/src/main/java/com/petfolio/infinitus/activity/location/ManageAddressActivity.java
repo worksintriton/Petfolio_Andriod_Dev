@@ -263,7 +263,7 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
     private void setView() {
         rv_adddress_list.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rv_adddress_list.setItemAnimator(new DefaultItemAnimator());
-        ManageAddressListAdapter manageAddressListAdapter = new ManageAddressListAdapter(getApplicationContext(), addressList, rv_adddress_list,this,this);
+        ManageAddressListAdapter manageAddressListAdapter = new ManageAddressListAdapter(getApplicationContext(), addressList,this,this,TAG);
         rv_adddress_list.setAdapter(manageAddressListAdapter);
 
     }

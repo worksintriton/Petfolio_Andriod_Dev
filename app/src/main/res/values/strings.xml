@@ -494,5 +494,19 @@
     <string name="product_description">Product Description</string>
     <string name="about_service_provider">About Service Provider</string>
 
+    <string name="view_vendor_details"><u>View Vendor Details</u></string>
+    <string name="view_vendor_detail">View Vendor Details</string>
+    <string name="grooming">Grooming</string>
+    <string name="vendor_name">Vendor Name</string>
+    <string name="bussiness_reg">Business Region</string>
+    <string name="chennai">Chennai</string>
+    <string name="_1234abcd12344321">1234ABCD12344321</string>
+    <string name="business_location">Business Location</string>
+    <string name="chennai_2a_3rd_main_rd_ram_nagar_karnam_street_dhadeswaram_nagar_velachery_chennai_tamil_nadu_600042_india">Chennai 2a, 3rd Main Rd, Ram Nagar, Karnam Street, Dhadeswaram Nagar, Velachery, Chennai, Tamil Nadu 600042, India</string>
+    <string name="business_gallery_images">Business Gallery</string>
+    <string name="doctor">Doctor</string>
+    <string name="service">Service</string>
+    <string name="recent_transactions">Recent Transactions</string>
+
 
 </resources>
