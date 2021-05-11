@@ -31,9 +31,14 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
+import com.petfolio.infinitus.activity.location.AddMyAddressDoctorActivity;
 import com.petfolio.infinitus.activity.location.EditMyAddressActivity;
+import com.petfolio.infinitus.activity.location.EditMyAddressDoctorActivity;
 import com.petfolio.infinitus.activity.location.ManageAddressActivity;
 
+import com.petfolio.infinitus.activity.location.PickUpLocationDoctorActivity;
+import com.petfolio.infinitus.activity.location.PickUpLocationEditActivity;
+import com.petfolio.infinitus.activity.location.PickUpLocationEditDoctorActivity;
 import com.petfolio.infinitus.adapter.ViewPagerDoctorClinicDetailsAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
@@ -169,6 +174,8 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
     private boolean defaultstatus;
     private String id;
     double latitude, longtitude;
+    private String latlng;
+    private String PostalCode;
 
 
     @Override
@@ -202,9 +209,12 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
             latitude = extras.getDouble("lat");
             longtitude = extras.getDouble("lon");
             pincode = extras.getString("pincode");
+            PostalCode = extras.getString("PostalCode");
             cityname = extras.getString("cityname");
             address = extras.getString("address");
             nickname = extras.getString("nickname");
+            latlng = extras.getString("latlng");
+
 
         }
 
@@ -258,8 +268,14 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
         if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorNavigationDrawer")){
             startActivity(new Intent(getApplicationContext(), DoctorDashboardActivity.class));
             finish();
-        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("EditMyAddressActivity")){
-            Intent intent = new Intent(getApplicationContext(), EditMyAddressActivity.class);
+        }if(fromactivity != null && fromactivity.equalsIgnoreCase("ManageAddressDoctorActivity")){
+            startActivity(new Intent(getApplicationContext(), ManageAddressDoctorActivity.class));
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PickUpLocationDoctorActivity")){
+            startActivity(new Intent(getApplicationContext(), PickUpLocationDoctorActivity.class));
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("EditMyAddressDoctorActivity")){
+            Intent intent = new Intent(getApplicationContext(), EditMyAddressDoctorActivity.class);
             intent.putExtra("id",id);
             intent.putExtra("userid",userid);
             intent.putExtra("nickname",nickname);
@@ -272,7 +288,29 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
             intent.putExtra("address",address);
             startActivity(intent);
             finish();
-        }else{
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("AddMyAddressDoctorActivity")){
+            Intent intent = new Intent(getApplicationContext(), AddMyAddressDoctorActivity.class);
+            intent.putExtra("latlng",latlng);
+            intent.putExtra("cityname",cityname);
+            intent.putExtra("address",address);
+            intent.putExtra("PostalCode",PostalCode);
+            intent.putExtra("userid",userid);
+            intent.putExtra("nickname",nickname);
+            startActivity(intent);
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PickUpLocationEditDoctorActivity")){
+            Intent intent = new Intent(getApplicationContext(), PickUpLocationEditDoctorActivity.class);
+            intent.putExtra("id",id);
+            intent.putExtra("userid",userid);
+            intent.putExtra("nickname",nickname);
+            intent.putExtra("locationtype",locationtype);
+            intent.putExtra("defaultstatus",defaultstatus);
+            intent.putExtra("lat",latitude);
+            intent.putExtra("lon",longtitude);
+            startActivity(intent);
+            finish();
+        }
+        else{
             startActivity(new Intent(getApplicationContext(), DoctorDashboardActivity.class));
             finish();
         }

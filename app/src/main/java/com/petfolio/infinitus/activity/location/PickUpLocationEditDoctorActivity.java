@@ -44,13 +44,15 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.api.API;
 import com.petfolio.infinitus.doctor.DoctorProfileScreenActivity;
-import com.petfolio.infinitus.petlover.PetLoverProfileScreenActivity;
 import com.petfolio.infinitus.responsepojo.GetAddressResultResponse;
 import com.petfolio.infinitus.service.GPSTracker;
 import com.wang.avi.AVLoadingIndicatorView;
+
 import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
@@ -60,7 +62,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class PickUpLocationEditActivity extends FragmentActivity implements OnMapReadyCallback,
+public class PickUpLocationEditDoctorActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
@@ -71,7 +73,7 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
     LocationRequest mLocationRequest;
     private GoogleMap mMap;
 
-    String TAG = "PickUpLocationEditActivity";
+    String TAG = "PickUpLocationEditDoctorActivity";
 
 
     @SuppressLint("NonConstantResourceId")
@@ -161,7 +163,7 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
         img_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class);
+                Intent intent = new Intent(getApplicationContext(), DoctorProfileScreenActivity.class);
                 intent.putExtra("id",id);
                 intent.putExtra("userid",userid);
                 intent.putExtra("nickname",nickname);
@@ -181,7 +183,7 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
 
 
         rl_placessearch.setOnClickListener(v -> {
-            Intent intent = new Intent(PickUpLocationEditActivity.this, PlacesSearchActivity.class);
+            Intent intent = new Intent(PickUpLocationEditDoctorActivity.this, PlacesSearchActivity.class);
             intent.putExtra("id",id);
             intent.putExtra("userid",userid);
             intent.putExtra("nickname",nickname);
@@ -220,7 +222,7 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
 
         btn_setpickuppoint.setOnClickListener(v -> {
             if(CityName != null){
-                   Intent intent = new Intent(PickUpLocationEditActivity.this,EditMyAddressActivity.class);
+                   Intent intent = new Intent(PickUpLocationEditDoctorActivity.this,EditMyAddressActivity.class);
                     intent.putExtra("latlng",strlatlng);
                     intent.putExtra("cityname",CityName);
                     intent.putExtra("address",AddressLine);
@@ -237,7 +239,7 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
                     intent.putExtra("fromactivity",fromactivity);
                     startActivity(intent);
             }else{
-                Toasty.warning(PickUpLocationEditActivity.this,"Please select citynmae",Toasty.LENGTH_SHORT).show();
+                Toasty.warning(PickUpLocationEditDoctorActivity.this,"Please select citynmae",Toasty.LENGTH_SHORT).show();
             }
 
 
@@ -363,7 +365,7 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
         if (ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        GPSTracker gps = new GPSTracker(PickUpLocationEditActivity.this);
+        GPSTracker gps = new GPSTracker(PickUpLocationEditDoctorActivity.this);
 
         gps.canGetLocation();
         LatLng curentpoint = new LatLng(gps.getLatitude(), gps.getLongitude());
@@ -612,12 +614,12 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
     }
     private void getLatandLong(){
         try{
-            if (ContextCompat.checkSelfPermission(PickUpLocationEditActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(PickUpLocationEditActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(PickUpLocationEditActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            if (ContextCompat.checkSelfPermission(PickUpLocationEditDoctorActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(PickUpLocationEditDoctorActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(PickUpLocationEditDoctorActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
             }
             else {
-                GPSTracker gps = new GPSTracker(PickUpLocationEditActivity.this);
+                GPSTracker gps = new GPSTracker(PickUpLocationEditDoctorActivity.this);
 
                 // Check if GPS enabled
                 if (gps.canGetLocation()) {
@@ -643,7 +645,7 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
 
     }
     public void showSettingsAlert() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(PickUpLocationEditActivity.this);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(PickUpLocationEditDoctorActivity.this);
 
         // Setting DialogHelp Title
         alertDialog.setTitle("GPS is settings");

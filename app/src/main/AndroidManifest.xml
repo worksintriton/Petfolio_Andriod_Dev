@@ -740,6 +740,33 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
 
+        <activity android:name=".activity.location.PickUpLocationDoctorActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity android:name=".activity.location.AddMyAddressDoctorActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity android:name=".activity.location.EditMyAddressDoctorActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity android:name=".activity.location.PickUpLocationEditDoctorActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity android:name=".doctor.DoctorProductsFavActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+
+
         <receiver
             android:name=".receiver.SmsBroadcastListener"
             android:permission="android.permission.BROADCAST_SMS">

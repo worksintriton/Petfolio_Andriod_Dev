@@ -2,7 +2,6 @@ package com.petfolio.infinitus.activity.location;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,7 +36,8 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-
+import com.petfolio.infinitus.doctor.DoctorProfileScreenActivity;
+import com.petfolio.infinitus.doctor.ManageAddressDoctorActivity;
 import com.petfolio.infinitus.petlover.PetLoverProfileScreenActivity;
 import com.petfolio.infinitus.requestpojo.LocationUpdateRequest;
 import com.petfolio.infinitus.responsepojo.LocationUpdateResponse;
@@ -48,11 +48,9 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import org.jetbrains.annotations.NotNull;
 
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-
 import java.util.Locale;
 import java.util.Objects;
 
@@ -63,12 +61,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class EditMyAddressActivity extends FragmentActivity implements OnMapReadyCallback,
+public class EditMyAddressDoctorActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener, View.OnClickListener {
 
-    String TAG = "EditMyAddressActivity";
+    String TAG = "EditMyAddressDoctorActivity";
 
 
 
@@ -171,7 +169,7 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
 
 
 
-        SessionManager sessionManager = new SessionManager(EditMyAddressActivity.this);
+        SessionManager sessionManager = new SessionManager(EditMyAddressDoctorActivity.this);
         HashMap<String, String> user = sessionManager.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
         Log.w(TAG,"userid--->"+userid);
@@ -286,7 +284,7 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
         img_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    Intent intent = new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), DoctorProfileScreenActivity.class);
                     intent.putExtra("id",id);
                     intent.putExtra("userid",userid);
                     intent.putExtra("nickname",nickname);
@@ -300,7 +298,6 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
                     intent.putExtra("fromactivity",TAG);
                     startActivity(intent);
                     finish();
-
 
             }
         });
@@ -384,7 +381,7 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
                 onBackPressed();
                 break;
             case R.id.btn_change:
-               Intent intent = new Intent(getApplicationContext(),PickUpLocationEditActivity.class);
+               Intent intent = new Intent(getApplicationContext(),PickUpLocationEditDoctorActivity.class);
                 intent.putExtra("id",id);
                 intent.putExtra("userid",userid);
                 intent.putExtra("nickname",nickname);
@@ -416,7 +413,7 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
         }
 
         if (can_proceed) {
-            if (new ConnectionDetector(EditMyAddressActivity.this).isNetworkAvailable(EditMyAddressActivity.this)) {
+            if (new ConnectionDetector(EditMyAddressDoctorActivity.this).isNetworkAvailable(EditMyAddressDoctorActivity.this)) {
                 locationUpdateResponseCall();
                 }
 
@@ -444,7 +441,7 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
                 if (response.body() != null) {
 
                     if(response.body().getCode() == 200){
-                        Intent i = new Intent(EditMyAddressActivity.this, ManageAddressActivity.class);
+                        Intent i = new Intent(EditMyAddressDoctorActivity.this, ManageAddressDoctorActivity.class);
                         startActivity(i);
 
                     }

@@ -38,6 +38,7 @@ import com.petfolio.infinitus.activity.location.AddMyAddressOldUserActivity;
 import com.petfolio.infinitus.activity.location.EditMyAddressActivity;
 import com.petfolio.infinitus.activity.location.ManageAddressActivity;
 import com.petfolio.infinitus.activity.location.PickUpLocationActivity;
+import com.petfolio.infinitus.activity.location.PickUpLocationEditActivity;
 import com.petfolio.infinitus.adapter.ManagePetListAdapter;
 import com.petfolio.infinitus.adapter.PetLoverSOSAdapter;
 import com.petfolio.infinitus.api.APIClient;
@@ -314,6 +315,9 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
 
 
 
+
+
+
         }
 
         bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
@@ -441,6 +445,17 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
             intent.putExtra("pincode",pincode);
             intent.putExtra("cityname",cityname);
             intent.putExtra("address",address);
+            startActivity(intent);
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PickUpLocationEditActivity")){
+            Intent intent = new Intent(getApplicationContext(), PickUpLocationEditActivity.class);
+            intent.putExtra("id",id);
+            intent.putExtra("userid",userid);
+            intent.putExtra("nickname",nickname);
+            intent.putExtra("locationtype",locationtype);
+            intent.putExtra("defaultstatus",defaultstatus);
+            intent.putExtra("lat",latitude);
+            intent.putExtra("lon",longtitude);
             startActivity(intent);
             finish();
         } else if(active_tag != null){

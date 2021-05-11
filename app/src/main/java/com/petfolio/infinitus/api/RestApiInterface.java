@@ -22,6 +22,7 @@ import com.petfolio.infinitus.responsepojo.DoctorDetailsResponse;
 import com.petfolio.infinitus.responsepojo.DoctorMyCalendarAvlDaysResponse;
 import com.petfolio.infinitus.responsepojo.DoctorMyCalendarAvlTimesResponse;
 import com.petfolio.infinitus.responsepojo.DoctorMyCalendarUpdateDocDateResponse;
+import com.petfolio.infinitus.responsepojo.DoctorProductFavListResponse;
 import com.petfolio.infinitus.responsepojo.DoctorSearchResponse;
 import com.petfolio.infinitus.responsepojo.DoctorUpdateProfileImageResponse;
 import com.petfolio.infinitus.responsepojo.DropDownListResponse;
@@ -732,6 +733,16 @@ public interface RestApiInterface {
    /*Appointments medical history*/
     @POST("appointments/medical_history")
     Call<MedicalHistoryResponse>medicalHistoryResponseCall(@Header("Content-Type") String type, @Body MedicalHistoryRequest medicalHistoryRequest);
+
+
+    /*Doctor Products Fav List*/
+    @POST("product_fav/getlist_id")
+    Call<DoctorProductFavListResponse>doctorProductFavListResponseCall(@Header("Content-Type") String type, @Body DoctorProductFavListRequest doctorProductFavListRequest);
+
+
+    /*Doctor Products Fav list create*/
+    @POST("product_fav/create")
+    Call<SuccessResponse>doctorProductFavListCreateResponseCall(@Header("Content-Type") String type, @Body DoctorProductFavListCreateRequest doctorProductFavListCreateRequest);
 
 
 

@@ -11,6 +11,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -27,8 +28,11 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -44,13 +48,17 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.api.API;
 import com.petfolio.infinitus.doctor.DoctorProfileScreenActivity;
+import com.petfolio.infinitus.doctor.ManageAddressDoctorActivity;
 import com.petfolio.infinitus.petlover.PetLoverProfileScreenActivity;
 import com.petfolio.infinitus.responsepojo.GetAddressResultResponse;
 import com.petfolio.infinitus.service.GPSTracker;
 import com.wang.avi.AVLoadingIndicatorView;
+
 import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
@@ -60,7 +68,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class PickUpLocationEditActivity extends FragmentActivity implements OnMapReadyCallback,
+public class PickUpLocationDoctorActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
@@ -71,16 +79,15 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
     LocationRequest mLocationRequest;
     private GoogleMap mMap;
 
-    String TAG = "PickUpLocationEditActivity";
+    String TAG = "PickUpLocationDoctorActivity";
 
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.avi_indicator)
-    AVLoadingIndicatorView avi_indicator;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_setpickuppoint)
     Button btn_setpickuppoint;
+
+
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.imgLocationPinUp)
@@ -90,11 +97,9 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
     @BindView(R.id.rl_placessearch)
     RelativeLayout rl_placessearch;
 
-
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_searchlocationaddress)
     TextView tv_searchlocationaddress;
-
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.include_petlover_header)
@@ -102,38 +107,40 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
 
 
     private double latitude = 0, longitude = 0;
+
     String strlatlng = "";
+
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.avi_indicator)
+    AVLoadingIndicatorView avi_indicator;
+
+
+
     String CityName, AddressLine ,PostalCode;
+
+
+
+
+    private FusedLocationProviderClient mFusedLocationClient;
+    private LocationCallback locationCallback;
+
     private String fromactivity;
-    private String id,userid,nickname,locationtype;
-    private boolean defaultstatus;
     private String placesearchactivity;
 
 
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_up_location_allow);
 
         ButterKnife.bind(this);
-
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             fromactivity = extras.getString("fromactivity");
-
-            Log.w(TAG,"fromactivity if : "+fromactivity);
-            id = extras.getString("id");
-            userid = extras.getString("userid");
-            nickname = extras.getString("nickname");
-            locationtype = extras.getString("locationtype");
-            defaultstatus = extras.getBoolean("defaultstatus");
-            latitude = extras.getDouble("lat");
-            longitude = extras.getDouble("lon");
-
             placesearchactivity = extras.getString("placesearchactivity");
-            Log.w(TAG,"fromactivity if : "+fromactivity+"placesearchactivity : "+placesearchactivity);
-
+            Log.w(TAG,"fromactivity if : "+fromactivity+"  placesearchactivity : "+placesearchactivity);
 
         }else{
             fromactivity  = TAG;
@@ -141,17 +148,18 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
 
         }
 
+
         ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
         ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
         ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
         ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
         ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
         TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
-        toolbar_title.setText(getResources().getString(R.string.pickup_location));
+        toolbar_title.setText(getResources().getString(R.string.choose_location));
+
 
         img_sos.setVisibility(View.GONE);
         img_cart.setVisibility(View.GONE);
-
         img_notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -161,14 +169,8 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
         img_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class);
-                intent.putExtra("id",id);
-                intent.putExtra("userid",userid);
-                intent.putExtra("nickname",nickname);
-                intent.putExtra("locationtype",locationtype);
-                intent.putExtra("defaultstatus",defaultstatus);
-                intent.putExtra("lat",latitude);
-                intent.putExtra("lon",longitude);
+                Intent intent = new Intent(new Intent(getApplicationContext(), DoctorProfileScreenActivity.class));
+                intent.putExtra("fromactivity",TAG);
                 startActivity(intent);
             }
         });
@@ -179,14 +181,8 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
 
 
 
-
         rl_placessearch.setOnClickListener(v -> {
-            Intent intent = new Intent(PickUpLocationEditActivity.this, PlacesSearchActivity.class);
-            intent.putExtra("id",id);
-            intent.putExtra("userid",userid);
-            intent.putExtra("nickname",nickname);
-            intent.putExtra("locationtype",locationtype);
-            intent.putExtra("defaultstatus",defaultstatus);
+            Intent intent = new Intent(PickUpLocationDoctorActivity.this, PlacesSearchActivity.class);
             intent.putExtra("fromactivity",TAG);
             startActivity(intent);
         });
@@ -201,7 +197,7 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
             checkLocationPermission();
         }
 
-        if (extras == null) {
+        if (extras != null) {}else{
             checkLocation();
         }
 
@@ -220,24 +216,15 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
 
         btn_setpickuppoint.setOnClickListener(v -> {
             if(CityName != null){
-                   Intent intent = new Intent(PickUpLocationEditActivity.this,EditMyAddressActivity.class);
+                   Intent intent = new Intent(PickUpLocationDoctorActivity.this,AddMyAddressDoctorActivity.class);
                     intent.putExtra("latlng",strlatlng);
                     intent.putExtra("cityname",CityName);
                     intent.putExtra("address",AddressLine);
-                    intent.putExtra("pincode",PostalCode);
-                    intent.putExtra("id",id);
-                    intent.putExtra("userid",userid);
-                    intent.putExtra("nickname",nickname);
-                    intent.putExtra("locationtype",locationtype);
-                    intent.putExtra("defaultstatus",defaultstatus);
-                    intent.putExtra("lat",latitude);
-                    intent.putExtra("lon",longitude);
-
-
+                    intent.putExtra("PostalCode",PostalCode);
                     intent.putExtra("fromactivity",fromactivity);
                     startActivity(intent);
             }else{
-                Toasty.warning(PickUpLocationEditActivity.this,"Please select citynmae",Toasty.LENGTH_SHORT).show();
+                Toasty.warning(PickUpLocationDoctorActivity.this,"Please select citynmae",Toasty.LENGTH_SHORT).show();
             }
 
 
@@ -252,25 +239,12 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
 
 
 
+    @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LatLng CHENNAI_LATLNG = new LatLng(13.067439, 80.237617);
 
         mMap = googleMap;
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
-                .target(CHENNAI_LATLNG)
-                .zoom(18)
-                .bearing(0)
-                .tilt(45)
-                .build()));
 
-
-
-      /*  //  mMap = googleMap;
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-       // mMap.getUiSettings().setZoomControlsEnabled(true);
-       // mMap.getUiSettings().setZoomGesturesEnabled(true);
-       mMap.getUiSettings().setCompassEnabled(true);*/
 
 
 
@@ -279,6 +253,31 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
         mMap.getUiSettings().isZoomControlsEnabled();
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(PickUpLocationDoctorActivity.this);
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(10 * 1000);
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+
+                if (locationResult.getLastLocation() != null) {
+
+                    latitude = locationResult.getLastLocation().getLatitude();
+                    longitude = locationResult.getLastLocation().getLongitude();
+
+
+
+                    LatLng sourcePoint = new LatLng(latitude, longitude);
+                    googleMap.addMarker(new MarkerOptions().position(sourcePoint).icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin)));
+                    mFusedLocationClient.removeLocationUpdates(locationCallback);
+                }
+            }
+        };
+        mFusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+
+
 
         //Initialize Google Play Services
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -327,9 +326,10 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
             mMap.clear();
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
-            MarkerOptions markerOptions = new MarkerOptions().position(Objects.requireNonNull(latLng)).title("");
-            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin));
-            mMap.addMarker(markerOptions);
+            MarkerOptions markerOptions1 = new MarkerOptions().position(Objects.requireNonNull(latLng)).title("");
+            markerOptions1.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin));
+            mMap.addMarker(markerOptions1);
+
         });
 
 
@@ -342,6 +342,7 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
                 .build();
         mGoogleApiClient.connect();
     }
+
     @Override
     public void onConnected(Bundle bundle) {
         mLocationRequest = new LocationRequest();
@@ -363,7 +364,7 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
         if (ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        GPSTracker gps = new GPSTracker(PickUpLocationEditActivity.this);
+        GPSTracker gps = new GPSTracker(PickUpLocationDoctorActivity.this);
 
         gps.canGetLocation();
         LatLng curentpoint = new LatLng(gps.getLatitude(), gps.getLongitude());
@@ -425,20 +426,18 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
     public void onLocationChanged(Location location) {
         Log.w(TAG,"onLocationChanged-->");
 
-
         mLastLocation = location;
-        if (mCurrLocationMarker != null) {
-            mCurrLocationMarker.remove();
-        }
+        if (mCurrLocationMarker != null) { mCurrLocationMarker.remove(); }
         //Showing Current Location Marker on Map
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        Log.w(TAG,"latLng--->"+latLng);
+        Log.w(TAG,"onLocationChanged latLng--->"+latLng);
 
         strlatlng  = String.valueOf(latLng);
 
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin));
+
 
 
         LocationManager locationManager = (LocationManager)
@@ -462,7 +461,7 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
             if(lat != 0 && lon != 0){
                 latitude = lat;
                 longitude = lon;
-                Log.w(TAG,"BundleData for search places :"+"lat :"+lat+" "+"lon :"+lon+" fromactivity : "+fromactivity);
+                Log.w(TAG,"BundleData for search places :"+"lat :"+lat+" "+"lon :"+lon);
 
                 latLng = new LatLng(lat, lon);
             }
@@ -472,26 +471,13 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
             if(placesearchactivity != null && placesearchactivity.equalsIgnoreCase("placesearchactivity")){
                 if(latitude != 0 && longitude != 0){
                     latLng = new LatLng(latitude,longitude);
-                    Log.w(TAG,"onLocationChanged BundleData if-->"+"Call getAddressResultResponse");
-                    Log.w(TAG,"onLocationChanged BundleData for searched places :"+"lat :"+lat+" "+"lon :"+lon);
+                   // Log.w(TAG,"onLocationChanged BundleData if-->"+"Call getAddressResultResponse");
+                    //Log.w(TAG,"onLocationChanged BundleData for searched places :"+"lat :"+lat+" "+"lon :"+lon);
                     strlatlng = String.valueOf(latLng);
-                    Log.w(TAG,"onLocationChanged BundleData"+strlatlng);
+                    //Log.w(TAG,"onLocationChanged BundleData"+strlatlng);
                     getAddressResultResponse(latLng);
                 }
-            }
-            else if(fromactivity != null && fromactivity.equalsIgnoreCase("EditMyAddressActivity")){
-                Log.w(TAG,"else if fromactivity : "+fromactivity);
-
-                if(latitude != 0 && longitude != 0){
-                    latLng = new LatLng(latitude,longitude);
-                    Log.w(TAG,"onLocationChanged BundleData if-->"+"Call getAddressResultResponse");
-                    Log.w(TAG,"onLocationChanged BundleData for searched places :"+"lat :"+lat+" "+"lon :"+lon);
-                    strlatlng = String.valueOf(latLng);
-                    Log.w(TAG,"onLocationChanged BundleData"+strlatlng);
-                    getAddressResultResponse(latLng);
-                }
-            }
-            else {
+            }else {
                 Log.w(TAG,"onLocationChanged BundleData else");
                 mMap.clear();
                 //  mMap.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getName().toString()));
@@ -515,26 +501,17 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
                         getAddressResultResponse(latLng);
 
                     }
-
-
                 }
             }
-
-
-
-
-
-
         }
 
         //   markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        mCurrLocationMarker = mMap.addMarker(markerOptions);
+        /*mCurrLocationMarker = mMap.addMarker(markerOptions);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(12.0f));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(16.0f));*/
 
         if (mGoogleApiClient != null) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient,
-                    this);
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
     }
     @Override
@@ -612,12 +589,12 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
     }
     private void getLatandLong(){
         try{
-            if (ContextCompat.checkSelfPermission(PickUpLocationEditActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(PickUpLocationEditActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(PickUpLocationEditActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            if (ContextCompat.checkSelfPermission(PickUpLocationDoctorActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(PickUpLocationDoctorActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(PickUpLocationDoctorActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
             }
             else {
-                GPSTracker gps = new GPSTracker(PickUpLocationEditActivity.this);
+                GPSTracker gps = new GPSTracker(PickUpLocationDoctorActivity.this);
 
                 // Check if GPS enabled
                 if (gps.canGetLocation()) {
@@ -643,7 +620,7 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
 
     }
     public void showSettingsAlert() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(PickUpLocationEditActivity.this);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(PickUpLocationDoctorActivity.this);
 
         // Setting DialogHelp Title
         alertDialog.setTitle("GPS is settings");
@@ -669,16 +646,25 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
     }
 
 
+
+
+
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(),ManageAddressActivity.class));
-        finish();
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("ManageAddressDoctorActivity")){
+            startActivity(new Intent(PickUpLocationDoctorActivity.this, ManageAddressDoctorActivity.class));
+            finish();
+        }else{
+            startActivity(new Intent(PickUpLocationDoctorActivity.this, ManageAddressDoctorActivity.class));
+            finish();
+        }
 
     }
 
     private void getAddressResultResponse(LatLng latLng) {
-        Log.w(TAG,"GetAddressResultResponse-->"+latLng);
+       // Log.w(TAG,"GetAddressResultResponse-->"+latLng);
         //avi_indicator.setVisibility(View.VISIBLE);
         // avi_indicator.smoothToShow();
         Retrofit retrofit = new Retrofit.Builder()
@@ -688,12 +674,12 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
 
         API service = retrofit.create(API.class);
         String strlatlng = String.valueOf(latLng);
-        Log.w(TAG,"getAddressResultResponse strlatlng-->"+strlatlng);
+      //  Log.w(TAG,"getAddressResultResponse strlatlng-->"+strlatlng);
         String newString = strlatlng.replace("lat/lng:", "");
-        Log.w(TAG,"getAddressResultResponse latlng=="+newString);
+       // Log.w(TAG,"getAddressResultResponse latlng=="+newString);
 
         String latlngs = newString.trim().replaceAll("\\(", "").replaceAll("\\)","").trim();
-        Log.w(TAG,"getAddressResultResponse latlngs=="+latlngs);
+       //Log.w(TAG,"getAddressResultResponse latlngs=="+latlngs);
 
 
 
@@ -742,12 +728,12 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
                     if(addressComponentsBeanList != null) {
                         if (addressComponentsBeanList.size() > 0) {
                             for (int i = 0; i < addressComponentsBeanList.size(); i++) {
-                                Log.w(TAG, "addressComponentsBeanList size : " + addressComponentsBeanList.size());
+                                //Log.w(TAG, "addressComponentsBeanList size : " + addressComponentsBeanList.size());
 
                                 for (int j = 0; j < addressComponentsBeanList.get(i).getTypes().size(); j++) {
-                                    Log.w(TAG, "getTypes size : " + addressComponentsBeanList.get(i).getTypes().size());
+                                    //Log.w(TAG, "getTypes size : " + addressComponentsBeanList.get(i).getTypes().size());
 
-                                    Log.w(TAG, "TYPES-->" + addressComponentsBeanList.get(i).getTypes());
+                                   // Log.w(TAG, "TYPES-->" + addressComponentsBeanList.get(i).getTypes());
                                     List<String> typesList = addressComponentsBeanList.get(i).getTypes();
 
                                     if (typesList.contains("postal_code")) {

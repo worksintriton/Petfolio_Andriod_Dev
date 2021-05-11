@@ -40,6 +40,7 @@ import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
 
 import com.petfolio.infinitus.doctor.DoctorProfileScreenActivity;
 import com.petfolio.infinitus.requestpojo.CartAddProductRequest;
+import com.petfolio.infinitus.requestpojo.DoctorProductFavListCreateRequest;
 import com.petfolio.infinitus.requestpojo.FetchByIdRequest;
 import com.petfolio.infinitus.responsepojo.FetchProductByIdResponse;
 import com.petfolio.infinitus.responsepojo.SuccessResponse;
@@ -47,6 +48,8 @@ import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -178,6 +181,10 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
 
     BottomSheetBehavior bottomSheetBehavior;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_fav)
+    ImageView img_fav;
+
     @SuppressLint({"LogNotTimber", "SetTextI18n", "LongLogTag"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -282,6 +289,13 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
 
                 showVendorDetails();
 
+            }
+        });
+
+        img_fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doctorProductFavListCreateResponseCall();
             }
         });
 
@@ -490,6 +504,12 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
                                  setView(response.body().getProduct_details().getProduct_related());
 
                             }
+
+                             if(response.body().getProduct_details().isProduct_fav()){
+                                 img_fav.setBackgroundResource(R.drawable.heart_gray);
+                             }else{
+                                 img_fav.setBackgroundResource(R.drawable.ic_fav);
+                             }
                              setUIData(product_title,product_review,product_rating,product_price,product_discount,product_discription,product_cart_count,threshould);
 
 
@@ -813,4 +833,59 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
         }
 
     }
+
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
+    private void doctorProductFavListCreateResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<SuccessResponse> call = apiInterface.doctorProductFavListCreateResponseCall(RestUtils.getContentType(),doctorProductFavListCreateRequest());
+
+        Log.w(TAG,"url  :%s"+call.request().url().toString());
+
+        call.enqueue(new Callback<SuccessResponse>() {
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onResponse(@NotNull Call<SuccessResponse> call, @NotNull Response<SuccessResponse> response) {
+                Log.w(TAG,"SuccessResponse"+ "--->" + new Gson().toJson(response.body()));
+                avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                            fetch_product_by_id_ResponseCall();
+                        }
+
+
+                    }
+                }
+
+
+
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<SuccessResponse> call, @NotNull Throwable t) {
+                avi_indicator.smoothToHide();
+
+                Log.w(TAG,"SuccessResponse"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
+    private DoctorProductFavListCreateRequest doctorProductFavListCreateRequest() {
+
+        /*
+         * user_id : 6087d8626163803091258a5d
+         * product_id : 60731580a959860485828fc5
+         */
+
+        DoctorProductFavListCreateRequest doctorProductFavListCreateRequest = new DoctorProductFavListCreateRequest();
+        doctorProductFavListCreateRequest.setUser_id(userid);
+        doctorProductFavListCreateRequest.setProduct_id(productid);
+        Log.w(TAG,"doctorProductFavListCreateRequest"+ "--->" + new Gson().toJson(doctorProductFavListCreateRequest));
+        return doctorProductFavListCreateRequest;
+    }
+
 }

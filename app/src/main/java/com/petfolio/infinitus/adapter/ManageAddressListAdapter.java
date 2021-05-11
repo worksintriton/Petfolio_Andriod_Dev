@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.location.EditMyAddressActivity;
+import com.petfolio.infinitus.activity.location.EditMyAddressDoctorActivity;
 import com.petfolio.infinitus.interfaces.LocationDefaultListener;
 import com.petfolio.infinitus.interfaces.LocationDeleteListener;
 import com.petfolio.infinitus.responsepojo.LocationListAddressResponse;
@@ -104,25 +105,48 @@ public class ManageAddressListAdapter extends  RecyclerView.Adapter<RecyclerView
                     public boolean onMenuItemClick(MenuItem item) {
                         String titleName = String.valueOf(item.getTitle());
                         if(titleName != null && titleName.equalsIgnoreCase("Edit")){
+                            if(fromactivity != null && fromactivity.equalsIgnoreCase("ManageAddressDoctorActivity")){
+                                Intent i = new Intent(context, EditMyAddressDoctorActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                i.putExtra("id",locationListResponseList.get(position).get_id());
+                                i.putExtra("userid",locationListResponseList.get(position).getUser_id());
+                                i.putExtra("cityname",locationListResponseList.get(position).getLocation_city());
+                                i.putExtra("state",locationListResponseList.get(position).getLocation_state());
+                                i.putExtra("country",locationListResponseList.get(position).getLocation_country());
+                                i.putExtra("address",locationListResponseList.get(position).getLocation_address());
+                                i.putExtra("pincode",locationListResponseList.get(position).getLocation_pin());
+                                i.putExtra("nickname",locationListResponseList.get(position).getLocation_nickname());
+                                i.putExtra("locationtype",locationListResponseList.get(position).getLocation_title());
+                                i.putExtra("defaultstatus",locationListResponseList.get(position).isDefault_status());
+                                i.putExtra("fromactivity",fromactivity);
+                                Bundle b = new Bundle();
+                                b.putDouble("lat", locationListResponseList.get(position).getLocation_lat());
+                                b.putDouble("lon", locationListResponseList.get(position).getLocation_long());
+                                i.putExtras(b);
+                                Log.w(TAG,"cityname-->"+locationListResponseList.get(position).getLocation_city());
+                                context.startActivity(i);
 
-                            Intent i = new Intent(context, EditMyAddressActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            i.putExtra("id",locationListResponseList.get(position).get_id());
-                            i.putExtra("userid",locationListResponseList.get(position).getUser_id());
-                            i.putExtra("cityname",locationListResponseList.get(position).getLocation_city());
-                            i.putExtra("state",locationListResponseList.get(position).getLocation_state());
-                            i.putExtra("country",locationListResponseList.get(position).getLocation_country());
-                            i.putExtra("address",locationListResponseList.get(position).getLocation_address());
-                            i.putExtra("pincode",locationListResponseList.get(position).getLocation_pin());
-                            i.putExtra("nickname",locationListResponseList.get(position).getLocation_nickname());
-                            i.putExtra("locationtype",locationListResponseList.get(position).getLocation_title());
-                            i.putExtra("defaultstatus",locationListResponseList.get(position).isDefault_status());
-                            i.putExtra("fromactivity",fromactivity);
-                            Bundle b = new Bundle();
-                            b.putDouble("lat", locationListResponseList.get(position).getLocation_lat());
-                            b.putDouble("lon", locationListResponseList.get(position).getLocation_long());
-                            i.putExtras(b);
-                            Log.w(TAG,"cityname-->"+locationListResponseList.get(position).getLocation_city());
-                            context.startActivity(i);
+                            }else{
+                                Intent i = new Intent(context, EditMyAddressActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                i.putExtra("id",locationListResponseList.get(position).get_id());
+                                i.putExtra("userid",locationListResponseList.get(position).getUser_id());
+                                i.putExtra("cityname",locationListResponseList.get(position).getLocation_city());
+                                i.putExtra("state",locationListResponseList.get(position).getLocation_state());
+                                i.putExtra("country",locationListResponseList.get(position).getLocation_country());
+                                i.putExtra("address",locationListResponseList.get(position).getLocation_address());
+                                i.putExtra("pincode",locationListResponseList.get(position).getLocation_pin());
+                                i.putExtra("nickname",locationListResponseList.get(position).getLocation_nickname());
+                                i.putExtra("locationtype",locationListResponseList.get(position).getLocation_title());
+                                i.putExtra("defaultstatus",locationListResponseList.get(position).isDefault_status());
+                                i.putExtra("fromactivity",fromactivity);
+                                Bundle b = new Bundle();
+                                b.putDouble("lat", locationListResponseList.get(position).getLocation_lat());
+                                b.putDouble("lon", locationListResponseList.get(position).getLocation_long());
+                                i.putExtras(b);
+                                Log.w(TAG,"cityname-->"+locationListResponseList.get(position).getLocation_city());
+                                context.startActivity(i);
+
+                            }
+
 
                         } else if(titleName != null && titleName.equalsIgnoreCase("Delete")){
                             locationDeleteListener.locationDeleteListener(locationListResponseList.get(position).isDefault_status(),locationListResponseList.get(position).get_id());

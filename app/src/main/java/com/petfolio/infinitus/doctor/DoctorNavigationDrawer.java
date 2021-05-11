@@ -203,7 +203,7 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
                         return true;
 
                     case R.id.nav_item_five:
-
+                         gotoFavourites();
                         return true;
 
                     case R.id.nav_item_six:
@@ -223,6 +223,11 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
             }
         });
 
+    }
+
+    private void gotoFavourites() {
+        Intent intent = new Intent(getApplicationContext(),DoctorProductsFavActivity.class);
+        startActivity(intent);
     }
 
     private void gotoProfile() {

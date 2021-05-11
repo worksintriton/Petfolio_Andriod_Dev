@@ -28,6 +28,7 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.activity.location.PickUpLocationActivity;
+import com.petfolio.infinitus.activity.location.PickUpLocationDoctorActivity;
 import com.petfolio.infinitus.adapter.ManageAddressListAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
@@ -180,7 +181,7 @@ public class ManageAddressDoctorActivity extends AppCompatActivity implements Vi
     }
 
     private void gotoAddNewAddress() {
-        Intent intent = new Intent(getApplicationContext(), PickUpLocationActivity.class);
+        Intent intent = new Intent(getApplicationContext(), PickUpLocationDoctorActivity.class);
         intent.putExtra("fromactivity",TAG);
         startActivity(intent);
     }
