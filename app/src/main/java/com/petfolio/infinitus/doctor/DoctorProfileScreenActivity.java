@@ -44,6 +44,7 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.petlover.AddYourPetOldUserActivity;
 
+import com.petfolio.infinitus.petlover.PetLoverProfileScreenActivity;
 import com.petfolio.infinitus.requestpojo.DoctorDetailsByUserIdRequest;
 
 import com.petfolio.infinitus.responsepojo.DoctorDetailsByUserIdResponse;
@@ -57,6 +58,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -339,7 +341,8 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
                 case R.id.txt_change_password:
                 break;
                 case R.id.txt_logout:
-                    confirmLogoutDialog();
+                    showLogOutAppAlert();
+                    //confirmLogoutDialog();
                 break; 
 
         }
@@ -531,4 +534,39 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
         startActivity(intent);
         finish();
     }
+
+    private void showLogOutAppAlert() {
+        try {
+
+            dialog = new Dialog(DoctorProfileScreenActivity.this);
+            dialog.setContentView(R.layout.alert_logout_layout);
+            Button btn_no = dialog.findViewById(R.id.btn_no);
+            Button btn_yes = dialog.findViewById(R.id.btn_yes);
+
+            btn_yes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    gotoLogout();
+
+                }
+            });
+            btn_no.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
 }

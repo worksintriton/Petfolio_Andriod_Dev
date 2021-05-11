@@ -174,6 +174,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
         TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.shipping_address));
         img_sos.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
 
         SessionManager session = new SessionManager(getApplicationContext());
 
@@ -299,11 +300,10 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
                     if(response.body().getCode() == 200)
                     {
 
-                        if(response.body().getData()!=null)
-                        {
+                        if(response.body().getData()!=null) {
                             dataBeanList = response.body().getData();
 
-                            if(dataBeanList!=null) {
+                            if(dataBeanList != null) {
                                 if(dataBeanList.isDefault_status()){
 
                                     Log.w(TAG,"true-->");
@@ -366,9 +366,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
                                 }
 
-                           }
-
-                            else {
+                           } else {
 
                                 showNoAddressAlert();
 

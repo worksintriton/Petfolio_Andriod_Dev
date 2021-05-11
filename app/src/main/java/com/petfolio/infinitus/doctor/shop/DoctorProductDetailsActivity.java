@@ -735,11 +735,18 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
 
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
-                        Intent intent = new Intent(getApplicationContext(),DoctorCartActivity.class);
+                        Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
+
+                        if(userid != null && productid != null){
+                            if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                                fetch_product_by_id_ResponseCall();
+                            }
+                        }
+                        /*Intent intent = new Intent(getApplicationContext(),DoctorCartActivity.class);
                         intent.putExtra("productid",productid);
                         intent.putExtra("fromactivity",TAG);
                         startActivity(intent);
-                        finish();
+                        finish();*/
                     }
                 }
             }
