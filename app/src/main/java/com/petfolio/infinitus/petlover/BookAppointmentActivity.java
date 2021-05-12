@@ -3,6 +3,7 @@ package com.petfolio.infinitus.petlover;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -36,6 +37,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -210,6 +212,15 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     @BindView(R.id.include_petlover_header)
     View include_petlover_header;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_visit_group)
+    LinearLayout ll_visit_group;
+
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rg_visit_group)
+    RadioGroup rg_visit_group;
+
     private List<PetTypeListResponse.DataBean.UsertypedataBean> usertypedataBeanList;
     private String strPetType;
     private String strPetBreedType;
@@ -237,6 +248,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     Dialog alertDialog;
     private boolean isSelectYourPet;
     private String selectedAppointmentType = "Emergency";
+    private String selectedVisitType;
     private String petId;
     private String doctorid;
     private String fromactivity;
@@ -313,7 +325,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         img_pet_imge.setVisibility(View.VISIBLE);
         rl_petbreed.setVisibility(View.GONE);
 
-
+        ll_visit_group.setVisibility(View.GONE);
         radioButton_online.setVisibility(View.GONE);
         radioButton_visit.setVisibility(View.GONE);
 
@@ -335,8 +347,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                 radioButton_visit.setChecked(true);
                 radioButton_visit.setClickable(false);
                 selectedCommunicationtype = communicationtype;
-
-
+                ll_visit_group.setVisibility(View.VISIBLE);
             }
         }
 
@@ -564,6 +575,14 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
             RadioButton radioButton = rg_communicationtype.findViewById(radioButtonID);
             selectedCommunicationtype = (String) radioButton.getText();
             Log.w(TAG,"selectedCommunicationtype" + rg_communicationtype);
+
+
+        });
+        rg_visit_group.setOnCheckedChangeListener((group, checkedId) -> {
+            int radioButtonID = rg_visit_group.getCheckedRadioButtonId();
+            RadioButton radioButton = rg_visit_group.findViewById(radioButtonID);
+            selectedVisitType = (String) radioButton.getText();
+            Log.w(TAG,"selectedVisitType" + selectedVisitType);
 
 
         });

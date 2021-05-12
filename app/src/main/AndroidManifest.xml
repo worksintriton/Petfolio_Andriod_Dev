@@ -150,7 +150,7 @@
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.ChooseUserTypeActivity"
@@ -161,7 +161,8 @@
             android:name=".activity.VerifyEmailOtpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" /> <!-- Pet Lover -->
+            android:windowSoftInputMode="adjustPan" />
+        <!-- Pet Lover -->
         <activity
             android:name=".petlover.AddYourPetActivity"
             android:screenOrientation="portrait"
@@ -186,7 +187,7 @@
         <activity
             android:name=".petlover.PetAppointment_Doctor_Date_Time_Activity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".petlover.PetMyappointmentsActivity"
@@ -765,7 +766,15 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
 
-
+        <activity android:name=".doctor.DoctorPaymentDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".petlover.PetloverPaymentDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
 
         <receiver
             android:name=".receiver.SmsBroadcastListener"

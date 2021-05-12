@@ -32,11 +32,12 @@
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/refresh_layout"
                 android:layout_width="match_parent"
+                android:layout_margin="10dp"
                 android:layout_height="wrap_content"
                 tools:ignore="MissingClass">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_newappointment"
+                    android:id="@+id/rv_docfavlist"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

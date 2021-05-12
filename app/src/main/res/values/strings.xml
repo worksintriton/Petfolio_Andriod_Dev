@@ -291,6 +291,9 @@
     <string name="offline">Offline</string>
     <string name="online">Online</string>
 
+    <string name="visithome">Home</string>
+    <string name="visitclinic">Clinic</string>
+
     <string name="emergency_new">Emergency ?</string>
     <string name="call">Call</string>
     <string name="contact">Contact</string>
@@ -309,6 +312,7 @@
     <string name="poor">Poor</string>
     <string name="communication_type">Offline Doctors</string>
     <string name="communicationtype">Communication Type</string>
+    <string name="visittype">Visit Type</string>
 
     <string name="review_added">Review Added</string>
     <string name="back">Back</string>
@@ -508,6 +512,10 @@
     <string name="doctor">Doctor</string>
     <string name="service">Service</string>
     <string name="recent_transactions">Recent Transactions</string>
+
+
+    <string name="my_favourites">My Favourites</string>
+    <string name="pet_1620638904266">PET-1620638904266</string>
 
 
 </resources>

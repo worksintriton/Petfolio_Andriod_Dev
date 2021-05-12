@@ -185,7 +185,7 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
             switch (menuItem.getItemId()) {
                 //Replacing the main content with ContentFragment Which is our Inbox View;
                 case R.id.nav_item_one:
-
+                    gotoMyFavourites();
                     return true;
 
                 // For rest of the options we just show a toast on click
@@ -224,6 +224,12 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
 
     private void gotoMedicalHistory() {
         Intent intent = new Intent(getApplicationContext(),MedicalHistoryActivity.class);
+        startActivity(intent);
+    }
+
+    private void gotoMyFavourites() {
+
+        Intent intent = new Intent(getApplicationContext(),PetloverFavListActivity.class);
         startActivity(intent);
     }
 

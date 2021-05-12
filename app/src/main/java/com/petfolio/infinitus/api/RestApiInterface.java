@@ -1,104 +1,7 @@
 package com.petfolio.infinitus.api;
 
 import com.petfolio.infinitus.requestpojo.*;
-import com.petfolio.infinitus.responsepojo.AddReviewResponse;
-import com.petfolio.infinitus.responsepojo.AddYourPetResponse;
-import com.petfolio.infinitus.responsepojo.ApplyMultiProdDiscountResponse;
-import com.petfolio.infinitus.responsepojo.ApplySingleDiscountCalResponse;
-import com.petfolio.infinitus.responsepojo.ApplySingleDiscountResponse;
-import com.petfolio.infinitus.responsepojo.AppoinmentCancelledResponse;
-import com.petfolio.infinitus.responsepojo.AppoinmentCompleteResponse;
-import com.petfolio.infinitus.responsepojo.AppointmentCheckResponse;
-import com.petfolio.infinitus.responsepojo.AppointmentsUpdateResponse;
-import com.petfolio.infinitus.responsepojo.BreedTypeResponse;
-import com.petfolio.infinitus.responsepojo.CartDetailsResponse;
-import com.petfolio.infinitus.responsepojo.CartSuccessResponse;
-import com.petfolio.infinitus.responsepojo.CreateHolidayResponse;
-import com.petfolio.infinitus.responsepojo.DocBusInfoUploadResponse;
-import com.petfolio.infinitus.responsepojo.DoctorAppointmentsResponse;
-import com.petfolio.infinitus.responsepojo.DoctorCheckStatusResponse;
-import com.petfolio.infinitus.responsepojo.DoctorDetailsByUserIdResponse;
-import com.petfolio.infinitus.responsepojo.DoctorDetailsResponse;
-import com.petfolio.infinitus.responsepojo.DoctorMyCalendarAvlDaysResponse;
-import com.petfolio.infinitus.responsepojo.DoctorMyCalendarAvlTimesResponse;
-import com.petfolio.infinitus.responsepojo.DoctorMyCalendarUpdateDocDateResponse;
-import com.petfolio.infinitus.responsepojo.DoctorProductFavListResponse;
-import com.petfolio.infinitus.responsepojo.DoctorSearchResponse;
-import com.petfolio.infinitus.responsepojo.DoctorUpdateProfileImageResponse;
-import com.petfolio.infinitus.responsepojo.DropDownListResponse;
-import com.petfolio.infinitus.responsepojo.EmailOTPResponse;
-import com.petfolio.infinitus.responsepojo.FBTokenUpdateResponse;
-import com.petfolio.infinitus.responsepojo.FetchProductByIdResponse;
-import com.petfolio.infinitus.responsepojo.FetctProductByCatResponse;
-import com.petfolio.infinitus.responsepojo.FileUploadResponse;
-import com.petfolio.infinitus.responsepojo.FilterDoctorResponse;
-import com.petfolio.infinitus.responsepojo.HolidayDeleteResponse;
-import com.petfolio.infinitus.responsepojo.HolidayListResponse;
-import com.petfolio.infinitus.responsepojo.LocationAddResponse;
-import com.petfolio.infinitus.responsepojo.LocationDeleteResponse;
-import com.petfolio.infinitus.responsepojo.LocationListAddressResponse;
-import com.petfolio.infinitus.responsepojo.LocationStatusChangeResponse;
-import com.petfolio.infinitus.responsepojo.LocationUpdateResponse;
-import com.petfolio.infinitus.responsepojo.LoginResponse;
-import com.petfolio.infinitus.responsepojo.ManageProductsListResponse;
-import com.petfolio.infinitus.responsepojo.MedicalHistoryResponse;
-import com.petfolio.infinitus.responsepojo.NotificationGetlistResponse;
-import com.petfolio.infinitus.responsepojo.NotificationSendResponse;
-import com.petfolio.infinitus.responsepojo.PetAddImageResponse;
-import com.petfolio.infinitus.responsepojo.PetAppointmentCreateResponse;
-import com.petfolio.infinitus.responsepojo.PetAppointmentResponse;
-import com.petfolio.infinitus.responsepojo.PetDeleteResponse;
-import com.petfolio.infinitus.responsepojo.PetDetailsResponse;
-import com.petfolio.infinitus.responsepojo.PetDoctorAvailableTimeResponse;
-import com.petfolio.infinitus.responsepojo.PetListResponse;
-import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
-import com.petfolio.infinitus.responsepojo.PetLoverVendorOrderDetailsResponse;
-import com.petfolio.infinitus.responsepojo.PetLoverVendorOrderListResponse;
-import com.petfolio.infinitus.responsepojo.PetNewAppointmentDetailsResponse;
-import com.petfolio.infinitus.responsepojo.PetNewAppointmentResponse;
-import com.petfolio.infinitus.responsepojo.PetTypeListResponse;
-import com.petfolio.infinitus.responsepojo.PetVendorOrderResponse;
-import com.petfolio.infinitus.responsepojo.PrescriptionCreateResponse;
-import com.petfolio.infinitus.responsepojo.ProductSearchResponse;
-import com.petfolio.infinitus.responsepojo.ProfileUpdateResponse;
-import com.petfolio.infinitus.responsepojo.ResendOTPResponse;
-import com.petfolio.infinitus.responsepojo.SPAppointmentDetailsResponse;
-import com.petfolio.infinitus.responsepojo.SPAppointmentResponse;
-import com.petfolio.infinitus.responsepojo.SPAvailableTimeResponse;
-import com.petfolio.infinitus.responsepojo.SPCheckStatusResponse;
-import com.petfolio.infinitus.responsepojo.SPCreateAppointmentResponse;
-import com.petfolio.infinitus.responsepojo.SPDetailsRepsonse;
-import com.petfolio.infinitus.responsepojo.SPFilterPriceListResponse;
-import com.petfolio.infinitus.responsepojo.SPServiceListResponse;
-import com.petfolio.infinitus.responsepojo.SPSpecificServiceDetailsResponse;
-import com.petfolio.infinitus.responsepojo.ServiceCatResponse;
-import com.petfolio.infinitus.responsepojo.ShippingAddressCreateResponse;
-import com.petfolio.infinitus.responsepojo.ShippingAddressDeleteResponse;
-import com.petfolio.infinitus.responsepojo.ShippingAddressEditResponse;
-import com.petfolio.infinitus.responsepojo.ShippingAddressFetchByUserIDResponse;
-import com.petfolio.infinitus.responsepojo.ShippingAddressListingByUserIDResponse;
-import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
-import com.petfolio.infinitus.responsepojo.SignupResponse;
-import com.petfolio.infinitus.responsepojo.SplashScreenResponse;
-import com.petfolio.infinitus.responsepojo.SuccessResponse;
-import com.petfolio.infinitus.responsepojo.TodayDealMoreResponse;
-import com.petfolio.infinitus.responsepojo.TrackOrderDetailsResponse;
-import com.petfolio.infinitus.responsepojo.UserStatusUpdateResponse;
-import com.petfolio.infinitus.responsepojo.UserTypeListResponse;
-import com.petfolio.infinitus.responsepojo.ServiceProviderRegisterFormCreateResponse;
-import com.petfolio.infinitus.responsepojo.VendorAcceptsReturnOrderResponse;
-import com.petfolio.infinitus.responsepojo.VendorCancelsOrderResponse;
-import com.petfolio.infinitus.responsepojo.VendorConfirmsOrderResponse;
-import com.petfolio.infinitus.responsepojo.VendorDispatchesOrderResponse;
-import com.petfolio.infinitus.responsepojo.VendorFetchOrderDetailsResponse;
-import com.petfolio.infinitus.responsepojo.VendorGetsOrderIDResponse;
-import com.petfolio.infinitus.responsepojo.VendorNewOrderResponse;
-import com.petfolio.infinitus.responsepojo.VendorOrderDetailsResponse;
-import com.petfolio.infinitus.responsepojo.VendorOrderListResponse;
-import com.petfolio.infinitus.responsepojo.VendorOrderResponse;
-import com.petfolio.infinitus.responsepojo.VendorOrderUpdateResponse;
-import com.petfolio.infinitus.responsepojo.VendorReasonListResponse;
-import com.petfolio.infinitus.responsepojo.VendorRegisterFormCreateResponse;
+import com.petfolio.infinitus.responsepojo.*;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -743,6 +646,36 @@ public interface RestApiInterface {
     /*Doctor Products Fav list create*/
     @POST("product_fav/create")
     Call<SuccessResponse>doctorProductFavListCreateResponseCall(@Header("Content-Type") String type, @Body DoctorProductFavListCreateRequest doctorProductFavListCreateRequest);
+
+
+
+    /*Petlover Doctor Fav list*/
+    @POST("doctor_fav/getlist_id")
+    Call<FetchPetloverDoctorFavListResponse>petloverdoctorfavlistResponseCall(@Header("Content-Type") String type, @Body FetchPetloverFavListRequest fetchPetloverFavListRequest);
+
+    /*Petlover SP Fav list*/
+    @POST("sp_fav/getlist_id")
+    Call<FetchPetloverSPFavListResponse>petloverspfavlistResponseCall(@Header("Content-Type") String type, @Body FetchPetloverFavListRequest fetchPetloverFavListRequest);
+
+    /*Petlover Shop Fav list*/
+    @POST("product_fav/getlist_id")
+    Call<FetchPetloverShopFavListResponse>petlovershopfavlistResponseCall(@Header("Content-Type") String type, @Body FetchPetloverFavListRequest fetchPetloverFavListRequest);
+
+    /*Create SP Fav list*/
+    @POST("sp_fav/create")
+    Call<SPFavCreateResponse>createspfavlistResponseCall(@Header("Content-Type") String type, @Body SPFavCreateRequest spFavCreateRequest);
+
+    /*Create Shop Fav list*/
+    @POST("product_fav/create")
+    Call<ProductFavCreateResponse>createshopfavlistResponseCall(@Header("Content-Type") String type, @Body ProductFavCreateRequest productFavCreateRequest);
+
+    /*Fetch Petlover Product Details*/
+    @POST("appointments/doctor/petlover_payment")
+    Call<FetchPetloverPaymDetaResponse>fetchpetlvrprodetaillistResponseCall(@Header("Content-Type") String type, @Body FetchPetloverPaymDetaRequest fetchPetloverPaymDetaRequest);
+
+    /*Fetch Doctor Product Details*/
+    @POST("appointments/doctor_payment")
+    Call<FetchDoctorPaymDetaResponse>fetchdrprodetaillistResponseCall(@Header("Content-Type") String type, @Body FetchDoctorPaymDetaRequest fetchDoctorPaymDetaRequest);
 
 
 
