@@ -251,7 +251,8 @@
                 android:maxLines="1"
                 android:text="@string/pet_details"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
             <LinearLayout
                 android:id="@+id/linear1"
@@ -329,7 +330,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -353,7 +354,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -377,7 +378,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -401,7 +402,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -425,7 +426,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -447,7 +448,7 @@
                     android:id="@+id/txt_weight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -469,7 +470,7 @@
                     android:id="@+id/txt_age"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -491,7 +492,7 @@
                     android:id="@+id/txt_vaccinated"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -516,7 +517,7 @@
                     android:id="@+id/txt_petlastvaccinatedage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -582,7 +583,7 @@
                     android:id="@+id/txt_order_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -605,7 +606,7 @@
                     android:id="@+id/txt_booking_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -628,7 +629,7 @@
                     android:id="@+id/txt_payment_method"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -651,7 +652,7 @@
                     android:id="@+id/txt_order_cost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -671,8 +672,8 @@
                 android:drawablePadding="10dp"
                 android:text="@string/address"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
-
+                android:textSize="16sp"
+                android:textStyle="bold"/>
             <TextView
                 android:id="@+id/txt_address"
                 android:layout_width="wrap_content"
@@ -682,8 +683,43 @@
                 android:ellipsize="end"
                 android:maxLines="3"
                 android:text="@string/desc_dummy"
-                android:textColor="@color/black"
+                android:textColor="@color/new_sec_txt_color"
                 android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/ll_home_address">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/vertical_dotted_line"
+                    android:layerType="software" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:drawablePadding="10dp"
+                    android:text="@string/home_address"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/txt_home_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:drawablePadding="10dp"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:text="@string/desc_dummy"
+                    android:textColor="@color/new_sec_txt_color"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="10dp"/>
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

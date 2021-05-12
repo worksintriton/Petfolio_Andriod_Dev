@@ -321,11 +321,14 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                 if (response.body() != null) {
 
                     if (200 == response.body().getCode()) {
-                        if (response.body().getStatus() != null&&!response.body().getStatus().isEmpty()) {
+                        Toasty.success(getApplicationContext(),""+response.body().getMessage(),Toasty.LENGTH_SHORT).show();
 
-                            Toasty.success(getApplicationContext(),""+response.body().getMessage(),Toasty.LENGTH_SHORT).show();
-
+                        if(userid != null && productid != null){
+                            if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                                fetch_product_by_id_ResponseCall();
+                            }
                         }
+
                     }
 
                 }
@@ -533,6 +536,12 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                     if(200 == response.body().getCode()){
                         Log.w(TAG,"FetchProductByIdResponse" + new Gson().toJson(response.body()));
                         if(response.body().getProduct_details() != null){
+                            if(response.body().getProduct_details().isProduct_fav()){
+                                img_fav.setBackgroundResource(R.drawable.ic_fav);
+                            }else{
+                                img_fav.setBackgroundResource(R.drawable.heart_gray);
+                            }
+
                             String product_title = response.body().getProduct_details().getProduct_title();
                             int product_review = response.body().getProduct_details().getProduct_review();
                             double product_rating = response.body().getProduct_details().getProduct_rating();
@@ -869,9 +878,10 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-
             case R.id.img_fav:
-                favResponseCall();
+                if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                    favResponseCall();
+                }
                 break;
 
         }

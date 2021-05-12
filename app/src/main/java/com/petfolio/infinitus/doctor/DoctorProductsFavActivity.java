@@ -381,6 +381,8 @@ public class DoctorProductsFavActivity extends AppCompatActivity implements View
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
+                        Toasty.success(getApplicationContext(),""+response.body().getMessage(),Toasty.LENGTH_SHORT).show();
+
                         if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
                             doctorProductFavListResponseCall();
                         }

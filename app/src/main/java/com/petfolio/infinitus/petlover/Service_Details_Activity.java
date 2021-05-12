@@ -319,14 +319,15 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
                 gotoSPAvailableTimeActivity();
                 break;
                 case R.id.img_fav:
-                favResponseCall();
+                    if (new ConnectionDetector(Service_Details_Activity.this).isNetworkAvailable(Service_Details_Activity.this)) {
+                        favResponseCall();
+                    }
                 break;
 
         }
     }
 
     private void favResponseCall() {
-
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
@@ -342,11 +343,14 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
                 if (response.body() != null) {
 
                     if (200 == response.body().getCode()) {
-                        if (response.body().getStatus() != null&&!response.body().getStatus().isEmpty()) {
+                        Toasty.success(getApplicationContext(),""+response.body().getMessage(),Toasty.LENGTH_SHORT).show();
 
-                            Toasty.success(getApplicationContext(),""+response.body().getMessage(),Toasty.LENGTH_SHORT).show();
-
+                        if(spid != null && userid != null) {
+                            if (new ConnectionDetector(Service_Details_Activity.this).isNetworkAvailable(Service_Details_Activity.this)) {
+                                SPDetailsRepsonseCall();
+                            }
                         }
+
                     }
 
                 }

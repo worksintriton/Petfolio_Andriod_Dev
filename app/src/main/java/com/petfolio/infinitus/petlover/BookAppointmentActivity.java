@@ -51,15 +51,20 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.adapter.AddImageListAdapter;
+import com.petfolio.infinitus.adapter.ManageAddressListAdapter;
+import com.petfolio.infinitus.adapter.ManageAddressListVisitAdapter;
 import com.petfolio.infinitus.adapter.ViewPagerClinicDetailsAdapter;
 import com.petfolio.infinitus.adapter.ViewPagerPetlistAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.appUtils.FileUtil;
 import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
+import com.petfolio.infinitus.interfaces.LocationDefaultListener;
+import com.petfolio.infinitus.interfaces.LocationDeleteListener;
 import com.petfolio.infinitus.requestpojo.AddYourPetRequest;
 import com.petfolio.infinitus.requestpojo.BreedTypeRequest;
 import com.petfolio.infinitus.requestpojo.DocBusInfoUploadRequest;
+import com.petfolio.infinitus.requestpojo.LocationListAddressRequest;
 import com.petfolio.infinitus.requestpojo.NotificationSendRequest;
 import com.petfolio.infinitus.requestpojo.PetAppointmentCreateRequest;
 import com.petfolio.infinitus.requestpojo.PetDetailsRequest;
@@ -67,6 +72,7 @@ import com.petfolio.infinitus.responsepojo.AddYourPetResponse;
 import com.petfolio.infinitus.responsepojo.BreedTypeResponse;
 import com.petfolio.infinitus.responsepojo.DoctorDetailsResponse;
 import com.petfolio.infinitus.responsepojo.FileUploadResponse;
+import com.petfolio.infinitus.responsepojo.LocationListAddressResponse;
 import com.petfolio.infinitus.responsepojo.NotificationSendResponse;
 import com.petfolio.infinitus.responsepojo.PetAppointmentCreateResponse;
 import com.petfolio.infinitus.responsepojo.PetDetailsResponse;
@@ -105,7 +111,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BookAppointmentActivity extends AppCompatActivity implements PaymentResultListener {
+public class BookAppointmentActivity extends AppCompatActivity implements PaymentResultListener, LocationDefaultListener {
 
     private static final String TAG = "BookAppointmentActivity";
 
@@ -248,7 +254,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     Dialog alertDialog;
     private boolean isSelectYourPet;
     private String selectedAppointmentType = "Emergency";
-    private String selectedVisitType;
+    private String selectedVisitType = "";
     private String petId;
     private String doctorid;
     private String fromactivity;
@@ -269,6 +275,15 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000;
     private Dialog dialog;
+
+    TextView txt_no_records;
+    TextView txt_savedaddress;
+    RecyclerView rv_manage_address;
+    Button btn_use_this_addreess;
+    private List<LocationListAddressResponse.DataBean> addressList;
+
+    String locationid = "";
+    private boolean isVisit;
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -343,6 +358,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                 selectedCommunicationtype = communicationtype;
 
             }else if(communicationtype.equalsIgnoreCase("Visit")){
+                isVisit = true;
                 radioButton_visit.setVisibility(View.VISIBLE);
                 radioButton_visit.setChecked(true);
                 radioButton_visit.setClickable(false);
@@ -498,7 +514,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         });
 
         btn_continue.setOnClickListener(v -> {
-            Log.w(TAG,"btn_continue strPetBreedType : "+strPetBreedType);
+            Log.w(TAG,"btn_continue selectedCommunicationtype : "+selectedCommunicationtype+" selectedVisitType : "+selectedVisitType);
             if (isSelectYourPet) {
                 if(validdSelectYourPetType()){
                     if (edt_allergies.getText().toString().trim().equals("")) {
@@ -509,6 +525,8 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                         edt_comment.requestFocus();
                     }else if (selectedCommunicationtype != null && selectedCommunicationtype.isEmpty()) {
                         showErrorLoading("Please select communication type");
+                    }else if (isVisit && selectedVisitType != null && selectedVisitType.isEmpty()) {
+                        showErrorLoading("Please select visit type");
                     }else{
 
 
@@ -574,18 +592,37 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
             int radioButtonID = rg_communicationtype.getCheckedRadioButtonId();
             RadioButton radioButton = rg_communicationtype.findViewById(radioButtonID);
             selectedCommunicationtype = (String) radioButton.getText();
-            Log.w(TAG,"selectedCommunicationtype" + rg_communicationtype);
+            Log.w(TAG,"selectedCommunicationtype " + selectedCommunicationtype);
+            if(selectedCommunicationtype != null && selectedCommunicationtype.equalsIgnoreCase("Visit")) {
+                ll_visit_group.setVisibility(View.VISIBLE);
+                isVisit = true;
+            }else{
+                ll_visit_group.setVisibility(View.GONE);
+                isVisit = false;
+            }
 
 
-        });
+            });
         rg_visit_group.setOnCheckedChangeListener((group, checkedId) -> {
             int radioButtonID = rg_visit_group.getCheckedRadioButtonId();
             RadioButton radioButton = rg_visit_group.findViewById(radioButtonID);
             selectedVisitType = (String) radioButton.getText();
-            Log.w(TAG,"selectedVisitType" + selectedVisitType);
+            Log.w(TAG,"selectedVisitType : " + selectedVisitType);
+            if(selectedVisitType != null && selectedVisitType.equalsIgnoreCase("Home")){
+                showManageAddressAlert();
+                btn_use_this_addreess.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                        Log.w(TAG," locationid : "+locationid+" selectedVisitType : "+selectedVisitType);
+                    }
+                });
+
+            }
 
 
         });
+
 
 
     }
@@ -1343,6 +1380,8 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
          * appointment_types : Normal
          * allergies : this is
          * amount : 400
+         * location_id,
+         * visit_type
          */
         List<PetAppointmentCreateRequest.DocAttchedBean> doc_attched = new ArrayList<>();
 
@@ -1406,6 +1445,8 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         petAppointmentCreateRequest.setService_name("");
         petAppointmentCreateRequest.setService_amount("");
         petAppointmentCreateRequest.setDate_and_time(currentDateandTime);
+        petAppointmentCreateRequest.setVisit_type(selectedVisitType);
+        petAppointmentCreateRequest.setLocation_id(locationid);
         Log.w(TAG,"petAppointmentCreateRequest"+ "--->" + new Gson().toJson(petAppointmentCreateRequest));
         return petAppointmentCreateRequest;
     }
@@ -1535,6 +1576,116 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         return notificationSendRequest;
     }
 
+
+    private void showManageAddressAlert() {
+        try {
+
+            dialog = new Dialog(BookAppointmentActivity.this);
+            dialog.setContentView(R.layout.alert_manage_addresses_layout);
+            dialog.setCancelable(false);
+             txt_no_records = dialog.findViewById(R.id.txt_no_records);
+            txt_savedaddress = dialog.findViewById(R.id.txt_savedaddress);
+            rv_manage_address = dialog.findViewById(R.id.rv_manage_address);
+            btn_use_this_addreess = dialog.findViewById(R.id.btn_use_this_addreess);
+            txt_no_records.setVisibility(View.GONE);
+            txt_savedaddress.setVisibility(View.GONE);
+            btn_use_this_addreess.setVisibility(View.GONE);
+            rv_manage_address.setVisibility(View.GONE);
+
+            if (new ConnectionDetector(BookAppointmentActivity.this).isNetworkAvailable(BookAppointmentActivity.this)) {
+                locationListAddressResponseCall();
+            }
+
+
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
+    @SuppressLint("LogNotTimber")
+    private void locationListAddressResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<LocationListAddressResponse> call = apiInterface.locationListAddressResponseCall(RestUtils.getContentType(), locationListAddressRequest());
+        Log.w(TAG,"locationListAddressResponseCall url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<LocationListAddressResponse>() {
+            @SuppressLint({"SetTextI18n", "LogNotTimber"})
+            @Override
+            public void onResponse(@NonNull Call<LocationListAddressResponse> call, @NonNull Response<LocationListAddressResponse> response) {
+
+                Log.w(TAG,"locationListAddressResponseCall"+ "--->" + new Gson().toJson(response.body()));
+
+                avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        if(response.body().getData() != null && response.body().getData().isEmpty()){
+                            txt_no_records.setVisibility(View.VISIBLE);
+                            txt_no_records.setText("No new address");
+                            rv_manage_address.setVisibility(View.GONE);
+                            txt_savedaddress.setVisibility(View.GONE);
+                        }
+                        else{
+                            btn_use_this_addreess.setVisibility(View.VISIBLE);
+                            txt_no_records.setVisibility(View.GONE);
+                            rv_manage_address.setVisibility(View.VISIBLE);
+                            txt_savedaddress.setVisibility(View.VISIBLE);
+                            if(response.body().getData() != null) {
+                                addressList = response.body().getData();
+                            }
+                            txt_savedaddress.setText(addressList.size()+" Saved Address");
+                            setViewManageAddress();
+                        }
+
+
+
+                    }
+                    else{
+                        showErrorLoading(response.body().getMessage());
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<LocationListAddressResponse> call, @NonNull Throwable t) {
+
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"locationListAddressResponseCall flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint("LogNotTimber")
+    private LocationListAddressRequest locationListAddressRequest() {
+        LocationListAddressRequest locationListAddressRequest = new LocationListAddressRequest();
+        locationListAddressRequest.setUser_id(userid);
+        Log.w(TAG,"locationListAddressRequest"+ "--->" + new Gson().toJson(locationListAddressRequest));
+        return locationListAddressRequest;
+    }
+    private void setViewManageAddress() {
+        rv_manage_address.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        rv_manage_address.setItemAnimator(new DefaultItemAnimator());
+        ManageAddressListVisitAdapter manageAddressListVisitAdapter = new ManageAddressListVisitAdapter(getApplicationContext(), addressList,this,TAG);
+        rv_manage_address.setAdapter(manageAddressListVisitAdapter);
+
+    }
+    @SuppressLint("LogNotTimber")
+    @Override
+    public void locationDefaultListener(boolean status, String location_id, String userid) {
+        locationid = location_id;
+        Log.w(TAG,"locationDefaultListener : "+"status : "+status+" locationid : "+locationid+" userid : "+userid);
+    }
 
 }
 

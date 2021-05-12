@@ -185,6 +185,13 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
     private String id;
     double latitude, longtitude;
 
+    String appointment_id;
+    String appoinment_status;
+    private String bookedat;
+    private String startappointmentstatus;
+    private String appointmentfor;
+    private String userrate;
+
 
 
     @Override
@@ -312,6 +319,14 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
             pincode = extras.getString("pincode");
             cityname = extras.getString("cityname");
             address = extras.getString("address");
+
+            /*PetAppointmentDetailsActivity*/
+            appointment_id = extras.getString("appointment_id");
+            bookedat = extras.getString("bookedat");
+            startappointmentstatus = extras.getString("startappointmentstatus");
+            appointmentfor = extras.getString("appointmentfor");
+            userrate = extras.getString("userrate");
+            from = extras.getString("from");
 
 
 
@@ -458,6 +473,21 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
             intent.putExtra("defaultstatus",defaultstatus);
             intent.putExtra("lat",latitude);
             intent.putExtra("lon",longtitude);
+            startActivity(intent);
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetloverFavListActivity")){
+            Intent intent = new Intent(getApplicationContext(), PetloverFavListActivity.class);
+            startActivity(intent);
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetAppointmentDetailsActivity")){
+            Intent intent = new Intent(getApplicationContext(), PetAppointmentDetailsActivity.class);
+            intent.putExtra("fromactivity",TAG);
+            intent.putExtra("appointment_id",appointment_id);
+            intent.putExtra("bookedat",bookedat);
+            intent.putExtra("startappointmentstatus",startappointmentstatus);
+            intent.putExtra("appointmentfor",appointmentfor);
+            intent.putExtra("userrate",userrate);
+            intent.putExtra("from",from);
             startActivity(intent);
             finish();
         } else if(active_tag != null){

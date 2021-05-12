@@ -669,6 +669,10 @@ public interface RestApiInterface {
     @POST("product_fav/create")
     Call<ProductFavCreateResponse>createshopfavlistResponseCall(@Header("Content-Type") String type, @Body ProductFavCreateRequest productFavCreateRequest);
 
+    /*Create Doctor Fav list*/
+    @POST("doctor_fav/create")
+    Call<SuccessResponse>createDoctorFavListResponseCall(@Header("Content-Type") String type, @Body DoctorFavCreateRequest doctorFavCreateRequest);
+
     /*Fetch Petlover Product Details*/
     @POST("appointments/doctor/petlover_payment")
     Call<FetchPetloverPaymDetaResponse>fetchpetlvrprodetaillistResponseCall(@Header("Content-Type") String type, @Body FetchPetloverPaymDetaRequest fetchPetloverPaymDetaRequest);

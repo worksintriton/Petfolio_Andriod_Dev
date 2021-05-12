@@ -26,6 +26,8 @@ public class PetAppointmentCreateRequest {
      * appointment_types : Normal
      * allergies : this is
      * amount : 400
+     * location_id,
+     * visit_type
      */
 
     private String doctor_id;
@@ -53,6 +55,25 @@ public class PetAppointmentCreateRequest {
     private String service_name;
     private String service_amount;
     private String date_and_time;
+
+    private String location_id;
+    private String visit_type;
+
+    public String getLocation_id() {
+        return location_id;
+    }
+
+    public void setLocation_id(String location_id) {
+        this.location_id = location_id;
+    }
+
+    public String getVisit_type() {
+        return visit_type;
+    }
+
+    public void setVisit_type(String visit_type) {
+        this.visit_type = visit_type;
+    }
 
     public String getDate_and_time() {
         return date_and_time;

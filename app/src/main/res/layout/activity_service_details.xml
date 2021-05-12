@@ -79,7 +79,7 @@
                 android:layout_height="48dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
-                android:src="@drawable/heart_gray"
+                android:background="@drawable/heart_gray"
                 tools:ignore="ContentDescription" />
         </LinearLayout>
 

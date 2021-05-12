@@ -103,6 +103,10 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
     @BindView(R.id.include_petlover_header)
     View include_petlover_header;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.footerView)
+    LinearLayout footerView;
+
     String userid,fromactivity;
 
 
@@ -136,6 +140,8 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
         Log.w(TAG,"onCreate ");
 
         ButterKnife.bind(this);
+
+        footerView.setVisibility(View.GONE);
 
 
         ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
@@ -812,8 +818,10 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
                             txt_no_records.setText("No new address");
                             rv_shipping_address.setVisibility(View.GONE);
                             txt_savedaddress.setVisibility(View.GONE);
+                            footerView.setVisibility(View.GONE);
                         }
                         else{
+                            footerView.setVisibility(View.VISIBLE);
                             txt_no_records.setVisibility(View.GONE);
                             rv_shipping_address.setVisibility(View.VISIBLE);
                             txt_savedaddress.setVisibility(View.VISIBLE);

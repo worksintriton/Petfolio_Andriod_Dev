@@ -3,8 +3,6 @@ package com.petfolio.infinitus.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,14 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.petfolio.infinitus.R;
 
-import com.petfolio.infinitus.activity.location.EditMyAddressActivity;
-import com.petfolio.infinitus.activity.location.EditShippingAddresssActivity;
 import com.petfolio.infinitus.interfaces.OnDeleteShipAddrListener;
 import com.petfolio.infinitus.interfaces.OnEditShipAddrListener;
 import com.petfolio.infinitus.interfaces.OnSelectingShipIdListener;
-import com.petfolio.infinitus.petlover.DoctorClinicDetailsActivity;
 import com.petfolio.infinitus.responsepojo.LocationListAddressResponse;
-import com.petfolio.infinitus.responsepojo.ShippingAddressListingByUserIDResponse;
 
 
 import java.util.List;
@@ -51,13 +45,14 @@ public class ShippingAddressListAdapter extends  RecyclerView.Adapter<RecyclerVi
     String first_name, last_name, state, landmark, pincode;
 
     private int lastSelectedPosition = -1;
+    private boolean isSelected = true;
 
     OnSelectingShipIdListener onSelectingShipIdListener;
 
     OnEditShipAddrListener onEditShipAddrListener;
 
     OnDeleteShipAddrListener onDeleteShipAddrListener;
-    private boolean isSelected = true;
+
 
     public ShippingAddressListAdapter(Context context, List<LocationListAddressResponse.DataBean> addressList,OnSelectingShipIdListener onSelectingShipIdListener,OnEditShipAddrListener onEditShipAddrListener,OnDeleteShipAddrListener onDeleteShipAddrListener) {
         this.context = context;
@@ -152,6 +147,7 @@ public class ShippingAddressListAdapter extends  RecyclerView.Adapter<RecyclerVi
 
        //since only one radio button is allowed to be selected,
         // this condition un-checks previous selections
+
         holder.rb_choose_addr_list.setChecked(lastSelectedPosition == position);
 
         if(isSelected) {
@@ -159,10 +155,6 @@ public class ShippingAddressListAdapter extends  RecyclerView.Adapter<RecyclerVi
                 holder.rb_choose_addr_list.setChecked(addressList.get(position).isDefault_status());
             }
         }
-
-
-
-
 
         holder.rb_choose_addr_list.setOnClickListener(new View.OnClickListener() {
             @Override

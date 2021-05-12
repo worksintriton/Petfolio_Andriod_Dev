@@ -1,6 +1,6 @@
 package com.petfolio.infinitus.requestpojo;
 
-public class DoctorDetailsRequest {
+public class DoctorFavCreateRequest {
 
     /**
      * user_id : 603e262e2c2b43125f8cb801

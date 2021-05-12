@@ -39,7 +39,7 @@
         android:drawablePadding="5dp"
         android:fontFamily="@font/futuramediumbt"
         android:gravity="center_vertical"
-        android:text="@string/current_location"
+        android:text=""
         android:textColor="@color/new_four_txt_color"
         android:textSize="16sp" />
 

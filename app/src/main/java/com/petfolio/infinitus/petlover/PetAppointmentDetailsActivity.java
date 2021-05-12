@@ -26,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.doctor.DoctorPrescriptionDetailsActivity;
@@ -217,19 +218,6 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
         setContentView(R.layout.activity_petappointment_details);
         ButterKnife.bind(this);
 
-
-
-        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
-        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
-        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
-        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
-        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
-        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
-        toolbar_title.setText(getResources().getString(R.string.appointment));
-
-        img_back.setOnClickListener(v -> onBackPressed());
-
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             appointment_id = extras.getString("appointment_id");
@@ -243,6 +231,44 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
 
 
         }
+
+
+
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.appointment));
+        img_sos.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
+
+        img_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+            }
+        });
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class);
+                intent.putExtra("fromactivity",TAG);
+                intent.putExtra("appointment_id",appointment_id);
+                intent.putExtra("bookedat",bookedat);
+                intent.putExtra("startappointmentstatus",startappointmentstatus);
+                intent.putExtra("appointmentfor",appointmentfor);
+                intent.putExtra("userrate",userrate);
+                intent.putExtra("from",from);
+                startActivity(intent);
+            }
+        });
+
+        img_back.setOnClickListener(v -> onBackPressed());
+
+
+
 
         btn_cancel.setVisibility(View.GONE);
         img_videocall.setVisibility(View.GONE);

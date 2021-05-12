@@ -127,6 +127,10 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
     LinearLayout ll_price;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.footerView)
+    LinearLayout footerView;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.include_petlover_header)
     View include_petlover_header;
 
@@ -165,6 +169,10 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
         Log.w(TAG,"onCreate ");
 
         ButterKnife.bind(this);
+
+        footerView.setVisibility(View.GONE);
+        ll_address_list_show.setVisibility(View.GONE);
+
 
         ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
         ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
@@ -303,8 +311,9 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
                         if(response.body().getData()!=null) {
                             dataBeanList = response.body().getData();
 
-                            if(dataBeanList != null) {
+                            if(dataBeanList != null ) {
                                 if(dataBeanList.isDefault_status()){
+                                    footerView.setVisibility(View.VISIBLE);
 
                                     Log.w(TAG,"true-->");
 
@@ -371,6 +380,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
                                 showNoAddressAlert();
 
                                 ll_address_list_show.setVisibility(View.GONE);
+                                footerView.setVisibility(View.GONE);
 
                                 txt_no_records.setVisibility(View.VISIBLE);
 

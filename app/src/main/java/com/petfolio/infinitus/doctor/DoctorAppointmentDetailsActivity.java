@@ -167,6 +167,14 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
     @BindView(R.id.include_doctor_footer)
     View include_doctor_footer;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_home_address)
+    LinearLayout ll_home_address;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_home_address)
+    TextView txt_home_address;
+
     BottomNavigationView bottom_navigation_view;
 
 
@@ -198,6 +206,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
         ButterKnife.bind(this);
         avi_indicator.setVisibility(View.GONE);
         txt_serv_name.setVisibility(View.GONE);
+        ll_home_address.setVisibility(View.GONE);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -287,8 +296,6 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
                     if (200 == response.body().getCode()) {
 
                         String vaccinated, addr = null, usrname = null;
-
-
                         if (response.body().getData() != null) {
 
                             String usr_image = response.body().getData().getDoctor_id().getProfile_img();
@@ -355,7 +362,20 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
                             setView(usrname, usr_image, pet_name, pet_type, breed
 
                                     , gender, colour, weight, order_date, orderid, payment_method, order_cost, vaccinated, addr);
+
+                            if(response.body().getData().getVisit_type() != null &&response.body().getData().getVisit_type().equalsIgnoreCase("Home")){
+                                ll_home_address.setVisibility(View.VISIBLE);
+                                if(response.body().getAddress() != null){
+                                    if(response.body().getAddress().getLocation_address() != null){
+                                        txt_home_address.setText(response.body().getAddress().getLocation_address());
+                                    }
+                                }
+                            }else{
+                                ll_home_address.setVisibility(View.GONE);
+                            }
                         }
+
+
                     }
 
 

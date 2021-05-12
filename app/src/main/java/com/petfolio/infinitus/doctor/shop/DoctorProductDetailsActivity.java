@@ -295,7 +295,9 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
         img_fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                doctorProductFavListCreateResponseCall();
+                if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                    doctorProductFavListCreateResponseCall();
+                }
             }
         });
 
@@ -506,9 +508,9 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
                             }
 
                              if(response.body().getProduct_details().isProduct_fav()){
-                                 img_fav.setBackgroundResource(R.drawable.heart_gray);
-                             }else{
                                  img_fav.setBackgroundResource(R.drawable.ic_fav);
+                             }else{
+                                 img_fav.setBackgroundResource(R.drawable.heart_gray);
                              }
                              setUIData(product_title,product_review,product_rating,product_price,product_discount,product_discription,product_cart_count,threshould);
 
@@ -859,6 +861,8 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
+                        Toasty.success(getApplicationContext(),""+response.body().getMessage(),Toasty.LENGTH_SHORT).show();
+
                         if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
                             fetch_product_by_id_ResponseCall();
                         }

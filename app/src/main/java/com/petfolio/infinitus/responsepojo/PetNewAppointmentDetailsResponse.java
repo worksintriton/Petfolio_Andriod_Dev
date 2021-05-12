@@ -4,11 +4,11 @@ import java.util.List;
 
 public class PetNewAppointmentDetailsResponse {
 
-
     /**
      * Status : Success
      * Message : New Appointment List
-     * Data : {"doc_attched":[],"doc_business_info":[{"education_details":[{"education":"MBBS","year":"2018"}],"experience_details":[{"company":"BDS","from":"2020","to":"2021","yearsofexperience":1}],"specialization":[{"specialization":"Surgeon"},{"specialization":"Internal Medicine Physician"}],"pet_handled":[{"pet_handled":"Dog"},{"pet_handled":"Cat"},{"pet_handled":"Parrot"},{"pet_handled":"Horse"}],"clinic_pic":[{"clinic_pic":"http://54.212.108.156:3000/api/uploads/1614840819938.jpg"}],"certificate_pic":[{"certificate_pic":"http://54.212.108.156:3000/api/uploads/1614840845040.pdf"}],"govt_id_pic":[{"govt_id_pic":"http://54.212.108.156:3000/api/uploads/1614840852559.6040832b2c2b43125f8cb84304-03-2021 12:20 PM0069427c-20d2-46a6-9ab1-64855268059e"}],"photo_id_pic":[{"photo_id_pic":"http://54.212.108.156:3000/api/uploads/1614840858530.6040832b2c2b43125f8cb84304-03-2021 12:20 PM0069427c-20d2-46a6-9ab1-64855268059e"}],"_id":"604084202c2b43125f8cb844","user_id":"6040832b2c2b43125f8cb843","dr_title":"Dr","dr_name":"Dr .Albert Doctor","clinic_name":"Care Medical Hospital","clinic_loc":"malles AV garden","clinic_lat":12.9832144,"clinic_long":80.223515,"profile_status":true,"profile_verification_status":"Verified","slot_type":"","date_and_time":"04/03/2021 12:24:22","signature":"","mobile_type":"Android","communication_type":"Online Or Visit","live_status":"Not Live","live_by":"","delete_status":false,"consultancy_fees":1000,"calender_status":true,"comments":0,"rating":5,"doctor_exp":1,"updatedAt":"2021-03-12T08:09:53.364Z","createdAt":"2021-03-04T06:54:24.307Z","__v":0}],"_id":"608f95260ce4f06a62055b5b","doctor_id":{"_id":"6040832b2c2b43125f8cb843","first_name":"Dr .Albert","last_name":"Doctor","user_email":"sangeetha.arulsaravanan99@gmail.com","user_phone":"9003237266","date_of_reg":"04/03/2021 12:20 PM","user_type":4,"user_status":"complete","otp":123456,"profile_img":"http://54.212.108.156:3000/api/uploads/1614842236226.jpg","user_email_verification":false,"fb_token":"fWv_aI-ESwigRRbQ9K8gk3:APA91bHaLS1AAazVqPp3haDYQpQRNttzRngaOeiBYfiFq8Ks5JFaraU7edo3Z-F89wyejzBDX4wNfL6ctz5joKj3sDp0NBNJu-A9B7_18Uo_PLivBNUUJCag9xR6aAWmG2MPs2o9Ylwe","device_id":"","device_type":"","mobile_type":"Android","delete_status":false,"updatedAt":"2021-04-03T07:10:32.695Z","createdAt":"2021-03-04T06:50:19.234Z","__v":0},"appointment_UID":"PET-1620022566186","booking_date":"03-05-2021","booking_time":"03:30 PM","booking_date_time":"03-05-2021 03:30 PM","communication_type":"Online","msg_id":"Meeting_id/608f95260ce4f06a62055b5b","video_id":"https://meet.jit.si/608f95260ce4f06a62055b5b","user_id":{"_id":"603e27792c2b43125f8cb802","first_name":"imthi","last_name":"DKK","user_email":"imthiyas@gmail.com","user_phone":"0123456789","date_of_reg":"02/03/2021 05:24 PM","user_type":1,"user_status":"complete","otp":123456,"profile_img":"http://54.212.108.156:3000/api/uploads/1614844333127.jpeg","user_email_verification":false,"fb_token":"clTQH7GbTVGRy-weBGlpgV:APA91bGQvsISuqQC35DxsdUc9oPLcYG3Q5tHYF6HP9MnPHLWImOgmlHdCFnILfpTPoaqPhOgy4a6SS31HXrS5veJgQO_xN9jBmlSDqeGPD_SZHKAtS4uxjpgpGDxB3BRF-fR2XkziCyM","device_id":"","device_type":"","mobile_type":"Android","delete_status":false,"updatedAt":"2021-05-03T04:33:11.433Z","createdAt":"2021-03-02T11:54:33.405Z","__v":0},"pet_id":{"pet_img":[{"pet_img":"http://54.212.108.156:3000/api/uploads/1614838906176.jpeg"},{"pet_img":"http://54.212.108.156:3000/api/uploads/1614838914060.jpeg"},{"pet_img":"http://54.212.108.156:3000/api/uploads/1614838919211.jpeg"}],"_id":"60407c392c2b43125f8cb83c","user_id":"603e27792c2b43125f8cb802","pet_name":"TEENU","pet_type":"Dog","pet_breed":"Pug","pet_gender":"Male","pet_color":"White","pet_weight":5,"pet_age":"","pet_dob":"01-03-2016","pet_spayed":true,"pet_purebred":false,"pet_frnd_with_dog":false,"pet_frnd_with_cat":true,"pet_frnd_with_kit":false,"pet_microchipped":false,"pet_tick_free":false,"pet_private_part":false,"vaccinated":true,"last_vaccination_date":"01-03-2021","default_status":true,"date_and_time":"06-03-2021 10:17 PM","mobile_type":"Android","delete_status":false,"updatedAt":"2021-03-06T16:47:34.026Z","createdAt":"2021-03-04T06:20:41.573Z","__v":0},"problem_info":"fever","appoinment_status":"Incomplete","start_appointment_status":"Not Started","end_appointment_status":"Not End","doc_feedback":"","doc_rate":"","user_feedback":"","user_rate":"0","display_date":"2021-05-03 15:30:00","server_date_time":"","payment_method":"Online","prescription_details":"","vaccination_details":"","appointment_types":"Emergency","allergies":"fever","payment_id":"pay_H6DWtYXqWcYbye","amount":"1000","service_name":"","service_amount":"","completed_at":"","missed_at":"","mobile_type":"Android","delete_status":false,"appoint_patient_st":"","date_and_time":"03-05-2021 11:45 AM","pervious_app_date":"","reshedule_status":"","updatedAt":"2021-05-03T06:16:06.218Z","createdAt":"2021-05-03T06:16:06.208Z","__v":0}
+     * Data : {"doc_attched":[],"doc_business_info":[{"education_details":[{"year":"2019","education":"MD"}],"experience_details":[{"yearsofexperience":3,"to":"2020","company":"SRM HOSPITAL","from":"2017"}],"specialization":[{"specialization":"Surgeon"},{"specialization":"Internal Medicine Physician"},{"specialization":"Psychiatrist"}],"pet_handled":[{"pet_handled":"Dog"},{"pet_handled":"Cat"},{"pet_handled":"Parrot"},{"pet_handled":"Pigs"}],"clinic_pic":[{"clinic_pic":"http://54.212.108.156:3000/api/uploads/1618550607731.jpg"}],"certificate_pic":[{"certificate_pic":"http://54.212.108.156:3000/api/uploads/1618550631073.PDF"}],"govt_id_pic":[{"govt_id_pic":"http://54.212.108.156:3000/api/uploads/1618550641426.PDF"}],"photo_id_pic":[{"photo_id_pic":"http://54.212.108.156:3000/api/uploads/1618550651333.PDF"}],"_id":"60791f8e0821fa2656160a2c","user_id":"60791e99793d48701d98f51b","dr_title":"Dr","dr_name":"Dinesh","clinic_name":"Apollo clinic","clinic_loc":"4, 1st Link Rd, Puzhuthivakkam, Sadasiva Nagar, Madipakkam, Chennai, Tamil Nadu 600091, India","clinic_lat":10.7938439,"clinic_long":78.6857356,"profile_status":true,"profile_verification_status":"Last update not verified","slot_type":"","date_and_time":"16-04-2021 04:19 PM","signature":"http://54.212.108.156:3000/api/uploads/1618552491813.png","mobile_type":"IOS","communication_type":"Online Or Visit","live_status":"Not Live","live_by":"","delete_status":false,"consultancy_fees":200,"calender_status":true,"comments":0,"rating":5,"doctor_exp":3,"updatedAt":"2021-04-16T10:49:08.692Z","createdAt":"2021-04-16T05:24:30.734Z","__v":0}],"_id":"609b987498fe1e1d326f91e3","doctor_id":{"_id":"60791e99793d48701d98f51b","first_name":"Dinesh","last_name":"Deva","user_email":"iddineshkumar@gmail.com","user_phone":"8989898989","date_of_reg":"16/04/2021 10:50 AM","user_type":4,"user_status":"complete","otp":123456,"profile_img":"","user_email_verification":false,"fb_token":"eHOQsnJLTxirh044sCC7bx:APA91bHavk6lnJfHt0CFwd0apCElvfzGmGzNJfJvr5bzA1pZE9pXaLcb50xbEuSLVLPYWTLCv7GS1FP8d0kcrEXCdRWh9ksqoR4bo21Sn5RqoEqxnIaD5FmRXShDowAM18E8TUT2Jl0O","device_id":"","device_type":"","mobile_type":"Android","delete_status":false,"updatedAt":"2021-04-20T05:56:30.119Z","createdAt":"2021-04-16T05:20:25.462Z","__v":0},"appointment_UID":"PET-1620809844438","booking_date":"12-05-2021","booking_time":"10:30 PM","booking_date_time":"12-05-2021 10:30 PM","communication_type":"Visit","msg_id":"Meeting_id/609b987498fe1e1d326f91e3","video_id":"https://meet.jit.si/609b987498fe1e1d326f91e3","user_id":{"_id":"603e27792c2b43125f8cb802","first_name":"imthi","last_name":"DKK","user_email":"imthiyas@gmail.com","user_phone":"0123456789","date_of_reg":"02/03/2021 05:24 PM","user_type":1,"user_status":"complete","otp":123456,"profile_img":"http://54.212.108.156:3000/api/uploads/1614844333127.jpeg","user_email_verification":false,"fb_token":"cDAL5G0ATz64yR9sXZTnQQ:APA91bFljAU_-uZ1r_XrurTdMYK7dhTPdd7UNUstgnyLab-ewPTvpHpxob8vvDIcDbsZBo1TDUfr1SCSN0DjeOQ8NKW55FVb2QRbwFMi9zOo1kejBk11r01uuX53E9DztFN7VTn7M_z4","device_id":"","device_type":"","mobile_type":"Android","delete_status":false,"updatedAt":"2021-05-12T04:10:47.226Z","createdAt":"2021-03-02T11:54:33.405Z","__v":0},"pet_id":{"pet_img":[{"pet_img":"http://54.212.108.156:3000/api/uploads/1614838906176.jpeg"},{"pet_img":"http://54.212.108.156:3000/api/uploads/1614838914060.jpeg"},{"pet_img":"http://54.212.108.156:3000/api/uploads/1614838919211.jpeg"}],"_id":"60407c392c2b43125f8cb83c","user_id":"603e27792c2b43125f8cb802","pet_name":"TEENU","pet_type":"Dog","pet_breed":"Pug","pet_gender":"Male","pet_color":"White","pet_weight":5,"pet_age":"","pet_dob":"01-03-2016","pet_spayed":true,"pet_purebred":false,"pet_frnd_with_dog":false,"pet_frnd_with_cat":true,"pet_frnd_with_kit":false,"pet_microchipped":false,"pet_tick_free":false,"pet_private_part":false,"vaccinated":true,"last_vaccination_date":"01-03-2021","default_status":true,"date_and_time":"06-03-2021 10:17 PM","mobile_type":"Android","delete_status":false,"updatedAt":"2021-03-06T16:47:34.026Z","createdAt":"2021-03-04T06:20:41.573Z","__v":0},"problem_info":"fever","appoinment_status":"Incomplete","start_appointment_status":"Not Started","end_appointment_status":"Not End","doc_feedback":"","doc_rate":"","user_feedback":"","user_rate":"0","display_date":"2021-05-12 22:30:00","server_date_time":"","payment_method":"Online","prescription_details":"","vaccination_details":"","appointment_types":"Emergency","allergies":"fever","payment_id":"pay_H9p5NVmmmHCvkR","amount":"200","service_name":"","service_amount":"","completed_at":"","missed_at":"","mobile_type":"Android","delete_status":false,"appoint_patient_st":"","date_and_time":"12-05-2021 02:26 PM","pervious_app_date":"","reshedule_status":"","location_id":"6091013d8296a250cbe2b198","visit_type":"Home","updatedAt":"2021-05-12T08:57:24.452Z","createdAt":"2021-05-12T08:57:24.447Z","__v":0}
+     * Address : {"_id":"6091013d8296a250cbe2b198","user_id":"603e27792c2b43125f8cb802","location_state":"Chandigarh","location_country":"India","location_city":"Sahibzada Ajit Singh Nagar","location_pin":"160062","location_address":"Vidya Bhawan, Sector 62, Sahibzada Ajit Singh Nagar, Chandigarh 160062, India","location_lat":30.6962126,"location_long":76.73348399999999,"location_title":"Home","location_nickname":"punjab national","default_status":false,"date_and_time":"04-05-2021 01:39 PM","mobile_type":"Android","delete_status":false,"updatedAt":"2021-05-04T08:09:33.013Z","createdAt":"2021-05-04T08:09:33.013Z","__v":0}
      * Code : 200
      */
 
@@ -16,17 +16,17 @@ public class PetNewAppointmentDetailsResponse {
     private String Message;
     /**
      * doc_attched : []
-     * doc_business_info : [{"education_details":[{"education":"MBBS","year":"2018"}],"experience_details":[{"company":"BDS","from":"2020","to":"2021","yearsofexperience":1}],"specialization":[{"specialization":"Surgeon"},{"specialization":"Internal Medicine Physician"}],"pet_handled":[{"pet_handled":"Dog"},{"pet_handled":"Cat"},{"pet_handled":"Parrot"},{"pet_handled":"Horse"}],"clinic_pic":[{"clinic_pic":"http://54.212.108.156:3000/api/uploads/1614840819938.jpg"}],"certificate_pic":[{"certificate_pic":"http://54.212.108.156:3000/api/uploads/1614840845040.pdf"}],"govt_id_pic":[{"govt_id_pic":"http://54.212.108.156:3000/api/uploads/1614840852559.6040832b2c2b43125f8cb84304-03-2021 12:20 PM0069427c-20d2-46a6-9ab1-64855268059e"}],"photo_id_pic":[{"photo_id_pic":"http://54.212.108.156:3000/api/uploads/1614840858530.6040832b2c2b43125f8cb84304-03-2021 12:20 PM0069427c-20d2-46a6-9ab1-64855268059e"}],"_id":"604084202c2b43125f8cb844","user_id":"6040832b2c2b43125f8cb843","dr_title":"Dr","dr_name":"Dr .Albert Doctor","clinic_name":"Care Medical Hospital","clinic_loc":"malles AV garden","clinic_lat":12.9832144,"clinic_long":80.223515,"profile_status":true,"profile_verification_status":"Verified","slot_type":"","date_and_time":"04/03/2021 12:24:22","signature":"","mobile_type":"Android","communication_type":"Online Or Visit","live_status":"Not Live","live_by":"","delete_status":false,"consultancy_fees":1000,"calender_status":true,"comments":0,"rating":5,"doctor_exp":1,"updatedAt":"2021-03-12T08:09:53.364Z","createdAt":"2021-03-04T06:54:24.307Z","__v":0}]
-     * _id : 608f95260ce4f06a62055b5b
-     * doctor_id : {"_id":"6040832b2c2b43125f8cb843","first_name":"Dr .Albert","last_name":"Doctor","user_email":"sangeetha.arulsaravanan99@gmail.com","user_phone":"9003237266","date_of_reg":"04/03/2021 12:20 PM","user_type":4,"user_status":"complete","otp":123456,"profile_img":"http://54.212.108.156:3000/api/uploads/1614842236226.jpg","user_email_verification":false,"fb_token":"fWv_aI-ESwigRRbQ9K8gk3:APA91bHaLS1AAazVqPp3haDYQpQRNttzRngaOeiBYfiFq8Ks5JFaraU7edo3Z-F89wyejzBDX4wNfL6ctz5joKj3sDp0NBNJu-A9B7_18Uo_PLivBNUUJCag9xR6aAWmG2MPs2o9Ylwe","device_id":"","device_type":"","mobile_type":"Android","delete_status":false,"updatedAt":"2021-04-03T07:10:32.695Z","createdAt":"2021-03-04T06:50:19.234Z","__v":0}
-     * appointment_UID : PET-1620022566186
-     * booking_date : 03-05-2021
-     * booking_time : 03:30 PM
-     * booking_date_time : 03-05-2021 03:30 PM
-     * communication_type : Online
-     * msg_id : Meeting_id/608f95260ce4f06a62055b5b
-     * video_id : https://meet.jit.si/608f95260ce4f06a62055b5b
-     * user_id : {"_id":"603e27792c2b43125f8cb802","first_name":"imthi","last_name":"DKK","user_email":"imthiyas@gmail.com","user_phone":"0123456789","date_of_reg":"02/03/2021 05:24 PM","user_type":1,"user_status":"complete","otp":123456,"profile_img":"http://54.212.108.156:3000/api/uploads/1614844333127.jpeg","user_email_verification":false,"fb_token":"clTQH7GbTVGRy-weBGlpgV:APA91bGQvsISuqQC35DxsdUc9oPLcYG3Q5tHYF6HP9MnPHLWImOgmlHdCFnILfpTPoaqPhOgy4a6SS31HXrS5veJgQO_xN9jBmlSDqeGPD_SZHKAtS4uxjpgpGDxB3BRF-fR2XkziCyM","device_id":"","device_type":"","mobile_type":"Android","delete_status":false,"updatedAt":"2021-05-03T04:33:11.433Z","createdAt":"2021-03-02T11:54:33.405Z","__v":0}
+     * doc_business_info : [{"education_details":[{"year":"2019","education":"MD"}],"experience_details":[{"yearsofexperience":3,"to":"2020","company":"SRM HOSPITAL","from":"2017"}],"specialization":[{"specialization":"Surgeon"},{"specialization":"Internal Medicine Physician"},{"specialization":"Psychiatrist"}],"pet_handled":[{"pet_handled":"Dog"},{"pet_handled":"Cat"},{"pet_handled":"Parrot"},{"pet_handled":"Pigs"}],"clinic_pic":[{"clinic_pic":"http://54.212.108.156:3000/api/uploads/1618550607731.jpg"}],"certificate_pic":[{"certificate_pic":"http://54.212.108.156:3000/api/uploads/1618550631073.PDF"}],"govt_id_pic":[{"govt_id_pic":"http://54.212.108.156:3000/api/uploads/1618550641426.PDF"}],"photo_id_pic":[{"photo_id_pic":"http://54.212.108.156:3000/api/uploads/1618550651333.PDF"}],"_id":"60791f8e0821fa2656160a2c","user_id":"60791e99793d48701d98f51b","dr_title":"Dr","dr_name":"Dinesh","clinic_name":"Apollo clinic","clinic_loc":"4, 1st Link Rd, Puzhuthivakkam, Sadasiva Nagar, Madipakkam, Chennai, Tamil Nadu 600091, India","clinic_lat":10.7938439,"clinic_long":78.6857356,"profile_status":true,"profile_verification_status":"Last update not verified","slot_type":"","date_and_time":"16-04-2021 04:19 PM","signature":"http://54.212.108.156:3000/api/uploads/1618552491813.png","mobile_type":"IOS","communication_type":"Online Or Visit","live_status":"Not Live","live_by":"","delete_status":false,"consultancy_fees":200,"calender_status":true,"comments":0,"rating":5,"doctor_exp":3,"updatedAt":"2021-04-16T10:49:08.692Z","createdAt":"2021-04-16T05:24:30.734Z","__v":0}]
+     * _id : 609b987498fe1e1d326f91e3
+     * doctor_id : {"_id":"60791e99793d48701d98f51b","first_name":"Dinesh","last_name":"Deva","user_email":"iddineshkumar@gmail.com","user_phone":"8989898989","date_of_reg":"16/04/2021 10:50 AM","user_type":4,"user_status":"complete","otp":123456,"profile_img":"","user_email_verification":false,"fb_token":"eHOQsnJLTxirh044sCC7bx:APA91bHavk6lnJfHt0CFwd0apCElvfzGmGzNJfJvr5bzA1pZE9pXaLcb50xbEuSLVLPYWTLCv7GS1FP8d0kcrEXCdRWh9ksqoR4bo21Sn5RqoEqxnIaD5FmRXShDowAM18E8TUT2Jl0O","device_id":"","device_type":"","mobile_type":"Android","delete_status":false,"updatedAt":"2021-04-20T05:56:30.119Z","createdAt":"2021-04-16T05:20:25.462Z","__v":0}
+     * appointment_UID : PET-1620809844438
+     * booking_date : 12-05-2021
+     * booking_time : 10:30 PM
+     * booking_date_time : 12-05-2021 10:30 PM
+     * communication_type : Visit
+     * msg_id : Meeting_id/609b987498fe1e1d326f91e3
+     * video_id : https://meet.jit.si/609b987498fe1e1d326f91e3
+     * user_id : {"_id":"603e27792c2b43125f8cb802","first_name":"imthi","last_name":"DKK","user_email":"imthiyas@gmail.com","user_phone":"0123456789","date_of_reg":"02/03/2021 05:24 PM","user_type":1,"user_status":"complete","otp":123456,"profile_img":"http://54.212.108.156:3000/api/uploads/1614844333127.jpeg","user_email_verification":false,"fb_token":"cDAL5G0ATz64yR9sXZTnQQ:APA91bFljAU_-uZ1r_XrurTdMYK7dhTPdd7UNUstgnyLab-ewPTvpHpxob8vvDIcDbsZBo1TDUfr1SCSN0DjeOQ8NKW55FVb2QRbwFMi9zOo1kejBk11r01uuX53E9DztFN7VTn7M_z4","device_id":"","device_type":"","mobile_type":"Android","delete_status":false,"updatedAt":"2021-05-12T04:10:47.226Z","createdAt":"2021-03-02T11:54:33.405Z","__v":0}
      * pet_id : {"pet_img":[{"pet_img":"http://54.212.108.156:3000/api/uploads/1614838906176.jpeg"},{"pet_img":"http://54.212.108.156:3000/api/uploads/1614838914060.jpeg"},{"pet_img":"http://54.212.108.156:3000/api/uploads/1614838919211.jpeg"}],"_id":"60407c392c2b43125f8cb83c","user_id":"603e27792c2b43125f8cb802","pet_name":"TEENU","pet_type":"Dog","pet_breed":"Pug","pet_gender":"Male","pet_color":"White","pet_weight":5,"pet_age":"","pet_dob":"01-03-2016","pet_spayed":true,"pet_purebred":false,"pet_frnd_with_dog":false,"pet_frnd_with_cat":true,"pet_frnd_with_kit":false,"pet_microchipped":false,"pet_tick_free":false,"pet_private_part":false,"vaccinated":true,"last_vaccination_date":"01-03-2021","default_status":true,"date_and_time":"06-03-2021 10:17 PM","mobile_type":"Android","delete_status":false,"updatedAt":"2021-03-06T16:47:34.026Z","createdAt":"2021-03-04T06:20:41.573Z","__v":0}
      * problem_info : fever
      * appoinment_status : Incomplete
@@ -36,15 +36,15 @@ public class PetNewAppointmentDetailsResponse {
      * doc_rate :
      * user_feedback :
      * user_rate : 0
-     * display_date : 2021-05-03 15:30:00
+     * display_date : 2021-05-12 22:30:00
      * server_date_time :
      * payment_method : Online
      * prescription_details :
      * vaccination_details :
      * appointment_types : Emergency
      * allergies : fever
-     * payment_id : pay_H6DWtYXqWcYbye
-     * amount : 1000
+     * payment_id : pay_H9p5NVmmmHCvkR
+     * amount : 200
      * service_name :
      * service_amount :
      * completed_at :
@@ -52,15 +52,39 @@ public class PetNewAppointmentDetailsResponse {
      * mobile_type : Android
      * delete_status : false
      * appoint_patient_st :
-     * date_and_time : 03-05-2021 11:45 AM
+     * date_and_time : 12-05-2021 02:26 PM
      * pervious_app_date :
      * reshedule_status :
-     * updatedAt : 2021-05-03T06:16:06.218Z
-     * createdAt : 2021-05-03T06:16:06.208Z
+     * location_id : 6091013d8296a250cbe2b198
+     * visit_type : Home
+     * updatedAt : 2021-05-12T08:57:24.452Z
+     * createdAt : 2021-05-12T08:57:24.447Z
      * __v : 0
      */
 
     private DataBean Data;
+    /**
+     * _id : 6091013d8296a250cbe2b198
+     * user_id : 603e27792c2b43125f8cb802
+     * location_state : Chandigarh
+     * location_country : India
+     * location_city : Sahibzada Ajit Singh Nagar
+     * location_pin : 160062
+     * location_address : Vidya Bhawan, Sector 62, Sahibzada Ajit Singh Nagar, Chandigarh 160062, India
+     * location_lat : 30.6962126
+     * location_long : 76.73348399999999
+     * location_title : Home
+     * location_nickname : punjab national
+     * default_status : false
+     * date_and_time : 04-05-2021 01:39 PM
+     * mobile_type : Android
+     * delete_status : false
+     * updatedAt : 2021-05-04T08:09:33.013Z
+     * createdAt : 2021-05-04T08:09:33.013Z
+     * __v : 0
+     */
+
+    private AddressBean Address;
     private int Code;
 
     public String getStatus() {
@@ -87,6 +111,14 @@ public class PetNewAppointmentDetailsResponse {
         this.Data = Data;
     }
 
+    public AddressBean getAddress() {
+        return Address;
+    }
+
+    public void setAddress(AddressBean Address) {
+        this.Address = Address;
+    }
+
     public int getCode() {
         return Code;
     }
@@ -98,24 +130,24 @@ public class PetNewAppointmentDetailsResponse {
     public static class DataBean {
         private String _id;
         /**
-         * _id : 6040832b2c2b43125f8cb843
-         * first_name : Dr .Albert
-         * last_name : Doctor
-         * user_email : sangeetha.arulsaravanan99@gmail.com
-         * user_phone : 9003237266
-         * date_of_reg : 04/03/2021 12:20 PM
+         * _id : 60791e99793d48701d98f51b
+         * first_name : Dinesh
+         * last_name : Deva
+         * user_email : iddineshkumar@gmail.com
+         * user_phone : 8989898989
+         * date_of_reg : 16/04/2021 10:50 AM
          * user_type : 4
          * user_status : complete
          * otp : 123456
-         * profile_img : http://54.212.108.156:3000/api/uploads/1614842236226.jpg
+         * profile_img :
          * user_email_verification : false
-         * fb_token : fWv_aI-ESwigRRbQ9K8gk3:APA91bHaLS1AAazVqPp3haDYQpQRNttzRngaOeiBYfiFq8Ks5JFaraU7edo3Z-F89wyejzBDX4wNfL6ctz5joKj3sDp0NBNJu-A9B7_18Uo_PLivBNUUJCag9xR6aAWmG2MPs2o9Ylwe
+         * fb_token : eHOQsnJLTxirh044sCC7bx:APA91bHavk6lnJfHt0CFwd0apCElvfzGmGzNJfJvr5bzA1pZE9pXaLcb50xbEuSLVLPYWTLCv7GS1FP8d0kcrEXCdRWh9ksqoR4bo21Sn5RqoEqxnIaD5FmRXShDowAM18E8TUT2Jl0O
          * device_id :
          * device_type :
          * mobile_type : Android
          * delete_status : false
-         * updatedAt : 2021-04-03T07:10:32.695Z
-         * createdAt : 2021-03-04T06:50:19.234Z
+         * updatedAt : 2021-04-20T05:56:30.119Z
+         * createdAt : 2021-04-16T05:20:25.462Z
          * __v : 0
          */
 
@@ -139,12 +171,12 @@ public class PetNewAppointmentDetailsResponse {
          * otp : 123456
          * profile_img : http://54.212.108.156:3000/api/uploads/1614844333127.jpeg
          * user_email_verification : false
-         * fb_token : clTQH7GbTVGRy-weBGlpgV:APA91bGQvsISuqQC35DxsdUc9oPLcYG3Q5tHYF6HP9MnPHLWImOgmlHdCFnILfpTPoaqPhOgy4a6SS31HXrS5veJgQO_xN9jBmlSDqeGPD_SZHKAtS4uxjpgpGDxB3BRF-fR2XkziCyM
+         * fb_token : cDAL5G0ATz64yR9sXZTnQQ:APA91bFljAU_-uZ1r_XrurTdMYK7dhTPdd7UNUstgnyLab-ewPTvpHpxob8vvDIcDbsZBo1TDUfr1SCSN0DjeOQ8NKW55FVb2QRbwFMi9zOo1kejBk11r01uuX53E9DztFN7VTn7M_z4
          * device_id :
          * device_type :
          * mobile_type : Android
          * delete_status : false
-         * updatedAt : 2021-05-03T04:33:11.433Z
+         * updatedAt : 2021-05-12T04:10:47.226Z
          * createdAt : 2021-03-02T11:54:33.405Z
          * __v : 0
          */
@@ -209,44 +241,46 @@ public class PetNewAppointmentDetailsResponse {
         private String date_and_time;
         private String pervious_app_date;
         private String reshedule_status;
+        private String location_id;
+        private String visit_type;
         private String updatedAt;
         private String createdAt;
         private int __v;
         private List<?> doc_attched;
         /**
-         * education_details : [{"education":"MBBS","year":"2018"}]
-         * experience_details : [{"company":"BDS","from":"2020","to":"2021","yearsofexperience":1}]
-         * specialization : [{"specialization":"Surgeon"},{"specialization":"Internal Medicine Physician"}]
-         * pet_handled : [{"pet_handled":"Dog"},{"pet_handled":"Cat"},{"pet_handled":"Parrot"},{"pet_handled":"Horse"}]
-         * clinic_pic : [{"clinic_pic":"http://54.212.108.156:3000/api/uploads/1614840819938.jpg"}]
-         * certificate_pic : [{"certificate_pic":"http://54.212.108.156:3000/api/uploads/1614840845040.pdf"}]
-         * govt_id_pic : [{"govt_id_pic":"http://54.212.108.156:3000/api/uploads/1614840852559.6040832b2c2b43125f8cb84304-03-2021 12:20 PM0069427c-20d2-46a6-9ab1-64855268059e"}]
-         * photo_id_pic : [{"photo_id_pic":"http://54.212.108.156:3000/api/uploads/1614840858530.6040832b2c2b43125f8cb84304-03-2021 12:20 PM0069427c-20d2-46a6-9ab1-64855268059e"}]
-         * _id : 604084202c2b43125f8cb844
-         * user_id : 6040832b2c2b43125f8cb843
+         * education_details : [{"year":"2019","education":"MD"}]
+         * experience_details : [{"yearsofexperience":3,"to":"2020","company":"SRM HOSPITAL","from":"2017"}]
+         * specialization : [{"specialization":"Surgeon"},{"specialization":"Internal Medicine Physician"},{"specialization":"Psychiatrist"}]
+         * pet_handled : [{"pet_handled":"Dog"},{"pet_handled":"Cat"},{"pet_handled":"Parrot"},{"pet_handled":"Pigs"}]
+         * clinic_pic : [{"clinic_pic":"http://54.212.108.156:3000/api/uploads/1618550607731.jpg"}]
+         * certificate_pic : [{"certificate_pic":"http://54.212.108.156:3000/api/uploads/1618550631073.PDF"}]
+         * govt_id_pic : [{"govt_id_pic":"http://54.212.108.156:3000/api/uploads/1618550641426.PDF"}]
+         * photo_id_pic : [{"photo_id_pic":"http://54.212.108.156:3000/api/uploads/1618550651333.PDF"}]
+         * _id : 60791f8e0821fa2656160a2c
+         * user_id : 60791e99793d48701d98f51b
          * dr_title : Dr
-         * dr_name : Dr .Albert Doctor
-         * clinic_name : Care Medical Hospital
-         * clinic_loc : malles AV garden
-         * clinic_lat : 12.9832144
-         * clinic_long : 80.223515
+         * dr_name : Dinesh
+         * clinic_name : Apollo clinic
+         * clinic_loc : 4, 1st Link Rd, Puzhuthivakkam, Sadasiva Nagar, Madipakkam, Chennai, Tamil Nadu 600091, India
+         * clinic_lat : 10.7938439
+         * clinic_long : 78.6857356
          * profile_status : true
-         * profile_verification_status : Verified
+         * profile_verification_status : Last update not verified
          * slot_type :
-         * date_and_time : 04/03/2021 12:24:22
-         * signature :
-         * mobile_type : Android
+         * date_and_time : 16-04-2021 04:19 PM
+         * signature : http://54.212.108.156:3000/api/uploads/1618552491813.png
+         * mobile_type : IOS
          * communication_type : Online Or Visit
          * live_status : Not Live
          * live_by :
          * delete_status : false
-         * consultancy_fees : 1000
+         * consultancy_fees : 200
          * calender_status : true
          * comments : 0
          * rating : 5
-         * doctor_exp : 1
-         * updatedAt : 2021-03-12T08:09:53.364Z
-         * createdAt : 2021-03-04T06:54:24.307Z
+         * doctor_exp : 3
+         * updatedAt : 2021-04-16T10:49:08.692Z
+         * createdAt : 2021-04-16T05:24:30.734Z
          * __v : 0
          */
 
@@ -554,6 +588,22 @@ public class PetNewAppointmentDetailsResponse {
 
         public void setReshedule_status(String reshedule_status) {
             this.reshedule_status = reshedule_status;
+        }
+
+        public String getLocation_id() {
+            return location_id;
+        }
+
+        public void setLocation_id(String location_id) {
+            this.location_id = location_id;
+        }
+
+        public String getVisit_type() {
+            return visit_type;
+        }
+
+        public void setVisit_type(String visit_type) {
+            this.visit_type = visit_type;
         }
 
         public String getUpdatedAt() {
@@ -1243,16 +1293,16 @@ public class PetNewAppointmentDetailsResponse {
             private String createdAt;
             private int __v;
             /**
-             * education : MBBS
-             * year : 2018
+             * year : 2019
+             * education : MD
              */
 
             private List<EducationDetailsBean> education_details;
             /**
-             * company : BDS
-             * from : 2020
-             * to : 2021
-             * yearsofexperience : 1
+             * yearsofexperience : 3
+             * to : 2020
+             * company : SRM HOSPITAL
+             * from : 2017
              */
 
             private List<ExperienceDetailsBean> experience_details;
@@ -1267,22 +1317,22 @@ public class PetNewAppointmentDetailsResponse {
 
             private List<PetHandledBean> pet_handled;
             /**
-             * clinic_pic : http://54.212.108.156:3000/api/uploads/1614840819938.jpg
+             * clinic_pic : http://54.212.108.156:3000/api/uploads/1618550607731.jpg
              */
 
             private List<ClinicPicBean> clinic_pic;
             /**
-             * certificate_pic : http://54.212.108.156:3000/api/uploads/1614840845040.pdf
+             * certificate_pic : http://54.212.108.156:3000/api/uploads/1618550631073.PDF
              */
 
             private List<CertificatePicBean> certificate_pic;
             /**
-             * govt_id_pic : http://54.212.108.156:3000/api/uploads/1614840852559.6040832b2c2b43125f8cb84304-03-2021 12:20 PM0069427c-20d2-46a6-9ab1-64855268059e
+             * govt_id_pic : http://54.212.108.156:3000/api/uploads/1618550641426.PDF
              */
 
             private List<GovtIdPicBean> govt_id_pic;
             /**
-             * photo_id_pic : http://54.212.108.156:3000/api/uploads/1614840858530.6040832b2c2b43125f8cb84304-03-2021 12:20 PM0069427c-20d2-46a6-9ab1-64855268059e
+             * photo_id_pic : http://54.212.108.156:3000/api/uploads/1618550651333.PDF
              */
 
             private List<PhotoIdPicBean> photo_id_pic;
@@ -1560,16 +1610,8 @@ public class PetNewAppointmentDetailsResponse {
             }
 
             public static class EducationDetailsBean {
-                private String education;
                 private String year;
-
-                public String getEducation() {
-                    return education;
-                }
-
-                public void setEducation(String education) {
-                    this.education = education;
-                }
+                private String education;
 
                 public String getYear() {
                     return year;
@@ -1578,13 +1620,37 @@ public class PetNewAppointmentDetailsResponse {
                 public void setYear(String year) {
                     this.year = year;
                 }
+
+                public String getEducation() {
+                    return education;
+                }
+
+                public void setEducation(String education) {
+                    this.education = education;
+                }
             }
 
             public static class ExperienceDetailsBean {
+                private int yearsofexperience;
+                private String to;
                 private String company;
                 private String from;
-                private String to;
-                private int yearsofexperience;
+
+                public int getYearsofexperience() {
+                    return yearsofexperience;
+                }
+
+                public void setYearsofexperience(int yearsofexperience) {
+                    this.yearsofexperience = yearsofexperience;
+                }
+
+                public String getTo() {
+                    return to;
+                }
+
+                public void setTo(String to) {
+                    this.to = to;
+                }
 
                 public String getCompany() {
                     return company;
@@ -1600,22 +1666,6 @@ public class PetNewAppointmentDetailsResponse {
 
                 public void setFrom(String from) {
                     this.from = from;
-                }
-
-                public String getTo() {
-                    return to;
-                }
-
-                public void setTo(String to) {
-                    this.to = to;
-                }
-
-                public int getYearsofexperience() {
-                    return yearsofexperience;
-                }
-
-                public void setYearsofexperience(int yearsofexperience) {
-                    this.yearsofexperience = yearsofexperience;
                 }
             }
 
@@ -1690,6 +1740,171 @@ public class PetNewAppointmentDetailsResponse {
                     this.photo_id_pic = photo_id_pic;
                 }
             }
+        }
+    }
+
+    public static class AddressBean {
+        private String _id;
+        private String user_id;
+        private String location_state;
+        private String location_country;
+        private String location_city;
+        private String location_pin;
+        private String location_address;
+        private double location_lat;
+        private double location_long;
+        private String location_title;
+        private String location_nickname;
+        private boolean default_status;
+        private String date_and_time;
+        private String mobile_type;
+        private boolean delete_status;
+        private String updatedAt;
+        private String createdAt;
+        private int __v;
+
+        public String get_id() {
+            return _id;
+        }
+
+        public void set_id(String _id) {
+            this._id = _id;
+        }
+
+        public String getUser_id() {
+            return user_id;
+        }
+
+        public void setUser_id(String user_id) {
+            this.user_id = user_id;
+        }
+
+        public String getLocation_state() {
+            return location_state;
+        }
+
+        public void setLocation_state(String location_state) {
+            this.location_state = location_state;
+        }
+
+        public String getLocation_country() {
+            return location_country;
+        }
+
+        public void setLocation_country(String location_country) {
+            this.location_country = location_country;
+        }
+
+        public String getLocation_city() {
+            return location_city;
+        }
+
+        public void setLocation_city(String location_city) {
+            this.location_city = location_city;
+        }
+
+        public String getLocation_pin() {
+            return location_pin;
+        }
+
+        public void setLocation_pin(String location_pin) {
+            this.location_pin = location_pin;
+        }
+
+        public String getLocation_address() {
+            return location_address;
+        }
+
+        public void setLocation_address(String location_address) {
+            this.location_address = location_address;
+        }
+
+        public double getLocation_lat() {
+            return location_lat;
+        }
+
+        public void setLocation_lat(double location_lat) {
+            this.location_lat = location_lat;
+        }
+
+        public double getLocation_long() {
+            return location_long;
+        }
+
+        public void setLocation_long(double location_long) {
+            this.location_long = location_long;
+        }
+
+        public String getLocation_title() {
+            return location_title;
+        }
+
+        public void setLocation_title(String location_title) {
+            this.location_title = location_title;
+        }
+
+        public String getLocation_nickname() {
+            return location_nickname;
+        }
+
+        public void setLocation_nickname(String location_nickname) {
+            this.location_nickname = location_nickname;
+        }
+
+        public boolean isDefault_status() {
+            return default_status;
+        }
+
+        public void setDefault_status(boolean default_status) {
+            this.default_status = default_status;
+        }
+
+        public String getDate_and_time() {
+            return date_and_time;
+        }
+
+        public void setDate_and_time(String date_and_time) {
+            this.date_and_time = date_and_time;
+        }
+
+        public String getMobile_type() {
+            return mobile_type;
+        }
+
+        public void setMobile_type(String mobile_type) {
+            this.mobile_type = mobile_type;
+        }
+
+        public boolean isDelete_status() {
+            return delete_status;
+        }
+
+        public void setDelete_status(boolean delete_status) {
+            this.delete_status = delete_status;
+        }
+
+        public String getUpdatedAt() {
+            return updatedAt;
+        }
+
+        public void setUpdatedAt(String updatedAt) {
+            this.updatedAt = updatedAt;
+        }
+
+        public String getCreatedAt() {
+            return createdAt;
+        }
+
+        public void setCreatedAt(String createdAt) {
+            this.createdAt = createdAt;
+        }
+
+        public int get__v() {
+            return __v;
+        }
+
+        public void set__v(int __v) {
+            this.__v = __v;
         }
     }
 }

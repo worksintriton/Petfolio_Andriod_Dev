@@ -103,6 +103,9 @@ public class PetloverFavListActivity extends AppCompatActivity  implements Botto
         TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.my_favourites));
 
+        img_sos.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
+
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
         img_back.setOnClickListener(v -> onBackPressed());

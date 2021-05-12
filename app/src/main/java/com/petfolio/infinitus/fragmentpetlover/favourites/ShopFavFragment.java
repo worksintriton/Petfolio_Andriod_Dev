@@ -165,7 +165,7 @@ public class ShopFavFragment extends Fragment implements View.OnClickListener {
                             } else {
                                 rv_shopfavlist.setVisibility(View.GONE);
                                 txt_no_records.setVisibility(View.VISIBLE);
-                                txt_no_records.setText("No doctors available");
+                                txt_no_records.setText("No favourites available");
 
                             }
 

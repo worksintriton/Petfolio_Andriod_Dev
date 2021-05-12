@@ -20,20 +20,13 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
-import com.petfolio.infinitus.activity.location.ManageAddressActivity;
-import com.petfolio.infinitus.adapter.ViewPagerDoctorClinicDetailsAdapter;
+
 import com.petfolio.infinitus.adapter.ViewPagerVendorDetailsAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
-import com.petfolio.infinitus.doctor.DoctorEditProfileActivity;
-import com.petfolio.infinitus.doctor.EditDoctorBusinessInfoActivity;
-import com.petfolio.infinitus.doctor.EditDoctorProfileImageActivity;
-import com.petfolio.infinitus.petlover.AddYourPetOldUserActivity;
-import com.petfolio.infinitus.requestpojo.DoctorDetailsByUserIdRequest;
+
 import com.petfolio.infinitus.requestpojo.VendorGetsOrderIdRequest;
-import com.petfolio.infinitus.responsepojo.DoctorDetailsByUserIdResponse;
-import com.petfolio.infinitus.responsepojo.PetListResponse;
+
 import com.petfolio.infinitus.responsepojo.VendorGetsOrderIDResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;

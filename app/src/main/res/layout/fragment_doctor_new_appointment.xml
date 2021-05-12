@@ -12,19 +12,13 @@
         android:orientation="horizontal">
     </LinearLayout>
 
-    <ScrollView
-        android:id="@+id/scrollablContent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/footerView"
-        android:layout_below="@+id/headerView"
-        android:fillViewport="true">
-
-        <LinearLayout
+    <LinearLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_above="@+id/footerView"
+            android:layout_below="@+id/headerView">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -49,7 +43,6 @@
             </RelativeLayout>
 
         </LinearLayout>
-    </ScrollView>
 
     <LinearLayout
         android:id="@+id/footerView"
@@ -64,7 +57,7 @@
             android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="30dp"
             android:background="@drawable/green_bgm_border"
             android:fontFamily="@font/futuramediumbt"
             android:gravity="center"
