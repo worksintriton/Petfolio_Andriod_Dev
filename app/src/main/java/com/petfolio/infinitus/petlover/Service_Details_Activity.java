@@ -2,30 +2,20 @@ package com.petfolio.infinitus.petlover;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
+
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.ContactsContract;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
+
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -39,28 +29,20 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.adapter.DoctorClinicSpecTypesListAdapter;
-import com.petfolio.infinitus.adapter.PetLoverSOSAdapter;
+
 import com.petfolio.infinitus.adapter.SPDetails_SpecTypesListAdapter;
-import com.petfolio.infinitus.adapter.ViewPagerClinicDetailsAdapter;
 import com.petfolio.infinitus.adapter.ViewPagerSPDetailsGalleryAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.interfaces.SoSCallListener;
 import com.petfolio.infinitus.requestpojo.SPDetailsRequest;
 import com.petfolio.infinitus.requestpojo.SPFavCreateRequest;
-import com.petfolio.infinitus.requestpojo.SPFavCreateResponse;
-import com.petfolio.infinitus.requestpojo.SPSpecificServiceDetailsRequest;
-import com.petfolio.infinitus.responsepojo.DoctorDetailsResponse;
-import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
-import com.petfolio.infinitus.responsepojo.SPCreateAppointmentResponse;
+
 import com.petfolio.infinitus.responsepojo.SPDetailsRepsonse;
-import com.petfolio.infinitus.responsepojo.SPSpecificServiceDetailsResponse;
+import com.petfolio.infinitus.responsepojo.SPFavCreateResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.GridSpacingItemDecoration;
