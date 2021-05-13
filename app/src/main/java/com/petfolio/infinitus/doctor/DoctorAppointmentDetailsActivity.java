@@ -521,8 +521,8 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
 
     img_videocall.setOnClickListener(v -> {
 
-        Log.w(TAG, "Start_appointment_status : " + appoinment_status);
-        if (appoinment_status != null && appoinment_status.equalsIgnoreCase("Not Started")) {
+        Log.w(TAG, "Start_appointment_status : " + start_appointment_status);
+        if (start_appointment_status != null && start_appointment_status.equalsIgnoreCase("Not Started")) {
             doctorStartAppointmentResponseCall(appointment_id);
         } else {
             Intent i = new Intent(DoctorAppointmentDetailsActivity.this, VideoCallDoctorActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -608,7 +608,6 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
             @SuppressLint("LogNotTimber")
             @Override
             public void onFailure(@NonNull Call<AppointmentsUpdateResponse> call, @NonNull Throwable t) {
-
                 avi_indicator.smoothToHide();
                 Log.w(TAG,"startAppointmentResponseCall flr"+"--->" + t.getMessage());
             }

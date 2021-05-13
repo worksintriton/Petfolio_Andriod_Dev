@@ -172,6 +172,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
     private String bookingdateandtime;
     private Dialog dialog;
     private String id;
+    private String distance;
 
 
     @SuppressLint("LogNotTimber")
@@ -200,6 +201,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
             selectedAppointmentType = extras.getString("selectedAppointmentType");
 
             amount = extras.getInt("amount");
+            distance = extras.getString("distance");
             Log.w(TAG,"amount : "+amount);
             communicationtype = extras.getString("communicationtype");
 
@@ -539,6 +541,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         }else{
             Intent intent = new Intent(getApplicationContext(), DoctorClinicDetailsActivity.class);
             intent.putExtra("doctorid",doctorid);
+            intent.putExtra("distance",distance);
             startActivity(intent);
             finish();
 

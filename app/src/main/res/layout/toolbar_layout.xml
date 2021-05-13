@@ -31,17 +31,19 @@
                 android:id="@+id/img_menu"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/ic_menu_new"/>
+                android:background="@drawable/ic_menu_new"
+                tools:ignore="ContentDescription" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/ll2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginEnd="10dp">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
@@ -69,18 +71,25 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="Chennai"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:textStyle="bold" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="end|center">
+                    <ImageView
+                        android:id="@+id/button2button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|center"
+                        android:layout_marginEnd="8dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_down_arrow"
 
-                <ImageView
-                    android:id="@+id/button2button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end|center"
-                    android:layout_marginEnd="5dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_down_arrow"
-                    />
+                        tools:ignore="ContentDescription" />
+                </RelativeLayout>
+
+
             </LinearLayout>
         </LinearLayout>
         <LinearLayout

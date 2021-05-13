@@ -253,7 +253,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     private String uploadimagepath = "";
     Dialog alertDialog;
     private boolean isSelectYourPet;
-    private String selectedAppointmentType = "Emergency";
+    private String selectedAppointmentType = "";
     private String selectedVisitType = "";
     private String petId;
     private String doctorid;
@@ -265,7 +265,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     private String selectedTimeSlot = "";
 
     private int amount;
-    private String communicationtype;
+    private String communicationtype = "";
 
     HashMap<String, String> hashMap_selectyourpet = new HashMap<>();
     private String selectedCommunicationtype;
@@ -355,14 +355,14 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                 radioButton_online.setVisibility(View.VISIBLE);
                 radioButton_online.setChecked(true);
                 radioButton_online.setClickable(false);
-                selectedCommunicationtype = communicationtype;
+                selectedCommunicationtype = "Online";
 
             }else if(communicationtype.equalsIgnoreCase("Visit")){
                 isVisit = true;
                 radioButton_visit.setVisibility(View.VISIBLE);
                 radioButton_visit.setChecked(true);
                 radioButton_visit.setClickable(false);
-                selectedCommunicationtype = communicationtype;
+                selectedCommunicationtype = "Visit";
                 ll_visit_group.setVisibility(View.VISIBLE);
             }
         }

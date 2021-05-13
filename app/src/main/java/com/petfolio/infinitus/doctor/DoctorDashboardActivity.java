@@ -115,6 +115,8 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
 
         bottom_navigation_view = include_doctor_footer.findViewById(R.id.bottom_navigation_view);
         bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
+
 
         avi_indicator.setVisibility(View.GONE);
 
@@ -142,18 +144,19 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
         if(tag != null){
             if(tag.equalsIgnoreCase("1")){
                 active = fragmentDoctorDashboard;
-                bottom_navigation_view.setSelectedItemId(R.id.home);
+                bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
                 loadFragment(new FragmentDoctorDashboard());
             }else if(tag.equalsIgnoreCase("2")){
                 active = doctorShopFragment;
-                bottom_navigation_view.setSelectedItemId(R.id.shop);
+                bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
                 loadFragment(new DoctorShopFragment());
             } else if(tag.equalsIgnoreCase("3")){
-                bottom_navigation_view.setSelectedItemId(R.id.community);
+                bottom_navigation_view.getMenu().findItem(R.id.community).setChecked(true);
+
             }
         }
         else{
-            bottom_navigation_view.setSelectedItemId(R.id.home);
+            bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_schedule, active, active_tag);
             transaction.commitNowAllowingStateLoss();
@@ -227,13 +230,15 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
             }
 
 
-        }else{
+        }
+        else{
             bottom_navigation_view.setSelectedItemId(R.id.home);
             // load fragment
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_schedule,new FragmentDoctorDashboard());
             transaction.commitNowAllowingStateLoss();
         }
+
     }
 
     private void replaceFragment(Fragment fragment){

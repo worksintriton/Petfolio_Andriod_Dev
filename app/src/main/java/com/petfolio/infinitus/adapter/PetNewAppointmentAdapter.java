@@ -136,7 +136,7 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
 
 
         if(newAppointmentResponseList.get(position).getAppointment_type() != null && newAppointmentResponseList.get(position).getAppointment_type().equalsIgnoreCase("Emergency")){
-        holder.img_emergency_appointment.setVisibility(View.VISIBLE);
+            holder.img_emergency_appointment.setVisibility(View.VISIBLE);
         }else{
             holder.img_emergency_appointment.setVisibility(View.GONE);
 

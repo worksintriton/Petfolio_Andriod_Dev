@@ -159,7 +159,37 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
     @BindView(R.id.bottomSheetLayouts)
     NestedScrollView bottomSheetLayouts;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_root1)
+    LinearLayout ll_root1;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_root2)
+    LinearLayout ll_root2;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_root3)
+    LinearLayout ll_root3;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_about_vet_label)
+    TextView txt_about_vet_label;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_spec_label)
+    TextView txt_spec_label;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_pet_hanldle)
+    TextView txt_pet_hanldle;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_map)
+    LinearLayout ll_map;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_location_label)
+    TextView txt_location_label;
 
 
     @SuppressLint("NonConstantResourceId")
@@ -248,6 +278,48 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
 
         avi_indicator.setVisibility(View.VISIBLE);
 
+        viewPager.setVisibility(View.GONE);
+
+        tabLayout.setVisibility(View.GONE);
+
+        hand_img1.setVisibility(View.GONE);
+
+        hand_img2.setVisibility(View.GONE);
+
+        hand_img3.setVisibility(View.GONE);
+
+        hand_img4.setVisibility(View.GONE);
+
+        hand_img5.setVisibility(View.GONE);
+
+        txt_clinicname.setVisibility(View.GONE);
+
+        txt_drname.setVisibility(View.GONE);
+
+        ll_root1.setVisibility(View.GONE);
+
+        ll_root2.setVisibility(View.GONE);
+
+        ll_root3.setVisibility(View.GONE);
+
+        txt_about_vet_label.setVisibility(View.GONE);
+
+        txt_dr_desc.setVisibility(View.GONE);
+
+        txt_spec_label.setVisibility(View.GONE);
+
+        rv_speclist.setVisibility(View.GONE);
+
+        txt_pet_hanldle.setVisibility(View.GONE);
+
+        rv_pet_hanldle.setVisibility(View.GONE);
+
+        txt_location_label.setVisibility(View.GONE);
+
+        txt_place.setVisibility(View.GONE);
+
+        ll_map.setVisibility(View.GONE);
+
 
 //
 //        bottomSheetLayouts.setVisibility(View.GONE);
@@ -261,15 +333,15 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
         }
 
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        assert mapFragment != null;
-        mapFragment.getMapAsync(DoctorClinicDetailsActivity.this);
-
-
-
-        setBottomSheet();
+//        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+//                .findFragmentById(R.id.map);
+//        assert mapFragment != null;
+//        mapFragment.getMapAsync(DoctorClinicDetailsActivity.this);
+//
+//
+//
+//        setBottomSheet();
 
 
         img_fav.setOnClickListener(new View.OnClickListener() {
@@ -439,6 +511,60 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
                             ClinicLocationname = response.body().getData().getClinic_loc();
                             Doctor_exp = response.body().getData().getDoctor_exp();
 
+                            viewPager.setVisibility(View.VISIBLE);
+
+                            tabLayout.setVisibility(View.VISIBLE);
+
+                            hand_img1.setVisibility(View.VISIBLE);
+
+                            hand_img2.setVisibility(View.VISIBLE);
+
+                            hand_img3.setVisibility(View.VISIBLE);
+
+                            hand_img4.setVisibility(View.VISIBLE);
+
+                            hand_img5.setVisibility(View.VISIBLE);
+
+                            txt_clinicname.setVisibility(View.VISIBLE);
+
+                            txt_drname.setVisibility(View.VISIBLE);
+
+                            ll_root1.setVisibility(View.VISIBLE);
+
+                            ll_root2.setVisibility(View.VISIBLE);
+
+                            ll_root3.setVisibility(View.VISIBLE);
+
+                            txt_about_vet_label.setVisibility(View.VISIBLE);
+
+                            txt_dr_desc.setVisibility(View.VISIBLE);
+
+                            txt_spec_label.setVisibility(View.VISIBLE);
+
+                            rv_speclist.setVisibility(View.VISIBLE);
+
+                            txt_pet_hanldle.setVisibility(View.VISIBLE);
+
+                            rv_pet_hanldle.setVisibility(View.VISIBLE);
+
+                            txt_location_label.setVisibility(View.VISIBLE);
+
+                            txt_place.setVisibility(View.VISIBLE);
+
+                            ll_map.setVisibility(View.VISIBLE);
+
+                                    // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+                            mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                                    .findFragmentById(R.id.map);
+
+                            if (mapFragment == null) {
+                                mapFragment = SupportMapFragment.newInstance();
+                                mapFragment.getMapAsync(DoctorClinicDetailsActivity.this);
+                            }
+
+
+                            setBottomSheet();
+
 //                            bottomSheetLayouts.setVisibility(View.VISIBLE);
 
                          //   setBottomSheet();
@@ -530,6 +656,15 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
                             Log.w(TAG,"latitude"+ latitude );
 
                             Log.w(TAG,"longitude"+ longitude );
+
+                            // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+                            mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                                    .findFragmentById(R.id.map);
+
+                            if (mapFragment == null) {
+                                mapFragment = SupportMapFragment.newInstance();
+                                mapFragment.getMapAsync(DoctorClinicDetailsActivity.this);
+                            }
 
 
 
@@ -751,6 +886,8 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
         Log.w(TAG,"Map longitude"+ longitude );
 
         if(latitude!=0&&longitude!=0){
+
+            ll_map.setVisibility(View.VISIBLE);
 
             LatLng currentLocation = new LatLng(latitude, longitude);
 

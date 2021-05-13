@@ -77,6 +77,8 @@ public class FragmentDoctorDashboard extends Fragment  {
 
     SessionManager session;
 
+    FragmentManager  childFragMang;
+
     public FragmentDoctorDashboard() {
         // Required empty public constructor
     }
@@ -94,13 +96,15 @@ public class FragmentDoctorDashboard extends Fragment  {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_doctor_dashboard, container, false);
 
+        childFragMang= getChildFragmentManager();
+
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         ButterKnife.bind(this, view);
         mContext = getActivity();
         avi_indicator.setVisibility(View.GONE);
 
-         session = new SessionManager(mContext);
+        session = new SessionManager(mContext);
         HashMap<String, String> user = session.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
         Log.w(TAG,"userid : "+userid);
@@ -123,7 +127,7 @@ public class FragmentDoctorDashboard extends Fragment  {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager(),3);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(childFragMang,3);
         adapter.addFragment(new FragmentDoctorNewAppointment(), "New");
         adapter.addFragment(new FragmentDoctorCompletedAppointment(), "Completed");
         adapter.addFragment(new FragmentDoctorMissedAppointment(), "Missed");

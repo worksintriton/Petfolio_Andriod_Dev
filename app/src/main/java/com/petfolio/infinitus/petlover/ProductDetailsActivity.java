@@ -181,6 +181,14 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
     @BindView(R.id.img_fav)
     ImageView img_fav;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_prod_desc_label)
+    TextView txt_prod_desc_label;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_relat_prod)
+    RelativeLayout rl_relat_prod;
+
     String prod_type;
 
     Dialog dialog;
@@ -298,9 +306,37 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
 
 
-        setBottomSheet();
+        viewPager.setVisibility(View.GONE);
 
-        img_fav.setOnClickListener(this);
+        tabLayout.setVisibility(View.GONE);
+
+        hand_img1.setVisibility(View.GONE);
+
+        hand_img2.setVisibility(View.GONE);
+
+        hand_img3.setVisibility(View.GONE);
+
+        hand_img4.setVisibility(View.GONE);
+
+        hand_img5.setVisibility(View.GONE);
+
+        txt_products_title.setVisibility(View.GONE);
+
+        txt_prod_type.setVisibility(View.GONE);
+
+        txt_products_price.setVisibility(View.GONE);
+
+        rl_discount.setVisibility(View.GONE);
+
+        txt_products_quantity.setVisibility(View.GONE);
+
+        txt_prod_desc_label.setVisibility(View.GONE);
+
+        txt_view_details.setVisibility(View.GONE);
+
+        txt_product_desc.setVisibility(View.GONE);
+
+        rl_relat_prod.setVisibility(View.GONE);
 
     }
 
@@ -565,6 +601,42 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                             business_location = response.body().getVendor_details().getBussiness_loc();
 
                             bussinessGalleryBeans = response.body().getVendor_details().getBussiness_gallery();
+
+                            viewPager.setVisibility(View.VISIBLE);
+
+                            tabLayout.setVisibility(View.VISIBLE);
+
+                            hand_img1.setVisibility(View.VISIBLE);
+
+                            hand_img2.setVisibility(View.VISIBLE);
+
+                            hand_img3.setVisibility(View.VISIBLE);
+
+                            hand_img4.setVisibility(View.VISIBLE);
+
+                            hand_img5.setVisibility(View.VISIBLE);
+
+                            txt_products_title.setVisibility(View.VISIBLE);
+
+                            txt_prod_type.setVisibility(View.VISIBLE);
+
+                            txt_products_price.setVisibility(View.VISIBLE);
+
+                            rl_discount.setVisibility(View.VISIBLE);
+
+                            txt_products_quantity.setVisibility(View.VISIBLE);
+
+                            txt_prod_desc_label.setVisibility(View.VISIBLE);
+
+                            txt_view_details.setVisibility(View.VISIBLE);
+
+                            txt_product_desc.setVisibility(View.VISIBLE);
+
+                            rl_relat_prod.setVisibility(View.VISIBLE);
+
+                            setBottomSheet();
+
+                            img_fav.setOnClickListener(ProductDetailsActivity.this);
 
                             if(response.body().getProduct_details().getProduct_img() != null && response.body().getProduct_details().getProduct_img().size()>0){
                                 viewpageData(response.body().getProduct_details().getProduct_img());
