@@ -53,13 +53,17 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.doctor.DoctorBusinessInfoActivity;
 import com.petfolio.infinitus.requestpojo.DoctorDetailsRequest;
+import com.petfolio.infinitus.requestpojo.DoctorFavCreateRequest;
 import com.petfolio.infinitus.responsepojo.DoctorDetailsResponse;
+import com.petfolio.infinitus.responsepojo.SuccessResponse;
+import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.GridSpacingItemDecoration;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Timer;
@@ -67,6 +71,7 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -210,6 +215,7 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
     @BindView(R.id.hand_img5)
     ImageView hand_img5;
     private int communication_type;
+    private String userid;
 
 
     @SuppressLint({"LongLogTag", "LogNotTimber"})
@@ -218,6 +224,10 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_clinic_details);
         ButterKnife.bind(this);
+
+        SessionManager sessionManager = new SessionManager(getApplicationContext());
+        HashMap<String, String> user = sessionManager.getProfileDetails();
+        userid = user.get(SessionManager.KEY_ID);
 
 
         avi_indicator.setVisibility(View.GONE);
@@ -262,6 +272,79 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
         setBottomSheet();
 
 
+        img_fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                    if(doctorid != null){
+                        createDoctorFavListResponseCall();
+                    }
+
+                }
+            }
+        });
+
+
+
+
+
+    }
+
+
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    private void createDoctorFavListResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<SuccessResponse> call = ApiService.createDoctorFavListResponseCall(RestUtils.getContentType(),doctorFavCreateRequest());
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<SuccessResponse>() {
+            @SuppressLint({"SetTextI18n", "LogNotTimber"})
+            @Override
+            public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"SuccessResponse Fav"+ "--->" + new Gson().toJson(response.body()));
+
+                if (response.body() != null) {
+                    if(response.body().getCode() ==  200){
+                        Toasty.success(getApplicationContext(),""+response.body().getMessage(),Toasty.LENGTH_SHORT).show();
+
+                        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                            if(doctorid != null){
+                                doctorDetailsResponseCall();
+                            }
+
+                        }
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+
+                Log.w(TAG,"SuccessResponse fav flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+
+
+
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
+    private DoctorFavCreateRequest doctorFavCreateRequest() {
+        /*
+         * user_id : 603e262e2c2b43125f8cb801
+         * doctor_id : 603e31a02c2b43125f8cb806
+         */
+        DoctorFavCreateRequest doctorFavCreateRequest = new DoctorFavCreateRequest();
+        doctorFavCreateRequest.setUser_id(userid);
+        doctorFavCreateRequest.setDoctor_id(doctorid);
+        Log.w(TAG,"doctorFavCreateRequest"+ "--->" + new Gson().toJson(doctorFavCreateRequest));
+        return doctorFavCreateRequest;
     }
 
 
@@ -373,6 +456,13 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
                           /////////  scrollView.setVisibility(View.VISIBLE);
 
                           //  footerView.setVisibility(View.GONE);
+
+
+                            if(response.body().getData().isFav()){
+                                img_fav.setBackgroundResource(R.drawable.ic_fav);
+                            }else{
+                                img_fav.setBackgroundResource(R.drawable.heart_gray);
+                            }
                         }
 
                         if(Doctor_exp != 0) {
