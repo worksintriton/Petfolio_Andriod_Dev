@@ -615,8 +615,13 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
     private DoctorDetailsRequest doctorDetailsRequest() {
+        /*
+         * user_id : 603e262e2c2b43125f8cb801
+         * doctor_id : 603e31a02c2b43125f8cb806
+         */
         DoctorDetailsRequest doctorDetailsRequest = new DoctorDetailsRequest();
-        doctorDetailsRequest.setUser_id(doctorid);
+        doctorDetailsRequest.setUser_id(userid);
+        doctorDetailsRequest.setDoctor_id(doctorid);
         Log.w(TAG,"doctorDetailsRequest"+ "--->" + new Gson().toJson(doctorDetailsRequest));
         return doctorDetailsRequest;
     }
