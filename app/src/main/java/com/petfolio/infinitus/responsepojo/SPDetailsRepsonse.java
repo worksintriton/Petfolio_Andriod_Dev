@@ -4,20 +4,59 @@ import java.util.List;
 
 public class SPDetailsRepsonse {
 
+
     /**
      * Status : Success
      * Message : SP Details
-     * Data : {"bus_service_list":[{"bus_service_list":"SP - 1"}],"bus_spec_list":[{"bus_spec_list":"Specialization - 1"}],"bus_service_gall":[{"bus_service_gall":"http://52.25.163.13:3000/api/uploads/5fe1e675094d0471dabf929522-12-2020 05:58 PMPetfolio1.jpg"}],"bus_certif":[{"bus_certif":"http://52.25.163.13:3000/api/uploads/5fe1e675094d0471dabf929522-12-2020 05:58 PM1606464394712_4893XXXXXXXXXX79_13-11-2020.PDF"}],"_id":"5fe1e6c7094d0471dabf9296","user_id":"5fe1e675094d0471dabf9295","bus_user_name":"Dk","bus_user_email":"iddineshkumar@gmail.com","bussiness_name":"Gromming","bus_user_phone":"9842670816","bus_profile":"http://52.25.163.13:3000/api/uploads/5fe1e675094d0471dabf929522-12-2020 05:58 PM1606464394712_4893XXXXXXXXXX79_13-11-2020.PDF","bus_proof":"http://52.25.163.13:3000/api/uploads/5fe1e675094d0471dabf929522-12-2020 05:58 PM1606464394712_4893XXXXXXXXXX79_13-11-2020.PDF","date_and_time":"23/12/2020 07:22 PM","mobile_type":"Android","profile_status":true,"profile_verification_status":"Verified","sp_loc":"Unnamed Road, Tamil Nadu 621006, India","sp_lat":11.0557284,"sp_long":78.6326037,"delete_status":false,"updatedAt":"2020-12-24T04:17:10.260Z","createdAt":"2020-12-22T12:29:59.324Z","__v":0,"distance":0,"rating":0,"comments":0}
-     * Details : {"image_path":"SP - 6","title":"","count":0}
+     * Data : {"bus_service_list":[{"amount":20,"time_slots":"30 mins","bus_service_list":" Dog Walking"}],"bus_spec_list":[{"bus_spec_list":"Specialization - 1"},{"bus_spec_list":"Specialization - 2"}],"bus_service_gall":[{"bus_service_gall":"http://54.212.108.156:3000/api/uploads/1614685509822.603e24ef2c2b43125f8cb7fe0203171509"}],"bus_certif":[{"bus_certif":"http://54.212.108.156:3000/api/uploads/1614685525491.pdf"}],"_id":"603e25562c2b43125f8cb7ff","user_id":"603e24ef2c2b43125f8cb7fe","bus_user_name":"jack","bus_user_email":"","bussiness_name":"sparrow service","bus_user_phone":"7417417415","bus_profile":"http://54.212.108.156:3000/api/uploads/1614685518352.pdf","bus_proof":"http://54.212.108.156:3000/api/uploads/1614685518352.pdf","date_and_time":"30-04-2021 12:46 PM","mobile_type":"IOS","profile_status":true,"profile_verification_status":"Verified","sp_loc":"Gajendra Circle Bus Stop, Indian Institute Of Technology, Chennai, Tamil Nadu 600036, India","sp_lat":12.991730767308209,"sp_long":80.23317474871874,"delete_status":false,"updatedAt":"2021-04-30T07:20:41.832Z","createdAt":"2021-03-02T11:45:26.472Z","__v":0,"distance":0,"rating":0,"comments":0,"fav":true}
+     * Details : {"_id":"5fe185d61996f651f5133693","image_path":"http://54.212.108.156:3000/api/uploads/icon6.jpg","title":" Dog Walking","count":0,"amount":200,"time":"15 mins"}
      * Code : 200
      */
 
     private String Status;
     private String Message;
+    /**
+     * bus_service_list : [{"amount":20,"time_slots":"30 mins","bus_service_list":" Dog Walking"}]
+     * bus_spec_list : [{"bus_spec_list":"Specialization - 1"},{"bus_spec_list":"Specialization - 2"}]
+     * bus_service_gall : [{"bus_service_gall":"http://54.212.108.156:3000/api/uploads/1614685509822.603e24ef2c2b43125f8cb7fe0203171509"}]
+     * bus_certif : [{"bus_certif":"http://54.212.108.156:3000/api/uploads/1614685525491.pdf"}]
+     * _id : 603e25562c2b43125f8cb7ff
+     * user_id : 603e24ef2c2b43125f8cb7fe
+     * bus_user_name : jack
+     * bus_user_email :
+     * bussiness_name : sparrow service
+     * bus_user_phone : 7417417415
+     * bus_profile : http://54.212.108.156:3000/api/uploads/1614685518352.pdf
+     * bus_proof : http://54.212.108.156:3000/api/uploads/1614685518352.pdf
+     * date_and_time : 30-04-2021 12:46 PM
+     * mobile_type : IOS
+     * profile_status : true
+     * profile_verification_status : Verified
+     * sp_loc : Gajendra Circle Bus Stop, Indian Institute Of Technology, Chennai, Tamil Nadu 600036, India
+     * sp_lat : 12.991730767308209
+     * sp_long : 80.23317474871874
+     * delete_status : false
+     * updatedAt : 2021-04-30T07:20:41.832Z
+     * createdAt : 2021-03-02T11:45:26.472Z
+     * __v : 0
+     * distance : 0
+     * rating : 0
+     * comments : 0
+     * fav : true
+     */
+
     private DataBean Data;
+    /**
+     * _id : 5fe185d61996f651f5133693
+     * image_path : http://54.212.108.156:3000/api/uploads/icon6.jpg
+     * title :  Dog Walking
+     * count : 0
+     * amount : 200
+     * time : 15 mins
+     */
+
     private DetailsBean Details;
     private int Code;
-
 
     public String getStatus() {
         return Status;
@@ -25,9 +64,7 @@ public class SPDetailsRepsonse {
 
     public void setStatus(String Status) {
         this.Status = Status;
-
     }
-
 
     public String getMessage() {
         return Message;
@@ -35,7 +72,6 @@ public class SPDetailsRepsonse {
 
     public void setMessage(String Message) {
         this.Message = Message;
-
     }
 
     public DataBean getData() {
@@ -46,16 +82,13 @@ public class SPDetailsRepsonse {
         this.Data = Data;
     }
 
-
     public DetailsBean getDetails() {
         return Details;
     }
 
     public void setDetails(DetailsBean Details) {
         this.Details = Details;
-
     }
-
 
     public int getCode() {
         return Code;
@@ -63,39 +96,9 @@ public class SPDetailsRepsonse {
 
     public void setCode(int Code) {
         this.Code = Code;
-
     }
 
-    public static class DataBean  {
-        /**
-         * bus_service_list : [{"bus_service_list":"SP - 1"}]
-         * bus_spec_list : [{"bus_spec_list":"Specialization - 1"}]
-         * bus_service_gall : [{"bus_service_gall":"http://52.25.163.13:3000/api/uploads/5fe1e675094d0471dabf929522-12-2020 05:58 PMPetfolio1.jpg"}]
-         * bus_certif : [{"bus_certif":"http://52.25.163.13:3000/api/uploads/5fe1e675094d0471dabf929522-12-2020 05:58 PM1606464394712_4893XXXXXXXXXX79_13-11-2020.PDF"}]
-         * _id : 5fe1e6c7094d0471dabf9296
-         * user_id : 5fe1e675094d0471dabf9295
-         * bus_user_name : Dk
-         * bus_user_email : iddineshkumar@gmail.com
-         * bussiness_name : Gromming
-         * bus_user_phone : 9842670816
-         * bus_profile : http://52.25.163.13:3000/api/uploads/5fe1e675094d0471dabf929522-12-2020 05:58 PM1606464394712_4893XXXXXXXXXX79_13-11-2020.PDF
-         * bus_proof : http://52.25.163.13:3000/api/uploads/5fe1e675094d0471dabf929522-12-2020 05:58 PM1606464394712_4893XXXXXXXXXX79_13-11-2020.PDF
-         * date_and_time : 23/12/2020 07:22 PM
-         * mobile_type : Android
-         * profile_status : true
-         * profile_verification_status : Verified
-         * sp_loc : Unnamed Road, Tamil Nadu 621006, India
-         * sp_lat : 11.0557284
-         * sp_long : 78.6326037
-         * delete_status : false
-         * updatedAt : 2020-12-24T04:17:10.260Z
-         * createdAt : 2020-12-22T12:29:59.324Z
-         * __v : 0
-         * distance : 0
-         * rating : 0
-         * comments : 0
-         */
-
+    public static class DataBean {
         private String _id;
         private String user_id;
         private String bus_user_name;
@@ -118,11 +121,29 @@ public class SPDetailsRepsonse {
         private int distance;
         private int rating;
         private int comments;
-        private List<BusServiceListBean> bus_service_list;
-        private List<BusSpecListBean> bus_spec_list;
-        private List<BusServiceGallBean> bus_service_gall;
-        private List<BusCertifBean> bus_certif;
+        private boolean fav;
+        /**
+         * amount : 20
+         * time_slots : 30 mins
+         * bus_service_list :  Dog Walking
+         */
 
+        private List<BusServiceListBean> bus_service_list;
+        /**
+         * bus_spec_list : Specialization - 1
+         */
+
+        private List<BusSpecListBean> bus_spec_list;
+        /**
+         * bus_service_gall : http://54.212.108.156:3000/api/uploads/1614685509822.603e24ef2c2b43125f8cb7fe0203171509
+         */
+
+        private List<BusServiceGallBean> bus_service_gall;
+        /**
+         * bus_certif : http://54.212.108.156:3000/api/uploads/1614685525491.pdf
+         */
+
+        private List<BusCertifBean> bus_certif;
 
         public String get_id() {
             return _id;
@@ -130,9 +151,7 @@ public class SPDetailsRepsonse {
 
         public void set_id(String _id) {
             this._id = _id;
-
         }
-
 
         public String getUser_id() {
             return user_id;
@@ -140,9 +159,7 @@ public class SPDetailsRepsonse {
 
         public void setUser_id(String user_id) {
             this.user_id = user_id;
-
         }
-
 
         public String getBus_user_name() {
             return bus_user_name;
@@ -150,9 +167,7 @@ public class SPDetailsRepsonse {
 
         public void setBus_user_name(String bus_user_name) {
             this.bus_user_name = bus_user_name;
-
         }
-
 
         public String getBus_user_email() {
             return bus_user_email;
@@ -160,9 +175,7 @@ public class SPDetailsRepsonse {
 
         public void setBus_user_email(String bus_user_email) {
             this.bus_user_email = bus_user_email;
-
         }
-
 
         public String getBussiness_name() {
             return bussiness_name;
@@ -170,9 +183,7 @@ public class SPDetailsRepsonse {
 
         public void setBussiness_name(String bussiness_name) {
             this.bussiness_name = bussiness_name;
-
         }
-
 
         public String getBus_user_phone() {
             return bus_user_phone;
@@ -180,9 +191,7 @@ public class SPDetailsRepsonse {
 
         public void setBus_user_phone(String bus_user_phone) {
             this.bus_user_phone = bus_user_phone;
-
         }
-
 
         public String getBus_profile() {
             return bus_profile;
@@ -190,9 +199,7 @@ public class SPDetailsRepsonse {
 
         public void setBus_profile(String bus_profile) {
             this.bus_profile = bus_profile;
-
         }
-
 
         public String getBus_proof() {
             return bus_proof;
@@ -218,16 +225,13 @@ public class SPDetailsRepsonse {
             this.mobile_type = mobile_type;
         }
 
-
         public boolean isProfile_status() {
             return profile_status;
         }
 
         public void setProfile_status(boolean profile_status) {
             this.profile_status = profile_status;
-
         }
-
 
         public String getProfile_verification_status() {
             return profile_verification_status;
@@ -235,9 +239,7 @@ public class SPDetailsRepsonse {
 
         public void setProfile_verification_status(String profile_verification_status) {
             this.profile_verification_status = profile_verification_status;
-
         }
-
 
         public String getSp_loc() {
             return sp_loc;
@@ -245,9 +247,7 @@ public class SPDetailsRepsonse {
 
         public void setSp_loc(String sp_loc) {
             this.sp_loc = sp_loc;
-
         }
-
 
         public double getSp_lat() {
             return sp_lat;
@@ -255,9 +255,7 @@ public class SPDetailsRepsonse {
 
         public void setSp_lat(double sp_lat) {
             this.sp_lat = sp_lat;
-
         }
-
 
         public double getSp_long() {
             return sp_long;
@@ -265,9 +263,7 @@ public class SPDetailsRepsonse {
 
         public void setSp_long(double sp_long) {
             this.sp_long = sp_long;
-
         }
-
 
         public boolean isDelete_status() {
             return delete_status;
@@ -275,9 +271,7 @@ public class SPDetailsRepsonse {
 
         public void setDelete_status(boolean delete_status) {
             this.delete_status = delete_status;
-
         }
-
 
         public String getUpdatedAt() {
             return updatedAt;
@@ -285,9 +279,7 @@ public class SPDetailsRepsonse {
 
         public void setUpdatedAt(String updatedAt) {
             this.updatedAt = updatedAt;
-
         }
-
 
         public String getCreatedAt() {
             return createdAt;
@@ -296,7 +288,6 @@ public class SPDetailsRepsonse {
         public void setCreatedAt(String createdAt) {
             this.createdAt = createdAt;
         }
-
 
         public int get__v() {
             return __v;
@@ -330,6 +321,13 @@ public class SPDetailsRepsonse {
             this.comments = comments;
         }
 
+        public boolean isFav() {
+            return fav;
+        }
+
+        public void setFav(boolean fav) {
+            this.fav = fav;
+        }
 
         public List<BusServiceListBean> getBus_service_list() {
             return bus_service_list;
@@ -337,9 +335,7 @@ public class SPDetailsRepsonse {
 
         public void setBus_service_list(List<BusServiceListBean> bus_service_list) {
             this.bus_service_list = bus_service_list;
-
         }
-
 
         public List<BusSpecListBean> getBus_spec_list() {
             return bus_spec_list;
@@ -347,9 +343,7 @@ public class SPDetailsRepsonse {
 
         public void setBus_spec_list(List<BusSpecListBean> bus_spec_list) {
             this.bus_spec_list = bus_spec_list;
-
         }
-
 
         public List<BusServiceGallBean> getBus_service_gall() {
             return bus_service_gall;
@@ -357,9 +351,7 @@ public class SPDetailsRepsonse {
 
         public void setBus_service_gall(List<BusServiceGallBean> bus_service_gall) {
             this.bus_service_gall = bus_service_gall;
-
         }
-
 
         public List<BusCertifBean> getBus_certif() {
             return bus_certif;
@@ -367,16 +359,28 @@ public class SPDetailsRepsonse {
 
         public void setBus_certif(List<BusCertifBean> bus_certif) {
             this.bus_certif = bus_certif;
-
         }
 
-        public static class BusServiceListBean  {
-            /**
-             * bus_service_list : SP - 1
-             */
-
+        public static class BusServiceListBean {
+            private int amount;
+            private String time_slots;
             private String bus_service_list;
 
+            public int getAmount() {
+                return amount;
+            }
+
+            public void setAmount(int amount) {
+                this.amount = amount;
+            }
+
+            public String getTime_slots() {
+                return time_slots;
+            }
+
+            public void setTime_slots(String time_slots) {
+                this.time_slots = time_slots;
+            }
 
             public String getBus_service_list() {
                 return bus_service_list;
@@ -388,12 +392,7 @@ public class SPDetailsRepsonse {
         }
 
         public static class BusSpecListBean {
-            /**
-             * bus_spec_list : Specialization - 1
-             */
-
             private String bus_spec_list;
-
 
             public String getBus_spec_list() {
                 return bus_spec_list;
@@ -401,17 +400,11 @@ public class SPDetailsRepsonse {
 
             public void setBus_spec_list(String bus_spec_list) {
                 this.bus_spec_list = bus_spec_list;
-
             }
         }
 
         public static class BusServiceGallBean {
-            /**
-             * bus_service_gall : http://52.25.163.13:3000/api/uploads/5fe1e675094d0471dabf929522-12-2020 05:58 PMPetfolio1.jpg
-             */
-
             private String bus_service_gall;
-
 
             public String getBus_service_gall() {
                 return bus_service_gall;
@@ -422,13 +415,8 @@ public class SPDetailsRepsonse {
             }
         }
 
-        public static class BusCertifBean  {
-            /**
-             * bus_certif : http://52.25.163.13:3000/api/uploads/5fe1e675094d0471dabf929522-12-2020 05:58 PM1606464394712_4893XXXXXXXXXX79_13-11-2020.PDF
-             */
-
+        public static class BusCertifBean {
             private String bus_certif;
-
 
             public String getBus_certif() {
                 return bus_certif;
@@ -436,25 +424,49 @@ public class SPDetailsRepsonse {
 
             public void setBus_certif(String bus_certif) {
                 this.bus_certif = bus_certif;
-
             }
         }
     }
 
-    public static class DetailsBean  {
-        /**
-         * image_path : SP - 6
-         * title :
-         * count : 0
-         *"amount": 200,
-         * "time": "15 mins"
-         */
-
+    public static class DetailsBean {
+        private String _id;
         private String image_path;
         private String title;
         private int count;
         private int amount;
         private String time;
+
+        public String get_id() {
+            return _id;
+        }
+
+        public void set_id(String _id) {
+            this._id = _id;
+        }
+
+        public String getImage_path() {
+            return image_path;
+        }
+
+        public void setImage_path(String image_path) {
+            this.image_path = image_path;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public int getCount() {
+            return count;
+        }
+
+        public void setCount(int count) {
+            this.count = count;
+        }
 
         public int getAmount() {
             return amount;
@@ -470,35 +482,6 @@ public class SPDetailsRepsonse {
 
         public void setTime(String time) {
             this.time = time;
-        }
-
-        public String getImage_path() {
-            return image_path;
-        }
-
-        public void setImage_path(String image_path) {
-            this.image_path = image_path;
-
-        }
-
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-
-        }
-
-
-        public int getCount() {
-            return count;
-        }
-
-        public void setCount(int count) {
-            this.count = count;
-
         }
     }
 }

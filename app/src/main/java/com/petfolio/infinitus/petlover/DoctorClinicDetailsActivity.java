@@ -210,6 +210,8 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
     @BindView(R.id.toolbar_header)
     Toolbar toolbar_header;
     private String userid;
+    private int communication_type;
+    private String searchString ;
 
 
     @SuppressLint({"LongLogTag", "LogNotTimber"})
@@ -231,6 +233,8 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
             doctorname = extras.getString("doctorname");
             distance = extras.getString("distance");
             fromactivity = extras.getString("fromactivity");
+            communication_type = extras.getInt("communication_type");
+            searchString = extras.getString("searchString");
             Log.w(TAG,"Bundle "+" doctorid : "+doctorid+ "fromactivity : "+fromactivity);
         }
 
@@ -591,6 +595,10 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
 
     public void callDirections(String tag){
         Intent intent = new Intent(DoctorClinicDetailsActivity.this,PetLoverDashboardActivity.class);
+        intent.putExtra("tag",tag);
+        intent.putExtra("communication_type",communication_type);
+        intent.putExtra("searchString",searchString);
+        intent.putExtra("doctorid",doctorid);
         intent.putExtra("tag",tag);
         startActivity(intent);
         finish();

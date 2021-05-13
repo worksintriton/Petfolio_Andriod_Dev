@@ -101,15 +101,14 @@ public class PetLoverSPNewFavAdapter extends  RecyclerView.Adapter<RecyclerView.
               holder.hand_img5.setBackgroundResource(R.drawable.ic_logo_color);
           }
 
-//          if(currentItem.i()){
-//              Glide.with(context)
-//                      .load(R.drawable.ic_fav)
-//                      .into(holder.img_fav);
-//          }else{
-//              Glide.with(context)
-//                      .load(R.drawable.heart_gray)
-//                      .into(holder.img_fav);
-//          }
+       if(currentItem.isFav()){
+              Glide.with(context)
+                     .load(R.drawable.ic_fav)
+                     .into(holder.img_fav);
+        }else{
+             Glide.with(context)
+                     .load(R.drawable.heart_gray).into(holder.img_fav);
+          }
 
 
         if (currentItem.getImage() != null && !currentItem.getImage().isEmpty()) {

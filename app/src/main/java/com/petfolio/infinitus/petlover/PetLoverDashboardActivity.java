@@ -131,6 +131,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
 
     private int communication_type;
     private String searchString ;
+    private String doctorid;
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -159,6 +160,8 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
 
             communication_type = extras.getInt("communication_type");
             searchString = extras.getString("searchString");
+            doctorid = extras.getString("doctorid");
+
             Log.w(TAG,"Bundle "+" communication_type : "+communication_type+ "searchString : "+searchString);
 
 
@@ -224,6 +227,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
             Log.w(TAG,"Else communication_type : "+communication_type+" searchString : "+searchString);
             bundle.putString("searchString", searchString);
             bundle.putInt("communication_type", communication_type);
+            bundle.putString("doctorid", doctorid);
 
             // set Fragmentclass Arguments
             fragment.setArguments(bundle);

@@ -157,6 +157,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     private int reviewcount;
     private String fromactivity,specialization;
     private List<FilterDoctorResponse.DataBean> doctorFilterDetailsResponseList;
+    private String doctorid;
 
 
     public PetCareFragment() {
@@ -190,8 +191,10 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
             Log.w(TAG,"fromactivity : "+fromactivity+" reviewcount : "+reviewcount+" specialization : "+specialization);
 
             searchString = getArguments().getString("searchString");
+            doctorid = getArguments().getString("doctorid");
             communication_type = getArguments().getInt("communication_type");
             Log.w(TAG," communication_type : "+communication_type+" searchString : "+searchString);
+
 
 
 
@@ -205,6 +208,12 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
         HashMap<String, String> user = sessionManager.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
         Log.w(TAG,"customerid-->"+userid);
+
+        if(communication_type == 1){
+            switchButton_communcationtype.setChecked(true);
+            txt_communicationtype.setText("Online Doctors");
+
+        }
 
 
         switchButton_communcationtype.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

@@ -380,7 +380,7 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
         SPFavCreateRequest spFavCreateRequest = new SPFavCreateRequest();
         spFavCreateRequest.setUser_id(userid);
         spFavCreateRequest.setSp_id(spid);
-        spFavCreateRequest.setCata_id(catid);
+        spFavCreateRequest.setCat_id(catid);
         Log.w(TAG,"spFavCreateRequest "+ new Gson().toJson(spFavCreateRequest));
         return spFavCreateRequest;
     }
@@ -499,6 +499,13 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
                             txt_selected_servicesname.setText(serv_name);
 
                         }
+
+                       if(response.body().getData().isFav()){
+                           img_fav.setBackgroundResource(R.drawable.ic_fav);
+
+                       }else{
+                           img_fav.setBackgroundResource(R.drawable.heart_gray);
+                       }
 
                         if(selectedServiceImagepath != null && !selectedServiceImagepath.isEmpty()){
                             Glide.with(Service_Details_Activity.this)

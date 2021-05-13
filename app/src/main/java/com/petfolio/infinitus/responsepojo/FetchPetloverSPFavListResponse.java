@@ -4,11 +4,10 @@ import java.util.List;
 
 public class FetchPetloverSPFavListResponse {
 
-
     /**
      * Status : Success
      * Message : SP FAV LIST
-     * Data : [{"_id":"603e25562c2b43125f8cb7ff","cat_id":"5fe185d61996f651f5133693","image":"http://54.212.108.156:3000/api/uploads/1614685509822.603e24ef2c2b43125f8cb7fe0203171509","service_provider_name":"sparrow service","user_name":"jack","service_price":0,"service_offer":0,"service_place":"Gajendra Circle Bus Stop, Indian Institute Of Technology, Chennai, Tamil Nadu 600036, India","distance":0,"rating_count":5,"comments_count":12}]
+     * Data : [{"_id":"603e25562c2b43125f8cb7ff","image":"http://54.212.108.156:3000/api/uploads/1614685509822.603e24ef2c2b43125f8cb7fe0203171509","service_provider_name":"sparrow service","user_name":"jack","service_price":0,"service_offer":0,"service_place":"Gajendra Circle Bus Stop, Indian Institute Of Technology, Chennai, Tamil Nadu 600036, India","distance":0,"rating_count":5,"comments_count":12,"fav":true}]
      * Code : 200
      */
 
@@ -17,7 +16,6 @@ public class FetchPetloverSPFavListResponse {
     private int Code;
     /**
      * _id : 603e25562c2b43125f8cb7ff
-     * cat_id : 5fe185d61996f651f5133693
      * image : http://54.212.108.156:3000/api/uploads/1614685509822.603e24ef2c2b43125f8cb7fe0203171509
      * service_provider_name : sparrow service
      * user_name : jack
@@ -27,6 +25,7 @@ public class FetchPetloverSPFavListResponse {
      * distance : 0
      * rating_count : 5
      * comments_count : 12
+     * fav : true
      */
 
     private List<DataBean> Data;
@@ -67,6 +66,15 @@ public class FetchPetloverSPFavListResponse {
         private String _id;
         private String cat_id;
         private String image;
+
+        public String getCat_id() {
+            return cat_id;
+        }
+
+        public void setCat_id(String cat_id) {
+            this.cat_id = cat_id;
+        }
+
         private String service_provider_name;
         private String user_name;
         private int service_price;
@@ -75,6 +83,7 @@ public class FetchPetloverSPFavListResponse {
         private int distance;
         private int rating_count;
         private int comments_count;
+        private boolean fav;
 
         public String get_id() {
             return _id;
@@ -82,14 +91,6 @@ public class FetchPetloverSPFavListResponse {
 
         public void set_id(String _id) {
             this._id = _id;
-        }
-
-        public String getCat_id() {
-            return cat_id;
-        }
-
-        public void setCat_id(String cat_id) {
-            this.cat_id = cat_id;
         }
 
         public String getImage() {
@@ -162,6 +163,14 @@ public class FetchPetloverSPFavListResponse {
 
         public void setComments_count(int comments_count) {
             this.comments_count = comments_count;
+        }
+
+        public boolean isFav() {
+            return fav;
+        }
+
+        public void setFav(boolean fav) {
+            this.fav = fav;
         }
     }
 }
