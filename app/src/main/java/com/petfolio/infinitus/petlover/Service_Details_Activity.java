@@ -407,17 +407,23 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Log.w(TAG,"distance : "+distance);
-        Intent intent = new Intent(getApplicationContext(),SelectedServiceActivity.class);
-        intent.putExtra("spid",spid);
-        intent.putExtra("catid",catid);
-        intent.putExtra("from",from);
-        intent.putExtra("distance",distance);
-        intent.putExtra("reviewcount",reviewcount);
-        intent.putExtra("Count_value_start",Count_value_start);
-        intent.putExtra("Count_value_end",Count_value_end);
-        startActivity(intent);
-        finish();
+        if(from != null && from.equalsIgnoreCase("PetLoverSPNewFavAdapter")){
+            Intent intent = new Intent(getApplicationContext(),PetloverFavListActivity.class);
+            startActivity(intent);
+            finish();
+        }else{
+            Intent intent = new Intent(getApplicationContext(),SelectedServiceActivity.class);
+            intent.putExtra("spid",spid);
+            intent.putExtra("catid",catid);
+            intent.putExtra("from",from);
+            intent.putExtra("distance",distance);
+            intent.putExtra("reviewcount",reviewcount);
+            intent.putExtra("Count_value_start",Count_value_start);
+            intent.putExtra("Count_value_end",Count_value_end);
+            startActivity(intent);
+            finish();
+        }
+
 
     }
     @SuppressLint("LogNotTimber")

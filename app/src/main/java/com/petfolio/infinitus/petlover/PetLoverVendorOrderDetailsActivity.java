@@ -460,6 +460,14 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
                                 }
 
 
+                            }else{
+                                if(response.body().getData().getOrder_details().getOrder_status() != null && response.body().getData().getOrder_details().getOrder_status().equalsIgnoreCase("Cancelled")){
+                                    txt_order_status.setText("Cancelled on");
+                                    img_order_status.setImageResource(R.drawable.ic_baseline_cancel_24);
+                                    if (response.body().getData().getOrder_details().getOrder_cancelled() != null && !response.body().getData().getOrder_details().getOrder_cancelled().isEmpty()) {
+                                        txt_delivered_date.setText(response.body().getData().getOrder_details().getOrder_cancelled());
+                                    }
+                                }
                             }
 
                             if(response.body().getData().getProduct_details() != null && response.body().getData().getProduct_details().size()>0){

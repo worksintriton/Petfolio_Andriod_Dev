@@ -509,6 +509,10 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
             Intent intent = new Intent(ProductDetailsActivity.this,PetCartActivity.class);
             startActivity(intent);
             finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetLoverShopNewFavAdapter")){
+            Intent intent = new Intent(ProductDetailsActivity.this,PetloverFavListActivity.class);
+            startActivity(intent);
+            finish();
         }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetLoverShopNewAdapter")){
             callDirections("1");
         }else {
