@@ -2,42 +2,34 @@ package com.petfolio.infinitus.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.api.APIClient;
-import com.petfolio.infinitus.petlover.Service_Details_Activity;
+import com.petfolio.infinitus.responsepojo.FetchDoctorPaymDetaResponse;
 import com.petfolio.infinitus.responsepojo.FetchPetloverPaymDetaResponse;
-import com.petfolio.infinitus.responsepojo.FetchPetloverSPFavListResponse;
 
 import java.util.List;
 
 
-public class PetLoverPaymDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class DoctorPaymDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private  String TAG = "PetLoverPaymDetailsAdapter";
+    private  String TAG = "DoctorPaymDetailsAdapter";
 
     private Context context;
 
-    List<FetchPetloverPaymDetaResponse.DataBean> dataBeanList;
+    List<FetchDoctorPaymDetaResponse.DataBean> dataBeanList;
 
-    FetchPetloverPaymDetaResponse.DataBean currentItem;
+    FetchDoctorPaymDetaResponse.DataBean currentItem;
 
     int size;
 
-    public PetLoverPaymDetailsAdapter(Context context,List<FetchPetloverPaymDetaResponse.DataBean> dataBeanList, int size) {
+    public DoctorPaymDetailsAdapter(Context context, List<FetchDoctorPaymDetaResponse.DataBean> dataBeanList, int size) {
         this.dataBeanList = dataBeanList;
         this.context = context;
         this.size = size;

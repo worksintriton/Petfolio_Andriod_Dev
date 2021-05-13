@@ -681,6 +681,13 @@ public interface RestApiInterface {
     @POST("appointments/doctor_payment")
     Call<FetchDoctorPaymDetaResponse>fetchdrprodetaillistResponseCall(@Header("Content-Type") String type, @Body FetchDoctorPaymDetaRequest fetchDoctorPaymDetaRequest);
 
+    /*Fetch Petlover Payment Details*/
+    @POST("appointments/doctor/petlover_payment")
+    Call<FetchPetloverPaymDetaResponse>fetchpetlvrpaymdetaillistResponseCall(@Header("Content-Type") String type, @Body FetchPetloverPaymDetaRequest fetchPetloverPaymDetaRequest);
+
+    /*Fetch Doctor Payment Details*/
+    @POST("appointments/doctor_payment")
+    Call<FetchDoctorPaymDetaResponse>fetchdrpaymetaillistResponseCall(@Header("Content-Type") String type, @Body FetchDoctorPaymDetaRequest fetchDoctorPaymDetaRequest);
 
 
 

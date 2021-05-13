@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,17 +53,13 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.doctor.DoctorBusinessInfoActivity;
 import com.petfolio.infinitus.requestpojo.DoctorDetailsRequest;
-import com.petfolio.infinitus.requestpojo.DoctorFavCreateRequest;
 import com.petfolio.infinitus.responsepojo.DoctorDetailsResponse;
-import com.petfolio.infinitus.responsepojo.SuccessResponse;
-import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.GridSpacingItemDecoration;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Timer;
@@ -70,7 +67,6 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -151,8 +147,15 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
     RecyclerView rv_pet_hanldle;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.cl_root)
-    CoordinatorLayout cl_root;
+    @BindView(R.id.toolbar_header)
+    Toolbar toolbar_header;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.bottomSheetLayouts)
+    NestedScrollView bottomSheetLayouts;
+
+
+
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.footerView)
@@ -174,6 +177,7 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
     private String distance;
     private String ClinicLocationname;
     private String fromactivity;
+    private String searchString;
     private int amount;
     private String communicationtype;
     private int Doctor_exp;
@@ -205,13 +209,7 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.hand_img5)
     ImageView hand_img5;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.toolbar_header)
-    Toolbar toolbar_header;
-    private String userid;
     private int communication_type;
-    private String searchString ;
 
 
     @SuppressLint({"LongLogTag", "LogNotTimber"})
@@ -220,10 +218,6 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_clinic_details);
         ButterKnife.bind(this);
-
-        SessionManager sessionManager = new SessionManager(getApplicationContext());
-        HashMap<String, String> user = sessionManager.getProfileDetails();
-        userid = user.get(SessionManager.KEY_ID);
 
 
         avi_indicator.setVisibility(View.GONE);
@@ -244,12 +238,10 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
 
         avi_indicator.setVisibility(View.VISIBLE);
 
-       // toolbar_header.setVisibility(View.GONE);
 
+//
+//        bottomSheetLayouts.setVisibility(View.GONE);
 
-        //footerView.setVisibility(View.GONE);
-
-        setBottomSheet();
 
         if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
             if(doctorid != null){
@@ -258,23 +250,16 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
 
         }
 
-        img_fav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                    if(doctorid != null){
-                        createDoctorFavListResponseCall();
-                    }
 
-                }
-            }
-        });
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        assert mapFragment != null;
+        mapFragment.getMapAsync(DoctorClinicDetailsActivity.this);
 
-        if (mapFragment == null) {
-            mapFragment = SupportMapFragment.newInstance();
-            mapFragment.getMapAsync(this);
-        }
 
+
+        setBottomSheet();
 
 
     }
@@ -370,13 +355,14 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
                             communicationtype = response.body().getData().getCommunication_type();
                             ClinicLocationname = response.body().getData().getClinic_loc();
                             Doctor_exp = response.body().getData().getDoctor_exp();
+
+//                            bottomSheetLayouts.setVisibility(View.VISIBLE);
+
+                         //   setBottomSheet();
+
+
                             if(response.body().getData().getAmount() != 0){
                                 txt_dr_consultationfees.setText("INR "+response.body().getData().getAmount());
-                            }
-                            if(response.body().getData().isFav()){
-                                img_fav.setBackgroundResource(R.drawable.ic_fav);
-                            }else{
-                                img_fav.setBackgroundResource(R.drawable.heart_gray);
                             }
 
 
@@ -392,7 +378,6 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
                         if(Doctor_exp != 0) {
                             txt_dr_experience.setText(""+Doctor_exp);
                         }
-
 
 
 
@@ -456,11 +441,6 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
 
                             Log.w(TAG,"longitude"+ longitude );
 
-                            // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-                            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                                    .findFragmentById(R.id.map);
-                            assert mapFragment != null;
-                            mapFragment.getMapAsync(DoctorClinicDetailsActivity.this);
 
 
                         }
@@ -475,6 +455,8 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
                         Log.w(TAG,"doctorclinicdetailsResponseList : "+new Gson().toJson(doctorclinicdetailsResponseList));
 
                         if(doctorclinicdetailsResponseList != null && doctorclinicdetailsResponseList.size()>0){
+
+                           // cl_banner.setVisibility(View.VISIBLE);
 
                             for (int i = 0; i < doctorclinicdetailsResponseList.size(); i++) {
                                 doctorclinicdetailsResponseList.get(i).getClinic_pic();
@@ -543,13 +525,8 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
     private DoctorDetailsRequest doctorDetailsRequest() {
-        /*
-         * user_id : 603e262e2c2b43125f8cb801
-         * doctor_id : 603e31a02c2b43125f8cb806
-         */
         DoctorDetailsRequest doctorDetailsRequest = new DoctorDetailsRequest();
-        doctorDetailsRequest.setUser_id(userid);
-        doctorDetailsRequest.setDoctor_id(doctorid);
+        doctorDetailsRequest.setUser_id(doctorid);
         Log.w(TAG,"doctorDetailsRequest"+ "--->" + new Gson().toJson(doctorDetailsRequest));
         return doctorDetailsRequest;
     }
@@ -690,62 +667,6 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
 
         }
 
-    }
-
-    @SuppressLint({"LongLogTag", "LogNotTimber"})
-    private void createDoctorFavListResponseCall() {
-        avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();
-        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<SuccessResponse> call = ApiService.createDoctorFavListResponseCall(RestUtils.getContentType(),doctorFavCreateRequest());
-        Log.w(TAG,"url  :%s"+ call.request().url().toString());
-
-        call.enqueue(new Callback<SuccessResponse>() {
-            @SuppressLint({"SetTextI18n", "LogNotTimber"})
-            @Override
-            public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
-                avi_indicator.smoothToHide();
-                Log.w(TAG,"SuccessResponse Fav"+ "--->" + new Gson().toJson(response.body()));
-
-                if (response.body() != null) {
-                    if(response.body().getCode() ==  200){
-                        Toasty.success(getApplicationContext(),""+response.body().getMessage(),Toasty.LENGTH_SHORT).show();
-
-                        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                            if(doctorid != null){
-                                doctorDetailsResponseCall();
-                            }
-
-                        }
-                    }
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull Throwable t) {
-                avi_indicator.smoothToHide();
-
-                Log.w(TAG,"SuccessResponse fav flr"+"--->" + t.getMessage());
-            }
-        });
-
-    }
-
-
-
-    @SuppressLint({"LogNotTimber", "LongLogTag"})
-    private DoctorFavCreateRequest doctorFavCreateRequest() {
-        /*
-         * user_id : 603e262e2c2b43125f8cb801
-         * doctor_id : 603e31a02c2b43125f8cb806
-         */
-        DoctorFavCreateRequest doctorFavCreateRequest = new DoctorFavCreateRequest();
-        doctorFavCreateRequest.setUser_id(userid);
-        doctorFavCreateRequest.setDoctor_id(doctorid);
-        Log.w(TAG,"doctorFavCreateRequest"+ "--->" + new Gson().toJson(doctorFavCreateRequest));
-        return doctorFavCreateRequest;
     }
 
 }

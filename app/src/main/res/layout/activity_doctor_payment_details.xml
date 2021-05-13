@@ -18,7 +18,7 @@
         tools:ignore="UseCompoundDrawables">
 
         <include
-            android:id="@+id/include_petlover_header"
+            android:id="@+id/include_doctor_header"
             layout="@layout/toolbar_layout_doctor_shop_header"
             android:layout_width="match_parent"
             android:layout_height="50dp" />
@@ -249,10 +249,21 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_norecords"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_centerInParent="true"
+                android:text="@string/no_data_found"
+                android:textColor="@color/color"
+                android:textSize="16sp"
+                android:visibility="gone" />
 
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/refresh_layout"
@@ -268,18 +279,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_norecords"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="@string/no_data_found"
-            android:textColor="@color/color"
-            android:textSize="16sp"
-            android:visibility="gone" />
+        </RelativeLayout>
 
 
     </LinearLayout>

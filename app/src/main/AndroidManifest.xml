@@ -166,7 +166,7 @@
         <activity
             android:name=".petlover.AddYourPetActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".petlover.RegisterYourPetActivity"
@@ -774,6 +774,31 @@
             android:name=".petlover.PetloverPaymentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity android:name=".serviceprovider.PickUpLocationEditSPActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".serviceprovider.EditMyAddressSPActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".serviceprovider.AddMyAddressSPActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".serviceprovider.PickUpLocationSPActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".serviceprovider.ManageAddressSPActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme"
             android:windowSoftInputMode="adjustPan" />
 
         <receiver

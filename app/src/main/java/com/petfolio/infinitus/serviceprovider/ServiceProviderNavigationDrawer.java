@@ -208,9 +208,9 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
         drawerImg = toolbar.findViewById(R.id.img_menu);
 
 
-        tvWelcomeName = toolbar.findViewById(R.id.toolbar_title);
-
-        tvWelcomeName.setText("Home");
+//        tvWelcomeName = toolbar.findViewById(R.id.toolbar_title);
+//
+//        tvWelcomeName.setText("Home");
 
         ImageView img_notification = toolbar.findViewById(R.id.img_notification);
         img_notification.setOnClickListener(new View.OnClickListener() {

@@ -39,6 +39,7 @@ import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.petlover.PetLoverEditProfileActivity;
 import com.petfolio.infinitus.petlover.PetLoverNavigationDrawerNew;
 import com.petfolio.infinitus.petlover.PetLoverProfileScreenActivity;
+import com.petfolio.infinitus.petlover.PetloverPaymentDetailsActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 //import com.petfolio.infinitus.sessionmanager.SessionManager;
 
@@ -210,6 +211,7 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
                         return true;
 
                     case R.id.nav_item_seven:
+                        gotoPaymentdetails();
                         return true;
                     case R.id.nav_item_eight:
                        // confirmLogoutDialog();
@@ -222,6 +224,13 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
                 }
             }
         });
+
+    }
+
+    private void gotoPaymentdetails() {
+
+        Intent intent = new Intent(getApplicationContext(), DoctorPaymentDetailsActivity.class);
+        startActivity(intent);
 
     }
 

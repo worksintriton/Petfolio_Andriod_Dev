@@ -53,9 +53,9 @@
     <group android:checkableBehavior="single"
             android:id="@+id/group7">
         <item android:id="@+id/nav_item_seven"
-            android:icon="@drawable/settings"
-            android:title="@string/settings"
-            android:visible="false"/>
+            android:icon="@drawable/medicalhistory"
+            android:title="Payment Details"
+            android:visible="true"/>
         </group>
 
     <group android:checkableBehavior="single"

@@ -249,7 +249,7 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -261,6 +261,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
+                android:visibility="visible"
                 tools:ignore="MissingClass">
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -268,18 +269,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-        </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_norecords"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="@string/no_data_found"
-            android:textColor="@color/color"
-            android:textSize="16sp"
-            android:visibility="gone" />
+            <TextView
+                android:id="@+id/tv_norecords"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/no_data_found"
+                android:textColor="@color/color"
+                android:textSize="16sp"
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
+
+        </RelativeLayout>
 
 
     </LinearLayout>

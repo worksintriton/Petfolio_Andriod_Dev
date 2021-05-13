@@ -328,6 +328,7 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
     }
 
     private void favResponseCall() {
+
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
@@ -343,14 +344,11 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
                 if (response.body() != null) {
 
                     if (200 == response.body().getCode()) {
-                        Toasty.success(getApplicationContext(),""+response.body().getMessage(),Toasty.LENGTH_SHORT).show();
+                        if (response.body().getStatus() != null&&!response.body().getStatus().isEmpty()) {
 
-                        if(spid != null && userid != null) {
-                            if (new ConnectionDetector(Service_Details_Activity.this).isNetworkAvailable(Service_Details_Activity.this)) {
-                                SPDetailsRepsonseCall();
-                            }
+                            Toasty.success(getApplicationContext(),""+response.body().getMessage(),Toasty.LENGTH_SHORT).show();
+
                         }
-
                     }
 
                 }
@@ -499,13 +497,6 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
                             txt_selected_servicesname.setText(serv_name);
 
                         }
-
-                       if(response.body().getData().isFav()){
-                           img_fav.setBackgroundResource(R.drawable.ic_fav);
-
-                       }else{
-                           img_fav.setBackgroundResource(R.drawable.heart_gray);
-                       }
 
                         if(selectedServiceImagepath != null && !selectedServiceImagepath.isEmpty()){
                             Glide.with(Service_Details_Activity.this)

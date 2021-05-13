@@ -1,5 +1,10 @@
-package com.petfolio.infinitus.activity.location;
+package com.petfolio.infinitus.serviceprovider;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -11,6 +16,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -20,15 +26,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -40,12 +44,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
-
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.activity.NotificationActivity;
+import com.petfolio.infinitus.activity.location.AddMyAddressDoctorActivity;
+import com.petfolio.infinitus.serviceprovider.PickUpLocationSPActivity;
 import com.petfolio.infinitus.api.API;
-import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
+import com.petfolio.infinitus.doctor.ManageAddressDoctorActivity;
 import com.petfolio.infinitus.responsepojo.GetAddressResultResponse;
 import com.petfolio.infinitus.service.GPSTracker;
+import com.petfolio.infinitus.serviceprovider.PickUpLocationSPActivity;
+import com.petfolio.infinitus.activity.location.PlacesSearchActivity;
+import com.petfolio.infinitus.doctor.DoctorProfileScreenActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.jetbrains.annotations.NotNull;
@@ -62,7 +71,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class PickUpLocationAllowActivity extends FragmentActivity implements OnMapReadyCallback,
+public class PickUpLocationSPActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
@@ -73,14 +82,13 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
     LocationRequest mLocationRequest;
     private GoogleMap mMap;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.avi_indicator)
-    AVLoadingIndicatorView avi_indicator;
+    String TAG = "PickUpLocationSPActivity";
+
+
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_setpickuppoint)
     Button btn_setpickuppoint;
-
 
 
 
@@ -100,15 +108,29 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
     @BindView(R.id.include_petlover_header)
     View include_petlover_header;
 
-    String TAG = "PickUpLocationAllowActivity";
 
     private double latitude = 0, longitude = 0;
 
     String strlatlng = "";
 
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.avi_indicator)
+    AVLoadingIndicatorView avi_indicator;
+
+
+
     String CityName, AddressLine ,PostalCode;
+
+
+
+
+    private FusedLocationProviderClient mFusedLocationClient;
+    private LocationCallback locationCallback;
+
     private String fromactivity;
     private String placesearchactivity;
+
 
 
     @Override
@@ -117,25 +139,11 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
         setContentView(R.layout.activity_pick_up_location_allow);
 
         ButterKnife.bind(this);
-
-        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
-        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
-        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
-        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
-        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
-        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
-        toolbar_title.setText(getResources().getString(R.string.choose_location));
-        img_sos.setVisibility(View.GONE);
-        img_cart.setVisibility(View.GONE);
-
-
-        imgLocationPinUp.setVisibility(View.GONE);
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             fromactivity = extras.getString("fromactivity");
             placesearchactivity = extras.getString("placesearchactivity");
-            Log.w(TAG,"fromactivity if : "+fromactivity+" placesearchactivity : "+placesearchactivity);
+            Log.w(TAG,"fromactivity if : "+fromactivity+"  placesearchactivity : "+placesearchactivity);
 
         }else{
             fromactivity  = TAG;
@@ -144,10 +152,40 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
         }
 
 
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.choose_location));
+
+
+        img_sos.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
+        img_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+            }
+        });
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(new Intent(getApplicationContext(), SPProfileScreenActivity.class));
+                intent.putExtra("fromactivity",TAG);
+                startActivity(intent);
+            }
+        });
+
+
+        imgLocationPinUp.setVisibility(View.GONE);
+
+
 
 
         rl_placessearch.setOnClickListener(v -> {
-            Intent intent = new Intent(PickUpLocationAllowActivity.this, PlacesSearchActivity.class);
+            Intent intent = new Intent(PickUpLocationSPActivity.this, PlacesSearchActivity.class);
             intent.putExtra("fromactivity",TAG);
             startActivity(intent);
         });
@@ -162,7 +200,7 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
             checkLocationPermission();
         }
 
-        if (extras == null) {
+        if (extras != null) {}else{
             checkLocation();
         }
 
@@ -181,48 +219,31 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
 
         btn_setpickuppoint.setOnClickListener(v -> {
             if(CityName != null){
-                   Intent intent = new Intent(PickUpLocationAllowActivity.this,AddMyAddressActivity.class);
-                    intent.putExtra("latlng",strlatlng);
-                    intent.putExtra("cityname",CityName);
-                    intent.putExtra("address",AddressLine);
-                    intent.putExtra("PostalCode",PostalCode);
-                    intent.putExtra("fromactivity",fromactivity);
-                    startActivity(intent);
+                Intent intent = new Intent(PickUpLocationSPActivity.this, AddMyAddressSPActivity.class);
+                intent.putExtra("latlng",strlatlng);
+                intent.putExtra("cityname",CityName);
+                intent.putExtra("address",AddressLine);
+                intent.putExtra("PostalCode",PostalCode);
+                intent.putExtra("fromactivity",fromactivity);
+                startActivity(intent);
             }else{
-                Toasty.warning(PickUpLocationAllowActivity.this,"Please select citynmae",Toasty.LENGTH_SHORT).show();
+                Toasty.warning(PickUpLocationSPActivity.this,"Please select citynmae",Toasty.LENGTH_SHORT).show();
             }
 
 
         });
 
+    }
 
 
 
 
-    } //end of oncreate
-
-
-
-
+    @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LatLng CHENNAI_LATLNG = new LatLng(13.067439, 80.237617);
 
         mMap = googleMap;
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
-                .target(CHENNAI_LATLNG)
-                .zoom(18)
-                .bearing(0)
-                .tilt(45)
-                .build()));
 
-
-
-      /*  //  mMap = googleMap;
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-       // mMap.getUiSettings().setZoomControlsEnabled(true);
-       // mMap.getUiSettings().setZoomGesturesEnabled(true);
-       mMap.getUiSettings().setCompassEnabled(true);*/
 
 
 
@@ -231,6 +252,31 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
         mMap.getUiSettings().isZoomControlsEnabled();
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(PickUpLocationSPActivity.this);
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(10 * 1000);
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+
+                if (locationResult.getLastLocation() != null) {
+
+                    latitude = locationResult.getLastLocation().getLatitude();
+                    longitude = locationResult.getLastLocation().getLongitude();
+
+
+
+                    LatLng sourcePoint = new LatLng(latitude, longitude);
+                    googleMap.addMarker(new MarkerOptions().position(sourcePoint).icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin)));
+                    mFusedLocationClient.removeLocationUpdates(locationCallback);
+                }
+            }
+        };
+        mFusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+
+
 
         //Initialize Google Play Services
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -279,9 +325,10 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
             mMap.clear();
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
-            MarkerOptions markerOptions = new MarkerOptions().position(Objects.requireNonNull(latLng)).title("");
-            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin));
-            mMap.addMarker(markerOptions);
+            MarkerOptions markerOptions1 = new MarkerOptions().position(Objects.requireNonNull(latLng)).title("");
+            markerOptions1.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin));
+            mMap.addMarker(markerOptions1);
+
         });
 
 
@@ -294,6 +341,7 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
                 .build();
         mGoogleApiClient.connect();
     }
+
     @Override
     public void onConnected(Bundle bundle) {
         mLocationRequest = new LocationRequest();
@@ -303,7 +351,8 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
+                    mLocationRequest, this);
         }
 
         mGoogleApiClient.connect();
@@ -314,7 +363,7 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
         if (ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        GPSTracker gps = new GPSTracker(PickUpLocationAllowActivity.this);
+        GPSTracker gps = new GPSTracker(PickUpLocationSPActivity.this);
 
         gps.canGetLocation();
         LatLng curentpoint = new LatLng(gps.getLatitude(), gps.getLongitude());
@@ -336,6 +385,7 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
             if(placesearchactivity != null && placesearchactivity.equalsIgnoreCase("placesearchactivity")){
 
             }else {
+                // mMap.clear();
                 imgLocationPinUp.setVisibility(View.GONE);
                 double CameraLat = mMap.getCameraPosition().target.latitude;
                 double CameraLong = mMap.getCameraPosition().target.longitude;
@@ -375,20 +425,18 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
     public void onLocationChanged(Location location) {
         Log.w(TAG,"onLocationChanged-->");
 
-
         mLastLocation = location;
-        if (mCurrLocationMarker != null) {
-            mCurrLocationMarker.remove();
-        }
+        if (mCurrLocationMarker != null) { mCurrLocationMarker.remove(); }
         //Showing Current Location Marker on Map
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        Log.w(TAG,"latLng--->"+latLng);
+        Log.w(TAG,"onLocationChanged latLng--->"+latLng);
 
         strlatlng  = String.valueOf(latLng);
 
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin));
+
 
 
         LocationManager locationManager = (LocationManager)
@@ -425,7 +473,17 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
                     Log.w(TAG,"onLocationChanged BundleData if-->"+"Call getAddressResultResponse");
                     Log.w(TAG,"onLocationChanged BundleData for searched places :"+"lat :"+lat+" "+"lon :"+lon);
                     strlatlng = String.valueOf(latLng);
+
                     Log.w(TAG,"onLocationChanged BundleData"+strlatlng);
+
+                    mMap.clear();
+
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
+                    markerOptions = new MarkerOptions().position(Objects.requireNonNull(latLng)).title(CityName);
+                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin));
+                    mMap.addMarker(markerOptions);
+
                     getAddressResultResponse(latLng);
                 }
             }else {
@@ -452,16 +510,14 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
                         getAddressResultResponse(latLng);
 
                     }
-
-
                 }
             }
-
         }
 
-      /*  mCurrLocationMarker = mMap.addMarker(markerOptions);
+        //   markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        /*mCurrLocationMarker = mMap.addMarker(markerOptions);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(12.0f));*/
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(16.0f));*/
 
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
@@ -542,12 +598,12 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
     }
     private void getLatandLong(){
         try{
-            if (ContextCompat.checkSelfPermission(PickUpLocationAllowActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(PickUpLocationAllowActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(PickUpLocationAllowActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            if (ContextCompat.checkSelfPermission(PickUpLocationSPActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(PickUpLocationSPActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(PickUpLocationSPActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
             }
             else {
-                GPSTracker gps = new GPSTracker(PickUpLocationAllowActivity.this);
+                GPSTracker gps = new GPSTracker(PickUpLocationSPActivity.this);
 
                 // Check if GPS enabled
                 if (gps.canGetLocation()) {
@@ -573,7 +629,7 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
 
     }
     public void showSettingsAlert() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(PickUpLocationAllowActivity.this);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(PickUpLocationSPActivity.this);
 
         // Setting DialogHelp Title
         alertDialog.setTitle("GPS is settings");
@@ -606,12 +662,18 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(PickUpLocationAllowActivity.this, PetLoverDashboardActivity.class));
-        finish();
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("ManageAddressSPActivity")){
+            startActivity(new Intent(PickUpLocationSPActivity.this, ManageAddressSPActivity.class));
+            finish();
+        }else{
+            startActivity(new Intent(PickUpLocationSPActivity.this, ManageAddressSPActivity.class));
+            finish();
+        }
+
     }
 
     private void getAddressResultResponse(LatLng latLng) {
-        Log.w(TAG,"GetAddressResultResponse-->"+latLng);
+        // Log.w(TAG,"GetAddressResultResponse-->"+latLng);
         //avi_indicator.setVisibility(View.VISIBLE);
         // avi_indicator.smoothToShow();
         Retrofit retrofit = new Retrofit.Builder()
@@ -621,12 +683,12 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
 
         API service = retrofit.create(API.class);
         String strlatlng = String.valueOf(latLng);
-        Log.w(TAG,"getAddressResultResponse strlatlng-->"+strlatlng);
+        //  Log.w(TAG,"getAddressResultResponse strlatlng-->"+strlatlng);
         String newString = strlatlng.replace("lat/lng:", "");
-        Log.w(TAG,"getAddressResultResponse latlng=="+newString);
+        // Log.w(TAG,"getAddressResultResponse latlng=="+newString);
 
         String latlngs = newString.trim().replaceAll("\\(", "").replaceAll("\\)","").trim();
-        Log.w(TAG,"getAddressResultResponse latlngs=="+latlngs);
+        //Log.w(TAG,"getAddressResultResponse latlngs=="+latlngs);
 
 
 
@@ -675,12 +737,12 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
                     if(addressComponentsBeanList != null) {
                         if (addressComponentsBeanList.size() > 0) {
                             for (int i = 0; i < addressComponentsBeanList.size(); i++) {
-                                Log.w(TAG, "addressComponentsBeanList size : " + addressComponentsBeanList.size());
+                                //Log.w(TAG, "addressComponentsBeanList size : " + addressComponentsBeanList.size());
 
                                 for (int j = 0; j < addressComponentsBeanList.get(i).getTypes().size(); j++) {
-                                    Log.w(TAG, "getTypes size : " + addressComponentsBeanList.get(i).getTypes().size());
+                                    //Log.w(TAG, "getTypes size : " + addressComponentsBeanList.get(i).getTypes().size());
 
-                                    Log.w(TAG, "TYPES-->" + addressComponentsBeanList.get(i).getTypes());
+                                    // Log.w(TAG, "TYPES-->" + addressComponentsBeanList.get(i).getTypes());
                                     List<String> typesList = addressComponentsBeanList.get(i).getTypes();
 
                                     if (typesList.contains("postal_code")) {
@@ -744,5 +806,4 @@ public class PickUpLocationAllowActivity extends FragmentActivity implements OnM
             }
         });
     }
-
 }

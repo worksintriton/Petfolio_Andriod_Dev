@@ -46,9 +46,9 @@
         <group android:checkableBehavior="single"
             android:id="@+id/group6">
         <item android:id="@+id/nav_item_six"
-            android:icon="@drawable/settings"
-            android:title="Settings"
-            android:visible="false"/>
+            android:icon="@drawable/medicalhistory"
+            android:title="Payment Details"
+            android:visible="true"/>
         </group>
 
 
