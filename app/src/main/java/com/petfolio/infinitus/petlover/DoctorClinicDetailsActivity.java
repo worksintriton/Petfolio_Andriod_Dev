@@ -836,6 +836,7 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
         intent.putExtra("fromactivity",fromactivity);
         intent.putExtra("amount",amount);
         intent.putExtra("communicationtype",communicationtype);
+        intent.putExtra("distance",distance);
         startActivity(intent);
     }
 
