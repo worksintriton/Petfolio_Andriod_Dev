@@ -2,6 +2,7 @@ package com.petfolio.infinitus.petlover;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -436,8 +437,11 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
                         btn_bookappointment.setVisibility(View.GONE);
                         tvlblavailabletime.setVisibility(View.GONE);
                         tvlbldoctoravailable.setVisibility(View.GONE);
-                        showErrorLoading(response.body().getMessage());
                         rv_doctoravailabeslottime.setVisibility(View.GONE);
+                        showErrorLoading(response.body().getMessage());
+
+
+
                     }
                 }
 
@@ -505,9 +509,14 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
                 (arg0, arg1) -> hideLoading());
 
 
+        try {
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+        catch (WindowManager.BadTokenException e) {
+            //use a log message
+        }
 
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
     }
     public void hideLoading(){
         try {
