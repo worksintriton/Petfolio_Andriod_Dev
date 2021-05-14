@@ -39,6 +39,7 @@ import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
 
 import com.petfolio.infinitus.doctor.DoctorProfileScreenActivity;
+import com.petfolio.infinitus.petlover.ProductDetailsActivity;
 import com.petfolio.infinitus.requestpojo.CartAddProductRequest;
 import com.petfolio.infinitus.requestpojo.DoctorProductFavListCreateRequest;
 import com.petfolio.infinitus.requestpojo.FetchByIdRequest;
@@ -157,6 +158,19 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rl_discount)
     RelativeLayout rl_discount;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_prod_type)
+    TextView txt_prod_type;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_prod_desc_label)
+    TextView txt_prod_desc_label;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_relat_prod)
+    RelativeLayout rl_relat_prod;
+
 
     Dialog dialog;
 
@@ -292,16 +306,38 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
             }
         });
 
-        img_fav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                    doctorProductFavListCreateResponseCall();
-                }
-            }
-        });
 
-        setBottomSheet();
+        viewPager.setVisibility(View.GONE);
+
+        tabLayout.setVisibility(View.GONE);
+
+        hand_img1.setVisibility(View.GONE);
+
+        hand_img2.setVisibility(View.GONE);
+
+        hand_img3.setVisibility(View.GONE);
+
+        hand_img4.setVisibility(View.GONE);
+
+        hand_img5.setVisibility(View.GONE);
+
+        txt_products_title.setVisibility(View.GONE);
+
+        txt_prod_type.setVisibility(View.GONE);
+
+        txt_products_price.setVisibility(View.GONE);
+
+        rl_discount.setVisibility(View.GONE);
+
+        txt_products_quantity.setVisibility(View.GONE);
+
+        txt_prod_desc_label.setVisibility(View.GONE);
+
+        txt_view_details.setVisibility(View.GONE);
+
+        txt_product_desc.setVisibility(View.GONE);
+
+        rl_relat_prod.setVisibility(View.GONE);
 
 
     }
@@ -498,6 +534,41 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
 
                             bussinessGalleryBeans = response.body().getVendor_details().getBussiness_gallery();
 
+                            viewPager.setVisibility(View.VISIBLE);
+
+                            tabLayout.setVisibility(View.VISIBLE);
+
+                            hand_img1.setVisibility(View.VISIBLE);
+
+                            hand_img2.setVisibility(View.VISIBLE);
+
+                            hand_img3.setVisibility(View.VISIBLE);
+
+                            hand_img4.setVisibility(View.VISIBLE);
+
+                            hand_img5.setVisibility(View.VISIBLE);
+
+                            txt_products_title.setVisibility(View.VISIBLE);
+
+                            txt_prod_type.setVisibility(View.VISIBLE);
+
+                            txt_products_price.setVisibility(View.VISIBLE);
+
+                            rl_discount.setVisibility(View.VISIBLE);
+
+                            txt_products_quantity.setVisibility(View.VISIBLE);
+
+                            txt_prod_desc_label.setVisibility(View.VISIBLE);
+
+                            txt_view_details.setVisibility(View.VISIBLE);
+
+                            txt_product_desc.setVisibility(View.VISIBLE);
+
+                            rl_relat_prod.setVisibility(View.VISIBLE);
+
+                            setBottomSheet();
+
+                            img_fav.setOnClickListener(DoctorProductDetailsActivity.this);
 
                             if(response.body().getProduct_details().getProduct_img() != null && response.body().getProduct_details().getProduct_img().size()>0){
                                 viewpageData(response.body().getProduct_details().getProduct_img());
@@ -512,7 +583,7 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
                              }else{
                                  img_fav.setBackgroundResource(R.drawable.heart_gray);
                              }
-                             setUIData(product_title,product_review,product_rating,product_price,product_discount,product_discription,product_cart_count,threshould);
+                             setUIData(product_title,prod_type,product_review,product_rating,product_price,product_discount,product_discription,product_cart_count,threshould);
 
 
 
@@ -565,12 +636,16 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
     }
 
     @SuppressLint("SetTextI18n")
-    private void setUIData(String product_title,int product_review, double product_rating, int product_price, int product_discount, String product_discription, int product_cart_count, String threshould) {
+    private void setUIData(String product_title, String prod_type, int product_review, double product_rating, int product_price, int product_discount, String product_discription, int product_cart_count, String threshould) {
 
         //product_cart_counts = product_cart_count;
 
         if(product_title != null && !product_title.isEmpty()){
             txt_products_title.setText(product_title);
+        }
+
+          if(prod_type != null && !prod_type.isEmpty()){
+            txt_prod_type.setText(prod_type);
         }
 
         if(product_rating != 0 ){
@@ -839,6 +914,13 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
                     }
                     startActivity(intent);
                 break;
+
+            case R.id.img_fav:
+                if (new ConnectionDetector(DoctorProductDetailsActivity.this).isNetworkAvailable(DoctorProductDetailsActivity.this)) {
+                    doctorProductFavListCreateResponseCall();
+                }
+                break;
+
         }
 
     }
