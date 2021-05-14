@@ -214,6 +214,10 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
                         gotoPaymentdetails();
                         return true;
                     case R.id.nav_item_eight:
+                        gotoNotifications();;
+                        return true;
+
+                        case R.id.nav_item_nine:
                        // confirmLogoutDialog();
                         showLogOutAppAlert();
                         return true;
@@ -225,6 +229,12 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
             }
         });
 
+    }
+
+    private void gotoNotifications() {
+        Intent intent = new Intent(getApplicationContext(),NotificationActivity.class);
+        intent.putExtra("fromactivity",TAG);
+        startActivity(intent);
     }
 
     private void gotoPaymentdetails() {

@@ -51,12 +51,20 @@
             android:visible="true"/>
         </group>
 
+    <group android:checkableBehavior="single"
+            android:id="@+id/group7">
+        <item android:id="@+id/nav_item_seven"
+            android:icon="@drawable/ic_notifications"
+            android:title="@string/notification"
+            android:visible="true"/>
+        </group>
+
 
 
 
     <group android:checkableBehavior="single"
-        android:id="@+id/group7">
-    <item android:id="@+id/nav_item_seven"
+        android:id="@+id/group8">
+    <item android:id="@+id/nav_item_eight"
         android:icon="@drawable/logout"
         android:title="Logout" />
     </group>

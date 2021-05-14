@@ -208,6 +208,9 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
                     gotoPaymentdetails();
                     return true;
                 case R.id.nav_item_seven:
+                     gotoNotifications();
+                    return true;
+                    case R.id.nav_item_eight:
                    // confirmLogoutDialog();
                     showLogOutAppAlert();
                     return true;
@@ -221,6 +224,12 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
             }
         });
 
+    }
+
+    private void gotoNotifications() {
+        Intent intent = new Intent(getApplicationContext(),NotificationActivity.class);
+        intent.putExtra("fromactivity",TAG);
+        startActivity(intent);
     }
 
     private void gotoPaymentdetails() {

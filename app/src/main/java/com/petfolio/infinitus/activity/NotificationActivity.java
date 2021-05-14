@@ -1,6 +1,7 @@
 package com.petfolio.infinitus.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +20,9 @@ import com.petfolio.infinitus.adapter.NotificationDashboardAdapter;
 
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
+import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
+import com.petfolio.infinitus.petlover.PetLoverProfileScreenActivity;
 import com.petfolio.infinitus.requestpojo.NotificationGetlistRequest;
 import com.petfolio.infinitus.responsepojo.NotificationGetlistResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
@@ -64,7 +68,7 @@ public class NotificationActivity extends AppCompatActivity {
     SessionManager session;
     String type = "",name = "",userid = "";
     private List<NotificationGetlistResponse.DataBean> notificationGetlistResponseList;
-
+    private String fromactivity;
 
 
     @SuppressLint("LogNotTimber")
@@ -75,6 +79,16 @@ public class NotificationActivity extends AppCompatActivity {
         Log.w(TAG,"onCreate-->");
         ButterKnife.bind(this);
         avi_indicator.setVisibility(View.GONE);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+
+            fromactivity = extras.getString("fromactivity");
+            Log.w(TAG,"Bundle "+" fromactivity : "+fromactivity);
+
+
+
+        }
 
 
 
@@ -170,7 +184,16 @@ public class NotificationActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("PetLoverNavigationDrawerNew")){
+            startActivity(new Intent(getApplicationContext(), PetLoverDashboardActivity.class));
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorNavigationDrawer")){
+            startActivity(new Intent(getApplicationContext(), DoctorDashboardActivity.class));
+            finish();
+        }else{
+            finish();
+        }
+
     }
 
     private void setView() {
