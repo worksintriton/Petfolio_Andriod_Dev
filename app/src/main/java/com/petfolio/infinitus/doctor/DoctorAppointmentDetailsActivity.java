@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -58,9 +59,6 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_back)
-    ImageView img_back;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_user)
@@ -177,6 +175,18 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
 
     BottomNavigationView bottom_navigation_view;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.scrollablContent)
+    ScrollView scrollablContent;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_visit_type)
+    TextView txt_visit_type;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_doctor_header)
+    View include_doctor_header;
+
 
     String appointment_id;
 
@@ -198,12 +208,21 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
     private List<PetNewAppointmentDetailsResponse.DataBean.PetIdBean.PetImgBean> pet_image;
     private String petAgeandMonth;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_emergency_appointment)
+    ImageView img_emergency_appointment;
+
+
+    @SuppressLint("LongLogTag")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_appointment_details);
 
         ButterKnife.bind(this);
+        scrollablContent.setVisibility(View.GONE);
+        img_emergency_appointment.setVisibility(View.GONE);
+
         avi_indicator.setVisibility(View.GONE);
         txt_serv_name.setVisibility(View.GONE);
         ll_home_address.setVisibility(View.GONE);
@@ -213,6 +232,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
             appointment_id = extras.getString("appointment_id");
             bookedat = extras.getString("bookedat");
             from = extras.getString("from");
+            Log.w(TAG,"from : "+from);
         }
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
@@ -222,35 +242,28 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
         }
 
 
-        if(from != null && from.equalsIgnoreCase("DoctorNewAppointmentAdapter")){
-            btn_prescriptiondetails.setVisibility(View.GONE);
-            btn_cancel.setVisibility(View.VISIBLE);
-            btn_complete.setVisibility(View.VISIBLE);
-            img_videocall.setVisibility(View.VISIBLE);
-            if(isVaildDate){
-                btn_cancel.setVisibility(View.VISIBLE);
-            }else{
-                btn_cancel.setVisibility(View.GONE);
-            }
-
-        }else if(from != null && from.equalsIgnoreCase("DoctorCompletedAppointmentAdapter")){
-            btn_prescriptiondetails.setVisibility(View.VISIBLE);
-            btn_cancel.setVisibility(View.GONE);
-            btn_complete.setVisibility(View.GONE);
-            img_videocall.setVisibility(View.GONE);
-
-        }else{
-            btn_prescriptiondetails.setVisibility(View.GONE);
-            btn_cancel.setVisibility(View.GONE);
-            btn_complete.setVisibility(View.GONE);
-            img_videocall.setVisibility(View.GONE);
-
-        }
 
         bottom_navigation_view = include_doctor_footer.findViewById(R.id.bottom_navigation_view);
         bottom_navigation_view.setItemIconTintList(null);
         bottom_navigation_view.setOnNavigationItemSelectedListener(this);
         bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
+
+        ImageView img_back = include_doctor_header.findViewById(R.id.img_back);
+        ImageView img_notification = include_doctor_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_doctor_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_doctor_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_doctor_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.appointment));
+
+        img_notification.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
+        img_profile.setVisibility(View.GONE);
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
 
 
@@ -294,9 +307,58 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
                 if (response.body() != null) {
 
                     if (200 == response.body().getCode()) {
+                        scrollablContent.setVisibility(View.VISIBLE);
+
 
                         String vaccinated, addr = null, usrname = null;
                         if (response.body().getData() != null) {
+
+                            if(response.body().getData().getAppointment_types() != null && response.body().getData().getAppointment_types().equalsIgnoreCase("Emergency")){
+                                img_emergency_appointment.setVisibility(View.VISIBLE);
+                            }else{
+                                img_emergency_appointment.setVisibility(View.GONE);
+
+                            }
+
+                            if(response.body().getData().getVisit_type() != null && !response.body().getData().getVisit_type().isEmpty() ){
+                                txt_visit_type.setText(response.body().getData().getVisit_type());
+                            }else{
+                                txt_visit_type.setText(response.body().getData().getCommunication_type());
+                            }
+
+                            if(from != null && from.equalsIgnoreCase("DoctorNewAppointmentAdapter")){
+                                btn_prescriptiondetails.setVisibility(View.GONE);
+                                btn_cancel.setVisibility(View.VISIBLE);
+                                btn_complete.setVisibility(View.VISIBLE);
+                                if(isVaildDate){
+                                    btn_cancel.setVisibility(View.VISIBLE);
+                                }else{
+                                    btn_cancel.setVisibility(View.GONE);
+                                }
+
+                                if(response.body().getData().getCommunication_type() != null && response.body().getData().getCommunication_type().equalsIgnoreCase("Online")){
+                                    img_videocall.setVisibility(View.VISIBLE);
+                                }else{
+                                    img_videocall.setVisibility(View.GONE);
+                                }
+
+                            }
+                            else if(from != null && from.equalsIgnoreCase("DoctorCompletedAppointmentAdapter")){
+                                btn_prescriptiondetails.setVisibility(View.VISIBLE);
+                                btn_cancel.setVisibility(View.GONE);
+                                btn_complete.setVisibility(View.GONE);
+                                img_videocall.setVisibility(View.GONE);
+
+                            }
+                            else{
+                                btn_prescriptiondetails.setVisibility(View.GONE);
+                                btn_cancel.setVisibility(View.GONE);
+                                btn_complete.setVisibility(View.GONE);
+                                img_videocall.setVisibility(View.GONE);
+
+                            }
+
+
 
                             String usr_image = response.body().getData().getDoctor_id().getProfile_img();
 
@@ -370,7 +432,8 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
                                         txt_home_address.setText(response.body().getAddress().getLocation_address());
                                     }
                                 }
-                            }else{
+                            }
+                            else{
                                 ll_home_address.setVisibility(View.GONE);
                             }
                         }
@@ -503,7 +566,6 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
         }
 
 
-        img_back.setOnClickListener(v -> onBackPressed());
 
         btn_complete.setOnClickListener(v -> {
             Intent i = new Intent(DoctorAppointmentDetailsActivity.this, PrescriptionActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

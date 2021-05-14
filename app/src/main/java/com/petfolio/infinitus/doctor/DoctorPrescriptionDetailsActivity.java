@@ -8,6 +8,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -35,6 +36,8 @@ import com.wang.avi.AVLoadingIndicatorView;
 import java.util.HashMap;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import es.voghdev.pdfviewpager.library.RemotePDFViewPager;
 import es.voghdev.pdfviewpager.library.adapter.PDFPagerAdapter;
 import es.voghdev.pdfviewpager.library.remote.DownloadFile;
@@ -76,12 +79,17 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity impleme
 
     private LinearLayout pdfLayout;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_header)
+    View include_petlover_header;
+
 
     @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_prescription_details);
+        ButterKnife.bind(this);
         Log.w(TAG,"Oncreate");
 
         //set the Visibility of the progressbar to visible
@@ -114,14 +122,34 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity impleme
 
         }
 
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.prescriptiondetails));
+
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+        img_sos.setVisibility(View.GONE);
+        img_notification.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
+        img_profile.setVisibility(View.GONE);
+
+
         if(appoinmentid != null){
             prescriptionDetailsResponseCall();
         }
 
 
 
-        RelativeLayout back_rela = findViewById(R.id.back_rela);
-        back_rela.setOnClickListener(v -> onBackPressed());
+
 
 
 

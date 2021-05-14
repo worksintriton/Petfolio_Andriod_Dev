@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -181,6 +183,22 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
     Button btn_reschedule_appointment;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_home_address)
+    LinearLayout ll_home_address;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_home_address)
+    TextView txt_home_address;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_visit_type)
+    TextView txt_visit_type;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.scrollablContent)
+    ScrollView scrollablContent;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.include_petlover_footer)
     View include_petlover_footer;
 
@@ -189,6 +207,10 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.include_petlover_header)
     View include_petlover_header;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_emergency_appointment)
+    ImageView img_emergency_appointment;
 
 
     String appointment_id;
@@ -217,6 +239,10 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_petappointment_details);
         ButterKnife.bind(this);
+
+        scrollablContent.setVisibility(View.GONE);
+        ll_home_address.setVisibility(View.GONE);
+        img_emergency_appointment.setVisibility(View.GONE);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -326,8 +352,11 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                 img_videocall.setVisibility(View.GONE);
                 btn_add_review.setVisibility(View.GONE);
                 btn_prescriptiondetails.setVisibility(View.GONE);
+                img_videocall.setVisibility(View.GONE);
 
-            }else if(from.equalsIgnoreCase("PetCompletedAppointmentAdapter")) {
+            }
+             else if(from.equalsIgnoreCase("PetCompletedAppointmentAdapter")) {
+                 img_videocall.setVisibility(View.GONE);
 
                 if (userrate != null && userrate.equalsIgnoreCase("0")) {
                     btn_add_review.setVisibility(View.VISIBLE);
@@ -389,11 +418,26 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                 if (response.body() != null) {
 
                     if (200 == response.body().getCode()) {
+                        scrollablContent.setVisibility(View.VISIBLE);
 
                         String vaccinated, addr = null, usrname = null;
 
 
                         if (response.body().getData() != null) {
+
+                            if(response.body().getData().getAppointment_types() != null && response.body().getData().getAppointment_types().equalsIgnoreCase("Emergency")){
+                                img_emergency_appointment.setVisibility(View.VISIBLE);
+                            }else{
+                                img_emergency_appointment.setVisibility(View.GONE);
+
+                            }
+
+                            if(response.body().getData().getVisit_type() != null && !response.body().getData().getVisit_type().isEmpty() ){
+                                txt_visit_type.setText(response.body().getData().getVisit_type());
+                            }else{
+                                txt_visit_type.setText(response.body().getData().getCommunication_type());
+                            }
+
                             String usr_image = response.body().getData().getDoctor_id().getProfile_img();
                             String servname = response.body().getData().getService_name();
                             String pet_name = response.body().getData().getPet_id().getPet_name();
@@ -413,6 +457,70 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
 
                             getAge(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
                             }
+
+
+                            if(from != null){
+                                if(from.equalsIgnoreCase("PetNewAppointmentAdapter")){
+                                    if(appointmentfor != null){
+                                        if(appointmentfor.equalsIgnoreCase("Doctor")){
+                                            btn_cancel.setVisibility(View.VISIBLE);
+                                            if(isVaildDate){
+                                                btn_cancel.setVisibility(View.VISIBLE);
+                                            }else{
+                                                btn_cancel.setVisibility(View.GONE);
+                                            }
+                                            if(startappointmentstatus != null && !startappointmentstatus.equalsIgnoreCase("Not Started")) {
+                                                btn_cancel.setVisibility(View.GONE);
+                                            }
+                                            if(response.body().getData().getCommunication_type() != null && response.body().getData().getCommunication_type().equalsIgnoreCase("Online")){
+                                                img_videocall.setVisibility(View.VISIBLE);
+                                            }else{
+                                                img_videocall.setVisibility(View.GONE);
+                                            }
+
+
+
+
+                                        }else if(appointmentfor.equalsIgnoreCase("SP")){
+                                            btn_cancel.setVisibility(View.VISIBLE);
+                                            if(userrate != null && userrate.equalsIgnoreCase("0")){
+                                                btn_add_review.setVisibility(View.VISIBLE);
+                                            }else{
+                                                btn_add_review.setVisibility(View.GONE);
+
+                                            }
+                                        }
+                                    }
+
+                                }
+                                else if(from.equalsIgnoreCase("PetMissedAppointmentAdapter")){
+                                    btn_cancel.setVisibility(View.GONE);
+                                    img_videocall.setVisibility(View.GONE);
+                                    btn_add_review.setVisibility(View.GONE);
+                                    btn_prescriptiondetails.setVisibility(View.GONE);
+                                    img_videocall.setVisibility(View.GONE);
+
+                                }
+                                else if(from.equalsIgnoreCase("PetCompletedAppointmentAdapter")) {
+                                    img_videocall.setVisibility(View.GONE);
+
+                                    if (userrate != null && userrate.equalsIgnoreCase("0")) {
+                                        btn_add_review.setVisibility(View.VISIBLE);
+                                    }
+                                    else {
+                                        btn_add_review.setVisibility(View.GONE);
+
+                                    }
+
+                                    if (appointmentfor.equalsIgnoreCase("Doctor")) {
+                                        btn_prescriptiondetails.setVisibility(View.VISIBLE);
+                                    }else{
+                                        btn_prescriptiondetails.setVisibility(View.GONE);
+                                    }
+                                }
+
+                            }
+
 
 
 
@@ -444,6 +552,18 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                             appoinment_status = response.body().getData().getAppoinment_status();
                             start_appointment_status = response.body().getData().getStart_appointment_status();
                             setView(usrname, usr_image, servname, pet_name, pet_type, breed, gender, colour, weight, order_date, orderid, payment_method, order_cost, vaccinated, addr);
+
+                            if(response.body().getData().getVisit_type() != null &&response.body().getData().getVisit_type().equalsIgnoreCase("Home")){
+                                ll_home_address.setVisibility(View.VISIBLE);
+                                if(response.body().getAddress() != null){
+                                    if(response.body().getAddress().getLocation_address() != null){
+                                        txt_home_address.setText(response.body().getAddress().getLocation_address());
+                                    }
+                                }
+                            }
+                            else{
+                                ll_home_address.setVisibility(View.GONE);
+                            }
                         }
 
                         if(response.body().getData().getAppoinment_status() != null && response.body().getData().getAppoinment_status().equalsIgnoreCase("Incomplete")){
@@ -533,8 +653,10 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
         }
 
         if(servname != null && !servname.isEmpty()){
-
+            txt_serv_name.setVisibility(View.VISIBLE);
             txt_serv_name.setText(servname);
+        }else{
+            txt_serv_name.setVisibility(View.GONE);
         }
 
         
@@ -828,6 +950,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                 Log.w(TAG, "SPAppointmentDetailsResponse" + "--->" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
+                        scrollablContent.setVisibility(View.VISIBLE);
                         String vaccinated, addr, usrname;
                         String usr_image = "";
                         if (response.body().getData() != null) {
