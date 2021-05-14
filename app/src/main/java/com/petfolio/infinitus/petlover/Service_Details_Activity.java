@@ -608,10 +608,12 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
                             mapFragment = (SupportMapFragment) getSupportFragmentManager()
                                     .findFragmentById(R.id.map);
 
-                            if (mapFragment == null) {
-                                mapFragment = SupportMapFragment.newInstance();
-                                mapFragment.getMapAsync(Service_Details_Activity.this);
-                            }
+
+                            assert mapFragment!=null;
+
+
+                            mapFragment.getMapAsync(Service_Details_Activity.this);
+
                            // mapFragment.getMapAsync(Service_Details_Activity.this);
 
                         }
@@ -825,12 +827,12 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
 
         if(latitude!=0&&longitude!=0){
 
-            ll_map.setVisibility(View.VISIBLE);
-
             LatLng currentLocation = new LatLng(latitude, longitude);
 
             mMap.addMarker(new
                     MarkerOptions().position(currentLocation));
+
+            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,15));
             // Zoom in, animating the camera.

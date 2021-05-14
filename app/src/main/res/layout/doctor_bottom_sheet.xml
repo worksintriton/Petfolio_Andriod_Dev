@@ -5,7 +5,7 @@
     android:id="@+id/bottomSheetLayouts"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="20dp"
+    android:layout_marginBottom="30dp"
     android:visibility="visible"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
@@ -405,7 +405,6 @@
                     android:drawablePadding="10dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/futuralightbt"
-                    android:maxLines="1"
                     android:text="@string/_1a_anna_nagar_main_road_chennai"
                     android:textColor="@color/new_light_black"
                     android:textSize="14sp"

@@ -253,7 +253,8 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
                         txt_no_records.setVisibility(View.GONE);
                         if (response.body().getData() != null) {
                             if (response.body().getData().getService_Details().getImage_path() != null && !response.body().getData().getService_Details().getImage_path().isEmpty()) {
-                                Glide.with(SelectedServiceActivity.this)
+
+                                    Glide.with(SelectedServiceActivity.this)
                                         .load(response.body().getData().getService_Details().getImage_path())
                                         .into(img_selectedserviceimage);
                             } else {
@@ -343,6 +344,14 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
         SelectedServiceProviderAdapter doctorNewAppointmentAdapter = new SelectedServiceProviderAdapter(getApplicationContext(), serviceProviderList,catid,from,distance,reviewcount,Count_value_start,Count_value_end);
         rv_nearbyservices.setAdapter(doctorNewAppointmentAdapter);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (!this.isDestroyed()) {
+            Glide.with(SelectedServiceActivity.this).pauseRequests();
+        }
     }
 
     @SuppressLint("NonConstantResourceId")

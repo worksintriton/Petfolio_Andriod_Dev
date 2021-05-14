@@ -25,16 +25,16 @@
 
         <RelativeLayout
             android:id="@+id/rl_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:background="@drawable/new_orange_bg">
 
             <ImageView
                 android:id="@+id/img_back"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_centerInParent="true"
-                android:background="@drawable/new_arrow"
+                android:src="@drawable/new_arrow"
                 tools:ignore="ContentDescription" />
 
         </RelativeLayout>
@@ -73,14 +73,13 @@
 
             <ImageView
                 android:id="@+id/img_fav"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/heart_gray"
                 tools:ignore="ContentDescription" />
         </LinearLayout>
-
 
     </androidx.appcompat.widget.Toolbar>
 

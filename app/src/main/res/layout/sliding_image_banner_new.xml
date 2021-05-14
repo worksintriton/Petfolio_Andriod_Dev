@@ -12,7 +12,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/new_yellow_bgm">
+        android:background="@drawable/rectangle_corner_bgm_white">
 
         <ImageView
             android:id="@+id/itemImage"

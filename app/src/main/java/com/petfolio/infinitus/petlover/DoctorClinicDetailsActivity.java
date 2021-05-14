@@ -553,15 +553,6 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
 
                             ll_map.setVisibility(View.VISIBLE);
 
-                                    // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-                            mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                                    .findFragmentById(R.id.map);
-
-                            if (mapFragment == null) {
-                                mapFragment = SupportMapFragment.newInstance();
-                                mapFragment.getMapAsync(DoctorClinicDetailsActivity.this);
-                            }
-
 
                             setBottomSheet();
 
@@ -661,11 +652,9 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
                             mapFragment = (SupportMapFragment) getSupportFragmentManager()
                                     .findFragmentById(R.id.map);
 
-                            if (mapFragment == null) {
-                                mapFragment = SupportMapFragment.newInstance();
-                                mapFragment.getMapAsync(DoctorClinicDetailsActivity.this);
-                            }
+                            assert mapFragment != null;
 
+                            mapFragment.getMapAsync(DoctorClinicDetailsActivity.this);
 
 
                         }
@@ -888,12 +877,12 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
 
         if(latitude!=0&&longitude!=0){
 
-            ll_map.setVisibility(View.VISIBLE);
-
             LatLng currentLocation = new LatLng(latitude, longitude);
 
             mMap.addMarker(new
                     MarkerOptions().position(currentLocation));
+
+            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,15));
             // Zoom in, animating the camera.
