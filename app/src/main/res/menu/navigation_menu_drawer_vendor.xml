@@ -6,25 +6,25 @@
         android:id="@+id/group1">
         <item android:id="@+id/nav_item_one"
             android:icon="@drawable/myorders"
-            android:title="Customer Orders" />
+            android:title="@string/customer_orders" />
     </group>
     <group android:checkableBehavior="single"
         android:id="@+id/group2">
         <item android:id="@+id/nav_item_two"
             android:icon="@drawable/ic_shop"
-            android:title="Manage Products" />
+            android:title="@string/manage_products" />
     </group>
     <group android:checkableBehavior="single"
         android:id="@+id/group3">
         <item android:id="@+id/nav_item_three"
             android:icon="@drawable/myorders"
-            android:title="My Orders" />
+            android:title="@string/my_orders" />
     </group>
     <group android:checkableBehavior="single"
         android:id="@+id/group4">
         <item android:id="@+id/nav_item_four"
             android:icon="@drawable/like"
-            android:title="Favourites" />
+            android:title="@string/favourites" />
     </group>
 
 
@@ -34,7 +34,7 @@
         android:id="@+id/group5">
         <item android:id="@+id/nav_item_five"
             android:icon="@drawable/discount"
-            android:title="My Coupons" />
+            android:title="@string/my_coupons" />
     </group>
 
 
@@ -42,14 +42,14 @@
         android:id="@+id/group6">
         <item android:id="@+id/nav_item_six"
             android:icon="@drawable/report"
-            android:title="Reports" />
+            android:title="@string/reports" />
     </group>
 
     <group android:checkableBehavior="single"
         android:id="@+id/group7">
         <item android:id="@+id/nav_item_seven"
             android:icon="@drawable/settings"
-            android:title="Settings" />
+            android:title="@string/settings" />
     </group>
 
 
@@ -59,7 +59,7 @@
         android:id="@+id/group8">
         <item android:id="@+id/nav_item_eight"
             android:icon="@drawable/logout"
-            android:title="Logout" />
+            android:title="@string/logout" />
     </group>
 
 

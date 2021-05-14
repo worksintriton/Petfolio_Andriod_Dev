@@ -117,6 +117,10 @@
     <string name="feeds">Feeds</string>
     <string name="market">Marketplace</string>
     <string name="Market">Market</string>
+    <string name="payment_details">Payment Details</string>
+
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tabnew">New</string>
@@ -215,7 +219,7 @@
     <string name="petlastvaccinated">Pet Last Vaccinated Date</string>
     <string name="lastvaccinateddate">Last Vaccinated Date</string>
 
-    <string name="medical_history">See Medical History</string>
+    <string name="medical_history">Medical History</string>
     <string name="appointmentdateandtime">Appointment Date and Time</string>
     <string name="order_date">Order date</string>
     <string name="bookingdate">Booked At</string>
@@ -444,6 +448,7 @@
     <string name="discount">Discount %</string>
     <string name="apply_discount">Apply Discount</string>
 
+    <string name="customer_orders">Customer Orders</string>
 
     <string name="manage_products">Manage Products</string>
     <string name="product_name">Product Name</string>
@@ -517,6 +522,9 @@
     <string name="my_favourites">My Favourites</string>
     <string name="pet_1620638904266">PET-1620638904266</string>
     <string name="home_address">Home Address</string>
+    <string name="reports">Reports</string>
+    <string name="pet_service">Pet Service</string>
+    <string name="sos">Sos</string>
 
 
 </resources>
