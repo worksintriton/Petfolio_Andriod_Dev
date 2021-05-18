@@ -90,6 +90,15 @@ public class FBTokenUpdateResponse {
         private String profile_img;
         private int __v;
         private boolean user_email_verification;
+        private String ref_code;
+
+        public String getRef_code() {
+            return ref_code;
+        }
+
+        public void setRef_code(String ref_code) {
+            this.ref_code = ref_code;
+        }
 
         public boolean isUser_email_verification() {
             return user_email_verification;

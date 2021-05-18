@@ -46,10 +46,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.API;
-import com.petfolio.infinitus.petlover.ShippingAddressAddActivity;
 import com.petfolio.infinitus.responsepojo.CartDetailsResponse;
 import com.petfolio.infinitus.responsepojo.GetAddressResultResponse;
 import com.petfolio.infinitus.service.GPSTracker;
+import com.petfolio.infinitus.serviceprovider.ShippingAddressSPActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.jetbrains.annotations.NotNull;
@@ -68,12 +68,12 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class PickUpLocationAddNewAddressActivity extends FragmentActivity implements OnMapReadyCallback,
+public class PickUpLocationAddNewAddressSPActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
-    String TAG = "PickUpLocationAddNewAddressActivity";
+    String TAG = "PickUpLocationAddNewAddressSPActivity";
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     GoogleApiClient mGoogleApiClient;
@@ -164,7 +164,7 @@ public class PickUpLocationAddNewAddressActivity extends FragmentActivity implem
         if (extras != null) {
             fromactivity = extras.getString("fromactivity");
             placesearchactivity = extras.getString("placesearchactivity");
-            Log.w(TAG,"fromactivity if : "+fromactivity+"placesearchactivity : "+placesearchactivity);
+            Log.w(TAG,"fromactivity if : "+fromactivity+" placesearchactivity : "+placesearchactivity);
 
             Data = (List<CartDetailsResponse.DataBean>) extras.getSerializable("data");
             prodouct_total = extras.getInt("product_total");
@@ -184,7 +184,7 @@ public class PickUpLocationAddNewAddressActivity extends FragmentActivity implem
 
 
         rl_placessearch.setOnClickListener(v -> {
-            Intent intent = new Intent(PickUpLocationAddNewAddressActivity.this, PlacesSearchActivity.class);
+            Intent intent = new Intent(PickUpLocationAddNewAddressSPActivity.this, PlacesSearchActivity.class);
             intent.putExtra("data", (Serializable) Data);
             intent.putExtra("product_total",prodouct_total);
             intent.putExtra("shipping_charge",shipping_charge);
@@ -227,7 +227,7 @@ public class PickUpLocationAddNewAddressActivity extends FragmentActivity implem
 
         btn_setpickuppoint.setOnClickListener(v -> {
             if(CityName != null){
-                   Intent intent = new Intent(PickUpLocationAddNewAddressActivity.this,AddMyAddressShippingActivity.class);
+                   Intent intent = new Intent(PickUpLocationAddNewAddressSPActivity.this,AddMyAddressShippingSPActivity.class);
                     intent.putExtra("latlng",strlatlng);
                     intent.putExtra("cityname",CityName);
                     intent.putExtra("address",AddressLine);
@@ -242,7 +242,7 @@ public class PickUpLocationAddNewAddressActivity extends FragmentActivity implem
                     intent.putExtra("prodcut_item_count",prodcut_item_count);
                     startActivity(intent);
             }else{
-                Toasty.warning(PickUpLocationAddNewAddressActivity.this,"Please select citynmae",Toasty.LENGTH_SHORT).show();
+                Toasty.warning(PickUpLocationAddNewAddressSPActivity.this,"Please select citynmae",Toasty.LENGTH_SHORT).show();
             }
 
 
@@ -272,7 +272,7 @@ public class PickUpLocationAddNewAddressActivity extends FragmentActivity implem
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
 
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(PickUpLocationAddNewAddressActivity.this);
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(PickUpLocationAddNewAddressSPActivity.this);
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(10 * 1000);
@@ -382,7 +382,7 @@ public class PickUpLocationAddNewAddressActivity extends FragmentActivity implem
         if (ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        GPSTracker gps = new GPSTracker(PickUpLocationAddNewAddressActivity.this);
+        GPSTracker gps = new GPSTracker(PickUpLocationAddNewAddressSPActivity.this);
 
         gps.canGetLocation();
         LatLng curentpoint = new LatLng(gps.getLatitude(), gps.getLongitude());
@@ -606,12 +606,12 @@ public class PickUpLocationAddNewAddressActivity extends FragmentActivity implem
     }
     private void getLatandLong(){
         try{
-            if (ContextCompat.checkSelfPermission(PickUpLocationAddNewAddressActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(PickUpLocationAddNewAddressActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(PickUpLocationAddNewAddressActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            if (ContextCompat.checkSelfPermission(PickUpLocationAddNewAddressSPActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(PickUpLocationAddNewAddressSPActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(PickUpLocationAddNewAddressSPActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
             }
             else {
-                GPSTracker gps = new GPSTracker(PickUpLocationAddNewAddressActivity.this);
+                GPSTracker gps = new GPSTracker(PickUpLocationAddNewAddressSPActivity.this);
 
                 // Check if GPS enabled
                 if (gps.canGetLocation()) {
@@ -637,7 +637,7 @@ public class PickUpLocationAddNewAddressActivity extends FragmentActivity implem
 
     }
     public void showSettingsAlert() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(PickUpLocationAddNewAddressActivity.this);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(PickUpLocationAddNewAddressSPActivity.this);
 
         // Setting DialogHelp Title
         alertDialog.setTitle("GPS is settings");
@@ -670,7 +670,7 @@ public class PickUpLocationAddNewAddressActivity extends FragmentActivity implem
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent =  new Intent(PickUpLocationAddNewAddressActivity.this, ShippingAddressAddActivity.class);
+        Intent intent =  new Intent(PickUpLocationAddNewAddressSPActivity.this, ShippingAddressSPActivity.class);
         intent.putExtra("data", (Serializable) Data);
         intent.putExtra("product_total",prodouct_total);
         intent.putExtra("shipping_charge",shipping_charge);
@@ -678,9 +678,11 @@ public class PickUpLocationAddNewAddressActivity extends FragmentActivity implem
         intent.putExtra("grand_total",grand_total);
         intent.putExtra("prodcut_count",prodcut_count);
         intent.putExtra("prodcut_item_count",prodcut_item_count);
-        intent.putExtra("fromactivity",fromactivity);
+        intent.putExtra("fromactivity",TAG);
         startActivity(intent);
         finish();
+
+
     }
 
     private void getAddressResultResponse(LatLng latLng) {

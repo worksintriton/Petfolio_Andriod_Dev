@@ -44,6 +44,7 @@ import com.petfolio.infinitus.responsepojo.LocationListAddressResponse;
 import com.petfolio.infinitus.responsepojo.LocationStatusChangeResponse;
 import com.petfolio.infinitus.responsepojo.ShippingAddressDeleteResponse;
 import com.petfolio.infinitus.responsepojo.ShippingAddressListingByUserIDResponse;
+import com.petfolio.infinitus.serviceprovider.ShippingAddressSPActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -152,6 +153,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
         TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.shipping_address));
         img_sos.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
 
 
         SessionManager session = new SessionManager(getApplicationContext());
@@ -176,7 +178,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
             fromactivity = extras.getString("fromactivity");
 
-            Log.w(TAG,"From "+ fromactivity +" : true-->");
+            Log.w(TAG,"fromactivity :  "+ fromactivity +" : true-->");
 
             Data = (List<CartDetailsResponse.DataBean>) extras.getSerializable("data");
 
@@ -428,18 +430,35 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        Toasty.success(getApplicationContext(), "Default Location Changed Successfully", Toast.LENGTH_SHORT, true).show();
-                        Intent intent = new Intent(ShippingAddressAddActivity.this, ShippingAddressActivity.class);
-                        intent.putExtra("fromactivity",TAG);
-                        intent.putExtra("data", (Serializable) Data);
-                        intent.putExtra("product_total",prodouct_total);
-                        intent.putExtra("shipping_charge",shipping_charge);
-                        intent.putExtra("discount_price",discount_price);
-                        intent.putExtra("grand_total",grand_total);
-                        intent.putExtra("prodcut_count",prodcut_count);
-                        intent.putExtra("prodcut_item_count",prodcut_item_count);
-                        startActivity(intent);
-                        finish();
+                        if(fromactivity != null && fromactivity.equalsIgnoreCase("AddMyAddressShippingSPActivity")){
+                            Toasty.success(getApplicationContext(), "Default Location Changed Successfully", Toast.LENGTH_SHORT, true).show();
+                            Intent intent = new Intent(ShippingAddressAddActivity.this, ShippingAddressSPActivity.class);
+                            intent.putExtra("fromactivity",TAG);
+                            intent.putExtra("data", (Serializable) Data);
+                            intent.putExtra("product_total",prodouct_total);
+                            intent.putExtra("shipping_charge",shipping_charge);
+                            intent.putExtra("discount_price",discount_price);
+                            intent.putExtra("grand_total",grand_total);
+                            intent.putExtra("prodcut_count",prodcut_count);
+                            intent.putExtra("prodcut_item_count",prodcut_item_count);
+                            startActivity(intent);
+                            finish();
+
+                        }else{
+                            Toasty.success(getApplicationContext(), "Default Location Changed Successfully", Toast.LENGTH_SHORT, true).show();
+                            Intent intent = new Intent(ShippingAddressAddActivity.this, ShippingAddressActivity.class);
+                            intent.putExtra("fromactivity",TAG);
+                            intent.putExtra("data", (Serializable) Data);
+                            intent.putExtra("product_total",prodouct_total);
+                            intent.putExtra("shipping_charge",shipping_charge);
+                            intent.putExtra("discount_price",discount_price);
+                            intent.putExtra("grand_total",grand_total);
+                            intent.putExtra("prodcut_count",prodcut_count);
+                            intent.putExtra("prodcut_item_count",prodcut_item_count);
+                            startActivity(intent);
+                            finish();
+
+                        }
 
 
                     }
@@ -715,17 +734,31 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
             locationStatusChangeResponseCall(shippid);
 
         } else {
-            Intent intent = new Intent(ShippingAddressAddActivity.this, ShippingAddressActivity.class);
-            intent.putExtra("fromactivity",TAG);
-            intent.putExtra("data", (Serializable) Data);
-            intent.putExtra("product_total",prodouct_total);
-            intent.putExtra("shipping_charge",shipping_charge);
-            intent.putExtra("discount_price",discount_price);
-            intent.putExtra("grand_total",grand_total);
-            intent.putExtra("prodcut_count",prodcut_count);
-            intent.putExtra("prodcut_item_count",prodcut_item_count);
-            startActivity(intent);
-            finish();
+            if(fromactivity != null && fromactivity.equalsIgnoreCase("AddMyAddressShippingSPActivity")) {
+                Intent intent = new Intent(ShippingAddressAddActivity.this, ShippingAddressSPActivity.class);
+                intent.putExtra("fromactivity", TAG);
+                intent.putExtra("data", (Serializable) Data);
+                intent.putExtra("product_total", prodouct_total);
+                intent.putExtra("shipping_charge", shipping_charge);
+                intent.putExtra("discount_price", discount_price);
+                intent.putExtra("grand_total", grand_total);
+                intent.putExtra("prodcut_count", prodcut_count);
+                intent.putExtra("prodcut_item_count", prodcut_item_count);
+                startActivity(intent);
+                finish();
+            }else{
+                Intent intent = new Intent(ShippingAddressAddActivity.this, ShippingAddressActivity.class);
+                intent.putExtra("fromactivity", TAG);
+                intent.putExtra("data", (Serializable) Data);
+                intent.putExtra("product_total", prodouct_total);
+                intent.putExtra("shipping_charge", shipping_charge);
+                intent.putExtra("discount_price", discount_price);
+                intent.putExtra("grand_total", grand_total);
+                intent.putExtra("prodcut_count", prodcut_count);
+                intent.putExtra("prodcut_item_count", prodcut_item_count);
+                startActivity(intent);
+                finish();
+            }
 
             //Toasty.warning(ShippingAddressAddActivity.this,"Plz choose shipping address ", Toasty.LENGTH_LONG).show();
         }

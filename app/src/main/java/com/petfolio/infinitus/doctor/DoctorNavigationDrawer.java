@@ -62,7 +62,7 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
 
     ImageView drawerImg;
     CircleImageView nav_header_imageView;
-    TextView nav_header_profilename, nav_header_emailid;
+    TextView nav_header_profilename, nav_header_emailid,nav_header_ref_code;
 
     FrameLayout frameLayout;
 
@@ -88,6 +88,7 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
     String emailid = "";
     private SessionManager session;
     private Dialog dialog;
+    private String refcode;
 
 
     @Override
@@ -104,6 +105,7 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
         name = user.get(SessionManager.KEY_FIRST_NAME);
         emailid = user.get(SessionManager.KEY_EMAIL_ID);
         phoneNo = user.get(SessionManager.KEY_MOBILE);
+        refcode = user.get(SessionManager.KEY_REF_CODE);
 
 
 
@@ -124,6 +126,7 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private void initUI(View view) {
 
         //Initializing NavigationView
@@ -145,6 +148,15 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
         nav_header_emailid = header.findViewById(R.id.nav_header_emailid);
         nav_header_profilename = header.findViewById(R.id.nav_header_profilename);
         // Glide.with(this).load(image_url).into(nav_header_imageView);
+
+        nav_header_ref_code = view.findViewById(R.id.nav_header_ref_code);
+        if(refcode != null && !refcode.isEmpty() ){
+            nav_header_ref_code.setVisibility(View.VISIBLE);
+            nav_header_ref_code.setText(getResources().getString(R.string.ref_code)+" : "+refcode);
+        }else{
+            nav_header_ref_code.setVisibility(View.GONE);
+            nav_header_ref_code.setText("");
+        }
 
         nav_header_emailid.setText(emailid);
         nav_header_profilename.setText(name);

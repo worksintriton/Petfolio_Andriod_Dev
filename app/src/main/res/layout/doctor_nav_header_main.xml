@@ -57,6 +57,8 @@
                 android:textColor="@color/new_txt_color"
                 android:textSize="14sp" />
 
+
+
         </LinearLayout>
 
         <TextView

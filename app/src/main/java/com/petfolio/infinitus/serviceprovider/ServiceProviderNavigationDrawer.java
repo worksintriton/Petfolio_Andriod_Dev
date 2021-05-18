@@ -16,7 +16,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,9 +28,8 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
 
 import com.petfolio.infinitus.activity.NotificationActivity;
-import com.petfolio.infinitus.doctor.DoctorEditProfileActivity;
-import com.petfolio.infinitus.doctor.DoctorProfileScreenActivity;
-import com.petfolio.infinitus.petlover.PetLoverNavigationDrawerNew;
+
+import com.petfolio.infinitus.serviceprovider.shop.SPMyOrdrersActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import java.util.HashMap;
 import java.util.Objects;
@@ -52,7 +51,7 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
     ImageView drawerImg;
     CircleImageView nav_header_imageView;
     FrameLayout frameLayout;
-    TextView nav_header_profilename, nav_header_emailid, nav_header_edit;
+    TextView nav_header_profilename, nav_header_emailid,nav_header_ref_code, nav_header_edit;
     //SessionManager session;
     String name, image_url, phoneNo;
 
@@ -69,6 +68,7 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
 
     String emailid = "";
     private Dialog dialog;
+    private String refcode;
 
 
     @SuppressLint({"InflateParams", "LongLogTag"})
@@ -85,8 +85,12 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
         name = user.get(SessionManager.KEY_FIRST_NAME);
         emailid = user.get(SessionManager.KEY_EMAIL_ID);
         phoneNo = user.get(SessionManager.KEY_MOBILE);
+        refcode = user.get(SessionManager.KEY_REF_CODE);
+
+
+
         String userid = user.get(SessionManager.KEY_ID);
-        Log.w(TAG, "userid : " + userid);
+        Log.w(TAG, "userid : " + userid+"refcode : "+refcode);
 
 
         Log.w(TAG, "user details--->" + "name :" + " " + name + " " + "image_url :" + image_url);
@@ -106,7 +110,7 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
         }
     }
 
-    @SuppressLint("NonConstantResourceId")
+    @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     private void initUI(View view) {
 
         //Initializing NavigationView
@@ -127,6 +131,14 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
         nav_header_profilename = header.findViewById(R.id.nav_header_profilename);
         nav_header_edit = header.findViewById(R.id.nav_header_edit);
         // Glide.with(this).load(image_url).into(nav_header_imageView);
+        nav_header_ref_code = view.findViewById(R.id.nav_header_ref_code);
+        if(refcode != null && !refcode.isEmpty() ){
+            nav_header_ref_code.setVisibility(View.VISIBLE);
+            nav_header_ref_code.setText(getResources().getString(R.string.ref_code)+" : "+refcode);
+        }else{
+            nav_header_ref_code.setVisibility(View.GONE);
+            nav_header_ref_code.setText("");
+        }
 
         nav_header_emailid.setText(emailid);
         nav_header_profilename.setText(name);
@@ -170,6 +182,7 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
                     return true;
 
                 case R.id.nav_item_four:
+                    gotoMyOrders();
                     return true;
 
                 case R.id.nav_item_five:
@@ -193,6 +206,11 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
         });
 
 
+    }
+
+    private void gotoMyOrders() {
+        Intent intent = new Intent(getApplicationContext(), SPMyOrdrersActivity.class);
+        startActivity(intent);
     }
 
     private void gotoMyCalendar() {

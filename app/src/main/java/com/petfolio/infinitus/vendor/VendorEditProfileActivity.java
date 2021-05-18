@@ -87,6 +87,7 @@ public class VendorEditProfileActivity extends AppCompatActivity implements View
     private String verifyemailstatus;
     private boolean user_email_verification;
     private String verified = "notverified";
+    private String refcode;
 
 
     @Override
@@ -109,6 +110,8 @@ public class VendorEditProfileActivity extends AppCompatActivity implements View
         userstatus = user.get(SessionManager.KEY_PROFILE_STATUS);
         profileimage = user.get(SessionManager.KEY_PROFILE_IMAGE);
         verifyemailstatus = user.get(SessionManager.KEY_VERIFY_EMAIL_STATUS);
+        refcode = user.get(SessionManager.KEY_REF_CODE);
+
 
         Log.w(TAG,"verifyemailstatus : "+verifyemailstatus);
 
@@ -220,7 +223,8 @@ public class VendorEditProfileActivity extends AppCompatActivity implements View
                                 String.valueOf(usertype),
                                 userstatus,
                                 profileimage,
-                                verifyemailstatus
+                                verifyemailstatus,
+                                refcode
 
                         );
                         Intent intent = new Intent(getApplicationContext(), VendorDashboardActivity.class);

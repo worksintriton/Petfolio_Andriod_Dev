@@ -87,6 +87,7 @@ public class SPEditProfileActivity extends AppCompatActivity implements View.OnC
     private String verifyemailstatus;
     private boolean user_email_verification;
     private String verified = "notverified";
+    private String refcode;
 
 
     @Override
@@ -109,6 +110,8 @@ public class SPEditProfileActivity extends AppCompatActivity implements View.OnC
         userstatus = user.get(SessionManager.KEY_PROFILE_STATUS);
         profileimage = user.get(SessionManager.KEY_PROFILE_IMAGE);
         verifyemailstatus = user.get(SessionManager.KEY_VERIFY_EMAIL_STATUS);
+        refcode = user.get(SessionManager.KEY_REF_CODE);
+
 
         Log.w(TAG,"verifyemailstatus : "+verifyemailstatus);
 
@@ -221,7 +224,8 @@ public class SPEditProfileActivity extends AppCompatActivity implements View.OnC
                                 String.valueOf(usertype),
                                 userstatus,
                                 profileimage,
-                                verifyemailstatus
+                                verifyemailstatus,
+                                refcode
 
                         );
                         Intent intent = new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class);

@@ -1,7 +1,4 @@
-package com.petfolio.infinitus.petlover;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+package com.petfolio.infinitus.serviceprovider;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -19,20 +16,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.activity.location.PickUpLocationAddNewAddressActivity;
+import com.petfolio.infinitus.activity.location.PickUpLocationAddNewAddressSPActivity;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
-import com.petfolio.infinitus.doctor.shop.DoctorCartActivity;
+
+import com.petfolio.infinitus.petlover.ShippingAddressAddActivity;
+import com.petfolio.infinitus.petlover.ShippingAddressEditActivity;
 import com.petfolio.infinitus.requestpojo.ShippingAddressDeleteRequest;
 import com.petfolio.infinitus.requestpojo.ShippingAddressFetchByUserIDRequest;
 import com.petfolio.infinitus.responsepojo.CartDetailsResponse;
 import com.petfolio.infinitus.responsepojo.CartSuccessResponse;
 import com.petfolio.infinitus.responsepojo.ShippingAddressDeleteResponse;
 import com.petfolio.infinitus.responsepojo.ShippingAddressFetchByUserIDResponse;
-import com.petfolio.infinitus.serviceprovider.ServiceProviderDashboardActivity;
 import com.petfolio.infinitus.serviceprovider.shop.SPCartActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -59,9 +59,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ShippingAddressActivity extends AppCompatActivity implements View.OnClickListener, PaymentResultListener {
+public class ShippingAddressSPActivity extends AppCompatActivity implements View.OnClickListener, PaymentResultListener {
 
-    private String TAG = "ShippingAddressActivity";
+    private String TAG = "ShippingAddressSPActivity";
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
@@ -221,7 +221,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
             prodcut_item_count = extras.getInt("prodcut_item_count");
 
-            if (new ConnectionDetector(ShippingAddressActivity.this).isNetworkAvailable(ShippingAddressActivity.this)) {
+            if (new ConnectionDetector(ShippingAddressSPActivity.this).isNetworkAvailable(ShippingAddressSPActivity.this)) {
                 shippingAddressresponseCall(userid);
 
             }
@@ -314,6 +314,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
                             dataBeanList = response.body().getData();
 
                             if(dataBeanList != null ) {
+                                showNoAddressAlert();
                                 if(dataBeanList.isDefault_status()){
                                     footerView.setVisibility(View.VISIBLE);
 
@@ -637,7 +638,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
 
     private void gotoShippingaddresslist() {
-        Intent intent = new Intent(ShippingAddressActivity.this, ShippingAddressAddActivity.class);
+        Intent intent = new Intent(ShippingAddressSPActivity.this, ShippingAddressAddActivity.class);
         intent.putExtra("data", (Serializable) Data);
         intent.putExtra("product_total",prodouct_total);
         intent.putExtra("shipping_charge",shipping_charge);
@@ -679,7 +680,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
     }
 
     private void gotoShippingaddressCreate() {
-        Intent intent = new Intent(ShippingAddressActivity.this, PickUpLocationAddNewAddressActivity.class);
+        Intent intent = new Intent(ShippingAddressSPActivity.this, PickUpLocationAddNewAddressSPActivity.class);
         intent.putExtra("data", (Serializable) Data);
         intent.putExtra("product_total",prodouct_total);
         intent.putExtra("shipping_charge",shipping_charge);
@@ -687,6 +688,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
         intent.putExtra("grand_total",grand_total);
         intent.putExtra("prodcut_count",prodcut_count);
         intent.putExtra("prodcut_item_count",prodcut_item_count);
+        intent.putExtra("fromactivity",TAG);
         startActivity(intent);
 
     }
@@ -695,7 +697,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
         try{
 
-            dialog = new Dialog(ShippingAddressActivity.this);
+            dialog = new Dialog(ShippingAddressSPActivity.this);
             dialog.setContentView(R.layout.alert_cancel_layout);
             dialog.setCanceledOnTouchOutside(false);
             Button btn_ok = dialog.findViewById(R.id.btn_ok);
@@ -705,7 +707,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
             btn_ok.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (new ConnectionDetector(ShippingAddressActivity.this).isNetworkAvailable(ShippingAddressActivity.this)) {
+                    if (new ConnectionDetector(ShippingAddressSPActivity.this).isNetworkAvailable(ShippingAddressSPActivity.this)) {
 
                         deleteshipAddrresponseCall(shipid);
 
@@ -739,7 +741,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
         try{
 
-            dialog = new Dialog(ShippingAddressActivity.this);
+            dialog = new Dialog(ShippingAddressSPActivity.this);
             dialog.setContentView(R.layout.alert_cancel_layout);
             dialog.setCanceledOnTouchOutside(false);
             Button btn_ok = dialog.findViewById(R.id.btn_ok);
@@ -853,21 +855,18 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorCartActivity")){
-            startActivity(new Intent(getApplicationContext(), DoctorCartActivity.class));
-            finish();
-        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("SPCartActivity")){
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("SPCartActivity")){
             startActivity(new Intent(getApplicationContext(), SPCartActivity.class));
             finish();
         }else{
-            startActivity(new Intent(getApplicationContext(),PetCartActivity.class));
+            startActivity(new Intent(getApplicationContext(), SPCartActivity.class));
             finish();
         }
 
     }
 
     public void callDirections(String tag){
-        Intent intent = new Intent(getApplicationContext(), PetLoverDashboardActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class);
         intent.putExtra("tag",tag);
         startActivity(intent);
         finish();
@@ -876,7 +875,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
     private void showPaymentSuccessalert() {
         try {
 
-            dialog = new Dialog(ShippingAddressActivity.this);
+            dialog = new Dialog(ShippingAddressSPActivity.this);
             dialog.setCancelable(false);
             dialog.setContentView(R.layout.alert_payment_success_layout);
             Button btn_back_to_shop = dialog.findViewById(R.id.btn_back_to_shop);
@@ -885,12 +884,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
                 @Override
                 public void onClick(View view) {
                     dialog.dismiss();
-                    if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorCartActivity")){
-                        Intent intent = new Intent(getApplicationContext(), DoctorDashboardActivity.class);
-                        intent.putExtra("tag","2");
-                        startActivity(intent);
-                        finish();
-                    }else if(fromactivity != null && fromactivity.equalsIgnoreCase("SPCartActivity")){
+                     if(fromactivity != null && fromactivity.equalsIgnoreCase("SPCartActivity")){
                         Intent intent = new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class);
                         intent.putExtra("tag","2");
                         startActivity(intent);

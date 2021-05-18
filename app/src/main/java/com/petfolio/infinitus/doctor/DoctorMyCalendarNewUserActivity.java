@@ -78,7 +78,7 @@ public class DoctorMyCalendarNewUserActivity extends AppCompatActivity implement
         if (new ConnectionDetector(DoctorMyCalendarNewUserActivity.this).isNetworkAvailable(DoctorMyCalendarNewUserActivity.this)) {
             doctorMyCalendarAvlDaysResponseCall();
         }
-         btn_next = findViewById(R.id.btn_next);
+        btn_next = findViewById(R.id.btn_next);
         btn_next.setVisibility(View.GONE);
         btn_next.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("LongLogTag")

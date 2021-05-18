@@ -94,6 +94,7 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
     private int prodcut_count;
     private int prodcut_item_count;
 
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

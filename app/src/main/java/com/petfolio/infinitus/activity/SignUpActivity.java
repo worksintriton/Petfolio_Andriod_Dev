@@ -82,6 +82,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     EditText edt_phone;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.edt_ref_code)
+    EditText edt_ref_code;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_continue)
     Button btn_continue;
 
@@ -104,6 +108,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private boolean user_email_verification;
     private String firstname,lastname,useremail;
     private String verified;
+    private String ref_code = "";
 
 
     @SuppressLint({"SetTextI18n", "LogNotTimber"})
@@ -281,6 +286,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
 
+        ref_code = edt_ref_code.getText().toString();
         SignupRequest signupRequest = new SignupRequest();
         signupRequest.setFirst_name(edt_firstname.getText().toString().trim());
         signupRequest.setLast_name(edt_lastname.getText().toString().trim());
@@ -290,6 +296,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         signupRequest.setDate_of_reg(currentDateandTime);
         signupRequest.setMobile_type("Android");
         signupRequest.setUser_email_verification(user_email_verification);
+        signupRequest.setRef_code(ref_code);
         Log.w(TAG,"signupRequest "+ new Gson().toJson(signupRequest));
         return signupRequest;
     }

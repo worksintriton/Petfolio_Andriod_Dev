@@ -83,7 +83,7 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
     ImageView drawerImg;
     CircleImageView nav_header_imageView;
     FrameLayout frameLayout;
-    TextView nav_header_profilename, nav_header_emailid;
+    TextView nav_header_profilename, nav_header_emailid,nav_header_ref_code;
     //SessionManager session;
     String name, image_url, phoneNo;
 
@@ -111,8 +111,7 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
 
     public View toolbar_layout;
     TextView txt_location;
-
-
+    private String refcode;
 
 
     @SuppressLint({"InflateParams", "LogNotTimber"})
@@ -134,6 +133,8 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
         String userid = user.get(SessionManager.KEY_ID);
         Log.w(TAG, "userid : " + userid);
 
+        refcode = user.get(SessionManager.KEY_REF_CODE);
+
 
         Log.w(TAG, "user details--->" + "name :" + " " + name + " " + "image_url :" + image_url);
 
@@ -146,7 +147,7 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
 
     }
 
-    @SuppressLint("NonConstantResourceId")
+    @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     private void initUI(View view) {
 
         //Initializing NavigationView
@@ -167,6 +168,15 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
         nav_header_imageView = header.findViewById(R.id.nav_header_imageView);
         nav_header_emailid = header.findViewById(R.id.nav_header_emailid);
         nav_header_profilename = header.findViewById(R.id.nav_header_profilename);
+
+        nav_header_ref_code = view.findViewById(R.id.nav_header_ref_code);
+        if(refcode != null && !refcode.isEmpty() ){
+            nav_header_ref_code.setVisibility(View.VISIBLE);
+            nav_header_ref_code.setText(getResources().getString(R.string.ref_code)+" : "+refcode);
+        }else{
+            nav_header_ref_code.setVisibility(View.GONE);
+            nav_header_ref_code.setText("");
+        }
 
         Glide.with(this).load(R.drawable.profile).circleCrop().into(nav_header_imageView);
 

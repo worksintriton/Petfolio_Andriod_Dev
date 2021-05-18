@@ -86,6 +86,7 @@ public class PetLoverEditProfileActivity extends AppCompatActivity implements Vi
     private String verifyemailstatus;
     private boolean user_email_verification;
     private String verified = "notverified";
+    private String refcode;
 
 
     @SuppressLint("SetTextI18n")
@@ -108,6 +109,8 @@ public class PetLoverEditProfileActivity extends AppCompatActivity implements Vi
         userstatus = user.get(SessionManager.KEY_PROFILE_STATUS);
         profileimage = user.get(SessionManager.KEY_PROFILE_IMAGE);
         verifyemailstatus = user.get(SessionManager.KEY_VERIFY_EMAIL_STATUS);
+        refcode = user.get(SessionManager.KEY_REF_CODE);
+
         Log.w(TAG,"verifyemailstatus : "+verifyemailstatus);
 
         Bundle extras = getIntent().getExtras();
@@ -225,7 +228,8 @@ public class PetLoverEditProfileActivity extends AppCompatActivity implements Vi
                                 String.valueOf(usertype),
                                 userstatus,
                                 profileimage,
-                                verifyemailstatus
+                                verifyemailstatus,
+                                refcode
 
                         );
                         Intent intent = new Intent(getApplicationContext(),PetLoverDashboardActivity.class);

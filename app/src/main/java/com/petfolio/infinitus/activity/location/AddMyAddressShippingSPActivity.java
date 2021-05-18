@@ -65,13 +65,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class AddMyAddressShippingActivity extends FragmentActivity implements OnMapReadyCallback,
+public class AddMyAddressShippingSPActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener, View.OnClickListener {
 
 
-    String TAG = "AddMyAddressShippingActivity";
+    String TAG = "AddMyAddressShippingSPActivity";
 
 
 
@@ -152,7 +152,7 @@ public class AddMyAddressShippingActivity extends FragmentActivity implements On
     private int grand_total;
     private int prodcut_count;
     private int prodcut_item_count;
-
+    private String fromactivity;
 
 
     @Override
@@ -187,6 +187,9 @@ public class AddMyAddressShippingActivity extends FragmentActivity implements On
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
+
+            fromactivity = extras.getString("fromactivity");
+            Log.w(TAG,"fromactivity : "+fromactivity);
 
             latlng = String.valueOf(getIntent().getSerializableExtra("latlng"));
            Log.w(TAG,"latlng-->"+getIntent().getSerializableExtra("latlng"));
@@ -339,7 +342,7 @@ public class AddMyAddressShippingActivity extends FragmentActivity implements On
         }
 
         if (can_proceed) {
-            if (new ConnectionDetector(AddMyAddressShippingActivity.this).isNetworkAvailable(AddMyAddressShippingActivity.this)) {
+            if (new ConnectionDetector(AddMyAddressShippingSPActivity.this).isNetworkAvailable(AddMyAddressShippingSPActivity.this)) {
                 locationAddResponseCall();
             }
 
@@ -369,7 +372,7 @@ public class AddMyAddressShippingActivity extends FragmentActivity implements On
                 if (response.body() != null) {
 
                     if(response.body().getCode() == 200){
-                        Intent intent = new Intent(AddMyAddressShippingActivity.this, ShippingAddressAddActivity.class);
+                        Intent intent = new Intent(AddMyAddressShippingSPActivity.this, ShippingAddressAddActivity.class);
                         intent.putExtra("data", (Serializable) Data);
                         intent.putExtra("product_total",prodouct_total);
                         intent.putExtra("shipping_charge",shipping_charge);
@@ -377,6 +380,7 @@ public class AddMyAddressShippingActivity extends FragmentActivity implements On
                         intent.putExtra("grand_total",grand_total);
                         intent.putExtra("prodcut_count",prodcut_count);
                         intent.putExtra("prodcut_item_count",prodcut_item_count);
+                        intent.putExtra("fromactivity",TAG);
                         startActivity(intent);
 
 

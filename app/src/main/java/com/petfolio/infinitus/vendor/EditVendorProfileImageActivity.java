@@ -115,9 +115,7 @@ public class EditVendorProfileImageActivity extends AppCompatActivity implements
     private String firstname,lastname,useremail;
     private String phonenumber,usertype,userstatus,profileimage;
     private String verifyemailstatus;
-
-
-
+    private String refcode;
 
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
@@ -147,6 +145,8 @@ public class EditVendorProfileImageActivity extends AppCompatActivity implements
         userstatus = user.get(SessionManager.KEY_PROFILE_STATUS);
         profileimage = user.get(SessionManager.KEY_PROFILE_IMAGE);
         verifyemailstatus = user.get(SessionManager.KEY_VERIFY_EMAIL_STATUS);
+        refcode = user.get(SessionManager.KEY_REF_CODE);
+
 
 
 
@@ -586,7 +586,8 @@ public class EditVendorProfileImageActivity extends AppCompatActivity implements
                                 String.valueOf(usertype),
                                 userstatus,
                                 profileimage,
-                                verifyemailstatus
+                                verifyemailstatus,
+                                refcode
 
                         );
                        onBackPressed();

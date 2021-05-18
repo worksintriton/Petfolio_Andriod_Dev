@@ -286,7 +286,6 @@ public class ManageAddressActivity extends AppCompatActivity implements View.OnC
     private void showStatusAlert(final String locationid) {
 
         try {
-
             dialog = new Dialog(ManageAddressActivity.this);
             dialog.setContentView(R.layout.alert_approve_reject_layout);
             TextView tvheader = dialog.findViewById(R.id.tvInternetNotConnected);

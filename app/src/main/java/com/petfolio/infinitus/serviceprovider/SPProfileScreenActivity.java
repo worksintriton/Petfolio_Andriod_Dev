@@ -4,10 +4,14 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +29,7 @@ import com.petfolio.infinitus.adapter.ViewPagerSPGalleryDetailsAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 
+import com.petfolio.infinitus.doctor.DoctorProfileScreenActivity;
 import com.petfolio.infinitus.doctor.EditDoctorProfileImageActivity;
 import com.petfolio.infinitus.requestpojo.SPDetailsByUserIdRequest;
 import com.petfolio.infinitus.responsepojo.PetListResponse;
@@ -36,6 +41,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -221,21 +227,57 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
                 startActivity(new Intent(getApplicationContext(), ServiceProviderEditFormActivity.class));
                 break;
                 case R.id.txt_manage_address:
-                    //gotoManageAddress();
+                    gotoManageAddress();
                 break;
                 case R.id.txt_change_password:
                 break;
                 case R.id.txt_logout:
-                    confirmLogoutDialog();
+                    //confirmLogoutDialog();
+                    showLogOutAppAlert();
                 break; 
 
         }
     }
 
+    private void showLogOutAppAlert() {
+        try {
+
+            dialog = new Dialog(SPProfileScreenActivity.this);
+            dialog.setContentView(R.layout.alert_logout_layout);
+            Button btn_no = dialog.findViewById(R.id.btn_no);
+            Button btn_yes = dialog.findViewById(R.id.btn_yes);
+
+            btn_yes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    gotoLogout();
+
+                }
+            });
+            btn_no.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
+
 
 
     private void gotoManageAddress() {
-        startActivity(new Intent(SPProfileScreenActivity.this, ManageAddressActivity.class));
+        startActivity(new Intent(SPProfileScreenActivity.this, ManageAddressSPActivity.class));
     }
 
     private void confirmLogoutDialog(){

@@ -3,10 +3,8 @@ package com.petfolio.infinitus.fragmentvendor;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -14,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -32,31 +29,20 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.VendorNewOrdersAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.interfaces.OnAppointmentCancel;
-import com.petfolio.infinitus.interfaces.OnAppointmentComplete;
-import com.petfolio.infinitus.requestpojo.AppoinmentCancelledRequest;
-import com.petfolio.infinitus.requestpojo.AppoinmentCompleteRequest;
-import com.petfolio.infinitus.requestpojo.SPNotificationSendRequest;
+
 import com.petfolio.infinitus.requestpojo.VendorGetsOrderIdRequest;
 import com.petfolio.infinitus.requestpojo.VendorNewOrderRequest;
-import com.petfolio.infinitus.requestpojo.VendorOrderRequest;
-import com.petfolio.infinitus.responsepojo.AppoinmentCancelledResponse;
-import com.petfolio.infinitus.responsepojo.AppoinmentCompleteResponse;
-import com.petfolio.infinitus.responsepojo.NotificationSendResponse;
+
 import com.petfolio.infinitus.responsepojo.VendorGetsOrderIDResponse;
 import com.petfolio.infinitus.responsepojo.VendorNewOrderResponse;
-import com.petfolio.infinitus.responsepojo.VendorOrderResponse;
-import com.petfolio.infinitus.serviceprovider.ServiceProviderDashboardActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
+
 import java.util.Timer;
 import java.util.TimerTask;
 

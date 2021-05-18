@@ -569,7 +569,71 @@
             android:name=".serviceprovider.SPEditProfileImageActivity"
             android:screenOrientation="portrait"
              android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" /> <!-- Vendor -->
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".serviceprovider.ShippingAddressSPActivity"
+            android:screenOrientation="portrait"
+             android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".serviceprovider.shop.SearchSPActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".serviceprovider.shop.SPCancelOrderActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".serviceprovider.shop.SPCartActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".serviceprovider.shop.SPListOfProductsSeeMoreActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".serviceprovider.shop.SPProductDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".serviceprovider.shop.SPShopTodayDealsSeeMoreActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".serviceprovider.shop.SPTrackOrderActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".serviceprovider.shop.SPOrderDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".serviceprovider.shop.SPMyOrdrersActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+
+
+
+        <!-- Vendor -->
         <activity
             android:name=".vendor.VendorRegisterFormActivity"
             android:screenOrientation="portrait"
@@ -737,6 +801,16 @@
             android:windowSoftInputMode="adjustPan" />
 
         <activity android:name=".petlover.PetloverFavListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity android:name=".activity.location.PickUpLocationAddNewAddressSPActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity android:name=".activity.location.AddMyAddressShippingSPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />

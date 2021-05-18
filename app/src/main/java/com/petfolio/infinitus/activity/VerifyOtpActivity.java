@@ -395,9 +395,11 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                                 String.valueOf(usertype),
                                 userstatus,
                                 response.body().getData().getProfile_img(),
-                                verifyemailstatus
+                                verifyemailstatus,
+                                response.body().getData().getRef_code()
 
                         );
+                        Log.w(TAG,"ref_code : "+response.body().getData().getRef_code());
 
                         if(fromactivity != null && fromactivity.equalsIgnoreCase("LoginActivity")){
                             if(usertype != 0){

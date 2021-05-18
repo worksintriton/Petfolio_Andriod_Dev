@@ -18,6 +18,8 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.doctor.shop.DoctorProductDetailsActivity;
 import com.petfolio.infinitus.petlover.ProductDetailsActivity;
 import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
+import com.petfolio.infinitus.serviceprovider.shop.SPProductDetailsActivity;
+
 import java.util.List;
 
 
@@ -111,6 +113,10 @@ public class PetShopTodayDealsAdapter extends  RecyclerView.Adapter<RecyclerView
         holder.ll_root.setOnClickListener(v -> {
             if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorShopFragment")){
                 Intent intent = new Intent(context, DoctorProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("productid",today_special.get(position).get_id());
+                context.startActivity(intent);
+            }else if(fromactivity != null && fromactivity.equalsIgnoreCase("SPShopFragment")){
+                Intent intent = new Intent(context, SPProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("productid",today_special.get(position).get_id());
                 context.startActivity(intent);
             }else{

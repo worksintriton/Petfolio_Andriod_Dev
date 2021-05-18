@@ -17,6 +17,7 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.petlover.ListOfProductsSeeMoreActivity;
 import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
 import com.petfolio.infinitus.doctor.shop.DoctorListOfProductsSeeMoreActivity;
+import com.petfolio.infinitus.serviceprovider.shop.SPListOfProductsSeeMoreActivity;
 
 import java.util.List;
 
@@ -103,7 +104,16 @@ public class PetShopProductDetailsAdapter extends  RecyclerView.Adapter<Recycler
                         intent.putExtra("cat_id", product_details.get(getAdapterPosition()).getCat_id());
                         context.startActivity(intent);
                     }
-                }else {
+                }
+                else if(fromactivity != null && fromactivity.equalsIgnoreCase("SPShopFragment")){
+                    if(product_details.get(getAdapterPosition()).getProduct_list() != null && product_details.get(getAdapterPosition()).getProduct_list().size()>0) {
+                        Intent intent = new Intent(context, SPListOfProductsSeeMoreActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("cat_id", product_details.get(getAdapterPosition()).getCat_id());
+                        context.startActivity(intent);
+                    }
+                }
+
+                else {
                     if(product_details.get(getAdapterPosition()).getProduct_list() != null && product_details.get(getAdapterPosition()).getProduct_list().size()>0) {
                         Intent intent = new Intent(context, ListOfProductsSeeMoreActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("cat_id", product_details.get(getAdapterPosition()).getCat_id());
