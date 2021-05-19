@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="110dp"
     android:layout_height="110dp"
     android:orientation="vertical"
     android:layout_marginEnd="5dp"
-    android:background="@drawable/layout_bg_service"
-    android:id="@+id/ll_root">
-
+    android:background="@drawable/border_shadow">
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="109dp"
+        android:layout_height="109dp"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        tools:ignore="UselessParent"
+        android:background="@drawable/layout_bg_service"
+        android:id="@+id/ll_root">
 
 
         <ImageView
@@ -19,7 +21,8 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_gravity="center"
-            android:src="@drawable/services" />
+            android:src="@drawable/services"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/txt_petlover_servicesname"

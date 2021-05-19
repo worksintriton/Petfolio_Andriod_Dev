@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,6 +97,8 @@ public class PetLoverServicesAdapter extends  RecyclerView.Adapter<RecyclerView.
               Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
               DrawableCompat.setTint(wrappedDrawable, color);
               holder.ll_root.setBackgroundResource(R.drawable.layout_bg_service);
+
+
           }
 
 

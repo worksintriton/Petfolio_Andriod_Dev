@@ -30,6 +30,7 @@ import com.petfolio.infinitus.activity.LoginActivity;
 import com.petfolio.infinitus.activity.NotificationActivity;
 
 import com.petfolio.infinitus.serviceprovider.shop.SPMyOrdrersActivity;
+import com.petfolio.infinitus.serviceprovider.shop.SPProductsFavActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import java.util.HashMap;
 import java.util.Objects;
@@ -186,6 +187,7 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
                     return true;
 
                 case R.id.nav_item_five:
+                    gotoFavourites();
                     return true;
 
                 case R.id.nav_item_six:
@@ -206,6 +208,11 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
         });
 
 
+    }
+
+    private void gotoFavourites() {
+        Intent intent = new Intent(getApplicationContext(), SPProductsFavActivity.class);
+        startActivity(intent);
     }
 
     private void gotoMyOrders() {

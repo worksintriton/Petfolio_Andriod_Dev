@@ -1,4 +1,4 @@
-package com.petfolio.infinitus.doctor;
+package com.petfolio.infinitus.serviceprovider.shop;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,14 +28,13 @@ import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.adapter.DoctorProductsFavAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-
 import com.petfolio.infinitus.interfaces.ProductsFavListener;
 import com.petfolio.infinitus.requestpojo.DoctorProductFavListCreateRequest;
 import com.petfolio.infinitus.requestpojo.DoctorProductFavListRequest;
-
 import com.petfolio.infinitus.responsepojo.DoctorProductFavListResponse;
-
 import com.petfolio.infinitus.responsepojo.SuccessResponse;
+import com.petfolio.infinitus.serviceprovider.SPProfileScreenActivity;
+import com.petfolio.infinitus.serviceprovider.ServiceProviderDashboardActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -55,9 +53,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DoctorProductsFavActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener, ProductsFavListener {
+public class SPProductsFavActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener, ProductsFavListener {
 
-    private String TAG = "DoctorShopFavActivity";
+    private String TAG = "SPProductsFavActivity";
 
 
 
@@ -98,7 +96,7 @@ public class DoctorProductsFavActivity extends AppCompatActivity implements View
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctor_products_fav);
+        setContentView(R.layout.activity_sp_products_fav);
         ButterKnife.bind(this);
 
 
@@ -156,7 +154,7 @@ public class DoctorProductsFavActivity extends AppCompatActivity implements View
                 break;
 
                 case R.id.img_profile:
-                    Intent  intent = new Intent(getApplicationContext(),DoctorProfileScreenActivity.class);
+                    Intent  intent = new Intent(getApplicationContext(), SPProfileScreenActivity.class);
                     intent.putExtra("fromactivity",TAG);
                     startActivity(intent);
                 break;
@@ -173,11 +171,11 @@ public class DoctorProductsFavActivity extends AppCompatActivity implements View
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorNavigationDrawer")){
-            startActivity(new Intent(getApplicationContext(), DoctorDashboardActivity.class));
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("ServiceProviderNavigationDrawer")){
+            startActivity(new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class));
             finish();
         }else {
-            startActivity(new Intent(getApplicationContext(), DoctorDashboardActivity.class));
+            startActivity(new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class));
             finish();
         }
     }
@@ -297,7 +295,7 @@ public class DoctorProductsFavActivity extends AppCompatActivity implements View
         return true;
     }
     public void callDirections(String tag){
-        Intent intent = new Intent(getApplicationContext(), DoctorDashboardActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class);
         intent.putExtra("tag",tag);
         startActivity(intent);
         finish();
@@ -313,7 +311,7 @@ public class DoctorProductsFavActivity extends AppCompatActivity implements View
     @SuppressLint("SetTextI18n")
     private void showProductFavStatusChangeAlert(String productid) {
         try {
-            dialog = new Dialog(DoctorProductsFavActivity.this);
+            dialog = new Dialog(SPProductsFavActivity.this);
             dialog.setContentView(R.layout.alert_approve_reject_layout);
             TextView tvheader = dialog.findViewById(R.id.tvInternetNotConnected);
             tvheader.setText(R.string.removeproductfavmsg);

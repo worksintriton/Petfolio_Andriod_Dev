@@ -164,7 +164,7 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
         txt_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), ManageAddressDoctorActivity.class));
+                startActivity(new Intent(getApplicationContext(), ManageAddressSPActivity.class));
             }
         });
     }

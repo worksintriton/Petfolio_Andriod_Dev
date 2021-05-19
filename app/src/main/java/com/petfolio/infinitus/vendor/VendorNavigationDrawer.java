@@ -203,6 +203,7 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
                         return true;
 
                     case R.id.nav_item_seven:
+                        gotoAddProducts();
                         return true;
                     case R.id.nav_item_eight:
                         showLogOutAppAlert();
@@ -216,6 +217,11 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
             }
         });
 
+    }
+
+    private void gotoAddProducts() {
+        Intent i = new Intent(VendorNavigationDrawer.this, VendorAddProductsActivity.class);
+        startActivity(i);
     }
 
 
