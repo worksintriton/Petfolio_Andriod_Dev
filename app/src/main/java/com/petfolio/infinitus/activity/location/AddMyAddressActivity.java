@@ -143,8 +143,10 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
 
 
     String LocationType = "Home";
+    private String fromactivity;
 
 
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -202,6 +204,8 @@ public class AddMyAddressActivity extends FragmentActivity implements OnMapReady
             Log.w(TAG,"lat"+lat+" "+"lon :"+lon);
             Log.w(TAG,"latitude"+latitude+" "+"longtitude :"+longtitude);
 
+            fromactivity = extras.getString("fromactivity");
+            Log.w(TAG,"fromactivity : "+fromactivity);
             CityName = extras.getString("cityname");
             AddressLine = extras.getString("address");
             String postalCode = extras.getString("PostalCode");

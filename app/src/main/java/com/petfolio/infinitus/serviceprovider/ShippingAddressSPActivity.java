@@ -22,10 +22,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.location.PickUpLocationAddNewAddressSPActivity;
+import com.petfolio.infinitus.activity.location.ShippingAddressAddSPActivity;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 
-import com.petfolio.infinitus.petlover.ShippingAddressAddActivity;
 import com.petfolio.infinitus.petlover.ShippingAddressEditActivity;
 import com.petfolio.infinitus.requestpojo.ShippingAddressDeleteRequest;
 import com.petfolio.infinitus.requestpojo.ShippingAddressFetchByUserIDRequest;
@@ -312,9 +312,8 @@ public class ShippingAddressSPActivity extends AppCompatActivity implements View
 
                         if(response.body().getData()!=null) {
                             dataBeanList = response.body().getData();
-
                             if(dataBeanList != null ) {
-                                showNoAddressAlert();
+
                                 if(dataBeanList.isDefault_status()){
                                     footerView.setVisibility(View.VISIBLE);
 
@@ -638,7 +637,7 @@ public class ShippingAddressSPActivity extends AppCompatActivity implements View
 
 
     private void gotoShippingaddresslist() {
-        Intent intent = new Intent(ShippingAddressSPActivity.this, ShippingAddressAddActivity.class);
+        Intent intent = new Intent(ShippingAddressSPActivity.this, ShippingAddressAddSPActivity.class);
         intent.putExtra("data", (Serializable) Data);
         intent.putExtra("product_total",prodouct_total);
         intent.putExtra("shipping_charge",shipping_charge);
@@ -646,7 +645,7 @@ public class ShippingAddressSPActivity extends AppCompatActivity implements View
         intent.putExtra("grand_total",grand_total);
         intent.putExtra("prodcut_count",prodcut_count);
         intent.putExtra("prodcut_item_count",prodcut_item_count);
-        intent.putExtra("fromactivity",fromactivity);
+        intent.putExtra("fromactivity",TAG);
         startActivity(intent);
     }
 

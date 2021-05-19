@@ -265,14 +265,14 @@ public class SPEditProfileImageActivity extends AppCompatActivity implements Vie
                 {
                     if(data.getExtras() != null){
                         Bitmap photo = (Bitmap) data.getExtras().get("data");
+                        Log.w(TAG,"photo width : "+photo.getWidth()+" height : "+photo.getHeight());
+
                         File file = new File(getFilesDir(), "Petfolio1" + ".jpg");
 
                         OutputStream os;
                         try {
                             os = new FileOutputStream(file);
-                            if (photo != null) {
-                                photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
-                            }
+                            photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
                             os.flush();
                             os.close();
                         } catch (Exception e) {

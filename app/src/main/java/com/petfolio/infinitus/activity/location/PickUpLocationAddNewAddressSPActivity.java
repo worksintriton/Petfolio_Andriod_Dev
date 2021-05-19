@@ -192,7 +192,7 @@ public class PickUpLocationAddNewAddressSPActivity extends FragmentActivity impl
             intent.putExtra("grand_total",grand_total);
             intent.putExtra("prodcut_count",prodcut_count);
             intent.putExtra("prodcut_item_count",prodcut_item_count);
-            intent.putExtra("fromactivity",fromactivity);
+            intent.putExtra("fromactivity",TAG);
            /* intent.putExtra("id",id);
             intent.putExtra("userid",userid);*/
             startActivity(intent);

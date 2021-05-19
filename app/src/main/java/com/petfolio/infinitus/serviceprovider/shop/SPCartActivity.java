@@ -266,7 +266,12 @@ public class SPCartActivity extends AppCompatActivity implements AddandRemovePro
             i.putExtra("cat_id",cat_id);
             startActivity(i);
             finish();
-        }else if(active_tag != null){
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("SPMyOrdrersActivity")){
+            Intent i = new Intent(SPCartActivity.this, SPMyOrdrersActivity.class);
+            startActivity(i);
+            finish();
+        }
+        else if(active_tag != null){
             callDirections(active_tag);
         } else{
             Intent i = new Intent(SPCartActivity.this, ServiceProviderDashboardActivity.class);

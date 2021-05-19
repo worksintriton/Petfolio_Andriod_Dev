@@ -192,7 +192,7 @@ public class SPOrderDetailsActivity extends AppCompatActivity implements View.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctor_order_details);
+        setContentView(R.layout.activity_sp_order_details);
         ButterKnife.bind(this);
 
         ImageView img_back = include_doctor_header.findViewById(R.id.img_back);
@@ -363,7 +363,8 @@ public class SPOrderDetailsActivity extends AppCompatActivity implements View.On
 
                                 }
                             }
-                            else { if (response.body().getData().getOrder_details().getOrder_product() == 1) {
+                            else {
+                                if (response.body().getData().getOrder_details().getOrder_product() == 1) {
                                 txt_products_price.setText("\u20B9 " + 0 + " (" + response.body().getData().getOrder_details().getOrder_product() + " product )");
                             } else {
                                 txt_products_price.setText("\u20B9 " + 0 + " (" + response.body().getData().getOrder_details().getOrder_product() + " products )"); } }
@@ -413,21 +414,21 @@ public class SPOrderDetailsActivity extends AppCompatActivity implements View.On
 
                             }
 
-                            if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverNewOrders")){
+                            if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentSPNewOrders")){
                                 txt_order_status.setText("Booked on");
                                 img_order_status.setImageResource(R.drawable.completed);
                                 if(response.body().getData().getOrder_details().getOrder_booked() != null){
                                     txt_delivered_date.setText(response.body().getData().getOrder_details().getOrder_booked());
                                 }
                             }
-                            else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverCompletedOrders")){
+                            else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentSPCompletedOrders")){
                                 txt_order_status.setText("Delivered on");
                                 img_order_status.setImageResource(R.drawable.completed);
                                 if(response.body().getData().getOrder_details().getOrder_completed() != null){
                                     txt_delivered_date.setText(response.body().getData().getOrder_details().getOrder_completed());
                                 }
                             }
-                            else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverCancelledOrders")) {
+                            else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentSPCancelledOrders")) {
                                 txt_order_status.setText("Cancelled on");
                                 img_order_status.setImageResource(R.drawable.ic_baseline_cancel_24);
                                 if (response.body().getData().getOrder_details().getOrder_cancelled() != null && !response.body().getData().getOrder_details().getOrder_cancelled().isEmpty()) {

@@ -37,7 +37,6 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.petlover.ShippingAddressAddActivity;
 import com.petfolio.infinitus.requestpojo.LocationAddRequest;
 import com.petfolio.infinitus.responsepojo.CartDetailsResponse;
 import com.petfolio.infinitus.responsepojo.LocationAddResponse;
@@ -372,7 +371,7 @@ public class AddMyAddressShippingSPActivity extends FragmentActivity implements 
                 if (response.body() != null) {
 
                     if(response.body().getCode() == 200){
-                        Intent intent = new Intent(AddMyAddressShippingSPActivity.this, ShippingAddressAddActivity.class);
+                        Intent intent = new Intent(AddMyAddressShippingSPActivity.this, ShippingAddressAddSPActivity.class);
                         intent.putExtra("data", (Serializable) Data);
                         intent.putExtra("product_total",prodouct_total);
                         intent.putExtra("shipping_charge",shipping_charge);

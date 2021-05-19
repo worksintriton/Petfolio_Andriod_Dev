@@ -3,6 +3,7 @@ package com.petfolio.infinitus.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.petfolio.infinitus.interfaces.AddReviewListener;
 import com.petfolio.infinitus.interfaces.AddandReviewListener;
 import com.petfolio.infinitus.petlover.PetLoverVendorOrderDetailsActivity;
 import com.petfolio.infinitus.responsepojo.PetLoverVendorOrderListResponse;
+import com.petfolio.infinitus.serviceprovider.shop.SPOrderDetailsActivity;
 
 import java.util.List;
 
@@ -61,8 +63,9 @@ public class PetLoverVendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerV
 
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "LogNotTimber", "LongLogTag"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
+        Log.w(TAG,"fromactivity : "+fromactivity);
         currentItem = orderResponseListAll.get(position);
         if (orderResponseListAll.get(position).getP_order_id() != null) {
             holder.txt_orderid.setText(orderResponseListAll.get(position).getP_order_id());
@@ -83,32 +86,37 @@ public class PetLoverVendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerV
             } else { holder.txt_products_price.setText("\u20B9 " + 0 + " (" + orderResponseListAll.get(position).getP_order_product_count() + " items )"); } }
 
 
-        if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentDoctorNewOrders") || fromactivity.equalsIgnoreCase("FragmentPetLoverNewOrders")){
-            if (orderResponseListAll.get(position).getP_order_booked_on() != null) {
-                holder.txt_bookedon.setText("Booked on:" + " " + orderResponseListAll.get(position).getP_order_booked_on());
+
+        if(fromactivity != null){
+            if(fromactivity.equalsIgnoreCase("FragmentSPNewOrders") || fromactivity.equalsIgnoreCase("FragmentDoctorNewOrders") || fromactivity.equalsIgnoreCase("FragmentPetLoverNewOrders")){
+                if (orderResponseListAll.get(position).getP_order_booked_on() != null) {
+                    holder.txt_bookedon.setText("Booked on:" + " " + orderResponseListAll.get(position).getP_order_booked_on());
+
+                }
+            }
+            else if(fromactivity.equalsIgnoreCase("FragmentSPCompletedOrders") || fromactivity.equalsIgnoreCase("FragmentDoctorCompletedOrders") || fromactivity.equalsIgnoreCase("FragmentPetLoverCompletedOrders")){
+                if (orderResponseListAll.get(position).getP_completed_date() != null) {
+                    holder.txt_bookedon.setText("Delivered on:" + " " + orderResponseListAll.get(position).getP_completed_date());
+
+                }
+                if(orderResponseListAll.get(position).getP_user_rate() == 0){
+                    holder.btn_add_review.setVisibility(View.VISIBLE);
+                }else{
+                    holder.btn_add_review.setVisibility(View.GONE);
+
+                }
+                holder.btn_add_review.setOnClickListener(v -> addReviewListener.addReviewListener(orderResponseListAll.get(position).getP_order_id(),orderResponseListAll.get(position).getP_user_rate(),orderResponseListAll.get(position).getP_user_feedback()));
 
             }
+            else if(fromactivity.equalsIgnoreCase("FragmentSPCancelledOrders") || fromactivity.equalsIgnoreCase("FragmentDoctorCancelledOrders") || fromactivity.equalsIgnoreCase("FragmentPetLoverCancelledOrders")){
+                if (orderResponseListAll.get(position).getP_cancelled_date() != null) {
+                    holder.txt_bookedon.setText("Cancelled on:" + " " + orderResponseListAll.get(position).getP_cancelled_date());
+
+                }
+            }
+
         }
-        else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentDoctorCompletedOrders") || fromactivity.equalsIgnoreCase("FragmentPetLoverCompletedOrders")){
-            if (orderResponseListAll.get(position).getP_completed_date() != null) {
-                holder.txt_bookedon.setText("Delivered on:" + " " + orderResponseListAll.get(position).getP_completed_date());
 
-            }
-            if(orderResponseListAll.get(position).getP_user_rate() == 0){
-                holder.btn_add_review.setVisibility(View.VISIBLE);
-            }else{
-                holder.btn_add_review.setVisibility(View.GONE);
-
-            }
-            holder.btn_add_review.setOnClickListener(v -> addReviewListener.addReviewListener(orderResponseListAll.get(position).getP_order_id(),orderResponseListAll.get(position).getP_user_rate(),orderResponseListAll.get(position).getP_user_feedback()));
-
-        }
-        else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentDoctorCancelledOrders") || fromactivity.equalsIgnoreCase("FragmentPetLoverCancelledOrders")){
-            if (orderResponseListAll.get(position).getP_cancelled_date() != null) {
-                holder.txt_bookedon.setText("Cancelled on:" + " " + orderResponseListAll.get(position).getP_cancelled_date());
-
-            }
-        }
 
         if (orderResponseListAll.get(position).getP_order_image() != null && !orderResponseListAll.get(position).getP_order_image().isEmpty()) {
             Glide.with(context)
@@ -128,6 +136,11 @@ public class PetLoverVendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerV
                 if(fromactivity != null) {
                     if (fromactivity.equalsIgnoreCase("FragmentDoctorNewOrders") || fromactivity.equalsIgnoreCase("FragmentDoctorCompletedOrders") || fromactivity.equalsIgnoreCase("FragmentDoctorCancelledOrders")) {
                         Intent i = new Intent(context, DoctorOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.putExtra("_id", orderResponseListAll.get(position).getP_order_id());
+                        i.putExtra("fromactivity", fromactivity);
+                        context.startActivity(i);
+                    } else if (fromactivity.equalsIgnoreCase("FragmentSPNewOrders") || fromactivity.equalsIgnoreCase("FragmentSPCompletedOrders") || fromactivity.equalsIgnoreCase("FragmentSPCancelledOrders")) {
+                        Intent i = new Intent(context, SPOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         i.putExtra("_id", orderResponseListAll.get(position).getP_order_id());
                         i.putExtra("fromactivity", fromactivity);
                         context.startActivity(i);
@@ -153,6 +166,11 @@ public class PetLoverVendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerV
                 if(fromactivity != null) {
                     if (fromactivity.equalsIgnoreCase("FragmentDoctorNewOrders") || fromactivity.equalsIgnoreCase("FragmentDoctorCompletedOrders") || fromactivity.equalsIgnoreCase("FragmentDoctorCancelledOrders")) {
                         Intent i = new Intent(context, DoctorOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.putExtra("_id", orderResponseListAll.get(position).getP_order_id());
+                        i.putExtra("fromactivity", fromactivity);
+                        context.startActivity(i);
+                    }else if (fromactivity.equalsIgnoreCase("FragmentSPNewOrders") || fromactivity.equalsIgnoreCase("FragmentSPCompletedOrders") || fromactivity.equalsIgnoreCase("FragmentSPCancelledOrders")) {
+                        Intent i = new Intent(context, SPOrderDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         i.putExtra("_id", orderResponseListAll.get(position).getP_order_id());
                         i.putExtra("fromactivity", fromactivity);
                         context.startActivity(i);

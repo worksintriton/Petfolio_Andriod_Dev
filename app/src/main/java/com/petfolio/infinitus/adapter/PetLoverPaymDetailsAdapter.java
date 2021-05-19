@@ -68,7 +68,7 @@ public class PetLoverPaymDetailsAdapter extends  RecyclerView.Adapter<RecyclerVi
 
         if(currentItem.getAmount() != null&&!currentItem.getAmount().isEmpty()){
 
-            holder.txt_amount.setText(" + INR " +currentItem.getAppointment_UID());
+            holder.txt_amount.setText(" + INR " +currentItem.getAmount());
 
         }
 

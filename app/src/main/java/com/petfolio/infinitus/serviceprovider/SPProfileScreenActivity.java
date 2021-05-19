@@ -34,6 +34,7 @@ import com.petfolio.infinitus.doctor.EditDoctorProfileImageActivity;
 import com.petfolio.infinitus.requestpojo.SPDetailsByUserIdRequest;
 import com.petfolio.infinitus.responsepojo.PetListResponse;
 import com.petfolio.infinitus.responsepojo.ServiceProviderRegisterFormCreateResponse;
+import com.petfolio.infinitus.serviceprovider.shop.SPMyOrdrersActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -143,6 +144,7 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
     final long PERIOD_MS = 3000;
     private String profileimage;
     private List<ServiceProviderRegisterFormCreateResponse.DataBean.BusServiceGallBean> servieGalleryResponseList;
+    private String fromactivity;
 
 
     @Override
@@ -163,7 +165,14 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
         userid = user.get(SessionManager.KEY_ID);
         profileimage = user.get(SessionManager.KEY_PROFILE_IMAGE);
 
+
+
         Log.w(TAG,"session profileimage : "+profileimage);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            fromactivity = extras.getString("fromactivity");
+        }
 
 
         txt_usrname.setText(name);
@@ -206,8 +215,14 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class));
-        finish();
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("SPMyOrdrersActivity")){
+            startActivity(new Intent(getApplicationContext(), SPMyOrdrersActivity.class));
+            finish();
+        }else{
+            startActivity(new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class));
+            finish();
+        }
+
     }
 
     @SuppressLint("NonConstantResourceId")

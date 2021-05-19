@@ -152,7 +152,7 @@ public class AddMyAddressShippingActivity extends FragmentActivity implements On
     private int grand_total;
     private int prodcut_count;
     private int prodcut_item_count;
-
+    private String fromactivity;
 
 
     @Override
@@ -209,6 +209,8 @@ public class AddMyAddressShippingActivity extends FragmentActivity implements On
             Log.w(TAG,"lat"+lat+" "+"lon :"+lon);
             Log.w(TAG,"latitude"+latitude+" "+"longtitude :"+longtitude);
 
+            fromactivity = extras.getString("fromactivity");
+            Log.w(TAG,"fromactivity : "+fromactivity);
             CityName = extras.getString("cityname");
             AddressLine = extras.getString("address");
             String postalCode = extras.getString("PostalCode");
@@ -377,6 +379,7 @@ public class AddMyAddressShippingActivity extends FragmentActivity implements On
                         intent.putExtra("grand_total",grand_total);
                         intent.putExtra("prodcut_count",prodcut_count);
                         intent.putExtra("prodcut_item_count",prodcut_item_count);
+                        intent.putExtra("fromactivity",fromactivity);
                         startActivity(intent);
 
 

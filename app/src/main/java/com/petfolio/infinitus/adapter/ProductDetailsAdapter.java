@@ -22,6 +22,8 @@ import com.petfolio.infinitus.petlover.PetVendorCancelOrderActivity;
 
 import com.petfolio.infinitus.petlover.TrackOrderActivity;
 import com.petfolio.infinitus.responsepojo.PetLoverVendorOrderDetailsResponse;
+import com.petfolio.infinitus.serviceprovider.shop.SPCancelOrderActivity;
+import com.petfolio.infinitus.serviceprovider.shop.SPTrackOrderActivity;
 
 import java.util.List;
 
@@ -61,7 +63,7 @@ public class ProductDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
 
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "LogNotTimber"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
         currentItem = product_details.get(position);
        /* if (product_details.get(position).getProduct_id() != null) {
@@ -69,16 +71,30 @@ public class ProductDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
         }*/
 
         Log.w(TAG,"fromactivity : "+fromactivity);
-        if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverCompletedOrders")){
-            holder.txt_cancell_order.setVisibility(View.INVISIBLE);
-        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverCancelledOrders")){
-            holder.txt_cancell_order.setVisibility(View.INVISIBLE);
+
+        if(fromactivity != null){
+            if(fromactivity.equalsIgnoreCase("FragmentPetLoverCompletedOrders")){
+                holder.txt_cancell_order.setVisibility(View.INVISIBLE);
+            }
+            else if(fromactivity.equalsIgnoreCase("FragmentPetLoverCancelledOrders")){
+                holder.txt_cancell_order.setVisibility(View.INVISIBLE);
+            }
+            else if(fromactivity.equalsIgnoreCase("FragmentDoctorCompletedOrders")){
+                holder.txt_cancell_order.setVisibility(View.INVISIBLE);
+            }
+            else if(fromactivity.equalsIgnoreCase("FragmentDoctorCancelledOrders")){
+                holder.txt_cancell_order.setVisibility(View.INVISIBLE);
+            }
+            else if(fromactivity.equalsIgnoreCase("FragmentSPCompletedOrders")){
+                holder.txt_cancell_order.setVisibility(View.INVISIBLE);
+            }
+            else if(fromactivity.equalsIgnoreCase("FragmentSPCancelledOrders")){
+                holder.txt_cancell_order.setVisibility(View.INVISIBLE);
+            }
+
+
         }
-        if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentDoctorCompletedOrders")){
-            holder.txt_cancell_order.setVisibility(View.INVISIBLE);
-        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentDoctorCancelledOrders")){
-            holder.txt_cancell_order.setVisibility(View.INVISIBLE);
-        }
+
         if (product_details.get(position).getProduct_name() != null) {
             holder.txt_producttitle.setText(product_details.get(position).getProduct_name());
         }
@@ -126,7 +142,15 @@ public class ProductDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
                         i.putExtra("orderid", orderid);
                         i.putExtra("fromactivity", TAG);
                         context.startActivity(i);
-                    }else {
+                    }
+                    else if (fromactivity.equalsIgnoreCase("FragmentSPNewOrders") || fromactivity.equalsIgnoreCase("FragmentSPCompletedOrders") || fromactivity.equalsIgnoreCase("FragmentSPCancelledOrders")) {
+                        Intent i = new Intent(context, SPTrackOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.putExtra("_id", product_details.get(position).getProduct_id());
+                        i.putExtra("orderid", orderid);
+                        i.putExtra("fromactivity", TAG);
+                        context.startActivity(i);
+                    }
+                    else {
                         Intent i = new Intent(context, TrackOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         i.putExtra("_id", product_details.get(position).getProduct_id());
                         i.putExtra("orderid", orderid);
@@ -151,6 +175,12 @@ public class ProductDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
                 if(fromactivity != null) {
                     if (fromactivity.equalsIgnoreCase("FragmentDoctorNewOrders")) {
                         Intent i = new Intent(context, DoctorCancelOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.putExtra("product_id", product_details.get(position).getProduct_id());
+                        i.putExtra("orderid", orderid);
+                        i.putExtra("fromactivity", fromactivity);
+                        context.startActivity(i);
+                    }else if (fromactivity.equalsIgnoreCase("FragmentSPNewOrders")) {
+                        Intent i = new Intent(context, SPCancelOrderActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         i.putExtra("product_id", product_details.get(position).getProduct_id());
                         i.putExtra("orderid", orderid);
                         i.putExtra("fromactivity", fromactivity);

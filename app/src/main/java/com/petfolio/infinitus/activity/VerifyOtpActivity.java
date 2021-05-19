@@ -99,6 +99,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
     private String token = "";
     private String firstname,lastname,useremail;
     private String verifyemailstatus = "false";
+    private String myrefcode = "";
 
 
     @Override
@@ -382,7 +383,16 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                             if (response.body().getData().isUser_email_verification()) {
                                 verifyemailstatus = "true";
                             }
+                            if(response.body().getData().getMy_ref_code() != null){
+                                Log.w(TAG,"MyRefCode : "+ response.body().getData().getMy_ref_code());
+                                myrefcode = response.body().getData().getMy_ref_code();
+                            }else{
+                                myrefcode = "";
+                            }
                         }
+
+
+
 
                         SessionManager sessionManager = new SessionManager(VerifyOtpActivity.this);
                         sessionManager.setIsLogin(true);
@@ -396,7 +406,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                                 userstatus,
                                 response.body().getData().getProfile_img(),
                                 verifyemailstatus,
-                                response.body().getData().getRef_code()
+                                myrefcode
 
                         );
                         Log.w(TAG,"ref_code : "+response.body().getData().getRef_code());

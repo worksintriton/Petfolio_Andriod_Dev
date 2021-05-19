@@ -312,7 +312,6 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
                         if(response.body().getData()!=null) {
                             dataBeanList = response.body().getData();
-
                             if(dataBeanList != null ) {
                                 if(dataBeanList.isDefault_status()){
                                     footerView.setVisibility(View.VISIBLE);
@@ -647,6 +646,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
         intent.putExtra("prodcut_item_count",prodcut_item_count);
         intent.putExtra("fromactivity",fromactivity);
         startActivity(intent);
+
     }
 
     private void gotoShippingaddressEdit() {
@@ -687,6 +687,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
         intent.putExtra("grand_total",grand_total);
         intent.putExtra("prodcut_count",prodcut_count);
         intent.putExtra("prodcut_item_count",prodcut_item_count);
+        intent.putExtra("fromactivity",fromactivity);
         startActivity(intent);
 
     }
@@ -885,7 +886,12 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
                 @Override
                 public void onClick(View view) {
                     dialog.dismiss();
-                    if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorCartActivity")){
+                    if(fromactivity != null && fromactivity.equalsIgnoreCase("ShippingAddressAddActivity")){
+                        Intent intent = new Intent(getApplicationContext(), DoctorDashboardActivity.class);
+                        intent.putExtra("tag","2");
+                        startActivity(intent);
+                        finish();
+                    }else if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorCartActivity")){
                         Intent intent = new Intent(getApplicationContext(), DoctorDashboardActivity.class);
                         intent.putExtra("tag","2");
                         startActivity(intent);

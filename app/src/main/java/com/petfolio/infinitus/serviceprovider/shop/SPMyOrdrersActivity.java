@@ -19,10 +19,12 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
-import com.petfolio.infinitus.fragmentdoctor.myorders.FragmentDoctorCancelledOrders;
-import com.petfolio.infinitus.fragmentdoctor.myorders.FragmentDoctorCompletedOrders;
-import com.petfolio.infinitus.fragmentdoctor.myorders.FragmentDoctorNewOrders;
+import com.petfolio.infinitus.activity.NotificationActivity;
+import com.petfolio.infinitus.fragmentserviceprovider.myorders.FragmentSPCancelledOrders;
+import com.petfolio.infinitus.fragmentserviceprovider.myorders.FragmentSPCompletedOrders;
+import com.petfolio.infinitus.fragmentserviceprovider.myorders.FragmentSPNewOrders;
+import com.petfolio.infinitus.serviceprovider.SPProfileScreenActivity;
+import com.petfolio.infinitus.serviceprovider.ServiceProviderDashboardActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -45,8 +47,6 @@ public class SPMyOrdrersActivity extends AppCompatActivity implements BottomNavi
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.viewPager)
     ViewPager viewPager;
-
-
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.include_doctor_footer)
@@ -75,6 +75,33 @@ public class SPMyOrdrersActivity extends AppCompatActivity implements BottomNavi
         TextView toolbar_title = include_doctor_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.my_orders));
 
+        img_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+                finish();
+            }
+        });
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SPProfileScreenActivity.class);
+                intent.putExtra("fromactivity",TAG);
+                startActivity(intent);
+                finish();
+            }
+        });
+        img_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SPCartActivity.class);
+                intent.putExtra("fromactivity",TAG);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
         setupViewPager(viewPager);
         tablayout.setupWithViewPager(viewPager);
         img_back.setOnClickListener(v -> onBackPressed());
@@ -90,23 +117,23 @@ public class SPMyOrdrersActivity extends AppCompatActivity implements BottomNavi
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FragmentDoctorNewOrders(), "New");
-        adapter.addFragment(new FragmentDoctorCompletedOrders(), "Completed");
-         adapter.addFragment(new FragmentDoctorCancelledOrders(), "Cancelled");
+        adapter.addFragment(new FragmentSPNewOrders(), "New");
+        adapter.addFragment(new FragmentSPCompletedOrders(), "Completed");
+         adapter.addFragment(new FragmentSPCancelledOrders(), "Cancelled");
         viewPager.setAdapter(adapter);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i = new Intent(SPMyOrdrersActivity.this, DoctorDashboardActivity.class);
+        Intent i = new Intent(SPMyOrdrersActivity.this, ServiceProviderDashboardActivity.class);
         startActivity(i);
         finish();
     }
 
 
     public void callDirections(String tag){
-        Intent intent = new Intent(getApplicationContext(), DoctorDashboardActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class);
         intent.putExtra("tag",tag);
         startActivity(intent);
         finish();

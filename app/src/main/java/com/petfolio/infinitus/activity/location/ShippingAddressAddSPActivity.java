@@ -1,10 +1,4 @@
-package com.petfolio.infinitus.petlover;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+package com.petfolio.infinitus.activity.location;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -21,16 +15,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.activity.location.EditShippingAddresssActivity;
-import com.petfolio.infinitus.activity.location.PickUpLocationAddNewAddressActivity;
 import com.petfolio.infinitus.adapter.ShippingAddressListAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.interfaces.OnDeleteShipAddrListener;
 import com.petfolio.infinitus.interfaces.OnEditShipAddrListener;
 import com.petfolio.infinitus.interfaces.OnSelectingShipIdListener;
+import com.petfolio.infinitus.petlover.ShippingAddressActivity;
 import com.petfolio.infinitus.requestpojo.LocationDeleteRequest;
 import com.petfolio.infinitus.requestpojo.LocationListAddressRequest;
 import com.petfolio.infinitus.requestpojo.LocationStatusChangeRequest;
@@ -67,9 +66,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ShippingAddressAddActivity extends AppCompatActivity implements View.OnClickListener, OnSelectingShipIdListener, OnEditShipAddrListener, OnDeleteShipAddrListener {
+public class ShippingAddressAddSPActivity extends AppCompatActivity implements View.OnClickListener, OnSelectingShipIdListener, OnEditShipAddrListener, OnDeleteShipAddrListener {
 
-    private String TAG = "ShippingAddressAddActivity";
+    private String TAG = "ShippingAddressAddSPActivity";
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
@@ -343,7 +342,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
 
-                        Intent intent = new Intent(ShippingAddressAddActivity.this, ShippingAddressActivity.class);
+                        Intent intent = new Intent(ShippingAddressAddSPActivity.this, ShippingAddressActivity.class);
 
                         intent.putExtra("fromactivity",TAG);
 
@@ -432,7 +431,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
                     if(response.body().getCode() == 200){
                         if(fromactivity != null && fromactivity.equalsIgnoreCase("AddMyAddressShippingSPActivity")){
                             Toasty.success(getApplicationContext(), "Default Location Changed Successfully", Toast.LENGTH_SHORT, true).show();
-                            Intent intent = new Intent(ShippingAddressAddActivity.this, ShippingAddressSPActivity.class);
+                            Intent intent = new Intent(ShippingAddressAddSPActivity.this, ShippingAddressSPActivity.class);
                             intent.putExtra("fromactivity",TAG);
                             intent.putExtra("data", (Serializable) Data);
                             intent.putExtra("product_total",prodouct_total);
@@ -446,8 +445,8 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
                         }else{
                             Toasty.success(getApplicationContext(), "Default Location Changed Successfully", Toast.LENGTH_SHORT, true).show();
-                            Intent intent = new Intent(ShippingAddressAddActivity.this, ShippingAddressActivity.class);
-                            intent.putExtra("fromactivity",fromactivity);
+                            Intent intent = new Intent(ShippingAddressAddSPActivity.this, ShippingAddressActivity.class);
+                            intent.putExtra("fromactivity",TAG);
                             intent.putExtra("data", (Serializable) Data);
                             intent.putExtra("product_total",prodouct_total);
                             intent.putExtra("shipping_charge",shipping_charge);
@@ -622,7 +621,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
         try{
 
-            dialog = new Dialog(ShippingAddressAddActivity.this);
+            dialog = new Dialog(ShippingAddressAddSPActivity.this);
             dialog.setContentView(R.layout.alert_cancel_layout);
             dialog.setCanceledOnTouchOutside(false);
             Button btn_ok = dialog.findViewById(R.id.btn_ok);
@@ -666,7 +665,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
         try{
 
-            dialog = new Dialog(ShippingAddressAddActivity.this);
+            dialog = new Dialog(ShippingAddressAddSPActivity.this);
             dialog.setContentView(R.layout.alert_cancel_layout);
             dialog.setCanceledOnTouchOutside(false);
             Button btn_ok = dialog.findViewById(R.id.btn_ok);
@@ -677,7 +676,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
                 @Override
                 public void onClick(View view) {
 
-                    if (new ConnectionDetector(ShippingAddressAddActivity.this).isNetworkAvailable(ShippingAddressAddActivity.this)) {
+                    if (new ConnectionDetector(ShippingAddressAddSPActivity.this).isNetworkAvailable(ShippingAddressAddSPActivity.this)) {
 
                         deleteshipAddrresponseCall(shippingid);
                         locationDeleteResponseCall(shippingid);
@@ -704,16 +703,16 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
 
     private void setView() {
-        rv_shipping_address.setLayoutManager(new LinearLayoutManager(ShippingAddressAddActivity.this));
+        rv_shipping_address.setLayoutManager(new LinearLayoutManager(ShippingAddressAddSPActivity.this));
         rv_shipping_address.setItemAnimator(new DefaultItemAnimator());
-        ShippingAddressListAdapter shippingAddressListAdapter = new ShippingAddressListAdapter(ShippingAddressAddActivity.this,addressList,this,this,this);
+        ShippingAddressListAdapter shippingAddressListAdapter = new ShippingAddressListAdapter(ShippingAddressAddSPActivity.this,addressList,this,this,this);
         rv_shipping_address.setAdapter(shippingAddressListAdapter);
 
 
     }
 
     private void gotoShippingaddressCreate() {
-        Intent intent = new Intent(ShippingAddressAddActivity.this, PickUpLocationAddNewAddressActivity.class);
+        Intent intent = new Intent(ShippingAddressAddSPActivity.this, PickUpLocationAddNewAddressSPActivity.class);
         intent.putExtra("data", (Serializable) Data);
         intent.putExtra("product_total",prodouct_total);
         intent.putExtra("shipping_charge",shipping_charge);
@@ -735,7 +734,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
 
         } else {
             if(fromactivity != null && fromactivity.equalsIgnoreCase("AddMyAddressShippingSPActivity")) {
-                Intent intent = new Intent(ShippingAddressAddActivity.this, ShippingAddressSPActivity.class);
+                Intent intent = new Intent(ShippingAddressAddSPActivity.this, ShippingAddressSPActivity.class);
                 intent.putExtra("fromactivity", TAG);
                 intent.putExtra("data", (Serializable) Data);
                 intent.putExtra("product_total", prodouct_total);
@@ -747,8 +746,8 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
                 startActivity(intent);
                 finish();
             }else{
-                Intent intent = new Intent(ShippingAddressAddActivity.this, ShippingAddressActivity.class);
-                intent.putExtra("fromactivity", fromactivity);
+                Intent intent = new Intent(ShippingAddressAddSPActivity.this, ShippingAddressActivity.class);
+                intent.putExtra("fromactivity", TAG);
                 intent.putExtra("data", (Serializable) Data);
                 intent.putExtra("product_total", prodouct_total);
                 intent.putExtra("shipping_charge", shipping_charge);
@@ -815,8 +814,20 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(fromactivity != null && fromactivity.equalsIgnoreCase("AddMyAddressShippingSPActivity")){
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("ShippingAddressSPActivity")){
             Intent i = new Intent(getApplicationContext(),ShippingAddressSPActivity.class);
+            i.putExtra("data", (Serializable) Data);
+            i.putExtra("product_total",prodouct_total);
+            i.putExtra("shipping_charge",shipping_charge);
+            i.putExtra("discount_price",discount_price);
+            i.putExtra("grand_total",grand_total);
+            i.putExtra("prodcut_count",prodcut_count);
+            i.putExtra("prodcut_item_count",prodcut_item_count);
+            i.putExtra("fromactivity",fromactivity);
+            startActivity(i);
+            finish();
+        } else if(fromactivity != null && fromactivity.equalsIgnoreCase("AddMyAddressShippingSPActivity")){
+            Intent i = new Intent(getApplicationContext(),AddMyAddressShippingSPActivity.class);
             i.putExtra("data", (Serializable) Data);
             i.putExtra("product_total",prodouct_total);
             i.putExtra("shipping_charge",shipping_charge);

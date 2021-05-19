@@ -412,21 +412,21 @@ public class DoctorOrderDetailsActivity extends AppCompatActivity implements Vie
 
                             }
 
-                            if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverNewOrders")){
+                            if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentDoctorNewOrders")){
                                 txt_order_status.setText("Booked on");
                                 img_order_status.setImageResource(R.drawable.completed);
                                 if(response.body().getData().getOrder_details().getOrder_booked() != null){
                                     txt_delivered_date.setText(response.body().getData().getOrder_details().getOrder_booked());
                                 }
                             }
-                            else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverCompletedOrders")){
+                            else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentDoctorCompletedOrders")){
                                 txt_order_status.setText("Delivered on");
                                 img_order_status.setImageResource(R.drawable.completed);
                                 if(response.body().getData().getOrder_details().getOrder_completed() != null){
                                     txt_delivered_date.setText(response.body().getData().getOrder_details().getOrder_completed());
                                 }
                             }
-                            else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverCancelledOrders")) {
+                            else if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentDoctorCancelledOrders")) {
                                 txt_order_status.setText("Cancelled on");
                                 img_order_status.setImageResource(R.drawable.ic_baseline_cancel_24);
                                 if (response.body().getData().getOrder_details().getOrder_cancelled() != null && !response.body().getData().getOrder_details().getOrder_cancelled().isEmpty()) {

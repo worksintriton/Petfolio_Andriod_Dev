@@ -91,6 +91,15 @@ public class FBTokenUpdateResponse {
         private int __v;
         private boolean user_email_verification;
         private String ref_code;
+        private String my_ref_code;
+
+        public String getMy_ref_code() {
+            return my_ref_code;
+        }
+
+        public void setMy_ref_code(String my_ref_code) {
+            this.my_ref_code = my_ref_code;
+        }
 
         public String getRef_code() {
             return ref_code;
