@@ -12,6 +12,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -20,6 +21,7 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -28,14 +30,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.ManageProductsListAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.fragmentvendor.FragmentVendorDashboard;
 import com.petfolio.infinitus.interfaces.ManageProductsDealsListener;
 import com.petfolio.infinitus.interfaces.OnItemCheckProduct;
+import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinitus.requestpojo.ApplyMultiProdDiscountRequest;
 import com.petfolio.infinitus.requestpojo.ApplySingleDiscountCalRequest;
 import com.petfolio.infinitus.requestpojo.ApplySingleDiscountRequest;
@@ -69,7 +74,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ManageProductsActivity extends AppCompatActivity implements View.OnClickListener, OnItemCheckProduct, ManageProductsDealsListener {
+public class ManageProductsActivity extends AppCompatActivity implements View.OnClickListener, OnItemCheckProduct, ManageProductsDealsListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private String TAG = "ManageProductsActivity";
 
@@ -126,6 +131,18 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
     TextView txt_discard_deal;
 
 
+   @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_add_deal)
+    LinearLayout ll_add_deal;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_vendor_footer)
+    View include_vendor_footer;
+
+    BottomNavigationView bottom_navigation_view;
+
+
+
 
     // to check whether sub FAB buttons are visible or not.
     Boolean isAllFabsVisible;
@@ -168,10 +185,16 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
         String userid = user.get(SessionManager.KEY_ID);
         ll_discard.setVisibility(View.INVISIBLE);
 
+        ll_add_deal.setVisibility(View.GONE);
         txt_add_deal.setVisibility(View.GONE);
         txt_discard_deal.setVisibility(View.GONE);
         fab_add_deal.setVisibility(View.GONE);
         fab_discard_deal.setVisibility(View.GONE);
+
+        bottom_navigation_view = include_vendor_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
 
 
         img_back.setOnClickListener(v -> onBackPressed());
@@ -313,11 +336,13 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
                             manageProductsListResponseList = response.body().getData();
                             txt_no_records.setVisibility(View.GONE);
                             rv_manage_productlist.setVisibility(View.VISIBLE);
+                            ll_add_deal.setVisibility(View.VISIBLE);
                             setView();
                         }else{
                             rv_manage_productlist.setVisibility(View.GONE);
                             txt_no_records.setVisibility(View.VISIBLE);
                             txt_no_records.setText("No products found");
+                            ll_add_deal.setVisibility(View.GONE);
 
                         }
 
@@ -1001,6 +1026,32 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
     }
 
 
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+                callDirections("1");
+                break;
+            case R.id.feeds:
+                callDirections("2");
+                break;
 
+            case R.id.community:
+                callDirections("3");
+                break;
 
+            default:
+                return  false;
+        }
+
+        return false;
+    }
+
+    public void callDirections(String tag){
+        Intent intent = new Intent(getApplicationContext(), VendorDashboardActivity.class);
+        intent.putExtra("tag",tag);
+        startActivity(intent);
+        finish();
+    }
 }

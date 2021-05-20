@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -24,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.ProductDetailsVendorAdapter;
@@ -56,7 +58,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VendorOrderDetailsNewActivity extends AppCompatActivity implements View.OnClickListener, OnItemCheckConfirmStatus, OnItemCheckRejectStatus, OnItemCheckDispatchStatus {
+public class VendorOrderDetailsNewActivity extends AppCompatActivity implements View.OnClickListener, OnItemCheckConfirmStatus, OnItemCheckRejectStatus, OnItemCheckDispatchStatus, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "VendorOrderDetailsNewActivity" ;
 
@@ -187,6 +189,13 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
     @BindView(R.id.btn_update_status)
     Button btn_update_status;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_vendor_footer)
+    View include_vendor_footer;
+
+    BottomNavigationView bottom_navigation_view;
+
+
 
     private String _id;
     private String orderid;
@@ -229,6 +238,11 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
 
         }
      scrollablContent.setVisibility(View.GONE);
+
+        bottom_navigation_view = include_vendor_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
 
      if (new ConnectionDetector(VendorOrderDetailsNewActivity.this).isNetworkAvailable(VendorOrderDetailsNewActivity.this)) {
          if (APIClient.VENDOR_ID != null && !APIClient.VENDOR_ID.isEmpty()) {
@@ -948,5 +962,32 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
         return vendorOrderUpdateDispatchRequest;
     }
 
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+                callDirections("1");
+                break;
+            case R.id.feeds:
+                callDirections("2");
+                break;
 
+            case R.id.community:
+                callDirections("3");
+                break;
+
+            default:
+                return  false;
+        }
+
+        return false;
+    }
+
+    public void callDirections(String tag){
+        Intent intent = new Intent(getApplicationContext(), VendorDashboardActivity.class);
+        intent.putExtra("tag",tag);
+        startActivity(intent);
+        finish();
+    }
 }

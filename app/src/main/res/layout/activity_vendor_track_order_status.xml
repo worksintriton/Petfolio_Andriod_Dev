@@ -14,7 +14,7 @@
             android:id="@+id/toolbar_header"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/whiteTwo"
+            android:background="@color/new_header_bg"
             app:contentInsetLeft="0dp"
             app:contentInsetStart="0dp"
             app:popupTheme="@style/AppTheme.PopupOverlay"
@@ -27,7 +27,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="15dp"
-                android:src="@drawable/back"
+                android:src="@drawable/back_arrow_white"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -37,8 +37,9 @@
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/track_order"
-                android:textColor="@color/new_txt_color"
-                android:textSize="18sp"  />
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -68,7 +69,8 @@
                     android:layout_height="24dp"
                     android:src="@drawable/ic_bag"
                     tools:ignore="ContentDescription"
-                    android:layout_marginStart="20dp" />
+                    android:layout_marginStart="20dp"
+                    android:visibility="gone"/>
                 <ImageView
                     android:id="@+id/img_profile"
                     android:layout_width="24dp"
@@ -801,24 +803,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="10dp">
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation_view"
+        <include
+            android:id="@+id/include_vendor_footer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/new_rounded_corner_btn"
-            app:elevation="8dp"
-            app:itemBackground="@drawable/selected_state"
-            app:itemIconSize="20dp"
-            app:itemIconTint="@color/selector"
-            app:itemTextColor="@color/selector"
-            app:labelVisibilityMode="labeled"
-            app:menu="@menu/vendor_bottom_navigation" />
-
+            android:layout_height="wrap_content"
+            layout="@layout/toolbar_layout_vendor_footer" />
     </LinearLayout>
 
 

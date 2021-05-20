@@ -25,9 +25,11 @@ import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinitus.petlover.PetLoverProfileScreenActivity;
 import com.petfolio.infinitus.requestpojo.NotificationGetlistRequest;
 import com.petfolio.infinitus.responsepojo.NotificationGetlistResponse;
+import com.petfolio.infinitus.serviceprovider.ServiceProviderDashboardActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
+import com.petfolio.infinitus.vendor.VendorDashboardActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
 
@@ -189,6 +191,12 @@ public class NotificationActivity extends AppCompatActivity {
             finish();
         }else if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorNavigationDrawer")){
             startActivity(new Intent(getApplicationContext(), DoctorDashboardActivity.class));
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("VendorNavigationDrawer")){
+            startActivity(new Intent(getApplicationContext(), VendorDashboardActivity.class));
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("ServiceProviderNavigationDrawer")){
+            startActivity(new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class));
             finish();
         }else{
             finish();

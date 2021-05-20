@@ -31,7 +31,6 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
 import com.petfolio.infinitus.activity.NotificationActivity;
 
-import com.petfolio.infinitus.serviceprovider.ServiceProviderDashboardActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 
 import java.util.HashMap;
@@ -83,6 +82,7 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
     private String refcode;
 
 
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -206,6 +206,10 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
                         gotoAddProducts();
                         return true;
                     case R.id.nav_item_eight:
+                       gotoNotifications();
+                        return true;
+
+                        case R.id.nav_item_nine:
                         showLogOutAppAlert();
                         //confirmLogoutDialog();
                         return true;
@@ -217,6 +221,12 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
             }
         });
 
+    }
+
+    private void gotoNotifications() {
+        Intent intent = new Intent(getApplicationContext(),NotificationActivity.class);
+        intent.putExtra("fromactivity",TAG);
+        startActivity(intent);
     }
 
     private void gotoAddProducts() {
@@ -305,7 +315,7 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
 
 
 
-    private void gotoManageProducts() {
+    void gotoManageProducts() {
         Intent i = new Intent(VendorNavigationDrawer.this, ManageProductsActivity.class);
         startActivity(i);
 

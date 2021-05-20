@@ -1,8 +1,10 @@
 package com.petfolio.infinitus.vendor;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
@@ -32,7 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VendorTrackOrderActivity extends AppCompatActivity implements View.OnClickListener {
+public class VendorTrackOrderActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "VendorTrackOrderActivity" ;
 
@@ -166,6 +169,12 @@ public class VendorTrackOrderActivity extends AppCompatActivity implements View.
     @BindView(R.id.ll_order_reject)
     LinearLayout ll_order_reject;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_vendor_footer)
+    View include_vendor_footer;
+
+    BottomNavigationView bottom_navigation_view;
+
 
     private int _id;
     private String orderid;
@@ -200,6 +209,12 @@ public class VendorTrackOrderActivity extends AppCompatActivity implements View.
         if (new ConnectionDetector(VendorTrackOrderActivity.this).isNetworkAvailable(VendorTrackOrderActivity.this)) {
             vendor_fetch_single_product_detail_ResponseCall();
         }
+
+        bottom_navigation_view = include_vendor_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+
 
 
 
@@ -408,7 +423,32 @@ public class VendorTrackOrderActivity extends AppCompatActivity implements View.
         return vendorTrackOrderDetailsRequest;
     }
 
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+                callDirections("1");
+                break;
+            case R.id.feeds:
+                callDirections("2");
+                break;
 
+            case R.id.community:
+                callDirections("3");
+                break;
 
+            default:
+                return  false;
+        }
 
+        return false;
+    }
+
+    public void callDirections(String tag){
+        Intent intent = new Intent(getApplicationContext(), VendorDashboardActivity.class);
+        intent.putExtra("tag",tag);
+        startActivity(intent);
+        finish();
+    }
 }

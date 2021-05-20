@@ -56,7 +56,7 @@ import retrofit2.Response;
 
 
 public class FragmentVendorCompletedOrders extends Fragment implements View.OnClickListener {
-    private final String TAG = "FragmentVendorCompletedAppointment";
+    private final String TAG = "FragmentVendorCompletedOrders";
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
@@ -293,7 +293,7 @@ public class FragmentVendorCompletedOrders extends Fragment implements View.OnCl
                     if(200 == response.body().getCode()){
                         newOrderResponseList = response.body().getData();
                         Log.w(TAG,"Size"+newOrderResponseList.size());
-                        Log.w(TAG,"newOrderResponseList : "+new Gson().toJson(newOrderResponseList));
+                        Log.w(TAG,"VendorCompletdOrderResponse : "+new Gson().toJson(newOrderResponseList));
                         if(response.body().getData().isEmpty()){
                             txt_no_records.setVisibility(View.VISIBLE);
                             txt_no_records.setText("No Completed orders");
@@ -337,7 +337,7 @@ public class FragmentVendorCompletedOrders extends Fragment implements View.OnCl
         VendorNewOrderRequest vendorNewOrderRequest = new VendorNewOrderRequest();
         vendorNewOrderRequest.setVendor_id(id);
         vendorNewOrderRequest.setOrder_status("Complete");
-        Log.w(TAG,"vendorNewOrderRequest"+ "--->" + new Gson().toJson(vendorNewOrderRequest));
+        Log.w(TAG,"VendorCompletdOrderRequest :  "+ "--->" + new Gson().toJson(vendorNewOrderRequest));
         return vendorNewOrderRequest;
     }
 

@@ -58,7 +58,7 @@ import retrofit2.Response;
 
 
 public class FragmentVendorCancelledOrders extends Fragment implements View.OnClickListener, OnAcceptsReturnOrder {
-    private String TAG = "FragmentVendorCancelledAppointment";
+    private String TAG = "FragmentVendorCancelledOrders";
 
 
     @SuppressLint("NonConstantResourceId")
@@ -283,7 +283,7 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
                 includelayout.setVisibility(View.GONE);
                 refresh_layout.setRefreshing(false);
                 //avi_indicator.smoothToHide();
-                Log.w(TAG,"VendorMissedOrderResponse"+ "--->" + new Gson().toJson(response.body()));
+                Log.w(TAG,"VendorCancelledOrderResponse : "+ "--->" + new Gson().toJson(response.body()));
 
 
                 if (response.body() != null) {
@@ -291,7 +291,7 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
                     if(200 == response.body().getCode()){
                         newOrderResponseList = response.body().getData();
                         Log.w(TAG,"Size"+newOrderResponseList.size());
-                        Log.w(TAG,"newOrderResponseList : "+new Gson().toJson(newOrderResponseList));
+                        Log.w(TAG,"VendorCancelledOrderResponse : "+new Gson().toJson(newOrderResponseList));
                         if(response.body().getData().isEmpty()){
                             txt_no_records.setVisibility(View.VISIBLE);
                             txt_no_records.setText("No Cancelled orders");
@@ -323,7 +323,7 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
 
                 mShimmerViewContainer.stopShimmerAnimation();
                 includelayout.setVisibility(View.GONE);
-                Log.w(TAG,"VendorMissedOrderResponse flr"+"--->" + t.getMessage());
+                Log.w(TAG,"VendorCancelledOrderResponse flr"+"--->" + t.getMessage());
             }
         });
 
@@ -338,7 +338,7 @@ public class FragmentVendorCancelledOrders extends Fragment implements View.OnCl
         VendorNewOrderRequest vendorNewOrderRequest = new VendorNewOrderRequest();
         vendorNewOrderRequest.setVendor_id(id);
         vendorNewOrderRequest.setOrder_status("Cancelled");
-        Log.w(TAG,"vendorNewOrderRequest"+ "--->" + new Gson().toJson(vendorNewOrderRequest));
+        Log.w(TAG,"VendorCancelledOrderRequest : "+ "--->" + new Gson().toJson(vendorNewOrderRequest));
         return vendorNewOrderRequest;
     }
 

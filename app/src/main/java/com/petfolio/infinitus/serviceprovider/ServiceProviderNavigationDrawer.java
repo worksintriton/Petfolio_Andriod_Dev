@@ -192,9 +192,9 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
 
                 case R.id.nav_item_six:
                     return true;
-//                case R.id.nav_item_seven:
-//
-//                    return true;
+               case R.id.nav_item_seven:
+                   gotoNotifications();
+                   return true;
                 case R.id.nav_item_eight:
                     //confirmLogoutDialog();
                     showLogOutAppAlert();
@@ -209,7 +209,11 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
 
 
     }
-
+    private void gotoNotifications() {
+        Intent intent = new Intent(getApplicationContext(),NotificationActivity.class);
+        intent.putExtra("fromactivity",TAG);
+        startActivity(intent);
+    }
     private void gotoFavourites() {
         Intent intent = new Intent(getApplicationContext(), SPProductsFavActivity.class);
         startActivity(intent);
