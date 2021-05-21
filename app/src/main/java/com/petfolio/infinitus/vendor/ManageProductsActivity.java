@@ -193,7 +193,7 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
 
         bottom_navigation_view = include_vendor_footer.findViewById(R.id.bottom_navigation_view);
         bottom_navigation_view.setItemIconTintList(null);
-        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
+        bottom_navigation_view.getMenu().findItem(R.id.feeds).setChecked(true);
         bottom_navigation_view.setOnNavigationItemSelectedListener(this);
 
 
@@ -387,6 +387,7 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(),VendorDashboardActivity.class));
         finish();
     }
     @SuppressLint({"NonConstantResourceId", "SetTextI18n", "LogNotTimber"})

@@ -300,6 +300,8 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
                     dialog.dismiss();
                 }
             });
+
+
             if(sosList != null && sosList.size()>0){
                 rv_sosnumbers.setVisibility(View.VISIBLE);
                 btn_call.setVisibility(View.VISIBLE);
@@ -308,7 +310,8 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
                 rv_sosnumbers.setItemAnimator(new DefaultItemAnimator());
                 PetLoverSOSAdapter petLoverSOSAdapter = new PetLoverSOSAdapter(getApplicationContext(), sosList,this);
                 rv_sosnumbers.setAdapter(petLoverSOSAdapter);
-            }else{
+            }
+            else{
                 rv_sosnumbers.setVisibility(View.GONE);
                 btn_call.setVisibility(View.GONE);
                 txt_no_records.setVisibility(View.VISIBLE);

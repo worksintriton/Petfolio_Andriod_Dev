@@ -149,6 +149,7 @@ public class VendorDashboardActivity  extends VendorNavigationDrawer implements 
                 gotoManageProducts();
                // loadFragment(new DoctorShopFragment());
             } else if(tag.equalsIgnoreCase("3")){
+                showComingSoonAlert();
                 bottom_navigation_view.getMenu().findItem(R.id.community).setChecked(true);
 
             }

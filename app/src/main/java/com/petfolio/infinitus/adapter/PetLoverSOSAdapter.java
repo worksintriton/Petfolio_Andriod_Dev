@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.interfaces.SoSCallListener;
-import com.petfolio.infinitus.responsepojo.DoctorSearchResponse;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 
 import java.util.List;

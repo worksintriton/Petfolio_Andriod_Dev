@@ -7,13 +7,14 @@
     android:layout_marginEnd="5dp"
     android:background="@drawable/border_shadow">
     <LinearLayout
-        android:layout_width="109dp"
-        android:layout_height="109dp"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         android:orientation="vertical"
         android:gravity="center"
         tools:ignore="UselessParent"
         android:background="@drawable/layout_bg_service"
-        android:id="@+id/ll_root">
+        android:id="@+id/ll_root"
+        android:elevation="8dp">
 
 
         <ImageView
