@@ -12,13 +12,14 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_service"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="5dp"
-            app:cardCornerRadius="1dp"
+            app:cardCornerRadius="8dp"
+            android:elevation="10dp"
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="true">
 
@@ -130,10 +131,11 @@
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:fontFamily="@font/futuramediumbt"
-                    android:maxLines="1"
+                    android:maxLines="2"
                     android:text="@string/addr_dummy"
                     android:textColor="@color/new_sec_txt_color"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:layout_marginEnd="5dp"/>
 
                 <TextView
                     android:id="@+id/txt_bullet"

@@ -99,7 +99,7 @@
                     android:layout_marginBottom="5dp"
                     android:alpha="0.5"
                     android:ellipsize="end"
-                    android:fontFamily="@font/futuralightbt"
+                    android:fontFamily="@font/futuramediumbt"
                     android:maxLines="1"
                     android:text="@string/pet_vet_clinic"
                     android:textColor="@color/new_light_black"
@@ -211,7 +211,8 @@
                                     android:textColor="@color/white"
                                     android:textSize="14sp"
                                     android:textStyle="bold"
-                                    tools:ignore="TooDeepLayout" />
+                                    tools:ignore="TooDeepLayout"
+                                    android:fontFamily="@font/futuramediumbt"/>
 
                                 <TextView
                                     android:id="@+id/txt_sp_exprvalueyr"
@@ -281,7 +282,8 @@
                                     android:text="@string/_1"
                                     android:textColor="@color/white"
                                     android:textSize="14sp"
-                                    android:textStyle="bold" />
+                                    android:textStyle="bold"
+                                    android:fontFamily="@font/futuramediumbt"/>
 
                                 <TextView
                                     android:id="@+id/txt_sp_loctnvaluekm"
@@ -295,7 +297,8 @@
                                     android:textColor="@color/white"
                                     android:textSize="10sp"
                                     android:textStyle="bold"
-                                    tools:ignore="SmallSp" />
+                                    tools:ignore="SmallSp"
+                                    android:fontFamily="@font/futuramediumbt"/>
 
                             </LinearLayout>
 
@@ -404,7 +407,7 @@
                     android:layout_marginEnd="20dp"
                     android:drawablePadding="10dp"
                     android:ellipsize="end"
-                    android:fontFamily="@font/futuralightbt"
+                    android:fontFamily="@font/futuramediumbt"
                     android:text="@string/_1a_anna_nagar_main_road_chennai"
                     android:textColor="@color/new_light_black"
                     android:textSize="14sp"
@@ -420,7 +423,7 @@
                         android:id="@+id/map"
                         android:name="com.google.android.gms.maps.SupportMapFragment"
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"
+                        android:layout_height="200dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="20dp"
                         tools:ignore="FragmentTagUsage" />

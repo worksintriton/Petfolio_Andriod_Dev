@@ -31,21 +31,17 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 
-import com.petfolio.infinitus.adapter.ManagePetListAdapter;
 import com.petfolio.infinitus.adapter.ManagePetListMedicalHistoryAdapter;
 import com.petfolio.infinitus.adapter.MedicalHistoryListAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.doctor.DoctorPrescriptionDetailsActivity;
 import com.petfolio.infinitus.interfaces.PetDeleteListener;
 
 import com.petfolio.infinitus.interfaces.PrescriptionListener;
 import com.petfolio.infinitus.requestpojo.MedicalHistoryRequest;
-import com.petfolio.infinitus.requestpojo.PetDeleteRequest;
 import com.petfolio.infinitus.requestpojo.PetListRequest;
 import com.petfolio.infinitus.requestpojo.PrescriptionDetailsRequest;
 import com.petfolio.infinitus.responsepojo.MedicalHistoryResponse;
-import com.petfolio.infinitus.responsepojo.PetDeleteResponse;
 import com.petfolio.infinitus.responsepojo.PetListResponse;
 import com.petfolio.infinitus.responsepojo.PrescriptionCreateResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;

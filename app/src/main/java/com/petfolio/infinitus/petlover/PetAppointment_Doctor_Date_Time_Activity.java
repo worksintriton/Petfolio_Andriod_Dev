@@ -1,39 +1,25 @@
 package com.petfolio.infinitus.petlover;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
-
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.CheckBox;
-
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.NotificationActivity;
@@ -42,35 +28,24 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.interfaces.OnItemSelectedTime;
 import com.petfolio.infinitus.requestpojo.AppointmentCheckRequest;
-import com.petfolio.infinitus.requestpojo.PetAppointmentCreateRequest;
 import com.petfolio.infinitus.requestpojo.PetDoctorAvailableTimeRequest;
 import com.petfolio.infinitus.requestpojo.RescheduleAppointmentRequest;
 import com.petfolio.infinitus.responsepojo.AppointmentCheckResponse;
-import com.petfolio.infinitus.responsepojo.PetAppointmentCreateResponse;
 import com.petfolio.infinitus.responsepojo.PetDoctorAvailableTimeResponse;
 import com.petfolio.infinitus.responsepojo.SuccessResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
-
-import com.razorpay.Checkout;
-import com.razorpay.PaymentResultListener;
 import com.vivekkaushik.datepicker.DatePickerTimeline;
 import com.vivekkaushik.datepicker.OnDateSelectedListener;
 import com.wang.avi.AVLoadingIndicatorView;
-
-
-import org.json.JSONObject;
-
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -102,7 +77,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
     RelativeLayout sub_layer1;
 
 
-    private String TAG = "PetAppointment_Doctor_Date_Time_Activity";
+    String TAG = "PetAppointment_Doctor_Date_Time_Activity";
 
    // CalendarView calendar;
 
@@ -115,18 +90,16 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
 
 
-    private String _id = "";
 
     private String Doctor_ava_Date = "";
     private String selectedTimeSlot = "";
 
 
-    SessionManager session;
 
 
 
 
-    private Boolean isAppointment = true;
+
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.view)
     View view;
@@ -157,18 +130,11 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
     private List<PetDoctorAvailableTimeResponse.DataBean> doctorDateAvailabilityResponseList;
     private List<PetDoctorAvailableTimeResponse.DataBean.TimesBean> timesBeanList;
-    private String petid,allergies,probleminfo;
-    private String userid;
     private String doctorid;
-    private String selectedAppointmentType;
-    private double totalamount =1;
-    private String Payment_id;
     private String fromactivity;
     private String fromto;
     private int amount;
     private String communicationtype;
-    private String bookingdate;
-    private String bookingtime;
     private String bookingdateandtime;
     private Dialog dialog;
     private String id;
@@ -194,23 +160,19 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
             Log.w(TAG,"doctorid : "+doctorid+"fromactivity : "+fromactivity+ " fromto : "+fromto);
 
 
-            petid = extras.getString("petid");
-            allergies = extras.getString("allergies");
-            probleminfo = extras.getString("probleminfo");
+            String petid = extras.getString("petid");
+            String allergies = extras.getString("allergies");
+            String probleminfo = extras.getString("probleminfo");
             doctorid = extras.getString("doctorid");
-            selectedAppointmentType = extras.getString("selectedAppointmentType");
+            String selectedAppointmentType = extras.getString("selectedAppointmentType");
 
             amount = extras.getInt("amount");
             distance = extras.getString("distance");
             Log.w(TAG,"amount : "+amount);
             communicationtype = extras.getString("communicationtype");
-
-
-            bookingdate = extras.getString("bookingdate");
-            bookingtime = extras.getString("bookingtime");
             bookingdateandtime = extras.getString("bookingdateandtime");
 
-            Log.w(TAG,"petid-->"+petid+ "allergies : "+allergies+"  probleminfo : "+probleminfo+" selectedAppointmentType : "+selectedAppointmentType+" communicationtype : "+communicationtype);
+            Log.w(TAG,"petid-->"+ petid + "allergies : "+ allergies +"  probleminfo : "+ probleminfo +" selectedAppointmentType : "+ selectedAppointmentType +" communicationtype : "+communicationtype);
 
         }
 
@@ -228,20 +190,12 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         avi_indicator.setVisibility(View.GONE);
 
 
-        img_notification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
-            }
-        });
-        img_profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class);
-                intent.putExtra("doctorid",doctorid);
-                intent.putExtra("fromactivity",TAG);
-                startActivity(intent);
-            }
+        img_notification.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), NotificationActivity.class)));
+        img_profile.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class);
+            intent.putExtra("doctorid",doctorid);
+            intent.putExtra("fromactivity",TAG);
+            startActivity(intent);
         });
 
 
@@ -250,10 +204,10 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
         SessionManager sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getProfileDetails();
-        userid = user.get(SessionManager.KEY_ID);
+        String userid = user.get(SessionManager.KEY_ID);
 
 
-        Log.w(TAG,"userid :"+userid);
+        Log.w(TAG,"userid :"+ userid);
 
 
 
@@ -275,20 +229,18 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         }
 
 
-        btn_bookappointment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(selectedTimeSlot != null && !selectedTimeSlot.isEmpty()){
+        btn_bookappointment.setOnClickListener(v -> {
+            Log.w(TAG,"btn_bookappointment selectedTimeSlot : "+selectedTimeSlot);
+           if(selectedTimeSlot != null && !selectedTimeSlot.isEmpty()){
 
-                    if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
-                        appointmentCheckResponseCall();
-                    }
-                }else{
-                    showErrorLoading("Please select time slot ");
-
+                if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
+                    appointmentCheckResponseCall();
                 }
+            }else{
+                showErrorLoading("Please select time slot ");
 
             }
+
         });
 
         Calendar calendar = Calendar.getInstance();
@@ -309,9 +261,9 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
             @Override
             public void onDateSelected(int year, int month, int dayOfMonth, int dayOfWeek) {
                 // Do Something
-
-                String strdayOfMonth = "";
-                String strMonth = "";
+                selectedTimeSlot = "";
+                String strdayOfMonth;
+                String strMonth;
                 int month1 =(month + 1);
                 if(dayOfMonth == 9 || dayOfMonth <9){
                     strdayOfMonth = "0"+dayOfMonth;
@@ -347,13 +299,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         Date[] dates = {Calendar.getInstance().getTime()};
         datePickerTimeline.deactivateDates(dates);*/
 
-        img_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-
-            }
-        });
+        img_back.setOnClickListener(v -> onBackPressed());
 
     }
     @SuppressLint("LogNotTimber")
@@ -391,7 +337,6 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
                             sub_layer1.setVisibility(View.VISIBLE);
                             btn_bookappointment.setVisibility(View.VISIBLE);
-                            List<PetDoctorAvailableTimeResponse.DataBean.TimesBean>timeBeanList = new ArrayList<>();
 
                             if(doctorDateAvailabilityResponseList.size()>0) {
 
@@ -559,6 +504,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
 
 
+    @SuppressLint("LogNotTimber")
     @Override
     public void onItemSelectedTime(String selectedTime) {
         Log.w(TAG,"onItemSelectedTime : "+selectedTime);
@@ -708,16 +654,13 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
             dialog.setContentView(R.layout.alert_reschedule_appointment_layout);
             Button btn_view = dialog.findViewById(R.id.btn_view);
 
-            btn_view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                    Intent intent = new Intent(PetAppointment_Doctor_Date_Time_Activity.this, PetMyappointmentsActivity.class);
-                    startActivity(intent);
-                    finish();
+            btn_view.setOnClickListener(view -> {
+                dialog.dismiss();
+                Intent intent = new Intent(PetAppointment_Doctor_Date_Time_Activity.this, PetMyappointmentsActivity.class);
+                startActivity(intent);
+                finish();
 
 
-                }
             });
             Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();

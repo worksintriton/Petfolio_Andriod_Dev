@@ -38,9 +38,7 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.fragmentpetlover.favourites.DoctorFavFragment;
 import com.petfolio.infinitus.fragmentpetlover.favourites.SPFavFragment;
 import com.petfolio.infinitus.fragmentpetlover.favourites.ShopFavFragment;
-import com.petfolio.infinitus.fragmentpetlover.myappointments.FragmentPetCompletedAppointment;
-import com.petfolio.infinitus.fragmentpetlover.myappointments.FragmentPetMissedAppointment;
-import com.petfolio.infinitus.fragmentpetlover.myappointments.FragmentPetNewAppointment;
+
 import com.petfolio.infinitus.interfaces.SoSCallListener;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 
@@ -140,7 +138,6 @@ public class PetloverFavListActivity extends AppCompatActivity  implements Botto
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.home:
                 callDirections("1");

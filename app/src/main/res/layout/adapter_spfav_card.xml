@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginEnd="10dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.cardview.widget.CardView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -21,7 +20,7 @@
 
         <RelativeLayout
             android:id="@+id/rl_doctor"
-            android:layout_width="140dp"
+            android:layout_width="160dp"
             android:layout_height="140dp">
 
             <ImageView
@@ -76,8 +75,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp">
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp">
                 <TextView
                     android:id="@+id/txt_doctors_name"
                     android:layout_width="match_parent"
@@ -112,8 +111,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginBottom="10dp">
                 <ImageView
                     android:id="@+id/hand_img1"

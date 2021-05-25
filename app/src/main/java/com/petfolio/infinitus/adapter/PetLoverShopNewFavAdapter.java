@@ -98,9 +98,9 @@ public class PetLoverShopNewFavAdapter extends  RecyclerView.Adapter<RecyclerVie
               holder.txt_products_title.setText(currentItem.getProduct_title());
           }
 
-//        if(currentItem.getCat_name() != null){
-//              holder.txt_category_title.setText(currentItem.getCat_name());
-//          }
+     /* if(currentItem.getCat_name() != null){
+              holder.txt_category_title.setText(currentItem.getCat_name());
+         }*/
           if(currentItem.getProduct_price() != 0){
               holder.txt_products_price.setText("INR "+currentItem.getProduct_price());
           }else{
@@ -180,6 +180,8 @@ public class PetLoverShopNewFavAdapter extends  RecyclerView.Adapter<RecyclerVie
             hand_img3 = itemView.findViewById(R.id.hand_img3);
             hand_img4 = itemView.findViewById(R.id.hand_img4);
             hand_img5 = itemView.findViewById(R.id.hand_img5);
+
+            txt_category_title.setVisibility(View.GONE);
 
 
 

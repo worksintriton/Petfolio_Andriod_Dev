@@ -716,6 +716,8 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
                         }
                         if(distance != 0 ){
                             txt_distance.setText(distance+"");
+                        }else{
+                            txt_distance.setText("0");
                         }
 
 

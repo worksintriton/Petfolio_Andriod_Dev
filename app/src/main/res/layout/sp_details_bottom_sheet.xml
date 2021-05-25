@@ -97,7 +97,7 @@
                     android:layout_marginEnd="20dp"
                     android:alpha="0.5"
                     android:ellipsize="end"
-                    android:fontFamily="@font/futuralightbt"
+                    android:fontFamily="@font/futuramediumbt"
                     android:maxLines="1"
                     android:text="@string/pet_vet_clinic"
                     android:textColor="@color/new_light_black"
@@ -132,7 +132,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
                                 android:ellipsize="end"
-                                android:fontFamily="@font/futuralightfont"
+                                android:fontFamily="@font/futuramediumbt"
                                 android:gravity="center"
                                 android:maxLines="1"
                                 android:text="@string/fee"
@@ -184,7 +184,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
                                 android:ellipsize="end"
-                                android:fontFamily="@font/futuralightfont"
+                                android:fontFamily="@font/futuramediumbt"
                                 android:gravity="center"
                                 android:maxLines="1"
                                 android:text="@string/experience"
@@ -210,7 +210,8 @@
                                     android:textColor="@color/white"
                                     android:textSize="14sp"
                                     android:textStyle="bold"
-                                    tools:ignore="TooDeepLayout" />
+                                    tools:ignore="TooDeepLayout"
+                                    android:fontFamily="@font/futuramediumbt"/>
 
                                 <TextView
                                     android:id="@+id/txt_sp_exprvalueyr"
@@ -256,7 +257,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
                                 android:ellipsize="end"
-                                android:fontFamily="@font/futuralightfont"
+                                android:fontFamily="@font/futuramediumbt"
                                 android:gravity="center"
                                 android:maxLines="1"
                                 android:text="@string/location"
@@ -280,7 +281,8 @@
                                     android:text="@string/_1"
                                     android:textColor="@color/white"
                                     android:textSize="14sp"
-                                    android:textStyle="bold" />
+                                    android:textStyle="bold"
+                                    android:fontFamily="@font/futuramediumbt"/>
 
                                 <TextView
                                     android:id="@+id/txt_sp_loctnvaluekm"
@@ -294,7 +296,8 @@
                                     android:textColor="@color/white"
                                     android:textSize="10sp"
                                     android:textStyle="bold"
-                                    tools:ignore="SmallSp" />
+                                    tools:ignore="SmallSp"
+                                    android:fontFamily="@font/futuramediumbt"/>
 
                             </LinearLayout>
 
@@ -389,160 +392,13 @@
                         android:maxLines="1"
                         android:text="@string/sub_services"
                         android:textColor="@color/new_txt_color"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:fontFamily="@font/futuramediumbt"/>
 
 
                 </LinearLayout>
 
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="vertical"-->
-<!--                    android:layout_marginTop="10dp"-->
-<!--                 >-->
 
-
-<!--                    <androidx.cardview.widget.CardView-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:elevation="10dp"-->
-<!--                        app:cardCornerRadius="20dp"-->
-<!--                        app:cardUseCompatPadding="true"-->
-<!--                        tools:ignore="UnusedAttribute">-->
-
-<!--                        <LinearLayout-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="match_parent"-->
-<!--                            android:orientation="horizontal">-->
-
-<!--                            <LinearLayout-->
-<!--                                android:id="@+id/ll_root6"-->
-<!--                                android:layout_width="100dp"-->
-<!--                                android:layout_height="100dp"-->
-<!--                                android:layout_marginStart="10dp"-->
-<!--                                android:layout_marginTop="10dp"-->
-<!--                                android:layout_marginEnd="10dp"-->
-<!--                                android:layout_marginBottom="10dp"-->
-<!--                                android:background="@drawable/layout_bg_service_green"-->
-<!--                                android:orientation="vertical"-->
-<!--                                tools:ignore="UselessParent">-->
-
-<!--                                <LinearLayout-->
-<!--                                    android:layout_width="match_parent"-->
-<!--                                    android:layout_height="match_parent"-->
-<!--                                    android:gravity="center"-->
-<!--                                    android:orientation="vertical">-->
-
-
-<!--                                    <ImageView-->
-<!--                                        android:id="@+id/cv_serviceimage"-->
-<!--                                        android:layout_width="35dp"-->
-<!--                                        android:layout_height="35dp"-->
-<!--                                        android:layout_gravity="center"-->
-<!--                                        android:src="@drawable/services" />-->
-
-
-<!--                                    <TextView-->
-<!--                                        android:id="@+id/txt_sp_spname"-->
-<!--                                        android:layout_width="wrap_content"-->
-<!--                                        android:layout_height="wrap_content"-->
-<!--                                        android:layout_marginTop="5dp"-->
-<!--                                        android:ellipsize="end"-->
-<!--                                        android:fontFamily="@font/futuramediumbt"-->
-<!--                                        android:gravity="center"-->
-<!--                                        android:maxLines="1"-->
-<!--                                        android:text="@string/bathing"-->
-<!--                                        android:textColor="@color/white"-->
-<!--                                        android:textSize="16sp"-->
-<!--                                        android:textStyle="bold" />-->
-
-<!--                                </LinearLayout>-->
-
-
-<!--                            </LinearLayout>-->
-
-<!--                            <LinearLayout-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="match_parent"-->
-<!--                                android:orientation="vertical">-->
-
-<!--                                <TextView-->
-<!--                                    android:id="@+id/txt_serv_name"-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:layout_marginTop="10dp"-->
-<!--                                    android:ellipsize="end"-->
-<!--                                    android:fontFamily="@font/futuramediumbt"-->
-<!--                                    android:maxLines="1"-->
-<!--                                    android:text="@string/bathing"-->
-<!--                                    android:textColor="@color/new_red"-->
-<!--                                    android:textSize="14sp"-->
-<!--                                    android:textStyle="bold" />-->
-
-<!--                                <TextView-->
-<!--                                    android:id="@+id/txt_serv_desc"-->
-<!--                                    android:layout_width="match_parent"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:layout_marginTop="5dp"-->
-<!--                                    android:ellipsize="end"-->
-<!--                                    android:fontFamily="@font/futuramediumbt"-->
-<!--                                    android:maxLines="2"-->
-<!--                                    android:text="@string/desc_content"-->
-<!--                                    android:textColor="@color/new_light_black"-->
-<!--                                    android:textSize="14sp" />-->
-
-<!--                                <LinearLayout-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="wrap_content"-->
-<!--                                    android:layout_marginTop="10dp"-->
-<!--                                    android:orientation="horizontal">-->
-
-<!--                                    <TextView-->
-<!--                                        android:id="@+id/txt_price"-->
-<!--                                        android:layout_width="wrap_content"-->
-<!--                                        android:layout_height="wrap_content"-->
-<!--                                        android:ellipsize="end"-->
-<!--                                        android:fontFamily="@font/futuramediumbt"-->
-<!--                                        android:maxLines="1"-->
-<!--                                        android:text="@string/inr_300_00"-->
-<!--                                        android:textColor="@color/new_txt_header"-->
-<!--                                        android:textSize="14sp"-->
-<!--                                        android:textStyle="bold" />-->
-
-<!--                                    <RelativeLayout-->
-<!--                                        android:layout_width="match_parent"-->
-<!--                                        android:layout_height="wrap_content"-->
-<!--                                        android:layout_marginStart="10dp"-->
-<!--                                        android:layout_marginBottom="5dp"-->
-<!--                                        android:gravity="start">-->
-
-<!--                                        <TextView-->
-<!--                                            android:id="@+id/txt_offer"-->
-<!--                                            android:layout_width="80dp"-->
-<!--                                            android:layout_height="wrap_content"-->
-<!--                                            android:background="@drawable/new_off_bgnd"-->
-<!--                                            android:ellipsize="end"-->
-<!--                                            android:fontFamily="@font/futuramediumbt"-->
-<!--                                            android:gravity="center"-->
-<!--                                            android:maxLines="1"-->
-<!--                                            android:padding="3dp"-->
-<!--                                            android:text="@string/_20_off"-->
-<!--                                            android:textColor="@color/white"-->
-<!--                                            android:textSize="10sp"-->
-<!--                                            tools:ignore="SmallSp" />-->
-
-<!--                                    </RelativeLayout>-->
-
-
-<!--                                </LinearLayout>-->
-<!--                            </LinearLayout>-->
-
-<!--                        </LinearLayout>-->
-
-<!--                    </androidx.cardview.widget.CardView>-->
-
-
-<!--                </LinearLayout>-->
 
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rc_servlist"
@@ -573,7 +429,7 @@
                     android:layout_marginEnd="20dp"
                     android:drawablePadding="10dp"
                     android:ellipsize="end"
-                    android:fontFamily="@font/futuralightbt"
+                    android:fontFamily="@font/futuramediumbt"
                     android:maxLines="3"
                     android:text="@string/_1a_anna_nagar_main_road_chennai"
                     android:textColor="@color/new_light_black"
@@ -590,7 +446,7 @@
                         android:id="@+id/map"
                         android:name="com.google.android.gms.maps.SupportMapFragment"
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"
+                        android:layout_height="200dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="20dp"
                         tools:ignore="FragmentTagUsage" />

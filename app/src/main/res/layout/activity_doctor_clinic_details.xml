@@ -178,12 +178,14 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:background="@drawable/new_rounded_corner_btn_red"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp">
 
                 <ImageView
                     android:id="@+id/img_shop"
@@ -191,7 +193,8 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center"
                     android:src="@drawable/new_shop_bag"
-                    tools:ignore="ContentDescription" />
+                    tools:ignore="ContentDescription"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/txt_sp_appoint"
