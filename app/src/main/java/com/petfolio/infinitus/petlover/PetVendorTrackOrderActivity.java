@@ -359,11 +359,13 @@ public class PetVendorTrackOrderActivity extends AppCompatActivity implements Vi
                                                 if (prodcutTrackDetailsBeanList.get(i).isStatus()) {
                                                     ll_order_reject_bypetlover.setVisibility(View.VISIBLE);
                                                     txt_order_reject_date_petlover.setText(" " + prodcutTrackDetailsBeanList.get(i).getDate());
-                                                    txt_order_reject_date_reason.setText(response.body().getData().getUser_cancell_info());
-                                                   // txt_order_reject_date_petlover.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+                                                    txt_order_reject_date_reason.setText(prodcutTrackDetailsBeanList.get(i).getTitle());
+                                                    txt_order_vendor_reject_date_reason.setText(prodcutTrackDetailsBeanList.get(i).getTitle());
+                                                    txt_order_vendor_reject_date_reason.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
                                                     img_vendor_order_rejected_bypetlover.setImageResource(R.drawable.ic_baseline_check_circle_24);
 
-                                                } else {
+                                                }
+                                                else {
                                                     ll_order_reject_bypetlover.setVisibility(View.GONE);
 
                                                 }

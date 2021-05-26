@@ -8,21 +8,23 @@
     <LinearLayout
         android:id="@+id/headerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignParentTop="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/new_header_bg"
+        android:gravity="center">
         <RelativeLayout
             android:id="@+id/back_rela"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            tools:ignore="UselessParent">
 
             <ImageView
                 android:id="@+id/backarrow"
-                android:layout_width="25dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="21dp"
-                android:layout_marginStart="20dp"
-                android:background="@drawable/ic_baseline_arrow_back_ios_24"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="15dp"
+                android:background="@drawable/back_arrow_white"
                 tools:ignore="ContentDescription" />
             <TextView
                 android:layout_width="wrap_content"
@@ -30,9 +32,9 @@
                 android:layout_toEndOf="@+id/backarrow"
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/add_holiday"
-                android:layout_marginTop="22dp"
                 android:layout_marginStart="10dp"
-                android:textColor="@color/new_txt_color"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:textSize="@dimen/big_txt_size"  />
 
         </RelativeLayout>

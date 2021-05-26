@@ -149,7 +149,7 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
                         .into(holder.img_clinic_imge);
 
             }
-           else{
+        else{
                 Glide.with(context)
                         .load(APIClient.PROFILE_IMAGE_URL)
                         .into(holder.img_clinic_imge);

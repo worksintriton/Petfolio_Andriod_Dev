@@ -25,6 +25,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -100,6 +101,14 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
     @BindView(R.id.rl_filters)
     RelativeLayout rl_filters;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_sort)
+    RelativeLayout rl_sort;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.scrollablContent)
+    ScrollView scrollablContent;
+
     private String active_tag;
 
     private List<SPSpecificServiceDetailsResponse.DataBean.ServiceProviderBean> serviceProviderList;
@@ -130,6 +139,10 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
 
         ButterKnife.bind(this);
         Log.w(TAG,"onCreate");
+
+        scrollablContent.setVisibility(View.GONE);
+        img_selectedserviceimage.setVisibility(View.GONE);
+        txt_selected_service.setVisibility(View.GONE);
 
 
         ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
@@ -248,9 +261,12 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
                 avi_indicator.smoothToHide();
                 Log.w(TAG,"SPSpecificServiceDetailsResponse" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
-
+                    scrollablContent.setVisibility(View.VISIBLE);
+                    img_selectedserviceimage.setVisibility(View.VISIBLE);
+                    txt_selected_service.setVisibility(View.VISIBLE);
                     if (200 == response.body().getCode()) {
                         txt_no_records.setVisibility(View.GONE);
+                        txt_totalproviders.setVisibility(View.VISIBLE);
                         if (response.body().getData() != null) {
                             if (response.body().getData().getService_Details().getImage_path() != null && !response.body().getData().getService_Details().getImage_path().isEmpty()) {
 
@@ -287,13 +303,17 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
 
 
                         }
-                    }else{
+                    }
+                    else{
+                        txt_totalproviders.setVisibility(View.GONE);
                         txt_no_records.setVisibility(View.VISIBLE);
+                        txt_no_records.setText("No service found");
                         if (response.body().getData().getService_Details().getImage_path() != null && !response.body().getData().getService_Details().getImage_path().isEmpty()) {
                             Glide.with(SelectedServiceActivity.this)
                                     .load(response.body().getData().getService_Details().getImage_path())
                                     .into(img_selectedserviceimage);
-                        } else {
+                        }
+                        else {
                             Glide.with(SelectedServiceActivity.this)
                                     .load(APIClient.PROFILE_IMAGE_URL)
                                     .into(img_selectedserviceimage);

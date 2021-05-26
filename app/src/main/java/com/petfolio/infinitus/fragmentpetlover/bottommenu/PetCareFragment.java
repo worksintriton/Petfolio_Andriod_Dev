@@ -184,6 +184,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
 
         avi_indicator.setVisibility(View.GONE);
+        txt_totaldrs.setVisibility(View.GONE);
         if(getArguments() != null){
             fromactivity = getArguments().getString("fromactivity");
             reviewcount = getArguments().getInt("reviewcount");

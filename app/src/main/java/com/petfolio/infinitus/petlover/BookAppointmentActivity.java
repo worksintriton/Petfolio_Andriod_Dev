@@ -253,7 +253,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     private String uploadimagepath = "";
     Dialog alertDialog;
     private boolean isSelectYourPet;
-    private String selectedAppointmentType = "";
+    private String selectedAppointmentType = "Normal";
     private String selectedVisitType = "";
     private String petId;
     private String doctorid;

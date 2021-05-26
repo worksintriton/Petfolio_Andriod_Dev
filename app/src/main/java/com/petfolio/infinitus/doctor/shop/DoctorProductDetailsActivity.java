@@ -524,15 +524,31 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
                             threshould = response.body().getProduct_details().getThreshould();
                             prod_type = response.body().getProduct_details().getCat_id().getProduct_cate();
 
-                            business_name = response.body().getVendor_details().getBussiness_name();
+                            if( response.body().getVendor_details() != null){
+                                if(response.body().getProduct_details().getThreshould() != null){
+                                    threshould = response.body().getProduct_details().getThreshould();
+                                }
+                                if(response.body().getProduct_details().getCat_id().getProduct_cate() != null){
+                                    prod_type = response.body().getProduct_details().getCat_id().getProduct_cate();
+                                }
 
-                            vendor_name = response.body().getVendor_details().getUser_name();
+                                if(response.body().getVendor_details().getBussiness_name() != null) {
+                                    business_name = response.body().getVendor_details().getBussiness_name();
+                                }
+                                if(response.body().getVendor_details().getUser_name() != null){
+                                    vendor_name = response.body().getVendor_details().getUser_name();
+                                }
+                                if( response.body().getVendor_details().getBusiness_reg() != null){
+                                    bussiness_reg = response.body().getVendor_details().getBusiness_reg();
+                                }
+                                if(response.body().getVendor_details().getBussiness_loc() != null) {
+                                    business_location = response.body().getVendor_details().getBussiness_loc();
+                                }
+                                if( response.body().getVendor_details().getBussiness_gallery() != null) {
+                                    bussinessGalleryBeans = response.body().getVendor_details().getBussiness_gallery();
 
-                            bussiness_reg = response.body().getVendor_details().getBusiness_reg();
-
-                            business_location = response.body().getVendor_details().getBussiness_loc();
-
-                            bussinessGalleryBeans = response.body().getVendor_details().getBussiness_gallery();
+                                }
+                            }
 
                             viewPager.setVisibility(View.VISIBLE);
 

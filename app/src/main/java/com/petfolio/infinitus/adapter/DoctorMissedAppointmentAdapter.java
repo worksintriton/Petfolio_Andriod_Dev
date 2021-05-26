@@ -100,14 +100,27 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
 
         }
 
-        if(missedAppointmentResponseList.get(position).getAppoint_patient_st() != null && missedAppointmentResponseList.get(position).getAppoint_patient_st().equalsIgnoreCase("Petowner Cancelled appointment")){
+        if(missedAppointmentResponseList.get(position).getAppointment_types() != null && missedAppointmentResponseList.get(position).getAppointment_types().equalsIgnoreCase("Emergency")){
+            holder.img_emergency_appointment.setVisibility(View.VISIBLE);
+        }else{
+            holder.img_emergency_appointment.setVisibility(View.GONE);
+
+        }
+
+
+        if(missedAppointmentResponseList.get(position).getAppoint_patient_st() != null && missedAppointmentResponseList.get(position).getAppoint_patient_st().equalsIgnoreCase("Patient Appointment Cancelled")){
+            holder.ll_appointmentstatus.setVisibility(View.VISIBLE);
+            holder.txt_appointment_status.setText("Not available");
+        }
+        else if(missedAppointmentResponseList.get(position).getAppoint_patient_st() != null && missedAppointmentResponseList.get(position).getAppoint_patient_st().equalsIgnoreCase("Doctor Cancelled appointment")){
             holder.ll_appointmentstatus.setVisibility(View.VISIBLE);
             holder.txt_appointment_status.setText("Not available");
         }
         else if(missedAppointmentResponseList.get(position).getAppoint_patient_st() != null && missedAppointmentResponseList.get(position).getAppoint_patient_st().equalsIgnoreCase("Doctor missed appointment")){
             holder.ll_appointmentstatus.setVisibility(View.VISIBLE);
             holder.txt_appointment_status.setText("Not available");
-        }else if(missedAppointmentResponseList.get(position).getAppoint_patient_st() != null && missedAppointmentResponseList.get(position).getAppoint_patient_st().equalsIgnoreCase("Petowner Not Available")){
+        }
+        else if(missedAppointmentResponseList.get(position).getAppoint_patient_st() != null && missedAppointmentResponseList.get(position).getAppoint_patient_st().equalsIgnoreCase("Patient Not Available")){
             holder.ll_appointmentstatus.setVisibility(View.VISIBLE);
             holder.txt_appointment_status.setText("No show");
         }
@@ -146,7 +159,7 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_petname,txt_pettype,txt_type,txt_service_cost,txt_missed_date,txt_appointment_status;
-        public ImageView img_pet_imge;
+        public ImageView img_pet_imge,img_emergency_appointment;
         public Button btn_cancel,btn_complete;
         public LinearLayout ll_appointmentstatus;
         LinearLayout ll_new;
@@ -166,6 +179,8 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
             ll_appointmentstatus = itemView.findViewById(R.id.ll_appointmentstatus);
             ll_appointmentstatus.setVisibility(View.GONE);
             ll_new = itemView.findViewById(R.id.ll_new);
+            img_emergency_appointment = itemView.findViewById(R.id.img_emergency_appointment);
+            img_emergency_appointment.setVisibility(View.GONE);
 
 
         }

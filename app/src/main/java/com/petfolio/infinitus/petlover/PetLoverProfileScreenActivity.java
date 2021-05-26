@@ -492,6 +492,12 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
             finish();
         } else if(active_tag != null){
             callDirections(active_tag);
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("TrackOrderActivity")){
+            Intent intent = new Intent(getApplicationContext(), TrackOrderActivity.class);
+            intent.putExtra("_id",_id);
+            intent.putExtra("orderid",orderid);
+            startActivity(intent);
+
         }else{
             Intent intent = new Intent(getApplicationContext(), PetLoverDashboardActivity.class);
             startActivity(intent);

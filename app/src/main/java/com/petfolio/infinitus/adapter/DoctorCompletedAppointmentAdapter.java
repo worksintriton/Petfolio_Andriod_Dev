@@ -96,6 +96,12 @@ public class DoctorCompletedAppointmentAdapter extends  RecyclerView.Adapter<Rec
 
         }
 
+        if(completedAppointmentResponseList.get(position).getAppointment_types() != null && completedAppointmentResponseList.get(position).getAppointment_types().equalsIgnoreCase("Emergency")){
+            holder.img_emergency_appointment.setVisibility(View.VISIBLE);
+        }else{
+            holder.img_emergency_appointment.setVisibility(View.GONE);
+
+        }
 
         holder.btn__prescriptiondetails.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,7 +145,7 @@ public class DoctorCompletedAppointmentAdapter extends  RecyclerView.Adapter<Rec
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_petname,txt_pettype,txt_type,txt_service_cost,txt_completed_date;
-        public ImageView img_pet_imge,img_prescriptiondetails;
+        public ImageView img_pet_imge,img_emergency_appointment;
         public Button btn_cancel,btn_complete,btn__prescriptiondetails;
         LinearLayout ll_new;
 
@@ -157,6 +163,8 @@ public class DoctorCompletedAppointmentAdapter extends  RecyclerView.Adapter<Rec
             //img_prescriptiondetails = itemView.findViewById(R.id.img_prescriptiondetails);
             ll_new = itemView.findViewById(R.id.ll_new);
             btn__prescriptiondetails = itemView.findViewById(R.id.btn_prescriptiondetails);
+            img_emergency_appointment = itemView.findViewById(R.id.img_emergency_appointment);
+            img_emergency_appointment.setVisibility(View.GONE);
 
         }
 

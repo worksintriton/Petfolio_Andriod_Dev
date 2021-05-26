@@ -7,30 +7,36 @@
     <LinearLayout
         android:id="@+id/headerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="UseCompoundDrawables"
-        android:layout_alignParentTop="true">
-
-        <ImageView
-            android:id="@+id/img_bck"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:contentDescription="@string/image"
-            android:src="@drawable/back" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:background="@color/new_header_bg"
+        android:gravity="center">
+        <RelativeLayout
+            android:id="@+id/back_rela"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/futuramediumbt"
-            android:padding="2dp"
-            android:text="@string/edit_doctor_business_info_title"
-            android:textColor="@color/new_txt_color"
-            android:textSize="@dimen/big_txt_size"  />
+            tools:ignore="UselessParent">
+
+            <ImageView
+                android:id="@+id/img_bck"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="15dp"
+                android:background="@drawable/back_arrow_white"
+                tools:ignore="ContentDescription" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/img_bck"
+                android:fontFamily="@font/futuramediumbt"
+                android:text="@string/edit_doctor_business_info_title"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="@dimen/big_txt_size"  />
+
+        </RelativeLayout>
 
     </LinearLayout>
 

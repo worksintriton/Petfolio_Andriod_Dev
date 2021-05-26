@@ -589,18 +589,32 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                             int product_discount = response.body().getProduct_details().getProduct_discount();
                             String  product_discription = response.body().getProduct_details().getProduct_discription();
                             int product_cart_count = response.body().getProduct_details().getProduct_cart_count();
-                            threshould = response.body().getProduct_details().getThreshould();
-                            prod_type = response.body().getProduct_details().getCat_id().getProduct_cate();
+                            if( response.body().getVendor_details() != null){
+                                if(response.body().getProduct_details().getThreshould() != null){
+                                    threshould = response.body().getProduct_details().getThreshould();
+                                }
+                                if(response.body().getProduct_details().getCat_id().getProduct_cate() != null){
+                                    prod_type = response.body().getProduct_details().getCat_id().getProduct_cate();
+                                }
 
-                            business_name = response.body().getVendor_details().getBussiness_name();
+                               if(response.body().getVendor_details().getBussiness_name() != null) {
+                                   business_name = response.body().getVendor_details().getBussiness_name();
+                               }
+                               if(response.body().getVendor_details().getUser_name() != null){
+                                   vendor_name = response.body().getVendor_details().getUser_name();
+                               }
+                               if( response.body().getVendor_details().getBusiness_reg() != null){
+                                   bussiness_reg = response.body().getVendor_details().getBusiness_reg();
+                               }
+                                if(response.body().getVendor_details().getBussiness_loc() != null) {
+                                    business_location = response.body().getVendor_details().getBussiness_loc();
+                                }
+                                if( response.body().getVendor_details().getBussiness_gallery() != null) {
+                                    bussinessGalleryBeans = response.body().getVendor_details().getBussiness_gallery();
 
-                            vendor_name = response.body().getVendor_details().getUser_name();
+                                }
+                            }
 
-                            bussiness_reg = response.body().getVendor_details().getBusiness_reg();
-
-                            business_location = response.body().getVendor_details().getBussiness_loc();
-
-                            bussinessGalleryBeans = response.body().getVendor_details().getBussiness_gallery();
 
                             viewPager.setVisibility(View.VISIBLE);
 

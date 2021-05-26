@@ -88,9 +88,9 @@ public class NotificationDashboardAdapter extends  RecyclerView.Adapter<Recycler
         holder.ll_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 currentSelectedPosition = position;
                 notifyDataSetChanged();
+
 
 
 

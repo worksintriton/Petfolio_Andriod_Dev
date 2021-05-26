@@ -15,8 +15,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 
+import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.doctor.DoctorPrescriptionDetailsActivity;
 import com.petfolio.infinitus.interfaces.AddReviewListener;
 import com.petfolio.infinitus.petlover.PetAppointmentDetailsActivity;
@@ -121,6 +123,28 @@ public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
 
         });
 
+        if (completedAppointmentResponseList.get(position).getPhoto() != null && !completedAppointmentResponseList.get(position).getPhoto().isEmpty()) {
+
+            Glide.with(context)
+                    .load(completedAppointmentResponseList.get(position).getPhoto())
+                    .into(holder.img_pet_imge);
+
+        }
+        else{
+            Glide.with(context)
+                    .load(APIClient.PROFILE_IMAGE_URL)
+                    .into(holder.img_pet_imge);
+
+        }
+
+        if(completedAppointmentResponseList.get(position).getAppointment_type() != null && completedAppointmentResponseList.get(position).getAppointment_type().equalsIgnoreCase("Emergency")){
+            holder.img_emergency_appointment.setVisibility(View.VISIBLE);
+        }else{
+            holder.img_emergency_appointment.setVisibility(View.GONE);
+
+        }
+
+
 
 
         holder.ll_new.setOnClickListener(v -> {
@@ -165,7 +189,7 @@ public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_petname,txt_pettype,txt_type,txt_completed_date,txt_service_cost,txt_lbl_doctorname,txt_doctorname;
-        public ImageView img_pet_imge;
+        public ImageView img_pet_imge,img_emergency_appointment;
         public Button btn_cancel,btn_complete,btn_add_review,btn__prescriptiondetails;
         LinearLayout ll_new;
 
@@ -185,6 +209,8 @@ public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
             btn__prescriptiondetails = itemView.findViewById(R.id.btn_prescriptiondetails);
             txt_lbl_doctorname = itemView.findViewById(R.id.txt_lbl_doctorname);
             txt_doctorname = itemView.findViewById(R.id.txt_doctorname);
+            img_emergency_appointment = itemView.findViewById(R.id.img_emergency_appointment);
+            img_emergency_appointment.setVisibility(View.GONE);
 
 
 

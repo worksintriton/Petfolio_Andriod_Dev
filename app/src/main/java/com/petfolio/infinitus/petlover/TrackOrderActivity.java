@@ -1,6 +1,7 @@
 package com.petfolio.infinitus.petlover;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.requestpojo.TrackOrderDetailsRequest;
@@ -193,6 +195,14 @@ public class TrackOrderActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_track_order_status);
         ButterKnife.bind(this);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            _id = extras.getInt("_id");
+            orderid = extras.getString("orderid");
+            fromactivity = extras.getString("fromactivity");
+            Log.w(TAG,"_id : "+_id);
+        }
+
 
         ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
         ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
@@ -201,6 +211,26 @@ public class TrackOrderActivity extends AppCompatActivity implements View.OnClic
         ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
         TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.track_order));
+        img_sos.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
+
+        img_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+            }
+        });
+
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class);
+                intent.putExtra("fromactivity",TAG);
+                intent.putExtra("_id",_id);
+                intent.putExtra("orderid",orderid);
+                startActivity(intent);
+            }
+        });
 
         img_back.setOnClickListener(this);
 
@@ -218,13 +248,7 @@ public class TrackOrderActivity extends AppCompatActivity implements View.OnClic
 
 
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            _id = extras.getInt("_id");
-            orderid = extras.getString("orderid");
-            fromactivity = extras.getString("fromactivity");
-            Log.w(TAG,"_id : "+_id);
-        }
+
         if (new ConnectionDetector(TrackOrderActivity.this).isNetworkAvailable(TrackOrderActivity.this)) {
             petlover_fetch_single_product_detail_ResponseCall();
         }
@@ -368,6 +392,7 @@ public class TrackOrderActivity extends AppCompatActivity implements View.OnClic
                                                 if (prodcutTrackDetailsBeanList.get(i).isStatus()) {
                                                     ll_order_reject_bypetlover.setVisibility(View.VISIBLE);
                                                     txt_order_reject_date_petlover.setText(" " + prodcutTrackDetailsBeanList.get(i).getDate());
+                                                    txt_order_reject_date_reason.setText(" " + prodcutTrackDetailsBeanList.get(i).getText());
                                                     txt_order_vendor_reject_date_reason.setText(prodcutTrackDetailsBeanList.get(i).getText());
                                                     txt_order_vendor_reject_date_reason.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
                                                     img_vendor_order_rejected_bypetlover.setImageResource(R.drawable.ic_baseline_check_circle_24);

@@ -31,6 +31,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
+import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.activity.location.AddMyAddressDoctorActivity;
 import com.petfolio.infinitus.activity.location.EditMyAddressActivity;
 import com.petfolio.infinitus.activity.location.EditMyAddressDoctorActivity;
@@ -145,6 +146,11 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
     @BindView(R.id.txt_clinic_address)
     TextView txt_clinic_address;
 
+   @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_notification)
+    ImageView img_notification;
+
+
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.include_doctor_footer)
@@ -221,6 +227,15 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
 
         }
 
+        img_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+            }
+        });
+
+
+
 
         txt_usrname.setText(name);
         txt_mail.setText(emailid);
@@ -276,6 +291,9 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
             finish();
         }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PickUpLocationDoctorActivity")){
             startActivity(new Intent(getApplicationContext(), PickUpLocationDoctorActivity.class));
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorMyOrdrersActivity")){
+            startActivity(new Intent(getApplicationContext(), DoctorMyOrdrersActivity.class));
             finish();
         }else if(fromactivity != null && fromactivity.equalsIgnoreCase("EditMyAddressDoctorActivity")){
             Intent intent = new Intent(getApplicationContext(), EditMyAddressDoctorActivity.class);
