@@ -36,12 +36,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
 import com.petfolio.infinitus.activity.NotificationActivity;
-import com.petfolio.infinitus.petlover.PetLoverEditProfileActivity;
-import com.petfolio.infinitus.petlover.PetLoverNavigationDrawerNew;
-import com.petfolio.infinitus.petlover.PetLoverProfileScreenActivity;
-import com.petfolio.infinitus.petlover.PetloverPaymentDetailsActivity;
+
 import com.petfolio.infinitus.sessionmanager.SessionManager;
-//import com.petfolio.infinitus.sessionmanager.SessionManager;
 
 import java.util.HashMap;
 import java.util.Objects;

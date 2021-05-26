@@ -34,6 +34,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.adapter.ManageProductsListAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
@@ -195,6 +196,25 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
         bottom_navigation_view.setItemIconTintList(null);
         bottom_navigation_view.getMenu().findItem(R.id.feeds).setChecked(true);
         bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+
+        ImageView img_notification = findViewById(R.id.img_notification);
+        ImageView img_profile = findViewById(R.id.img_profile);
+        img_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+
+            }
+        });
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), VendorProfileScreenActivity.class);
+                intent.putExtra("fromactivity",TAG);
+                startActivity(intent);
+
+            }
+        });
 
 
         img_back.setOnClickListener(v -> onBackPressed());

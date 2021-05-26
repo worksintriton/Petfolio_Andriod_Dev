@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -121,6 +122,10 @@ public class VendorProfileScreenActivity extends AppCompatActivity implements Vi
     TextView txt_phone;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_manage_products)
+    LinearLayout ll_manage_products;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.include_vendor_footer)
     View include_vendor_footer;
 
@@ -138,8 +143,10 @@ public class VendorProfileScreenActivity extends AppCompatActivity implements Vi
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000;
     private String profileimage;
+    private String fromactivity;
 
 
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,6 +155,11 @@ public class VendorProfileScreenActivity extends AppCompatActivity implements Vi
 
         Log.w(TAG,"onCreate : ");
         avi_indicator.setVisibility(View.GONE);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            fromactivity = extras.getString("fromactivity");
+            Log.w(TAG," fromactivity : "+fromactivity);
+        }
 
 
         bottom_navigation_view = include_vendor_footer.findViewById(R.id.bottom_navigation_view);
@@ -166,6 +178,14 @@ public class VendorProfileScreenActivity extends AppCompatActivity implements Vi
 
         Log.w(TAG,"session profileimage : "+profileimage);
 
+
+        ll_manage_products.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),ManageProductsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         txt_usrname.setText(name);
         txt_mail.setText(emailid);
@@ -207,8 +227,15 @@ public class VendorProfileScreenActivity extends AppCompatActivity implements Vi
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(), VendorDashboardActivity.class));
-        finish();
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("ManageProductsActivity")){
+            Intent intent = new Intent(getApplicationContext(), ManageProductsActivity.class);
+            intent.putExtra("fromactivity",TAG);
+            startActivity(intent);
+        }else{
+            startActivity(new Intent(getApplicationContext(), VendorDashboardActivity.class));
+            finish();
+        }
+
     }
 
     @SuppressLint("NonConstantResourceId")

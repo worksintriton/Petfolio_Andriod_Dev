@@ -200,6 +200,7 @@ public class SPTrackOrderActivity extends AppCompatActivity implements View.OnCl
         ImageView img_profile = include_doctor_header.findViewById(R.id.img_profile);
         TextView toolbar_title = include_doctor_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.track_order));
+        img_cart.setVisibility(View.GONE);
 
         img_back.setOnClickListener(this);
 

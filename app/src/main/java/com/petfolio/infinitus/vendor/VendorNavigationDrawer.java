@@ -242,13 +242,19 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
        // header_title = (TextView) toolbar.findViewById(R.id.header_title);
 
         ImageView img_notification = toolbar.findViewById(R.id.img_notification);
-        ImageView img_cart = toolbar.findViewById(R.id.img_cart);
         ImageView img_profile = toolbar.findViewById(R.id.img_profile);
-
         img_notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+
+            }
+        });
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), VendorProfileScreenActivity.class);
+                startActivity(intent);
 
             }
         });
