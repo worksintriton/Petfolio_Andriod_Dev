@@ -1,8 +1,9 @@
 package com.petfolio.infinitus.requestpojo;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PrescriptionCreateRequest{
+public class PrescriptionCreateRequest {
 
 
 	/**
@@ -16,6 +17,8 @@ public class PrescriptionCreateRequest{
 	 * Prescription_data : [{"Quantity":"3","Tablet_name":"dolo","consumption":"twice"}]
 	 * Treatment_Done_by : Self
 	 * Appointment_ID
+	 * diagnosis : String,
+	 *   sub_diagnosis : String,
 	 */
 
 	private String doctor_id;
@@ -28,6 +31,24 @@ public class PrescriptionCreateRequest{
 	private String Treatment_Done_by;
 	private List<PrescriptionDataBean> Prescription_data;
 	private String Appointment_ID;
+	private String diagnosis;
+	private String sub_diagnosis;
+
+	public String getDiagnosis() {
+		return diagnosis;
+	}
+
+	public void setDiagnosis(String diagnosis) {
+		this.diagnosis = diagnosis;
+	}
+
+	public String getSub_diagnosis() {
+		return sub_diagnosis;
+	}
+
+	public void setSub_diagnosis(String sub_diagnosis) {
+		this.sub_diagnosis = sub_diagnosis;
+	}
 
 	public String getAppointment_ID() {
 		return Appointment_ID;
@@ -125,7 +146,7 @@ public class PrescriptionCreateRequest{
 
 	}
 
-	public static class PrescriptionDataBean  {
+	public static class PrescriptionDataBean implements Serializable {
 		/**
 		 * Quantity : 3
 		 * Tablet_name : dolo

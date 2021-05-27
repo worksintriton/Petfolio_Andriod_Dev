@@ -472,6 +472,11 @@
              android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".doctor.PrescriptionDetailsActivity"
+            android:screenOrientation="portrait"
+             android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".doctor.VideoCallDoctorActivity"
             android:screenOrientation="portrait"
              android:theme="@style/AppTheme"

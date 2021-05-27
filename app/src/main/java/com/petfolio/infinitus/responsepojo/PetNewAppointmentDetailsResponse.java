@@ -57,6 +57,9 @@ public class PetNewAppointmentDetailsResponse {
      * reshedule_status :
      * location_id : 6091013d8296a250cbe2b198
      * visit_type : Home
+     *   "doctor_comment": "",
+     *         "diagnosis": "",
+     *         "sub_diagnosis": "",
      * updatedAt : 2021-05-12T08:57:24.452Z
      * createdAt : 2021-05-12T08:57:24.447Z
      * __v : 0
@@ -243,6 +246,34 @@ public class PetNewAppointmentDetailsResponse {
         private String reshedule_status;
         private String location_id;
         private String visit_type;
+        private String doctor_comment;
+        private String diagnosis;
+        private String sub_diagnosis;
+
+        public String getDoctor_comment() {
+            return doctor_comment;
+        }
+
+        public void setDoctor_comment(String doctor_comment) {
+            this.doctor_comment = doctor_comment;
+        }
+
+        public String getDiagnosis() {
+            return diagnosis;
+        }
+
+        public void setDiagnosis(String diagnosis) {
+            this.diagnosis = diagnosis;
+        }
+
+        public String getSub_diagnosis() {
+            return sub_diagnosis;
+        }
+
+        public void setSub_diagnosis(String sub_diagnosis) {
+            this.sub_diagnosis = sub_diagnosis;
+        }
+
         private String updatedAt;
         private String createdAt;
         private int __v;

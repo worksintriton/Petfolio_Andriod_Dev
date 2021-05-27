@@ -690,6 +690,15 @@ public interface RestApiInterface {
     Call<FetchDoctorPaymDetaResponse>fetchdrpaymetaillistResponseCall(@Header("Content-Type") String type, @Body FetchDoctorPaymDetaRequest fetchDoctorPaymDetaRequest);
 
 
+    /*Listing all diagnosis*/
+    @GET("diagnosis/getlist")
+    Call<DiagnosisListResponse> diagnosisListResponseCall(@Header("Content-Type") String type);
+
+    /*Listing all diagnosis by sub diagnosis*/
+    @POST("sub_diagnosis/getlist_id")
+    Call<SubDiagnosisListResponse> subDiagnosisListResponseCall(@Header("Content-Type") String type, @Body SubDiagnosisRequest subDiagnosisRequest);
+
+
 
 
 }

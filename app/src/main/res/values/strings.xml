@@ -52,6 +52,9 @@
     <string name="err_msg_type_of_communicationtype">Select the communication type</string>
     <string name="err_msg_type_of_petgendertype">Select the pet gender type</string>
     <string name="err_msg_type_of_petcolortype">Select the pet color type</string>
+
+    <string name="err_msg_type_of_diagnosis">Select the diagnosis type</string>
+    <string name="err_msg_type_of_sub_diagnosis">Select the sub diagnosis type</string>
     <string name="upload_pet_image">Upload Pet image</string>
     <string name="change_pet_image">Change Pet image</string>
     <string name="pet_last_vaccinated_age">Pet Last Vaccinated Date</string>

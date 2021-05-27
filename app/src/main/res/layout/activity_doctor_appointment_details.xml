@@ -277,7 +277,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/pet_name_details"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
                 <TextView
                     android:id="@+id/txt_pet_name"
@@ -286,7 +287,8 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:textColor="@color/new_sec_txt_color"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
             </LinearLayout>
             <LinearLayout
@@ -301,7 +303,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/pet_type_details"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
                 <TextView
                     android:id="@+id/txt_pet_type"
@@ -310,7 +313,8 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:textColor="@color/new_sec_txt_color"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
             </LinearLayout>
             <LinearLayout
@@ -325,7 +329,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/breed"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
                 <TextView
                     android:id="@+id/txt_breed"
@@ -334,7 +339,8 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:textColor="@color/new_sec_txt_color"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
             </LinearLayout>
             <LinearLayout
@@ -349,7 +355,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/gender"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
                 <TextView
                     android:id="@+id/txt_gender"
@@ -358,7 +365,8 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:textColor="@color/new_sec_txt_color"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
             </LinearLayout>
             <LinearLayout
@@ -373,7 +381,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/colour"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
                 <TextView
                     android:id="@+id/txt_color"
@@ -382,7 +391,8 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:textColor="@color/new_sec_txt_color"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
             </LinearLayout>
             <LinearLayout
@@ -397,14 +407,16 @@
                     android:layout_height="wrap_content"
                     android:text="@string/weight"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
                 <TextView
                     android:id="@+id/txt_weight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/new_sec_txt_color"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
             </LinearLayout>
             <LinearLayout
@@ -419,14 +431,16 @@
                     android:layout_height="wrap_content"
                     android:text="@string/age"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
                 <TextView
                     android:id="@+id/txt_age"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/new_sec_txt_color"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
             </LinearLayout>
             <LinearLayout
@@ -441,14 +455,18 @@
                     android:layout_height="wrap_content"
                     android:text="@string/vaccinated_details"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
                 <TextView
                     android:id="@+id/txt_vaccinated"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/new_sec_txt_color"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/futuramediumbt"/>
 
             </LinearLayout>
             <LinearLayout
@@ -465,7 +483,8 @@
                     android:layout_height="match_parent"
                     android:text="@string/lastvaccinateddate"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
 
                 <TextView
@@ -473,9 +492,156 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/new_sec_txt_color"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/futuramediumbt"
+                    />
 
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:orientation="horizontal"
+                android:id="@+id/ll_allergies">
+
+                <TextView
+                    android:layout_width="@dimen/width_appoitmentdetails"
+                    android:layout_height="match_parent"
+                    android:text="@string/allergies"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
+
+
+                <TextView
+                    android:id="@+id/txt_allergies"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/new_sec_txt_color"
+                    android:textSize="14sp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/futuramediumbt"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:orientation="horizontal"
+                android:id="@+id/ll_comments">
+
+                <TextView
+                    android:layout_width="@dimen/width_appoitmentdetails"
+                    android:layout_height="match_parent"
+                    android:text="Comments"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
+
+
+                <TextView
+                    android:id="@+id/txt_comments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/new_sec_txt_color"
+                    android:textSize="14sp"
+                    android:maxLines="3"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/futuramediumbt"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:orientation="horizontal"
+                android:id="@+id/ll_diagnosis">
+
+                <TextView
+                    android:layout_width="@dimen/width_appoitmentdetails"
+                    android:layout_height="match_parent"
+                    android:text="Diagnosis"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
+
+
+                <TextView
+                    android:id="@+id/txt_diagnosis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/new_sec_txt_color"
+                    android:textSize="14sp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/futuramediumbt"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:orientation="horizontal"
+                android:id="@+id/ll_sub_diagnosis">
+
+                <TextView
+                    android:layout_width="@dimen/width_appoitmentdetails"
+                    android:layout_height="match_parent"
+                    android:text="Sub diagnosis "
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
+
+
+                <TextView
+                    android:id="@+id/txt_sub_diagnosis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/new_sec_txt_color"
+                    android:textSize="14sp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/futuramediumbt"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:orientation="horizontal"
+                android:id="@+id/ll_doctor_comment">
+
+                <TextView
+                    android:layout_width="@dimen/width_appoitmentdetails"
+                    android:layout_height="match_parent"
+                    android:text="Doctor comments"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
+
+
+                <TextView
+                    android:id="@+id/txt_doctor_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/new_sec_txt_color"
+                    android:textSize="14sp"
+                    android:maxLines="3"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/futuramediumbt"/>
+
+            </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
@@ -491,7 +657,8 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_baseline_access_time_24"/>
+                    android:src="@drawable/ic_baseline_access_time_24"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_marginStart="10dp"
@@ -501,7 +668,8 @@
                     android:text="@string/appointmentdateandtime"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    tools:ignore="UseCompatTextViewDrawableXml" />
+                    tools:ignore="UseCompatTextViewDrawableXml"
+                    android:fontFamily="@font/futuramediumbt"/>
 
             </LinearLayout>
             <TextView
@@ -513,6 +681,7 @@
                 android:textColor="@color/new_green_btn"
                 android:textSize="14sp"
                 android:text="@string/appointmentdateandtime"
+                android:fontFamily="@font/futuramediumbt"
                 />
             <View
                 android:layout_width="match_parent"
@@ -532,14 +701,16 @@
                     android:layout_height="wrap_content"
                     android:text="@string/bookingdate"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
                 <TextView
                     android:id="@+id/txt_order_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/new_sec_txt_color"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
             </LinearLayout>
 
@@ -555,14 +726,16 @@
                     android:layout_height="match_parent"
                     android:text="@string/bookingid"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
                 <TextView
                     android:id="@+id/txt_booking_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/new_sec_txt_color"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
             </LinearLayout>
 
@@ -578,14 +751,16 @@
                     android:layout_height="wrap_content"
                     android:text="@string/payment_method"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
                 <TextView
                     android:id="@+id/txt_payment_method"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/new_sec_txt_color"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
             </LinearLayout>
 
@@ -601,14 +776,16 @@
                     android:layout_height="wrap_content"
                     android:text="@string/consultation_fees"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
                 <TextView
                     android:id="@+id/txt_order_cost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/new_sec_txt_color"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
             </LinearLayout>
 
@@ -624,14 +801,16 @@
                     android:layout_height="wrap_content"
                     android:text="@string/visittype"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
                 <TextView
                     android:id="@+id/txt_visit_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/new_sec_txt_color"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:fontFamily="@font/futuramediumbt"/>
 
             </LinearLayout>
 
@@ -651,7 +830,8 @@
                 android:text="@string/address"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:fontFamily="@font/futuramediumbt"/>
             <TextView
                 android:id="@+id/txt_address"
                 android:layout_width="wrap_content"
@@ -662,7 +842,8 @@
                 android:maxLines="3"
                 android:text="@string/desc_dummy"
                 android:textColor="@color/new_sec_txt_color"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:fontFamily="@font/futuramediumbt"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -684,7 +865,8 @@
                     android:text="@string/home_address"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:fontFamily="@font/futuramediumbt"/>
                 <TextView
                     android:id="@+id/txt_home_address"
                     android:layout_width="wrap_content"
@@ -696,7 +878,8 @@
                     android:text="@string/desc_dummy"
                     android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/futuramediumbt"/>
             </LinearLayout>
 
         </LinearLayout>

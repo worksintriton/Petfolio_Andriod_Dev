@@ -212,6 +212,48 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
     @BindView(R.id.img_emergency_appointment)
     ImageView img_emergency_appointment;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_allergies)
+    LinearLayout ll_allergies;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_allergies)
+    TextView txt_allergies;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_comments)
+    LinearLayout ll_comments;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_comments)
+    TextView txt_comments;
+
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_diagnosis)
+    LinearLayout ll_diagnosis;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_diagnosis)
+    TextView txt_diagnosis;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_sub_diagnosis)
+    LinearLayout ll_sub_diagnosis;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_sub_diagnosis)
+    TextView txt_sub_diagnosis;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_doctor_comment)
+    LinearLayout ll_doctor_comment;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_doctor_comment)
+    TextView txt_doctor_comment;
+
+
 
     @SuppressLint("LongLogTag")
     @Override
@@ -227,6 +269,17 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
         txt_serv_name.setVisibility(View.GONE);
         ll_home_address.setVisibility(View.GONE);
 
+        ll_allergies.setVisibility(View.GONE);
+        ll_comments.setVisibility(View.GONE);
+
+        ll_diagnosis.setVisibility(View.GONE);
+        ll_sub_diagnosis.setVisibility(View.GONE);
+        ll_doctor_comment.setVisibility(View.GONE);
+        txt_diagnosis.setVisibility(View.GONE);
+        txt_sub_diagnosis.setVisibility(View.GONE);
+        txt_doctor_comment.setVisibility(View.GONE);
+
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             appointment_id = extras.getString("appointment_id");
@@ -240,6 +293,8 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
         if(bookedat != null){
             compareDatesandTime(currentDateandTime,bookedat);
         }
+
+
 
 
 
@@ -398,7 +453,8 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
                                 if (response.body().getData().getPet_id().getLast_vaccination_date() != null && !response.body().getData().getPet_id().getLast_vaccination_date().isEmpty()) {
                                     txt_petlastvaccinatedage.setText(response.body().getData().getPet_id().getLast_vaccination_date());
                                 }
-                            } else {
+                            }
+                            else {
                                 ll_petlastvacinateddate.setVisibility(View.GONE);
                                 vaccinated = "No";
                             }
@@ -435,6 +491,48 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
                             }
                             else{
                                 ll_home_address.setVisibility(View.GONE);
+                            }
+
+                            if(response.body().getData().getAllergies() != null && !response.body().getData().getAllergies().isEmpty() ){
+                                ll_allergies.setVisibility(View.VISIBLE);
+                                txt_allergies.setText(response.body().getData().getAllergies());
+                            }
+                            else{
+                                ll_allergies.setVisibility(View.GONE);
+                            }
+                            if(response.body().getData().getProblem_info() != null && !response.body().getData().getProblem_info().isEmpty() ){
+                                ll_comments.setVisibility(View.VISIBLE);
+                                txt_comments.setText(response.body().getData().getProblem_info());
+                            }
+                            else{
+                                ll_comments.setVisibility(View.GONE);
+                            }
+
+
+                            if(from != null && from.equalsIgnoreCase("DoctorCompletedAppointmentAdapter")){
+                                if(response.body().getData().getDiagnosis() != null && !response.body().getData().getDiagnosis().isEmpty()){
+                                    ll_diagnosis.setVisibility(View.VISIBLE);
+                                    txt_diagnosis.setVisibility(View.VISIBLE);
+                                    txt_diagnosis.setText(response.body().getData().getDiagnosis());
+
+                                }
+                                if(response.body().getData().getSub_diagnosis() != null && !response.body().getData().getSub_diagnosis().isEmpty()){
+                                    ll_sub_diagnosis.setVisibility(View.VISIBLE);
+                                    txt_sub_diagnosis.setVisibility(View.VISIBLE);
+                                    txt_sub_diagnosis.setText(response.body().getData().getSub_diagnosis());
+                                }
+                                if(response.body().getData().getDoctor_comment() != null && !response.body().getData().getDoctor_comment().isEmpty()){
+                                    ll_doctor_comment.setVisibility(View.VISIBLE);
+                                    txt_doctor_comment.setVisibility(View.VISIBLE);
+                                    txt_doctor_comment.setText(response.body().getData().getDoctor_comment());
+
+                                }
+
+
+
+
+
+
                             }
                         }
 
