@@ -201,6 +201,8 @@ public class DoctorOrderDetailsActivity extends AppCompatActivity implements Vie
         TextView toolbar_title = include_doctor_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.order_details));
 
+        img_cart.setVisibility(View.GONE);
+
 
         img_back.setOnClickListener(this);
         Bundle extras = getIntent().getExtras();

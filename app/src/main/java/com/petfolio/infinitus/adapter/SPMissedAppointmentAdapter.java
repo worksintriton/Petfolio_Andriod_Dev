@@ -122,7 +122,7 @@ public class SPMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerVi
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_petname,txt_pettype,txt_type,txt_service_cost,txt_missed_date,txt_lbl_type;
-        public ImageView img_pet_imge;
+        public ImageView img_pet_imge,img_emergency_appointment;
         public Button btn_cancel,btn_complete;
         public LinearLayout ll_new;
 
@@ -139,6 +139,9 @@ public class SPMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerVi
             btn_cancel = itemView.findViewById(R.id.btn_cancel);
             btn_complete = itemView.findViewById(R.id.btn_complete);
             ll_new = itemView.findViewById(R.id.ll_new);
+
+            img_emergency_appointment = itemView.findViewById(R.id.img_emergency_appointment);
+            img_emergency_appointment.setVisibility(View.GONE);
 
 
 

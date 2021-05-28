@@ -29,6 +29,9 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.fragmentvendor.myorders.FragementNewOrders;
+import com.petfolio.infinitus.fragmentvendor.myorders.FragmentCancelledOrders;
+import com.petfolio.infinitus.fragmentvendor.myorders.FragmentCompletedOrders;
 import com.petfolio.infinitus.requestpojo.SPCheckStatusRequest;
 import com.petfolio.infinitus.responsepojo.SPCheckStatusResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
@@ -123,9 +126,9 @@ public class FragmentVendorDashboard extends Fragment  {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager(),3);
-        adapter.addFragment(new FragmentVendorNewOrders(), "New");
-        adapter.addFragment(new FragmentVendorCompletedOrders(), "Completed");
-        adapter.addFragment(new FragmentVendorCancelledOrders(), "Cancelled");
+        adapter.addFragment(new FragementNewOrders(), "New");
+        adapter.addFragment(new FragmentCompletedOrders(), "Completed");
+        adapter.addFragment(new FragmentCancelledOrders(), "Cancelled");
         viewPager.setAdapter(adapter);
     }
 

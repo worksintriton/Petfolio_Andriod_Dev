@@ -74,6 +74,7 @@ public class SPMyOrdrersActivity extends AppCompatActivity implements BottomNavi
         ImageView img_profile = include_doctor_header.findViewById(R.id.img_profile);
         TextView toolbar_title = include_doctor_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.my_orders));
+        img_cart.setVisibility(View.GONE);
 
         img_notification.setOnClickListener(new View.OnClickListener() {
             @Override

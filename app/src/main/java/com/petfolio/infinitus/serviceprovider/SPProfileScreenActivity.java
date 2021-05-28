@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -20,17 +21,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
-import com.petfolio.infinitus.activity.location.ManageAddressActivity;
+import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.adapter.ViewPagerSPGalleryDetailsAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 
-import com.petfolio.infinitus.doctor.DoctorProfileScreenActivity;
-import com.petfolio.infinitus.doctor.EditDoctorProfileImageActivity;
 import com.petfolio.infinitus.requestpojo.SPDetailsByUserIdRequest;
 import com.petfolio.infinitus.responsepojo.PetListResponse;
 import com.petfolio.infinitus.responsepojo.ServiceProviderRegisterFormCreateResponse;
@@ -52,12 +52,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SPProfileScreenActivity extends AppCompatActivity implements View.OnClickListener {
+public class SPProfileScreenActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
     private  String TAG = "SPProfileScreenActivity";
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_back)
-    ImageView img_back;
+
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_profile)
@@ -123,6 +121,16 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
     @BindView(R.id.txt_sp_specialization)
     TextView txt_sp_specialization;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_header)
+    View include_petlover_header;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_doctor_footer)
+    View include_doctor_footer;
+
+    BottomNavigationView bottom_navigation_view;
+
 
 
 
@@ -145,6 +153,9 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
     private String profileimage;
     private List<ServiceProviderRegisterFormCreateResponse.DataBean.BusServiceGallBean> servieGalleryResponseList;
     private String fromactivity;
+    private String appointment_id;
+    private String bookedat;
+    private String from;
 
 
     @Override
@@ -172,7 +183,37 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             fromactivity = extras.getString("fromactivity");
+
+            /*SPAppointmentDetailsActivity*/
+            appointment_id = extras.getString("appointment_id");
+            fromactivity = extras.getString("fromactivity");
+            bookedat = extras.getString("bookedat");
+            from = extras.getString("from");
+
+
         }
+
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.appointment));
+
+        img_back.setOnClickListener(v -> onBackPressed());
+
+
+        img_sos.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
+        img_profile.setVisibility(View.INVISIBLE);
+
+        img_notification.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), NotificationActivity.class)));
+
+        bottom_navigation_view = include_doctor_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
 
 
         txt_usrname.setText(name);
@@ -218,6 +259,13 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
         if(fromactivity != null && fromactivity.equalsIgnoreCase("SPMyOrdrersActivity")){
             startActivity(new Intent(getApplicationContext(), SPMyOrdrersActivity.class));
             finish();
+        }if(from != null && from.equalsIgnoreCase("SPAppointmentDetailsActivity")){
+            Intent intent = new Intent(new Intent(getApplicationContext(), SPAppointmentDetailsActivity.class));
+            intent.putExtra("appointment_id",appointment_id);
+            intent.putExtra("fromactivity",fromactivity);
+            intent.putExtra("bookedat",bookedat);
+            intent.putExtra("from",TAG);
+            startActivity(intent);
         }else{
             startActivity(new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class));
             finish();
@@ -441,4 +489,31 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
 
     }
 
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.home:
+                callDirections("1");
+                break;
+            case R.id.shop:
+                callDirections("2");
+                break;
+
+            case R.id.community:
+                callDirections("3");
+                break;
+
+            default:
+                return  false;
+        }
+        return true;
+    }
+    public void callDirections(String tag){
+        Intent intent = new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class);
+        intent.putExtra("tag",tag);
+        startActivity(intent);
+        finish();
+    }
 }

@@ -228,6 +228,7 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
     @BindView(R.id.txt_dr_desc)
     TextView txt_dr_desc;
 
+
     List<SPDetailsRepsonse.DataBean.BusSpecListBean> specializationBeanList;
 
     String serv_name,selectedServiceImagepath;
@@ -591,6 +592,11 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
 //                        }
                         if(response.body().getData().getDistance() != 0) {
                              distance = response.body().getData().getDistance();
+                             txt_distance.setText(distance+"");
+
+                        }else{
+                            distance = 0;
+                            txt_distance.setText(0+"");
                         }
                         if( response.body().getData().getSp_loc() != null) {
                              location = response.body().getData().getSp_loc();
@@ -604,17 +610,17 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
                             Log.w(TAG,"longitude"+ longitude );
 
 
+
                             // Obtain the SupportMapFragment and get notified when the map is ready to be used.
                             mapFragment = (SupportMapFragment) getSupportFragmentManager()
                                     .findFragmentById(R.id.map);
 
 
-                            assert mapFragment!=null;
+                            if (mapFragment != null) {
+                                mapFragment.getMapAsync(Service_Details_Activity.this);
+                            }
 
-
-                            mapFragment.getMapAsync(Service_Details_Activity.this);
-
-                           // mapFragment.getMapAsync(Service_Details_Activity.this);
+                            // mapFragment.getMapAsync(Service_Details_Activity.this);
 
                         }
                         if(response.body().getDetails().getImage_path() != null) {

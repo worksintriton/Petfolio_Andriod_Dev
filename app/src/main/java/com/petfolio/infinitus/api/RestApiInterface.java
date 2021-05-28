@@ -253,6 +253,8 @@ public interface RestApiInterface {
     @POST("prescription/create")
     Call<PrescriptionCreateResponse> prescriptionCreateRequestCall(@Header("Content-Type") String type, @Body PrescriptionCreateRequest prescriptionCreateRequest);
 
+
+
     /*Prescriptoin Details*/
     @POST("prescription/fetch_by_appointment_id")
     Call<PrescriptionCreateResponse> prescriptionDetailsResponseCall(@Header("Content-Type") String type, @Body PrescriptionDetailsRequest prescriptionDetailsRequest);
@@ -697,6 +699,7 @@ public interface RestApiInterface {
     /*Listing all diagnosis by sub diagnosis*/
     @POST("sub_diagnosis/getlist_id")
     Call<SubDiagnosisListResponse> subDiagnosisListResponseCall(@Header("Content-Type") String type, @Body SubDiagnosisRequest subDiagnosisRequest);
+
 
 
 

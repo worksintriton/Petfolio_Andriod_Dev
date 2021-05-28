@@ -393,6 +393,9 @@ public class PrescriptionDetailsActivity extends AppCompatActivity {
         appoinmentCompleteRequest.set_id(appoinmentid);
         appoinmentCompleteRequest.setCompleted_at(currentDateandTime);
         appoinmentCompleteRequest.setAppoinment_status("Completed");
+        appoinmentCompleteRequest.setDiagnosis(DiagnosisType);
+        appoinmentCompleteRequest.setSub_diagnosis(SubDiagnosisType);
+        appoinmentCompleteRequest.setDoctor_comment(Doctor_Comments);
         Log.w(TAG,"appoinmentCompleteRequest"+ "--->" + new Gson().toJson(appoinmentCompleteRequest));
         return appoinmentCompleteRequest;
     }

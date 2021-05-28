@@ -115,6 +115,8 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
         bottom_navigation_view = include_doctor_footer.findViewById(R.id.bottom_navigation_view);
         bottom_navigation_view.setItemIconTintList(null);
         bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+
 
 
         avi_indicator.setVisibility(View.GONE);
@@ -159,7 +161,6 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
             transaction.replace(R.id.frame_schedule, active, active_tag);
             transaction.commitNowAllowingStateLoss();
         }
-        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
 
         txt_location.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -18,7 +18,7 @@ public class PrescriptionCreateRequest {
 	 * Treatment_Done_by : Self
 	 * Appointment_ID
 	 * diagnosis : String,
-	 *   sub_diagnosis : String,
+	 * sub_diagnosis : String,
 	 */
 
 	private String doctor_id;

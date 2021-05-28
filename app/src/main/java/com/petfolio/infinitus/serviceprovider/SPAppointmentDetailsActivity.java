@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.petlover.PetAppointmentDetailsActivity;
@@ -63,9 +65,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_back)
-    ImageView img_back;
+
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_user)
@@ -168,6 +168,14 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
     @BindView(R.id.txt_petlastvaccinatedage)
     TextView txt_petlastvaccinatedage;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.scrollablContent)
+    ScrollView scrollablContent;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_header)
+    View include_petlover_header;
+
     private String fromactivity;
     private String spid;
     private String appointmentid;
@@ -180,6 +188,13 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
     private List<PetNewAppointmentDetailsResponse.DataBean.PetIdBean.PetImgBean> pet_image;
     private String petAgeandMonth;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_doctor_footer)
+    View include_doctor_footer;
+
+
+    BottomNavigationView bottom_navigation_view;
+
 
     @SuppressLint({"LongLogTag", "LogNotTimber"})
     @Override
@@ -190,6 +205,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
 
 
         ll_petlastvacinateddate.setVisibility(View.GONE);
+        scrollablContent.setVisibility(View.GONE);
 
 
         Bundle extras = getIntent().getExtras();
@@ -209,6 +225,35 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
                 btn_complete.setVisibility(View.VISIBLE);
             }
         }
+
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.appointment));
+
+        img_back.setOnClickListener(v -> onBackPressed());
+
+
+        img_sos.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
+
+        img_notification.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), NotificationActivity.class)));
+        img_profile.setOnClickListener(view -> {
+            Intent intent = new Intent(new Intent(getApplicationContext(), SPProfileScreenActivity.class));
+            intent.putExtra("appointment_id",appointment_id);
+            intent.putExtra("fromactivity",fromactivity);
+            intent.putExtra("bookedat",bookedat);
+            intent.putExtra("from",TAG);
+            startActivity(intent);
+        });
+
+        bottom_navigation_view = include_doctor_footer.findViewById(R.id.bottom_navigation_view);
+        bottom_navigation_view.setItemIconTintList(null);
+        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
+        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
 
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
@@ -258,6 +303,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
                 if (response.body() != null) {
 
                     if (200 == response.body().getCode()) {
+                        scrollablContent.setVisibility(View.VISIBLE);
 
                         String vaccinated, addr, usrname;
 
@@ -333,6 +379,8 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
 
                                     , gender, colour, weight, order_date, orderid, payment_method, order_cost, vaccinated, addr);
                         }
+                    }else{
+                        scrollablContent.setVisibility(View.GONE);
                     }
 
 
@@ -471,7 +519,6 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
             txt_address.setText(addr);
         }
 
-        img_back.setOnClickListener(v -> onBackPressed());
 
         img_videocall.setOnClickListener(v -> {
             Log.w(TAG,"Start_appointment_status : "+start_appointment_status);
@@ -498,11 +545,11 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
         try {
             dialog = new Dialog(SPAppointmentDetailsActivity.this);
             dialog.setContentView(R.layout.alert_approve_reject_layout);
-            TextView tvheader = (TextView)dialog.findViewById(R.id.tvInternetNotConnected);
+            TextView tvheader = dialog.findViewById(R.id.tvInternetNotConnected);
             tvheader.setText(R.string.cancelappointment);
-            Button dialogButtonApprove = (Button) dialog.findViewById(R.id.btnApprove);
+            Button dialogButtonApprove = dialog.findViewById(R.id.btnApprove);
             dialogButtonApprove.setText("Yes");
-            Button dialogButtonRejected = (Button) dialog.findViewById(R.id.btnReject);
+            Button dialogButtonRejected = dialog.findViewById(R.id.btnReject);
             dialogButtonRejected.setText("No");
 
             dialogButtonApprove.setOnClickListener(view -> {
@@ -603,14 +650,9 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
             case R.id.shop:
                 callDirections("2");
                 break;
-            case R.id.services:
-                callDirections("3");
-                break;
-            case R.id.care:
-                callDirections("4");
-                break;
+
             case R.id.community:
-                callDirections("5");
+                callDirections("3");
                 break;
 
             default:
@@ -619,11 +661,13 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
         return true;
     }
     public void callDirections(String tag){
-        Intent intent = new Intent(getApplicationContext(), PetLoverDashboardActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class);
         intent.putExtra("tag",tag);
         startActivity(intent);
         finish();
     }
+
+
     @SuppressLint("SetTextI18n")
     private void showStatusAlertCompleteAppointment(String id) {
 
@@ -631,11 +675,11 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
 
             dialog = new Dialog(SPAppointmentDetailsActivity.this);
             dialog.setContentView(R.layout.alert_approve_reject_layout);
-            TextView tvheader = (TextView)dialog.findViewById(R.id.tvInternetNotConnected);
+            TextView tvheader = dialog.findViewById(R.id.tvInternetNotConnected);
             tvheader.setText(R.string.completeappointment);
-            Button dialogButtonApprove = (Button) dialog.findViewById(R.id.btnApprove);
+            Button dialogButtonApprove = dialog.findViewById(R.id.btnApprove);
             dialogButtonApprove.setText("Yes");
-            Button dialogButtonRejected = (Button) dialog.findViewById(R.id.btnReject);
+            Button dialogButtonRejected = dialog.findViewById(R.id.btnReject);
             dialogButtonRejected.setText("No");
 
             dialogButtonApprove.setOnClickListener(view -> {
@@ -807,7 +851,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
             e1.printStackTrace();
         }
     }
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     private void getAge(int year, int month, int day){
 
         Log.w(TAG,"day : "+day+" month: "+month+" year : "+year);
@@ -824,8 +868,8 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements B
             age--;
         }
 
-        Integer ageInt = new Integer(age);
-        Integer monthsInt = new Integer(months);
+        @SuppressLint("UseValueOf") Integer ageInt = new Integer(age);
+        @SuppressLint("UseValueOf") Integer monthsInt = new Integer(months);
         String ageS = ageInt.toString();
         String monthsS = monthsInt.toString();
 

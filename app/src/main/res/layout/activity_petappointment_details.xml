@@ -786,9 +786,11 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:id="@+id/ll_visit_type">
 
                 <TextView
+
                     android:layout_width="@dimen/width_appoitmentdetails"
                     android:layout_height="wrap_content"
                     android:text="@string/visittype"

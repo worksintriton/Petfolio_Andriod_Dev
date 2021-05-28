@@ -254,6 +254,14 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
     @BindView(R.id.txt_doctor_comment)
     TextView txt_doctor_comment;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_pets_handled_details)
+    TextView txt_pets_handled_details;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_visit_type)
+    LinearLayout ll_visit_type;
+
 
     String appointment_id;
     String appoinment_status;
@@ -307,6 +315,11 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
             from = extras.getString("from");
 
             Log.w(TAG,"appointmentfor : "+appointmentfor+" from : "+from);
+
+            if(appointmentfor !=null && appointmentfor.equalsIgnoreCase("SP")){
+                txt_pets_handled_details.setVisibility(View.GONE);
+                ll_visit_type.setVisibility(View.GONE);
+            }
 
 
         }

@@ -290,14 +290,14 @@
                                     android:layout_height="match_parent"
                                     android:layout_marginStart="5dp"
                                     android:ellipsize="end"
+                                    android:fontFamily="@font/futuramediumbt"
                                     android:gravity="center"
                                     android:maxLines="1"
                                     android:text="@string/km"
                                     android:textColor="@color/white"
                                     android:textSize="10sp"
                                     android:textStyle="bold"
-                                    tools:ignore="SmallSp"
-                                    android:fontFamily="@font/futuramediumbt"/>
+                                    tools:ignore="SmallSp" />
 
                             </LinearLayout>
 

@@ -271,6 +271,7 @@ public class SPVerifyEmailOtpActivity extends AppCompatActivity implements View.
         });
 
     }
+    @SuppressLint("LongLogTag")
     private EmailOTPRequest emailOTPRequest() {
         /*
          * user_email : mohammedimthi2395@gmail.com

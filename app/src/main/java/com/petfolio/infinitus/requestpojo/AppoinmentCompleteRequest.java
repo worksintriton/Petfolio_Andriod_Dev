@@ -12,6 +12,33 @@ public class AppoinmentCompleteRequest {
     private String completed_at;
     private String appoinment_status;
 
+    private String doctor_comment;
+    private String diagnosis;
+    private String sub_diagnosis;
+
+    public String getDoctor_comment() {
+        return doctor_comment;
+    }
+
+    public void setDoctor_comment(String doctor_comment) {
+        this.doctor_comment = doctor_comment;
+    }
+
+    public String getDiagnosis() {
+        return diagnosis;
+    }
+
+    public void setDiagnosis(String diagnosis) {
+        this.diagnosis = diagnosis;
+    }
+
+    public String getSub_diagnosis() {
+        return sub_diagnosis;
+    }
+
+    public void setSub_diagnosis(String sub_diagnosis) {
+        this.sub_diagnosis = sub_diagnosis;
+    }
 
     public String get_id() {
         return _id;
