@@ -35,10 +35,7 @@ import com.petfolio.infinitus.adapter.PetShopTodayDealsSeeMoreAdapter;
 import com.petfolio.infinitus.adapter.ProductsSearchAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetCareFragment;
-import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetHomeNewFragment;
-import com.petfolio.infinitus.fragmentpetlover.bottommenu.PetServicesFragment;
-import com.petfolio.infinitus.fragmentpetlover.bottommenu.VendorShopFragment;
+
 import com.petfolio.infinitus.requestpojo.ProductFiltersRequest;
 import com.petfolio.infinitus.requestpojo.ProductSearchRequest;
 import com.petfolio.infinitus.requestpojo.ProductSortByRequest;
