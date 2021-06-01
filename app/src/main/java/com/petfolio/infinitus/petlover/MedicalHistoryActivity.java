@@ -31,6 +31,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 
+import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.adapter.ManagePetListMedicalHistoryAdapter;
 import com.petfolio.infinitus.adapter.MedicalHistoryListAdapter;
 import com.petfolio.infinitus.api.APIClient;
@@ -70,9 +71,7 @@ import retrofit2.Response;
 public class MedicalHistoryActivity extends AppCompatActivity implements View.OnClickListener, PetDeleteListener, BottomNavigationView.OnNavigationItemSelectedListener, PrescriptionListener {
     private  String TAG = "MedicalHistoryActivity";
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_back)
-    ImageView img_back;
+
 
 
 
@@ -105,6 +104,11 @@ public class MedicalHistoryActivity extends AppCompatActivity implements View.On
     View include_petlover_footer;
 
     BottomNavigationView bottom_navigation_view;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.include_petlover_header)
+    View include_petlover_header;
+
 
 
 
@@ -149,6 +153,36 @@ public class MedicalHistoryActivity extends AppCompatActivity implements View.On
         profileimage = user.get(SessionManager.KEY_PROFILE_IMAGE);
         Log.w(TAG,"profileimage"+ "--->" + profileimage);
 
+        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
+        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
+        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
+        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
+        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
+        toolbar_title.setText(getResources().getString(R.string.my_orders));
+
+        img_sos.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+        img_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+            }
+        });
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class);
+                intent.putExtra("fromactivity",TAG);
+                startActivity(intent);
+            }
+        });
 
 
 
@@ -164,7 +198,7 @@ public class MedicalHistoryActivity extends AppCompatActivity implements View.On
         }
 
 
-        img_back.setOnClickListener(this);
+
 
 
 
@@ -219,11 +253,8 @@ public class MedicalHistoryActivity extends AppCompatActivity implements View.On
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.img_back:
-                onBackPressed();
-                break;
 
-                case R.id.ll_add:
+            case R.id.ll_add:
                     gotoAddYourPet();
                 break;
 

@@ -170,7 +170,7 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
 
                 //Replacing the main content with ContentFragment Which is our Inbox View;
                 case R.id.nav_item_one:
-
+                     gotoSPDashboard();
                     return true;
 
                 // For rest of the options we just show a toast on click
@@ -209,6 +209,13 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
 
 
     }
+
+    private void gotoSPDashboard() {
+        Intent intent = new Intent(getApplicationContext(),ServiceProviderDashboardActivity.class);
+        intent.putExtra("fromactivity",TAG);
+        startActivity(intent);
+    }
+
     private void gotoNotifications() {
         Intent intent = new Intent(getApplicationContext(),NotificationActivity.class);
         intent.putExtra("fromactivity",TAG);

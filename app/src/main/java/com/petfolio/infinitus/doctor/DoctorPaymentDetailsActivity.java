@@ -92,7 +92,7 @@ public class DoctorPaymentDetailsActivity extends  AppCompatActivity implements 
     private Dialog dialog;
 
 
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +108,8 @@ public class DoctorPaymentDetailsActivity extends  AppCompatActivity implements 
         ImageView img_profile = include_doctor_header.findViewById(R.id.img_profile);
         TextView toolbar_title = include_doctor_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText("Payment Details");
+
+        img_cart.setVisibility(View.GONE);
 
 
         img_back.setOnClickListener(v -> onBackPressed());
@@ -208,7 +210,7 @@ public class DoctorPaymentDetailsActivity extends  AppCompatActivity implements 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
     private FetchDoctorPaymDetaRequest fetchDoctorPaymDetaRequest() {
 
-        /**
+        /*
          * doctor_id : 603e2a7b2c2b43125f8cb805
          */
 

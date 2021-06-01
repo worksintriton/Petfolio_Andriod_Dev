@@ -196,6 +196,7 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
 
                     //Replacing the main content with ContentFragment Which is our Inbox View;
                     case R.id.nav_item_one:
+                        gotoMyAppointments();
                         return true;
 
                     // For rest of the options we just show a toast on click
@@ -237,6 +238,12 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
             }
         });
 
+    }
+
+    private void gotoMyAppointments() {
+        Intent intent = new Intent(getApplicationContext(),DoctorDashboardActivity.class);
+        intent.putExtra("fromactivity",TAG);
+        startActivity(intent);
     }
 
     private void gotoNotifications() {

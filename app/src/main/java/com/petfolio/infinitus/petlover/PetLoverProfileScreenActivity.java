@@ -388,6 +388,14 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
             Intent intent = new Intent(getApplicationContext(),PetMyappointmentsActivity.class);
             startActivity(intent);
             finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("MedicalHistoryActivity")){
+            Intent intent = new Intent(getApplicationContext(),MedicalHistoryActivity.class);
+            startActivity(intent);
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetloverPaymentDetailsActivity")){
+            Intent intent = new Intent(getApplicationContext(),PetloverPaymentDetailsActivity.class);
+            startActivity(intent);
+            finish();
         }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetServiceAppointment_Doctor_Date_Time_Activity")){
             Intent intent = new Intent(getApplicationContext(),PetServiceAppointment_Doctor_Date_Time_Activity.class);
             intent.putExtra("spuserid",spuserid);

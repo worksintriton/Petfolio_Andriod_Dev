@@ -158,6 +158,7 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
     private String from;
 
 
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -183,7 +184,6 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             fromactivity = extras.getString("fromactivity");
-
             /*SPAppointmentDetailsActivity*/
             appointment_id = extras.getString("appointment_id");
             fromactivity = extras.getString("fromactivity");
@@ -199,7 +199,7 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
         ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
         ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
         TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
-        toolbar_title.setText(getResources().getString(R.string.appointment));
+        toolbar_title.setText(getResources().getString(R.string.profile));
 
         img_back.setOnClickListener(v -> onBackPressed());
 
@@ -358,12 +358,7 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
                     }
                 });
 
-        alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                alertDialogBuilder.setCancelable(true);
-            }
-        });
+        alertDialogBuilder.setNegativeButton("No", (dialog, which) -> alertDialogBuilder.setCancelable(true));
 
         android.app.AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();

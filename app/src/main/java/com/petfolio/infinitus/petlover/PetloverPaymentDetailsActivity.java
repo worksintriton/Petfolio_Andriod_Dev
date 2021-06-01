@@ -203,10 +203,22 @@ public class PetloverPaymentDetailsActivity extends AppCompatActivity implements
 
         img_back.setOnClickListener(v -> onBackPressed());
 
-        img_sos.setOnClickListener(this);
-        img_notification.setOnClickListener(this);
-        img_cart.setOnClickListener(this);
-        img_profile.setOnClickListener(this);
+        img_sos.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
+        img_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+            }
+        });
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class);
+                intent.putExtra("fromactivity",TAG);
+                startActivity(intent);
+            }
+        });
 
         bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
         bottom_navigation_view.setItemIconTintList(null);
