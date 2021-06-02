@@ -145,6 +145,11 @@ public class VendorProfileScreenActivity extends AppCompatActivity implements Vi
     private String profileimage;
     private String fromactivity;
 
+    private String productid;
+    private String producttitle;
+    private String productdesc;
+    private String productimage;
+
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -159,6 +164,11 @@ public class VendorProfileScreenActivity extends AppCompatActivity implements Vi
         if (extras != null) {
             fromactivity = extras.getString("fromactivity");
             Log.w(TAG," fromactivity : "+fromactivity);
+
+            productid = extras.getString("productid");
+            producttitle = extras.getString("producttitle");
+            productdesc = extras.getString("productdesc");
+            productimage = extras.getString("productimage");
         }
 
 
@@ -230,6 +240,17 @@ public class VendorProfileScreenActivity extends AppCompatActivity implements Vi
         if(fromactivity != null && fromactivity.equalsIgnoreCase("ManageProductsActivity")){
             Intent intent = new Intent(getApplicationContext(), ManageProductsActivity.class);
             intent.putExtra("fromactivity",TAG);
+            startActivity(intent);
+        } else if(fromactivity != null && fromactivity.equalsIgnoreCase("VendorAddProductsActivity")){
+            Intent intent = new Intent(getApplicationContext(), VendorAddProductsActivity.class);
+            startActivity(intent);
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("VendorCreateProductsActivity")){
+            Intent intent = new Intent(getApplicationContext(),VendorCreateProductsActivity.class);
+            intent.putExtra("fromactivity",TAG);
+            intent.putExtra("productid",productid);
+            intent.putExtra("producttitle",producttitle);
+            intent.putExtra("productdesc",productdesc);
+            intent.putExtra("productimage",productimage);
             startActivity(intent);
         }else{
             startActivity(new Intent(getApplicationContext(), VendorDashboardActivity.class));

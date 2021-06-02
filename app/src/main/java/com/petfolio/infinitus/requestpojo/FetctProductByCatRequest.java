@@ -3,7 +3,7 @@ package com.petfolio.infinitus.requestpojo;
 public class FetctProductByCatRequest {
     /**
      * cat_id : 5fec14a5ea832e2e73c1fc79
-     * skip_count : 6
+     * skip_count : 1
      */
 
     private String cat_id;

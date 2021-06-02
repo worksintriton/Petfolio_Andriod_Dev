@@ -444,7 +444,6 @@ public class VendorTrackOrderActivity extends AppCompatActivity implements View.
 
         return false;
     }
-
     public void callDirections(String tag){
         Intent intent = new Intent(getApplicationContext(), VendorDashboardActivity.class);
         intent.putExtra("tag",tag);

@@ -70,9 +70,6 @@
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp"
                 tools:ignore="Autofill,LabelFor" />
-
-
-
             <EditText
                 android:id="@+id/edt_product_price"
                 android:layout_width="match_parent"
@@ -89,7 +86,6 @@
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp"
                 tools:ignore="Autofill,LabelFor" />
-
             <EditText
                 android:id="@+id/edt_product_thresould"
                 android:layout_width="match_parent"
@@ -105,7 +101,6 @@
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp"
                 tools:ignore="Autofill,LabelFor,TextFields" />
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
@@ -130,12 +125,6 @@
                     android:maxLength="150"/>
 
             </RelativeLayout>
-
-
-
-
-
-
 
         </LinearLayout>
     </ScrollView>

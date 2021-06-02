@@ -701,7 +701,19 @@ public interface RestApiInterface {
     Call<SubDiagnosisListResponse> subDiagnosisListResponseCall(@Header("Content-Type") String type, @Body SubDiagnosisRequest subDiagnosisRequest);
 
 
+    /*Vendor Add products*/
+    /*category list*/
+    @GET("product_cate/getlist_cat")
+    Call<CatgoryGetListResponse> getlistCatResponseCall(@Header("Content-Type") String type);
 
+    /*View the Product's by cat id see more*/
+    @POST("newproduct_detail/fetch_product_by_cat")
+    Call<FetctProductByCatDetailsResponse> fetctProductByCatDetailsResponse(@Header("Content-Type") String type, @Body FetctProductByCatRequest fetctProductByCatRequest);
+
+
+    /*Vendor product update*/
+    @POST("newproduct_detail/vendor_product_create")
+    Call<SuccessResponse> vendor_product_create_ResponseCall(@Header("Content-Type") String type, @Body ProductVendorCreateRequest productVendorCreateRequest);
 
 
 }
