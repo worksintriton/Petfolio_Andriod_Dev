@@ -246,54 +246,6 @@ public class VendorCreateProductsActivity extends AppCompatActivity implements B
 
 
 
-    @SuppressLint("LogNotTimber")
-    public void fetctProductByCatDetailsResponse(String strCatTypeId){
-        avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();
-        //Creating an object of our api interface
-        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<FetctProductByCatDetailsResponse> call = ApiService.fetctProductByCatDetailsResponse(RestUtils.getContentType(),fetctProductByCatRequest(strCatTypeId));
-
-        Log.w(TAG,"url  :%s"+ call.request().url().toString());
-
-        call.enqueue(new Callback<FetctProductByCatDetailsResponse>() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onResponse(@NonNull Call<FetctProductByCatDetailsResponse> call, @NonNull Response<FetctProductByCatDetailsResponse> response) {
-                avi_indicator.smoothToHide();
-
-
-                if (response.body() != null) {
-                    if(200 == response.body().getCode()){
-
-
-                    }
-                }
-
-            }
-
-
-            @Override
-            public void onFailure(@NonNull Call<FetctProductByCatDetailsResponse> call, @NonNull  Throwable t) {
-                avi_indicator.smoothToHide();
-                Log.w(TAG,"FetctProductByCatDetailsResponse flr"+t.getMessage());
-            }
-        });
-
-    }
-    @SuppressLint("LogNotTimber")
-    private FetctProductByCatRequest fetctProductByCatRequest(String strCatTypeId) {
-        /*
-         * cat_id : 5fec14a5ea832e2e73c1fc79
-         * skip_count : 1
-         */
-
-        FetctProductByCatRequest fetctProductByCatRequest = new FetctProductByCatRequest();
-        fetctProductByCatRequest.setCat_id(strCatTypeId);
-        fetctProductByCatRequest.setSkip_count(1);
-        Log.w(TAG,"fetctProductByCatRequest"+ "--->" + new Gson().toJson(fetctProductByCatRequest));
-        return fetctProductByCatRequest;
-    }
 
 
 

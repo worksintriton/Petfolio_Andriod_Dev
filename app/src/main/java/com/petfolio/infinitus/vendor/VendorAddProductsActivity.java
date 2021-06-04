@@ -297,6 +297,7 @@ public class VendorAddProductsActivity extends AppCompatActivity implements Bott
          */
 
         FetctProductByCatRequest fetctProductByCatRequest = new FetctProductByCatRequest();
+        fetctProductByCatRequest.setVendor_id(APIClient.VENDOR_ID);
         fetctProductByCatRequest.setCat_id(strCatTypeId);
         fetctProductByCatRequest.setSkip_count(1);
         Log.w(TAG,"fetctProductByCatRequest"+ "--->" + new Gson().toJson(fetctProductByCatRequest));
