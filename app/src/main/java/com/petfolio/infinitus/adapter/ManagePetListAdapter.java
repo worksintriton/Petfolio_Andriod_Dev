@@ -127,11 +127,11 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
             //registering popup with OnMenuItemClickListener
             popup.setOnMenuItemClickListener(item -> {
                 String titleName = String.valueOf(item.getTitle());
-                if(titleName != null && titleName.equalsIgnoreCase("Edit")){
+                if(titleName.equalsIgnoreCase("Edit")){
                     Intent i = new Intent(context, EditYourPetProfileInfoActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.putExtra("id",petListResponseList.get(position).get_id());
                     i.putExtra("userid",petListResponseList.get(position).getUser_id());
-                    i.putExtra("petimage",petListResponseList.get(position).getPet_img().get(position).getPet_img());
+                    i.putExtra("petimage",petListResponseList.get(position).getPet_img().get(0).getPet_img());
                     i.putExtra("petname",petListResponseList.get(position).getPet_name());
                     i.putExtra("pettype",petListResponseList.get(position).getPet_type());
                     i.putExtra("petbreed",petListResponseList.get(position).getPet_breed());
@@ -151,13 +151,13 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
                     i.putExtra("pet_private_part",petListResponseList.get(position).isPet_private_part());
 
                     Bundle args = new Bundle();
-                    int list = petListResponseList.get(position).getPet_img().size();
+                    //int list = petListResponseList.get(position).getPet_img().size();
                     args.putSerializable("PETLIST", (Serializable) petListResponseList.get(position).getPet_img());
                     i.putExtra("petimage",args);
 
                     context.startActivity(i);
 
-                } else if(titleName != null && titleName.equalsIgnoreCase("Delete")){
+                } else if(titleName.equalsIgnoreCase("Delete")){
                     petDeleteListener.petDeleteListener(petListResponseList.get(position).isDefault_status(),petListResponseList.get(position).get_id());
 
                 }
@@ -168,10 +168,7 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
         });
         //closing the setOnClickListener method
 
-
-
-
-       if(position == petListResponseList.size()-1){
+        if(position == petListResponseList.size()-1){
             holder.ll_add.setVisibility(View.VISIBLE);
         }
 

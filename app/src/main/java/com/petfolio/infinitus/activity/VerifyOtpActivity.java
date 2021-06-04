@@ -124,9 +124,6 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
             firstname = extras.getString("firstname");
             lastname = extras.getString("lastname");
             useremail = extras.getString("useremail");
-
-
-
             fromactivity = extras.getString("fromactivity");
             Log.w(TAG,"Bundle "+" phonenumber : "+phonenumber+" otp :"+otp+" usertype : "+usertype+" userstatus : "+userstatus+ " userid : "+userid);
         }

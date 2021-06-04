@@ -297,7 +297,8 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
             if (new ConnectionDetector(AddYourPetOldUserActivity.this).isNetworkAvailable(AddYourPetOldUserActivity.this)) {
 
                 if(validdSelectPetType() && validdSelectPetBreedType() && validdSelectPetGenderType() ) {
-                    addYourPetResponseCall();
+                   addYourPetResponseCall();
+
                 }
             }
 
@@ -475,8 +476,6 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
             year  = selectedYear;
             month = selectedMonth;
             day   = selectedDay;
-
-
 
             String strdayOfMonth;
             String strMonth;
@@ -798,25 +797,36 @@ public class AddYourPetOldUserActivity extends AppCompatActivity {
         return breedTypeRequest;
     }
 
+    @SuppressLint("LogNotTimber")
     private void getAge(int year, int month, int day){
+        Log.w(TAG,"getAge : year "+year+" month : "+ month+" day : "+day);
         Calendar dob = Calendar.getInstance();
         Calendar today = Calendar.getInstance();
 
         dob.set(year, month, day);
 
         int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
-        int months = dob.get(Calendar.MONTH) - today.get(Calendar.MONTH);
+        Log.w(TAG,"age : "+age+" todayyear : "+today.get(Calendar.YEAR)+" dobyear : "+ dob.get(Calendar.YEAR));
 
-        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)){
+
+        int months = dob.get(Calendar.MONTH) - today.get(Calendar.MONTH);
+        int currentmonths = (today.get(Calendar.MONTH))+1;
+        Log.w(TAG,"dob months: "+dob.get(Calendar.MONTH)+" currentmonths : "+ currentmonths);
+
+        Log.w(TAG," todayyear : "+today.get(Calendar.YEAR)+" dobyear : "+ dob.get(Calendar.YEAR));
+
+        Log.w(TAG,"Conditions : "+(today.get(Calendar.YEAR) < dob.get(Calendar.YEAR)));
+        if(today.get(Calendar.YEAR) < dob.get(Calendar.YEAR)){
             age--;
         }
 
-        Integer ageInt = new Integer(age);
-        Integer monthsInt = new Integer(months);
-        String ageS = ageInt.toString();
-        String monthsS = monthsInt.toString();
+        Log.w(TAG,"age: "+age+" monthsInt : "+ months);
+        String ageS = Integer.toString(age);
+        String monthsS = Integer.toString(months);
 
-        if(ageInt != 0){
+        Log.w(TAG,"ageS: "+ageS+" months : "+monthsS);
+
+        if(age != 0){
             petAgeandMonth = ageS+" years "+monthsS+" months";
         }else{
             petAgeandMonth = monthsS+" months";
