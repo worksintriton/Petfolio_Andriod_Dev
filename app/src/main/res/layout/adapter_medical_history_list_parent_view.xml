@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl_vendorlist"
     android:background="@color/white">
 
@@ -21,19 +22,33 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:layout_marginTop="10dp">
-            <LinearLayout
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_pet"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/rounded_rect_white">
-                <ImageView
-                    android:id="@+id/img_medical_image"
-                    android:layout_width="100dp"
-                    android:layout_height="80dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/upload"
-                    tools:ignore="ContentDescription" />
-            </LinearLayout>
+                android:layout_height="100dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="8dp"
+                android:elevation="10dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/img_medical_image"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/upload"
+                        tools:ignore="ContentDescription" />
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
 
 
 

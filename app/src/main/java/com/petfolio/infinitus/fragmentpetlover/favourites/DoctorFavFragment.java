@@ -25,12 +25,9 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.PetLoverDoctorNewFavAdapter;
-import com.petfolio.infinitus.adapter.PetLoverNearByDoctorAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.requestpojo.DoctorSearchRequest;
 import com.petfolio.infinitus.requestpojo.FetchPetloverFavListRequest;
-import com.petfolio.infinitus.responsepojo.DoctorSearchResponse;
 import com.petfolio.infinitus.responsepojo.FetchPetloverDoctorFavListResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -39,8 +36,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
