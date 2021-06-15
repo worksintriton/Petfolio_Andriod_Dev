@@ -36,7 +36,8 @@ public class DoctorClinicPetsHandledListAdapter extends  RecyclerView.Adapter<Re
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_sp_petlist, parent, false);
+       // View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_sp_petlist, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_sp_speclist, parent, false);
         return new ViewHolderOne(view);
     }
 
@@ -81,7 +82,7 @@ public class DoctorClinicPetsHandledListAdapter extends  RecyclerView.Adapter<Re
         public ViewHolderOne(View itemView) {
             super(itemView);
 
-            txt_petname = itemView.findViewById(R.id.txt_petname);
+            txt_petname = itemView.findViewById(R.id.txt_specname);
 
 
 

@@ -594,7 +594,9 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
     }
 
     private void gotoAddYourPet() {
-        startActivity(new Intent(getApplicationContext(),AddYourPetOldUserActivity.class));
+        Intent i = new Intent(getApplicationContext(), BasicPetDetailsActivity.class);
+        startActivity(i);
+        //startActivity(new Intent(getApplicationContext(),AddYourPetOldUserActivity.class));
     }
 
     private void gotoManageAddress() {

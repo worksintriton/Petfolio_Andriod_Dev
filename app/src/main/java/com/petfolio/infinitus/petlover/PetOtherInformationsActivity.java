@@ -110,7 +110,7 @@ public class PetOtherInformationsActivity extends AppCompatActivity {
         }
 
         txt_skip.setOnClickListener(v -> {
-            if(fromactivity != null && fromactivity.equalsIgnoreCase("AddYourPetOldUserActivity")) {
+            if(fromactivity != null && fromactivity.equalsIgnoreCase("BasicPetDetailsActivity")) {
                 Intent intent = new Intent(getApplicationContext(), AddYourPetImageOlduserActivity.class);
                 intent.putExtra("petid", petid);
                 intent.putExtra("fromactivity",TAG);
@@ -279,7 +279,7 @@ public class PetOtherInformationsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(fromactivity != null && fromactivity.equalsIgnoreCase("AddYourPetOldUserActivity")) {
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("BasicPetDetailsActivity")) {
             startActivity(new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class));
             finish();
         }else{

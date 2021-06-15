@@ -77,6 +77,10 @@ public interface RestApiInterface {
     @GET("pettype/mobile/getlist")
     Call<PetTypeListResponse> petTypeListResponseCall(@Header("Content-Type") String type);
 
+    /*Listing all health issues*/
+    @GET("healthissue/getlist")
+    Call<HealthIssuesListResponse> healthissueListResponseCall(@Header("Content-Type") String type);
+
     /*Listing all breed by Pet ID*/
     @POST("breedtype/mobile/getlist_id")
     Call<BreedTypeResponse> breedTypeResponseByPetIdCall(@Header("Content-Type") String type, @Body BreedTypeRequest breedTypeRequest);

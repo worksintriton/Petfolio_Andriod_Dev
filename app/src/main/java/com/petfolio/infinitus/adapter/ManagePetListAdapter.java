@@ -19,7 +19,8 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.interfaces.PetDeleteListener;
-import com.petfolio.infinitus.petlover.AddYourPetOldUserActivity;
+import com.petfolio.infinitus.petlover.BasicPetDetailsActivity;
+import com.petfolio.infinitus.petlover.ChoosePetTypeActivity;
 import com.petfolio.infinitus.petlover.EditYourPetProfileInfoActivity;
 import com.petfolio.infinitus.responsepojo.PetListResponse;
 
@@ -113,7 +114,9 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
 
 
         holder.ll_add.setOnClickListener(v -> {
-            Intent i = new Intent(context, AddYourPetOldUserActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+           /* Intent i = new Intent(context, AddYourPetOldUserActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(i);*/
+            Intent i = new Intent(context, BasicPetDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(i);
         });
 

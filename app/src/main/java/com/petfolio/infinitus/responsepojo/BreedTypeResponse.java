@@ -69,6 +69,25 @@ public class BreedTypeResponse {
         private String pet_type_id;
         private String pet_breed;
         private String date_and_time;
+        private String pet_breed_img;
+
+        private boolean isSelected ;
+        public boolean isSelected() {
+            return isSelected;
+        }
+
+        public void setSelected(boolean selected) {
+            isSelected = selected;
+        }
+
+        public String getPet_breed_img() {
+            return pet_breed_img;
+        }
+
+        public void setPet_breed_img(String pet_breed_img) {
+            this.pet_breed_img = pet_breed_img;
+        }
+
         private int __v;
 
 

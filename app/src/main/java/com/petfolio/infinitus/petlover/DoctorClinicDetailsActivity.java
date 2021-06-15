@@ -844,10 +844,10 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
 
     private void setPetHandle(List<DoctorDetailsResponse.DataBean.PetHandledBean> petHandledBeanList) {
 
-        int spanCount = 3; // 3 columns
+        int spanCount = 2; // 3 columns
         int spacing = 0; // 50px
         boolean includeEdge = true;
-        rv_pet_hanldle.setLayoutManager(new GridLayoutManager(this, 3));
+        rv_pet_hanldle.setLayoutManager(new GridLayoutManager(this, 2));
         rv_speclist.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
         rv_pet_hanldle.setItemAnimator(new DefaultItemAnimator());
         doctorClinicPetsHandledListAdapter = new DoctorClinicPetsHandledListAdapter(DoctorClinicDetailsActivity.this, petHandledBeanList);

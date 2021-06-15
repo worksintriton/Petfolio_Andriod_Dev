@@ -20,6 +20,9 @@
     <string name="enter_your_otp">Enter your OTP</string>
     <string name="ind">IND</string>
     <string name="choose_user_type">Choose user type</string>
+    <string name="choose_pet_type">Choose pet type</string>
+    <string name="basicpetdetails">My pet details</string>
+    <string name="choose_breed_type">Choose breed type</string>
     <string name="no_data_found">No data found</string>
     <string name="onbackpressedmsg">The operation is disabled in the screen. </string>
 
@@ -69,6 +72,7 @@
     <string name="addyourservices">Add your services</string>
     <string name="turn_on_your_location_services">Turn on your location services</string>
     <string name="search_location_address">Search Location Address</string>
+    <string name="search_for_breed">Search for breed...</string>
     <string name="noplacesfound">No Places Found</string>
     <string name="save_this_location_and_procced">Save this location &amp; Proceed</string>
 
@@ -531,6 +535,12 @@
     <string name="pet_service">Pet Service</string>
     <string name="sos">Sos</string>
     <string name="add_products">Add Products</string>
+    <string name="pet_s_genus_breed">Pet types &amp; Breed</string>
+    <string name="date_of_birth">Date of Birth</string>
+    <string name="pet_bio">Pet Bio</string>
+    <string name="save_continue"><![CDATA[Save & Continue]]></string>
+    <string name="err_msg_type_of_gender">Select the gender</string>
+
 
 
 </resources>
