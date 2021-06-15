@@ -118,6 +118,15 @@ public class PetListResponse {
         private int __v;
         private List<PetImgBean> pet_img;
 
+        private boolean isSelected ;
+        public boolean isSelected() {
+            return isSelected;
+        }
+
+        public void setSelected(boolean selected) {
+            isSelected = selected;
+        }
+
 
         public String get_id() {
             return _id;

@@ -393,7 +393,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
-        android:background="@color/sort_by_bg">
+        android:background="@color/whitelight">
 
         <LinearLayout
             android:layout_width="wrap_content"

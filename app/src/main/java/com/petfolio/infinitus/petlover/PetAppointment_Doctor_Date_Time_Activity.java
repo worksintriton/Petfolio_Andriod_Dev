@@ -536,7 +536,8 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
                             rescheduleResponseCall();
                         }else {
 
-                            Intent intent = new Intent(PetAppointment_Doctor_Date_Time_Activity.this, BookAppointmentActivity.class);
+                           // Intent intent = new Intent(PetAppointment_Doctor_Date_Time_Activity.this, BookAppointmentActivity.class);
+                            Intent intent = new Intent(PetAppointment_Doctor_Date_Time_Activity.this, ConsultationActivity.class);
                             intent.putExtra("doctorid", doctorid);
                             intent.putExtra("fromactivity", fromactivity);
                             intent.putExtra("Doctor_ava_Date", Doctor_ava_Date);

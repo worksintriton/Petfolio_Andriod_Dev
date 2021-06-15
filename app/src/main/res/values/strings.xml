@@ -540,7 +540,7 @@
     <string name="pet_bio">Pet Bio</string>
     <string name="save_continue"><![CDATA[Save & Continue]]></string>
     <string name="err_msg_type_of_gender">Select the gender</string>
-
+    <string name="consultation">Consultation</string>
 
 
 </resources>

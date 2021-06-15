@@ -38,7 +38,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/rectangular_curved_corner">
+                android:background="@drawable/rectangular_curved_corner"
+                android:visibility="gone">
 
                 <Spinner
                     android:id="@+id/spr_selectyourpettype"
@@ -66,7 +67,8 @@
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/or"
                 android:textColor="@color/new_txt_color"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="gone"/>
 
             <EditText
                 android:id="@+id/edt_petname"
@@ -84,6 +86,7 @@
                 tools:ignore="Autofill,LabelFor"
                 android:maxLines="1"
                 android:maxLength="25"
+                android:visibility="gone"
                 />
 
             <TextView
@@ -97,7 +100,8 @@
                 android:textColor="@color/new_light_green"
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp"
-                tools:ignore="Autofill,LabelFor" />
+                tools:ignore="Autofill,LabelFor"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/txt_petbreed"
@@ -111,7 +115,8 @@
                 android:textColor="@color/new_light_green"
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp"
-                tools:ignore="Autofill,LabelFor" />
+                tools:ignore="Autofill,LabelFor"
+                android:visibility="gone"/>
 
 
 
@@ -121,7 +126,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/rectangular_curved_corner">
+                android:background="@drawable/rectangular_curved_corner"
+                android:visibility="gone">
 
                 <Spinner
                     android:id="@+id/sprpettype"
@@ -144,7 +150,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/rectangular_curved_corner">
+                android:background="@drawable/rectangular_curved_corner"
+                android:visibility="gone">
 
                 <Spinner
                     android:id="@+id/sprpetbreed"

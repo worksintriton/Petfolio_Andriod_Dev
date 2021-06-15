@@ -299,11 +299,11 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
             fromto = extras.getString("fromto");
             Doctor_ava_Date = extras.getString("Doctor_ava_Date");
             selectedTimeSlot = extras.getString("selectedTimeSlot");
-
             amount = extras.getInt("amount");
             Log.w(TAG,"amount : "+amount);
             communicationtype = extras.getString("communicationtype");
-            Log.w(TAG,"Bundle "+" doctorid : "+doctorid+" selectedTimeSlot : "+selectedTimeSlot+"communicationtype : "+communicationtype+" amount : "+amount);
+            petId = extras.getString("petId");
+            Log.w(TAG,"Bundle "+" doctorid : "+doctorid+" selectedTimeSlot : "+selectedTimeSlot+"communicationtype : "+communicationtype+" amount : "+amount+" fromactivity : "+fromactivity);
         }
 
         ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
@@ -515,24 +515,27 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
         btn_continue.setOnClickListener(v -> {
             Log.w(TAG,"btn_continue selectedCommunicationtype : "+selectedCommunicationtype+" selectedVisitType : "+selectedVisitType);
-            if (isSelectYourPet) {
+           /* if (isSelectYourPet) {
                 if(validdSelectYourPetType()){
                     if (edt_allergies.getText().toString().trim().equals("")) {
                         edt_allergies.setError("Please enter allergies");
                         edt_allergies.requestFocus();
-                    }else if (edt_comment.getText().toString().trim().equals("")) {
+                    }
+                    else if (edt_comment.getText().toString().trim().equals("")) {
                         edt_comment.setError("Please enter comment");
                         edt_comment.requestFocus();
-                    }else if (selectedCommunicationtype != null && selectedCommunicationtype.isEmpty()) {
+                    }
+                    else if (selectedCommunicationtype != null && selectedCommunicationtype.isEmpty()) {
                         showErrorLoading("Please select communication type");
-                    }else if (isVisit && selectedVisitType != null && selectedVisitType.isEmpty()) {
+                    }
+                    else if (isVisit && selectedVisitType != null && selectedVisitType.isEmpty()) {
                         showErrorLoading("Please select visit type");
-                    }else{
-
-
+                    }
+                    else{
                         if(amount != 0){
                             startPayment();
-                        }else {
+                        }
+                        else {
                             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
                                 petAppointmentCreateResponseCall();
                             }
@@ -547,7 +550,8 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
                 }
 
-            } else {
+            }
+            else {
                 if( bookAppointmentValidator()){
                     if (validdSelectPetType()) {
                         if(validdSelectPetBreedType()){
@@ -570,6 +574,16 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
 
 
+                }
+
+            }*/
+
+            if(amount != 0){
+                startPayment();
+            }
+            else {
+                if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                    petAppointmentCreateResponseCall();
                 }
 
             }
@@ -1225,7 +1239,8 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent intent = new Intent(getApplicationContext(),PetAppointment_Doctor_Date_Time_Activity.class);
+        //Intent intent = new Intent(getApplicationContext(),PetAppointment_Doctor_Date_Time_Activity.class);
+        Intent intent = new Intent(getApplicationContext(),ConsultationIssuesActivity.class);
         intent.putExtra("doctorid",doctorid);
         intent.putExtra("communicationtype",communicationtype);
         intent.putExtra("fromactivity",fromactivity);

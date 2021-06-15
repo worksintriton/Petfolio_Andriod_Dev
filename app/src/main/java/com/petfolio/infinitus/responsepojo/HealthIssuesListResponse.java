@@ -69,6 +69,17 @@ public class HealthIssuesListResponse {
         private String createdAt;
         private int __v;
 
+        private boolean isSelected ;
+        public boolean isSelected() {
+            return isSelected;
+        }
+
+        public void setSelected(boolean selected) {
+            isSelected = selected;
+        }
+
+
+
         public String get_id() {
             return _id;
         }
