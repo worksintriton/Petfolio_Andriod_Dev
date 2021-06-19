@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
@@ -116,6 +117,9 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
     @BindView(R.id.scrollablContent)
     ScrollView scrollablContent;
 
+    private ShimmerFrameLayout mShimmerViewContainer;
+    private View includelayout;
+
     private Context mContext;
     private Dialog alertDialog;
     private List<ShopDashboardResponse.DataBean.BannerDetailsBean> listHomeBannerResponse;
@@ -143,7 +147,9 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
         ButterKnife.bind(this, view);
         mContext = getActivity();
         avi_indicator.setVisibility(View.GONE);
-        scrollablContent.setVisibility(View.GONE);
+
+        includelayout = view.findViewById(R.id.includelayout);
+        mShimmerViewContainer = includelayout.findViewById(R.id.shimmer_layout);
 
         SessionManager sessionManager = new SessionManager(mContext);
         HashMap<String, String> user = sessionManager.getProfileDetails();
@@ -242,8 +248,10 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
 
     @SuppressLint("LogNotTimber")
     public void shopDashboardResponseCall(){
-        avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();
+       /* avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();*/
+        includelayout.setVisibility(View.VISIBLE);
+        mShimmerViewContainer.startShimmerAnimation();
         //Creating an object of our api interface
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
         Call<ShopDashboardResponse> call = ApiService.shopDashboardResponseCall(RestUtils.getContentType(),shopDashboardRequest());
@@ -254,7 +262,9 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
             @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<ShopDashboardResponse> call, @NonNull Response<ShopDashboardResponse> response) {
-                avi_indicator.smoothToHide();
+              //  avi_indicator.smoothToHide();
+                mShimmerViewContainer.stopShimmerAnimation();
+                includelayout.setVisibility(View.GONE);
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
                         scrollablContent.setVisibility(View.VISIBLE);
@@ -304,7 +314,10 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
             @SuppressLint("LogNotTimber")
             @Override
             public void onFailure(@NonNull Call<ShopDashboardResponse> call, @NonNull  Throwable t) {
-                avi_indicator.smoothToHide();
+              //  avi_indicator.smoothToHide();
+                mShimmerViewContainer.stopShimmerAnimation();
+                includelayout.setVisibility(View.GONE);
+
                 Log.w(TAG,"ShopDashboardResponse flr"+t.getMessage());
             }
         });

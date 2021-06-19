@@ -24,12 +24,14 @@ public class DoctorClinicPetsHandledListAdapter extends  RecyclerView.Adapter<Re
     private Context context;
     private List<DoctorDetailsResponse.DataBean.PetHandledBean> petHandledBeanList;
     DoctorDetailsResponse.DataBean.PetHandledBean currentItem;
+    private int size;
 
 
-    public DoctorClinicPetsHandledListAdapter(Context context, List<DoctorDetailsResponse.DataBean.PetHandledBean> pettypedataBeanList) {
-
-        this.petHandledBeanList = pettypedataBeanList;
+    public DoctorClinicPetsHandledListAdapter(Context context, List<DoctorDetailsResponse.DataBean.PetHandledBean> pettypedataBeanList,int size) {
         this.context = context;
+        this.petHandledBeanList = pettypedataBeanList;
+        this.size = size;
+
 
     }
 
@@ -63,8 +65,10 @@ public class DoctorClinicPetsHandledListAdapter extends  RecyclerView.Adapter<Re
 
     }
     @Override
-    public int getItemCount() {
-        return petHandledBeanList.size();
+    public int getItemCount()
+    {
+        //return petHandledBeanList.size();
+        return Math.min(petHandledBeanList.size(), size);
     }
 
 

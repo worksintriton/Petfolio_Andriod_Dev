@@ -29,8 +29,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PetOtherInformationsActivity extends AppCompatActivity {
-    private final String TAG = "PetOtherInformationsActivity";
 
+    private  String TAG = "PetOtherInformationsActivity";
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
@@ -94,6 +94,30 @@ public class PetOtherInformationsActivity extends AppCompatActivity {
     private boolean pet_tick_free = false;
     private boolean pet_private_part = false;
 
+    private String selectedAppointmentType = "Normal";
+    private String selectedVisitType = "";
+    private String petId;
+    private String doctorid;
+    private String fromto;
+    private String Payment_id = "";
+    private String Doctor_ava_Date = "";
+    private String selectedTimeSlot = "";
+    private int amount;
+    private String communicationtype = "";
+
+
+    private String spid,catid,from;
+    private String spuserid;
+    private String selectedServiceTitle;
+    private String petcolor;
+    private double petweight;
+    private String servicetime;
+    private int serviceamount;
+    private String petage;
+    private int distance;
+    private String SP_ava_Date;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +130,33 @@ public class PetOtherInformationsActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             petid = extras.getString("petid");
+            doctorid = extras.getString("doctorid");
             fromactivity = extras.getString("fromactivity");
+            fromto = extras.getString("fromto");
+            Doctor_ava_Date = extras.getString("Doctor_ava_Date");
+            selectedTimeSlot = extras.getString("selectedTimeSlot");
+            amount = extras.getInt("amount");
+            communicationtype = extras.getString("communicationtype");
+            petId = extras.getString("petId");
+            Log.w(TAG,"Bundle "+" doctorid : "+doctorid+" selectedTimeSlot : "+selectedTimeSlot+"communicationtype : "+communicationtype+" amount : "+amount+" fromactivity : "+fromactivity+" fromto : "+fromto);
+
+
+            /*PetServiceAppointment_Doctor_Date_Time_Activity*/
+            fromactivity = extras.getString("fromactivity");
+            spid = extras.getString("spid");
+            catid = extras.getString("catid");
+            from = extras.getString("from");
+            spuserid = extras.getString("spuserid");
+            selectedServiceTitle = extras.getString("selectedServiceTitle");
+            serviceamount = extras.getInt("serviceamount");
+            servicetime = extras.getString("servicetime");
+            SP_ava_Date = extras.getString("SP_ava_Date");
+            selectedTimeSlot = extras.getString("selectedTimeSlot");
+            distance = extras.getInt("distance");
+            Log.w(TAG,"spid : "+spid +" catid : "+catid+" from : "+from+" serviceamount : "+serviceamount+" servicetime : "+servicetime+" SP_ava_Date : "+SP_ava_Date+" selectedTimeSlot : "+selectedTimeSlot);
+
+            Log.w(TAG,"fromactivity : "+fromactivity+" from : "+from);
+
         }
 
         txt_skip.setOnClickListener(v -> {
@@ -115,6 +165,40 @@ public class PetOtherInformationsActivity extends AppCompatActivity {
                 intent.putExtra("petid", petid);
                 intent.putExtra("fromactivity",TAG);
                 startActivity(intent);
+            }else if(fromactivity != null && fromactivity.equalsIgnoreCase("BasicPetDetailsNewActivity")) {
+                Intent intent = new Intent(getApplicationContext(), RegisterYourPetActivity.class);
+                intent.putExtra("petid", petid);
+                intent.putExtra("fromactivity",TAG);
+                startActivity(intent);
+            } else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetServiceAppointment_Doctor_Date_Time_Activity")){
+                Intent intent = new Intent(getApplicationContext(),AddYourPetImageOlduserActivity.class);
+                intent.putExtra("spid",spid);
+                intent.putExtra("catid",catid);
+                intent.putExtra("from",from);
+                intent.putExtra("spuserid",spuserid);
+                intent.putExtra("selectedServiceTitle",selectedServiceTitle);
+                intent.putExtra("serviceamount",serviceamount);
+                intent.putExtra("servicetime",servicetime);
+                intent.putExtra("SP_ava_Date",SP_ava_Date);
+                intent.putExtra("selectedTimeSlot",selectedTimeSlot);
+                intent.putExtra("distance",distance);
+                intent.putExtra("fromactivity",fromactivity);
+                intent.putExtra("petid", petid);
+                startActivity(intent);
+            }
+            else if(fromactivity != null && fromactivity.equalsIgnoreCase("AddNewPetActivity")) {
+                Intent intent = new Intent(PetOtherInformationsActivity.this, AddYourPetImageOlduserActivity.class);
+                intent.putExtra("doctorid", doctorid);
+                intent.putExtra("fromactivity", fromactivity);
+                intent.putExtra("Doctor_ava_Date", Doctor_ava_Date);
+                intent.putExtra("selectedTimeSlot", selectedTimeSlot);
+                intent.putExtra("amount", amount);
+                intent.putExtra("communicationtype", communicationtype);
+                intent.putExtra("fromto", TAG);
+                intent.putExtra("petId",petId);
+                intent.putExtra("petid",petid);
+                startActivity(intent);
+
             }else{
                 Intent intent = new Intent(getApplicationContext(), RegisterYourPetActivity.class);
                 intent.putExtra("petid", petid);
@@ -215,12 +299,50 @@ public class PetOtherInformationsActivity extends AppCompatActivity {
 
                 if (response.body() != null) {
                     if(response.body().getData().get_id() != null) {
-                        if(fromactivity != null && fromactivity.equalsIgnoreCase("AddYourPetOldUserActivity")) {
+                        if(fromactivity != null && fromactivity.equalsIgnoreCase("BasicPetDetailsActivity")) {
                             Intent intent = new Intent(getApplicationContext(), AddYourPetImageOlduserActivity.class);
                             intent.putExtra("petid", response.body().getData().get_id());
                             intent.putExtra("fromactivity",TAG);
                             startActivity(intent);
-                        }else{
+                        }
+                        else if(fromactivity != null && fromactivity.equalsIgnoreCase("AddNewPetActivity")) {
+                            Intent intent = new Intent(PetOtherInformationsActivity.this, AddYourPetImageOlduserActivity.class);
+                            intent.putExtra("doctorid", doctorid);
+                            intent.putExtra("fromactivity", fromactivity);
+                            intent.putExtra("Doctor_ava_Date", Doctor_ava_Date);
+                            intent.putExtra("selectedTimeSlot", selectedTimeSlot);
+                            intent.putExtra("amount", amount);
+                            intent.putExtra("communicationtype", communicationtype);
+                            intent.putExtra("fromto", TAG);
+                            intent.putExtra("petId",petId);
+                            intent.putExtra("petid", response.body().getData().get_id());
+                            startActivity(intent);
+
+                        }
+                        else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetServiceAppointment_Doctor_Date_Time_Activity")){
+                            Intent intent = new Intent(getApplicationContext(),AddYourPetImageOlduserActivity.class);
+                            intent.putExtra("spid",spid);
+                            intent.putExtra("catid",catid);
+                            intent.putExtra("from",from);
+                            intent.putExtra("spuserid",spuserid);
+                            intent.putExtra("selectedServiceTitle",selectedServiceTitle);
+                            intent.putExtra("serviceamount",serviceamount);
+                            intent.putExtra("servicetime",servicetime);
+                            intent.putExtra("SP_ava_Date",SP_ava_Date);
+                            intent.putExtra("selectedTimeSlot",selectedTimeSlot);
+                            intent.putExtra("distance",distance);
+                            intent.putExtra("fromactivity",fromactivity);
+                            intent.putExtra("petId",petId);
+                            intent.putExtra("petid", response.body().getData().get_id());
+                            startActivity(intent);
+                        }
+                        else if(fromactivity != null && fromactivity.equalsIgnoreCase("BasicPetDetailsNewActivity")) {
+                            Intent intent = new Intent(getApplicationContext(), RegisterYourPetActivity.class);
+                            intent.putExtra("petid", petid);
+                            intent.putExtra("fromactivity",TAG);
+                            startActivity(intent);
+                        }
+                        else{
                             Intent intent = new Intent(getApplicationContext(), RegisterYourPetActivity.class);
                             intent.putExtra("petid", response.body().getData().get_id());
                             intent.putExtra("fromactivity",TAG);
@@ -282,6 +404,34 @@ public class PetOtherInformationsActivity extends AppCompatActivity {
         if(fromactivity != null && fromactivity.equalsIgnoreCase("BasicPetDetailsActivity")) {
             startActivity(new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class));
             finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("AddNewPetActivity")) {
+            Intent intent = new Intent(PetOtherInformationsActivity.this, ConsultationActivity.class);
+            intent.putExtra("doctorid", doctorid);
+            intent.putExtra("fromactivity", TAG);
+            intent.putExtra("Doctor_ava_Date", Doctor_ava_Date);
+            intent.putExtra("selectedTimeSlot", selectedTimeSlot);
+            intent.putExtra("amount", amount);
+            intent.putExtra("communicationtype", communicationtype);
+            intent.putExtra("fromto", TAG);
+            intent.putExtra("petId", petId);
+            startActivity(intent);
+        }
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("PetServiceAppointment_Doctor_Date_Time_Activity")){
+            Intent intent = new Intent(getApplicationContext(),ConsultationActivity.class);
+            intent.putExtra("spid",spid);
+            intent.putExtra("catid",catid);
+            intent.putExtra("from",from);
+            intent.putExtra("spuserid",spuserid);
+            intent.putExtra("selectedServiceTitle",selectedServiceTitle);
+            intent.putExtra("serviceamount",serviceamount);
+            intent.putExtra("servicetime",servicetime);
+            intent.putExtra("SP_ava_Date",SP_ava_Date);
+            intent.putExtra("selectedTimeSlot",selectedTimeSlot);
+            intent.putExtra("distance",distance);
+            intent.putExtra("fromactivity",fromactivity);
+            intent.putExtra("petId",petId);
+            intent.putExtra("petid", petid);
+            startActivity(intent);
         }else{
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             finish();

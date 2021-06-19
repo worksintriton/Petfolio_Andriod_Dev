@@ -88,18 +88,22 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
     @SuppressLint("SetTextI18n")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
-        Log.w(TAG,"Pet name-->"+newAppointmentResponseList.get(position).getPet_id().getPet_name());
 
         currentItem = newAppointmentResponseList.get(position);
         if(newAppointmentResponseList.get(position).getCommunication_type() != null ) {
             communicationtype = newAppointmentResponseList.get(position).getCommunication_type();
         }
-        if(newAppointmentResponseList.get(position).getPet_id().getPet_name() != null) {
-            holder.txt_petname.setText(newAppointmentResponseList.get(position).getPet_id().getPet_name());
+
+        if(newAppointmentResponseList.get(position).getPet_id() != null){
+            if(newAppointmentResponseList.get(position).getPet_id().getPet_name() != null) {
+                holder.txt_petname.setText(newAppointmentResponseList.get(position).getPet_id().getPet_name());
+            }
+            if(newAppointmentResponseList.get(position).getPet_id().getPet_type() != null) {
+                holder.txt_pettype.setText(newAppointmentResponseList.get(position).getPet_id().getPet_type());
+            }
+            petImgBeanList = newAppointmentResponseList.get(position).getPet_id().getPet_img();
         }
-        if(newAppointmentResponseList.get(position).getPet_id().getPet_type() != null) {
-            holder.txt_pettype.setText(newAppointmentResponseList.get(position).getPet_id().getPet_type());
-        }
+
 
         if(newAppointmentResponseList.get(position).getAppointment_types() != null){
             holder.txt_type.setText(newAppointmentResponseList.get(position).getAppointment_types());
@@ -113,7 +117,7 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
 
         }
 
-        petImgBeanList = newAppointmentResponseList.get(position).getPet_id().getPet_img();
+
         if (petImgBeanList != null && petImgBeanList.size() > 0) {
             for(int j=0;j<petImgBeanList.size();j++) {
                 petImagePath = petImgBeanList.get(j).getPet_img();
@@ -156,15 +160,16 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, PrescriptionActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("petname",newAppointmentResponseList.get(position).getPet_id().getPet_name());
-                i.putExtra("pettype",newAppointmentResponseList.get(position).getPet_id().getPet_type());
+                if(newAppointmentResponseList.get(position).getPet_id() != null){
+                    i.putExtra("petname",newAppointmentResponseList.get(position).getPet_id().getPet_name());
+                    i.putExtra("pettype",newAppointmentResponseList.get(position).getPet_id().getPet_type());
+                }
+
                 i.putExtra("id",newAppointmentResponseList.get(position).get_id());
                 i.putExtra("userid",newAppointmentResponseList.get(position).getUser_id().get_id());
-                Log.w(TAG, " User_ID "+newAppointmentResponseList.get(position).getUser_id().get_id());
                 i.putExtra("allergies",newAppointmentResponseList.get(position).getAllergies());
                 i.putExtra("probleminfo",newAppointmentResponseList.get(position).getProblem_info());
                 i.putExtra("doctorid",newAppointmentResponseList.get(position).getDoctor_id().get_id());
-
                 context.startActivity(i);
 
             }

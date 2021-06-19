@@ -90,7 +90,7 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
           if (currentItem.getDoctor_img() != null && !currentItem.getDoctor_img().isEmpty()) {
 
             Glide.with(context)
-                    .load(currentItem.getDoctor_img())
+                    .load(currentItem.getThumbnail_image())
                     //.load(R.drawable.logo)
                     .into(holder.img_doctors_image);
 

@@ -43,7 +43,6 @@
                 android:text="Select health issue"
                 android:textColor="@color/dark_gray"
                 android:textSize="18sp"
-                android:layout_marginTop="5dp"
                 />
 
 
@@ -74,7 +73,8 @@
             android:id="@+id/ll_add"
             android:orientation="horizontal"
             android:layout_marginTop="30dp"
-            android:layout_marginStart="20dp">
+            android:layout_marginStart="20dp"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -83,7 +83,8 @@
                 android:text="Select health issue"
                 android:fontFamily="@font/futuramediumbt"
                 android:textSize="20sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                />
 
 
 
@@ -153,7 +154,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@drawable/button_rounded_corner"
+            android:background="@drawable/new_rounded_corner_btn_red"
             android:layout_marginTop="10dp"
             tools:ignore="UselessParent"
             android:layout_gravity="end|center"
@@ -162,25 +163,26 @@
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="20dp"
-           >
+            >
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:text="Continue"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="16sp"
-                tools:ignore="Autofill,LabelFor" />
+                tools:ignore="Autofill,LabelFor"
+                android:gravity="center"/>
 
-                <ImageView
-                    android:layout_marginStart="20dp"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/next"
-                    tools:ignore="ContentDescription"
-                    android:layout_marginEnd="10dp"/>
+            <ImageView
+                android:layout_marginStart="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/next_icon_white"
+                tools:ignore="ContentDescription"
+                android:layout_marginEnd="10dp"/>
 
 
         </LinearLayout>

@@ -62,6 +62,10 @@ public class ConsultationActivity extends AppCompatActivity implements View.OnCl
     @BindView(R.id.ll_save_continue)
     LinearLayout ll_save_continue;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_add_new_pet)
+    LinearLayout ll_add_new_pet;
+
     private String userid;
     private List<PetListResponse.DataBean> petList;
 
@@ -77,6 +81,18 @@ public class ConsultationActivity extends AppCompatActivity implements View.OnCl
     private String selectedTimeSlot = "";
     private int amount;
     private String communicationtype = "";
+
+
+    private String spid,catid,from;
+    private String spuserid;
+    private String selectedServiceTitle;
+    private String petcolor;
+    private double petweight;
+    private String servicetime;
+    private int serviceamount;
+    private String petage;
+    private int distance;
+    private String SP_ava_Date;
 
 
 
@@ -108,6 +124,24 @@ public class ConsultationActivity extends AppCompatActivity implements View.OnCl
             Log.w(TAG,"amount : "+amount);
             communicationtype = extras.getString("communicationtype");
             Log.w(TAG,"Bundle "+" doctorid : "+doctorid+" selectedTimeSlot : "+selectedTimeSlot+"communicationtype : "+communicationtype+" amount : "+amount);
+
+
+            /*PetServiceAppointment_Doctor_Date_Time_Activity*/
+            fromactivity = extras.getString("fromactivity");
+            spid = extras.getString("spid");
+            catid = extras.getString("catid");
+            from = extras.getString("from");
+            spuserid = extras.getString("spuserid");
+            selectedServiceTitle = extras.getString("selectedServiceTitle");
+            serviceamount = extras.getInt("serviceamount");
+            servicetime = extras.getString("servicetime");
+            SP_ava_Date = extras.getString("SP_ava_Date");
+            selectedTimeSlot = extras.getString("selectedTimeSlot");
+            distance = extras.getInt("distance");
+            Log.w(TAG,"spid : "+spid +" catid : "+catid+" from : "+from+" serviceamount : "+serviceamount+" servicetime : "+servicetime+" SP_ava_Date : "+SP_ava_Date+" selectedTimeSlot : "+selectedTimeSlot);
+
+            Log.w(TAG,"fromactivity : "+fromactivity+" from : "+from);
+
         }
         img_back.setOnClickListener(this);
         if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
@@ -117,17 +151,69 @@ public class ConsultationActivity extends AppCompatActivity implements View.OnCl
         ll_save_continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ConsultationActivity.this, ConsultationIssuesActivity.class);
-                intent.putExtra("doctorid", doctorid);
-                intent.putExtra("fromactivity", fromactivity);
-                intent.putExtra("Doctor_ava_Date", Doctor_ava_Date);
-                intent.putExtra("selectedTimeSlot", selectedTimeSlot);
-                intent.putExtra("amount", amount);
-                intent.putExtra("communicationtype", communicationtype);
-                intent.putExtra("fromto", fromto);
-                intent.putExtra("petId", petId);
-                startActivity(intent);
-                Log.w(TAG, "communicationtype : " + communicationtype);
+                if(fromactivity != null && fromactivity.equalsIgnoreCase("PetServiceAppointment_Doctor_Date_Time_Activity")){
+                    Intent intent = new Intent(getApplicationContext(),ConsultationIssuesActivity.class);
+                    intent.putExtra("spid",spid);
+                    intent.putExtra("catid",catid);
+                    intent.putExtra("from",from);
+                    intent.putExtra("spuserid",spuserid);
+                    intent.putExtra("selectedServiceTitle",selectedServiceTitle);
+                    intent.putExtra("serviceamount",serviceamount);
+                    intent.putExtra("servicetime",servicetime);
+                    intent.putExtra("SP_ava_Date",SP_ava_Date);
+                    intent.putExtra("selectedTimeSlot",selectedTimeSlot);
+                    intent.putExtra("distance",distance);
+                    intent.putExtra("fromactivity",fromactivity);
+                    startActivity(intent);
+                }
+                else {
+                    Intent intent = new Intent(ConsultationActivity.this, ConsultationIssuesActivity.class);
+                    intent.putExtra("doctorid", doctorid);
+                    intent.putExtra("fromactivity", fromactivity);
+                    intent.putExtra("Doctor_ava_Date", Doctor_ava_Date);
+                    intent.putExtra("selectedTimeSlot", selectedTimeSlot);
+                    intent.putExtra("amount", amount);
+                    intent.putExtra("communicationtype", communicationtype);
+                    intent.putExtra("fromto", fromto);
+                    intent.putExtra("petId", petId);
+                    startActivity(intent);
+                    Log.w(TAG, "communicationtype : " + communicationtype);
+                }
+            }
+        });
+
+        ll_add_new_pet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(fromactivity != null && fromactivity.equalsIgnoreCase("PetServiceAppointment_Doctor_Date_Time_Activity")){
+                    Intent intent = new Intent(getApplicationContext(),AddNewPetActivity.class);
+                    intent.putExtra("spid",spid);
+                    intent.putExtra("catid",catid);
+                    intent.putExtra("from",from);
+                    intent.putExtra("spuserid",spuserid);
+                    intent.putExtra("selectedServiceTitle",selectedServiceTitle);
+                    intent.putExtra("serviceamount",serviceamount);
+                    intent.putExtra("servicetime",servicetime);
+                    intent.putExtra("SP_ava_Date",SP_ava_Date);
+                    intent.putExtra("selectedTimeSlot",selectedTimeSlot);
+                    intent.putExtra("distance",distance);
+                    intent.putExtra("fromactivity",fromactivity);
+                    startActivity(intent);
+                }
+                else {
+                    Intent intent = new Intent(ConsultationActivity.this, AddNewPetActivity.class);
+                    intent.putExtra("doctorid", doctorid);
+                    intent.putExtra("fromactivity", TAG);
+                    intent.putExtra("Doctor_ava_Date", Doctor_ava_Date);
+                    intent.putExtra("selectedTimeSlot", selectedTimeSlot);
+                    intent.putExtra("amount", amount);
+                    intent.putExtra("communicationtype", communicationtype);
+                    intent.putExtra("fromto", TAG);
+                    intent.putExtra("petId", petId);
+                    startActivity(intent);
+                    Log.w(TAG, "communicationtype : " + communicationtype);
+                }
+
             }
         });
 
@@ -140,12 +226,29 @@ public class ConsultationActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(getApplicationContext(),PetAppointment_Doctor_Date_Time_Activity.class);
-        intent.putExtra("doctorid",doctorid);
-        intent.putExtra("communicationtype",communicationtype);
-        intent.putExtra("fromactivity",fromactivity);
-        intent.putExtra("fromto",fromto);
-        startActivity(intent);
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("PetServiceAppointment_Doctor_Date_Time_Activity")){
+            Intent intent = new Intent(getApplicationContext(),PetServiceAppointment_Doctor_Date_Time_Activity.class);
+            intent.putExtra("spid",spid);
+            intent.putExtra("catid",catid);
+            intent.putExtra("from",from);
+            intent.putExtra("spuserid",spuserid);
+            intent.putExtra("selectedServiceTitle",selectedServiceTitle);
+            intent.putExtra("serviceamount",serviceamount);
+            intent.putExtra("servicetime",servicetime);
+            intent.putExtra("SP_ava_Date",SP_ava_Date);
+            intent.putExtra("selectedTimeSlot",selectedTimeSlot);
+            intent.putExtra("distance",distance);
+            intent.putExtra("fromactivity",TAG);
+            startActivity(intent);
+        }else{
+            Intent intent = new Intent(getApplicationContext(),PetAppointment_Doctor_Date_Time_Activity.class);
+            intent.putExtra("doctorid",doctorid);
+            intent.putExtra("communicationtype",communicationtype);
+            intent.putExtra("fromactivity",fromactivity);
+            intent.putExtra("fromto",fromto);
+            startActivity(intent);
+        }
+
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -189,7 +292,7 @@ public class ConsultationActivity extends AppCompatActivity implements View.OnCl
                         }
                         else{
                             txt_no_records.setVisibility(View.VISIBLE);
-                            txt_no_records.setText("No new pets");
+                            txt_no_records.setText("No pets");
                             rv_pet.setVisibility(View.GONE);
                         }
 

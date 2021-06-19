@@ -179,33 +179,24 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_weight="1"
+                android:layout_height="40dp"
                 android:background="@drawable/new_rounded_corner_btn_red"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp">
-
-                <ImageView
-                    android:id="@+id/img_shop"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/new_shop_bag"
-                    tools:ignore="ContentDescription"
-                    android:visibility="gone"/>
-
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="60dp">
                 <TextView
                     android:id="@+id/txt_sp_appoint"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
                     android:fontFamily="@font/futuramediumbt"
                     android:maxLines="1"
                     android:text="@string/make_an_appointment"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    />
 
             </LinearLayout>
 

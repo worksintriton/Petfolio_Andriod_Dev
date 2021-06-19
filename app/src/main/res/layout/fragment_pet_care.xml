@@ -75,7 +75,9 @@
             android:orientation="vertical"
             android:layout_above="@+id/footerView"
             android:layout_below="@+id/headerView">
-
+            <include android:id="@+id/includelayout"
+                layout="@layout/loading_layout"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -171,11 +173,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
-
-
-
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_nearbydoctors"
                 android:layout_width="match_parent"

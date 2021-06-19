@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">PetFolio</string>
     <string name="verify_otp">Verify OTP</string>
     <string name="emailorphonenumber">Phone Number</string>
@@ -212,6 +212,7 @@
     <string name="upload_image">Upload Image</string>
 
     <string name="add_a_new_address">Add a new address</string>
+    <string name="add_new_pet">Add a new pet</string>
     <string name="address_info">TESSDGD dgsdg dgasdg saddagdasg dsgasdg sadgdsgds SGADSGD</string>
     <string name="saved_address">Saved Address</string>
 
@@ -541,6 +542,8 @@
     <string name="save_continue"><![CDATA[Save & Continue]]></string>
     <string name="err_msg_type_of_gender">Select the gender</string>
     <string name="consultation">Consultation</string>
+    <string name="see_more_pets_handled" tools:ignore="TypographyEllipsis">See more...</string>
+    <string name="see_more_pets_specialization" tools:ignore="TypographyEllipsis">See more...</string>
 
 
 </resources>

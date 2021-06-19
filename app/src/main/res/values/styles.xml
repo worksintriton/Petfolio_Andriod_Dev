@@ -1,9 +1,9 @@
 <resources>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">@color/new_header_bg</item>
-        <item name="colorPrimaryDark">@color/new_header_bg</item>
-        <item name="colorAccent">@color/new_header_bg</item>
+        <item name="colorPrimary">@color/new_gree_color</item>
+        <item name="colorPrimaryDark">@color/new_gree_color</item>
+        <item name="colorAccent">@color/new_gree_color</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
      <!--   <item name="android:windowLightStatusBar">true</item>-->
@@ -12,12 +12,12 @@
 
     </style>
     <style name="NewAppTheme" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">@color/new_header_bg</item>
-        <item name="colorPrimaryDark">@color/new_header_bg</item>
-        <item name="colorAccent">@color/new_header_bg</item>
+        <item name="colorPrimary">@color/new_gree_color</item>
+        <item name="colorPrimaryDark">@color/new_gree_color</item>
+        <item name="colorAccent">@color/new_gree_color</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowBackground">@color/new_header_bg</item>
+        <item name="android:windowBackground">@color/new_gree_color</item>
         <item name="tabBackground">@drawable/tab_background</item>
 
     </style>

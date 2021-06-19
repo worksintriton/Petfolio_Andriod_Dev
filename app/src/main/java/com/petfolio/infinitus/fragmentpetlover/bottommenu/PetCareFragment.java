@@ -36,6 +36,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 
@@ -133,6 +134,9 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     @BindView(R.id.edt_search)
     EditText edt_search;
 
+    private ShimmerFrameLayout mShimmerViewContainer;
+    private View includelayout;
+
 
 
 
@@ -185,6 +189,10 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
         avi_indicator.setVisibility(View.GONE);
         txt_totaldrs.setVisibility(View.GONE);
+
+        includelayout = view.findViewById(R.id.includelayout);
+        mShimmerViewContainer = includelayout.findViewById(R.id.shimmer_layout);
+
         if(getArguments() != null){
             fromactivity = getArguments().getString("fromactivity");
             reviewcount = getArguments().getInt("reviewcount");
@@ -325,8 +333,11 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
     @SuppressLint("LogNotTimber")
     private void doctorSearchResponseCall(String searchString, int communication_type) {
-        avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();
+      /*  avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();*/
+        includelayout.setVisibility(View.VISIBLE);
+        mShimmerViewContainer.startShimmerAnimation();
+
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
         Call<DoctorSearchResponse> call = apiInterface.doctorSearchResponseCall(RestUtils.getContentType(), doctorSearchRequest(searchString,communication_type));
         Log.w(TAG,"DoctorSearchResponse url  :%s"+" "+ call.request().url().toString());
@@ -335,7 +346,9 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
             @SuppressLint({"LogNotTimber", "SetTextI18n"})
             @Override
             public void onResponse(@NonNull Call<DoctorSearchResponse> call, @NonNull Response<DoctorSearchResponse> response) {
-                avi_indicator.smoothToHide();
+                //avi_indicator.smoothToHide();
+                mShimmerViewContainer.stopShimmerAnimation();
+                includelayout.setVisibility(View.GONE);
                 Log.w(TAG,"DoctorSearchResponse" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
@@ -347,7 +360,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
                             if (doctorDetailsResponseList != null && doctorDetailsResponseList.size()>0) {
                                 rv_nearbydoctors.setVisibility(View.VISIBLE);
                                 txt_no_records.setVisibility(View.GONE);
-                                txt_totaldrs.setVisibility(View.VISIBLE);
+                                txt_totaldrs.setVisibility(View.GONE);
                                 txt_totaldrs.setText(doctorDetailsResponseList.size()+" "+"Doctors");
                                 setViewDoctors(doctorDetailsResponseList);
                             } else {
@@ -375,7 +388,10 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
             @SuppressLint("LongLogTag")
             @Override
             public void onFailure(@NonNull Call<DoctorSearchResponse> call,@NonNull Throwable t) {
-                avi_indicator.smoothToHide();
+                //avi_indicator.smoothToHide();
+
+                mShimmerViewContainer.stopShimmerAnimation();
+                includelayout.setVisibility(View.GONE);
                 Log.e("DoctorSearchResponse", "--->" + t.getMessage());
             }
         });
@@ -469,8 +485,11 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
     @SuppressLint("LogNotTimber")
     private void filterDoctorResponseCall() {
-        avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();
+        /*avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();*/
+        includelayout.setVisibility(View.VISIBLE);
+        mShimmerViewContainer.startShimmerAnimation();
+
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
         Call<FilterDoctorResponse> call = apiInterface.filterDoctorResponseCall(RestUtils.getContentType(), filterDoctorRequest());
         Log.w(TAG,"filterDoctorResponseCall url  :%s"+" "+ call.request().url().toString());
@@ -479,7 +498,9 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
             @SuppressLint({"LogNotTimber", "SetTextI18n"})
             @Override
             public void onResponse(@NonNull Call<FilterDoctorResponse> call, @NonNull Response<FilterDoctorResponse> response) {
-                avi_indicator.smoothToHide();
+                //avi_indicator.smoothToHide();
+                mShimmerViewContainer.stopShimmerAnimation();
+                includelayout.setVisibility(View.GONE);
                 Log.w(TAG,"filterDoctorResponseCall" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
@@ -490,7 +511,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
                             if (doctorFilterDetailsResponseList != null && doctorFilterDetailsResponseList.size()>0) {
                                 rv_nearbydoctors.setVisibility(View.VISIBLE);
                                 txt_no_records.setVisibility(View.GONE);
-                                txt_totaldrs.setVisibility(View.VISIBLE);
+                                txt_totaldrs.setVisibility(View.GONE);
                                 txt_totaldrs.setText(doctorFilterDetailsResponseList.size()+" "+"Doctors");
                                 setViewDoctorFilters(doctorFilterDetailsResponseList);
 
@@ -519,7 +540,9 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
             @SuppressLint({"LongLogTag", "LogNotTimber"})
             @Override
             public void onFailure(@NonNull Call<FilterDoctorResponse> call,@NonNull Throwable t) {
-                avi_indicator.smoothToHide();
+               // avi_indicator.smoothToHide();
+                mShimmerViewContainer.stopShimmerAnimation();
+                includelayout.setVisibility(View.GONE);
                 Log.w(TAG,"FilterDoctorResponse flr"+ t.getMessage());
             }
         });

@@ -153,15 +153,25 @@ public class SPSpecificServiceDetailsResponse {
              * distance : 2
              * rating_count : 5
              * comments_count : 12
+             * thumbnail_image
              */
 
             private String _id;
             private String image;
+            private String thumbnail_image;
             private String service_provider_name;
             private int service_price;
             private int service_offer;
             private String service_place;
             private double distance;
+
+            public String getThumbnail_image() {
+                return thumbnail_image;
+            }
+
+            public void setThumbnail_image(String thumbnail_image) {
+                this.thumbnail_image = thumbnail_image;
+            }
 
             public double getDistance() {
                 return distance;
@@ -173,6 +183,9 @@ public class SPSpecificServiceDetailsResponse {
 
             private int rating_count;
             private int comments_count;
+
+
+
 
 
             public String get_id() {

@@ -75,6 +75,10 @@
             android:layout_marginBottom="10dp"
             android:orientation="vertical">
 
+            <include android:id="@+id/includelayout"
+                layout="@layout/loading_layout"
+                android:visibility="gone"/>
+
             <View
                 android:id="@+id/view6"
                 android:layout_width="match_parent"
@@ -201,7 +205,8 @@
                 android:text="@string/providers"
                 android:textAllCaps="false"
                 android:textColor="@color/new_sec_txt_color"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:visibility="gone"/>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

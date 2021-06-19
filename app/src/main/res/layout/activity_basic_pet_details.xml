@@ -13,13 +13,13 @@
         android:orientation="horizontal"
         tools:ignore="UseCompoundDrawables"
         android:background="@color/white"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:layout_marginStart="20dp">
 
         <ImageView
             android:id="@+id/img_back"
             android:layout_width="26dp"
             android:layout_height="26dp"
-            android:layout_marginStart="20dp"
             android:background="@drawable/left_arrow"
             tools:ignore="ContentDescription" />
 
@@ -399,7 +399,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@drawable/button_rounded_corner"
+            android:background="@drawable/new_rounded_corner_btn_red"
             android:layout_marginTop="10dp"
             tools:ignore="UselessParent"
             android:layout_gravity="center"
@@ -414,8 +414,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/futuramediumbt"
-                android:text="@string/save_continue"
-                android:textColor="@color/black"
+                android:text="@string/continues"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 tools:ignore="Autofill,LabelFor" />
 
@@ -423,7 +423,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:background="@drawable/next"
+                    android:background="@drawable/next_icon_white"
                     tools:ignore="ContentDescription"
                     android:layout_marginEnd="10dp"/>
 

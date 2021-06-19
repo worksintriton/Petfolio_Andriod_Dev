@@ -302,7 +302,7 @@ public class MedicalHistoryActivity extends AppCompatActivity implements View.On
                         }
                         else{
                             txt_no_records.setVisibility(View.VISIBLE);
-                            txt_no_records.setText("No new pets");
+                            txt_no_records.setText("No pets");
                             rv_pet.setVisibility(View.GONE);
                         }
 

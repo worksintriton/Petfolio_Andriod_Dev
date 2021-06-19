@@ -41,8 +41,6 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
         this.missedAppointmentResponseList = missedAppointmentResponseList;
         this.context = context;
         this.size = size;
-
-
     }
 
     @NonNull
@@ -62,14 +60,19 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
     @SuppressLint("SetTextI18n")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
-        Log.w(TAG,"Pet name-->"+missedAppointmentResponseList.get(position).getPet_id().getPet_name());
 
         currentItem = missedAppointmentResponseList.get(position);
-        if(missedAppointmentResponseList.get(position).getPet_id().getPet_name() != null){
-        holder.txt_petname.setText(missedAppointmentResponseList.get(position).getPet_id().getPet_name());}
-        if(missedAppointmentResponseList.get(position).getPet_id().getPet_type() != null) {
-            holder.txt_pettype.setText(missedAppointmentResponseList.get(position).getPet_id().getPet_type());
+
+        if(missedAppointmentResponseList.get(position).getPet_id() != null){
+            if(missedAppointmentResponseList.get(position).getPet_id().getPet_name() != null){
+                holder.txt_petname.setText(missedAppointmentResponseList.get(position).getPet_id().getPet_name());}
+            if(missedAppointmentResponseList.get(position).getPet_id().getPet_type() != null) {
+                holder.txt_pettype.setText(missedAppointmentResponseList.get(position).getPet_id().getPet_type());
+            }
+            petImgBeanList = missedAppointmentResponseList.get(position).getPet_id().getPet_img();
+
         }
+
         if(missedAppointmentResponseList.get(position).getMissed_at() != null ){
         holder.txt_missed_date.setText("Missed on:"+" "+missedAppointmentResponseList.get(position).getMissed_at());}
 
@@ -80,7 +83,6 @@ public class DoctorMissedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
             holder.txt_service_cost.setText("\u20B9 "+missedAppointmentResponseList.get(position).getAmount());
         }
 
-        petImgBeanList = missedAppointmentResponseList.get(position).getPet_id().getPet_img();
 
         if (petImgBeanList != null && petImgBeanList.size() > 0) {
             for(int j=0;j<petImgBeanList.size();j++) {

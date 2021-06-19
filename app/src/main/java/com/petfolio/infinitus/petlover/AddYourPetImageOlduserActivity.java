@@ -126,9 +126,33 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
 
     private static final int SELECT_CLINIC_PICTURE = 1001 ;
     private MultipartBody.Part filePart;
-    private Object userid;
+    private String userid;
+
+    private String selectedAppointmentType = "Normal";
+    private String selectedVisitType = "";
+    private String petId;
+    private String doctorid;
+    private String fromto;
+    private String Payment_id = "";
+    private String Doctor_ava_Date = "";
+    private String selectedTimeSlot = "";
+    private int amount;
+    private String communicationtype = "";
+    private String fromactivity;
+
+    private String spid,catid,from;
+    private String spuserid;
+    private String selectedServiceTitle;
+    private String petcolor;
+    private double petweight;
+    private String servicetime;
+    private int serviceamount;
+    private String petage;
+    private int distance;
+    private String SP_ava_Date;
 
 
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,6 +175,32 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             petid = extras.getString("petid");
+            doctorid = extras.getString("doctorid");
+            fromactivity = extras.getString("fromactivity");
+            fromto = extras.getString("fromto");
+            Doctor_ava_Date = extras.getString("Doctor_ava_Date");
+            selectedTimeSlot = extras.getString("selectedTimeSlot");
+            amount = extras.getInt("amount");
+            communicationtype = extras.getString("communicationtype");
+            petId = extras.getString("petId");
+            Log.w(TAG,"Bundle "+" doctorid : "+doctorid+" selectedTimeSlot : "+selectedTimeSlot+"communicationtype : "+communicationtype+" amount : "+amount+" fromactivity : "+fromactivity+" fromto : "+fromto);
+
+            /*PetServiceAppointment_Doctor_Date_Time_Activity*/
+            fromactivity = extras.getString("fromactivity");
+            spid = extras.getString("spid");
+            catid = extras.getString("catid");
+            from = extras.getString("from");
+            spuserid = extras.getString("spuserid");
+            selectedServiceTitle = extras.getString("selectedServiceTitle");
+            serviceamount = extras.getInt("serviceamount");
+            servicetime = extras.getString("servicetime");
+            SP_ava_Date = extras.getString("SP_ava_Date");
+            selectedTimeSlot = extras.getString("selectedTimeSlot");
+            distance = extras.getInt("distance");
+            Log.w(TAG,"spid : "+spid +" catid : "+catid+" from : "+from+" serviceamount : "+serviceamount+" servicetime : "+servicetime+" SP_ava_Date : "+SP_ava_Date+" selectedTimeSlot : "+selectedTimeSlot);
+
+            Log.w(TAG,"fromactivity : "+fromactivity+" from : "+from);
+
         }
 
 
@@ -196,15 +246,58 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
     }
 
     private void gotoPetLoverProfileScreenActivity() {
-        Intent intent = new Intent(AddYourPetImageOlduserActivity.this, PetLoverProfileScreenActivity.class);
-        startActivity(intent);
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("AddNewPetActivity")){
+            Intent intent = new Intent(getApplicationContext(), ConsultationActivity.class);
+            intent.putExtra("doctorid", doctorid);
+            intent.putExtra("fromactivity", TAG);
+            intent.putExtra("Doctor_ava_Date", Doctor_ava_Date);
+            intent.putExtra("selectedTimeSlot", selectedTimeSlot);
+            intent.putExtra("amount", amount);
+            intent.putExtra("communicationtype", communicationtype);
+            intent.putExtra("fromto", TAG);
+            intent.putExtra("petId", petId);
+            startActivity(intent);
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetServiceAppointment_Doctor_Date_Time_Activity")){
+            Intent intent = new Intent(getApplicationContext(),ConsultationActivity.class);
+            intent.putExtra("spid",spid);
+            intent.putExtra("catid",catid);
+            intent.putExtra("from",from);
+            intent.putExtra("spuserid",spuserid);
+            intent.putExtra("selectedServiceTitle",selectedServiceTitle);
+            intent.putExtra("serviceamount",serviceamount);
+            intent.putExtra("servicetime",servicetime);
+            intent.putExtra("SP_ava_Date",SP_ava_Date);
+            intent.putExtra("selectedTimeSlot",selectedTimeSlot);
+            intent.putExtra("distance",distance);
+            intent.putExtra("fromactivity",fromactivity);
+            intent.putExtra("petid", petid);
+            intent.putExtra("petId", petId);
+            startActivity(intent);
+        }else {
+            Intent intent = new Intent(AddYourPetImageOlduserActivity.this, PetLoverProfileScreenActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(AddYourPetImageOlduserActivity.this, PetLoverProfileScreenActivity.class));
-        finish();
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("AddNewPetActivity")){
+            Intent intent = new Intent(getApplicationContext(), ConsultationActivity.class);
+            intent.putExtra("doctorid", doctorid);
+            intent.putExtra("fromactivity", TAG);
+            intent.putExtra("Doctor_ava_Date", Doctor_ava_Date);
+            intent.putExtra("selectedTimeSlot", selectedTimeSlot);
+            intent.putExtra("amount", amount);
+            intent.putExtra("communicationtype", communicationtype);
+            intent.putExtra("fromto", TAG);
+            intent.putExtra("petId", petId);
+            startActivity(intent);
+        }else{
+            startActivity(new Intent(AddYourPetImageOlduserActivity.this, PetLoverProfileScreenActivity.class));
+            finish();
+        }
+
     }
 
 

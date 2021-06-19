@@ -50,8 +50,6 @@ import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -68,9 +66,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BasicPetDetailsActivity extends AppCompatActivity implements PetTypeSelectListener, View.OnClickListener, PetBreedTypeSelectListener {
+public class AddNewPetActivity extends AppCompatActivity implements PetTypeSelectListener, View.OnClickListener, PetBreedTypeSelectListener {
 
-    private static final String TAG = "BasicPetDetailsActivity";
+    private static final String TAG = "AddNewPetActivity";
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
@@ -176,6 +174,30 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
     private String userid;
     private String PetBreedType = "";
 
+    private String selectedAppointmentType = "Normal";
+    private String selectedVisitType = "";
+    private String petId;
+    private String doctorid;
+    private String fromactivity;
+    private String fromto;
+    private String Payment_id = "";
+    private String Doctor_ava_Date = "";
+    private String selectedTimeSlot = "";
+    private int amount;
+    private String communicationtype = "";
+
+
+    private String spid,catid,from;
+    private String spuserid;
+    private String selectedServiceTitle;
+    private String petcolor;
+    private double petweight;
+    private String servicetime;
+    private int serviceamount;
+    private String petage;
+    private int distance;
+    private String SP_ava_Date;
+
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -188,17 +210,42 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
         edt_petweight.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,2)});
 
 
-        SessionManager sessionManager = new SessionManager(BasicPetDetailsActivity.this);
+        SessionManager sessionManager = new SessionManager(AddNewPetActivity.this);
         HashMap<String, String> user = sessionManager.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
 
-       /* Bundle extras = getIntent().getExtras();
+        Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            petType = extras.getString("petType");
+            doctorid = extras.getString("doctorid");
+            fromactivity = extras.getString("fromactivity");
+            fromto = extras.getString("fromto");
+            Doctor_ava_Date = extras.getString("Doctor_ava_Date");
+            selectedTimeSlot = extras.getString("selectedTimeSlot");
+            amount = extras.getInt("amount");
+            Log.w(TAG,"amount : "+amount);
+            communicationtype = extras.getString("communicationtype");
             petId = extras.getString("petId");
-            Log.w(TAG,"petType : "+petType +"petId : "+petId);
+            Log.w(TAG,"Bundle "+" doctorid : "+doctorid+" selectedTimeSlot : "+selectedTimeSlot+"communicationtype : "+communicationtype+" amount : "+amount+" fromactivity : "+fromactivity+" fromto : "+fromto);
+
+            Log.w(TAG,"fromactivity : "+fromactivity);
+
+            /*PetServiceAppointment_Doctor_Date_Time_Activity*/
+            fromactivity = extras.getString("fromactivity");
+            spid = extras.getString("spid");
+            catid = extras.getString("catid");
+            from = extras.getString("from");
+            spuserid = extras.getString("spuserid");
+            selectedServiceTitle = extras.getString("selectedServiceTitle");
+            serviceamount = extras.getInt("serviceamount");
+            servicetime = extras.getString("servicetime");
+            SP_ava_Date = extras.getString("SP_ava_Date");
+            selectedTimeSlot = extras.getString("selectedTimeSlot");
+            distance = extras.getInt("distance");
+            Log.w(TAG,"spid : "+spid +" catid : "+catid+" from : "+from+" serviceamount : "+serviceamount+" servicetime : "+servicetime+" SP_ava_Date : "+SP_ava_Date+" selectedTimeSlot : "+selectedTimeSlot);
+
+            Log.w(TAG,"fromactivity : "+fromactivity+" from : "+from);
+
         }
-*/
 
         img_back.setOnClickListener(this);
         ivmale.setOnClickListener(this);
@@ -210,7 +257,7 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
 
 
 
-        if (new ConnectionDetector(BasicPetDetailsActivity.this).isNetworkAvailable(BasicPetDetailsActivity.this)) {
+        if (new ConnectionDetector(AddNewPetActivity.this).isNetworkAvailable(AddNewPetActivity.this)) {
             petTypeListResponseCall();
         }
 
@@ -421,10 +468,9 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
 
 
     private void showPopupPetType() {
-
         try {
 
-            Dialog dialog = new Dialog(BasicPetDetailsActivity.this);
+            Dialog dialog = new Dialog(AddNewPetActivity.this);
             dialog.setContentView(R.layout.alert_pettype_layout);
             dialog.setCanceledOnTouchOutside(false);
 
@@ -528,7 +574,7 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
 
 
     public void showErrorLoading(String errormesage){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BasicPetDetailsActivity.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(AddNewPetActivity.this);
         alertDialogBuilder.setMessage(errormesage);
         alertDialogBuilder.setPositiveButton("ok",
                 (arg0, arg1) -> hideLoading());
@@ -582,7 +628,7 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
     }
 
     private void gotoSignup() {
-        Intent intent = new Intent(BasicPetDetailsActivity.this, BasicPetDetailsActivity.class);
+        Intent intent = new Intent(AddNewPetActivity.this, AddNewPetActivity.class);
         intent.putExtra("UserType",petType);
         intent.putExtra("petTypeId",petTypeId);
 
@@ -636,7 +682,7 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
 
 
         if (can_proceed) {
-            if (new ConnectionDetector(BasicPetDetailsActivity.this).isNetworkAvailable(BasicPetDetailsActivity.this)) {
+            if (new ConnectionDetector(AddNewPetActivity.this).isNetworkAvailable(AddNewPetActivity.this)) {
                 addYourPetResponseCall();
 
             }
@@ -663,10 +709,38 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
                     if (200 == response.body().getCode()) {
                         Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
                         if(response.body().getData() != null) {
-                            Intent intent = new Intent(BasicPetDetailsActivity.this, PetOtherInformationsActivity.class);
-                            intent.putExtra("petid", response.body().getData().get_id());
-                            intent.putExtra("fromactivity",TAG);
-                            startActivity(intent);
+                            if(fromactivity != null && fromactivity.equalsIgnoreCase("PetServiceAppointment_Doctor_Date_Time_Activity")){
+                                Intent intent = new Intent(getApplicationContext(),PetOtherInformationsActivity.class);
+                                intent.putExtra("spid",spid);
+                                intent.putExtra("catid",catid);
+                                intent.putExtra("from",from);
+                                intent.putExtra("spuserid",spuserid);
+                                intent.putExtra("selectedServiceTitle",selectedServiceTitle);
+                                intent.putExtra("serviceamount",serviceamount);
+                                intent.putExtra("servicetime",servicetime);
+                                intent.putExtra("SP_ava_Date",SP_ava_Date);
+                                intent.putExtra("selectedTimeSlot",selectedTimeSlot);
+                                intent.putExtra("distance",distance);
+                                intent.putExtra("fromactivity",fromactivity);
+                                intent.putExtra("petid", response.body().getData().get_id());
+                                intent.putExtra("petId", response.body().getData().get_id());
+                                startActivity(intent);
+                            }
+                             else {
+                                Intent intent = new Intent(AddNewPetActivity.this, PetOtherInformationsActivity.class);
+                                intent.putExtra("petid", response.body().getData().get_id());
+                                intent.putExtra("doctorid", doctorid);
+                                intent.putExtra("fromactivity", TAG);
+                                intent.putExtra("Doctor_ava_Date", Doctor_ava_Date);
+                                intent.putExtra("selectedTimeSlot", selectedTimeSlot);
+                                intent.putExtra("amount", amount);
+                                intent.putExtra("communicationtype", communicationtype);
+                                intent.putExtra("fromto", TAG);
+                                intent.putExtra("petId", response.body().getData().get_id());
+                                startActivity(intent);
+                            }
+
+
                         }
 
                     } else {
@@ -733,7 +807,7 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
     public boolean vaildSelectGender() {
 
         if(gender.isEmpty()){
-            final AlertDialog alertDialog = new AlertDialog.Builder(BasicPetDetailsActivity.this).create();
+            final AlertDialog alertDialog = new AlertDialog.Builder(AddNewPetActivity.this).create();
             alertDialog.setMessage(getString(R.string.err_msg_type_of_gender));
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
                     (dialog, which) -> alertDialog.cancel());
@@ -768,6 +842,7 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
                         Log.w(TAG,"PetTypeListResponse" + new Gson().toJson(response.body()));
                         if(response.body().getData().getUsertypedata() != null) {
                             petTypedataBeanList = response.body().getData().getUsertypedata();
+                            Log.w(TAG,"petTypedataBeanList size" + petTypedataBeanList.size());
                         }
 
                     }
@@ -775,6 +850,13 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
 
 
                 }
+
+
+
+
+
+
+
 
             }
 
@@ -817,6 +899,7 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<BreedTypeResponse>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(@NonNull Call<BreedTypeResponse> call, @NonNull Response<BreedTypeResponse> response) {
                 avi_indicator.smoothToHide();
@@ -837,6 +920,7 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
                             tv_breednorecords.setVisibility(View.VISIBLE);
                             tv_breednorecords.setText("No breed type");
                         }
+
                     }
 
                 }

@@ -61,7 +61,8 @@ public class DoctorSearchResponse {
          * clinic_name : cli
          * specialization : [{"specialization":"Testing - 1"}]
          * doctor_img : http://52.25.163.13:3000/api/uploads/Slide1.jpg
-         * clinic_loc : loc
+         * thumbnail_image : http://52.25.163.13:3000/api/uploads/Slide1.jpg
+         *clinic_loc : loc
          * distance : 2
          * star_count : 2.5
          * review_count : 234
@@ -75,6 +76,16 @@ public class DoctorSearchResponse {
         private String doctor_name;
         private String clinic_name;
         private String doctor_img;
+        private String thumbnail_image;
+
+        public String getThumbnail_image() {
+            return thumbnail_image;
+        }
+
+        public void setThumbnail_image(String thumbnail_image) {
+            this.thumbnail_image = thumbnail_image;
+        }
+
         private String clinic_loc;
         private String distance;
         private double star_count;

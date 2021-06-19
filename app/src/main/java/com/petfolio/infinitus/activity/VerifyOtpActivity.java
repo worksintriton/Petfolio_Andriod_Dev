@@ -28,6 +28,7 @@ import com.petfolio.infinitus.appUtils.NumericKeyBoardTransformationMethod;
 import com.petfolio.infinitus.doctor.DoctorBusinessInfoActivity;
 import com.petfolio.infinitus.doctor.DoctorDashboardActivity;
 import com.petfolio.infinitus.petlover.AddYourPetActivity;
+import com.petfolio.infinitus.petlover.BasicPetDetailsNewActivity;
 import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinitus.receiver.SmsBroadcastListener;
 import com.petfolio.infinitus.requestpojo.FBTokenUpdateRequest;
@@ -428,7 +429,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                         else{
                             if(usertype != 0){
                                 if(usertype == 1 ){
-                                    startActivity(new Intent(VerifyOtpActivity.this, AddYourPetActivity.class));
+                                    startActivity(new Intent(VerifyOtpActivity.this, BasicPetDetailsNewActivity.class));
 
                                 }else if(usertype == 2 ){
                                     startActivity(new Intent(VerifyOtpActivity.this, ServiceProviderRegisterFormActivity.class));

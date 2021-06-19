@@ -41,6 +41,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -189,6 +190,9 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
     @BindView(R.id.ll_content_shop)
     LinearLayout ll_content_shop;
 
+    private ShimmerFrameLayout mShimmerViewContainer;
+    private View includelayout;
+
     private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.BannerDetailsBean> listHomeBannerResponse;
     private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.DoctorDetailsBean> doctorDetailsResponseList;
     private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ServiceDetailsBean> serviceDetailsResponseList;
@@ -248,6 +252,9 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
 
         headerView.setVisibility(View.GONE);
         ll_content_shop.setVisibility(View.GONE);
+
+        includelayout = view.findViewById(R.id.includelayout);
+        mShimmerViewContainer = includelayout.findViewById(R.id.shimmer_layout);
 
         txt_doctors.setVisibility(View.GONE);
         txt_services.setVisibility(View.GONE);
@@ -350,8 +357,10 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
 
     @SuppressLint("LogNotTimber")
     private void petLoverDashboardResponseCall(int doctor, int service, int product) {
-        avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();
+       /* avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();*/
+        includelayout.setVisibility(View.VISIBLE);
+        mShimmerViewContainer.startShimmerAnimation();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
         Call<PetLoverDashboardResponse> call = apiInterface.petLoverDashboardResponseCall(RestUtils.getContentType(), petLoverDashboardRequest(doctor,service,product));
         Log.w(TAG,"PetLoverDashboardResponse url  :%s"+" "+ call.request().url().toString());
@@ -360,7 +369,9 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
             @SuppressLint({"LogNotTimber", "SetTextI18n"})
             @Override
             public void onResponse(@NonNull Call<PetLoverDashboardResponse> call, @NonNull Response<PetLoverDashboardResponse> response) {
-                avi_indicator.smoothToHide();
+                //avi_indicator.smoothToHide();
+                mShimmerViewContainer.stopShimmerAnimation();
+                includelayout.setVisibility(View.GONE);
                 Log.w(TAG,"PetLoverDashboardResponse" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
@@ -485,7 +496,9 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
             @SuppressLint({"LongLogTag", "LogNotTimber"})
             @Override
             public void onFailure(@NonNull Call<PetLoverDashboardResponse> call,@NonNull Throwable t) {
-                avi_indicator.smoothToHide();
+               // avi_indicator.smoothToHide();
+                mShimmerViewContainer.stopShimmerAnimation();
+                includelayout.setVisibility(View.GONE);
                 Log.e("PetLoverDashboardResponseflr", "--->" + t.getMessage());
                 Toast.makeText(mContext, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -556,7 +569,7 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
     private void setViewServices(List<PetLoverDashboardResponse.DataBean.DashboarddataBean.ServiceDetailsBean> serviceDetailsResponseList) {
         rvservice.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         rvservice.setMotionEventSplittingEnabled(false);
-        int size =4;
+        int size = 4;
         rvservice.setItemAnimator(new DefaultItemAnimator());
         PetLoverServicesAdapter petLoverServicesAdapter = new PetLoverServicesAdapter(mContext, serviceDetailsResponseList, rvservice, size);
         rvservice.setAdapter(petLoverServicesAdapter);

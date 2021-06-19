@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -97,10 +98,15 @@ public class PetMyCalendarAvailableAdapter extends  RecyclerView.Adapter<Recycle
 
 
 
-        if(selectedPosition==position)
+        if(selectedPosition==position){
             holder.txt_days.setBackgroundResource(R.drawable.button_blue_rounded_corner);
-        else
+            holder.txt_days.setTextColor(ContextCompat.getColor(context, R.color.white));
+        } else{
             holder.txt_days.setBackgroundResource(R.drawable.button_rounded_corner);
+            holder.txt_days.setTextColor(ContextCompat.getColor(context, R.color.black));
+
+        }
+
 
 
         if(!timesBeanList.get(position).isBook_status()){

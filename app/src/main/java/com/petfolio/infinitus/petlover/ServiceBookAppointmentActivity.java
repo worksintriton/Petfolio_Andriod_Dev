@@ -119,6 +119,10 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
     TabLayout tabLayout;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_petimage)
+    RelativeLayout rl_petimage;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.spr_selectyourpettype)
     Spinner spr_selectyourpettype;
 
@@ -267,6 +271,25 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
 
         ButterKnife.bind(this);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            spid = extras.getString("spid");
+            catid = extras.getString("catid");
+            from = extras.getString("from");
+            spuserid = extras.getString("spuserid");
+            selectedServiceTitle = extras.getString("selectedServiceTitle");
+            serviceamount = extras.getInt("serviceamount");
+            servicetime = extras.getString("servicetime");
+            SP_ava_Date = extras.getString("SP_ava_Date");
+            selectedTimeSlot = extras.getString("selectedTimeSlot");
+            distance = extras.getInt("distance");
+            Log.w(TAG,"spid : "+spid +" catid : "+catid+" from : "+from+" serviceamount : "+serviceamount+" servicetime : "+servicetime+" SP_ava_Date : "+SP_ava_Date+" selectedTimeSlot : "+selectedTimeSlot);
+
+            if(selectedServiceTitle != null){
+                txt_selected_service.setText(selectedServiceTitle);
+            }
+        }
+
         ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
         ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
         ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
@@ -313,24 +336,7 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
 
 
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            spid = extras.getString("spid");
-            catid = extras.getString("catid");
-            from = extras.getString("from");
-            spuserid = extras.getString("spuserid");
-            selectedServiceTitle = extras.getString("selectedServiceTitle");
-            serviceamount = extras.getInt("serviceamount");
-            servicetime = extras.getString("servicetime");
-            SP_ava_Date = extras.getString("SP_ava_Date");
-            selectedTimeSlot = extras.getString("selectedTimeSlot");
-            distance = extras.getInt("distance");
-            Log.w(TAG,"spid : "+spid +" catid : "+catid+" from : "+from+" serviceamount : "+serviceamount+" servicetime : "+servicetime+" SP_ava_Date : "+SP_ava_Date+" selectedTimeSlot : "+selectedTimeSlot);
 
-            if(selectedServiceTitle != null){
-                txt_selected_service.setText(selectedServiceTitle);
-            }
-        }
 
 
         SessionManager sessionManager = new SessionManager(getApplicationContext());
@@ -389,13 +395,15 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
                                     cv_pet_img.setVisibility(View.VISIBLE);
 
                                     img_pet_imge.setVisibility(View.GONE);
+                                    rl_petimage.setVisibility(View.VISIBLE);
 
                                     viewpageData(petimage);
                                 }
-
                                 else {
 
                                     img_pet_imge.setVisibility(View.VISIBLE);
+                                    rl_petimage.setVisibility(View.GONE);
+
 
                                 }
 
@@ -518,9 +526,9 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
 
         btn_bookappointment.setOnClickListener(v -> {
             Log.w(TAG,"btn_continue strPetBreedType : "+strPetBreedType);
-            if (isSelectYourPet) {
-                if(validdSelectYourPetType()){
 
+         /*   if (isSelectYourPet) {
+                if(validdSelectYourPetType()){
                     if(serviceamount != 0) {
                         startPayment();
                     } else if(new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
@@ -528,22 +536,22 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
 
                     }
                 }
-
             } else {
                 if( bookAppointmentValidator()){
                     if (new ConnectionDetector(ServiceBookAppointmentActivity.this).isNetworkAvailable(ServiceBookAppointmentActivity.this)) {
                         addYourPetResponseCall();
                     }
-                    /*if (validdSelectPetType()) {
-                        if(validdSelectPetBreedType()){
-
-                        }
-
-                    }*/
 
 
 
                 }
+
+            }*/
+
+            if(serviceamount != 0) {
+                startPayment();
+            } else if(new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                spCreateAppointmentResponseCall();
 
             }
 
@@ -1173,7 +1181,8 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent intent = new Intent(getApplicationContext(),PetServiceAppointment_Doctor_Date_Time_Activity.class);
+       // Intent intent = new Intent(getApplicationContext(),PetServiceAppointment_Doctor_Date_Time_Activity.class);
+        Intent intent = new Intent(getApplicationContext(),ConsultationIssuesActivity.class);
         intent.putExtra("spid",spid);
         intent.putExtra("catid",catid);
         intent.putExtra("from",from);
@@ -1284,11 +1293,7 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
                     if(response.body().getCode() == 200){
                         if(response.body().getMessage() != null){
                             showSuceessLoading(response.body().getMessage());
-
                         }
-
-
-
                     }
                     else{
                         if(response.body().getMessage() != null){

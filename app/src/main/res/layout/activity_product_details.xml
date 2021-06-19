@@ -163,7 +163,7 @@
                 android:layout_height="50dp"
                 android:layout_marginStart="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/new_rounded_corner_btn_red"
+                android:background="@drawable/new_rounded_corner_btn_green"
                 android:gravity="center"
                 android:orientation="horizontal">
 

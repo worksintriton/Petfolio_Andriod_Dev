@@ -11,11 +11,15 @@
         android:layout_height="wrap_content"
         android:fillViewport="true"
         android:layout_marginBottom="10dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginBottom="20dp">
+            <include android:id="@+id/includelayout"
+                layout="@layout/loading_layout"
+                android:visibility="gone"/>
             <LinearLayout
                 android:id="@+id/headerView"
                 android:layout_width="wrap_content"
@@ -212,6 +216,7 @@
             </LinearLayout>
 
         </LinearLayout>
+
 
 
     </ScrollView>

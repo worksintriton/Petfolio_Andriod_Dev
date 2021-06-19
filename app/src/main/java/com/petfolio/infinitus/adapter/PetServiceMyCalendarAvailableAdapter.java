@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.petfolio.infinitus.R;
@@ -88,13 +89,14 @@ public class PetServiceMyCalendarAvailableAdapter extends  RecyclerView.Adapter<
             }
         });
 
-        if(selectedPosition==position)
+        if(selectedPosition==position){
             holder.txt_days.setBackgroundResource(R.drawable.button_blue_rounded_corner);
-        else
+            holder.txt_days.setTextColor(ContextCompat.getColor(context, R.color.white));
+        } else{
             holder.txt_days.setBackgroundResource(R.drawable.button_rounded_corner);
+            holder.txt_days.setTextColor(ContextCompat.getColor(context, R.color.black));
 
-
-
+        }
 
 
 

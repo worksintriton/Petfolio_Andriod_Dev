@@ -262,9 +262,10 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
         // Set a Start date (Default, 1 Jan 1970)
         datePickerTimeline.setInitialDate(year, month, date);
 
-        datePickerTimeline.setDateTextColor(Color.parseColor("#009675"));
-        datePickerTimeline.setDayTextColor(Color.parseColor("#009675"));
-        datePickerTimeline.setMonthTextColor(Color.parseColor("#009675"));
+        datePickerTimeline.setDateTextColor(getResources().getColor(R.color.new_gree_color));
+        //datePickerTimeline.setDayTextColor(Color.parseColor("#009675"));
+        datePickerTimeline.setDayTextColor(getResources().getColor(R.color.new_gree_color));
+        datePickerTimeline.setMonthTextColor(getResources().getColor(R.color.new_gree_color));
       // Set a date Selected Listener
         datePickerTimeline.setOnDateSelectedListener(new OnDateSelectedListener() {
             @SuppressLint("LogNotTimber")
@@ -533,7 +534,8 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
 
     @SuppressLint("LogNotTimber")
     private void gotoServiceBookAppoinment(){
-        Intent intent = new Intent(PetServiceAppointment_Doctor_Date_Time_Activity.this,ServiceBookAppointmentActivity.class);
+      //  Intent intent = new Intent(PetServiceAppointment_Doctor_Date_Time_Activity.this,ServiceBookAppointmentActivity.class);
+        Intent intent = new Intent(PetServiceAppointment_Doctor_Date_Time_Activity.this,ConsultationActivity.class);
         intent.putExtra("spid",spid);
         intent.putExtra("catid",catid);
         intent.putExtra("from",from);
@@ -544,6 +546,7 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
         intent.putExtra("SP_ava_Date",SP_ava_Date);
         intent.putExtra("selectedTimeSlot",selectedTimeSlot);
         intent.putExtra("distance",distance);
+        intent.putExtra("fromactivity",TAG);
         Log.w(TAG,"gotoServiceBookAppoinment : "+"SP_ava_Date : "+SP_ava_Date);
         startActivity(intent);
 

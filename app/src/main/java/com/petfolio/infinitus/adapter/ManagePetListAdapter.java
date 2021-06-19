@@ -20,7 +20,6 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.interfaces.PetDeleteListener;
 import com.petfolio.infinitus.petlover.BasicPetDetailsActivity;
-import com.petfolio.infinitus.petlover.ChoosePetTypeActivity;
 import com.petfolio.infinitus.petlover.EditYourPetProfileInfoActivity;
 import com.petfolio.infinitus.responsepojo.PetListResponse;
 

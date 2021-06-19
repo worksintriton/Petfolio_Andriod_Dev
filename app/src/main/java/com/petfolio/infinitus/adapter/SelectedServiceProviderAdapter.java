@@ -82,7 +82,10 @@ public class SelectedServiceProviderAdapter extends  RecyclerView.Adapter<Recycl
             holder.txt_service_providers.setText(serviceProviderList.get(position).getService_provider_name());
         }
         if(serviceProviderList.get(position).getService_price() != 0) {
+            holder.txt_serv_price.setVisibility(View.VISIBLE);
             holder.txt_serv_price.setText("\u20B9 " + serviceProviderList.get(position).getService_price());
+        }else{
+            holder.txt_serv_price.setVisibility(View.GONE);
         }
         if(serviceProviderList.get(position).getService_offer() != 0) {
             holder.txt_serv_offer.setText(serviceProviderList.get(position).getService_offer() + "");
@@ -91,7 +94,7 @@ public class SelectedServiceProviderAdapter extends  RecyclerView.Adapter<Recycl
             holder.txt_place.setText(serviceProviderList.get(position).getService_place());
         }
         if(serviceProviderList.get(position).getDistance() != 0) {
-            holder.txt_km.setText(serviceProviderList.get(position).getDistance() + " km away");
+            holder.txt_km.setText(serviceProviderList.get(position).getDistance() + " km");
         }else{
             holder.txt_km.setText("0 km away");
         }
@@ -107,7 +110,7 @@ public class SelectedServiceProviderAdapter extends  RecyclerView.Adapter<Recycl
            if (serviceProviderList.get(position).getImage() != null && !serviceProviderList.get(position).getImage().isEmpty()) {
 
                 Glide.with(context)
-                        .load(serviceProviderList.get(position).getImage())
+                        .load(serviceProviderList.get(position).getThumbnail_image())
                         .into(holder.img_service);
 
             }

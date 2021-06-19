@@ -15,26 +15,15 @@
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true">
 
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <CheckBox
-                android:id="@+id/chx_usertypes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/cb_selector"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="10dp"
-                android:checked="true"
-                android:layout_alignParentEnd="true"/>
-
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_pet"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="5dp"
                 app:cardCornerRadius="10dp"
@@ -56,44 +45,50 @@
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/txt_health_issue_name"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:ellipsize="end"
+                android:fontFamily="@font/futuramediumbt"
+                android:maxLines="2"
+                android:text="@string/service_name"
+                android:textColor="@color/new_txt_color"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                android:gravity="center_vertical"
+                android:layout_marginStart="20dp"/>
 
-            <LinearLayout
-                android:id="@+id/ly_petname"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/cv_pet"
-                android:orientation="vertical"
-                android:layout_marginStart="20dp">
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                <CheckBox
+                    android:id="@+id/chx_usertypes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/cb_selector"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    tools:ignore="UselessParent">
-
-                    <TextView
-                        android:id="@+id/txt_health_issue_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/futuramediumbt"
-                        android:maxLines="1"
-                        android:text="@string/service_name"
-                        android:textColor="@color/new_txt_color"
-                        android:textSize="14sp"
-                        android:textStyle="normal"
-                        android:layout_marginEnd="40dp"/>
-
-
-                </LinearLayout>
-
-            </LinearLayout>
+                    android:checked="true"
+                    android:layout_alignParentEnd="true"/>
+            </RelativeLayout>
 
 
 
 
-        </RelativeLayout>
+
+
+
+
+
+
+
+        </LinearLayout>
+
+
+
 
     </androidx.cardview.widget.CardView>
 

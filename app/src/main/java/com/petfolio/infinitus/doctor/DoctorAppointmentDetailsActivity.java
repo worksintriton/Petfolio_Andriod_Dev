@@ -52,7 +52,7 @@ import retrofit2.Response;
 
 public class DoctorAppointmentDetailsActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
-    private static final String TAG = "DoctorAppointmentDetailsActivity";
+    private String TAG = "DoctorAppointmentDetailsActivity";
 
 
     @SuppressLint("NonConstantResourceId")
@@ -253,6 +253,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
     @BindView(R.id.txt_doctor_comment)
     TextView txt_doctor_comment;
 
+    String breed,gender,colour,weight,pet_dob ;
 
 
     @SuppressLint("LongLogTag")
@@ -416,22 +417,27 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
 
 
                             String usr_image = response.body().getData().getDoctor_id().getProfile_img();
+                            if(response.body().getData().getPet_id() != null){
+                                 pet_name = response.body().getData().getPet_id().getPet_name();
+                                pet_image = response.body().getData().getPet_id().getPet_img();
+                                 pet_type = response.body().getData().getPet_id().getPet_type();
 
-                            String pet_name = response.body().getData().getPet_id().getPet_name();
+                                 breed = response.body().getData().getPet_id().getPet_breed();
 
-                             pet_image = response.body().getData().getPet_id().getPet_img();
+                                 gender = response.body().getData().getPet_id().getPet_gender();
 
-                            String pet_type = response.body().getData().getPet_id().getPet_type();
+                                 colour = response.body().getData().getPet_id().getPet_color();
 
-                            String breed = response.body().getData().getPet_id().getPet_breed();
+                                 weight = String.valueOf(response.body().getData().getPet_id().getPet_weight());
 
-                            String gender = response.body().getData().getPet_id().getPet_gender();
+                                 pet_dob = response.body().getData().getPet_id().getPet_dob();
 
-                            String colour = response.body().getData().getPet_id().getPet_color();
+                            }
 
-                            String weight = String.valueOf(response.body().getData().getPet_id().getPet_weight());
 
-                            String pet_dob = response.body().getData().getPet_id().getPet_dob();
+
+
+
                             if(pet_dob != null){
                                 String[] separated = pet_dob.split("-");
                                 String day = separated[0];

@@ -61,15 +61,17 @@ public class DoctorCompletedAppointmentAdapter extends  RecyclerView.Adapter<Rec
     @SuppressLint({"SetTextI18n", "LogNotTimber"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
-        Log.w(TAG,"Pet name-->"+completedAppointmentResponseList.get(position).getPet_id().getPet_name());
+        if(completedAppointmentResponseList.get(position).getPet_id() != null){
+            if(completedAppointmentResponseList.get(position).getPet_id().getPet_name() != null){
+                holder.txt_petname.setText(completedAppointmentResponseList.get(position).getPet_id().getPet_name());}
+            if(completedAppointmentResponseList.get(position).getPet_id().getPet_type() != null){
+                holder.txt_pettype.setText(completedAppointmentResponseList.get(position).getPet_id().getPet_type());}
+            petImgBeanList = completedAppointmentResponseList.get(position).getPet_id().getPet_img();
 
-        if(completedAppointmentResponseList.get(position).getPet_id().getPet_name() != null){
-        holder.txt_petname.setText(completedAppointmentResponseList.get(position).getPet_id().getPet_name());}
-        if(completedAppointmentResponseList.get(position).getPet_id().getPet_type() != null){
-        holder.txt_pettype.setText(completedAppointmentResponseList.get(position).getPet_id().getPet_type());}
+        }
+
         if(completedAppointmentResponseList.get(position).getCompleted_at() != null){
         holder.txt_completed_date.setText("Completed on:"+" "+completedAppointmentResponseList.get(position).getCompleted_at());}
-
         if(completedAppointmentResponseList.get(position).getAppointment_types() != null){
             holder.txt_type.setText(completedAppointmentResponseList.get(position).getAppointment_types());
         }
@@ -77,7 +79,6 @@ public class DoctorCompletedAppointmentAdapter extends  RecyclerView.Adapter<Rec
             holder.txt_service_cost.setText("\u20B9 "+completedAppointmentResponseList.get(position).getAmount());
         }
 
-        petImgBeanList = completedAppointmentResponseList.get(position).getPet_id().getPet_img();
         if (petImgBeanList != null && petImgBeanList.size() > 0) {
             for(int j=0;j<petImgBeanList.size();j++) {
                 petImagePath = petImgBeanList.get(j).getPet_img();

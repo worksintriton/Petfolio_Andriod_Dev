@@ -34,6 +34,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.activity.LoginActivity;
 import com.petfolio.infinitus.adapter.PetBreedTypesListAdapter;
 import com.petfolio.infinitus.adapter.PetTypesListAdapter;
 import com.petfolio.infinitus.api.APIClient;
@@ -49,8 +50,6 @@ import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,9 +67,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BasicPetDetailsActivity extends AppCompatActivity implements PetTypeSelectListener, View.OnClickListener, PetBreedTypeSelectListener {
+public class BasicPetDetailsNewActivity extends AppCompatActivity implements PetTypeSelectListener, View.OnClickListener, PetBreedTypeSelectListener {
 
-    private static final String TAG = "BasicPetDetailsActivity";
+    private  String TAG = "BasicPetDetailsNewActivity";
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
@@ -188,7 +187,7 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
         edt_petweight.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(4,2)});
 
 
-        SessionManager sessionManager = new SessionManager(BasicPetDetailsActivity.this);
+        SessionManager sessionManager = new SessionManager(BasicPetDetailsNewActivity.this);
         HashMap<String, String> user = sessionManager.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
 
@@ -210,7 +209,7 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
 
 
 
-        if (new ConnectionDetector(BasicPetDetailsActivity.this).isNetworkAvailable(BasicPetDetailsActivity.this)) {
+        if (new ConnectionDetector(BasicPetDetailsNewActivity.this).isNetworkAvailable(BasicPetDetailsNewActivity.this)) {
             petTypeListResponseCall();
         }
 
@@ -417,14 +416,11 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
         Log.w(TAG,"ageS: "+ageS+" months : "+monthsS);
 
     }
-
-
-
     private void showPopupPetType() {
 
         try {
 
-            Dialog dialog = new Dialog(BasicPetDetailsActivity.this);
+            Dialog dialog = new Dialog(BasicPetDetailsNewActivity.this);
             dialog.setContentView(R.layout.alert_pettype_layout);
             dialog.setCanceledOnTouchOutside(false);
 
@@ -506,7 +502,6 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
 
 
     }
-
     private void filter(String text) {
         //new array list that will hold the filtered data
         List<BreedTypeResponse.DataBean> breedTypedataBeanListFiltered = new ArrayList<>();
@@ -524,11 +519,8 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
         //calling a method of the adapter class and passing the filtered list
         petBreedTypesListAdapter.filterList(breedTypedataBeanListFiltered);
     }
-
-
-
     public void showErrorLoading(String errormesage){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BasicPetDetailsActivity.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BasicPetDetailsNewActivity.this);
         alertDialogBuilder.setMessage(errormesage);
         alertDialogBuilder.setPositiveButton("ok",
                 (arg0, arg1) -> hideLoading());
@@ -542,14 +534,10 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
 
         }
     }
-
-
-
-
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         finish();
     }
 
@@ -582,7 +570,7 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
     }
 
     private void gotoSignup() {
-        Intent intent = new Intent(BasicPetDetailsActivity.this, BasicPetDetailsActivity.class);
+        Intent intent = new Intent(BasicPetDetailsNewActivity.this, BasicPetDetailsNewActivity.class);
         intent.putExtra("UserType",petType);
         intent.putExtra("petTypeId",petTypeId);
 
@@ -636,7 +624,7 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
 
 
         if (can_proceed) {
-            if (new ConnectionDetector(BasicPetDetailsActivity.this).isNetworkAvailable(BasicPetDetailsActivity.this)) {
+            if (new ConnectionDetector(BasicPetDetailsNewActivity.this).isNetworkAvailable(BasicPetDetailsNewActivity.this)) {
                 addYourPetResponseCall();
 
             }
@@ -663,7 +651,7 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
                     if (200 == response.body().getCode()) {
                         Toasty.success(getApplicationContext(),response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
                         if(response.body().getData() != null) {
-                            Intent intent = new Intent(BasicPetDetailsActivity.this, PetOtherInformationsActivity.class);
+                            Intent intent = new Intent(BasicPetDetailsNewActivity.this, PetOtherInformationsActivity.class);
                             intent.putExtra("petid", response.body().getData().get_id());
                             intent.putExtra("fromactivity",TAG);
                             startActivity(intent);
@@ -733,7 +721,7 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
     public boolean vaildSelectGender() {
 
         if(gender.isEmpty()){
-            final AlertDialog alertDialog = new AlertDialog.Builder(BasicPetDetailsActivity.this).create();
+            final AlertDialog alertDialog = new AlertDialog.Builder(BasicPetDetailsNewActivity.this).create();
             alertDialog.setMessage(getString(R.string.err_msg_type_of_gender));
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
                     (dialog, which) -> alertDialog.cancel());
@@ -775,6 +763,13 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
 
 
                 }
+
+
+
+
+
+
+
 
             }
 
@@ -837,6 +832,7 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
                             tv_breednorecords.setVisibility(View.VISIBLE);
                             tv_breednorecords.setText("No breed type");
                         }
+
                     }
 
                 }

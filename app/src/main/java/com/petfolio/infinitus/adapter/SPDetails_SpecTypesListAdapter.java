@@ -22,11 +22,14 @@ public class SPDetails_SpecTypesListAdapter extends  RecyclerView.Adapter<Recycl
     Context mcontext;
     List<SPDetailsRepsonse.DataBean.BusSpecListBean> specializationBeanList;
     SPDetailsRepsonse.DataBean.BusSpecListBean currentItem;
+    private int size;
 
 
-    public SPDetails_SpecTypesListAdapter(Context context, List<SPDetailsRepsonse.DataBean.BusSpecListBean> specializationBeanList) {
-        this.specializationBeanList = specializationBeanList;
+    public SPDetails_SpecTypesListAdapter(Context context, List<SPDetailsRepsonse.DataBean.BusSpecListBean> specializationBeanList,int size) {
         this.mcontext = context;
+        this.specializationBeanList = specializationBeanList;
+        this.size = size;
+
 
     }
 
@@ -57,7 +60,9 @@ public class SPDetails_SpecTypesListAdapter extends  RecyclerView.Adapter<Recycl
     }
     @Override
     public int getItemCount() {
-        return specializationBeanList.size();
+
+        //return specializationBeanList.size();
+        return Math.min(specializationBeanList.size(), size);
     }
 
 

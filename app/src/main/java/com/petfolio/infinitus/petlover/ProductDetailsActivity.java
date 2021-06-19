@@ -254,6 +254,11 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
         });
         img_add_product.setOnClickListener(v -> {
+
+            Log.w(TAG,"threshould : "+threshould);
+            Log.w(TAG,"img_add_product setOnClickListener : product_cart_counts "+product_cart_counts);
+
+
             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
 
                 if(threshould != null){
@@ -303,6 +308,25 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                 cart_add_product_ResponseCall();
             }
         });
+
+
+      /*  txt_cart_label.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(txt_cart_label.getText().toString() != null && txt_cart_label.getText().toString().equalsIgnoreCase("Go to cart")){
+                    Intent intent = new Intent(getApplicationContext(),PetCartActivity.class);
+                    intent.putExtra("productid",productid);
+                    intent.putExtra("fromactivity",TAG);
+                    startActivity(intent);
+                    finish();
+                }
+
+            }
+        });*/
+
+
+
+
 
 
 

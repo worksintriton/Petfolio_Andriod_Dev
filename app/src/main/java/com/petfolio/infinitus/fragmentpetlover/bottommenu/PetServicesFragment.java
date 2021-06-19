@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -113,14 +114,8 @@ public class PetServicesFragment extends Fragment implements Serializable, View.
     @BindView(R.id.txt_no_records)
     TextView txt_no_records;
 
-
-
-
-
-
-
-
-
+    private ShimmerFrameLayout mShimmerViewContainer;
+    private View includelayout;
 
 
     private String AddressLine;
@@ -168,7 +163,8 @@ public class PetServicesFragment extends Fragment implements Serializable, View.
 
 
         avi_indicator.setVisibility(View.GONE);
-
+        includelayout = view.findViewById(R.id.includelayout);
+        mShimmerViewContainer = includelayout.findViewById(R.id.shimmer_layout);
 
 
 
@@ -227,8 +223,10 @@ public class PetServicesFragment extends Fragment implements Serializable, View.
 
     @SuppressLint("LogNotTimber")
     private void ServiceCatResponseCall() {
-        avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();
+      /*  avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();*/
+        includelayout.setVisibility(View.VISIBLE);
+        mShimmerViewContainer.startShimmerAnimation();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
         Call<ServiceCatResponse> call = apiInterface.ServiceCatResponseCall(RestUtils.getContentType(), serviceCatRequest());
         Log.w(TAG,"ServiceCatResponseCall url  :%s"+" "+ call.request().url().toString());
@@ -237,7 +235,9 @@ public class PetServicesFragment extends Fragment implements Serializable, View.
             @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(@NonNull Call<ServiceCatResponse> call, @NonNull Response<ServiceCatResponse> response) {
-                avi_indicator.smoothToHide();
+                //avi_indicator.smoothToHide();
+                mShimmerViewContainer.stopShimmerAnimation();
+                includelayout.setVisibility(View.GONE);
                 Log.w(TAG,"ServiceCatResponseCall" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
@@ -276,7 +276,9 @@ public class PetServicesFragment extends Fragment implements Serializable, View.
             @SuppressLint("LongLogTag")
             @Override
             public void onFailure(@NonNull Call<ServiceCatResponse> call,@NonNull Throwable t) {
-                avi_indicator.smoothToHide();
+               // avi_indicator.smoothToHide();
+                mShimmerViewContainer.stopShimmerAnimation();
+                includelayout.setVisibility(View.GONE);
                 Log.e(" ServiceCatResponse flr", "--->" + t.getMessage());
             }
         });

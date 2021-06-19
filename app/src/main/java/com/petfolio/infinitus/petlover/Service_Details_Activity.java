@@ -228,6 +228,10 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
     @BindView(R.id.txt_dr_desc)
     TextView txt_dr_desc;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_seemore_spec)
+    TextView txt_seemore_spec;
+
 
     List<SPDetailsRepsonse.DataBean.BusSpecListBean> specializationBeanList;
 
@@ -248,7 +252,7 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
 
 
 
-
+        txt_seemore_spec.setVisibility(View.GONE);
         avi_indicator.setVisibility(View.GONE);
 
         rl_back.setOnClickListener(this);
@@ -279,6 +283,25 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
                 SPDetailsRepsonseCall();
             }
         }
+
+        txt_seemore_spec.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onClick(View view) {
+                if(txt_seemore_spec.getText().toString() != null && txt_seemore_spec.getText().toString().equalsIgnoreCase("See more...")){
+                    txt_seemore_spec.setText("Hide");
+                    int size =specializationBeanList.size();
+                    setSpecList(specializationBeanList,size);
+                }else{
+                    txt_seemore_spec.setText("See more...");
+                    int size = 4;
+                    setSpecList(specializationBeanList,size);
+
+                }
+
+            }
+        });
+
 
         viewPager.setVisibility(View.GONE);
 
@@ -746,8 +769,9 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
                             specializationBeanList=response.body().getData().getBus_spec_list();
 
                             Log.w(TAG,"SpecilaziationList : "+new Gson().toJson(specializationBeanList));
+                            Log.w(TAG,"SpecilaziationList size: "+specializationBeanList.size());
 
-                            setSpecList(specializationBeanList);
+                            setSpecList(specializationBeanList,4);
 
 
 
@@ -854,7 +878,7 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
 
 
 
-    private void setSpecList(List<SPDetailsRepsonse.DataBean.BusSpecListBean> specializationBeanList) {
+    private void setSpecList(List<SPDetailsRepsonse.DataBean.BusSpecListBean> specializationBeanList, int size) {
 
         int spanCount = 2; // 3 columns
         int spacing = 0; // 50px
@@ -862,7 +886,7 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
         rv_speclist.setLayoutManager(new GridLayoutManager(this, 2));
         rv_speclist.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
         rv_speclist.setItemAnimator(new DefaultItemAnimator());
-        spDetails_specTypesListAdapter = new SPDetails_SpecTypesListAdapter(Service_Details_Activity.this, specializationBeanList);
+        spDetails_specTypesListAdapter = new SPDetails_SpecTypesListAdapter(Service_Details_Activity.this, specializationBeanList,size);
         rv_speclist.setAdapter(spDetails_specTypesListAdapter);
 
     }

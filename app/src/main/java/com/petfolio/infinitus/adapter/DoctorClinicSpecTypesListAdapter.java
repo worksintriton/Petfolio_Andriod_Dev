@@ -21,11 +21,13 @@ public class DoctorClinicSpecTypesListAdapter extends  RecyclerView.Adapter<Recy
     Context mcontext;
     List<DoctorDetailsResponse.DataBean.SpecializationBean> specializationBeanList;
     DoctorDetailsResponse.DataBean.SpecializationBean currentItem;
+    private  int size;
 
 
-    public DoctorClinicSpecTypesListAdapter(Context context, List<DoctorDetailsResponse.DataBean.SpecializationBean> specializationBeanList) {
-        this.specializationBeanList = specializationBeanList;
+    public DoctorClinicSpecTypesListAdapter(Context context, List<DoctorDetailsResponse.DataBean.SpecializationBean> specializationBeanList, int size) {
         this.mcontext = context;
+        this.specializationBeanList = specializationBeanList;
+        this.size = size;
 
     }
 
@@ -56,7 +58,8 @@ public class DoctorClinicSpecTypesListAdapter extends  RecyclerView.Adapter<Recy
     }
     @Override
     public int getItemCount() {
-        return specializationBeanList.size();
+        //return specializationBeanList.size();
+        return Math.min(specializationBeanList.size(), size);
     }
 
 

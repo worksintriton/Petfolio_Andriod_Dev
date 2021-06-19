@@ -100,7 +100,6 @@ public class MyPetsListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHo
 
 
         }
-
         holder.ll_pet_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,7 +126,6 @@ public class MyPetsListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHo
         }
         else {
             Log.w(TAG, "ELSE isSelected--->");
-
             holder.ll_pet_profile.setBackgroundResource(R.drawable.user_bgm_trans);
             holder.chx_usertypes.setVisibility(View.INVISIBLE);
             holder.chx_usertypes.setChecked(false);

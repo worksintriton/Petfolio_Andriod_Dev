@@ -84,21 +84,8 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
     AlertDialog.Builder alertDialogBuilder;
     AlertDialog alertDialog;
 
-
-
-
-
-
-
-
     private String Doctor_ava_Date = "";
     private String selectedTimeSlot = "";
-
-
-
-
-
-
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.view)
@@ -251,9 +238,10 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         // Set a Start date (Default, 1 Jan 1970)
         datePickerTimeline.setInitialDate(year, month, date);
 
-        datePickerTimeline.setDateTextColor(Color.parseColor("#009675"));
-        datePickerTimeline.setDayTextColor(Color.parseColor("#009675"));
-        datePickerTimeline.setMonthTextColor(Color.parseColor("#009675"));
+        datePickerTimeline.setDateTextColor(getResources().getColor(R.color.new_gree_color));
+        //datePickerTimeline.setDayTextColor(Color.parseColor("#009675"));
+        datePickerTimeline.setDayTextColor(getResources().getColor(R.color.new_gree_color));
+        datePickerTimeline.setMonthTextColor(getResources().getColor(R.color.new_gree_color));
 
       // Set a date Selected Listener
         datePickerTimeline.setOnDateSelectedListener(new OnDateSelectedListener() {

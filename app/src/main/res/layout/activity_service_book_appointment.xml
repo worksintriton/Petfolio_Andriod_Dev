@@ -37,7 +37,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/rectangular_curved_corner"
-                android:padding="10dp">
+                android:padding="10dp"
+                android:visibility="gone">
 
                 <Spinner
                     android:id="@+id/spr_selectyourpettype"
@@ -53,7 +54,6 @@
                     android:src="@drawable/option"
                     tools:ignore="ContentDescription" />
             </RelativeLayout>
-
             <TextView
                 android:id="@+id/txt_or"
                 android:layout_width="wrap_content"
@@ -63,7 +63,8 @@
                 android:fontFamily="@font/futuramediumbt"
                 android:text="@string/or"
                 android:textColor="@color/new_txt_color"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="gone"/>
 
             <EditText
                 android:id="@+id/edt_petname"
@@ -81,6 +82,7 @@
                 tools:ignore="Autofill,LabelFor"
                 android:maxLines="1"
                 android:maxLength="25"
+                android:visibility="gone"
                 />
 
             <TextView
@@ -94,7 +96,8 @@
                 android:textColor="@color/new_light_green"
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp"
-                tools:ignore="Autofill,LabelFor" />
+                tools:ignore="Autofill,LabelFor"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/txt_petbreed"
@@ -108,7 +111,8 @@
                 android:textColor="@color/new_light_green"
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp"
-                tools:ignore="Autofill,LabelFor" />
+                tools:ignore="Autofill,LabelFor"
+                android:visibility="gone"/>
 
             <RelativeLayout
                 android:id="@+id/rl_pettype"
@@ -116,7 +120,8 @@
                 android:layout_height="48dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/rectangular_curved_corner"
-                android:padding="10dp">
+                android:padding="10dp"
+                android:visibility="gone">
 
                 <Spinner
                     android:id="@+id/sprpettype"
@@ -140,7 +145,8 @@
                 android:background="@drawable/rectangular_curved_corner"
                 android:layout_marginTop="10dp"
                 android:padding="10dp"
-                android:id="@+id/rl_petbreed">
+                android:id="@+id/rl_petbreed"
+                android:visibility="gone">
 
                 <Spinner
                     android:id="@+id/sprpetbreed"
@@ -178,7 +184,8 @@
                 android:textColor="@color/green"
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp"
-                tools:ignore="Autofill,LabelFor" />
+                tools:ignore="Autofill,LabelFor"
+                android:visibility="gone"/>
 
             <EditText
                 android:id="@+id/edt_petweight"
@@ -195,7 +202,8 @@
                 android:textColor="@color/green"
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp"
-                tools:ignore="Autofill,LabelFor,TextFields" />
+                tools:ignore="Autofill,LabelFor,TextFields"
+                android:visibility="gone"/>
 
             <EditText
                 android:id="@+id/edt_petage"
@@ -211,7 +219,8 @@
                 android:textColor="@color/green"
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp"
-                tools:ignore="Autofill,LabelFor,TextFields" />
+                tools:ignore="Autofill,LabelFor,TextFields"
+                android:visibility="gone"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -249,7 +258,8 @@
                     android:layout_below="@id/linear1"
                     android:background="@drawable/rounded_corner_button"
                     android:elevation="9dp"
-                    tools:ignore="UnusedAttribute">
+                    tools:ignore="UnusedAttribute"
+                    android:id="@+id/rl_petimage">
 
                     <androidx.viewpager.widget.ViewPager
                         android:id="@+id/pager"

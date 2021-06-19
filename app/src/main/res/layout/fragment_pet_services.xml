@@ -29,6 +29,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:orientation="vertical">
+            <include android:id="@+id/includelayout"
+                layout="@layout/loading_layout"
+                android:visibility="gone"/>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
 
     <LinearLayout
         android:id="@+id/headerView"
@@ -72,8 +73,6 @@
 
 
                     </LinearLayout>
-
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -199,8 +198,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        android:background="@color/white">
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -212,13 +210,13 @@
             tools:ignore="UselessParent">
             <Button
                 android:id="@+id/btn_done"
-                android:background="@drawable/button_rounded_corner"
+                android:background="@drawable/new_rounded_corner_btn_red"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:text="done"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 tools:ignore="Autofill,LabelFor" />
         </RelativeLayout>

@@ -2,56 +2,41 @@ package com.petfolio.infinitus.petlover;
 
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 
 import android.os.Handler;
-import android.text.Layout;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.DoctorClinicPetsHandledListAdapter;
 import com.petfolio.infinitus.adapter.DoctorClinicSpecTypesListAdapter;
-import com.petfolio.infinitus.adapter.SpecTypesListAdapter;
 import com.petfolio.infinitus.adapter.ViewPagerClinicDetailsAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.doctor.DoctorBusinessInfoActivity;
 import com.petfolio.infinitus.requestpojo.DoctorDetailsRequest;
 import com.petfolio.infinitus.requestpojo.DoctorFavCreateRequest;
 import com.petfolio.infinitus.responsepojo.DoctorDetailsResponse;
@@ -62,10 +47,8 @@ import com.petfolio.infinitus.utils.GridSpacingItemDecoration;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -244,6 +227,16 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.hand_img5)
     ImageView hand_img5;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_seemore_spec)
+    TextView txt_seemore_spec;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_seemore_petshandle)
+    TextView txt_seemore_petshandle;
+
+
     private int communication_type;
     private String userid;
 
@@ -261,6 +254,8 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
 
 
         avi_indicator.setVisibility(View.GONE);
+        txt_seemore_spec.setVisibility(View.GONE);
+        txt_seemore_petshandle.setVisibility(View.GONE);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             doctorid = extras.getString("doctorid");
@@ -331,6 +326,43 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
             }
 
         }
+
+
+        txt_seemore_spec.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onClick(View view) {
+                if(txt_seemore_spec.getText().toString() != null && txt_seemore_spec.getText().toString().equalsIgnoreCase("See more...")){
+                    txt_seemore_spec.setText("Hide");
+                    int size =specializationBeanList.size();
+                    setSpecList(specializationBeanList,size);
+                }else{
+                    txt_seemore_spec.setText("See more...");
+                    int size = 4;
+                    setSpecList(specializationBeanList,size);
+
+                }
+
+            }
+        });
+        txt_seemore_petshandle.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onClick(View view) {
+                if(txt_seemore_petshandle.getText().toString() != null && txt_seemore_petshandle.getText().toString().equalsIgnoreCase("See more...")){
+                    txt_seemore_petshandle.setText("Hide");
+                    int size =specializationBeanList.size();
+                    setPetHandle(petHandledBeanList,size);
+                }else{
+                    txt_seemore_petshandle.setText("See more...");
+                    int size = 4;
+                    setPetHandle(petHandledBeanList,size);
+
+                }
+
+            }
+        });
+
 
 
 //        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -583,7 +615,8 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
                         }
 
                         if(Doctor_exp != 0) {
-                            txt_dr_experience.setText(""+Doctor_exp);
+                            Log.w(TAG,"Doctor_exp : "+Doctor_exp);
+                            txt_dr_experience.setText(Doctor_exp+" Years");
                         }
 
 
@@ -634,9 +667,6 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
                             }
 
                         }
-
-
-
                         if(ClinicLocationname != null ){
                             txt_place.setText(ClinicLocationname+"");
 
@@ -658,8 +688,6 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
 
 
                         }
-
-
                         if(distance != null && ClinicLocationname != null){
                             txt_distance.setText(""+distance);
                         }
@@ -698,7 +726,7 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
 
                             Log.w(TAG,"SpecilaziationList : "+new Gson().toJson(specializationBeanList));
 
-                            setSpecList(specializationBeanList);
+                            setSpecList(specializationBeanList,4);
 
 
 
@@ -712,7 +740,7 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
 
                             Log.w(TAG,"petHandledBeanList : "+new Gson().toJson(petHandledBeanList));
 
-                            setPetHandle(petHandledBeanList);
+                            setPetHandle(petHandledBeanList, 4);
 
 
 
@@ -829,7 +857,7 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
         startActivity(intent);
     }
 
-    private void setSpecList(List<DoctorDetailsResponse.DataBean.SpecializationBean> specializationBeanList) {
+    private void setSpecList(List<DoctorDetailsResponse.DataBean.SpecializationBean> specializationBeanList,int size) {
 
         int spanCount = 2; // 3 columns
         int spacing = 0; // 50px
@@ -837,21 +865,34 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
         rv_speclist.setLayoutManager(new GridLayoutManager(this, 2));
         rv_speclist.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
         rv_speclist.setItemAnimator(new DefaultItemAnimator());
-        doctorClinicSpecTypesListAdapter = new DoctorClinicSpecTypesListAdapter(DoctorClinicDetailsActivity.this, specializationBeanList);
+        doctorClinicSpecTypesListAdapter = new DoctorClinicSpecTypesListAdapter(DoctorClinicDetailsActivity.this, specializationBeanList,size);
         rv_speclist.setAdapter(doctorClinicSpecTypesListAdapter);
+
+        if(specializationBeanList.size()>4){
+            txt_seemore_spec.setVisibility(View.VISIBLE);
+        }else {
+            txt_seemore_spec.setVisibility(View.GONE);
+        }
+
 
     }
 
-    private void setPetHandle(List<DoctorDetailsResponse.DataBean.PetHandledBean> petHandledBeanList) {
 
+    private void setPetHandle(List<DoctorDetailsResponse.DataBean.PetHandledBean> petHandledBeanList, int size) {
         int spanCount = 2; // 3 columns
         int spacing = 0; // 50px
         boolean includeEdge = true;
         rv_pet_hanldle.setLayoutManager(new GridLayoutManager(this, 2));
         rv_speclist.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
         rv_pet_hanldle.setItemAnimator(new DefaultItemAnimator());
-        doctorClinicPetsHandledListAdapter = new DoctorClinicPetsHandledListAdapter(DoctorClinicDetailsActivity.this, petHandledBeanList);
+        doctorClinicPetsHandledListAdapter = new DoctorClinicPetsHandledListAdapter(DoctorClinicDetailsActivity.this, petHandledBeanList,size);
         rv_pet_hanldle.setAdapter(doctorClinicPetsHandledListAdapter);
+
+        if(petHandledBeanList.size()>4){
+            txt_seemore_petshandle.setVisibility(View.VISIBLE);
+        }else {
+            txt_seemore_petshandle.setVisibility(View.GONE);
+        }
 
     }
 
