@@ -190,7 +190,7 @@
 
     <string name="petlovers">Petlovers</string>
     <string name="prescriptiondetails">Prescription Details</string>
-    <string name="prescriptionmsg">Note: Pls use the + button to submit the entered details.</string>
+    <string name="prescriptionmsg">Note : Pls use the + button to submit the entered details."\n" M - Morning, A - Afternoon ,N - Night.</string>
 
     <string name="cancelappointment">Are you sure you want to cancel this appoinment?</string>
     <string name="completeappointment">Are you sure you want to complete this appoinment?</string>
@@ -292,7 +292,7 @@
     <string name="prescription_medicines">Prescription medicines</string>
     <string name="no_of_days">No of days</string>
     <string name="medicine">Medicine</string>
-    <string name="consumption_per_day">Consumption per day</string>
+    <string name="consumption_per_day">Consumption</string>
 
     <string name="search">Search</string>
     <string name="near_by_doctors">Near by Doctors</string>

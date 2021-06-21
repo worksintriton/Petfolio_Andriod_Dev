@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/new_header_bg"
+    android:background="@color/white"
     android:orientation="horizontal"
     android:gravity="center">
 
@@ -13,7 +13,7 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginStart="5dp"
-        android:background="@drawable/back_arrow_white"
+        android:background="@drawable/left_arrow"
         tools:ignore="ContentDescription" />
 
     <TextView
@@ -25,7 +25,7 @@
         android:fontFamily="@font/futuramediumbt"
         android:gravity="center"
         android:text="Title"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
         tools:ignore="HardcodedText" />

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -27,15 +28,11 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.appUtils.NumericKeyBoardTransformationMethod;
-import com.petfolio.infinitus.petlover.BookAppointmentActivity;
 import com.petfolio.infinitus.requestpojo.AppoinmentCompleteRequest;
-import com.petfolio.infinitus.requestpojo.BreedTypeRequest;
 import com.petfolio.infinitus.requestpojo.PrescriptionCreateRequest;
 import com.petfolio.infinitus.requestpojo.SubDiagnosisRequest;
 import com.petfolio.infinitus.responsepojo.AppoinmentCompleteResponse;
-import com.petfolio.infinitus.responsepojo.BreedTypeResponse;
 import com.petfolio.infinitus.responsepojo.DiagnosisListResponse;
-import com.petfolio.infinitus.responsepojo.PetTypeListResponse;
 import com.petfolio.infinitus.responsepojo.PrescriptionCreateResponse;
 import com.petfolio.infinitus.responsepojo.SubDiagnosisListResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
@@ -76,6 +73,18 @@ public class PrescriptionActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.etdoctorcomments)
     EditText etdoctorcomments;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.chx_m)
+    CheckBox chx_m;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.chx_a)
+    CheckBox chx_a;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.chx_n)
+    CheckBox chx_n;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.add)
@@ -256,6 +265,16 @@ public class PrescriptionActivity extends AppCompatActivity {
                 tvconsumption.setText(et_consumption.getText().toString());
                 Button buttonRemove = addView.findViewById(R.id.remove);
 
+                final CheckBox chx_mg = addView.findViewById(R.id.chx_m);
+                final CheckBox chx_an = addView.findViewById(R.id.chx_a);
+                final CheckBox chx_ng = addView.findViewById(R.id.chx_n);
+
+                chx_mg.setChecked(chx_m.isChecked());
+                chx_an.setChecked(chx_a.isChecked());
+                chx_ng.setChecked(chx_n.isChecked());
+
+                Log.w(TAG,"Consumptions checked : m "+chx_m.isChecked()+" a "+chx_a.isChecked()+" n "+chx_n.isChecked());
+
                 buttonRemove.setOnClickListener(new View.OnClickListener(){
 
                     @Override
@@ -264,15 +283,16 @@ public class PrescriptionActivity extends AppCompatActivity {
                     }});
 
 
-                if(!et_tabletname.getText().toString().isEmpty() && !et_quanity.getText().toString().isEmpty() && !et_consumption.getText().toString().isEmpty()){
+                if(!et_tabletname.getText().toString().isEmpty() && !et_quanity.getText().toString().isEmpty() && chx_m.isChecked() || chx_a.isChecked() || chx_n.isChecked()){
                     ll_headername.setVisibility(View.VISIBLE);
                     container.addView(addView, 0);
+                    clearField();
                 }else{
                     showErrorLoading("Please fill all the fields");
                     //ll_headername.setVisibility(View.GONE);
                 }
 
-                clearField();
+
             }});
 
         LayoutTransition transition = new LayoutTransition();
@@ -370,6 +390,9 @@ public class PrescriptionActivity extends AppCompatActivity {
         et_quanity.setText("");
         et_consumption.setText("");
         et_tabletname.requestFocus();
+        chx_m.setChecked(false);
+        chx_a.setChecked(false);
+        chx_n.setChecked(false);
 
     }
 

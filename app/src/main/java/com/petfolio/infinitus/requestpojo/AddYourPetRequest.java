@@ -33,6 +33,15 @@ public class AddYourPetRequest {
     private String pet_age;
     private String pet_dob;
     private String mobile_type;
+    private String petbio;
+
+    public String getPetbio() {
+        return petbio;
+    }
+
+    public void setPetbio(String petbio) {
+        this.petbio = petbio;
+    }
 
     public String getMobile_type() {
         return mobile_type;

@@ -800,6 +800,7 @@ public class AddNewPetActivity extends AppCompatActivity implements PetTypeSelec
         addYourPetRequest.setDefault_status(true);
         addYourPetRequest.setDate_and_time(currentDateandTime);
         addYourPetRequest.setMobile_type("Android");
+        addYourPetRequest.setPetbio(edt_petbio.getText().toString());
         Log.w(TAG,"addYourPetRequest"+ new Gson().toJson(addYourPetRequest));
         return addYourPetRequest;
     }

@@ -52,10 +52,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-
-
-
-      <activity
+        <activity
             android:name=".activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme"
@@ -487,11 +484,11 @@
             android:screenOrientation="portrait"
              android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity
+        <!--<activity
             android:name=".doctor.PrescriptionActivity"
             android:screenOrientation="portrait"
              android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan" />-->
         <activity
             android:name=".doctor.DoctorEditProfileActivity"
             android:screenOrientation="portrait"

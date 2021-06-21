@@ -281,6 +281,19 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
             }
         });
 
+        ImageView img_cart = toolbar_layout.findViewById(R.id.img_cart);
+        img_cart.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onClick(View v) {
+                if(PetLoverDashboardActivity.active_tag != null){
+                    Log.w(TAG,"active_tag : "+PetLoverDashboardActivity.active_tag);
+                }
+                startActivity(new Intent(getApplicationContext(), PetCartActivity.class));
+            }
+        });
+
+
        /*
         toolbar_title = toolbar.findViewById(R.id.toolbar_title);
         toolbar_title.setText("Home " );
@@ -364,9 +377,6 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
 
                 }
             });
-
-
-
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
 

@@ -56,8 +56,8 @@
     </style>
 
     <style name="MyCheckBox" parent="Theme.AppCompat.Light">
-        <item name="colorControlNormal">@color/color</item>
-        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/new_gree_color</item>
+        <item name="colorControlActivated">@color/new_gree_color</item>
     </style>
 
     <style name="Widget.BottomNavigationView"

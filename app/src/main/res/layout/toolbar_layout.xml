@@ -104,9 +104,10 @@
                 android:layout_height="wrap_content"
                 android:gravity="end">
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/ic_user_image"
+                    android:id="@+id/img_cart"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_bag"
                     android:scaleType="centerInside"/>
 
             </RelativeLayout>
@@ -172,7 +173,7 @@
             android:src="@drawable/ic_notifications"
             tools:ignore="ContentDescription" />
         <ImageView
-            android:id="@+id/img_cart"
+            android:id="@+id/img_cart1"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_bag"

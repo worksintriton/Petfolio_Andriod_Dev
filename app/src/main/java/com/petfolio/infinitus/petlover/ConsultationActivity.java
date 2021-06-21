@@ -164,7 +164,9 @@ public class ConsultationActivity extends AppCompatActivity implements View.OnCl
                     intent.putExtra("selectedTimeSlot",selectedTimeSlot);
                     intent.putExtra("distance",distance);
                     intent.putExtra("fromactivity",fromactivity);
+                    intent.putExtra("petId", petId);
                     startActivity(intent);
+                    Log.w(TAG, "petId : " + petId);
                 }
                 else {
                     Intent intent = new Intent(ConsultationActivity.this, ConsultationIssuesActivity.class);
@@ -177,7 +179,7 @@ public class ConsultationActivity extends AppCompatActivity implements View.OnCl
                     intent.putExtra("fromto", fromto);
                     intent.putExtra("petId", petId);
                     startActivity(intent);
-                    Log.w(TAG, "communicationtype : " + communicationtype);
+                    Log.w(TAG, "petId : " + petId);
                 }
             }
         });

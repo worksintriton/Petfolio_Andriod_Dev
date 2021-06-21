@@ -35,17 +35,22 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 
 import com.petfolio.infinitus.adapter.PetLoverDoctorFilterAdapter;
 import com.petfolio.infinitus.adapter.PetLoverNearByDoctorAdapter;
 
+
+import com.petfolio.infinitus.adapter.ViewPagerPetCareAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.petlover.FiltersActivity;
@@ -61,9 +66,11 @@ import com.wang.avi.AVLoadingIndicatorView;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -134,6 +141,15 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     @BindView(R.id.edt_search)
     EditText edt_search;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.pager)
+    ViewPager viewPager;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tabDots)
+    TabLayout tabLayout;
+
+
     private ShimmerFrameLayout mShimmerViewContainer;
     private View includelayout;
 
@@ -160,9 +176,17 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     private int communication_type = 0;
     private int reviewcount;
     private String fromactivity,specialization;
+
     private List<FilterDoctorResponse.DataBean> doctorFilterDetailsResponseList;
     private String doctorid;
 
+    // BottomSheetBehavior variable
+    @SuppressWarnings("rawtypes")
+    public BottomSheetBehavior bottomSheetBehavior;
+
+    List<String> imagelist = new ArrayList();
+
+    View view;
 
     public PetCareFragment() {
         // Required empty public constructor
@@ -180,7 +204,8 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.w(TAG,"onCreateView-->");
-        View view = inflater.inflate(R.layout.fragment_pet_care, container, false);
+
+        view = inflater.inflate(R.layout.fragment_pet_care, container, false);
         preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         ButterKnife.bind(this, view);
         mContext = getActivity();
@@ -301,6 +326,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
             }
         });
 
+        setBottomSheet();
 
 
         return view;
@@ -312,14 +338,6 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     }
 
 
-
-
-
-
-
-
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -329,6 +347,89 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
         }
 
     }
+
+
+    /**
+     * method to setup the bottomsheet
+     */
+    private void setBottomSheet() {
+
+        bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.bottomSheetLayouts));
+
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+
+        bottomSheetBehavior.setHideable(false);
+
+        bottomSheetBehavior.setFitToContents(false);
+
+        bottomSheetBehavior.setHalfExpandedRatio(0.85f);
+
+
+        // Capturing the callbacks for bottom sheet
+        bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        Log.w("Bottom Sheet Behaviour", "STATE_COLLAPSED");
+                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+                        break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        Log.w("Bottom Sheet Behaviour", "STATE_DRAGGING");
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        Log.w("Bottom Sheet Behaviour", "STATE_EXPANDED");
+                        //  bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+                        break;
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        Log.w("Bottom Sheet Behaviour", "STATE_HIDDEN");
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        Log.w("Bottom Sheet Behaviour", "STATE_SETTLING");
+                        break;
+                    case BottomSheetBehavior.STATE_HALF_EXPANDED:
+                        Log.w("Bottom Sheet Behaviour", "STATE_HALF_EXPANDED");
+                        break;
+                }
+
+
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+
+            }
+
+
+        });
+    }
+
+    private void viewpageData(List<String> doctorclinicdetailsResponseList) {
+        tabLayout.setupWithViewPager(viewPager, true);
+
+        ViewPagerPetCareAdapter viewPagerClinicDetailsAdapter = new ViewPagerPetCareAdapter(getContext(), doctorclinicdetailsResponseList);
+        viewPager.setAdapter(viewPagerClinicDetailsAdapter);
+        /*After setting the adapter use the timer */
+        final Handler handler = new Handler();
+        final Runnable Update = () -> {
+            if (currentPage == doctorclinicdetailsResponseList.size()) {
+                currentPage = 0;
+            }
+            viewPager.setCurrentItem(currentPage++, false);
+        };
+
+        timer = new Timer(); // This will create a new Thread
+        timer.schedule(new TimerTask() { // task to be scheduled
+            @Override
+            public void run() {
+                handler.post(Update);
+            }
+        }, DELAY_MS, PERIOD_MS);
+
+    }
+
 
 
     @SuppressLint("LogNotTimber")
@@ -398,6 +499,31 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
     }
     private void setViewDoctors(List<DoctorSearchResponse.DataBean> doctorDetailsResponseList) {
+
+        if(doctorDetailsResponseList!=null&&doctorDetailsResponseList.size()>0){
+
+            for(int i=0; i<doctorDetailsResponseList.size(); i++){
+
+                if(doctorDetailsResponseList.get(i).getDoctor_img()!=null&&!doctorDetailsResponseList.get(i).getDoctor_img().isEmpty()){
+
+                    imagelist.add(doctorDetailsResponseList.get(i).getDoctor_img());
+                }
+                else {
+
+                    imagelist.add(APIClient.BANNER_IMAGE_URL);
+                }
+
+
+            }
+
+        }
+        else {
+
+            imagelist.add(APIClient.BANNER_IMAGE_URL);
+        }
+
+        viewpageData(imagelist);
+
         rv_nearbydoctors.setLayoutManager(new LinearLayoutManager(mContext));
         rv_nearbydoctors.setItemAnimator(new DefaultItemAnimator());
         PetLoverNearByDoctorAdapter petLoverNearByDoctorAdapter = new PetLoverNearByDoctorAdapter(mContext, doctorDetailsResponseList,communication_type,searchString);

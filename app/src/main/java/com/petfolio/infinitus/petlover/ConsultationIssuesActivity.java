@@ -140,6 +140,8 @@ public class ConsultationIssuesActivity extends AppCompatActivity implements Vie
             distance = extras.getInt("distance");
             Log.w(TAG,"spid : "+spid +" catid : "+catid+" from : "+from+" serviceamount : "+serviceamount+" servicetime : "+servicetime+" SP_ava_Date : "+SP_ava_Date+" selectedTimeSlot : "+selectedTimeSlot);
 
+            Log.w(TAG, "petId : " + petId);
+
         }
         img_back.setOnClickListener(this);
         if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
@@ -295,10 +297,10 @@ public class ConsultationIssuesActivity extends AppCompatActivity implements Vie
 
     @SuppressLint("LogNotTimber")
     @Override
-    public void myPetsSelectListener(String petid) {
-        Log.w(TAG,"myPetsSelectListener : petid "+petid);
-        if(petid != null){
-            petId = petid;
+    public void myPetsSelectListener(String healthissueid) {
+        Log.w(TAG,"myPetsSelectListener : healthissueid "+healthissueid);
+        if(healthissueid != null){
+           // petId = petid;
             ll_save_continue.setVisibility(View.VISIBLE);
         }else{
             ll_save_continue.setVisibility(View.GONE);

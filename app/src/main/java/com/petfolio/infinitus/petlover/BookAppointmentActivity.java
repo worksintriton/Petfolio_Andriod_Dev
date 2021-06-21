@@ -304,6 +304,9 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
             communicationtype = extras.getString("communicationtype");
             petId = extras.getString("petId");
             Log.w(TAG,"Bundle "+" doctorid : "+doctorid+" selectedTimeSlot : "+selectedTimeSlot+"communicationtype : "+communicationtype+" amount : "+amount+" fromactivity : "+fromactivity);
+
+            Log.w(TAG, "petId : " + petId);
+
         }
 
         ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
