@@ -26,7 +26,7 @@ public class ViewPagerPetCareAdapter extends PagerAdapter {
     private LayoutInflater inflater;
     private View itemView;
 
-    private String TAG = "ViewPagerPetCareAdapter";
+    private String TAG = "ViewPagerClinicDetailsAdapter";
 
     public ViewPagerPetCareAdapter(Context context,  List<String> imagelist){
 

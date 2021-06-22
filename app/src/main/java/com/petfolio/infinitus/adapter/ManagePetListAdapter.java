@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -21,6 +22,7 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.interfaces.PetDeleteListener;
 import com.petfolio.infinitus.petlover.BasicPetDetailsActivity;
 import com.petfolio.infinitus.petlover.EditYourPetProfileInfoActivity;
+import com.petfolio.infinitus.petlover.PetloverPetDetailsActivity;
 import com.petfolio.infinitus.responsepojo.PetListResponse;
 
 import java.io.Serializable;
@@ -174,6 +176,41 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
             holder.ll_add.setVisibility(View.VISIBLE);
         }
 
+        holder.cv_root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(context, PetloverPetDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("id",petListResponseList.get(position).get_id());
+                i.putExtra("userid",petListResponseList.get(position).getUser_id());
+                i.putExtra("petimage",petListResponseList.get(position).getPet_img().get(0).getPet_img());
+                i.putExtra("petname",petListResponseList.get(position).getPet_name());
+                i.putExtra("pettype",petListResponseList.get(position).getPet_type());
+                i.putExtra("petbreed",petListResponseList.get(position).getPet_breed());
+                i.putExtra("petgender",petListResponseList.get(position).getPet_gender());
+                i.putExtra("petcolor",petListResponseList.get(position).getPet_color());
+                i.putExtra("petweight",petListResponseList.get(position).getPet_weight());
+                i.putExtra("petdob",petListResponseList.get(position).getPet_dob());
+                i.putExtra("vaccinatedstatus",petListResponseList.get(position).isVaccinated());
+                i.putExtra("vaccinateddate",petListResponseList.get(position).getLast_vaccination_date());
+                i.putExtra("defaultstatus",petListResponseList.get(position).isDefault_status());
+                i.putExtra("pet_spayed",petListResponseList.get(position).isPet_spayed());
+                i.putExtra("pet_purebred",petListResponseList.get(position).isPet_purebred());
+                i.putExtra("pet_frnd_with_dog",petListResponseList.get(position).isPet_frnd_with_dog());
+                i.putExtra("pet_frnd_with_cat",petListResponseList.get(position).isPet_frnd_with_cat());
+                i.putExtra("pet_microchipped",petListResponseList.get(position).isPet_microchipped());
+                i.putExtra("pet_tick_free",petListResponseList.get(position).isPet_tick_free());
+                i.putExtra("pet_private_part",petListResponseList.get(position).isPet_private_part());
+
+                Bundle args = new Bundle();
+                //int list = petListResponseList.get(position).getPet_img().size();
+                args.putSerializable("PETLIST", (Serializable) petListResponseList.get(position).getPet_img());
+                i.putExtra("petimage",args);
+
+                context.startActivity(i);
+
+            }
+        });
     }
 
 
@@ -199,7 +236,7 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
         public TextView txt_pet_name;
         public ImageView img_pet_imge,img_settings;
         public LinearLayout ll_add;
-
+        public CardView cv_root;
 
         public ViewHolderOne(View itemView) {
             super(itemView);
@@ -207,6 +244,7 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
             img_settings = itemView.findViewById(R.id.img_settings);
             txt_pet_name = itemView.findViewById(R.id.txt_pet_name);
             ll_add = itemView.findViewById(R.id.ll_add);
+            cv_root = itemView.findViewById(R.id.cv_root);
             ll_add.setVisibility(View.GONE);
 
 
