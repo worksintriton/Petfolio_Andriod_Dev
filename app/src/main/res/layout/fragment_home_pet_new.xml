@@ -125,9 +125,8 @@
                                 android:fontFamily="@font/futuramediumbt"
                                 android:gravity="center"
                                 android:text="@string/view_more"
-                                android:textColor="@color/white"
-                                android:textSize="10sp"
-                                android:background="@drawable/btn_background"/>
+                                android:textColor="@color/new_gree_color"
+                                android:textSize="16sp" />
 
                         </RelativeLayout>
 
@@ -227,7 +226,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginTop="25dp">
+                        android:layout_marginTop="15dp">
                         <TextView
                             android:id="@+id/txt_doctors"
                             android:layout_width="wrap_content"
@@ -250,9 +249,8 @@
                                 android:fontFamily="@font/futuramediumbt"
                                 android:gravity="center"
                                 android:text="@string/view_more"
-                                android:textColor="@color/white"
-                                android:textSize="10sp"
-                                android:background="@drawable/btn_background"/>
+                                android:textColor="@color/new_gree_color"
+                                android:textSize="16sp" />
 
                         </RelativeLayout>
 
@@ -280,21 +278,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="@color/new_shop_bg"
+                    android:background="@color/new_gree_color"
                     android:layout_marginTop="10dp"
                     android:id="@+id/ll_content_shop">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginTop="25dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginStart="15dp">
                         <TextView
                             android:id="@+id/txt_products"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Shop"
-                            android:textColor="#141414"
+                            android:textColor="@color/white"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                         <RelativeLayout
@@ -312,8 +310,7 @@
                                 android:gravity="center"
                                 android:text="@string/view_more"
                                 android:textColor="@color/white"
-                                android:textSize="10sp"
-                                android:background="@drawable/btn_background"/>
+                                android:textSize="16sp" />
 
                         </RelativeLayout>
                     </LinearLayout>

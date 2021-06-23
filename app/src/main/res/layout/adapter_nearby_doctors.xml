@@ -95,7 +95,8 @@
                         android:text="@string/doctor_name"
                         android:textColor="@color/new_gree_color"
                         android:textSize="14sp"
-                        android:textStyle="normal" />
+                        android:textStyle="normal"
+                        android:layout_marginTop="5dp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -105,12 +106,13 @@
                             android:id="@+id/txt_doctors_specialization"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginTop="2dp"
                             android:fontFamily="@font/futuramediumbt"
                             android:maxLines="2"
+                            android:ellipsize="end"
                             android:text="@string/specialization"
                             android:textColor="@color/new_sec_txt_color"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            android:layout_marginTop="5dp"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -120,7 +122,7 @@
                             android:id="@+id/txt_doctors_experience"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="5dp"
                             android:fontFamily="@font/futuramediumbt"
                             android:maxLines="1"
                             android:ellipsize="end"

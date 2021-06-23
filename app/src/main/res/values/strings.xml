@@ -480,7 +480,7 @@
     <string name="discount10">10% or more </string>
     <string name="discount10below">10% and below </string>
     <string name="category">Category</string>
-    <string name="view_more"><u>VIEW MORE</u></string>
+    <string name="view_more">More</string>
 
     <string name="digitalsignature">Digital Signature</string>
     <string name="quantity">Quantity</string>

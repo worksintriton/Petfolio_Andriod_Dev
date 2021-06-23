@@ -91,7 +91,7 @@ public class PetLoverServicesAdapter extends  RecyclerView.Adapter<RecyclerView.
 
         }
 
-          if(currentItem.getBackground_color() != null) {
+         /* if(currentItem.getBackground_color() != null) {
               int color = Color.parseColor(currentItem.getBackground_color());
               Drawable unwrappedDrawable = AppCompatResources.getDrawable(context, R.drawable.layout_bg_service);
               Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
@@ -99,7 +99,7 @@ public class PetLoverServicesAdapter extends  RecyclerView.Adapter<RecyclerView.
               holder.ll_root.setBackgroundResource(R.drawable.layout_bg_service);
 
 
-          }
+          }*/
 
 
         holder.ll_root.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +147,7 @@ public class PetLoverServicesAdapter extends  RecyclerView.Adapter<RecyclerView.
 
     class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_petlover_servicesname;
-        public LinearLayout ll_root;
+        public RelativeLayout ll_root;
         public ImageView cv_serviceimage;
 
 

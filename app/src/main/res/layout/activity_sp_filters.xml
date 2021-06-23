@@ -61,8 +61,8 @@
 
             <RadioGroup
                 android:id="@+id/rg_specialization"
-                android:layout_width="359dp"
-                android:layout_height="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical" />
 
             <TextView

@@ -166,6 +166,7 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
         Log.w(TAG,"onCreate");
 
 
+        avi_indicator.setVisibility(View.GONE);
 
         img_selectedserviceimage.setVisibility(View.GONE);
         txt_selected_service.setVisibility(View.GONE);
@@ -193,7 +194,7 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
 
 
 
-        avi_indicator.setVisibility(View.GONE);
+
 
 
         bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
