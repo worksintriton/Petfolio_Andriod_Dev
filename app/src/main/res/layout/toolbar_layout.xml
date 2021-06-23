@@ -29,8 +29,8 @@
             android:orientation="vertical">
             <ImageView
                 android:id="@+id/img_menu"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:background="@drawable/ic_menu_new"
                 tools:ignore="ContentDescription" />
         </LinearLayout>
@@ -108,7 +108,16 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_bag"
-                    android:scaleType="centerInside"/>
+                    android:scaleType="centerInside"
+                    tools:ignore="ContentDescription" />
+                <ImageView
+                    android:layout_toEndOf="@+id/img_cart"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_notification_new"
+                    android:scaleType="centerInside"
+                    android:layout_marginStart="15dp"
+                    tools:ignore="ContentDescription" />
 
             </RelativeLayout>
         </LinearLayout>
