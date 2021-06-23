@@ -191,14 +191,65 @@
                     android:textColor="@color/new_txt_color"
                     android:layout_marginStart="10dp" />
 
-                <TextView
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical"
                     android:layout_weight="1"
-                    android:text="@string/consumption_per_day"
-                    android:textColor="@color/new_txt_color"
-                    android:layout_marginStart="10dp" />
+                    android:layout_marginStart="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/consumption_per_day"
+                        android:textColor="@color/new_txt_color"
+                        />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+                            <TextView
+                                android:layout_width="30dp"
+                                android:layout_height="wrap_content"
+                                android:text="M.."
+                                android:fontFamily="@font/futuramediumbt"
+                                />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+                            <TextView
+                                android:layout_width="30dp"
+                                android:layout_height="wrap_content"
+                                android:text="A.."
+                                android:fontFamily="@font/futuramediumbt"
+                                />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+                            <TextView
+                                android:layout_width="30dp"
+                                android:layout_height="wrap_content"
+                                android:text="N.."
+                                android:fontFamily="@font/futuramediumbt" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
 
                 <Button
                     android:layout_marginLeft="10dp"

@@ -124,9 +124,6 @@ public class PrescriptionDetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Log.w(TAG,"Oncreate");
 
-
-
-
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
 

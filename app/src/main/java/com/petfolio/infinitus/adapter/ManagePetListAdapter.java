@@ -190,6 +190,7 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
                 i.putExtra("petgender",petListResponseList.get(position).getPet_gender());
                 i.putExtra("petcolor",petListResponseList.get(position).getPet_color());
                 i.putExtra("petweight",petListResponseList.get(position).getPet_weight());
+                i.putExtra("petage",petListResponseList.get(position).getPet_age());
                 i.putExtra("petdob",petListResponseList.get(position).getPet_dob());
                 i.putExtra("vaccinatedstatus",petListResponseList.get(position).isVaccinated());
                 i.putExtra("vaccinateddate",petListResponseList.get(position).getLast_vaccination_date());

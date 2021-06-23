@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -52,7 +53,17 @@ public class PrescriptionsDetailsAdapter extends  RecyclerView.Adapter<RecyclerV
             currentItem = prescriptionDataList.get(position);
             holder.txt_medicine.setText(prescriptionDataList.get(position).getTablet_name());
             holder.txt_noofdays.setText(prescriptionDataList.get(position).getQuantity());
-            holder.txt_consumptionperday.setText(prescriptionDataList.get(position).getConsumption());
+
+            if(currentItem.getConsumption().isMorning()){
+                holder.chx_m.setChecked(true);
+            }
+            if(currentItem.getConsumption().isEvening()){
+                holder.chx_a.setChecked(true);
+            }
+            if(currentItem.getConsumption().isNight()){
+                holder.chx_n.setChecked(true);
+            }
+           // holder.txt_consumptionperday.setText(prescriptionDataList.get(position).getConsumption());
 
 
 
@@ -81,6 +92,7 @@ public class PrescriptionsDetailsAdapter extends  RecyclerView.Adapter<RecyclerV
     static class ViewHolderOne extends RecyclerView.ViewHolder {
 
         public TextView txt_medicine,txt_noofdays,txt_consumptionperday;
+        CheckBox chx_m,chx_a,chx_n;
 
 
 
@@ -89,6 +101,9 @@ public class PrescriptionsDetailsAdapter extends  RecyclerView.Adapter<RecyclerV
             txt_medicine = itemView.findViewById(R.id.txt_medicine);
             txt_noofdays = itemView.findViewById(R.id.txt_noofdays);
             txt_consumptionperday = itemView.findViewById(R.id.txt_consumptionperday);
+            chx_m = itemView.findViewById(R.id.chx_m);
+            chx_a = itemView.findViewById(R.id.chx_a);
+            chx_n = itemView.findViewById(R.id.chx_n);
 
 
 

@@ -1,24 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/bottomSheetLayouts"
+    android:id="@+id/bottomSheetLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="60dp"
     android:visibility="visible"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/new_topcorner_radius">
+        android:background="@drawable/new_topcorner_radius"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="15dp"
+            android:background="@drawable/new_topcorner_radius"
             android:orientation="vertical">
+
+            <!-- <ScrollView
+                     android:id="@+id/scrollablContent"
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:layout_above="@+id/footerView"
+                     android:layout_below="@+id/headerView"
+                     android:fillViewport="true">-->
 
             <LinearLayout
                 android:id="@+id/headerView"
@@ -26,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal"
+                android:visibility="visible"
                 tools:ignore="UseCompoundDrawables">
 
                 <RelativeLayout
@@ -73,23 +84,17 @@
 
             </LinearLayout>
 
-            <!-- <ScrollView
-                 android:id="@+id/scrollablContent"
-                 android:layout_width="match_parent"
-                 android:layout_height="match_parent"
-                 android:layout_above="@+id/footerView"
-                 android:layout_below="@+id/headerView"
-                 android:fillViewport="true">-->
-
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="visible">
 
                 <LinearLayout
+                    android:id="@+id/ll_doctor_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:baselineAligned="false"
@@ -190,50 +195,40 @@
                     android:id="@+id/rv_nearbydoctors"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/ll_doctor_info"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="120dp"/>
+                    android:layout_marginBottom="120dp" />
+
+                <TextView
+                    android:id="@+id/txt_no_records"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:text="@string/norecordsfound"
+                    android:textColor="@color/color"
+                    android:textSize="16sp"
+                    android:visibility="gone" />
 
 
-            </LinearLayout>
+            </RelativeLayout>
             <!--</ScrollView>-->
-
-            <LinearLayout
-                android:id="@+id/footerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
-
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/txt_no_records"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:text="@string/norecordsfound"
-                android:textColor="@color/color"
-                android:textSize="16sp"
-                android:visibility="gone" />
 
 
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-        <com.wang.avi.AVLoadingIndicatorView
-            android:id="@+id/avi_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center|center_vertical"
-            app:indicatorColor="@color/new_green_btn"
-            app:indicatorName="LineSpinFadeLoaderIndicator" />
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center|center_vertical"
+        app:indicatorColor="@color/new_green_btn"
+        app:indicatorName="LineSpinFadeLoaderIndicator" />
 
-    </RelativeLayout>
 
-</androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

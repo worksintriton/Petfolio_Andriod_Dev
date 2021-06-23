@@ -484,11 +484,11 @@
             android:screenOrientation="portrait"
              android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-        <!--<activity
+        <activity
             android:name=".doctor.PrescriptionActivity"
             android:screenOrientation="portrait"
              android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />-->
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".doctor.DoctorEditProfileActivity"
             android:screenOrientation="portrait"
@@ -940,6 +940,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
+
+
 
         <receiver
             android:name=".receiver.SmsBroadcastListener"

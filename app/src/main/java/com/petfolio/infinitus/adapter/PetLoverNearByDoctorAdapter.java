@@ -36,6 +36,7 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
 
     private int communication_type;
     private String searchString ;
+    private String concatenatedSpcNames= "";
 
     public PetLoverNearByDoctorAdapter(Context context, List<DoctorSearchResponse.DataBean> doctorDetailsResponseList,int communication_type,String searchString) {
         this.doctorDetailsResponseList = doctorDetailsResponseList;
@@ -73,19 +74,47 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
           if(currentItem.getDistance() != null) {
               holder.txt_km.setText(currentItem.getDistance() +" km");
           }
-          if(currentItem.getSpecialization() != null && currentItem.getSpecialization().size()>0){
+          if(currentItem.getDoctor_exp() != 0) {
+              holder.txt_doctors_experience.setVisibility(View.VISIBLE);
+              holder.txt_doctors_experience.setText(currentItem.getDoctor_exp() +" Years Experience");
+          }else{
+              holder.txt_doctors_experience.setVisibility(View.GONE);
+              holder.txt_doctors_experience.setText("");
+          }
+
+         /* if(currentItem.getSpecialization() != null && currentItem.getSpecialization().size()>0){
               List<DoctorSearchResponse.DataBean.SpecializationBean> specializationBeanList = currentItem.getSpecialization();
               for(int i=0;i<specializationBeanList.size();i++){
                   holder.txt_doctors_specialization.setText(specializationBeanList.get(i).getSpecialization());
 
               }
-          }
+          }*/
+
+
+        if(currentItem.getSpecialization() != null && currentItem.getSpecialization().size()>0){
+            List<DoctorSearchResponse.DataBean.SpecializationBean> specializationBeanList = currentItem.getSpecialization();
+
+            for (int i = 0; i < specializationBeanList.size(); i++) {
+                concatenatedSpcNames += specializationBeanList.get(i).getSpecialization();
+                if (i < specializationBeanList.size() - 1) concatenatedSpcNames += ", ";
+            }
+            holder.txt_doctors_specialization.setText(concatenatedSpcNames);
+
+        }
 
           if(doctorDetailsResponseList.get(position).getStar_count() != 0) {
               holder.txt_star_rating.setText(doctorDetailsResponseList.get(position).getStar_count() + "");
           }
-          if(doctorDetailsResponseList.get(position).getReview_count() != 0) {
-              holder.txt_review_count.setText(doctorDetailsResponseList.get(position).getReview_count() + "");
+          if(doctorDetailsResponseList.get(position).getClinic_name() != null) {
+              holder.txt_doctors_clinicname.setVisibility(View.VISIBLE);
+              holder.txt_doctors_clinicname.setText(doctorDetailsResponseList.get(position).getClinic_name());
+          }else{
+              holder.txt_doctors_clinicname.setVisibility(View.GONE);
+          }
+          if(doctorDetailsResponseList.get(position).getAmount() != 0) {
+              holder.txt_review_count.setText("\u20B9"+doctorDetailsResponseList.get(position).getAmount());
+          }else{
+              holder.txt_review_count.setText("0");
           }
           if (currentItem.getDoctor_img() != null && !currentItem.getDoctor_img().isEmpty()) {
 
@@ -183,7 +212,7 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
     }
 
     class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_doctors_name,txt_doctors_specialization,txt_star_rating,txt_review_count,txt_place,txt_km;
+        public TextView txt_doctors_name,txt_doctors_specialization,txt_star_rating,txt_review_count,txt_place,txt_km,txt_doctors_clinicname,txt_doctors_experience;
         public LinearLayout ll_root;
         public ImageView img_doctors_image;
         public Button btn_book;
@@ -202,6 +231,8 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
             txt_place = itemView.findViewById(R.id.txt_place);
             txt_km = itemView.findViewById(R.id.txt_km);
             btn_book = itemView.findViewById(R.id.btn_book);
+            txt_doctors_clinicname = itemView.findViewById(R.id.txt_doctors_clinicname);
+            txt_doctors_experience = itemView.findViewById(R.id.txt_doctors_experience);
 
 
 

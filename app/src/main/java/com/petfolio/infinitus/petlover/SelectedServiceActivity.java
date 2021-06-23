@@ -3,8 +3,10 @@ package com.petfolio.infinitus.petlover;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,6 +26,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -92,8 +95,15 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
     @BindView(R.id.include_petlover_footer)
     View include_petlover_footer;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.view6)
+    View view;
+
     BottomNavigationView bottom_navigation_view;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_root)
+    LinearLayout ll_root;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.include_petlover_header)
@@ -108,8 +118,16 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
     RelativeLayout rl_sort;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.scrollablContent)
-    ScrollView scrollablContent;
+    @BindView(R.id.scrollview)
+    NestedScrollView scrollablContent;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.bottomSheetLayouts)
+    CoordinatorLayout bottomSheetLayouts;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.textView20)
+    TextView textView20;
 
     private ShimmerFrameLayout mShimmerViewContainer;
     private View includelayout;
@@ -149,9 +167,14 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
 
 
 
-        scrollablContent.setVisibility(View.GONE);
         img_selectedserviceimage.setVisibility(View.GONE);
         txt_selected_service.setVisibility(View.GONE);
+        view.setVisibility(View.GONE);
+        ll_root.setVisibility(View.GONE);
+        bottomSheetLayouts.setVisibility(View.GONE);
+        textView20.setVisibility(View.GONE);
+        rl_filters.setVisibility(View.GONE);
+        rl_sort.setVisibility(View.GONE);
 
         includelayout = findViewById(R.id.includelayout);
         mShimmerViewContainer = includelayout.findViewById(R.id.shimmer_layout);
@@ -171,6 +194,7 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
 
 
         avi_indicator.setVisibility(View.GONE);
+
 
         bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
         bottom_navigation_view.setItemIconTintList(null);
@@ -271,7 +295,7 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
 
         bottomSheetBehavior.setFitToContents(false);
 
-        bottomSheetBehavior.setHalfExpandedRatio(0.85f);
+        bottomSheetBehavior.setHalfExpandedRatio(0.6f);
 
 
         // Capturing the callbacks for bottom sheet
@@ -321,6 +345,15 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
     private void SPSpecificServiceDetailsResponseCall(int distance, int reviewcount, int count_value_start, int count_value_end) {
        /* avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();*/
+        img_selectedserviceimage.setVisibility(View.GONE);
+        txt_selected_service.setVisibility(View.GONE);
+        view.setVisibility(View.GONE);
+        ll_root.setVisibility(View.GONE);
+        bottomSheetLayouts.setVisibility(View.GONE);
+        textView20.setVisibility(View.GONE);
+        rl_filters.setVisibility(View.GONE);
+        rl_sort.setVisibility(View.GONE);
+
         includelayout.setVisibility(View.VISIBLE);
         mShimmerViewContainer.startShimmerAnimation();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
@@ -333,32 +366,18 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
             public void onResponse(@NonNull Call<SPSpecificServiceDetailsResponse> call, @NonNull Response<SPSpecificServiceDetailsResponse> response) {
                 //avi_indicator.smoothToHide();
 
+
                 mShimmerViewContainer.stopShimmerAnimation();
                 includelayout.setVisibility(View.GONE);
 
                 Log.w(TAG,"SPSpecificServiceDetailsResponse" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
-                    scrollablContent.setVisibility(View.VISIBLE);
-                    img_selectedserviceimage.setVisibility(View.VISIBLE);
-                    txt_selected_service.setVisibility(View.VISIBLE);
+
                     if (200 == response.body().getCode()) {
                         txt_no_records.setVisibility(View.GONE);
                         txt_totalproviders.setVisibility(View.GONE);
                         if (response.body().getData() != null) {
-                            if (response.body().getData().getService_Details().getImage_path() != null && !response.body().getData().getService_Details().getImage_path().isEmpty()) {
 
-                                    Glide.with(SelectedServiceActivity.this)
-                                        .load(response.body().getData().getService_Details().getImage_path())
-                                        .into(img_selectedserviceimage);
-                            } else {
-                                Glide.with(SelectedServiceActivity.this)
-                                        .load(APIClient.PROFILE_IMAGE_URL)
-                                        .into(img_selectedserviceimage);
-
-                            }
-                            if(response.body().getData().getService_Details().getTitle() != null){
-                                txt_selected_service.setText(response.body().getData().getService_Details().getTitle());
-                            }
                             if(response.body().getData().getService_Details().get_id() != null) {
                                 catid = response.body().getData().getService_Details().get_id();
                             }
@@ -369,6 +388,29 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
 
                             if(serviceProviderList != null && serviceProviderList.size()>0){
                                 txt_totalproviders.setText(serviceProviderList.size()+" Providers");
+                                view.setVisibility(View.VISIBLE);
+                                bottomSheetLayouts.setVisibility(View.VISIBLE);
+                                img_selectedserviceimage.setVisibility(View.VISIBLE);
+                                txt_selected_service.setVisibility(View.VISIBLE);
+                                ll_root.setVisibility(View.VISIBLE);
+                                textView20.setVisibility(View.VISIBLE);
+                                rl_filters.setVisibility(View.VISIBLE);
+                                rl_sort.setVisibility(View.VISIBLE);
+                                setBottomSheet();
+                                if (response.body().getData().getService_Details().getImage_path() != null && !response.body().getData().getService_Details().getImage_path().isEmpty()) {
+
+                                    Glide.with(SelectedServiceActivity.this)
+                                            .load(response.body().getData().getService_Details().getImage_path())
+                                            .into(img_selectedserviceimage);
+                                } else {
+                                    Glide.with(SelectedServiceActivity.this)
+                                            .load(APIClient.PROFILE_IMAGE_URL)
+                                            .into(img_selectedserviceimage);
+
+                                }
+                                if(response.body().getData().getService_Details().getTitle() != null){
+                                    txt_selected_service.setText(response.body().getData().getService_Details().getTitle());
+                                }
                                 setViewListedSP(serviceProviderList);
                             }else{
                                 showAlertSPNotAvlLoading(response.body().getAlert_msg());
@@ -381,9 +423,20 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
                         }
                     }
                     else{
+//                        txt_totalproviders.setText(serviceProviderList.size()+" Providers");
+                        view.setVisibility(View.VISIBLE);
+                        bottomSheetLayouts.setVisibility(View.VISIBLE);
+                        img_selectedserviceimage.setVisibility(View.VISIBLE);
+                        txt_selected_service.setVisibility(View.VISIBLE);
+                        ll_root.setVisibility(View.VISIBLE);
+                        textView20.setVisibility(View.VISIBLE);
+                        rl_filters.setVisibility(View.VISIBLE);
+                        rl_sort.setVisibility(View.VISIBLE);
                         txt_totalproviders.setVisibility(View.GONE);
                         txt_no_records.setVisibility(View.VISIBLE);
                         txt_no_records.setText("No service found");
+                        setBottomSheet();
+                        bottomSheetBehavior.setDraggable(false);
                         if (response.body().getData().getService_Details().getImage_path() != null && !response.body().getData().getService_Details().getImage_path().isEmpty()) {
                             Glide.with(SelectedServiceActivity.this)
                                     .load(response.body().getData().getService_Details().getImage_path())
@@ -596,6 +649,7 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
     public void showAlertSPNotAvlLoading(String errormesage){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SelectedServiceActivity.this);
         alertDialogBuilder.setMessage(errormesage);
+        alertDialogBuilder.setCancelable(false);
         alertDialogBuilder.setPositiveButton("ok",
                 (arg0, arg1) -> hideLoadingSPnotavl());
 

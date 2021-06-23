@@ -5,16 +5,8 @@
     android:id="@+id/rl_doctornearyby"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="5dp">
+    android:layout_marginBottom="10dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cdvw_newappointment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="10dp"
-        app:cardPreventCornerOverlap="true"
-        app:cardUseCompatPadding="true">
     <LinearLayout
         android:id="@+id/ll_root"
         android:layout_width="match_parent"
@@ -39,7 +31,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cv_pet"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
+                    android:layout_height="100dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="5dp"
                     app:cardPreventCornerOverlap="true"
@@ -82,18 +74,7 @@
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
                         android:text="@string/doctor_name"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"
-                        android:textStyle="normal" />
-
-                    <TextView
-                        android:id="@+id/txt_doctors_clinicname"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/futuramediumbt"
-                        android:maxLines="1"
-                        android:text="@string/doctor_name"
-                        android:textColor="@color/new_gree_color"
+                        android:textColor="@color/new_txt_color"
                         android:textSize="14sp"
                         android:textStyle="normal" />
 
@@ -101,43 +82,28 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
+
                         <TextView
                             android:id="@+id/txt_doctors_specialization"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginTop="2dp"
                             android:fontFamily="@font/futuramediumbt"
-                            android:maxLines="2"
-                            android:text="@string/specialization"
-                            android:textColor="@color/new_sec_txt_color"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:id="@+id/txt_doctors_experience"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="2dp"
-                            android:fontFamily="@font/futuramediumbt"
                             android:maxLines="1"
-                            android:ellipsize="end"
                             android:text="@string/specialization"
-                            android:textColor="@color/new_txt_color"
+                            android:textColor="@color/new_tri_txt_color"
                             android:textSize="12sp" />
 
 
-                    </LinearLayout>
 
+                    </LinearLayout>
 
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
+                        android:layout_marginTop="2dp"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/txt_place"
@@ -179,11 +145,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginTop="5dp">
+                        android:layout_marginTop="12dp">
 
                         <RelativeLayout
                             android:layout_width="50dp"
-                            android:layout_height="wrap_content">
+                            android:layout_height="25dp"
+                            android:background="@drawable/light_orange_background">
 
                             <TextView
                                 android:id="@+id/txt_star_rating"
@@ -212,7 +179,7 @@
                             android:layout_marginEnd="5dp"
                             android:fontFamily="@font/futurabookfont"
                             android:text="@string/review_count"
-                            android:textColor="@color/red"
+                            android:textColor="@color/new_sec_txt_color"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -260,7 +227,5 @@
 
 
     </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
 
 </RelativeLayout>

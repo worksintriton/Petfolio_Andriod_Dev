@@ -152,7 +152,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:orientation="horizontal"
             android:background="@drawable/new_rounded_corner_btn_red"
             android:layout_marginTop="10dp"
@@ -178,8 +178,8 @@
 
             <ImageView
                 android:layout_marginStart="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:background="@drawable/next_icon_white"
                 tools:ignore="ContentDescription"
                 android:layout_marginEnd="10dp"/>

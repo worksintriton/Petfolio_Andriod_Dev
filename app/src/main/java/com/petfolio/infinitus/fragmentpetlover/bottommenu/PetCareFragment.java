@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
@@ -89,14 +91,10 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
 
 
+
+
+
     int currentPage = 0;
-    Timer timer;
-    final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
-    final long PERIOD_MS = 3000;
-
-
-
-
 
     String token = "";
     String type ="";
@@ -145,20 +143,16 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     EditText edt_search;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.pager)
-    ViewPager viewPager;
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tabDots)
-    TabLayout tabLayout;
-
-    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rl_search)
     RelativeLayout rl_search;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.bottomSheetLayouts)
-    NestedScrollView bottomSheetLayouts;
+    @BindView(R.id.bottomSheetLayout)
+    CoordinatorLayout bottomSheetLayout;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.linear1)
+    LinearLayout linear1;
 
 
     private ShimmerFrameLayout mShimmerViewContainer;
@@ -219,6 +213,8 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
         txt_totaldrs.setVisibility(View.GONE);
 
         rl_search.setVisibility(View.GONE);
+
+        linear1.setVisibility(View.GONE);
 
         includelayout = view.findViewById(R.id.includelayout);
         mShimmerViewContainer = includelayout.findViewById(R.id.shimmer_layout);
@@ -354,7 +350,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
      */
     private void setBottomSheet() {
 
-        bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.bottomSheetLayouts));
+        bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.bottomSheetLayout));
 
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
 
@@ -362,7 +358,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
         bottomSheetBehavior.setFitToContents(false);
 
-        bottomSheetBehavior.setHalfExpandedRatio(0.85f);
+        bottomSheetBehavior.setHalfExpandedRatio(0.9f);
 
 
         // Capturing the callbacks for bottom sheet
@@ -407,6 +403,17 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     }
 
     private void viewpageData(List<String> doctorclinicdetailsResponseList) {
+
+        ViewPager viewPager = view.findViewById(R.id.pager);
+
+        TabLayout tabLayout = view.findViewById(R.id.tabDots);
+
+        Timer timer;
+        final long DELAY_MS = 600;//delay in milliseconds before task is to be executed
+        final long PERIOD_MS = 3000;
+
+        currentPage = 0;
+
         tabLayout.setupWithViewPager(viewPager, true);
 
         ViewPagerPetCareAdapter viewPagerClinicDetailsAdapter = new ViewPagerPetCareAdapter(getContext(), doctorclinicdetailsResponseList);
@@ -417,13 +424,23 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
             if (currentPage == doctorclinicdetailsResponseList.size()) {
                 currentPage = 0;
             }
-            viewPager.setCurrentItem(currentPage++, false);
+            Log.w(TAG,"currentPage " + currentPage);
+
+            viewPager.setCurrentItem(currentPage++, true);
         };
 
         timer = new Timer(); // This will create a new Thread
+
         timer.schedule(new TimerTask() { // task to be scheduled
             @Override
             public void run() {
+
+                Log.w(TAG,"update on " + Update);
+
+                Log.w(TAG,"Delay_MS on " + DELAY_MS);
+
+                Log.w(TAG,"Period_MS on " + PERIOD_MS);
+
                 handler.post(Update);
             }
         }, DELAY_MS, PERIOD_MS);
@@ -437,7 +454,8 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
       /*  avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();*/
         rl_search.setVisibility(View.GONE);
-        bottomSheetLayouts.setVisibility(View.GONE);
+        linear1.setVisibility(View.GONE);
+        bottomSheetLayout.setVisibility(View.GONE);
         includelayout.setVisibility(View.VISIBLE);
         mShimmerViewContainer.startShimmerAnimation();
 
@@ -453,7 +471,8 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
                 mShimmerViewContainer.stopShimmerAnimation();
                 includelayout.setVisibility(View.GONE);
                 rl_search.setVisibility(View.VISIBLE);
-                bottomSheetLayouts.setVisibility(View.VISIBLE);
+                linear1.setVisibility(View.VISIBLE);
+                bottomSheetLayout.setVisibility(View.VISIBLE);
                 Log.w(TAG,"DoctorSearchResponse" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
@@ -622,6 +641,9 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     private void filterDoctorResponseCall() {
         /*avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();*/
+        rl_search.setVisibility(View.GONE);
+        linear1.setVisibility(View.GONE);
+        bottomSheetLayout.setVisibility(View.GONE);
         includelayout.setVisibility(View.VISIBLE);
         mShimmerViewContainer.startShimmerAnimation();
 
@@ -634,6 +656,9 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
             @Override
             public void onResponse(@NonNull Call<FilterDoctorResponse> call, @NonNull Response<FilterDoctorResponse> response) {
                 //avi_indicator.smoothToHide();
+                rl_search.setVisibility(View.VISIBLE);
+                linear1.setVisibility(View.VISIBLE);
+                bottomSheetLayout.setVisibility(View.VISIBLE);
                 mShimmerViewContainer.stopShimmerAnimation();
                 includelayout.setVisibility(View.GONE);
                 Log.w(TAG,"filterDoctorResponseCall" + new Gson().toJson(response.body()));

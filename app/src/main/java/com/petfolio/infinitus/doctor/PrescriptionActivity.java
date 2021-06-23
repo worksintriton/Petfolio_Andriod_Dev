@@ -161,6 +161,9 @@ public class PrescriptionActivity extends AppCompatActivity {
     private String DiagnosisTypeId;
     private String SubDiagnosisType;
 
+    PrescriptionCreateRequest.PrescriptionDataBean.ConsumptionBean consumptionBean;
+
+
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -193,9 +196,7 @@ public class PrescriptionActivity extends AppCompatActivity {
               diagnosisListResponseCall();
         }
 
-
-            back_rela.setOnClickListener(v -> onBackPressed());
-
+        back_rela.setOnClickListener(v -> onBackPressed());
         sprdiagnosistype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @SuppressLint("LogNotTimber")
             @Override
@@ -238,11 +239,6 @@ public class PrescriptionActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
-
         et_quanity.setTransformationMethod(new NumericKeyBoardTransformationMethod());
         et_consumption.setTransformationMethod(new NumericKeyBoardTransformationMethod());
 
@@ -273,6 +269,27 @@ public class PrescriptionActivity extends AppCompatActivity {
                 chx_an.setChecked(chx_a.isChecked());
                 chx_ng.setChecked(chx_n.isChecked());
 
+
+
+
+              consumptionBean =  new PrescriptionCreateRequest.PrescriptionDataBean.ConsumptionBean();
+
+                if(chx_m.isChecked()){
+                    consumptionBean.setMorning(chx_m.isChecked());
+                }else{
+                    consumptionBean.setMorning(false);
+                }if(chx_a.isChecked()){
+                    consumptionBean.setEvening(chx_a.isChecked());
+                }else{
+                    consumptionBean.setEvening(false);
+                }if(chx_n.isChecked()){
+                    consumptionBean.setNight(chx_n.isChecked());
+                }else{
+                    consumptionBean.setNight(false);
+                }
+
+
+
                 Log.w(TAG,"Consumptions checked : m "+chx_m.isChecked()+" a "+chx_a.isChecked()+" n "+chx_n.isChecked());
 
                 buttonRemove.setOnClickListener(new View.OnClickListener(){
@@ -284,9 +301,21 @@ public class PrescriptionActivity extends AppCompatActivity {
 
 
                 if(!et_tabletname.getText().toString().isEmpty() && !et_quanity.getText().toString().isEmpty() && chx_m.isChecked() || chx_a.isChecked() || chx_n.isChecked()){
+
+                    Log.w(TAG,"prescriptionDataList  : tablet name "+et_tabletname.getText().toString()+" qty : "+et_quanity.getText().toString());
+                    prescriptionData  = new PrescriptionCreateRequest.PrescriptionDataBean();
+
+                    prescriptionData.setTablet_name(et_tabletname.getText().toString());
+                    prescriptionData.setQuantity(et_quanity.getText().toString());
+                    prescriptionData.setConsumption(consumptionBean);
+                    prescriptionDataList.add(prescriptionData);
+
+                    Log.w(TAG,"prescriptionDataList add : "+new Gson().toJson(prescriptionDataList));
                     ll_headername.setVisibility(View.VISIBLE);
                     container.addView(addView, 0);
                     clearField();
+
+
                 }else{
                     showErrorLoading("Please fill all the fields");
                     //ll_headername.setVisibility(View.GONE);
@@ -305,14 +334,14 @@ public class PrescriptionActivity extends AppCompatActivity {
             public void onClick(View arg0) {
 
 
-                    prescriptionDataList.clear();
+                   // prescriptionDataList.clear();
 
                     String showallPrompt = "";
 
                     int childCount = container.getChildCount();
                     showallPrompt += "childCount: " + childCount + "\n\n";
 
-                    for(int c=0; c<childCount; c++){
+                   /* for(int c=0; c<childCount; c++){
                         prescriptionData  = new PrescriptionCreateRequest.PrescriptionDataBean();
                         View childView = container.getChildAt(c);
                         TextView childTabletName = childView.findViewById(R.id.tv_tabletname);
@@ -324,16 +353,18 @@ public class PrescriptionActivity extends AppCompatActivity {
                         TextView childConsumption = childView.findViewById(R.id.tv_consumption);
                         String childTextConsumption = (String)(childConsumption.getText());
 
+
+
                         showallPrompt += c + ": " + childTextTabletName + "\n"+
                                 c + ": " + childTexQuantity+"\n"+
                                 c + ": " + childTextConsumption +"\n" ;
 
                         prescriptionData.setTablet_name(childTextTabletName);
                         prescriptionData.setQuantity(childTexQuantity);
-                        prescriptionData.setConsumption(childTextConsumption);
+                        prescriptionData.setConsumption(consumptionBean);
                         prescriptionDataList.add(prescriptionData);
 
-                    }
+                    }*/
 
 
                     //  Toast.makeText(PrescriptionExActivity.this, showallPrompt, Toast.LENGTH_LONG).show();
@@ -360,6 +391,8 @@ public class PrescriptionActivity extends AppCompatActivity {
                                 Family_Name = Family_Name;
                                 Family_ID = Family_ID;
                             }
+
+                            Log.w(TAG,"prescriptionDataList : "+new Gson().toJson(prescriptionDataList));
 
                             Intent intent = new Intent(getApplicationContext(),PrescriptionDetailsActivity.class);
                             intent.putExtra("Doctor_ID",Doctor_ID);

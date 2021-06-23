@@ -544,6 +544,7 @@
     <string name="consultation">Consultation</string>
     <string name="see_more_pets_handled" tools:ignore="TypographyEllipsis">See more...</string>
     <string name="see_more_pets_specialization" tools:ignore="TypographyEllipsis">See more...</string>
+    <string name="dob">Date of birth</string>
 
 
 </resources>
