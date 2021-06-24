@@ -4,23 +4,16 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.graphics.drawable.DrawableCompat;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
