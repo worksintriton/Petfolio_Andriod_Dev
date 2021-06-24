@@ -59,6 +59,16 @@ public class PetAppointmentCreateRequest {
     private String location_id;
     private String visit_type;
 
+    private String health_issue_title;
+
+    public String getHealth_issue_title() {
+        return health_issue_title;
+    }
+
+    public void setHealth_issue_title(String health_issue_title) {
+        this.health_issue_title = health_issue_title;
+    }
+
     public String getLocation_id() {
         return location_id;
     }

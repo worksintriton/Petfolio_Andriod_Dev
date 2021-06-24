@@ -94,8 +94,8 @@ public class HealthIssueListAdapter extends  RecyclerView.Adapter<RecyclerView.V
                 }
                 healthissueList.get(position).setSelected(true);
                 notifyDataSetChanged();
-                if(healthissueList.get(position).get_id() != null ){
-                    myPetsSelectListener.myPetsSelectListener(healthissueList.get(position).get_id());
+                if(healthissueList.get(position).getHealth_issue_title() != null ){
+                    myPetsSelectListener.myPetsSelectListener(healthissueList.get(position).getHealth_issue_title());
 
                 }
             }

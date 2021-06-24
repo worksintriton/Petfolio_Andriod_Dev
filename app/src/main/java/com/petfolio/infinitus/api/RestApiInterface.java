@@ -261,7 +261,7 @@ public interface RestApiInterface {
 
     /*Prescriptoin Details*/
     @POST("prescription/fetch_by_appointment_id")
-    Call<PrescriptionCreateResponse> prescriptionDetailsResponseCall(@Header("Content-Type") String type, @Body PrescriptionDetailsRequest prescriptionDetailsRequest);
+    Call<PrescriptionFetchResponse> prescriptionDetailsResponseCall(@Header("Content-Type") String type, @Body PrescriptionDetailsRequest prescriptionDetailsRequest);
 
     /*Update Appointment Status complete*/
     @POST("appointments/edit")

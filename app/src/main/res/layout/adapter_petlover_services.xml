@@ -17,7 +17,7 @@
             android:id="@+id/cv_serviceimage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/ic_grooming_new"
+            android:background="@drawable/images_avatar"
             tools:ignore="ContentDescription"
             android:scaleType="fitXY"/>
 

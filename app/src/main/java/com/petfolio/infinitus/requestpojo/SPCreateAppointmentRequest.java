@@ -28,6 +28,7 @@ public class SPCreateAppointmentRequest {
      * missed_at :
      * mobile_type : Admin
      * sp_business_info : []
+     * health_issue_title
      */
 
     private String sp_id;
@@ -53,6 +54,15 @@ public class SPCreateAppointmentRequest {
     private String mobile_type;
     private List<SpAttchedBean> sp_attched;
     private String date_and_time;
+    private String health_issue_title;
+
+    public String getHealth_issue_title() {
+        return health_issue_title;
+    }
+
+    public void setHealth_issue_title(String health_issue_title) {
+        this.health_issue_title = health_issue_title;
+    }
 
     public String getDate_and_time() {
         return date_and_time;

@@ -284,6 +284,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
     String locationid = "";
     private boolean isVisit;
+    private String health_issue_title;
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -303,6 +304,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
             Log.w(TAG,"amount : "+amount);
             communicationtype = extras.getString("communicationtype");
             petId = extras.getString("petId");
+            health_issue_title = extras.getString("health_issue_title");
             Log.w(TAG,"Bundle "+" doctorid : "+doctorid+" selectedTimeSlot : "+selectedTimeSlot+"communicationtype : "+communicationtype+" amount : "+amount+" fromactivity : "+fromactivity);
 
             Log.w(TAG, "petId : " + petId);
@@ -1465,6 +1467,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         petAppointmentCreateRequest.setDate_and_time(currentDateandTime);
         petAppointmentCreateRequest.setVisit_type(selectedVisitType);
         petAppointmentCreateRequest.setLocation_id(locationid);
+        petAppointmentCreateRequest.setHealth_issue_title(health_issue_title);
         Log.w(TAG,"petAppointmentCreateRequest"+ "--->" + new Gson().toJson(petAppointmentCreateRequest));
         return petAppointmentCreateRequest;
     }

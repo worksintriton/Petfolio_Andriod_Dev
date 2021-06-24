@@ -262,6 +262,7 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000;
     private int distance;
+    private String health_issue_title;
 
     @SuppressLint("LongLogTag")
     @Override
@@ -283,6 +284,7 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
             SP_ava_Date = extras.getString("SP_ava_Date");
             selectedTimeSlot = extras.getString("selectedTimeSlot");
             distance = extras.getInt("distance");
+            health_issue_title = extras.getString("health_issue_title");
             Log.w(TAG,"spid : "+spid +" catid : "+catid+" from : "+from+" serviceamount : "+serviceamount+" servicetime : "+servicetime+" SP_ava_Date : "+SP_ava_Date+" selectedTimeSlot : "+selectedTimeSlot);
 
             if(selectedServiceTitle != null){
@@ -1398,6 +1400,7 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
         spCreateAppointmentRequest.setMissed_at("");
         spCreateAppointmentRequest.setMobile_type("Android");
         spCreateAppointmentRequest.setDate_and_time(currentDateandTime);
+        spCreateAppointmentRequest.setHealth_issue_title(health_issue_title);
         Log.w(TAG,"spCreateAppointmentRequest"+ "--->" + new Gson().toJson(spCreateAppointmentRequest));
         return spCreateAppointmentRequest;
     }

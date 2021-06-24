@@ -91,6 +91,7 @@ public class ConsultationIssuesActivity extends AppCompatActivity implements Vie
     private String petage;
     private int distance;
     private String SP_ava_Date;
+    private String health_issue_title;
 
 
     @SuppressLint({"LogNotTimber", "SetTextI18n", "LongLogTag"})
@@ -160,6 +161,7 @@ public class ConsultationIssuesActivity extends AppCompatActivity implements Vie
                     intent.putExtra("selectedTimeSlot",selectedTimeSlot);
                     intent.putExtra("distance",distance);
                     intent.putExtra("fromactivity",fromactivity);
+                    intent.putExtra("health_issue_title",health_issue_title);
                     startActivity(intent);
                 }
                 else {
@@ -172,6 +174,7 @@ public class ConsultationIssuesActivity extends AppCompatActivity implements Vie
                     intent.putExtra("communicationtype", communicationtype);
                     intent.putExtra("fromto", fromto);
                     intent.putExtra("petId", petId);
+                    intent.putExtra("health_issue_title", health_issue_title);
                     startActivity(intent);
                     Log.w(TAG, "communicationtype : " + communicationtype);
                 }
@@ -293,10 +296,11 @@ public class ConsultationIssuesActivity extends AppCompatActivity implements Vie
 
     @SuppressLint("LogNotTimber")
     @Override
-    public void myPetsSelectListener(String healthissueid) {
-        Log.w(TAG,"myPetsSelectListener : healthissueid "+healthissueid);
-        if(healthissueid != null){
+    public void myPetsSelectListener(String Health_issue_title) {
+        Log.w(TAG,"myPetsSelectListener : Health_issue_title "+Health_issue_title);
+        if(Health_issue_title != null){
            // petId = petid;
+             health_issue_title = Health_issue_title;
             ll_save_continue.setVisibility(View.VISIBLE);
         }else{
             ll_save_continue.setVisibility(View.GONE);

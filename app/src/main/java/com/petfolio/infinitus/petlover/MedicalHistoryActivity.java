@@ -45,6 +45,7 @@ import com.petfolio.infinitus.requestpojo.PrescriptionDetailsRequest;
 import com.petfolio.infinitus.responsepojo.MedicalHistoryResponse;
 import com.petfolio.infinitus.responsepojo.PetListResponse;
 import com.petfolio.infinitus.responsepojo.PrescriptionCreateResponse;
+import com.petfolio.infinitus.responsepojo.PrescriptionFetchResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -459,13 +460,13 @@ public class MedicalHistoryActivity extends AppCompatActivity implements View.On
           avi_indicator.setVisibility(View.VISIBLE);
           avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<PrescriptionCreateResponse> call = ApiService.prescriptionDetailsResponseCall(RestUtils.getContentType(),prescriptionDetailsRequest(appointmentid));
+        Call<PrescriptionFetchResponse> call = ApiService.prescriptionDetailsResponseCall(RestUtils.getContentType(),prescriptionDetailsRequest(appointmentid));
         Log.w(TAG,"url  :%s"+" "+ call.request().url().toString());
 
-        call.enqueue(new Callback<PrescriptionCreateResponse>() {
+        call.enqueue(new Callback<PrescriptionFetchResponse>() {
             @SuppressLint({"SetJavaScriptEnabled", "LogNotTimber"})
             @Override
-            public void onResponse(@NonNull Call<PrescriptionCreateResponse> call, @NonNull Response<PrescriptionCreateResponse> response) {
+            public void onResponse(@NonNull Call<PrescriptionFetchResponse> call, @NonNull Response<PrescriptionFetchResponse> response) {
               avi_indicator.smoothToHide();
                 Log.w(TAG,"PrescriptionCreateResponse"+ "--->" + new Gson().toJson(response.body()));
 
@@ -515,7 +516,7 @@ public class MedicalHistoryActivity extends AppCompatActivity implements View.On
 
             @SuppressLint("LogNotTimber")
             @Override
-            public void onFailure(@NonNull Call<PrescriptionCreateResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<PrescriptionFetchResponse> call, @NonNull Throwable t) {
                 //               avi_indicator.smoothToHide();
 
                 Log.w(TAG,"PrescriptionCreateResponseflr"+"--->" + t.getMessage());

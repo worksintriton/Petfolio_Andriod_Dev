@@ -545,6 +545,8 @@
     <string name="see_more_pets_handled" tools:ignore="TypographyEllipsis">See more...</string>
     <string name="see_more_pets_specialization" tools:ignore="TypographyEllipsis">See more...</string>
     <string name="dob">Date of birth</string>
+    <string name="powered_by">Powered By:</string>
+    <string name="owner_s_name">Owner\'s Name</string>
 
 
 </resources>
