@@ -74,7 +74,7 @@
     <color name="bg_white">#FFFFFF</color>
 
    <!-- <color name="new_header_bg">#E8571E</color>-->
-    <color name="new_header_bg">#E8571E</color>
+    <color name="new_header_bg">#FFFFFF</color>
     <color name="new_shop_bg">#7AD1C0</color>
     <color name="new_txt_header">#141414</color>
     <color name="new_secondtxt">#2E2E2E</color>

@@ -80,14 +80,14 @@ public class PetServicesAdapter extends  RecyclerView.Adapter<RecyclerView.ViewH
                       Glide.with(context)
                               .load(currentItem.getImage())
                               .centerCrop()
-                              .apply(new RequestOptions().override(150, 200))
+                              .apply(new RequestOptions().override(140, 220))
                               //.load(R.drawable.logo)
                               .into(holder.img_petservice);
                   }else{
                       Glide.with(context)
                               .load(APIClient.PROFILE_IMAGE_URL)
                               .centerCrop()
-                              .apply(new RequestOptions().override(150, 200))
+                              .apply(new RequestOptions().override(140, 220))
                               //.load(R.drawable.logo)
                               .into(holder.img_petservice);
 
@@ -102,14 +102,14 @@ public class PetServicesAdapter extends  RecyclerView.Adapter<RecyclerView.ViewH
                       Glide.with(context)
                               .load(currentItem.getImage())
                               .centerCrop()
-                              .apply(new RequestOptions().override(150, 220))
+                              .apply(new RequestOptions().override(140, 220))
                               //.load(R.drawable.logo)
                               .into(holder.img_petservice);
                   }else{
                       Glide.with(context)
                               .load(APIClient.PROFILE_IMAGE_URL)
                               .centerCrop()
-                              .apply(new RequestOptions().override(150, 220))
+                              .apply(new RequestOptions().override(140, 220))
                               //.load(R.drawable.logo)
                               .into(holder.img_petservice);
                   }
@@ -125,7 +125,7 @@ public class PetServicesAdapter extends  RecyclerView.Adapter<RecyclerView.ViewH
                           Glide.with(context)
                                   .load(currentItem.getImage())
                                   .centerCrop()
-                                  .apply(new RequestOptions().override(150, 220))
+                                  .apply(new RequestOptions().override(140, 220))
                                   //.load(R.drawable.logo)
                                   .into(holder.img_petservice);
                       }else {
@@ -133,7 +133,7 @@ public class PetServicesAdapter extends  RecyclerView.Adapter<RecyclerView.ViewH
                           Glide.with(context)
                                   .load(APIClient.PROFILE_IMAGE_URL)
                                   .centerCrop()
-                                  .apply(new RequestOptions().override(150, 220))
+                                  .apply(new RequestOptions().override(140, 220))
                                   //.load(R.drawable.logo)
                                   .into(holder.img_petservice);
                       }
@@ -148,13 +148,13 @@ public class PetServicesAdapter extends  RecyclerView.Adapter<RecyclerView.ViewH
                           Glide.with(context)
                                   .load(currentItem.getImage())
                                   .centerCrop()
-                                  .apply(new RequestOptions().override(150, 210))
+                                  .apply(new RequestOptions().override(140, 220))
                                   .into(holder.img_petservice);
                       }else{
                           Glide.with(context)
                                   .load(APIClient.PROFILE_IMAGE_URL)
                                   .centerCrop()
-                                  .apply(new RequestOptions().override(150, 210))
+                                  .apply(new RequestOptions().override(140, 220))
                                   .into(holder.img_petservice);
                       }
 
@@ -219,13 +219,12 @@ public class PetServicesAdapter extends  RecyclerView.Adapter<RecyclerView.ViewH
 
     class ViewHolderOne extends RecyclerView.ViewHolder {
 
-        public ImageView img_petservice,img_next;
+        public ImageView img_petservice;
         public TextView txt_title,txt_sub_title;
 
         public ViewHolderOne(View itemView) {
             super(itemView);
             img_petservice = itemView.findViewById(R.id.img_petservice);
-            img_next = itemView.findViewById(R.id.img_next);
             txt_title = itemView.findViewById(R.id.txt_title);
             txt_sub_title = itemView.findViewById(R.id.txt_sub_title);
 

@@ -118,6 +118,17 @@ public class PetListResponse {
         private int __v;
         private List<PetImgBean> pet_img;
 
+
+        private String petbio;
+
+        public String getPetbio() {
+            return petbio;
+        }
+
+        public void setPetbio(String petbio) {
+            this.petbio = petbio;
+        }
+
         private boolean isSelected ;
         public boolean isSelected() {
             return isSelected;

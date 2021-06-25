@@ -158,6 +158,7 @@ public class PetloverPetDetailsActivity extends AppCompatActivity implements Vie
     private Dialog dialog;
     private static final int REQUEST_PHONE_CALL =1 ;
     private String sosPhonenumber;
+    private String petbio;
 
 
     @Override
@@ -219,6 +220,7 @@ public class PetloverPetDetailsActivity extends AppCompatActivity implements Vie
             SelectedLastVaccinateddate = extras.getString("vaccinateddate");
             defaultstatus = extras.getBoolean("defaultstatus");
             petdob = extras.getString("petdob");
+            petbio = extras.getString("petbio");
 
             pet_spayed = extras.getBoolean("pet_spayed");
             pet_purebred = extras.getBoolean("pet_purebred");
@@ -231,6 +233,14 @@ public class PetloverPetDetailsActivity extends AppCompatActivity implements Vie
 
             Log.w(TAG, "strPetType : " + strPetType + " strPetBreedType : " + strPetBreedType + " strPetGenderType : " + strPetGenderType);
 
+
+
+        }
+
+        if(petbio != null){
+            txt_petbio.setText(petbio);
+        }else {
+            txt_petbio.setText("");
         }
 
         if(petImgBeanList!=null&&petImgBeanList.size()>0){

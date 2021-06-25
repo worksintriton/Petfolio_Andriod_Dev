@@ -202,6 +202,7 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
                 i.putExtra("pet_microchipped",petListResponseList.get(position).isPet_microchipped());
                 i.putExtra("pet_tick_free",petListResponseList.get(position).isPet_tick_free());
                 i.putExtra("pet_private_part",petListResponseList.get(position).isPet_private_part());
+                i.putExtra("petbio",petListResponseList.get(position).getPetbio());
 
                 Bundle args = new Bundle();
                 //int list = petListResponseList.get(position).getPet_img().size();
