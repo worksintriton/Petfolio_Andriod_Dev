@@ -119,14 +119,14 @@
                             android:layout_marginBottom="5dp">
                             <TextView
                                 android:id="@+id/txt_seemore_services"
-                                android:layout_width="80dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="5dp"
                                 android:fontFamily="@font/futuramediumbt"
                                 android:gravity="center"
                                 android:text="@string/view_more"
                                 android:textColor="@color/new_gree_color"
-                                android:textSize="16sp" />
+                                android:textSize="16sp"
+                                android:layout_marginEnd="10dp"/>
 
                         </RelativeLayout>
 
@@ -138,9 +138,7 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/rvservice"
-                        android:layout_marginTop="10dp"
-                        />
+                        android:id="@+id/rvservice" />
 
                     <TextView
                         android:layout_marginTop="20dp"
@@ -243,14 +241,14 @@
                             android:layout_marginBottom="5dp">
                             <TextView
                                 android:id="@+id/txt_seemore_vets"
-                                android:layout_width="80dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="5dp"
                                 android:fontFamily="@font/futuramediumbt"
                                 android:gravity="center"
                                 android:text="@string/view_more"
                                 android:textColor="@color/new_gree_color"
-                                android:textSize="16sp" />
+                                android:textSize="16sp"
+                                android:layout_marginEnd="10dp"/>
 
                         </RelativeLayout>
 
@@ -303,14 +301,14 @@
                             android:layout_marginBottom="5dp">
                             <TextView
                                 android:id="@+id/txt_seemore_products"
-                                android:layout_width="80dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="5dp"
                                 android:fontFamily="@font/futuramediumbt"
                                 android:gravity="center"
                                 android:text="@string/view_more"
                                 android:textColor="@color/white"
-                                android:textSize="16sp" />
+                                android:textSize="16sp"
+                                android:layout_marginEnd="10dp"/>
 
                         </RelativeLayout>
                     </LinearLayout>

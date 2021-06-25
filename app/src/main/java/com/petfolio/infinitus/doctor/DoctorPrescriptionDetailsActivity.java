@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,8 +26,6 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.requestpojo.PrescriptionCreateRequest;
 import com.petfolio.infinitus.requestpojo.PrescriptionDetailsRequest;
-import com.petfolio.infinitus.responsepojo.DoctorSearchResponse;
-import com.petfolio.infinitus.responsepojo.PrescriptionCreateResponse;
 import com.petfolio.infinitus.responsepojo.PrescriptionFetchResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -39,7 +36,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import es.voghdev.pdfviewpager.library.RemotePDFViewPager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,15 +50,8 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
     PrescriptionCreateRequest.PrescriptionDataBean prescriptionData;
 
     SessionManager session;
-
-
     private String userid;
     private String appoinmentid,doctor_id;
-
-
-
-
-
     private String url;
 
 
