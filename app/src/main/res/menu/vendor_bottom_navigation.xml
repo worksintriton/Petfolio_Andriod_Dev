@@ -7,7 +7,7 @@
         android:id="@+id/home"
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/ic_homess"
         android:title="@string/home" />
     <item
         app:showAsAction="ifRoom"

@@ -2,6 +2,7 @@ package com.petfolio.infinitus.fragmentpetlover.bottommenu;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -195,6 +196,18 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
         super.onCreate(savedInstanceState);
 
 
+    }
+
+    private Activity mActivity;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mActivity=activity;
+    }
+
+    public Activity getMyActivity() {
+        return mActivity;
     }
 
     @SuppressLint({"SetTextI18n", "LogNotTimber"})
@@ -416,7 +429,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
         tabLayout.setupWithViewPager(viewPager, true);
 
-        ViewPagerPetCareAdapter viewPagerClinicDetailsAdapter = new ViewPagerPetCareAdapter(getContext(), doctorclinicdetailsResponseList);
+        ViewPagerPetCareAdapter viewPagerClinicDetailsAdapter = new ViewPagerPetCareAdapter(getMyActivity(), doctorclinicdetailsResponseList);
         viewPager.setAdapter(viewPagerClinicDetailsAdapter);
         /*After setting the adapter use the timer */
         final Handler handler = new Handler();
@@ -487,8 +500,8 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
                                 rl_search.setVisibility(View.VISIBLE);
                                 rv_nearbydoctors.setVisibility(View.VISIBLE);
                                 txt_no_records.setVisibility(View.GONE);
-                                txt_totaldrs.setVisibility(View.VISIBLE);
-                                txt_totaldrs.setText(doctorDetailsResponseList.size()+" "+"Doctors");
+                              //  txt_totaldrs.setVisibility(View.VISIBLE);
+                              //  txt_totaldrs.setText(doctorDetailsResponseList.size()+" "+"Doctors");
                                 setViewDoctors(doctorDetailsResponseList);
                             } else {
                                 rv_nearbydoctors.setVisibility(View.GONE);
@@ -673,8 +686,8 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
                                 rv_nearbydoctors.setVisibility(View.VISIBLE);
                                 rl_search.setVisibility(View.VISIBLE);
                                 txt_no_records.setVisibility(View.GONE);
-                                txt_totaldrs.setVisibility(View.GONE);
-                                txt_totaldrs.setText(doctorFilterDetailsResponseList.size()+" "+"Doctors");
+                               // txt_totaldrs.setVisibility(View.GONE);
+                               // txt_totaldrs.setText(doctorFilterDetailsResponseList.size()+" "+"Doctors");
                                 setViewDoctorFilters(doctorFilterDetailsResponseList);
 
                             } else {

@@ -126,6 +126,7 @@ dependencies {
     implementation 'com.github.wwdablu:SimplyPDF:1.1.2'
 
 
+    implementation 'com.etebarian:meow-bottom-navigation-java:1.2.0'
 
 
 

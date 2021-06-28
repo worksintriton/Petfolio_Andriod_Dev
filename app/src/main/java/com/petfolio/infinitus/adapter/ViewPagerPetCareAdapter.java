@@ -28,12 +28,15 @@ public class ViewPagerPetCareAdapter extends PagerAdapter {
 
     private String TAG = "ViewPagerClinicDetailsAdapter";
 
-    public ViewPagerPetCareAdapter(Context context,  List<String> imagelist){
+    public ViewPagerPetCareAdapter(Context context1,  List<String> imagelist){
 
-        this.context = context;
+        this.context = context1;
         this.imagelist = imagelist;
         inflater = LayoutInflater.from(context);
     }
+
+
+
     @Override
     public int getCount() {
         return imagelist.size();

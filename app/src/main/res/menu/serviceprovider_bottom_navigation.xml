@@ -7,13 +7,13 @@
         app:showAsAction="ifRoom"
         android:enabled="true"
         android:id="@+id/home"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/ic_homess"
         android:title="@string/home"/>
     <item
         app:showAsAction="ifRoom"
         android:enabled="true"
         android:id="@+id/shop"
-        android:icon="@drawable/ic_shop"
+        android:icon="@drawable/ic_shopss"
         android:title="@string/shop"/>
 
 

@@ -32,6 +32,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -100,8 +101,6 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
     @BindView(R.id.txt_location)
     TextView txt_location;
 
-    BottomNavigationView bottom_navigation_view;
-
 
     final Fragment petHomeFragment = new PetHomeNewFragment();
     final Fragment petCareFragment = new PetCareFragment();
@@ -132,6 +131,14 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
     private String searchString ;
     private String doctorid;
 
+    private final static int ID_CARE = 1;
+    private final static int ID_SERVICE = 2;
+    private final static int ID_HOME = 3;
+    private final static int ID_SHOP = 4;
+    private final static int ID_COMMUNITY = 5;
+
+    MeowBottomNavigation bottom_navigation_view;
+
     @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,8 +147,8 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
         ButterKnife.bind(this);
         Log.w(TAG,"onCreate-->");
 
+
         bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
-        bottom_navigation_view.setItemIconTintList(null);
         googleApiConnected();
         avi_indicator.setVisibility(View.GONE);
 
@@ -149,6 +156,14 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
         SessionManager session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
+
+
+        bottom_navigation_view.add(new MeowBottomNavigation.Model(ID_CARE, R.drawable.ic_pet_care));
+        bottom_navigation_view.add(new MeowBottomNavigation.Model(ID_SERVICE, R.drawable.ic_pet_service));
+        bottom_navigation_view.add(new MeowBottomNavigation.Model(ID_HOME, R.drawable.ic_home_updated));
+        bottom_navigation_view.add(new MeowBottomNavigation.Model(ID_SHOP, R.drawable.ic_shop_updated));
+        bottom_navigation_view.add(new MeowBottomNavigation.Model(ID_COMMUNITY, R.drawable.ic_community));
+
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -170,36 +185,139 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
             shippingAddressresponseCall();
         }
 
+        bottom_navigation_view.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
+            @Override
+            public void onClickItem(MeowBottomNavigation.Model item) {
+
+
+                String name;
+                switch (item.getId()) {
+                    case ID_HOME:
+                        active_tag = "1";
+                        replaceFragment(new PetHomeNewFragment());
+                        break;
+                    case ID_SHOP:
+                        active_tag = "2";
+                        replaceFragment(new VendorShopFragment());
+                        break;
+                    case ID_SERVICE:
+                        active_tag = "3";
+                        replaceFragment(new PetServicesFragment());
+                        break;
+                    case ID_CARE:
+                        active_tag = "4";
+                        replaceFragment(new PetCareFragment());
+                        break;
+                    case ID_COMMUNITY:
+                        showComingSoonAlert();
+                        active_tag = "5";
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        });
+
+
+
+        bottom_navigation_view.setOnShowListener(new MeowBottomNavigation.ShowListener() {
+            @Override
+            public void onShowItem(MeowBottomNavigation.Model item) {
+                String name;
+                switch (item.getId()) {
+                    case ID_HOME:
+                        active_tag = "1";
+                        replaceFragment(new PetHomeNewFragment());
+                        break;
+                    case ID_SHOP:
+                        active_tag = "2";
+                        replaceFragment(new VendorShopFragment());
+                        break;
+                    case ID_SERVICE:
+                        active_tag = "3";
+                        replaceFragment(new PetServicesFragment());
+                        break;
+                    case ID_CARE:
+                        active_tag = "4";
+                        replaceFragment(new PetCareFragment());
+                        break;
+                    case ID_COMMUNITY:
+                        showComingSoonAlert();
+                        active_tag = "5";
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        });
+
+        bottom_navigation_view.show(ID_HOME,true);
+
+        bottom_navigation_view.setOnReselectListener(new MeowBottomNavigation.ReselectListener() {
+            @Override
+            public void onReselectItem(MeowBottomNavigation.Model item) {
+
+                switch (item.getId()) {
+                    case ID_HOME:
+                        active_tag = "1";
+                        replaceFragment(new PetHomeNewFragment());
+                        break;
+                    case ID_SHOP:
+                        active_tag = "2";
+                        replaceFragment(new VendorShopFragment());
+                        break;
+                    case ID_SERVICE:
+                        active_tag = "3";
+                        replaceFragment(new PetServicesFragment());
+                        break;
+                    case ID_CARE:
+                        active_tag = "4";
+                        replaceFragment(new PetCareFragment());
+                        break;
+                    case ID_COMMUNITY:
+                        showComingSoonAlert();
+                        active_tag = "5";
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        });
+
         tag = getIntent().getStringExtra("tag");
         Log.w(TAG," tag : "+tag);
         if(tag != null){
             if(tag.equalsIgnoreCase("1")){
                 active = petHomeFragment;
-                bottom_navigation_view.setSelectedItemId(R.id.home);
+                bottom_navigation_view.show(ID_HOME,true);
                 loadFragment(new PetHomeNewFragment());
             }else if(tag.equalsIgnoreCase("2")){
                 active = vendorShopFragment;
-                bottom_navigation_view.setSelectedItemId(R.id.shop);
+                bottom_navigation_view.show(ID_SHOP,true);
                 loadFragment(new VendorShopFragment());
             }else if(tag.equalsIgnoreCase("3")){
                 active = petServicesFragment;
-                bottom_navigation_view.setSelectedItemId(R.id.services);
+                bottom_navigation_view.show(ID_SERVICE,true);
                 loadFragment(new PetServicesFragment());
             }else if(tag.equalsIgnoreCase("4")){
                 active = petCareFragment;
-                bottom_navigation_view.setSelectedItemId(R.id.care);
+                bottom_navigation_view.show(ID_CARE,true);
                 loadFragment(new PetCareFragment());
             } else if(tag.equalsIgnoreCase("5")){
-                bottom_navigation_view.setSelectedItemId(R.id.community);
+                bottom_navigation_view.show(ID_COMMUNITY,true);
             }
         }
         else{
-            bottom_navigation_view.setSelectedItemId(R.id.home);
+            bottom_navigation_view.show(ID_HOME,true);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_schedule, active, active_tag);
             transaction.commitNowAllowingStateLoss();
         }
-        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+
+
     }
 
 
@@ -242,7 +360,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
     @Override
     public void onBackPressed() {
         Log.w(TAG,"tag : "+tag);
-        if (bottom_navigation_view.getSelectedItemId() == R.id.home) {
+//        if (bottom_navigation_view.getSelectedItemId() == R.id.home) {
             showExitAppAlert();
           /*  new android.app.AlertDialog.Builder(PetLoverDashboardActivity.this)
                     .setMessage("Are you sure you want to exit?")
@@ -250,28 +368,28 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
                     .setPositiveButton("Yes", (dialog, id) -> PetLoverDashboardActivity.this.finishAffinity())
                     .setNegativeButton("No", null)
                     .show();*/
-        }
-        else if(tag != null ){
-            Log.w(TAG,"Else IF--->"+"fromactivity : "+fromactivity);
-            if(fromactivity != null){
-
-
-            }else{
-                bottom_navigation_view.setSelectedItemId(R.id.home);
-                // load fragment
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_schedule,new PetHomeNewFragment());
-                transaction.commitNowAllowingStateLoss();
-            }
-
-
-        }else{
-            bottom_navigation_view.setSelectedItemId(R.id.home);
-            // load fragment
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frame_schedule,new PetHomeNewFragment());
-            transaction.commitNowAllowingStateLoss();
-        }
+//        }
+//        else if(tag != null ){
+//            Log.w(TAG,"Else IF--->"+"fromactivity : "+fromactivity);
+//            if(fromactivity != null){
+//
+//
+//            }else{
+//                bottom_navigation_view.setSelectedItemId(R.id.home);
+//                // load fragment
+//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//                transaction.replace(R.id.frame_schedule,new PetHomeNewFragment());
+//                transaction.commitNowAllowingStateLoss();
+//            }
+//
+//
+//        }else{
+//            bottom_navigation_view.setSelectedItemId(R.id.home);
+//            // load fragment
+//            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//            transaction.replace(R.id.frame_schedule,new PetHomeNewFragment());
+//            transaction.commitNowAllowingStateLoss();
+//        }
     }
 
     private void replaceFragment(Fragment fragment){
@@ -285,26 +403,26 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()) {
-                case R.id.home:
-                    active_tag = "1";
+            case R.id.home:
+                active_tag = "1";
                 replaceFragment(new PetHomeNewFragment());
                 break;
-                case R.id.shop:
-                    active_tag = "2";
-                    replaceFragment(new VendorShopFragment());
+            case R.id.shop:
+                active_tag = "2";
+                replaceFragment(new VendorShopFragment());
                 break;
-                case R.id.services:
-                    active_tag = "3";
-                    replaceFragment(new PetServicesFragment());
-                    break;
-                case R.id.care:
-                    active_tag = "4";
-                    replaceFragment(new PetCareFragment());
-                    break;
+            case R.id.services:
+                active_tag = "3";
+                replaceFragment(new PetServicesFragment());
+                break;
+            case R.id.care:
+                active_tag = "4";
+                replaceFragment(new PetCareFragment());
+                break;
             case R.id.community:
-                     showComingSoonAlert();
-                    active_tag = "5";
-                    break;
+                showComingSoonAlert();
+                active_tag = "5";
+                break;
 
             default:
                 return  false;
@@ -576,11 +694,15 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
                         String[] splitData = placesname.split("\\s", 2);
                         String code = splitData[0];
                         currentplacename = splitData[1];
+                        Log.w(TAG,"currentplacename : "+currentplacename);
                     }
+
+
 
 
                     String localityName = null;
                     String sublocalityName = null;
+                    String CityName = null;
                     String postalCode;
 
 
@@ -601,23 +723,38 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
 
                                     if (typesList.contains("postal_code")) {
                                         postalCode = addressComponentsBeanList.get(i).getShort_name();
-                                       String PostalCode = postalCode;
+                                        String PostalCode = postalCode;
 
                                     }
                                     if (typesList.contains("locality")) {
-                                       String CityName = addressComponentsBeanList.get(i).getLong_name();
+                                        CityName = addressComponentsBeanList.get(i).getLong_name();
                                         localityName = addressComponentsBeanList.get(i).getShort_name();
+                                        Log.w(TAG,"CityName : "+CityName+"localityName : "+localityName);
 
 
+                                    }
+
+                                    if(currentplacename != null){
+                                        txt_location.setText(currentplacename);
+                                    }else if(CityName != null){
+                                        txt_location.setText(CityName);
+                                    }else if(localityName != null){
+                                        txt_location.setText(localityName);
+                                    }else{
+                                        txt_location.setText("");
                                     }
 
                                     if (typesList.contains("administrative_area_level_2")) {
                                         cityName = addressComponentsBeanList.get(i).getShort_name();
                                         //  CityName = cityName;
 
+
+
+
                                     }
                                     if (typesList.contains("sublocality_level_1")) {
                                         sublocalityName = addressComponentsBeanList.get(i).getShort_name();
+                                        Log.w(TAG,"sublocalityName : "+sublocalityName);
 
                                     }
 
@@ -724,7 +861,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
 
                 Log.w(TAG,"ShippingAddressFetchByUserIDResponse"+ "--->" + new Gson().toJson(response.body()));
 
-              //  avi_indicator.smoothToHide();
+                //  avi_indicator.smoothToHide();
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200) {
@@ -736,7 +873,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
                                     Log.w(TAG,"true-->");
                                     String city = dataBeanList.getLocation_city();
                                     if(city !=null){
-                                        txt_location.setText(city);
+                                        //txt_location.setText(city);
                                     }
 
                                 }
@@ -759,7 +896,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
             @Override
             public void onFailure(@NonNull Call<ShippingAddressFetchByUserIDResponse> call, @NonNull Throwable t) {
 
-              //  avi_indicator.smoothToHide();
+                //  avi_indicator.smoothToHide();
                 Log.w(TAG,"ShippingAddressFetchByUserIDResponse flr"+"--->" + t.getMessage());
             }
         });
