@@ -61,7 +61,6 @@ import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.petlover.FiltersActivity;
 import com.petfolio.infinitus.requestpojo.DoctorSearchRequest;
 import com.petfolio.infinitus.requestpojo.FilterDoctorRequest;
-import com.petfolio.infinitus.responsepojo.DoctorDetailsResponse;
 import com.petfolio.infinitus.responsepojo.DoctorSearchResponse;
 import com.petfolio.infinitus.responsepojo.FilterDoctorResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
@@ -191,24 +190,27 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     }
 
 
+    @SuppressLint("LogNotTimber")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.w(TAG,"onCreate-->");
+
 
 
     }
 
-    private Activity mActivity;
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mActivity=activity;
-    }
-
-    public Activity getMyActivity() {
-        return mActivity;
-    }
+//    private Activity mActivity;
+//
+//    @Override
+//    public void onAttach(@NotNull Activity activity) {
+//        super.onAttach(activity);
+//        mActivity=activity;
+//    }
+//
+//    public Activity getMyActivity() {
+//        return mActivity;
+//    }
 
     @SuppressLint({"SetTextI18n", "LogNotTimber"})
     @Override
@@ -282,11 +284,18 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
         });
 
         if(fromactivity != null && fromactivity.equalsIgnoreCase("FiltersActivity")) {
-            if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
+
+            Log.w(TAG,"callfilter --> true");
+
+            if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
                 filterDoctorResponseCall();
             }
         }else{
-            if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
+
+            Log.w(TAG,"calldrsearch --> true");
+
+            if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
+                //doctorSearchRequest(searchString,communication_type);
                 doctorSearchResponseCall(searchString,communication_type);
             }
         }
@@ -429,7 +438,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
         tabLayout.setupWithViewPager(viewPager, true);
 
-        ViewPagerPetCareAdapter viewPagerClinicDetailsAdapter = new ViewPagerPetCareAdapter(getMyActivity(), doctorclinicdetailsResponseList);
+        ViewPagerPetCareAdapter viewPagerClinicDetailsAdapter = new ViewPagerPetCareAdapter(getContext(), doctorclinicdetailsResponseList);
         viewPager.setAdapter(viewPagerClinicDetailsAdapter);
         /*After setting the adapter use the timer */
         final Handler handler = new Handler();
@@ -437,8 +446,6 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
             if (currentPage == doctorclinicdetailsResponseList.size()) {
                 currentPage = 0;
             }
-            Log.w(TAG,"currentPage " + currentPage);
-
             viewPager.setCurrentItem(currentPage++, true);
         };
 
@@ -447,12 +454,6 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
         timer.schedule(new TimerTask() { // task to be scheduled
             @Override
             public void run() {
-
-                Log.w(TAG,"update on " + Update);
-
-                Log.w(TAG,"Delay_MS on " + DELAY_MS);
-
-                Log.w(TAG,"Period_MS on " + PERIOD_MS);
 
                 handler.post(Update);
             }
@@ -532,7 +533,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
                 mShimmerViewContainer.stopShimmerAnimation();
                 includelayout.setVisibility(View.GONE);
-                Log.e("DoctorSearchResponse", "--->" + t.getMessage());
+                Log.w(TAG,"DoctorSearchResponse flr" + t.getMessage());
             }
         });
 
@@ -570,6 +571,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
         PetLoverNearByDoctorAdapter petLoverNearByDoctorAdapter = new PetLoverNearByDoctorAdapter(mContext, doctorDetailsResponseList,communication_type,searchString);
         rv_nearbydoctors.setAdapter(petLoverNearByDoctorAdapter);
     }
+    @SuppressLint("LogNotTimber")
     private DoctorSearchRequest doctorSearchRequest(String searchString, int communication_type) {
         /*
          * search_string :

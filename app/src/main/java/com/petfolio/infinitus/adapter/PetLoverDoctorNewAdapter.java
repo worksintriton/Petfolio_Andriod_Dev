@@ -13,6 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -146,6 +148,14 @@ public class PetLoverDoctorNewAdapter extends  RecyclerView.Adapter<RecyclerView
         holder.ll_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //Opens the AppDetailActivity showing the selected App Card
+                //Log.d("Debugtext","Card with position " + getAdapterPosition() + " was touched.");
+//                Intent intent = new Intent(context, DoctorClinicDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+//                        context, holder.img_doctors_image, holder.img_doctors_image.getTransitionName());
+//                ActivityCompat.startActivity(context, intent, options.toBundle());
+
                 Intent intent = new Intent(context, DoctorClinicDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("doctorid",doctorDetailsResponseList.get(position).get_id());
                 intent.putExtra("doctorname",doctorDetailsResponseList.get(position).getDoctor_name());

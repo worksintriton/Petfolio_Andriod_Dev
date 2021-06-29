@@ -32,7 +32,7 @@ public class ViewPagerPetCareAdapter extends PagerAdapter {
 
         this.context = context1;
         this.imagelist = imagelist;
-        inflater = LayoutInflater.from(context);
+
     }
 
 
@@ -56,7 +56,9 @@ public class ViewPagerPetCareAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup view, int position) {
-        View itemView = inflater.inflate(R.layout.sliding_image, view, false);
+
+        View itemView = LayoutInflater.from(view.getContext()).inflate(R.layout.sliding_image, view, false);
+
         ImageView imageView = itemView.findViewById(R.id.itemImage);
 
 

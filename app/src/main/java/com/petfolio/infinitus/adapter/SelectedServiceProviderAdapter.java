@@ -93,11 +93,11 @@ public class SelectedServiceProviderAdapter extends  RecyclerView.Adapter<Recycl
         if(serviceProviderList.get(position).getService_place() != null) {
             holder.txt_place.setText(serviceProviderList.get(position).getService_place());
         }
-        if(serviceProviderList.get(position).getDistance() != 0) {
-            holder.txt_km.setText(serviceProviderList.get(position).getDistance() + " km");
-        }else{
-            holder.txt_km.setText("0 km away");
-        }
+//        if(serviceProviderList.get(position).getDistance() != 0) {
+//            holder.txt_km.setText(serviceProviderList.get(position).getDistance() + " km");
+//        }else{
+//            holder.txt_km.setText("0 km away");
+//        }
         if(serviceProviderList.get(position).getRating_count() != 0) {
             holder.txt_star_rating.setText(serviceProviderList.get(position).getRating_count() + "");
         }

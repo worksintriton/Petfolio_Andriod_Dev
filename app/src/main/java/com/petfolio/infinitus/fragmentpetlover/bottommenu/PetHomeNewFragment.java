@@ -212,7 +212,7 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
     private String doctornotavlmsg;
     private List<PetLoverDashboardResponse.DataBean.DashboarddataBean.MiddleBannerDetailsBean> middleBannerDetailsBeanList;
 
-
+    private Activity mActivity;
 
 
     public PetHomeNewFragment() {
@@ -945,7 +945,7 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
                             break;
                         case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
                             try {
-                                status.startResolutionForResult(getActivity(), REQUEST_CHECK_SETTINGS_GPS);
+                                status.startResolutionForResult(mActivity, REQUEST_CHECK_SETTINGS_GPS);
                             } catch (IntentSender.SendIntentException e) {
                                 // Ignore the error.
                             }
@@ -998,6 +998,16 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
         } catch (Exception ignored) {
 
         }
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mActivity=activity;
+    }
+
+    public Activity getMyActivity() {
+        return mActivity;
     }
 
 }

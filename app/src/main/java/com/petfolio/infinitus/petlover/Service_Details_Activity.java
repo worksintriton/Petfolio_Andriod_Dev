@@ -368,7 +368,7 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
 
         bottomSheetBehavior.setFitToContents(false);
 
-        bottomSheetBehavior.setHalfExpandedRatio(0.7f);
+        bottomSheetBehavior.setHalfExpandedRatio(0.8f);
 
 
         // Capturing the callbacks for bottom sheet

@@ -1,8 +1,10 @@
 package com.petfolio.infinitus.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.transition.Fade;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
@@ -131,6 +137,14 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
 
         }
 
+        Fade fade = new Fade();
+        View decor = ((Activity) context).getWindow().getDecorView();
+        fade.excludeTarget(decor.findViewById(R.id.action_bar_container), true);
+        fade.excludeTarget(android.R.id.statusBarBackground, true);
+        fade.excludeTarget(android.R.id.navigationBarBackground, true);
+        ((Activity) context).getWindow().setEnterTransition(fade);
+        ((Activity) context).getWindow().setExitTransition(fade);
+
         holder.ll_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,6 +158,8 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
                 intent.putExtra("fromactivity", "PetCareFragment");
                 intent.putExtra("communication_type", communication_type);
                 intent.putExtra("searchString", searchString);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        (Activity)context, holder.img_doctors_image, ViewCompat.getTransitionName(holder.img_doctors_image));
                 Log.w(TAG,"doctorid :"+doctorDetailsResponseList.get(position).getUser_id());
                 context.startActivity(intent);
                 }

@@ -158,11 +158,11 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
         userid = user.get(SessionManager.KEY_ID);
 
 
-        bottom_navigation_view.add(new MeowBottomNavigation.Model(ID_CARE, R.drawable.ic_pet_care));
-        bottom_navigation_view.add(new MeowBottomNavigation.Model(ID_SERVICE, R.drawable.ic_pet_service));
-        bottom_navigation_view.add(new MeowBottomNavigation.Model(ID_HOME, R.drawable.ic_home_updated));
-        bottom_navigation_view.add(new MeowBottomNavigation.Model(ID_SHOP, R.drawable.ic_shop_updated));
-        bottom_navigation_view.add(new MeowBottomNavigation.Model(ID_COMMUNITY, R.drawable.ic_community));
+        bottom_navigation_view.add(new MeowBottomNavigation.Model(ID_CARE, R.drawable.petcare_fill));
+        bottom_navigation_view.add(new MeowBottomNavigation.Model(ID_SERVICE, R.drawable.petserv_fill));
+        bottom_navigation_view.add(new MeowBottomNavigation.Model(ID_HOME, R.drawable.home_fill));
+        bottom_navigation_view.add(new MeowBottomNavigation.Model(ID_SHOP, R.drawable.shop_fill));
+        bottom_navigation_view.add(new MeowBottomNavigation.Model(ID_COMMUNITY, R.drawable.community_fill));
 
 
         Bundle extras = getIntent().getExtras();
@@ -253,7 +253,7 @@ public class PetLoverDashboardActivity  extends PetLoverNavigationDrawerNew impl
             }
         });
 
-        bottom_navigation_view.show(ID_HOME,true);
+//        bottom_navigation_view.show(ID_HOME,true);
 
         bottom_navigation_view.setOnReselectListener(new MeowBottomNavigation.ReselectListener() {
             @Override

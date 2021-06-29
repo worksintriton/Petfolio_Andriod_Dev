@@ -18,8 +18,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/new_topcorner_radius"
-            android:orientation="vertical">
+            android:background="@drawable/new_topcorner_radius_new"            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/ll_linearroot"
