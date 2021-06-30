@@ -10,6 +10,7 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -20,6 +21,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,15 +38,20 @@ import com.bumptech.glide.Glide;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.NotificationActivity;
+import com.petfolio.infinitus.adapter.PetLoverNearByDoctorAdapter;
 import com.petfolio.infinitus.adapter.PetLoverSOSAdapter;
 import com.petfolio.infinitus.adapter.SelectedServiceProviderAdapter;
+import com.petfolio.infinitus.adapter.ViewPagerPetCareAdapter;
+import com.petfolio.infinitus.adapter.ViewPagerPetServiceAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.interfaces.SoSCallListener;
 import com.petfolio.infinitus.requestpojo.SPSpecificServiceDetailsRequest;
+import com.petfolio.infinitus.responsepojo.DoctorSearchResponse;
 import com.petfolio.infinitus.responsepojo.PetLoverDashboardResponse;
 import com.petfolio.infinitus.responsepojo.SPSpecificServiceDetailsResponse;
 import com.petfolio.infinitus.serviceprovider.SPFiltersActivity;
@@ -55,6 +62,8 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,9 +80,9 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
     @BindView(R.id.avi_indicator)
     AVLoadingIndicatorView avi_indicator;
 
-    @SuppressLint("NonConstantResourceId")
+  /*  @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_selectedserviceimage)
-    ImageView img_selectedserviceimage;
+    ImageView img_selectedserviceimage;*/
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_selected_service)
@@ -155,6 +164,9 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
     @SuppressWarnings("rawtypes")
     public BottomSheetBehavior bottomSheetBehavior;
 
+    int currentPage = 0;
+
+
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -168,7 +180,6 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
 
         avi_indicator.setVisibility(View.GONE);
 
-        img_selectedserviceimage.setVisibility(View.GONE);
         txt_selected_service.setVisibility(View.GONE);
         view.setVisibility(View.GONE);
         ll_root.setVisibility(View.GONE);
@@ -346,7 +357,6 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
     private void SPSpecificServiceDetailsResponseCall(int distance, int reviewcount, int count_value_start, int count_value_end) {
        /* avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();*/
-        img_selectedserviceimage.setVisibility(View.GONE);
         txt_selected_service.setVisibility(View.GONE);
         view.setVisibility(View.GONE);
         ll_root.setVisibility(View.GONE);
@@ -380,10 +390,10 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
 
                         if (response.body().getData() != null) {
 
-                        if(response.body().getBanner() != null && response.body().getBanner().size()>0){
+                            if(response.body().getBanner() != null && response.body().getBanner().size()>0){
+                                setViewServicesBanner(response.body().getBanner());
+                            }
 
-
-                        }
 
                             if(response.body().getData().getService_Details().get_id() != null) {
                                 catid = response.body().getData().getService_Details().get_id();
@@ -397,24 +407,13 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
                                 txt_totalproviders.setText(serviceProviderList.size()+" Providers");
                                 view.setVisibility(View.VISIBLE);
                                 bottomSheetLayouts.setVisibility(View.VISIBLE);
-                                img_selectedserviceimage.setVisibility(View.VISIBLE);
                                 txt_selected_service.setVisibility(View.VISIBLE);
                                 ll_root.setVisibility(View.VISIBLE);
                                 textView20.setVisibility(View.VISIBLE);
                                 rl_filters.setVisibility(View.VISIBLE);
                                 rl_sort.setVisibility(View.VISIBLE);
                                 setBottomSheet();
-                                if (response.body().getData().getService_Details().getImage_path() != null && !response.body().getData().getService_Details().getImage_path().isEmpty()) {
 
-                                    Glide.with(SelectedServiceActivity.this)
-                                            .load(response.body().getData().getService_Details().getImage_path())
-                                            .into(img_selectedserviceimage);
-                                } else {
-                                    Glide.with(SelectedServiceActivity.this)
-                                            .load(APIClient.PROFILE_IMAGE_URL)
-                                            .into(img_selectedserviceimage);
-
-                                }
                                 if(response.body().getData().getService_Details().getTitle() != null){
                                     txt_selected_service.setText(response.body().getData().getService_Details().getTitle());
                                 }
@@ -433,7 +432,6 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
 //                        txt_totalproviders.setText(serviceProviderList.size()+" Providers");
                         view.setVisibility(View.VISIBLE);
                         bottomSheetLayouts.setVisibility(View.VISIBLE);
-                        img_selectedserviceimage.setVisibility(View.VISIBLE);
                         txt_selected_service.setVisibility(View.VISIBLE);
                         ll_root.setVisibility(View.VISIBLE);
                         textView20.setVisibility(View.VISIBLE);
@@ -444,17 +442,7 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
                         txt_no_records.setText("No service found");
                         setBottomSheet();
                         bottomSheetBehavior.setDraggable(false);
-                        if (response.body().getData().getService_Details().getImage_path() != null && !response.body().getData().getService_Details().getImage_path().isEmpty()) {
-                            Glide.with(SelectedServiceActivity.this)
-                                    .load(response.body().getData().getService_Details().getImage_path())
-                                    .into(img_selectedserviceimage);
-                        }
-                        else {
-                            Glide.with(SelectedServiceActivity.this)
-                                    .load(APIClient.PROFILE_IMAGE_URL)
-                                    .into(img_selectedserviceimage);
 
-                        }
                         if(response.body().getData().getService_Details().getTitle() != null){
                             txt_selected_service.setText(response.body().getData().getService_Details().getTitle());
                         }
@@ -503,6 +491,52 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
         rv_nearbyservices.setAdapter(doctorNewAppointmentAdapter);
 
     }
+
+
+    private void setViewServicesBanner(List<SPSpecificServiceDetailsResponse.BannerBean> banner) {
+        if(banner!=null && banner.size()>0){
+            viewpageData(banner);
+        }
+
+    }
+
+    private void viewpageData(List<SPSpecificServiceDetailsResponse.BannerBean> banner) {
+
+        ViewPager viewPager = findViewById(R.id.pager);
+
+        TabLayout tabLayout = findViewById(R.id.tabDots);
+
+        Timer timer;
+        final long DELAY_MS = 600;//delay in milliseconds before task is to be executed
+        final long PERIOD_MS = 3000;
+
+        currentPage = 0;
+
+        tabLayout.setupWithViewPager(viewPager, true);
+
+        ViewPagerPetServiceAdapter viewPagerPetServiceAdapter = new ViewPagerPetServiceAdapter(getApplicationContext(), banner);
+        viewPager.setAdapter(viewPagerPetServiceAdapter);
+        /*After setting the adapter use the timer */
+        final Handler handler = new Handler();
+        final Runnable Update = () -> {
+            if (currentPage == banner.size()) {
+                currentPage = 0;
+            }
+            viewPager.setCurrentItem(currentPage++, true);
+        };
+
+        timer = new Timer(); // This will create a new Thread
+
+        timer.schedule(new TimerTask() { // task to be scheduled
+            @Override
+            public void run() {
+
+                handler.post(Update);
+            }
+        }, DELAY_MS, PERIOD_MS);
+
+    }
+
 
     @Override
     protected void onDestroy() {

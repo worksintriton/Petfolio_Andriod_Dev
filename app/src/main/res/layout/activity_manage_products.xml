@@ -27,7 +27,7 @@
                 android:layout_height="25dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/back_arrow_white"
+                android:src="@drawable/left_arrow"
                 tools:ignore="ContentDescription"
                 android:layout_marginStart="15dp"/>
 
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="@string/manage_products"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="@dimen/big_txt_size"
                 android:fontFamily="@font/futuramediumbt"
                 android:textStyle="bold"/>

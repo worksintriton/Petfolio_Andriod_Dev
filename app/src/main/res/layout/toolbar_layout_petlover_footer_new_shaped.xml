@@ -25,7 +25,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_centerInParent="true"
-                android:src="@drawable/grey_care"
+                android:src="@drawable/whity_care"
                 tools:ignore="ContentDescription" />
         </RelativeLayout>
 
@@ -42,7 +42,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_centerInParent="true"
-                android:src="@drawable/grey_servc"
+                android:src="@drawable/whity_serv"
                 tools:ignore="ContentDescription" />
         </RelativeLayout>
 
@@ -52,14 +52,14 @@
             android:layout_height="60dp"
             android:layout_weight="1"
             android:background="@drawable/img_circle"
-            android:visibility="invisible">
+            android:visibility="visible">
 
             <ImageView
                 android:id="@+id/img_homes"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_centerInParent="true"
-                android:src="@drawable/grey_home"
+                android:src="@drawable/whity_home"
                 tools:ignore="ContentDescription" />
         </RelativeLayout>
 
@@ -69,14 +69,14 @@
             android:layout_height="60dp"
             android:layout_weight="1"
             android:background="@drawable/img_circle"
-            android:visibility="visible">
+            android:visibility="invisible">
 
             <ImageView
                 android:id="@+id/img_shops"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_centerInParent="true"
-                android:src="@drawable/grey_shop"
+                android:src="@drawable/whity_shop"
                 tools:ignore="ContentDescription" />
         </RelativeLayout>
 
@@ -93,18 +93,18 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_centerInParent="true"
-                android:src="@drawable/grey_community"
+                android:src="@drawable/whity_comm"
                 tools:ignore="ContentDescription" />
         </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/root_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="20dp"
-        android:id="@+id/root_nav"
-        android:background="@drawable/nav__shop">
+        android:background="@drawable/nav_home"
+        android:orientation="horizontal">
 
         <RelativeLayout
             android:id="@+id/rl_care"
@@ -112,7 +112,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="20dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:visibility="visible">
 
 
             <TextView
@@ -138,12 +139,13 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_service"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:layout_weight="1"
             android:layout_marginTop="20dp"
-            android:id="@+id/rl_service">
+            android:layout_weight="1"
+            android:visibility="visible">
 
 
             <TextView
@@ -163,9 +165,9 @@
                 android:id="@+id/img_serv"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_centerHorizontal="true"
                 android:src="@drawable/petserv_fill"
-                tools:ignore="ContentDescription"
-                android:layout_centerHorizontal="true"/>
+                tools:ignore="ContentDescription" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -175,7 +177,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="20dp"
             android:layout_weight="1"
-            android:visibility="visible">
+            android:visibility="invisible">
 
 
             <TextView
@@ -186,7 +188,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/futuramediumbt"
-                android:text="@string/pet_service"
+                android:text="@string/home"
                 android:textColor="@color/text_color"
                 android:textSize="10sp"
                 tools:ignore="HardcodedText" />
@@ -207,7 +209,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="20dp"
             android:layout_weight="1"
-            android:visibility="invisible">
+            android:visibility="visible">
 
 
             <TextView
@@ -238,7 +240,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:visibility="visible">
 
 
             <TextView

@@ -22,13 +22,36 @@
             android:layout_width="match_parent"
             android:layout_height="50dp" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:elevation="9dp"
+            tools:ignore="UnusedAttribute">
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabDots"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                app:tabBackground="@drawable/tab_selector"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0dp" />
+
+        </RelativeLayout>
+
 
         <ImageView
             android:id="@+id/img_selectedserviceimage"
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:scaleType="fitXY"
-            android:src="@drawable/dietcian" />
+            android:src="@drawable/dietcian"
+            android:visibility="gone" />
 
     </LinearLayout>
 
