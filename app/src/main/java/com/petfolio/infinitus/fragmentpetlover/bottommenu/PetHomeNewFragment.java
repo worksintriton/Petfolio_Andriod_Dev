@@ -245,6 +245,7 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
         }
         // R.id.map is a FrameLayout, not a Fragment
         getChildFragmentManager().beginTransaction().replace(R.id.map, mapFragment).commit();
+
         googleApiConnected();
 
 
@@ -945,7 +946,7 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
                             break;
                         case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
                             try {
-                                status.startResolutionForResult(mActivity, REQUEST_CHECK_SETTINGS_GPS);
+                                status.startResolutionForResult(getActivity(), REQUEST_CHECK_SETTINGS_GPS);
                             } catch (IntentSender.SendIntentException e) {
                                 // Ignore the error.
                             }
@@ -1000,14 +1001,6 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
         }
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mActivity=activity;
-    }
 
-    public Activity getMyActivity() {
-        return mActivity;
-    }
 
 }

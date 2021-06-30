@@ -100,11 +100,7 @@
 
     <color name="new_thick_red_bgm_color">#E8571E</color>
     <color name="new_gree_color">#296F67</color>
-
-
-
-
-
+    <color name="darker_grey_new">#515151</color>
 
 
 </resources>

@@ -377,7 +377,13 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
                     if (200 == response.body().getCode()) {
                         txt_no_records.setVisibility(View.GONE);
                         txt_totalproviders.setVisibility(View.GONE);
+
                         if (response.body().getData() != null) {
+
+                        if(response.body().getBanner() != null && response.body().getBanner().size()>0){
+
+
+                        }
 
                             if(response.body().getData().getService_Details().get_id() != null) {
                                 catid = response.body().getData().getService_Details().get_id();

@@ -4,10 +4,12 @@ import java.util.List;
 
 public class DoctorSearchResponse {
 
+
     /**
      * Status : Success
      * Message : Text Search Details.
-     * Data : [{"_id":"60acb1bb68492a4567b3f509","user_id":"60acb15868492a4567b3f508","dr_title":"Dr","doctor_name":"Sri Dinesh","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624009571860.jpeg","clinic_name":"jack sparrow ","specialization":[{"specialization":"Surgeon"},{"specialization":"Family Physician"},{"specialization":"Internal Medicine Physician"},{"specialization":"Pediatrician"},{"specialization":"Psychiatrist"},{"specialization":"Cardiologist"},{"specialization":"Dermatologist"},{"specialization":"Endocrinologist"},{"specialization":"Endocrinologist"},{"specialization":"Endocrinologist"}],"doctor_img":"http://54.212.108.156:3000/api/uploads/60acb15868492a4567b3f5082505134303","clinic_loc":"7, Rajiv Gandhi Nagar Rd, Nanmangalam, Chennai, Tamil Nadu 600117, India","communication_type":"Online Or Visit","distance":"267.34","star_count":2.5,"review_count":234,"doctor_exp":3,"amount":1},{"_id":"60b4dd01541a437c7b9c60f5","user_id":"60b4dc30541a437c7b9c60f4","dr_title":"Dr","doctor_name":"Audrey","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624009558909.jpeg","clinic_name":"AvaAudrey ","specialization":[{"specialization":"Surgeon"},{"specialization":"Family Physician"},{"specialization":"Internal Medicine Physician"},{"specialization":"Pediatrician"},{"specialization":"Psychiatrist"},{"specialization":"Cardiologist"},{"specialization":"Dermatologist"},{"specialization":"Endocrinologist"}],"doctor_img":"http://54.212.108.156:3000/api/uploads/60b4dc30541a437c7b9c60f43105182553","clinic_loc":"15, Vembuliamman Koil 2nd St, Kulathuma Nagar, Pachaiamman Colony, Malangananda Puram, Chennai, Tamil Nadu 601302, India","communication_type":"Online Or Visit","distance":"268.48","star_count":2.5,"review_count":234,"doctor_exp":1,"amount":1},{"_id":"60b4e434541a437c7b9c60fa","user_id":"60b4e3cc541a437c7b9c60f9","dr_title":"Dr","doctor_name":"Astor","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624009543976.jpeg","clinic_name":"Astor bette","specialization":[{"specialization":"Surgeon"},{"specialization":"Family Physician"},{"specialization":"Internal Medicine Physician"},{"specialization":"Pediatrician"},{"specialization":"Psychiatrist"},{"specialization":"Cardiologist"},{"specialization":"Dermatologist"},{"specialization":"Endocrinologist"},{"specialization":"Endocrinologist"},{"specialization":"Endocrinologist"}],"doctor_img":"http://54.212.108.156:3000/api/uploads/60b4e3cc541a437c7b9c60f93105185634","clinic_loc":"Plot No.4, Sai Balaji Nagar, Melathur Main Road, Melathur, Dharkast Rd, Tharavur, Tamil Nadu 602109, India","communication_type":"Online Or Visit","distance":"260.70","star_count":2.5,"review_count":234,"doctor_exp":1,"amount":1},{"_id":"60b4e90c541a437c7b9c60fe","user_id":"60b4e899541a437c7b9c60fd","dr_title":"Dr","doctor_name":"Bille ","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624009531143.jpeg","clinic_name":"burton bille","specialization":[{"specialization":"Surgeon"},{"specialization":"Family Physician"},{"specialization":"Internal Medicine Physician"},{"specialization":"Pediatrician"},{"specialization":"Psychiatrist"},{"specialization":"Cardiologist"},{"specialization":"Dermatologist"},{"specialization":"Endocrinologist"},{"specialization":"Endocrinologist"},{"specialization":"Endocrinologist"}],"doctor_img":"http://54.212.108.156:3000/api/uploads/60b4e899541a437c7b9c60fd3105191717","clinic_loc":"4/270, Azhagappa Nagar, Bharathiyar Nagar, Raj Nagar, Thoraipakkam, Tamil Nadu 600097, India","communication_type":"Online Or Visit","distance":"271.39","star_count":2.5,"review_count":234,"doctor_exp":1,"amount":1},{"_id":"60b5cb01f1841117f8e02abc","user_id":"60b5ca8af1841117f8e02abb","dr_title":"Dr","doctor_name":"Imthi Dinesh","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624009518549.jpeg","clinic_name":"Apollo pharmacy","specialization":[{"specialization":"Internal Medicine Physician"},{"specialization":"Dermatologist"},{"specialization":"Endocrinologist"}],"doctor_img":"http://54.212.108.156:3000/api/uploads/1622526670409.jpeg","clinic_loc":"Iluppaiyur Karatampatti Iluppaiyur road, Iluppaiyur, Tamil Nadu 621006, India","communication_type":"Online Or Visit","distance":"0.00","star_count":2.5,"review_count":234,"doctor_exp":2,"amount":1},{"_id":"60b7447338e95868d79be9ca","user_id":"60b73fff38e95868d79be9c9","dr_title":"Dr","doctor_name":"Sam Sandy","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624009505667.jpeg","clinic_name":"Sam Clinic","specialization":[{"specialization":"Internal Medicine Physician"},{"specialization":"Surgeon"},{"specialization":"Psychiatrist"},{"specialization":"Dermatologist"},{"specialization":"Endocrinologist"},{"specialization":"Endocrinologist"},{"specialization":"Family Physician"},{"specialization":"Pediatrician"},{"specialization":"Cardiologist"},{"specialization":"Endocrinologist"},{"specialization":"Endocrinologist"}],"doctor_img":"http://54.212.108.156:3000/api/uploads/1622623292791.jpeg","clinic_loc":"Salem 133, Vmr Theatre Back Side Rd, Shevapet, Salem, Tamil Nadu 636002, India","communication_type":"Online Or Visit","distance":"85.67","star_count":2.5,"review_count":234,"doctor_exp":1,"amount":1},{"_id":"60b74ae238e95868d79be9ce","user_id":"60b749ef38e95868d79be9cd","dr_title":"Dr","doctor_name":"Samm Samm","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624009490990.jpeg","clinic_name":"Samm Sann","specialization":[{"specialization":"Surgeon"},{"specialization":"Internal Medicine Physician"}],"doctor_img":"http://54.212.108.156:3000/api/uploads/1622624926287.jpeg","clinic_loc":"Salem 133, Vmr Theatre Back Side Rd, Shevapet, Salem, Tamil Nadu 636002, India","communication_type":"Online Or Visit","distance":"85.67","star_count":2.5,"review_count":234,"doctor_exp":1,"amount":1},{"_id":"60be0018fcc6541fe0b227aa","user_id":"60bdff94fcc6541fe0b227a9","dr_title":"Dr","doctor_name":"DINESH KUMAR","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624009474746.jpeg","clinic_name":"Apollo hospital","specialization":[{"specialization":"Surgeon"},{"specialization":"Psychiatrist"},{"specialization":"Cardiologist"}],"doctor_img":"http://54.212.108.156:3000/api/uploads/1623064543096.jpeg","clinic_loc":"Iluppaiyur Karatampatti Iluppaiyur road, Iluppaiyur, Tamil Nadu 621006, India","communication_type":"Online Or Visit","distance":"0.00","star_count":2.5,"review_count":234,"doctor_exp":2,"amount":1},{"_id":"60c1e1656051e269fc96f09b","user_id":"60c1dd746051e269fc96f09a","dr_title":"Dr","doctor_name":"Harish","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624009410180.jpeg","clinic_name":"test clinic xd","specialization":[{"specialization":"Surgeon"},{"specialization":"Family Physician"},{"specialization":"Internal Medicine Physician"},{"specialization":"Pediatrician"},{"specialization":"Psychiatrist"},{"specialization":"Cardiologist"},{"specialization":"Dermatologist"},{"specialization":"Endocrinologist"}],"doctor_img":"http://54.212.108.156:3000/api/uploads/60c1dd746051e269fc96f09a1006152148","clinic_loc":"19, Sardar Patel Rd, Gandhi Nagar, Adyar, Chennai, Tamil Nadu 600020, India","communication_type":"Online Or Visit","distance":"279.16","star_count":2.5,"review_count":234,"doctor_exp":11,"amount":1}]
+     * Data : [{"_id":"60acb1bb68492a4567b3f509","user_id":"60acb15868492a4567b3f508","dr_title":"Dr","doctor_name":"Sri Dinesh","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624009571860.jpeg","clinic_name":"jack sparrow ","specialization":[{"specialization":"General Consultant"},{"specialization":"Pathology"},{"specialization":"Theriogenology"}],"doctor_img":"http://54.212.108.156:3000/api/uploads/60acb15868492a4567b3f5082505134303","clinic_loc":"7, Rajiv Gandhi Nagar Rd, Nanmangalam, Chennai, Tamil Nadu 600117, India","communication_type":"Online Or Visit","distance":"267.34","star_count":2.5,"review_count":234,"doctor_exp":3,"amount":1},{"_id":"60b4dd01541a437c7b9c60f5","user_id":"60b4dc30541a437c7b9c60f4","dr_title":"Dr","doctor_name":"Audrey","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624009558909.jpeg","clinic_name":"AvaAudrey ","specialization":[{"specialization":"Surgeon"},{"specialization":"Family Physician"},{"specialization":"Internal Medicine Physician"},{"specialization":"Pediatrician"},{"specialization":"Psychiatrist"},{"specialization":"Cardiologist"},{"specialization":"Dermatologist"},{"specialization":"Endocrinologist"}],"doctor_img":"http://54.212.108.156:3000/api/uploads/60b4dc30541a437c7b9c60f43105182553","clinic_loc":"15, Vembuliamman Koil 2nd St, Kulathuma Nagar, Pachaiamman Colony, Malangananda Puram, Chennai, Tamil Nadu 601302, India","communication_type":"Online Or Visit","distance":"268.48","star_count":2.5,"review_count":234,"doctor_exp":1,"amount":1},{"_id":"60b4e434541a437c7b9c60fa","user_id":"60b4e3cc541a437c7b9c60f9","dr_title":"Dr","doctor_name":"Astor","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624009543976.jpeg","clinic_name":"Astor bette","specialization":[{"specialization":"Surgeon"},{"specialization":"Family Physician"},{"specialization":"Internal Medicine Physician"},{"specialization":"Pediatrician"},{"specialization":"Psychiatrist"},{"specialization":"Cardiologist"},{"specialization":"Dermatologist"},{"specialization":"Endocrinologist"},{"specialization":"Endocrinologist"},{"specialization":"Endocrinologist"}],"doctor_img":"http://54.212.108.156:3000/api/uploads/60b4e3cc541a437c7b9c60f93105185634","clinic_loc":"Plot No.4, Sai Balaji Nagar, Melathur Main Road, Melathur, Dharkast Rd, Tharavur, Tamil Nadu 602109, India","communication_type":"Online Or Visit","distance":"260.70","star_count":2.5,"review_count":234,"doctor_exp":1,"amount":1},{"_id":"60b4e90c541a437c7b9c60fe","user_id":"60b4e899541a437c7b9c60fd","dr_title":"Dr","doctor_name":"Bille ","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624009531143.jpeg","clinic_name":"burton bille","specialization":[{"specialization":"Surgeon"},{"specialization":"Family Physician"},{"specialization":"Internal Medicine Physician"},{"specialization":"Pediatrician"},{"specialization":"Psychiatrist"},{"specialization":"Cardiologist"},{"specialization":"Dermatologist"},{"specialization":"Endocrinologist"},{"specialization":"Endocrinologist"},{"specialization":"Endocrinologist"}],"doctor_img":"http://54.212.108.156:3000/api/uploads/60b4e899541a437c7b9c60fd3105191717","clinic_loc":"4/270, Azhagappa Nagar, Bharathiyar Nagar, Raj Nagar, Thoraipakkam, Tamil Nadu 600097, India","communication_type":"Online Or Visit","distance":"271.39","star_count":2.5,"review_count":234,"doctor_exp":1,"amount":1},{"_id":"60b5cb01f1841117f8e02abc","user_id":"60b5ca8af1841117f8e02abb","dr_title":"Dr","doctor_name":"Imthi Dinesh","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624009518549.jpeg","clinic_name":"Apollo pharmacy","specialization":[{"specialization":"Internal Medicine Physician"},{"specialization":"Dermatologist"},{"specialization":"Endocrinologist"}],"doctor_img":"http://54.212.108.156:3000/api/uploads/1622526670409.jpeg","clinic_loc":"Iluppaiyur Karatampatti Iluppaiyur road, Iluppaiyur, Tamil Nadu 621006, India","communication_type":"Online Or Visit","distance":"0.00","star_count":2.5,"review_count":234,"doctor_exp":2,"amount":1},{"_id":"60b7447338e95868d79be9ca","user_id":"60b73fff38e95868d79be9c9","dr_title":"Dr","doctor_name":"Sam Sandy","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624009505667.jpeg","clinic_name":"Sam Clinic","specialization":[{"specialization":"Internal Medicine Physician"},{"specialization":"Surgeon"},{"specialization":"Psychiatrist"},{"specialization":"Dermatologist"},{"specialization":"Endocrinologist"},{"specialization":"Endocrinologist"},{"specialization":"Family Physician"},{"specialization":"Pediatrician"},{"specialization":"Cardiologist"},{"specialization":"Endocrinologist"},{"specialization":"Endocrinologist"}],"doctor_img":"http://54.212.108.156:3000/api/uploads/1622623292791.jpeg","clinic_loc":"Salem 133, Vmr Theatre Back Side Rd, Shevapet, Salem, Tamil Nadu 636002, India","communication_type":"Online Or Visit","distance":"85.67","star_count":2.5,"review_count":234,"doctor_exp":1,"amount":1},{"_id":"60b74ae238e95868d79be9ce","user_id":"60b749ef38e95868d79be9cd","dr_title":"Dr","doctor_name":"Samm Samm","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624009490990.jpeg","clinic_name":"Samm Sann","specialization":[{"specialization":"Surgeon"},{"specialization":"Internal Medicine Physician"}],"doctor_img":"http://54.212.108.156:3000/api/uploads/1622624926287.jpeg","clinic_loc":"Salem 133, Vmr Theatre Back Side Rd, Shevapet, Salem, Tamil Nadu 636002, India","communication_type":"Online Or Visit","distance":"85.67","star_count":2.5,"review_count":234,"doctor_exp":1,"amount":1},{"_id":"60be0018fcc6541fe0b227aa","user_id":"60bdff94fcc6541fe0b227a9","dr_title":"Dr","doctor_name":"DINESH KUMAR","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624009474746.jpeg","clinic_name":"Apollo hospital","specialization":[{"specialization":"Surgeon"},{"specialization":"Psychiatrist"},{"specialization":"Cardiologist"}],"doctor_img":"http://54.212.108.156:3000/api/uploads/1623064543096.jpeg","clinic_loc":"Iluppaiyur Karatampatti Iluppaiyur road, Iluppaiyur, Tamil Nadu 621006, India","communication_type":"Online Or Visit","distance":"0.00","star_count":2.5,"review_count":234,"doctor_exp":2,"amount":1},{"_id":"60c1e1656051e269fc96f09b","user_id":"60c1dd746051e269fc96f09a","dr_title":"Dr","doctor_name":"Harish","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624009410180.jpeg","clinic_name":"test clinic xd","specialization":[{"specialization":"Surgeon"},{"specialization":"Family Physician"},{"specialization":"Internal Medicine Physician"},{"specialization":"Pediatrician"},{"specialization":"Psychiatrist"},{"specialization":"Cardiologist"},{"specialization":"Dermatologist"},{"specialization":"Endocrinologist"}],"doctor_img":"http://54.212.108.156:3000/api/uploads/60c1dd746051e269fc96f09a1006152148","clinic_loc":"19, Sardar Patel Rd, Gandhi Nagar, Adyar, Chennai, Tamil Nadu 600020, India","communication_type":"Online Or Visit","distance":"279.16","star_count":2.5,"review_count":234,"doctor_exp":11,"amount":1}]
+     * banner : [{"title":"title1","image_path":"http://54.212.108.156:3000/api/uploads/60b4dc30541a437c7b9c60f43105182553"},{"title":"title1","image_path":"http://54.212.108.156:3000/api/uploads/60b4dc30541a437c7b9c60f43105182553"},{"title":"title1","image_path":"http://54.212.108.156:3000/api/uploads/60b4dc30541a437c7b9c60f43105182553"},{"title":"title1","image_path":"http://54.212.108.156:3000/api/uploads/60b4dc30541a437c7b9c60f43105182553"}]
      * Code : 200
      */
 
@@ -21,7 +23,7 @@ public class DoctorSearchResponse {
      * doctor_name : Sri Dinesh
      * thumbnail_image : http://54.212.108.156:3000/api/uploads/1624009571860.jpeg
      * clinic_name : jack sparrow
-     * specialization : [{"specialization":"Surgeon"},{"specialization":"Family Physician"},{"specialization":"Internal Medicine Physician"},{"specialization":"Pediatrician"},{"specialization":"Psychiatrist"},{"specialization":"Cardiologist"},{"specialization":"Dermatologist"},{"specialization":"Endocrinologist"},{"specialization":"Endocrinologist"},{"specialization":"Endocrinologist"}]
+     * specialization : [{"specialization":"General Consultant"},{"specialization":"Pathology"},{"specialization":"Theriogenology"}]
      * doctor_img : http://54.212.108.156:3000/api/uploads/60acb15868492a4567b3f5082505134303
      * clinic_loc : 7, Rajiv Gandhi Nagar Rd, Nanmangalam, Chennai, Tamil Nadu 600117, India
      * communication_type : Online Or Visit
@@ -33,6 +35,12 @@ public class DoctorSearchResponse {
      */
 
     private List<DataBean> Data;
+    /**
+     * title : title1
+     * image_path : http://54.212.108.156:3000/api/uploads/60b4dc30541a437c7b9c60f43105182553
+     */
+
+    private List<BannerBean> banner;
 
     public String getStatus() {
         return Status;
@@ -66,6 +74,14 @@ public class DoctorSearchResponse {
         this.Data = Data;
     }
 
+    public List<BannerBean> getBanner() {
+        return banner;
+    }
+
+    public void setBanner(List<BannerBean> banner) {
+        this.banner = banner;
+    }
+
     public static class DataBean {
         private String _id;
         private String user_id;
@@ -82,7 +98,7 @@ public class DoctorSearchResponse {
         private int doctor_exp;
         private int amount;
         /**
-         * specialization : Surgeon
+         * specialization : General Consultant
          */
 
         private List<SpecializationBean> specialization;
@@ -217,6 +233,27 @@ public class DoctorSearchResponse {
             public void setSpecialization(String specialization) {
                 this.specialization = specialization;
             }
+        }
+    }
+
+    public static class BannerBean {
+        private String title;
+        private String image_path;
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getImage_path() {
+            return image_path;
+        }
+
+        public void setImage_path(String image_path) {
+            this.image_path = image_path;
         }
     }
 }

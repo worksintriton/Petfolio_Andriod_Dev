@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.responsepojo.DoctorDetailsResponse;
+import com.petfolio.infinitus.responsepojo.DoctorSearchResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,17 +22,17 @@ import java.util.List;
 
 public class ViewPagerPetCareAdapter extends PagerAdapter {
     private DoctorDetailsResponse.DataBean.ClinicPicBean currentItem;
-    List<String> imagelist;
+    List<DoctorSearchResponse.BannerBean> banner;
     private Context context;
     private LayoutInflater inflater;
     private View itemView;
 
     private String TAG = "ViewPagerClinicDetailsAdapter";
 
-    public ViewPagerPetCareAdapter(Context context1,  List<String> imagelist){
+    public ViewPagerPetCareAdapter(Context context1,  List<DoctorSearchResponse.BannerBean> banner){
 
         this.context = context1;
-        this.imagelist = imagelist;
+        this.banner = banner;
 
     }
 
@@ -39,7 +40,7 @@ public class ViewPagerPetCareAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return imagelist.size();
+        return banner.size();
     }
 
     @Override
@@ -63,7 +64,7 @@ public class ViewPagerPetCareAdapter extends PagerAdapter {
 
 
         try {
-            String imageURL = imagelist.get(position);
+            String imageURL = banner.get(position).getImage_path();
             if(imageURL != null && !imageURL.isEmpty()){
                 Glide.with(context)
                         .load(imageURL)

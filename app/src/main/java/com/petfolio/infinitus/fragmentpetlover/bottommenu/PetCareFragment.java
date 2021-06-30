@@ -2,7 +2,6 @@ package com.petfolio.infinitus.fragmentpetlover.bottommenu;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -35,7 +34,6 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -54,7 +52,6 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.adapter.PetLoverDoctorFilterAdapter;
 import com.petfolio.infinitus.adapter.PetLoverNearByDoctorAdapter;
 
-import com.petfolio.infinitus.adapter.ViewPagerClinicDetailsAdapter;
 import com.petfolio.infinitus.adapter.ViewPagerPetCareAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
@@ -246,9 +243,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
             Log.w(TAG," communication_type : "+communication_type+" searchString : "+searchString);
 
 
-
-
-            }
+        }
 
 
         SessionManager sessionManager = new SessionManager(mContext);
@@ -287,14 +282,14 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
             Log.w(TAG,"callfilter --> true");
 
-            if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
+            if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
                 filterDoctorResponseCall();
             }
         }else{
 
             Log.w(TAG,"calldrsearch --> true");
 
-            if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
+            if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
                 //doctorSearchRequest(searchString,communication_type);
                 doctorSearchResponseCall(searchString,communication_type);
             }
@@ -308,6 +303,8 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
                 Log.w(TAG,"beforeTextChanged-->"+s.toString());
+
+                searchString="";
             }
 
             @SuppressLint("LogNotTimber")
@@ -424,7 +421,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
         });
     }
 
-    private void viewpageData(List<String> doctorclinicdetailsResponseList) {
+    private void viewpageData(List<DoctorSearchResponse.BannerBean> banner) {
 
         ViewPager viewPager = view.findViewById(R.id.pager);
 
@@ -438,12 +435,12 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
         tabLayout.setupWithViewPager(viewPager, true);
 
-        ViewPagerPetCareAdapter viewPagerClinicDetailsAdapter = new ViewPagerPetCareAdapter(getContext(), doctorclinicdetailsResponseList);
+        ViewPagerPetCareAdapter viewPagerClinicDetailsAdapter = new ViewPagerPetCareAdapter(getContext(), banner);
         viewPager.setAdapter(viewPagerClinicDetailsAdapter);
         /*After setting the adapter use the timer */
         final Handler handler = new Handler();
         final Runnable Update = () -> {
-            if (currentPage == doctorclinicdetailsResponseList.size()) {
+            if (currentPage == banner.size()) {
                 currentPage = 0;
             }
             viewPager.setCurrentItem(currentPage++, true);
@@ -475,6 +472,8 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
         Call<DoctorSearchResponse> call = apiInterface.doctorSearchResponseCall(RestUtils.getContentType(), doctorSearchRequest(searchString,communication_type));
+        String url = "DoctorSearchResponse url  :%s"+" "+ call.request().url().toString();
+        Log.w(TAG,"URL String "+url);
         Log.w(TAG,"DoctorSearchResponse url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<DoctorSearchResponse>() {
@@ -503,13 +502,18 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
                                 txt_no_records.setVisibility(View.GONE);
                               //  txt_totaldrs.setVisibility(View.VISIBLE);
                               //  txt_totaldrs.setText(doctorDetailsResponseList.size()+" "+"Doctors");
-                                setViewDoctors(doctorDetailsResponseList);
-                            } else {
+
+                            }
+                            else {
                                 rv_nearbydoctors.setVisibility(View.GONE);
                                 txt_totaldrs.setVisibility(View.GONE);
                                 txt_no_records.setVisibility(View.VISIBLE);
                                 txt_no_records.setText("No doctors available");
 
+                            }
+
+                            if(response.body().getBanner() != null && response.body().getBanner().size()>0){
+                                setViewDoctors(response.body().getBanner());
                             }
 
                         }
@@ -538,15 +542,16 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
         });
 
     }
-    private void setViewDoctors(List<DoctorSearchResponse.DataBean> doctorDetailsResponseList) {
+    private void setViewDoctors(List<DoctorSearchResponse.BannerBean> banner) {
 
-        imagelist.clear();
 
-        if(doctorDetailsResponseList!=null&&doctorDetailsResponseList.size()>0){
 
-            for(int i=0; i<doctorDetailsResponseList.size(); i++){
+        if(banner!=null && banner.size()>0){
+            viewpageData(banner);
 
-                if(doctorDetailsResponseList.get(i).getDoctor_img()!=null&&!doctorDetailsResponseList.get(i).getDoctor_img().isEmpty()){
+            /*for(int i=0; i<banner.size(); i++){
+
+                if(banner.get(i).getImage_path() !=null && !banner.get(i).getImage_path().isEmpty()){
 
                     imagelist.add(doctorDetailsResponseList.get(i).getDoctor_img());
                 }
@@ -556,7 +561,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
                 }
 
 
-            }
+            }*/
 
         }
         else {
@@ -564,7 +569,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
             imagelist.add(APIClient.BANNER_IMAGE_URL);
         }
 
-        viewpageData(imagelist);
+
 
         rv_nearbydoctors.setLayoutManager(new LinearLayoutManager(mContext));
         rv_nearbydoctors.setItemAnimator(new DefaultItemAnimator());
@@ -579,6 +584,9 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
          * user_id : 5fd227ac80791a71361baad3
          */
 
+        if(searchString==null||searchString.isEmpty()){
+            searchString="";
+        }
 
         DoctorSearchRequest doctorSearchRequest = new DoctorSearchRequest();
         doctorSearchRequest.setSearch_string(searchString);
