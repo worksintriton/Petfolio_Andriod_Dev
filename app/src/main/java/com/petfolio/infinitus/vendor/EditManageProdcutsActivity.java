@@ -1,9 +1,5 @@
 package com.petfolio.infinitus.vendor;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
@@ -15,12 +11,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.appUtils.NumericKeyBoardTransformationMethod;
-import com.petfolio.infinitus.petlover.AddYourPetActivity;
 import com.petfolio.infinitus.requestpojo.ProductEditRequest;
 import com.petfolio.infinitus.responsepojo.VendorOrderUpdateResponse;
 import com.petfolio.infinitus.utils.ConnectionDetector;

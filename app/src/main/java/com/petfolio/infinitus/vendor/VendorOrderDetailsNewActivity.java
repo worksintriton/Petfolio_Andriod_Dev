@@ -7,13 +7,13 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -34,7 +34,6 @@ import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.interfaces.OnItemCheckConfirmStatus;
 import com.petfolio.infinitus.interfaces.OnItemCheckDispatchStatus;
 import com.petfolio.infinitus.interfaces.OnItemCheckRejectStatus;
-import com.petfolio.infinitus.requestpojo.PetLoverVendorOrderDetailsRequest;
 import com.petfolio.infinitus.requestpojo.VendorOrderDetailsListRequest;
 import com.petfolio.infinitus.requestpojo.VendorOrderUpdateDispatchRequest;
 import com.petfolio.infinitus.requestpojo.VendorOrderUpdateRejectRequest;
@@ -43,7 +42,6 @@ import com.petfolio.infinitus.responsepojo.PetLoverVendorOrderDetailsResponse;
 import com.petfolio.infinitus.responsepojo.VendorOrderUpdateResponse;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
-
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.text.SimpleDateFormat;
@@ -58,7 +56,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VendorOrderDetailsNewActivity extends AppCompatActivity implements View.OnClickListener, OnItemCheckConfirmStatus, OnItemCheckRejectStatus, OnItemCheckDispatchStatus, BottomNavigationView.OnNavigationItemSelectedListener {
+public class VendorOrderDetailsNewActivity extends AppCompatActivity implements View.OnClickListener, OnItemCheckConfirmStatus, OnItemCheckRejectStatus, OnItemCheckDispatchStatus {
 
     private static final String TAG = "VendorOrderDetailsNewActivity" ;
 
@@ -218,7 +216,39 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
     private boolean isConfirmaAndDispatch = false;
     private boolean isRejectAndDispatch = false;
 
+    /* Bottom Navigation */
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_home)
+    RelativeLayout rl_home;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_shop)
+    RelativeLayout rl_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_shop)
+    TextView title_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_shop)
+    ImageView img_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_comn)
+    RelativeLayout rl_comn;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_community)
+    TextView title_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_community)
+    ImageView img_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_homes)
+    RelativeLayout rl_homes;
 
     @SuppressLint({"LogNotTimber", "LongLogTag", "SetTextI18n"})
     @Override
@@ -239,12 +269,29 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
         }
      scrollablContent.setVisibility(View.GONE);
 
-        bottom_navigation_view = include_vendor_footer.findViewById(R.id.bottom_navigation_view);
-        bottom_navigation_view.setItemIconTintList(null);
-        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
-        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+//        bottom_navigation_view = include_vendor_footer.findViewById(R.id.bottom_navigation_view);
+//        bottom_navigation_view.setItemIconTintList(null);
+//        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
+//        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
 
-     if (new ConnectionDetector(VendorOrderDetailsNewActivity.this).isNetworkAvailable(VendorOrderDetailsNewActivity.this)) {
+        /*home*/
+
+        title_shop.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_shop.setImageResource(R.drawable.grey_shop_selector);
+        title_community.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_community.setImageResource(R.drawable.grey_community);
+
+        rl_home.setOnClickListener(this);
+
+        rl_shop.setOnClickListener(this);
+
+        rl_comn.setOnClickListener(this);
+
+
+        rl_homes.setOnClickListener(this);
+
+
+        if (new ConnectionDetector(VendorOrderDetailsNewActivity.this).isNetworkAvailable(VendorOrderDetailsNewActivity.this)) {
          if (APIClient.VENDOR_ID != null && !APIClient.VENDOR_ID.isEmpty()) {
             vendorOrderDetailsResponseCall(APIClient.VENDOR_ID);
          }
@@ -386,8 +433,34 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.img_back) {
-            onBackPressed();
+
+        switch (v.getId()){
+
+            case R.id.img_back:
+
+                onBackPressed();
+                break;
+
+            case R.id.rl_homes:
+
+                callDirections("1");
+                break;
+
+            case R.id.rl_home:
+
+                callDirections("1");
+                break;
+
+            case R.id.rl_shop:
+                callDirections("2");
+                break;
+
+
+            case R.id.rl_comn:
+
+                callDirections("3");
+                break;
+
         }
 
     }
@@ -962,27 +1035,27 @@ public class VendorOrderDetailsNewActivity extends AppCompatActivity implements 
         return vendorOrderUpdateDispatchRequest;
     }
 
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.home:
-                callDirections("1");
-                break;
-            case R.id.feeds:
-                callDirections("2");
-                break;
-
-            case R.id.community:
-                callDirections("3");
-                break;
-
-            default:
-                return  false;
-        }
-
-        return false;
-    }
+//    @SuppressLint("NonConstantResourceId")
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.home:
+//                callDirections("1");
+//                break;
+//            case R.id.feeds:
+//                callDirections("2");
+//                break;
+//
+//            case R.id.community:
+//                callDirections("3");
+//                break;
+//
+//            default:
+//                return  false;
+//        }
+//
+//        return false;
+//    }
 
     public void callDirections(String tag){
         Intent intent = new Intent(getApplicationContext(), VendorDashboardActivity.class);

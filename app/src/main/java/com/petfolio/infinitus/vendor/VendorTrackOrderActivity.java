@@ -4,10 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,12 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.requestpojo.TrackOrderDetailsRequest;
 import com.petfolio.infinitus.requestpojo.VendorTrackOrderDetailsRequest;
 import com.petfolio.infinitus.responsepojo.TrackOrderDetailsResponse;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -35,7 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VendorTrackOrderActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
+public class VendorTrackOrderActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = "VendorTrackOrderActivity" ;
 
@@ -173,7 +171,39 @@ public class VendorTrackOrderActivity extends AppCompatActivity implements View.
     @BindView(R.id.include_vendor_footer)
     View include_vendor_footer;
 
-    BottomNavigationView bottom_navigation_view;
+    /* Bottom Navigation */
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_home)
+    RelativeLayout rl_home;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_shop)
+    RelativeLayout rl_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_shop)
+    TextView title_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_shop)
+    ImageView img_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_comn)
+    RelativeLayout rl_comn;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_community)
+    TextView title_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_community)
+    ImageView img_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_homes)
+    RelativeLayout rl_homes;
 
 
     private int _id;
@@ -210,10 +240,28 @@ public class VendorTrackOrderActivity extends AppCompatActivity implements View.
             vendor_fetch_single_product_detail_ResponseCall();
         }
 
-        bottom_navigation_view = include_vendor_footer.findViewById(R.id.bottom_navigation_view);
-        bottom_navigation_view.setItemIconTintList(null);
-        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
-        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+//        bottom_navigation_view = include_vendor_footer.findViewById(R.id.bottom_navigation_view);
+//        bottom_navigation_view.setItemIconTintList(null);
+//        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
+//        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+
+
+        /*home*/
+
+        title_shop.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_shop.setImageResource(R.drawable.grey_shop_selector);
+        title_community.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_community.setImageResource(R.drawable.grey_community);
+
+
+        rl_home.setOnClickListener(this);
+
+        rl_shop.setOnClickListener(this);
+
+        rl_comn.setOnClickListener(this);
+
+
+        rl_homes.setOnClickListener(this);
 
 
 
@@ -226,15 +274,6 @@ public class VendorTrackOrderActivity extends AppCompatActivity implements View.
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.img_back) {
-            onBackPressed();
-        }
-
     }
 
     @SuppressLint({"LongLogTag", "LogNotTimber"})
@@ -423,31 +462,66 @@ public class VendorTrackOrderActivity extends AppCompatActivity implements View.
         return vendorTrackOrderDetailsRequest;
     }
 
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.home:
-                callDirections("1");
-                break;
-            case R.id.feeds:
-                callDirections("2");
-                break;
-
-            case R.id.community:
-                callDirections("3");
-                break;
-
-            default:
-                return  false;
-        }
-
-        return false;
-    }
+//    @SuppressLint("NonConstantResourceId")
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.home:
+//                callDirections("1");
+//                break;
+//            case R.id.feeds:
+//                callDirections("2");
+//                break;
+//
+//            case R.id.community:
+//                callDirections("3");
+//                break;
+//
+//            default:
+//                return  false;
+//        }
+//
+//        return false;
+//    }
     public void callDirections(String tag){
         Intent intent = new Intent(getApplicationContext(), VendorDashboardActivity.class);
         intent.putExtra("tag",tag);
         startActivity(intent);
         finish();
     }
+
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+
+            case R.id.img_back:
+                onBackPressed();
+                break;
+
+            case R.id.rl_homes:
+
+                callDirections("1");
+                break;
+
+            case R.id.rl_home:
+
+                callDirections("1");
+                break;
+
+            case R.id.rl_shop:
+                callDirections("2");
+                break;
+
+
+            case R.id.rl_comn:
+
+                callDirections("3");
+                break;
+
+
+        }
+    }
+
 }

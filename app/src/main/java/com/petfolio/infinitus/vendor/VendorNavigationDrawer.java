@@ -30,14 +30,12 @@ import com.google.android.material.navigation.NavigationView;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.LoginActivity;
 import com.petfolio.infinitus.activity.NotificationActivity;
-
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 
 import java.util.HashMap;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
 
 
 public class VendorNavigationDrawer extends AppCompatActivity implements View.OnClickListener {

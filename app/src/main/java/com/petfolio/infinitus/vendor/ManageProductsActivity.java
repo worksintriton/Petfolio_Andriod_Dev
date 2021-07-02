@@ -1,36 +1,32 @@
 package com.petfolio.infinitus.vendor;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
@@ -38,16 +34,12 @@ import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.adapter.ManageProductsListAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.fragmentvendor.FragmentVendorDashboard;
 import com.petfolio.infinitus.interfaces.ManageProductsDealsListener;
 import com.petfolio.infinitus.interfaces.OnItemCheckProduct;
-import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinitus.requestpojo.ApplyMultiProdDiscountRequest;
 import com.petfolio.infinitus.requestpojo.ApplySingleDiscountCalRequest;
 import com.petfolio.infinitus.requestpojo.ApplySingleDiscountRequest;
 import com.petfolio.infinitus.requestpojo.ManageProductsListRequest;
-import com.petfolio.infinitus.requestpojo.PetLoverMyOrdersReviewandUpdateRequest;
-import com.petfolio.infinitus.requestpojo.ProductEditRequest;
 import com.petfolio.infinitus.requestpojo.TodayDealsClearRequest;
 import com.petfolio.infinitus.responsepojo.ApplyMultiProdDiscountResponse;
 import com.petfolio.infinitus.responsepojo.ApplySingleDiscountCalResponse;
@@ -66,8 +58,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,7 +65,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ManageProductsActivity extends AppCompatActivity implements View.OnClickListener, OnItemCheckProduct, ManageProductsDealsListener, BottomNavigationView.OnNavigationItemSelectedListener {
+public class ManageProductsActivity extends AppCompatActivity implements View.OnClickListener, OnItemCheckProduct, ManageProductsDealsListener{
 
     private String TAG = "ManageProductsActivity";
 
@@ -140,7 +130,41 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
     @BindView(R.id.include_vendor_footer)
     View include_vendor_footer;
 
-    BottomNavigationView bottom_navigation_view;
+    /* Bottom Navigation */
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_home)
+    RelativeLayout rl_home;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_shop)
+    RelativeLayout rl_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_shop)
+    TextView title_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_shop)
+    ImageView img_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_comn)
+    RelativeLayout rl_comn;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_community)
+    TextView title_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_community)
+    ImageView img_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_homes)
+    RelativeLayout rl_homes;
+
+
 
 
 
@@ -192,10 +216,26 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
         fab_add_deal.setVisibility(View.GONE);
         fab_discard_deal.setVisibility(View.GONE);
 
-        bottom_navigation_view = include_vendor_footer.findViewById(R.id.bottom_navigation_view);
-        bottom_navigation_view.setItemIconTintList(null);
-        bottom_navigation_view.getMenu().findItem(R.id.feeds).setChecked(true);
-        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+//        bottom_navigation_view = include_vendor_footer.findViewById(R.id.bottom_navigation_view);
+//        bottom_navigation_view.setItemIconTintList(null);
+//        bottom_navigation_view.getMenu().findItem(R.id.feeds).setChecked(true);
+//        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+
+        /*shop*/
+
+        title_community.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_community.setImageResource(R.drawable.grey_community);
+        title_shop.setTextColor(getResources().getColor(R.color.new_gree_color,getTheme()));
+        img_shop.setImageResource(R.drawable.green_shop_selector);
+
+        rl_home.setOnClickListener(this);
+
+        rl_shop.setOnClickListener(this);
+
+        rl_comn.setOnClickListener(this);
+
+
+        rl_homes.setOnClickListener(this);
 
         ImageView img_notification = findViewById(R.id.img_notification);
         ImageView img_profile = findViewById(R.id.img_profile);
@@ -445,6 +485,28 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
                     setView();
                 }
                 break;
+
+            case R.id.rl_homes:
+
+                callDirections("1");
+                break;
+
+            case R.id.rl_home:
+
+                callDirections("1");
+                break;
+
+            case R.id.rl_shop:
+                callDirections("2");
+                break;
+
+
+            case R.id.rl_comn:
+
+                callDirections("3");
+                break;
+
+
 
         }
 
@@ -1047,27 +1109,27 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
     }
 
 
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.home:
-                callDirections("1");
-                break;
-            case R.id.feeds:
-                callDirections("2");
-                break;
-
-            case R.id.community:
-                callDirections("3");
-                break;
-
-            default:
-                return  false;
-        }
-
-        return false;
-    }
+//    @SuppressLint("NonConstantResourceId")
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.home:
+//                callDirections("1");
+//                break;
+//            case R.id.feeds:
+//                callDirections("2");
+//                break;
+//
+//            case R.id.community:
+//                callDirections("3");
+//                break;
+//
+//            default:
+//                return  false;
+//        }
+//
+//        return false;
+//    }
 
     public void callDirections(String tag){
         Intent intent = new Intent(getApplicationContext(), VendorDashboardActivity.class);

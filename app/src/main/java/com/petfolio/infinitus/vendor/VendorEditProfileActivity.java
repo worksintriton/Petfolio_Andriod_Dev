@@ -26,8 +26,6 @@ import com.petfolio.infinitus.requestpojo.EmailOTPRequest;
 import com.petfolio.infinitus.requestpojo.ProfileUpdateRequest;
 import com.petfolio.infinitus.responsepojo.EmailOTPResponse;
 import com.petfolio.infinitus.responsepojo.ProfileUpdateResponse;
-import com.petfolio.infinitus.serviceprovider.SPVerifyEmailOtpActivity;
-import com.petfolio.infinitus.serviceprovider.ServiceProviderDashboardActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;

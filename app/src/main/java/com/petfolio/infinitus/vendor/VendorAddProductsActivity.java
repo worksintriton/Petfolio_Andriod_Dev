@@ -1,5 +1,17 @@
 package com.petfolio.infinitus.vendor;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,36 +19,16 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextView;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.activity.NotificationActivity;
-import com.petfolio.infinitus.adapter.ProductsSearchAdapter;
 import com.petfolio.infinitus.adapter.VendorAddProductsAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.petlover.AddYourPetActivity;
 import com.petfolio.infinitus.requestpojo.FetctProductByCatRequest;
-import com.petfolio.infinitus.requestpojo.ShopDashboardRequest;
 import com.petfolio.infinitus.responsepojo.CatgoryGetListResponse;
 import com.petfolio.infinitus.responsepojo.FetctProductByCatDetailsResponse;
-import com.petfolio.infinitus.responsepojo.FetctProductByCatResponse;
-import com.petfolio.infinitus.responsepojo.PetTypeListResponse;
-import com.petfolio.infinitus.responsepojo.ProductSearchResponse;
-import com.petfolio.infinitus.responsepojo.ShopDashboardResponse;
-import com.petfolio.infinitus.responsepojo.TodayDealMoreResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -52,7 +44,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VendorAddProductsActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class VendorAddProductsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private  String TAG = "VendorAddProductsActivity";
 
@@ -98,6 +90,42 @@ public class VendorAddProductsActivity extends AppCompatActivity implements Bott
     private String strCatTypeId;
     private List<FetctProductByCatDetailsResponse.DataBean> fetctProductByCatDetailsList;
 
+    /* Bottom Navigation */
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_home)
+    RelativeLayout rl_home;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_shop)
+    RelativeLayout rl_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_shop)
+    TextView title_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_shop)
+    ImageView img_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_comn)
+    RelativeLayout rl_comn;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_community)
+    TextView title_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_community)
+    ImageView img_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_homes)
+    RelativeLayout rl_homes;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,10 +138,31 @@ public class VendorAddProductsActivity extends AppCompatActivity implements Bott
         HashMap<String, String> user = session.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
 
-        bottom_navigation_view = include_vendor_footer.findViewById(R.id.bottom_navigation_view);
-        bottom_navigation_view.setItemIconTintList(null);
-        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
-        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+//        bottom_navigation_view = include_vendor_footer.findViewById(R.id.bottom_navigation_view);
+//        bottom_navigation_view.setItemIconTintList(null);
+//        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
+//        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+
+
+        /*home*/
+
+        title_shop.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_shop.setImageResource(R.drawable.grey_shop_selector);
+        title_community.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_community.setImageResource(R.drawable.grey_community);
+
+
+
+
+        rl_home.setOnClickListener(this);
+
+        rl_shop.setOnClickListener(this);
+
+        rl_comn.setOnClickListener(this);
+
+
+        rl_homes.setOnClickListener(this);
+
 
         img_back.setOnClickListener(v -> onBackPressed());
 
@@ -326,28 +375,57 @@ public class VendorAddProductsActivity extends AppCompatActivity implements Bott
         rv_manage_productlist.setAdapter(vendorAddProductsAdapter);
     }
 
-
-    @SuppressLint("NonConstantResourceId")
+    @SuppressLint({"NonConstantResourceId", "SetTextI18n", "LogNotTimber"})
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.home:
+    public void onClick(View v) {
+        switch (v.getId()){
+
+            case R.id.rl_homes:
+
                 callDirections("1");
                 break;
-            case R.id.feeds:
+
+            case R.id.rl_home:
+
+                callDirections("1");
+                break;
+
+            case R.id.rl_shop:
                 callDirections("2");
                 break;
 
-            case R.id.community:
+
+            case R.id.rl_comn:
+
                 callDirections("3");
                 break;
 
-            default:
-                return  false;
+
+
         }
 
-        return false;
     }
+//    @SuppressLint("NonConstantResourceId")
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.home:
+//                callDirections("1");
+//                break;
+//            case R.id.feeds:
+//                callDirections("2");
+//                break;
+//
+//            case R.id.community:
+//                callDirections("3");
+//                break;
+//
+//            default:
+//                return  false;
+//        }
+//
+//        return false;
+//    }
     public void callDirections(String tag){
         Intent intent = new Intent(getApplicationContext(), VendorDashboardActivity.class);
         intent.putExtra("tag",tag);
