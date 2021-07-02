@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,7 +61,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ManageAddressSPActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener, LocationDeleteListener, LocationDefaultListener {
+public class ManageAddressSPActivity extends AppCompatActivity implements View.OnClickListener, LocationDeleteListener, LocationDefaultListener {
 
     private String TAG = "ManageAddressSPActivity";
 
@@ -94,7 +95,6 @@ public class ManageAddressSPActivity extends AppCompatActivity implements View.O
     @BindView(R.id.include_petlover_header)
     View include_petlover_header;
 
-    BottomNavigationView bottom_navigation_view;
 
 
     private String userid;
@@ -102,6 +102,44 @@ public class ManageAddressSPActivity extends AppCompatActivity implements View.O
     private Dialog dialog;
     Dialog alertDialog;
     private String fromactivity;
+
+    /* Bottom Navigation */
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_home)
+    RelativeLayout rl_home;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_service)
+    RelativeLayout rl_service;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_shop)
+    RelativeLayout rl_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_shop)
+    TextView title_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_shop)
+    ImageView img_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_comn)
+    RelativeLayout rl_comn;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_community)
+    TextView title_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_community)
+    ImageView img_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_homes)
+    RelativeLayout rl_homes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,11 +170,19 @@ public class ManageAddressSPActivity extends AppCompatActivity implements View.O
         img_back.setOnClickListener(this);
         ll_add_newaddress.setOnClickListener(this);
 
-        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
-        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
+       // bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
+        /*home*/
 
-        bottom_navigation_view.setItemIconTintList(null);
-        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+        title_shop.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_shop.setImageResource(R.drawable.grey_shop);
+        title_community.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_community.setImageResource(R.drawable.grey_community);
+
+        rl_home.setOnClickListener(this);
+        rl_shop.setOnClickListener(this);
+        rl_comn.setOnClickListener(this);
+        rl_homes.setOnClickListener(this);
+
 
 
         SessionManager session = new SessionManager(getApplicationContext());
@@ -173,6 +219,22 @@ public class ManageAddressSPActivity extends AppCompatActivity implements View.O
                 Intent  intent1 = new Intent(getApplicationContext(), NotificationActivity.class);
                 intent1.putExtra("fromactivity",TAG);
                 startActivity(intent1);
+                break;
+
+            case R.id.rl_homes:
+                callDirections("1");
+                break;
+
+            case R.id.rl_home:
+                callDirections("1");
+                break;
+
+            case R.id.rl_shop:
+                callDirections("2");
+                break;
+
+            case R.id.rl_comn:
+                callDirections("3");
                 break;
         }
     }
@@ -490,27 +552,7 @@ public class ManageAddressSPActivity extends AppCompatActivity implements View.O
         }
     }
 
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()) {
-            case R.id.home:
-                callDirections("1");
-                break;
-            case R.id.shop:
-                callDirections("2");
-                break;
-
-            case R.id.community:
-                callDirections("3");
-                break;
-
-            default:
-                return  false;
-        }
-        return true;
-    }
     public void callDirections(String tag){
         Intent intent = new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class);
         intent.putExtra("tag",tag);

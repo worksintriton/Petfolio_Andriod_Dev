@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,7 +59,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DoctorCartActivity extends AppCompatActivity implements AddandRemoveProductListener, PaymentResultListener, BottomNavigationView.OnNavigationItemSelectedListener {
+public class DoctorCartActivity extends AppCompatActivity implements AddandRemoveProductListener, PaymentResultListener, View.OnClickListener {
 
     private String TAG = "DoctorCartActivity";
 
@@ -72,7 +73,6 @@ public class DoctorCartActivity extends AppCompatActivity implements AddandRemov
     @BindView(R.id.include_doctor_footer)
     View include_doctor_footer;
 
-    BottomNavigationView bottom_navigation_view;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_cart)
@@ -163,6 +163,44 @@ public class DoctorCartActivity extends AppCompatActivity implements AddandRemov
     private String active_tag;
     private String cat_id;
 
+    /* Bottom Navigation */
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_home)
+    RelativeLayout rl_home;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_service)
+    RelativeLayout rl_service;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_shop)
+    RelativeLayout rl_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_shop)
+    TextView title_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_shop)
+    ImageView img_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_comn)
+    RelativeLayout rl_comn;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_community)
+    TextView title_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_community)
+    ImageView img_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_homes)
+    RelativeLayout rl_homes;
+
     @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -232,10 +270,19 @@ public class DoctorCartActivity extends AppCompatActivity implements AddandRemov
 
 
 
-        bottom_navigation_view = include_doctor_footer.findViewById(R.id.bottom_navigation_view);
-        bottom_navigation_view.setItemIconTintList(null);
-        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
-        bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
+
+        //bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
+        /*shop*/
+
+        title_community.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_community.setImageResource(R.drawable.grey_community);
+        title_shop.setTextColor(getResources().getColor(R.color.new_gree_color,getTheme()));
+        img_shop.setImageResource(R.drawable.green_shop);
+
+        rl_home.setOnClickListener(this);
+        rl_shop.setOnClickListener(this);
+        rl_comn.setOnClickListener(this);
+        rl_homes.setOnClickListener(this);
 
 
 
@@ -763,22 +810,31 @@ public class DoctorCartActivity extends AppCompatActivity implements AddandRemov
 
     @SuppressLint("NonConstantResourceId")
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.home:
-               callDirections("1");
+    public void onClick(View v) {
+        switch (v.getId()){
+
+            case R.id.rl_homes:
+                callDirections("1");
                 break;
-            case R.id.shop:
+
+            case R.id.rl_home:
+                callDirections("1");
+                break;
+
+            case R.id.rl_shop:
                 callDirections("2");
                 break;
 
-            case R.id.community:
+            case R.id.rl_comn:
                 callDirections("3");
                 break;
 
-            default:
-                return  false;
+
+
+
+
+
         }
-        return true;
+
     }
 }

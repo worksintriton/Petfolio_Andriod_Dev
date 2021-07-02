@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,7 +34,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DoctorMyOrdrersActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class DoctorMyOrdrersActivity extends AppCompatActivity implements View.OnClickListener {
     private final String TAG = "DoctorMyOrdrersActivity";
 
 
@@ -53,11 +54,48 @@ public class DoctorMyOrdrersActivity extends AppCompatActivity implements Bottom
     @BindView(R.id.include_doctor_footer)
     View include_doctor_footer;
 
-    BottomNavigationView bottom_navigation_view;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.include_doctor_header)
     View include_doctor_header;
+
+    /* Bottom Navigation */
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_home)
+    RelativeLayout rl_home;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_service)
+    RelativeLayout rl_service;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_shop)
+    RelativeLayout rl_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_shop)
+    TextView title_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_shop)
+    ImageView img_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_comn)
+    RelativeLayout rl_comn;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_community)
+    TextView title_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_community)
+    ImageView img_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_homes)
+    RelativeLayout rl_homes;
 
 
     @SuppressLint({"LogNotTimber", "NonConstantResourceId"})
@@ -97,11 +135,18 @@ public class DoctorMyOrdrersActivity extends AppCompatActivity implements Bottom
         tablayout.setupWithViewPager(viewPager);
         img_back.setOnClickListener(v -> onBackPressed());
 
-        bottom_navigation_view = include_doctor_footer.findViewById(R.id.bottom_navigation_view);
-        bottom_navigation_view.setItemIconTintList(null);
-        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
-        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
 
+       // bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
+        /*home*/
+        title_shop.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_shop.setImageResource(R.drawable.grey_shop);
+        title_community.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_community.setImageResource(R.drawable.grey_community);
+
+        rl_home.setOnClickListener(this);
+        rl_shop.setOnClickListener(this);
+        rl_comn.setOnClickListener(this);
+        rl_homes.setOnClickListener(this);
 
 
     }
@@ -130,25 +175,31 @@ public class DoctorMyOrdrersActivity extends AppCompatActivity implements Bottom
         finish();
     }
 
+
     @SuppressLint("NonConstantResourceId")
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.home:
+    public void onClick(View v) {
+        switch (v.getId()){
+
+
+            case R.id.rl_homes:
                 callDirections("1");
                 break;
-            case R.id.shop:
+
+            case R.id.rl_home:
+                callDirections("1");
+                break;
+
+            case R.id.rl_shop:
                 callDirections("2");
                 break;
 
-            case R.id.community:
+            case R.id.rl_comn:
                 callDirections("3");
                 break;
 
-            default:
-                return  false;
         }
-        return true;
+
     }
 
     static class ViewPagerAdapter extends FragmentPagerAdapter {

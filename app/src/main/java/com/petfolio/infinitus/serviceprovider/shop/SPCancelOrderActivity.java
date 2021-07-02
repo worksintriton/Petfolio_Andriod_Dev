@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -53,7 +54,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SPCancelOrderActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
+public class SPCancelOrderActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = "SPCancelOrderActivity" ;
 
@@ -79,7 +80,6 @@ public class SPCancelOrderActivity extends AppCompatActivity implements View.OnC
     @BindView(R.id.include_doctor_footer)
     View include_doctor_footer;
 
-    BottomNavigationView bottom_navigation_view;
 
     private List<DropDownListResponse.DataBean.SpecialzationBean> petSpecilaziationList;
     private String _id;
@@ -98,6 +98,44 @@ public class SPCancelOrderActivity extends AppCompatActivity implements View.OnC
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.include_doctor_header)
     View include_doctor_header;
+
+    /* Bottom Navigation */
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_home)
+    RelativeLayout rl_home;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_service)
+    RelativeLayout rl_service;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_shop)
+    RelativeLayout rl_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_shop)
+    TextView title_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_shop)
+    ImageView img_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_comn)
+    RelativeLayout rl_comn;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_community)
+    TextView title_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_community)
+    ImageView img_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_homes)
+    RelativeLayout rl_homes;
 
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
@@ -118,10 +156,19 @@ public class SPCancelOrderActivity extends AppCompatActivity implements View.OnC
 
         edt_comment.setVisibility(View.GONE);
 
-        bottom_navigation_view = include_doctor_footer.findViewById(R.id.bottom_navigation_view);
-        bottom_navigation_view.setItemIconTintList(null);
-        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
-        bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
+
+     //   bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
+        /*shop*/
+
+        title_community.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_community.setImageResource(R.drawable.grey_community);
+        title_shop.setTextColor(getResources().getColor(R.color.new_gree_color,getTheme()));
+        img_shop.setImageResource(R.drawable.green_shop);
+
+        rl_home.setOnClickListener(this);
+        rl_shop.setOnClickListener(this);
+        rl_comn.setOnClickListener(this);
+        rl_homes.setOnClickListener(this);
 
 
         Bundle extras = getIntent().getExtras();
@@ -194,6 +241,22 @@ public class SPCancelOrderActivity extends AppCompatActivity implements View.OnC
         switch (v.getId()){
             case R.id.img_back:
                 onBackPressed();
+                break;
+
+            case R.id.rl_homes:
+                callDirections("1");
+                break;
+
+            case R.id.rl_home:
+                callDirections("1");
+                break;
+
+            case R.id.rl_shop:
+                callDirections("2");
+                break;
+
+            case R.id.rl_comn:
+                callDirections("3");
                 break;
 
 
@@ -526,25 +589,7 @@ public class SPCancelOrderActivity extends AppCompatActivity implements View.OnC
     }
 
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.home:
-                callDirections("1");
-                break;
-            case R.id.shop:
-                callDirections("2");
-                break;
 
-            case R.id.community:
-                callDirections("3");
-                break;
-
-            default:
-                return  false;
-        }
-        return true;
-    }
 
     public void callDirections(String tag){
         Intent intent = new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class);

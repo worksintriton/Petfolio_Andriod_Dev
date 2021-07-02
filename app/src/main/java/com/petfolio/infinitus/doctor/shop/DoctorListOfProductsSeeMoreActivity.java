@@ -62,7 +62,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class DoctorListOfProductsSeeMoreActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
+public class DoctorListOfProductsSeeMoreActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String TAG = "DoctorListOfProductsSeeMoreActivity";
 
@@ -78,9 +78,6 @@ public class DoctorListOfProductsSeeMoreActivity extends AppCompatActivity imple
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_today_deal)
     RecyclerView rv_today_deal;
-
-
-
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rl_sort)
@@ -107,7 +104,6 @@ public class DoctorListOfProductsSeeMoreActivity extends AppCompatActivity imple
     @BindView(R.id.include_doctor_footer)
     View include_doctor_footer;
 
-    BottomNavigationView bottom_navigation_view;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.include_doctor_header)
@@ -143,6 +139,45 @@ public class DoctorListOfProductsSeeMoreActivity extends AppCompatActivity imple
     private String petBreedTypeId = "";
     private String strCategoryTypeId = "";
     private String fromactivity;
+
+
+    /* Bottom Navigation */
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_home)
+    RelativeLayout rl_home;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_service)
+    RelativeLayout rl_service;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_shop)
+    RelativeLayout rl_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_shop)
+    TextView title_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_shop)
+    ImageView img_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_comn)
+    RelativeLayout rl_comn;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_community)
+    TextView title_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_community)
+    ImageView img_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_homes)
+    RelativeLayout rl_homes;
 
 
     @SuppressLint("LogNotTimber")
@@ -207,10 +242,18 @@ public class DoctorListOfProductsSeeMoreActivity extends AppCompatActivity imple
         rl_sort.setOnClickListener(this);
         edt_sort.setOnClickListener(this);
 
-        bottom_navigation_view = include_doctor_footer.findViewById(R.id.bottom_navigation_view);
-        bottom_navigation_view.setItemIconTintList(null);
-        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
-        bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
+
+        //bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
+        /*shop*/
+        title_community.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_community.setImageResource(R.drawable.grey_community);
+        title_shop.setTextColor(getResources().getColor(R.color.new_gree_color,getTheme()));
+        img_shop.setImageResource(R.drawable.green_shop);
+
+        rl_home.setOnClickListener(this);
+        rl_shop.setOnClickListener(this);
+        rl_comn.setOnClickListener(this);
+        rl_homes.setOnClickListener(this);
 
 
 
@@ -470,6 +513,22 @@ public class DoctorListOfProductsSeeMoreActivity extends AppCompatActivity imple
 
                 }
                 startActivity(intent);
+                break;
+
+            case R.id.rl_homes:
+                callDirections("1");
+                break;
+
+            case R.id.rl_home:
+                callDirections("1");
+                break;
+
+            case R.id.rl_shop:
+                callDirections("2");
+                break;
+
+            case R.id.rl_comn:
+                callDirections("3");
                 break;
 
         }
@@ -739,25 +798,7 @@ public class DoctorListOfProductsSeeMoreActivity extends AppCompatActivity imple
             return productFiltersRequest;
         }
 
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.home:
-                callDirections("1");
-                break;
-            case R.id.shop:
-                callDirections("2");
 
-            case R.id.community:
-                callDirections("3");
-                break;
-
-            default:
-                return  false;
-        }
-        return true;
-    }
 
 
 }
