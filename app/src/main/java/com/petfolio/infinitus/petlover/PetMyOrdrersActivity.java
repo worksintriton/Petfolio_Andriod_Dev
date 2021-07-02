@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,7 +35,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PetMyOrdrersActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class PetMyOrdrersActivity extends AppCompatActivity implements View.OnClickListener {
     private final String TAG = "PetMyOrdrersActivity";
 
 
@@ -50,6 +52,65 @@ public class PetMyOrdrersActivity extends AppCompatActivity implements BottomNav
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.include_petlover_header)
     View include_petlover_header;
+
+    /* Petlover Bottom Navigation */
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_home)
+    RelativeLayout rl_home;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_care)
+    RelativeLayout rl_care;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_care)
+    TextView title_care;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_care)
+    ImageView img_care;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_service)
+    RelativeLayout rl_service;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_serv)
+    TextView title_serv;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_serv)
+    ImageView img_serv;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_shop)
+    RelativeLayout rl_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_shop)
+    TextView title_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_shop)
+    ImageView img_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_comn)
+    RelativeLayout rl_comn;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_community)
+    TextView title_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_community)
+    ImageView img_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_homes)
+    RelativeLayout rl_homes;
+
 
 
     @SuppressLint({"LogNotTimber", "NonConstantResourceId"})
@@ -79,11 +140,33 @@ public class PetMyOrdrersActivity extends AppCompatActivity implements BottomNav
         img_back.setOnClickListener(v -> onBackPressed());
 
 
-        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
-        bottom_navigation_view.setItemIconTintList(null);
-        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+//        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
+//        bottom_navigation_view.setItemIconTintList(null);
+//        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+
+        /*shop*/
+        title_care.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_care.setImageResource(R.drawable.grey_care);
+        title_serv.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_serv.setImageResource(R.drawable.grey_servc);
+        title_community.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_community.setImageResource(R.drawable.grey_community);
+        title_shop.setTextColor(getResources().getColor(R.color.new_gree_color,getTheme()));
+        img_shop.setImageResource(R.drawable.green_shop);
 
 
+        rl_home.setOnClickListener(this);
+
+        rl_care.setOnClickListener(this);
+
+        rl_service.setOnClickListener(this);
+
+        rl_shop.setOnClickListener(this);
+
+        rl_comn.setOnClickListener(this);
+
+
+        rl_homes.setOnClickListener(this);
 
 
     }
@@ -112,30 +195,30 @@ public class PetMyOrdrersActivity extends AppCompatActivity implements BottomNav
         finish();
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.home:
-                callDirections("1");
-                break;
-            case R.id.shop:
-                callDirections("2");
-                break;
-            case R.id.services:
-                callDirections("3");
-                break;
-            case R.id.care:
-                callDirections("4");
-                break;
-            case R.id.community:
-                callDirections("5");
-                break;
-
-            default:
-                return  false;
-        }
-        return true;
-    }
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.home:
+//                callDirections("1");
+//                break;
+//            case R.id.shop:
+//                callDirections("2");
+//                break;
+//            case R.id.services:
+//                callDirections("3");
+//                break;
+//            case R.id.care:
+//                callDirections("4");
+//                break;
+//            case R.id.community:
+//                callDirections("5");
+//                break;
+//
+//            default:
+//                return  false;
+//        }
+//        return true;
+//    }
 
     static class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
@@ -166,7 +249,43 @@ public class PetMyOrdrersActivity extends AppCompatActivity implements BottomNav
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+
+            case R.id.rl_homes:
+                callDirections("1");
+                break;
+
+            case R.id.rl_home:
+                callDirections("1");
+                break;
+
+            case R.id.rl_shop:
+                callDirections("2");
+                break;
+
+            case R.id.rl_service:
+                callDirections("3");
+                break;
+
+            case R.id.rl_care:
+                callDirections("4");
+                break;
+
+            case R.id.rl_comn:
+                callDirections("5");
+                break;
+        }
+    }
 
 
+    private void setMargins(RelativeLayout rl_layout, int i, int i1, int i2, int i3) {
+
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)rl_layout.getLayoutParams();
+        params.setMargins(i, i1, i2, i3);
+        rl_layout.setLayoutParams(params);
+    }
 
 }

@@ -69,8 +69,6 @@ public class PetServicesAdapter extends  RecyclerView.Adapter<RecyclerView.ViewH
           Log.w(TAG,"Size : "+serviceCatList.size()+" "+" Images : "+serviceCatList.get(position).getImage());
           if (currentItem.getImage() != null && !currentItem.getImage().isEmpty()) {
 
-
-
               int pos = position % 2 ;
 
               Log.w(TAG,"position "+pos);

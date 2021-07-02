@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,7 +61,11 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.doctor.ManageAddressDoctorActivity;
 
+import com.petfolio.infinitus.fragmentdoctor.DoctorCommunityFragment;
+import com.petfolio.infinitus.fragmentdoctor.DoctorShopFragment;
+import com.petfolio.infinitus.fragmentdoctor.FragmentDoctorDashboard;
 import com.petfolio.infinitus.fragmentserviceprovider.FragmentSPDashboard;
+import com.petfolio.infinitus.fragmentserviceprovider.SPCommunityFragment;
 import com.petfolio.infinitus.fragmentserviceprovider.SPShopFragment;
 import com.petfolio.infinitus.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinitus.requestpojo.ShippingAddressFetchByUserIDRequest;
@@ -92,7 +97,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class ServiceProviderDashboardActivity  extends ServiceProviderNavigationDrawer implements Serializable, BottomNavigationView.OnNavigationItemSelectedListener,
+public class ServiceProviderDashboardActivity  extends ServiceProviderNavigationDrawer implements Serializable,
         OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
@@ -108,8 +113,6 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
     View include_doctor_footer;
 
 
-    BottomNavigationView bottom_navigation_view;
-
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_location)
     TextView txt_location;
@@ -117,6 +120,9 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
 
     final Fragment fragmentSPDashboard = new FragmentSPDashboard();
     final Fragment sPShopFragment = new SPShopFragment();
+    final Fragment spCommunityFragment = new SPCommunityFragment();
+
+
 
     public static String active_tag = "1";
 
@@ -138,6 +144,40 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
     private Dialog dialog;
     private String userid;
 
+    /* Bottom Navigation */
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_home)
+    RelativeLayout rl_home;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_shop)
+    RelativeLayout rl_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_shop)
+    TextView title_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_shop)
+    ImageView img_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_comn)
+    RelativeLayout rl_comn;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_community)
+    TextView title_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_community)
+    ImageView img_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_homes)
+    RelativeLayout rl_homes;
+
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -147,10 +187,30 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
         ButterKnife.bind(this);
         Log.w(TAG, "onCreate-->");
 
-        bottom_navigation_view = include_doctor_footer.findViewById(R.id.bottom_navigation_view);
-        bottom_navigation_view.setItemIconTintList(null);
-        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
-        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+//        bottom_navigation_view = include_doctor_footer.findViewById(R.id.bottom_navigation_view);
+//        bottom_navigation_view.setItemIconTintList(null);
+//        bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
+//        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
+
+
+        /*home*/
+
+        title_shop.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_shop.setImageResource(R.drawable.grey_shop);
+        title_community.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_community.setImageResource(R.drawable.grey_community);
+
+
+        rl_home.setOnClickListener(this);
+
+        rl_shop.setOnClickListener(this);
+
+        rl_comn.setOnClickListener(this);
+
+
+        rl_homes.setOnClickListener(this);
+
+
 
         googleApiConnected();
 
@@ -178,22 +238,40 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
         }
 
         tag = getIntent().getStringExtra("tag");
-        Log.w(TAG, " tag : " + tag);
-        if (tag != null) {
-            if (tag.equalsIgnoreCase("1")) {
+        Log.w(TAG," tag : "+tag);
+        if(tag != null){
+            if(tag.equalsIgnoreCase("1")){
                 active = fragmentSPDashboard;
-                bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
+//                bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
+                title_shop.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+                img_shop.setImageResource(R.drawable.grey_shop);
+                title_community.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+                img_community.setImageResource(R.drawable.grey_community);
                 loadFragment(new FragmentSPDashboard());
-            } else if (tag.equalsIgnoreCase("2")) {
+            }else if(tag.equalsIgnoreCase("2")){
                 active = sPShopFragment;
-                bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
+//                bottom_navigation_view.getMenu().findItem(R.id.shop).setChecked(true);
+                title_community.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+                img_community.setImageResource(R.drawable.grey_community);
+                title_shop.setTextColor(getResources().getColor(R.color.new_gree_color,getTheme()));
+                img_shop.setImageResource(R.drawable.green_shop);
                 loadFragment(new SPShopFragment());
-            } else if (tag.equalsIgnoreCase("3")) {
-                bottom_navigation_view.getMenu().findItem(R.id.community).setChecked(true);
-
+            } else if(tag.equalsIgnoreCase("3")){
+//                bottom_navigation_view.getMenu().findItem(R.id.community).setChecked(true);
+                active=spCommunityFragment;
+                title_shop.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+                img_shop.setImageResource(R.drawable.grey_shop);
+                title_community.setTextColor(getResources().getColor(R.color.new_gree_color,getTheme()));
+                img_community.setImageResource(R.drawable.green_comm);
+                loadFragment(new DoctorCommunityFragment());
             }
-        } else {
-            bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
+        }
+        else{
+//            bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
+            title_shop.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+            img_shop.setImageResource(R.drawable.grey_shop);
+            title_community.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+            img_community.setImageResource(R.drawable.grey_community);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_schedule, active, active_tag);
             transaction.commitNowAllowingStateLoss();
@@ -242,7 +320,7 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
     @Override
     public void onBackPressed() {
         Log.w(TAG, "tag : " + tag);
-        if (bottom_navigation_view.getSelectedItemId() == R.id.home) {
+//        if (bottom_navigation_view.getSelectedItemId() == R.id.home) {
             showExitAppAlert();
           /*  new android.app.AlertDialog.Builder(PetLoverDashboardActivity.this)
                     .setMessage("Are you sure you want to exit?")
@@ -250,27 +328,27 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
                     .setPositiveButton("Yes", (dialog, id) -> PetLoverDashboardActivity.this.finishAffinity())
                     .setNegativeButton("No", null)
                     .show();*/
-        } else if (tag != null) {
-            Log.w(TAG, "Else IF--->" + "fromactivity : " + fromactivity);
-            if (fromactivity != null) {
-
-
-            } else {
-                bottom_navigation_view.setSelectedItemId(R.id.home);
-                // load fragment
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_schedule, new FragmentSPDashboard());
-                transaction.commitNowAllowingStateLoss();
-            }
-
-
-        } else {
-            bottom_navigation_view.setSelectedItemId(R.id.home);
-            // load fragment
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frame_schedule, new FragmentSPDashboard());
-            transaction.commitNowAllowingStateLoss();
-        }
+//        } else if (tag != null) {
+//            Log.w(TAG, "Else IF--->" + "fromactivity : " + fromactivity);
+//            if (fromactivity != null) {
+//
+//
+//            } else {
+//                bottom_navigation_view.setSelectedItemId(R.id.home);
+//                // load fragment
+//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//                transaction.replace(R.id.frame_schedule, new FragmentSPDashboard());
+//                transaction.commitNowAllowingStateLoss();
+//            }
+//
+//
+//        } else {
+//            bottom_navigation_view.setSelectedItemId(R.id.home);
+//            // load fragment
+//            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//            transaction.replace(R.id.frame_schedule, new FragmentSPDashboard());
+//            transaction.commitNowAllowingStateLoss();
+//        }
 
     }
 
@@ -280,30 +358,30 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
         transaction.commitNowAllowingStateLoss();
     }
 
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.home:
-                active_tag = "1";
-                replaceFragment(new FragmentSPDashboard());
-                break;
-            case R.id.shop:
-                active_tag = "2";
-                replaceFragment(new SPShopFragment());
-                break;
-
-            case R.id.community:
-                showComingSoonAlert();
-                active_tag = "3";
-                break;
-
-            default:
-                return false;
-        }
-        return true;
-    }
+//    @SuppressLint("NonConstantResourceId")
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//
+//        switch (item.getItemId()) {
+//            case R.id.home:
+//                active_tag = "1";
+//                replaceFragment(new FragmentSPDashboard());
+//                break;
+//            case R.id.shop:
+//                active_tag = "2";
+//                replaceFragment(new SPShopFragment());
+//                break;
+//
+//            case R.id.community:
+//                showComingSoonAlert();
+//                active_tag = "3";
+//                break;
+//
+//            default:
+//                return false;
+//        }
+//        return true;
+//    }
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -772,6 +850,52 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
 
         Log.w(TAG, "shippingAddressFetchByUserIDRequest" + "--->" + new Gson().toJson(shippingAddressFetchByUserIDRequest));
         return shippingAddressFetchByUserIDRequest;
+    }
+
+
+    @Override
+    public void onClick(View v) {
+
+
+        switch (v.getId()) {
+
+            case R.id.rl_homes:
+                active_tag = "1";
+                title_shop.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+                img_shop.setImageResource(R.drawable.grey_shop);
+                title_community.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+                img_community.setImageResource(R.drawable.grey_community);
+                replaceFragment(new FragmentSPDashboard());
+                break;
+
+            case R.id.rl_home:
+                active_tag = "1";
+                title_shop.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+                img_shop.setImageResource(R.drawable.grey_shop);
+                title_community.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+                img_community.setImageResource(R.drawable.grey_community);
+                replaceFragment(new FragmentSPDashboard());
+                break;
+
+            case R.id.rl_shop:
+                active_tag = "2";
+                title_community.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+                img_community.setImageResource(R.drawable.grey_community);
+                title_shop.setTextColor(getResources().getColor(R.color.new_gree_color,getTheme()));
+                img_shop.setImageResource(R.drawable.green_shop);
+                replaceFragment(new SPShopFragment());
+                break;
+
+            case R.id.rl_comn:
+                active_tag = "3";
+                title_shop.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+                img_shop.setImageResource(R.drawable.grey_shop);
+                title_community.setTextColor(getResources().getColor(R.color.new_gree_color,getTheme()));
+                img_community.setImageResource(R.drawable.green_comm);
+                replaceFragment(new SPCommunityFragment());
+                break;
+        }
+
     }
 
 

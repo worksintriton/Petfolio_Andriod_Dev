@@ -59,7 +59,7 @@ import java.util.TimerTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PetloverPetDetailsActivity extends AppCompatActivity implements View.OnClickListener, SoSCallListener, BottomNavigationView.OnNavigationItemSelectedListener {
+public class PetloverPetDetailsActivity extends AppCompatActivity implements View.OnClickListener, SoSCallListener {
 
     private String TAG = "PetloverPetDetailsActivity";
 
@@ -153,12 +153,73 @@ public class PetloverPetDetailsActivity extends AppCompatActivity implements Vie
     @BindView(R.id.include_petlover_footer)
     View include_petlover_footer;
 
-    BottomNavigationView bottom_navigation_view;
 
     private Dialog dialog;
     private static final int REQUEST_PHONE_CALL =1 ;
     private String sosPhonenumber;
     private String petbio;
+
+
+    /* Petlover Bottom Navigation */
+    /* Petlover Bottom Navigation */
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_home)
+    RelativeLayout rl_home;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_care)
+    RelativeLayout rl_care;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_care)
+    TextView title_care;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_care)
+    ImageView img_care;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_service)
+    RelativeLayout rl_service;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_serv)
+    TextView title_serv;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_serv)
+    ImageView img_serv;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_shop)
+    RelativeLayout rl_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_shop)
+    TextView title_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_shop)
+    ImageView img_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_comn)
+    RelativeLayout rl_comn;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_community)
+    TextView title_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_community)
+    ImageView img_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_homes)
+    RelativeLayout rl_homes;
+
+
 
 
     @Override
@@ -190,10 +251,22 @@ public class PetloverPetDetailsActivity extends AppCompatActivity implements Vie
         avi_indicator.setVisibility(View.GONE);
 
 
-        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
-        bottom_navigation_view.setItemIconTintList(null);
-        bottom_navigation_view.setOnNavigationItemSelectedListener(this);
-        bottom_navigation_view.getMenu().findItem(R.id.services).setChecked(true);
+        /*serv*/
+        title_care.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_care.setImageResource(R.drawable.grey_care);
+        title_shop.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_shop.setImageResource(R.drawable.grey_shop);
+        title_community.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_community.setImageResource(R.drawable.grey_community);
+        title_serv.setTextColor(getResources().getColor(R.color.new_gree_color,getTheme()));
+        img_serv.setImageResource(R.drawable.green_serv);
+
+        rl_home.setOnClickListener(this);
+        rl_care.setOnClickListener(this);
+        rl_service.setOnClickListener(this);
+        rl_shop.setOnClickListener(this);
+        rl_comn.setOnClickListener(this);
+        rl_homes.setOnClickListener(this);
 
 
 
@@ -370,6 +443,32 @@ public class PetloverPetDetailsActivity extends AppCompatActivity implements Vie
                 goto_Profile();
                 break;
 
+            case R.id.rl_homes:
+                callDirections("1");
+                break;
+
+            case R.id.rl_home:
+                callDirections("1");
+                break;
+
+
+            case R.id.rl_shop:
+                callDirections("2");
+                break;
+
+            case R.id.rl_service:
+                callDirections("3");
+                break;
+
+            case R.id.rl_care:
+                callDirections("4");
+                break;
+
+
+            case R.id.rl_comn:
+                callDirections("5");
+                break;
+
         }
     }
 
@@ -476,13 +575,6 @@ public class PetloverPetDetailsActivity extends AppCompatActivity implements Vie
     }
 
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
-    }
-
-
-
 
     /**
      * method to setup the bottomsheet
@@ -584,6 +676,13 @@ public class PetloverPetDetailsActivity extends AppCompatActivity implements Vie
             }
         }, DELAY_MS, PERIOD_MS);
 
+    }
+
+
+    private void setMargins(RelativeLayout rl_layout, int i, int i1, int i2, int i3) {
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)rl_layout.getLayoutParams();
+        params.setMargins(i, i1, i2, i3);
+        rl_layout.setLayoutParams(params);
     }
 
 

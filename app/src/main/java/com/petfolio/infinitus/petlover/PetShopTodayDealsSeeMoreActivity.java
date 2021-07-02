@@ -469,6 +469,9 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
                 case R.id.rl_homes:
                     callDirections("1");
                     break;
+                case R.id.rl_home:
+                    callDirections("1");
+                    break;
                 case R.id.shop:
                     callDirections("2");
                     break;

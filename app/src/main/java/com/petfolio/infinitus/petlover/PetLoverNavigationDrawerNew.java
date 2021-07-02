@@ -213,10 +213,10 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
                 case R.id.nav_item_five:
                     gotoMedicalHistory();
                     return true;
-
-                case R.id.nav_item_six:
-                    gotoPaymentdetails();
-                    return true;
+//
+//                case R.id.nav_item_six:
+//                    gotoPaymentdetails();
+//                    return true;
                 case R.id.nav_item_seven:
                      gotoNotifications();
                     return true;
