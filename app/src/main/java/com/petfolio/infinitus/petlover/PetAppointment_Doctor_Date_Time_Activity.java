@@ -463,12 +463,14 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
             Intent intent = new Intent(getApplicationContext(),DoctorClinicDetailsActivity.class);
             intent.putExtra("doctorid",doctorid);
             intent.putExtra("fromactivity",fromactivity);
+            intent.putExtra("distance",distance);
             startActivity(intent);
 
         }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetAppointmentDetailsActivity")){
             Intent intent = new Intent(getApplicationContext(),PetMyappointmentsActivity.class);
             intent.putExtra("doctorid",doctorid);
             intent.putExtra("fromactivity",fromactivity);
+            intent.putExtra("distance",distance);
             startActivity(intent);
 
         }else{
@@ -533,6 +535,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
                             intent.putExtra("amount", amount);
                             intent.putExtra("communicationtype", communicationtype);
                             intent.putExtra("fromto", fromto);
+                            intent.putExtra("distance",distance);
                             startActivity(intent);
                             Log.w(TAG, "communicationtype : " + communicationtype);
                         }

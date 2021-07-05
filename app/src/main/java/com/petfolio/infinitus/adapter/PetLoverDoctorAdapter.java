@@ -105,6 +105,7 @@ public class PetLoverDoctorAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
         }
 
         holder.ll_root.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DoctorClinicDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -113,6 +114,7 @@ public class PetLoverDoctorAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
                 intent.putExtra("reviewcount",doctorDetailsResponseList.get(position).getReview_count());
                 intent.putExtra("starcount",doctorDetailsResponseList.get(position).getStar_count());
                 intent.putExtra("distance",doctorDetailsResponseList.get(position).getDistance());
+                intent.putExtra("fromactivity",TAG);
                 Log.w(TAG,"doctorid :"+doctorDetailsResponseList.get(position).get_id());
                 context.startActivity(intent);
                 }
