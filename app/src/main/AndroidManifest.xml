@@ -319,6 +319,11 @@
              android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".petlover.SelectYourPetActivity"
+            android:screenOrientation="portrait"
+             android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".petlover.PetVerifyEmailOtpActivity"
             android:screenOrientation="portrait"
              android:theme="@style/AppTheme"

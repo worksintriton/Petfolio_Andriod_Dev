@@ -535,7 +535,7 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
     @SuppressLint("LogNotTimber")
     private void gotoServiceBookAppoinment(){
       //  Intent intent = new Intent(PetServiceAppointment_Doctor_Date_Time_Activity.this,ServiceBookAppointmentActivity.class);
-        Intent intent = new Intent(PetServiceAppointment_Doctor_Date_Time_Activity.this,ConsultationActivity.class);
+        Intent intent = new Intent(PetServiceAppointment_Doctor_Date_Time_Activity.this,SelectYourPetActivity.class);
         intent.putExtra("spid",spid);
         intent.putExtra("catid",catid);
         intent.putExtra("from",from);

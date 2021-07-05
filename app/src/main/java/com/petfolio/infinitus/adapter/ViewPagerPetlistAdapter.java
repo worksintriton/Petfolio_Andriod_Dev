@@ -1,7 +1,9 @@
 package com.petfolio.infinitus.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,8 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.responsepojo.DoctorDetailsResponse;
 import com.petfolio.infinitus.responsepojo.PetDetailsResponse;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -51,14 +55,16 @@ public class ViewPagerPetlistAdapter extends PagerAdapter {
     }
 
 
+    @SuppressLint("LogNotTimber")
     @Override
-    public Object instantiateItem(ViewGroup view, int position) {
+    public @NotNull Object instantiateItem(ViewGroup view, int position) {
         View itemView = inflater.inflate(R.layout.sliding_image, view, false);
         ImageView imageView = itemView.findViewById(R.id.itemImage);
 
 
         try {
             String imageURL = petImgBeanList.get(position).getPet_img();
+            Log.w(TAG,"imageURL:"+imageURL);
             if(imageURL != null && !imageURL.isEmpty()){
                 Glide.with(context)
                         .load(imageURL)

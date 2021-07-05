@@ -19,6 +19,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,6 +31,7 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -263,6 +266,7 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
     final long PERIOD_MS = 3000;
     private int distance;
     private String health_issue_title;
+    private Dialog dialog;
 
     @SuppressLint("LongLogTag")
     @Override
@@ -284,6 +288,7 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
             SP_ava_Date = extras.getString("SP_ava_Date");
             selectedTimeSlot = extras.getString("selectedTimeSlot");
             distance = extras.getInt("distance");
+            petId = extras.getString("petId");
             health_issue_title = extras.getString("health_issue_title");
             Log.w(TAG,"spid : "+spid +" catid : "+catid+" from : "+from+" serviceamount : "+serviceamount+" servicetime : "+servicetime+" SP_ava_Date : "+SP_ava_Date+" selectedTimeSlot : "+selectedTimeSlot);
 
@@ -385,21 +390,20 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
                                 petName = petDetailsResponseByUserIdList.get(i).getPet_name();
                                 petType = petDetailsResponseByUserIdList.get(i).getPet_type();
                                 petBreed = petDetailsResponseByUserIdList.get(i).getPet_breed();
-                                petId = petDetailsResponseByUserIdList.get(i).get_id();
+                                //petId = petDetailsResponseByUserIdList.get(i).get_id();
                                 petimage = petDetailsResponseByUserIdList.get(i).getPet_img();
                                 petcolor = petDetailsResponseByUserIdList.get(i).getPet_color();
                                 petweight = petDetailsResponseByUserIdList.get(i).getPet_weight();
                                 petage = petDetailsResponseByUserIdList.get(i).getPet_age();
-                                Log.w(TAG, "for petType-->" + petType + "  petcolor : "+petcolor+" petweight : "+petweight+" petage : "+petage);
+                            //    Log.w(TAG, "for petType-->" + petType + "  petcolor : "+petcolor+" petweight : "+petweight+" petage : "+petage);
 
-                                if(petimage!=null&&petimage.size()>0){
-
+                               /* if(petimage!=null && petimage.size()>0){
+                                    Log.w(TAG,"petimage : "+new Gson().toJson(petimage));
                                     cv_pet_img.setVisibility(View.VISIBLE);
-
                                     img_pet_imge.setVisibility(View.GONE);
                                     rl_petimage.setVisibility(View.VISIBLE);
-
                                     viewpageData(petimage);
+
                                 }
                                 else {
 
@@ -407,7 +411,7 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
                                     rl_petimage.setVisibility(View.GONE);
 
 
-                                }
+                                }*/
 
                             }
                         }
@@ -417,7 +421,6 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
                     edt_petname.setText(petName);
                     txt_pettype.setText(petType);
                     txt_petbreed.setText(petBreed);
-                    Log.w(TAG, "onItemSelected petType-->" + petType + "  petcolor : "+petcolor+" petweight : "+petweight+" petage : "+petage);
 
 
                     if(petcolor != null){
@@ -567,7 +570,6 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
 
     private void viewpageData(List<PetDetailsResponse.DataBean.PetImgBean> petImgBeanList) {
         tabLayout.setupWithViewPager(viewPager, true);
-
         ViewPagerPetlistAdapter viewPagerPetlistAdapter = new ViewPagerPetlistAdapter(getApplicationContext(), petImgBeanList);
         viewPager.setAdapter(viewPagerPetlistAdapter);
         /*After setting the adapter use the timer */
@@ -707,7 +709,7 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
 
             String petType = breedTypedataBeanList.get(i).getPet_breed();
 
-            Log.w(TAG, "petType-->" + petType);
+            //Log.w(TAG, "petType-->" + petType);
             pettypeArrayList.add(petType);
 
             ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(ServiceBookAppointmentActivity.this, R.layout.spinner_item, pettypeArrayList);
@@ -745,15 +747,36 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
 
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
-                        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-
+                        /*if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
                             petTypeListResponseCall();
-                        }
+                        }*/
                         if(response.body().getData() != null) {
                             petDetailsResponseByUserIdList = response.body().getData();
                         }
                         if (petDetailsResponseByUserIdList != null && petDetailsResponseByUserIdList.size() > 0) {
                             setSelectYourPetType(petDetailsResponseByUserIdList);
+                        }
+
+                        for(int i = 0;i<petDetailsResponseByUserIdList.size();i++) {
+                            petimage = petDetailsResponseByUserIdList.get(i).getPet_img();
+
+                        }
+
+                        Log.w(TAG,"PetDetailsResponse petimage : "+new Gson().toJson(petimage));
+
+                        if(petimage!=null && petimage.size()>0){
+                            cv_pet_img.setVisibility(View.VISIBLE);
+                            img_pet_imge.setVisibility(View.GONE);
+                            rl_petimage.setVisibility(View.VISIBLE);
+                            viewpageData(petimage);
+
+                        }
+                        else {
+
+                            img_pet_imge.setVisibility(View.VISIBLE);
+                            rl_petimage.setVisibility(View.GONE);
+
+
                         }
 
                     }
@@ -1052,7 +1075,7 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
                         Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
-                        petId = response.body().getData().get_id();
+                        //petId = response.body().getData().get_id();
                         if(serviceamount != 0) {
                             startPayment();
                         } else if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
@@ -1184,7 +1207,7 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
         super.onBackPressed();
 
        // Intent intent = new Intent(getApplicationContext(),PetServiceAppointment_Doctor_Date_Time_Activity.class);
-        Intent intent = new Intent(getApplicationContext(),ConsultationIssuesActivity.class);
+        Intent intent = new Intent(getApplicationContext(),ConsultationActivity.class);
         intent.putExtra("spid",spid);
         intent.putExtra("catid",catid);
         intent.putExtra("from",from);
@@ -1294,7 +1317,9 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         if(response.body().getMessage() != null){
-                            showSuceessLoading(response.body().getMessage());
+                            showPaymentSuccessalert(response.body().getMessage());
+
+                           // showSuceessLoading(response.body().getMessage());
                         }
                     }
                     else{
@@ -1424,6 +1449,40 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
             }
         });
     }
+    private void showPaymentSuccessalert(String message) {
+        try {
+
+            dialog = new Dialog(ServiceBookAppointmentActivity.this);
+            dialog.setCancelable(false);
+            dialog.setContentView(R.layout.alert_appointment_payment_success_layout);
+            TextView txt_success_msg = dialog.findViewById(R.id.txt_success_msg);
+            txt_success_msg.setText(message);
+            Button btn_ok = dialog.findViewById(R.id.btn_ok);
+
+            btn_ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    Intent intent = new Intent(getApplicationContext(), PetLoverDashboardActivity.class);
+                    startActivity(intent);
+                    finish();
+
+
+
+                }
+            });
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
     public void hideLoadingSuccess() {
         try {
             Intent intent = new Intent(getApplicationContext(), PetLoverDashboardActivity.class);
@@ -1454,9 +1513,6 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-
-
-
 
                     }
 
