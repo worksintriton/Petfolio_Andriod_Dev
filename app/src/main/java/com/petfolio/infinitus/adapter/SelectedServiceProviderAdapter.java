@@ -83,29 +83,30 @@ public class SelectedServiceProviderAdapter extends  RecyclerView.Adapter<Recycl
         }
         if(serviceProviderList.get(position).getService_price() != 0) {
             holder.txt_serv_price.setVisibility(View.VISIBLE);
+
             holder.txt_serv_price.setText("\u20B9 " + serviceProviderList.get(position).getService_price());
         }else{
-            holder.txt_serv_price.setVisibility(View.GONE);
+            holder.txt_serv_price.setText("\u20B9 " + 0);
         }
         if(serviceProviderList.get(position).getService_offer() != 0) {
             holder.txt_serv_offer.setText(serviceProviderList.get(position).getService_offer() + "");
         }
-        if(serviceProviderList.get(position).getService_place() != null) {
-            holder.txt_place.setText(serviceProviderList.get(position).getService_place());
-        }
-//        if(serviceProviderList.get(position).getDistance() != 0) {
-//            holder.txt_km.setText(serviceProviderList.get(position).getDistance() + " km");
-//        }else{
-//            holder.txt_km.setText("0 km away");
+//        if(serviceProviderList.get(position).getService_place() != null) {
+//            holder.txt_place.setText(serviceProviderList.get(position).getService_place());
 //        }
+        if(serviceProviderList.get(position).getDistance() != 0) {
+            holder.txt_km.setText(serviceProviderList.get(position).getDistance() + " km");
+        }else{
+            holder.txt_km.setText("0 km away");
+        }
         if(serviceProviderList.get(position).getRating_count() != 0) {
             holder.txt_star_rating.setText(serviceProviderList.get(position).getRating_count() + "");
         }
-        if(serviceProviderList.get(position).getComments_count() != 0) {
-            holder.txt_review_count.setText(serviceProviderList.get(position).getComments_count() + "");
-        }
-
-
+//        if(serviceProviderList.get(position).getComments_count() != 0) {
+//            holder.txt_review_count.setText(serviceProviderList.get(position).getComments_count() + "");
+//        }
+//
+//
 
            if (serviceProviderList.get(position).getImage() != null && !serviceProviderList.get(position).getImage().isEmpty()) {
 
@@ -187,10 +188,10 @@ public class SelectedServiceProviderAdapter extends  RecyclerView.Adapter<Recycl
             super(itemView);
             img_service = itemView.findViewById(R.id.img_service);
             txt_service_providers = itemView.findViewById(R.id.txt_service_providers);
-            txt_serv_price = itemView.findViewById(R.id.txt_serv_price);
+            txt_serv_price = itemView.findViewById(R.id.txt_price);
             txt_serv_offer = itemView.findViewById(R.id.txt_serv_offer);
             txt_place = itemView.findViewById(R.id.txt_place);
-            txt_km = itemView.findViewById(R.id.txt_km);
+            txt_km = itemView.findViewById(R.id.txt_dist);
             txt_star_rating = itemView.findViewById(R.id.txt_star_rating);
             txt_review_count = itemView.findViewById(R.id.txt_review_count);
             btn_book = itemView.findViewById(R.id.btn_book);

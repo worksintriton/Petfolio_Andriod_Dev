@@ -42,6 +42,7 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
 
     public static String id = "";
     private List<PetListResponse.DataBean.PetImgBean> petImgBeanList;
+    String petImagePath;
 
 
     public ManagePetListAdapter(Context context, List<PetListResponse.DataBean> petListResponseList, PetDeleteListener petDeleteListener) {
@@ -74,14 +75,14 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
 
 
 
-        if (petListResponseList != null && petListResponseList.size() > 0) {
+        if (petListResponseList.size() > 0) {
             String TAG = "ManagePetListAdapter";
             Log.w(TAG,"petListResponseList : "+new Gson().toJson(petListResponseList));
 
 
             petImgBeanList =   petListResponseList.get(position).getPet_img();
 
-            String petImagePath = null;
+
 
 
             Log.w(TAG,"petImgBeanList : "+new Gson().toJson(petImgBeanList));
@@ -179,11 +180,10 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
         holder.cv_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent i = new Intent(context, PetloverPetDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra("id",petListResponseList.get(position).get_id());
                 i.putExtra("userid",petListResponseList.get(position).getUser_id());
-                i.putExtra("petimage",petListResponseList.get(position).getPet_img().get(0).getPet_img());
+              //  i.putExtra("petimage",petListResponseList.get(position).getPet_img());
                 i.putExtra("petname",petListResponseList.get(position).getPet_name());
                 i.putExtra("pettype",petListResponseList.get(position).getPet_type());
                 i.putExtra("petbreed",petListResponseList.get(position).getPet_breed());

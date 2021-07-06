@@ -35,6 +35,7 @@
                     android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cv_service"
                         android:layout_width="match_parent"
@@ -46,22 +47,20 @@
                         app:cardCornerRadius="8dp"
                         android:elevation="10dp">
 
-                        <RelativeLayout
+                        <ImageView
+                            android:id="@+id/img_service"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:contentDescription="@string/image"
+                            android:scaleType="fitXY"
+                            app:srcCompat="@drawable/image_thumbnail" />
 
-                            <ImageView
-                                android:id="@+id/img_service"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_centerInParent="true"
-                                android:contentDescription="@string/image"
-                                android:scaleType="fitXY"
-                                app:srcCompat="@drawable/image_thumbnail" />
-
-                        </RelativeLayout>
                     </androidx.cardview.widget.CardView>
+
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_weight="2"
@@ -74,10 +73,10 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_marginTop="5dp"
                             android:id="@+id/txt_service_providers"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
                             android:fontFamily="@font/futuramediumbt"
                             android:maxLines="1"
                             android:text="@string/service_providers"
@@ -85,84 +84,100 @@
                             android:textSize="14sp"
                             android:textStyle="normal" />
 
-                                <LinearLayout
-                        android:id="@+id/ll_price"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:visibility="visible">
-
-                        <TextView
-                            android:id="@+id/txt_serv_price"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/futuramediumbt"
-                            android:maxLines="1"
-                            android:text="@string/doctor_name"
-                            android:textColor="@color/new_gree_color"
-                            android:textSize="14sp"
-                            android:textStyle="normal"
-                            android:layout_marginTop="5dp" />
-
-                        <TextView
-                            android:id="@+id/txt_serv_offer"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/futuramediumbt"
-                            android:maxLines="1"
-                            android:text="@string/serviceoffer"
-                            android:textColor="@color/new_gree_color"
-                            android:textSize="14sp"
-                            android:layout_marginStart="5dp"
-                            android:textStyle="normal"
-                            android:layout_marginTop="5dp" />
-
-                                </LinearLayout>
-
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:id="@+id/txt_place"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:ellipsize="end"
                                 android:fontFamily="@font/futuramediumbt"
                                 android:maxLines="2"
+                                android:text="@string/chennai"
+                                android:textColor="@color/new_sec_txt_color"
+                                android:textSize="12sp" />
+
+                            <View
+                                android:id="@+id/view9"
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@color/Lightgray" />
+
+                            <TextView
+                                android:id="@+id/txt_dist"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginTop="5dp"
                                 android:ellipsize="end"
+                                android:fontFamily="@font/futuramediumbt"
+                                android:maxLines="2"
                                 android:text="@string/specialization"
                                 android:textColor="@color/new_sec_txt_color"
-                                android:textSize="12sp"
-                                android:layout_marginTop="5dp"/>
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="5dp">
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal">
 
-                            <RelativeLayout
-                                android:layout_width="50dp"
-                                android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/img_star"
+                                    android:layout_width="16dp"
+                                    android:layout_height="16dp"
+                                    android:layout_marginTop="5dp"
+                                    android:src="@drawable/ic_baseline_star_rate_24"
+                                    tools:ignore="ContentDescription" />
 
                                 <TextView
                                     android:id="@+id/txt_star_rating"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
                                     android:layout_marginStart="5dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:drawablePadding="5dp"
                                     android:fontFamily="@font/futuramediumbt"
-                                    android:text="@string/rating_value"
+                                    android:padding="3dp"
+                                    android:text="4.5"
                                     android:textColorHint="@color/new_txt_color"
-                                    android:textSize="12sp"
-                                    app:drawableLeftCompat="@drawable/ic_baseline_star_rate_24"
-                                    app:drawableStartCompat="@drawable/ic_baseline_star_rate_24" />
+                                    android:textSize="14sp" />
+                            </LinearLayout>
 
+                            <TextView
+                                android:id="@+id/txt_star_rating2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/futuramediumbt"
+                                android:padding="3dp"
+                                android:text="4.5"
+                                android:textColorHint="@color/new_txt_color"
+                                android:textSize="14sp"
+                                android:visibility="gone" />
 
-                            </RelativeLayout>
+                            <TextView
+                                android:id="@+id/txt_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/futuramediumbt"
+                                android:padding="3dp"
+                                android:text="4.5"
+                                android:textColorHint="@color/new_txt_color"
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/txt_review_count"
@@ -174,7 +189,50 @@
                                 android:fontFamily="@font/futurabookfont"
                                 android:text="@string/review_count"
                                 android:textColor="@color/red"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"
+                                android:visibility="gone" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/view10"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@color/Lightgray" />
+
+                        <LinearLayout
+                            android:id="@+id/ll_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:visibility="visible">
+
+                            <TextView
+                                android:id="@+id/txt_serv_offer"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/futuramediumbt"
+                                android:maxLines="1"
+                                android:text="@string/doctor_name"
+                                android:textColor="@color/new_gree_color"
+                                android:textSize="14sp"
+                                android:textStyle="normal" />
+
+<!--                            <TextView-->
+<!--                                android:id="@+id/txt_serv_offer"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginStart="5dp"-->
+<!--                                android:layout_marginTop="5dp"-->
+<!--                                android:fontFamily="@font/futuramediumbt"-->
+<!--                                android:maxLines="1"-->
+<!--                                android:text="@string/serviceoffer"-->
+<!--                                android:textColor="@color/new_gree_color"-->
+<!--                                android:textSize="14sp"-->
+<!--                                android:textStyle="normal" />-->
 
                         </LinearLayout>
 
