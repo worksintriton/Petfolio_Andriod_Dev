@@ -48,7 +48,7 @@
                         android:elevation="10dp">
 
                         <ImageView
-                            android:id="@+id/img_service"
+                            android:id="@+id/img_doctors_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_centerHorizontal="true"

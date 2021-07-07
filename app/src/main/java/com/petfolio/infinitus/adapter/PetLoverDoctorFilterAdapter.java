@@ -3,8 +3,6 @@ package com.petfolio.infinitus.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,12 +20,9 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.petlover.BookAppointmentActivity;
 import com.petfolio.infinitus.petlover.DoctorClinicDetailsActivity;
-import com.petfolio.infinitus.responsepojo.DoctorSearchResponse;
 import com.petfolio.infinitus.responsepojo.FilterDoctorResponse;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 
 
 public class PetLoverDoctorFilterAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -80,8 +75,8 @@ public class PetLoverDoctorFilterAdapter extends  RecyclerView.Adapter<RecyclerV
 
             holder.txt_doctors_name.setText("");
         }
-        if(currentItem.getClinic_loc() != null&&!currentItem.getClinic_loc().isEmpty()) {
-            holder.txt_place.setText("Chennai");
+        if(currentItem.getCity_name() != null&&!currentItem.getCity_name().isEmpty()) {
+            holder.txt_place.setText(currentItem.getCity_name());
         }else {
 
             holder.txt_place.setVisibility(View.GONE);
@@ -92,6 +87,13 @@ public class PetLoverDoctorFilterAdapter extends  RecyclerView.Adapter<RecyclerV
         }else {
 
             holder.txt_km.setText("");
+        }
+
+        if(doctorFilterDetailsResponseList.get(position).getAmount() != 0) {
+            holder.txt_price.setText("\u20B9 " +doctorFilterDetailsResponseList.get(position).getAmount() + "");
+        }else {
+
+            holder.txt_price.setText("\u20B9 " +"0");
         }
 //          if(currentItem.getDoctor_exp() != 0) {
 //              holder.txt_doctors_experience.setVisibility(View.VISIBLE);
@@ -233,7 +235,7 @@ public class PetLoverDoctorFilterAdapter extends  RecyclerView.Adapter<RecyclerV
     }
 
     class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_doctors_name,txt_doctors_specialization,txt_star_rating,txt_review_count,txt_place,txt_km;
+        public TextView txt_doctors_name,txt_doctors_specialization,txt_price,txt_star_rating,txt_review_count,txt_place,txt_km;
         public LinearLayout ll_root;
         public ImageView img_doctors_image;
         public Button btn_book;
@@ -244,13 +246,14 @@ public class PetLoverDoctorFilterAdapter extends  RecyclerView.Adapter<RecyclerV
         public ViewHolderOne(View itemView) {
             super(itemView);
             txt_doctors_name = itemView.findViewById(R.id.txt_doctors_name);
+            txt_price = itemView.findViewById(R.id.txt_price);
             txt_doctors_specialization = itemView.findViewById(R.id.txt_doctors_specialization);
             img_doctors_image = itemView.findViewById(R.id.img_doctors_image);
             ll_root = itemView.findViewById(R.id.ll_root);
             txt_star_rating = itemView.findViewById(R.id.txt_star_rating);
             txt_review_count = itemView.findViewById(R.id.txt_review_count);
             txt_place = itemView.findViewById(R.id.txt_place);
-            txt_km = itemView.findViewById(R.id.txt_km);
+            txt_km = itemView.findViewById(R.id.txt_dist);
             btn_book = itemView.findViewById(R.id.btn_book);
             view = itemView.findViewById(R.id.view9);
 
@@ -261,24 +264,6 @@ public class PetLoverDoctorFilterAdapter extends  RecyclerView.Adapter<RecyclerV
 
 
 
-    }
-
-    @SuppressLint("LogNotTimber")
-    public void setCity(Double lat, Double longi){
-
-        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
-        List<Address> addresses = null;
-        try {
-            addresses = geocoder.getFromLocation(lat, longi, 1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String cityName = addresses.get(0).getAddressLine(0);
-
-        Log.w(TAG,"cityName "+cityName);
-
-        String stateName = addresses.get(0).getAddressLine(1);
-        String countryName = addresses.get(0).getAddressLine(2);
     }
 
 }

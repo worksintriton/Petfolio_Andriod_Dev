@@ -27,6 +27,7 @@ public class DocBusInfoUploadRequest {
      * mobile_type : Android
      * communication_type  : 1
      * consultancy_fees
+     * city_name : Chennai
      */
 
     private String user_id;
@@ -41,6 +42,17 @@ public class DocBusInfoUploadRequest {
     private String communication_type;
     private int consultancy_fees;
     private String signature;
+    private String city_name;
+
+    public String getCity_name() {
+        return city_name;
+    }
+
+    public void setCity_name(String city_name) {
+        this.city_name = city_name;
+    }
+
+
 
     public String getSignature() {
         return signature;
@@ -134,7 +146,7 @@ public class DocBusInfoUploadRequest {
 
 
 
-    public DocBusInfoUploadRequest(String user_id, String dr_title, String dr_name, String clinic_name, String clinic_loc, double clinic_lat, double clinic_long, List<EducationDetailsBean> education_details, List<ExperienceDetailsBean> experience_details, List<SpecializationBean> specialization, List<PetHandledBean> pet_handled, List<ClinicPicBean> clinic_pic, List<CertificatePicBean> certificate_pic, List<GovtIdPicBean> govt_id_pic, List<PhotoIdPicBean> photo_id_pic, boolean profile_status, String profile_verification_status, String date_and_time,String mobile_type,String communication_type,int consultancy_fees, String signature) {
+    public DocBusInfoUploadRequest(String user_id, String dr_title, String dr_name, String clinic_name, String clinic_loc, double clinic_lat, double clinic_long, List<EducationDetailsBean> education_details, List<ExperienceDetailsBean> experience_details, List<SpecializationBean> specialization, List<PetHandledBean> pet_handled, List<ClinicPicBean> clinic_pic, List<CertificatePicBean> certificate_pic, List<GovtIdPicBean> govt_id_pic, List<PhotoIdPicBean> photo_id_pic, boolean profile_status, String profile_verification_status, String date_and_time,String mobile_type,String communication_type,int consultancy_fees, String signature,String city_name) {
         this.user_id = user_id;
         this.dr_title = dr_title;
         this.dr_name = dr_name;
@@ -157,6 +169,7 @@ public class DocBusInfoUploadRequest {
         this.communication_type = communication_type;
         this.consultancy_fees = consultancy_fees;
         this.signature = signature;
+        this.city_name=city_name;
     }
 
     public String getUser_id() {

@@ -545,7 +545,6 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     private void setViewDoctors(List<DoctorSearchResponse.BannerBean> banner) {
 
 
-
         if(banner!=null && banner.size()>0){
             viewpageData(banner);
 
@@ -566,7 +565,9 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
         }
         else {
 
-            imagelist.add(APIClient.BANNER_IMAGE_URL);
+            banner.add(new DoctorSearchResponse.BannerBean(APIClient.BANNER_IMAGE_URL));
+
+            viewpageData(banner);
         }
 
 
@@ -696,6 +697,8 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
                                 rv_nearbydoctors.setVisibility(View.VISIBLE);
                                 rl_search.setVisibility(View.VISIBLE);
                                 txt_no_records.setVisibility(View.GONE);
+                                bottomSheetBehavior.setPeekHeight(0);
+                                bottomSheetBehavior.setHalfExpandedRatio(0.8f);
                                // txt_totaldrs.setVisibility(View.GONE);
                                // txt_totaldrs.setText(doctorFilterDetailsResponseList.size()+" "+"Doctors");
                                 setViewDoctorFilters(doctorFilterDetailsResponseList);
@@ -704,6 +707,8 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
                                 rv_nearbydoctors.setVisibility(View.GONE);
                                 txt_totaldrs.setVisibility(View.GONE);
                                 txt_no_records.setVisibility(View.VISIBLE);
+                                bottomSheetBehavior.setPeekHeight(0);
+                                bottomSheetBehavior.setHalfExpandedRatio(0.8f);
                                 txt_no_records.setText("No doctors available");
 
                             }
@@ -735,30 +740,33 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     }
     private void setViewDoctorFilters(List<FilterDoctorResponse.DataBean> doctorFilterDetailsResponseList) {
 
-        imagelist.clear();
+        List<DoctorSearchResponse.BannerBean> banner = new ArrayList();
 
-        if(doctorDetailsResponseList!=null&&doctorDetailsResponseList.size()>0){
+        if(doctorFilterDetailsResponseList!=null&&doctorFilterDetailsResponseList.size()>0){
 
-            for(int i=0; i<doctorDetailsResponseList.size(); i++){
+            for(int i=0; i<doctorFilterDetailsResponseList.size(); i++){
 
-                if(doctorDetailsResponseList.get(i).getDoctor_img()!=null&&!doctorDetailsResponseList.get(i).getDoctor_img().isEmpty()){
+                if(doctorFilterDetailsResponseList.get(i).getDoctor_img()!=null&&!doctorFilterDetailsResponseList.get(i).getDoctor_img().isEmpty()){
 
-                    imagelist.add(doctorDetailsResponseList.get(i).getDoctor_img());
+                    banner.add(new DoctorSearchResponse.BannerBean(doctorFilterDetailsResponseList.get(i).getDoctor_img()));
                 }
                 else {
 
-                    imagelist.add(APIClient.BANNER_IMAGE_URL);
+                    banner.add(new DoctorSearchResponse.BannerBean(doctorFilterDetailsResponseList.get(i).getDoctor_img()));
                 }
 
 
             }
 
+            viewpageData(banner);
+
         }
         else {
 
-            imagelist.add(APIClient.BANNER_IMAGE_URL);
-        }
+            banner.add(new DoctorSearchResponse.BannerBean(APIClient.BANNER_IMAGE_URL));
 
+            viewpageData(banner);
+        }
 
         rv_nearbydoctors.setLayoutManager(new LinearLayoutManager(mContext));
         rv_nearbydoctors.setItemAnimator(new DefaultItemAnimator());

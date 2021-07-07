@@ -229,21 +229,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/normal_margin_value8"
-                android:layout_marginBottom="@dimen/big_margin_value"
                 android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
                     android:background="@drawable/rounded_corner_button"
-                    android:elevation="9dp">
+                    android:elevation="9dp"
+                    android:visibility="gone">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cv_pet"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         app:cardPreventCornerOverlap="false"
-                        app:cardUseCompatPadding="false">
+                        app:cardUseCompatPadding="false"
+                        android:visibility="gone">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -637,7 +638,8 @@
                 android:maxLines="1"
                 android:text="@string/pets_handled"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="gone"/>
 
 
             <TextView
@@ -648,7 +650,8 @@
                 android:fontFamily="@font/futuramediumbt"
                 android:text=""
                 android:textColor="@color/new_sec_txt_color"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:visibility="gone"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"

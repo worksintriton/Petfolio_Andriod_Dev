@@ -115,8 +115,6 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
 
 
         holder.ll_add.setOnClickListener(v -> {
-           /* Intent i = new Intent(context, AddYourPetOldUserActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(i);*/
             Intent i = new Intent(context, BasicPetDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(i);
         });
@@ -176,7 +174,7 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
             holder.ll_add.setVisibility(View.VISIBLE);
         }
 
-        holder.cv_root.setOnClickListener(new View.OnClickListener() {
+       /* holder.cv_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -212,7 +210,7 @@ public class ManagePetListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
                 context.startActivity(i);
 
             }
-        });
+        });*/
     }
 
 

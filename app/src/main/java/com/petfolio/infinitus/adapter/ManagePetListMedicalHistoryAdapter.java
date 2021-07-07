@@ -2,15 +2,13 @@ package com.petfolio.infinitus.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,11 +19,9 @@ import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.interfaces.PetDeleteListener;
-import com.petfolio.infinitus.petlover.AddYourPetOldUserActivity;
-import com.petfolio.infinitus.petlover.EditYourPetProfileInfoActivity;
+
 import com.petfolio.infinitus.responsepojo.PetListResponse;
 
-import java.io.Serializable;
 import java.util.List;
 
 
@@ -71,8 +67,6 @@ public class ManagePetListMedicalHistoryAdapter extends  RecyclerView.Adapter<Re
         if (petListResponseList.get(position).getPet_name() != null) {
             holder.txt_pet_name.setText(petListResponseList.get(position).getPet_name());
         }
-
-
 
         if (petListResponseList.size() > 0) {
             String TAG = "ManagePetListAdapter";
