@@ -157,19 +157,11 @@ public class FragmentSPCompletedAppointment extends Fragment implements View.OnC
                if (response.body() != null) {
 
                    if(200 == response.body().getCode()){
-                       if(response.body().getData() != null){
+                       if(response.body().getData() != null && response.body().getData().size()>0){
                            completedAppointmentResponseList = response.body().getData();
                            Log.w(TAG,"Size"+completedAppointmentResponseList.size());
                            Log.w(TAG,"spCompletedAppointmentResponseCall : "+new Gson().toJson(completedAppointmentResponseList));
-                           if(response.body().getData().isEmpty()){
-                               txt_no_records.setVisibility(View.VISIBLE);
-                               txt_no_records.setText(getResources().getString(R.string.no_completed_appointments_sp));
-                               rv_completedappointment.setVisibility(View.GONE);
-                               btn_load_more.setVisibility(View.GONE);
-                               btn_filter.setVisibility(View.GONE);
-                           }
-                           else{
-                               txt_no_records.setVisibility(View.GONE);
+                              txt_no_records.setVisibility(View.GONE);
                                rv_completedappointment.setVisibility(View.VISIBLE);
                                Log.w(TAG,"Size : "+completedAppointmentResponseList.size());
                                if(completedAppointmentResponseList.size() > 3){
@@ -179,7 +171,14 @@ public class FragmentSPCompletedAppointment extends Fragment implements View.OnC
 
                                }
                                setView();
-                           }
+                           }else{
+                               rv_completedappointment.setVisibility(View.GONE);
+                               btn_load_more.setVisibility(View.GONE);
+                               btn_filter.setVisibility(View.GONE);
+                               txt_no_records.setVisibility(View.VISIBLE);
+                               txt_no_records.setText(getResources().getString(R.string.no_completed_appointments_sp));
+
+
                        }
 
 

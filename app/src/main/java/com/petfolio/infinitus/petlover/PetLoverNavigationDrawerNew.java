@@ -282,6 +282,13 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
         });
 
         ImageView img_cart = toolbar_layout.findViewById(R.id.img_cart);
+        ImageView img_notification = toolbar_layout.findViewById(R.id.img_notification);
+        img_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),NotificationActivity.class));
+            }
+        });
         img_cart.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("LogNotTimber")
             @Override

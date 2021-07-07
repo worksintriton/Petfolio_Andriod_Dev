@@ -160,6 +160,7 @@
                     android:scaleType="centerInside"
                     tools:ignore="ContentDescription" />
                 <ImageView
+                    android:id="@+id/img_notification"
                     android:layout_toEndOf="@+id/img_cart"
                     android:layout_width="24dp"
                     android:layout_height="24dp"

@@ -198,18 +198,11 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
                if (response.body() != null) {
 
                    if(200 == response.body().getCode()){
-                       if(response.body().getData() != null){
+
+                       if(response.body().getData() != null && response.body().getData().size()>0){
                            newAppointmentResponseList = response.body().getData();
                            Log.w(TAG,"Size"+newAppointmentResponseList.size());
                            Log.w(TAG,"newAppointmentResponseList : "+new Gson().toJson(newAppointmentResponseList));
-                       }
-
-                       if(response.body().getData() != null && response.body().getData().isEmpty()){
-                           txt_no_records.setVisibility(View.VISIBLE);
-                           txt_no_records.setText(getResources().getString(R.string.no_new_appointments_petlover));
-                           rv_newappointment.setVisibility(View.GONE);
-                           btn_load_more.setVisibility(View.GONE);
-                       }else{
                            txt_no_records.setVisibility(View.GONE);
                            rv_newappointment.setVisibility(View.VISIBLE);
                            if(newAppointmentResponseList.size()>3){
@@ -218,6 +211,13 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
                                btn_load_more.setVisibility(View.GONE);
                            }
                            setView();
+
+
+                       }else{
+                           rv_newappointment.setVisibility(View.GONE);
+                           btn_load_more.setVisibility(View.GONE);
+                           txt_no_records.setVisibility(View.VISIBLE);
+                           txt_no_records.setText(getResources().getString(R.string.no_new_appointments_petlover));
                        }
 
                    }

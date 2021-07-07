@@ -160,28 +160,29 @@ public class FragmentSPMissedAppointment extends Fragment implements View.OnClic
 
                if (response.body() != null) {
                    if(200 == response.body().getCode()){
-                       if(response.body().getData() != null){
-                           missedAppointmentResponseList = response.body().getData();
-                           Log.w(TAG,"Size"+missedAppointmentResponseList.size());
-                           Log.w(TAG,"spMissedAppointmentResponseCall : "+new Gson().toJson(missedAppointmentResponseList));
-                           if(response.body().getData().isEmpty()){
-                               txt_no_records.setVisibility(View.VISIBLE);
-                               txt_no_records.setText(getResources().getString(R.string.no_missed_appointments_sp));
-                               rv_missedappointment.setVisibility(View.GONE);
+                       if(response.body().getData() != null && response.body().getData().size()>0){
+                         missedAppointmentResponseList = response.body().getData();
+                         Log.w(TAG,"Size"+missedAppointmentResponseList.size());
+                         Log.w(TAG,"spMissedAppointmentResponseCall : "+new Gson().toJson(missedAppointmentResponseList));
+                         txt_no_records.setVisibility(View.GONE);
+                         rv_missedappointment.setVisibility(View.VISIBLE);
+                         if(missedAppointmentResponseList.size()>3){
+                               btn_load_more.setVisibility(View.VISIBLE);
+                          }else{
                                btn_load_more.setVisibility(View.GONE);
-                               btn_filter.setVisibility(View.GONE);
                            }
-                           else{
-                               txt_no_records.setVisibility(View.GONE);
-                               rv_missedappointment.setVisibility(View.VISIBLE);
-                               if(missedAppointmentResponseList.size()>3){
-                                   btn_load_more.setVisibility(View.VISIBLE);
-                               }else{
-                                   btn_load_more.setVisibility(View.GONE);
-                               }
-                               setView();
-                           }
+                           setView();
+
+
+
+                       } else{
+                           txt_no_records.setVisibility(View.VISIBLE);
+                           txt_no_records.setText(getResources().getString(R.string.no_missed_appointments_sp));
+                           rv_missedappointment.setVisibility(View.GONE);
+                           btn_load_more.setVisibility(View.GONE);
+                           btn_filter.setVisibility(View.GONE);
                        }
+
 
                    }
 

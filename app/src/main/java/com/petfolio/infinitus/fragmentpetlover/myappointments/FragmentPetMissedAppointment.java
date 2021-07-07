@@ -77,9 +77,6 @@ public class FragmentPetMissedAppointment extends Fragment implements View.OnCli
     SwipeRefreshLayout refresh_layout;
 
 
-
-
-
     SessionManager session;
     String type = "",name = "",doctorid = "";
     private SharedPreferences preferences;
@@ -186,19 +183,11 @@ public class FragmentPetMissedAppointment extends Fragment implements View.OnCli
 
 
                 if (response.body() != null) {
-
                     if(200 == response.body().getCode()){
-                        if(response.body().getData() != null) {
+                        if(response.body().getData() != null && response.body().getData().size()>0){
                             missedAppointmentResponseList = response.body().getData();
                             Log.w(TAG, "Size" + missedAppointmentResponseList.size());
                             Log.w(TAG, "missedAppointmentResponseList : " + new Gson().toJson(missedAppointmentResponseList));
-                        }
-                        if(response.body().getData() != null && response.body().getData().isEmpty()){
-                            txt_no_records.setVisibility(View.VISIBLE);
-                            txt_no_records.setText(getResources().getString(R.string.no_missed_appointments_petlover));
-                            rv_missedappointment.setVisibility(View.GONE);
-                            btn_load_more.setVisibility(View.GONE);
-                        }else{
                             txt_no_records.setVisibility(View.GONE);
                             rv_missedappointment.setVisibility(View.VISIBLE);
                             if(missedAppointmentResponseList.size()>3){
@@ -207,6 +196,13 @@ public class FragmentPetMissedAppointment extends Fragment implements View.OnCli
                                 btn_load_more.setVisibility(View.GONE);
                             }
                             setView();
+
+                        }else{
+                            rv_missedappointment.setVisibility(View.GONE);
+                            btn_load_more.setVisibility(View.GONE);
+                            txt_no_records.setVisibility(View.VISIBLE);
+                            txt_no_records.setText(getResources().getString(R.string.no_missed_appointments_petlover));
+
                         }
 
                     }
