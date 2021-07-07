@@ -204,7 +204,7 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
                         Log.w(TAG,"completedAppointmentResponseList : "+new Gson().toJson(completedAppointmentResponseList));
                         if(response.body().getData() != null && response.body().getData().isEmpty()){
                             txt_no_records.setVisibility(View.VISIBLE);
-                            txt_no_records.setText("No completed appointments");
+                            txt_no_records.setText(getResources().getString(R.string.no_completed_appointments_petlover));
                             rv_completedappointment.setVisibility(View.GONE);
                             btn_load_more.setVisibility(View.GONE);
                             btn_filter.setVisibility(View.GONE);

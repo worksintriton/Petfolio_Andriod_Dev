@@ -145,7 +145,7 @@ public class NotificationActivity extends AppCompatActivity {
                         }else{
                             rvnotifiaction.setVisibility(View.GONE);
                             tvNorecords.setVisibility(View.VISIBLE);
-                            tvNorecords.setText("No notifications");
+                            tvNorecords.setText(getResources().getString(R.string.no_notifications));
 
                         }
 

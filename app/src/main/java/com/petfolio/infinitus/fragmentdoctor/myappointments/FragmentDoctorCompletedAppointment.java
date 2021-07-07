@@ -1,4 +1,4 @@
-package com.petfolio.infinitus.fragmentserviceprovider;
+package com.petfolio.infinitus.fragmentdoctor.myappointments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -21,16 +21,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.adapter.SPCompletedAppointmentAdapter;
+import com.petfolio.infinitus.adapter.DoctorCompletedAppointmentAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.requestpojo.SPAppointmentRequest;
-import com.petfolio.infinitus.responsepojo.SPAppointmentResponse;
+import com.petfolio.infinitus.requestpojo.DoctorNewAppointmentRequest;
+import com.petfolio.infinitus.responsepojo.DoctorAppointmentsResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
@@ -43,8 +45,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentSPCompletedAppointment extends Fragment implements View.OnClickListener {
-    private String TAG = "FragmentSPCompletedAppointment";
+public class FragmentDoctorCompletedAppointment extends Fragment implements View.OnClickListener {
+    private String TAG = "FragmentDoctorCompletedAppointment";
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
@@ -70,13 +72,13 @@ public class FragmentSPCompletedAppointment extends Fragment implements View.OnC
 
 
     SessionManager session;
-    String type = "",username = "",userid = "";
+    String type = "",name = "",doctorid = "";
     private SharedPreferences preferences;
     private Context mContext;
-    private List<SPAppointmentResponse.DataBean> completedAppointmentResponseList;
+    private List<DoctorAppointmentsResponse.DataBean> completedAppointmentResponseList;
 
 
-    public FragmentSPCompletedAppointment() {
+    public FragmentDoctorCompletedAppointment() {
 
     }
 
@@ -86,7 +88,7 @@ public class FragmentSPCompletedAppointment extends Fragment implements View.OnC
         Log.w(TAG,"onCreateView");
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        View view = inflater.inflate(R.layout.fragment_sp_completed_appointment, container, false);
+        View view = inflater.inflate(R.layout.fragment_doctor_completed_appointment, container, false);
 
         ButterKnife.bind(this, view);
         mContext = getActivity();
@@ -100,16 +102,18 @@ public class FragmentSPCompletedAppointment extends Fragment implements View.OnC
         session = new SessionManager(getContext());
         HashMap<String, String> user = session.getProfileDetails();
 
-        userid = user.get(SessionManager.KEY_ID);
-        username = user.get(SessionManager.KEY_FIRST_NAME);
+        doctorid = user.get(SessionManager.KEY_ID);
 
-        Log.w(TAG,"userid"+userid +"username :"+username);
+        String doctorname = user.get(SessionManager.KEY_FIRST_NAME);
+
+        Log.w(TAG,"Doctorid"+doctorid +"doctorname :"+doctorname);
 
       
 
         if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-            spCompletedAppointmentResponseCall();
+            doctorCompletedAppointmentResponseCall();
         }
+
 
         final Handler handler = new Handler();
         Timer timer = new Timer();
@@ -121,7 +125,7 @@ public class FragmentSPCompletedAppointment extends Fragment implements View.OnC
                         try {
                             //your method here
                             if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-                                spCompletedAppointmentResponseCall();
+                                doctorCompletedAppointmentResponseCall();
                             }
 
                         } catch (Exception e) {
@@ -132,56 +136,53 @@ public class FragmentSPCompletedAppointment extends Fragment implements View.OnC
         };
         timer.schedule(doAsynchronousTask, 0, 30000);//you can put 30000(30 secs)
 
-
         return view;
     }
 
 
 
     @SuppressLint("LogNotTimber")
-    private void spCompletedAppointmentResponseCall() {
+    private void doctorCompletedAppointmentResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<SPAppointmentResponse> call = ApiService.spCompletedAppointmentResponseCall(RestUtils.getContentType(),spAppointmentRequest());
+        Call<DoctorAppointmentsResponse> call = ApiService.doctorCompletedAppointmentResponseCall(RestUtils.getContentType(),doctorNewAppointmentRequest());
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
-        call.enqueue(new Callback<SPAppointmentResponse>() {
-            @SuppressLint({"LogNotTimber", "SetTextI18n"})
+        call.enqueue(new Callback<DoctorAppointmentsResponse>() {
+            @SuppressLint("SetTextI18n")
             @Override
-            public void onResponse(@NonNull Call<SPAppointmentResponse> call, @NonNull Response<SPAppointmentResponse> response) {
+            public void onResponse(@NonNull Call<DoctorAppointmentsResponse> call, @NonNull Response<DoctorAppointmentsResponse> response) {
                avi_indicator.smoothToHide();
-                Log.w(TAG,"spCompletedAppointmentResponseCall"+ "--->" + new Gson().toJson(response.body()));
+                Log.w(TAG,"DoctorCompletedAppointmentResponse"+ "--->" + new Gson().toJson(response.body()));
 
 
                if (response.body() != null) {
 
                    if(200 == response.body().getCode()){
-                       if(response.body().getData() != null){
+                       if(response.body().getData() != null) {
                            completedAppointmentResponseList = response.body().getData();
-                           Log.w(TAG,"Size"+completedAppointmentResponseList.size());
-                           Log.w(TAG,"spCompletedAppointmentResponseCall : "+new Gson().toJson(completedAppointmentResponseList));
-                           if(response.body().getData().isEmpty()){
-                               txt_no_records.setVisibility(View.VISIBLE);
-                               txt_no_records.setText("No completed appointments");
-                               rv_completedappointment.setVisibility(View.GONE);
-                               btn_load_more.setVisibility(View.GONE);
-                               btn_filter.setVisibility(View.GONE);
-                           }
-                           else{
-                               txt_no_records.setVisibility(View.GONE);
-                               rv_completedappointment.setVisibility(View.VISIBLE);
-                               Log.w(TAG,"Size : "+completedAppointmentResponseList.size());
-                               if(completedAppointmentResponseList.size() > 3){
-                                   btn_load_more.setVisibility(View.VISIBLE);
-                               }else{
-                                   btn_load_more.setVisibility(View.GONE);
-
-                               }
-                               setView();
-                           }
+                           Log.w(TAG, "Size" + completedAppointmentResponseList.size());
+                           Log.w(TAG, "completedAppointmentResponseList : " + new Gson().toJson(completedAppointmentResponseList));
                        }
+                       if(response.body().getData() != null && response.body().getData().isEmpty()){
+                           txt_no_records.setVisibility(View.VISIBLE);
+                           txt_no_records.setText(getResources().getString(R.string.no_completed_appointments_doctor));
+                           rv_completedappointment.setVisibility(View.GONE);
+                           btn_load_more.setVisibility(View.GONE);
+                           btn_filter.setVisibility(View.GONE);
+                       }else{
+                           txt_no_records.setVisibility(View.GONE);
+                           rv_completedappointment.setVisibility(View.VISIBLE);
+                           Log.w(TAG,"Size : "+completedAppointmentResponseList.size());
+                           if(completedAppointmentResponseList.size() > 3){
+                               btn_load_more.setVisibility(View.VISIBLE);
+                           }else{
+                               btn_load_more.setVisibility(View.GONE);
 
+                           }
+                           setView();
+                       }
 
                    }
 
@@ -191,35 +192,38 @@ public class FragmentSPCompletedAppointment extends Fragment implements View.OnC
             }
 
             @Override
-            public void onFailure(@NonNull Call<SPAppointmentResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<DoctorAppointmentsResponse> call, @NonNull Throwable t) {
                 avi_indicator.smoothToHide();
 
-                Log.w(TAG,"SPAppointmentResponse flr"+"--->" + t.getMessage());
+                Log.w(TAG,"DoctorCompletedAppointmentResponseflr"+"--->" + t.getMessage());
             }
         });
 
     }
     @SuppressLint("LogNotTimber")
-    private SPAppointmentRequest spAppointmentRequest() {
-        SPAppointmentRequest spAppointmentRequest = new SPAppointmentRequest();
-        spAppointmentRequest.setSp_id(userid);
-        Log.w(TAG,"spAppointmentRequest"+ "--->" + new Gson().toJson(spAppointmentRequest));
-        return spAppointmentRequest;
+    private DoctorNewAppointmentRequest doctorNewAppointmentRequest() {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String currentDateandTime = simpleDateFormat.format(new Date());
+        DoctorNewAppointmentRequest doctorNewAppointmentRequest = new DoctorNewAppointmentRequest();
+        doctorNewAppointmentRequest.setDoctor_id(doctorid);
+        doctorNewAppointmentRequest.setCurrent_time(currentDateandTime);
+        Log.w(TAG,"doctorNewAppointmentRequest"+ "--->" + new Gson().toJson(doctorNewAppointmentRequest));
+        return doctorNewAppointmentRequest;
     }
     private void setView() {
         rv_completedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_completedappointment.setItemAnimator(new DefaultItemAnimator());
         int size = 3;
-        SPCompletedAppointmentAdapter spCompletedAppointmentAdapter = new SPCompletedAppointmentAdapter(getContext(), completedAppointmentResponseList, rv_completedappointment,size);
-        rv_completedappointment.setAdapter(spCompletedAppointmentAdapter);
+        DoctorCompletedAppointmentAdapter doctorCompletedAppointmentAdapter = new DoctorCompletedAppointmentAdapter(getContext(), completedAppointmentResponseList, rv_completedappointment,size);
+        rv_completedappointment.setAdapter(doctorCompletedAppointmentAdapter);
 
     }
     private void setViewLoadMore() {
         rv_completedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_completedappointment.setItemAnimator(new DefaultItemAnimator());
         int size = completedAppointmentResponseList.size();
-        SPCompletedAppointmentAdapter spCompletedAppointmentAdapter = new SPCompletedAppointmentAdapter(getContext(), completedAppointmentResponseList, rv_completedappointment,size);
-        rv_completedappointment.setAdapter(spCompletedAppointmentAdapter);
+        DoctorCompletedAppointmentAdapter doctorCompletedAppointmentAdapter = new DoctorCompletedAppointmentAdapter(getContext(), completedAppointmentResponseList, rv_completedappointment,size);
+        rv_completedappointment.setAdapter(doctorCompletedAppointmentAdapter);
 
     }
 

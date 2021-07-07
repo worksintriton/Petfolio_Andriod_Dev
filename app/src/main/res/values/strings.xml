@@ -437,7 +437,7 @@
     <string name="text_with_bullet2"> \u2022 Dermatologist</string>
     <string name="text_with_bullet3"> \u2022 Medicine Physician</string>
 
-    <string name="your_cart_is_empty">Your cart is empty!</string>
+    <string name="your_cart_is_empty">Buy me something please</string>
     <string name="cancel_order">Cancel order</string>
     <string name="track_order">Track order</string>
     <string name="return_order">Return order</string>
@@ -548,6 +548,29 @@
     <string name="powered_by">Powered By:</string>
     <string name="owner_s_name">Owner\'s Name</string>
     <string name="_200_km">266.68 KM</string>
+
+    <string name="no_new_appointments_petlover">Is it time for the Doc yet?</string>
+    <string name="no_missed_appointments_petlover">I miss my Doc</string>
+    <string name="no_completed_appointments_petlover">I miss my Doc</string>
+
+    <string name="no_phone_numbers">I know you got me!</string>
+    <string name="no_notifications">I\'m bored</string>
+    <string name="no_new_pets">Add your loved one!</string>
+    <string name="no_pet_service">Groom me please!</string>
+    <string name="cart_empty">Buy me something please</string>
+
+    <string name="no_new_appointments_doctor">Someone needs your love</string>
+    <string name="no_missed_appointments_doctor">You make this world a Woofer place</string>
+    <string name="no_completed_appointments_doctor">Time to get Jiggy with it</string>
+
+    <string name="no_new_appointments_sp">Someone needs your love</string>
+    <string name="no_missed_appointments_sp">You make this world a Woofer place</string>
+    <string name="no_completed_appointments_sp">Time to get Jiggy with it</string>
+
+    <string name="no_holidays">Have a great Holiday Doc. You need it!</string>
+
+
+
 
 
 </resources>

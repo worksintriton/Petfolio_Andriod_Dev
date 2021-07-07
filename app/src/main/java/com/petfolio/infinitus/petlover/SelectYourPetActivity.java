@@ -338,7 +338,7 @@ public class SelectYourPetActivity extends AppCompatActivity implements View.OnC
                         }
                         else{
                             txt_no_records.setVisibility(View.VISIBLE);
-                            txt_no_records.setText("No pets");
+                            txt_no_records.setText(getResources().getString(R.string.no_new_pets));
                             rv_pet.setVisibility(View.GONE);
                         }
 

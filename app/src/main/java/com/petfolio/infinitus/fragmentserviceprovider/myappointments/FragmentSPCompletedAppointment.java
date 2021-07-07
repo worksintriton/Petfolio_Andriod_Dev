@@ -1,4 +1,4 @@
-package com.petfolio.infinitus.fragmentserviceprovider;
+package com.petfolio.infinitus.fragmentserviceprovider.myappointments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -21,13 +21,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.adapter.DoctorMissedAppointmentAdapter;
-import com.petfolio.infinitus.adapter.SPMissedAppointmentAdapter;
+import com.petfolio.infinitus.adapter.SPCompletedAppointmentAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.requestpojo.DoctorNewAppointmentRequest;
 import com.petfolio.infinitus.requestpojo.SPAppointmentRequest;
-import com.petfolio.infinitus.responsepojo.DoctorMissedAppointmentResponse;
 import com.petfolio.infinitus.responsepojo.SPAppointmentResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
@@ -36,7 +33,6 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -47,10 +43,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentSPMissedAppointment extends Fragment implements View.OnClickListener {
-    private String TAG = "FragmentSPMissedAppointment";
-
-
+public class FragmentSPCompletedAppointment extends Fragment implements View.OnClickListener {
+    private String TAG = "FragmentSPCompletedAppointment";
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
@@ -61,8 +55,8 @@ public class FragmentSPMissedAppointment extends Fragment implements View.OnClic
     TextView txt_no_records;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.rv_missedappointment)
-    RecyclerView rv_missedappointment;
+    @BindView(R.id.rv_completedappointment)
+    RecyclerView rv_completedappointment;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_load_more)
@@ -74,14 +68,15 @@ public class FragmentSPMissedAppointment extends Fragment implements View.OnClic
 
 
 
+
     SessionManager session;
     String type = "",username = "",userid = "";
     private SharedPreferences preferences;
     private Context mContext;
-    private List<SPAppointmentResponse.DataBean> missedAppointmentResponseList;
+    private List<SPAppointmentResponse.DataBean> completedAppointmentResponseList;
 
 
-    public FragmentSPMissedAppointment() {
+    public FragmentSPCompletedAppointment() {
 
     }
 
@@ -91,7 +86,7 @@ public class FragmentSPMissedAppointment extends Fragment implements View.OnClic
         Log.w(TAG,"onCreateView");
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        View view = inflater.inflate(R.layout.fragment_sp_missed, container, false);
+        View view = inflater.inflate(R.layout.fragment_sp_completed_appointment, container, false);
 
         ButterKnife.bind(this, view);
         mContext = getActivity();
@@ -104,6 +99,7 @@ public class FragmentSPMissedAppointment extends Fragment implements View.OnClic
 
         session = new SessionManager(getContext());
         HashMap<String, String> user = session.getProfileDetails();
+
         userid = user.get(SessionManager.KEY_ID);
         username = user.get(SessionManager.KEY_FIRST_NAME);
 
@@ -112,7 +108,7 @@ public class FragmentSPMissedAppointment extends Fragment implements View.OnClic
       
 
         if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-            spMissedAppointmentResponseCall();
+            spCompletedAppointmentResponseCall();
         }
 
         final Handler handler = new Handler();
@@ -125,7 +121,7 @@ public class FragmentSPMissedAppointment extends Fragment implements View.OnClic
                         try {
                             //your method here
                             if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-                                spMissedAppointmentResponseCall();
+                                spCompletedAppointmentResponseCall();
                             }
 
                         } catch (Exception e) {
@@ -143,11 +139,11 @@ public class FragmentSPMissedAppointment extends Fragment implements View.OnClic
 
 
     @SuppressLint("LogNotTimber")
-    private void spMissedAppointmentResponseCall() {
+    private void spCompletedAppointmentResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<SPAppointmentResponse> call = ApiService.spMissedAppointmentResponseCall(RestUtils.getContentType(),spAppointmentRequest());
+        Call<SPAppointmentResponse> call = ApiService.spCompletedAppointmentResponseCall(RestUtils.getContentType(),spAppointmentRequest());
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<SPAppointmentResponse>() {
@@ -155,35 +151,40 @@ public class FragmentSPMissedAppointment extends Fragment implements View.OnClic
             @Override
             public void onResponse(@NonNull Call<SPAppointmentResponse> call, @NonNull Response<SPAppointmentResponse> response) {
                avi_indicator.smoothToHide();
-                Log.w(TAG,"SPAppointmentResponse "+ "--->" + new Gson().toJson(response.body()));
+                Log.w(TAG,"spCompletedAppointmentResponseCall"+ "--->" + new Gson().toJson(response.body()));
 
 
                if (response.body() != null) {
+
                    if(200 == response.body().getCode()){
                        if(response.body().getData() != null){
-                           missedAppointmentResponseList = response.body().getData();
-                           Log.w(TAG,"Size"+missedAppointmentResponseList.size());
-                           Log.w(TAG,"spMissedAppointmentResponseCall : "+new Gson().toJson(missedAppointmentResponseList));
+                           completedAppointmentResponseList = response.body().getData();
+                           Log.w(TAG,"Size"+completedAppointmentResponseList.size());
+                           Log.w(TAG,"spCompletedAppointmentResponseCall : "+new Gson().toJson(completedAppointmentResponseList));
                            if(response.body().getData().isEmpty()){
                                txt_no_records.setVisibility(View.VISIBLE);
-                               txt_no_records.setText("No missed appointments");
-                               rv_missedappointment.setVisibility(View.GONE);
+                               txt_no_records.setText(getResources().getString(R.string.no_completed_appointments_sp));
+                               rv_completedappointment.setVisibility(View.GONE);
                                btn_load_more.setVisibility(View.GONE);
                                btn_filter.setVisibility(View.GONE);
                            }
                            else{
                                txt_no_records.setVisibility(View.GONE);
-                               rv_missedappointment.setVisibility(View.VISIBLE);
-                               if(missedAppointmentResponseList.size()>3){
+                               rv_completedappointment.setVisibility(View.VISIBLE);
+                               Log.w(TAG,"Size : "+completedAppointmentResponseList.size());
+                               if(completedAppointmentResponseList.size() > 3){
                                    btn_load_more.setVisibility(View.VISIBLE);
                                }else{
                                    btn_load_more.setVisibility(View.GONE);
+
                                }
                                setView();
                            }
                        }
 
+
                    }
+
 
 
                 }
@@ -202,23 +203,23 @@ public class FragmentSPMissedAppointment extends Fragment implements View.OnClic
     private SPAppointmentRequest spAppointmentRequest() {
         SPAppointmentRequest spAppointmentRequest = new SPAppointmentRequest();
         spAppointmentRequest.setSp_id(userid);
-        Log.w(TAG,"spMissedAppointmentRequest"+ "--->" + new Gson().toJson(spAppointmentRequest));
+        Log.w(TAG,"spAppointmentRequest"+ "--->" + new Gson().toJson(spAppointmentRequest));
         return spAppointmentRequest;
     }
     private void setView() {
-        rv_missedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv_missedappointment.setItemAnimator(new DefaultItemAnimator());
+        rv_completedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv_completedappointment.setItemAnimator(new DefaultItemAnimator());
         int size = 3;
-        SPMissedAppointmentAdapter spMissedAppointmentAdapter = new SPMissedAppointmentAdapter(getContext(), missedAppointmentResponseList, rv_missedappointment,size);
-        rv_missedappointment.setAdapter(spMissedAppointmentAdapter);
+        SPCompletedAppointmentAdapter spCompletedAppointmentAdapter = new SPCompletedAppointmentAdapter(getContext(), completedAppointmentResponseList, rv_completedappointment,size);
+        rv_completedappointment.setAdapter(spCompletedAppointmentAdapter);
 
     }
     private void setViewLoadMore() {
-        rv_missedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv_missedappointment.setItemAnimator(new DefaultItemAnimator());
-        int size = missedAppointmentResponseList.size();
-        SPMissedAppointmentAdapter spMissedAppointmentAdapter = new SPMissedAppointmentAdapter(getContext(), missedAppointmentResponseList, rv_missedappointment,size);
-        rv_missedappointment.setAdapter(spMissedAppointmentAdapter);
+        rv_completedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv_completedappointment.setItemAnimator(new DefaultItemAnimator());
+        int size = completedAppointmentResponseList.size();
+        SPCompletedAppointmentAdapter spCompletedAppointmentAdapter = new SPCompletedAppointmentAdapter(getContext(), completedAppointmentResponseList, rv_completedappointment,size);
+        rv_completedappointment.setAdapter(spCompletedAppointmentAdapter);
 
     }
 

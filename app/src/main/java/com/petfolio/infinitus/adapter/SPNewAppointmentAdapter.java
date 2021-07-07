@@ -70,7 +70,7 @@ public class SPNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.
 
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "LogNotTimber"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
         Log.w(TAG,"Pet name-->"+newAppointmentResponseList.get(position).getPet_id().getPet_name());
@@ -94,6 +94,8 @@ public class SPNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.
             holder.txt_bookedon.setText("Booked on:"+" "+newAppointmentResponseList.get(position).getBooking_date_time());
 
         }
+
+        Log.w(TAG,"Pet_img : "+newAppointmentResponseList.get(position).getPet_id().getPet_img());
 
            if (newAppointmentResponseList.get(position).getPet_id().getPet_img() != null && !newAppointmentResponseList.get(position).getPet_id().getPet_img().isEmpty()) {
 

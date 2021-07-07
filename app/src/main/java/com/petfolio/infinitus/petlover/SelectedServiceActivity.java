@@ -671,7 +671,7 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
                 rv_sosnumbers.setVisibility(View.GONE);
                 btn_call.setVisibility(View.GONE);
                 txt_no_records.setVisibility(View.VISIBLE);
-                txt_no_records.setText("No phone numbers");
+                txt_no_records.setText(getResources().getString(R.string.no_phone_numbers));
 
             }
 

@@ -735,7 +735,7 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
                         }
                         else{
                             txt_no_records.setVisibility(View.VISIBLE);
-                            txt_no_records.setText("No pets");
+                            txt_no_records.setText(getResources().getString(R.string.no_new_pets));
                             ll_add.setVisibility(View.VISIBLE);
                             rv_pet.setVisibility(View.GONE);
                         }
@@ -944,7 +944,7 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
                 rv_sosnumbers.setVisibility(View.GONE);
                 btn_call.setVisibility(View.GONE);
                 txt_no_records.setVisibility(View.VISIBLE);
-                txt_no_records.setText("No phone numbers");
+                txt_no_records.setText(getResources().getString(R.string.no_phone_numbers));
 
             }
 

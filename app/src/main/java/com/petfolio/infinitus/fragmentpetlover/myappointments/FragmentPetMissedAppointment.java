@@ -195,7 +195,7 @@ public class FragmentPetMissedAppointment extends Fragment implements View.OnCli
                         }
                         if(response.body().getData() != null && response.body().getData().isEmpty()){
                             txt_no_records.setVisibility(View.VISIBLE);
-                            txt_no_records.setText("No missed appointments");
+                            txt_no_records.setText(getResources().getString(R.string.no_missed_appointments_petlover));
                             rv_missedappointment.setVisibility(View.GONE);
                             btn_load_more.setVisibility(View.GONE);
                         }else{

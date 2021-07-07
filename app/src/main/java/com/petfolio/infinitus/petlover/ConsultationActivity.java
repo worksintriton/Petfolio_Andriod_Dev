@@ -294,7 +294,7 @@ public class ConsultationActivity extends AppCompatActivity implements View.OnCl
                         }
                         else{
                             txt_no_records.setVisibility(View.VISIBLE);
-                            txt_no_records.setText("No pets");
+                            txt_no_records.setText(getResources().getString(R.string.no_new_pets));
                             rv_pet.setVisibility(View.GONE);
                         }
 

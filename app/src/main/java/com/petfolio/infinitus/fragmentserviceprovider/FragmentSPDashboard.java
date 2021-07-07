@@ -31,6 +31,9 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 
 
+import com.petfolio.infinitus.fragmentserviceprovider.myappointments.FragmentSPCompletedAppointment;
+import com.petfolio.infinitus.fragmentserviceprovider.myappointments.FragmentSPMissedAppointment;
+import com.petfolio.infinitus.fragmentserviceprovider.myappointments.FragmentSPNewAppointment;
 import com.petfolio.infinitus.requestpojo.SPCheckStatusRequest;
 import com.petfolio.infinitus.responsepojo.SPCheckStatusResponse;
 import com.petfolio.infinitus.serviceprovider.SPMyCalendarNewUserActivity;
