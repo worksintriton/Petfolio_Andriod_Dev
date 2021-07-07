@@ -50,14 +50,14 @@ public class AddPhotoIDPdfAdapter extends RecyclerView.Adapter<AddPhotoIDPdfAdap
 
         }
 
-        if (extension.equals(".png")||extension.equals(".jpg")||(extension.equals(".jpeg"))){
-            Glide.with(context)
-                    .load(photoIdPicBean.getPhoto_id_pic())
-                    .into(holder.certificate_pics_1);
+        if(extension != null && !extension.isEmpty()) {
+            if (extension.equals(".png") || extension.equals(".jpg") || (extension.equals(".jpeg"))) {
+                Glide.with(context)
+                        .load(photoIdPicBean.getPhoto_id_pic())
+                        .into(holder.certificate_pics_1);
 
-        }
-
-        else {
+            }
+        } else {
 
             holder.certificate_pics_1.setImageResource(R.drawable.pdf_icon);
         }

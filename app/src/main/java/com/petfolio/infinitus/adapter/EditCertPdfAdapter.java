@@ -58,15 +58,14 @@ public class EditCertPdfAdapter extends RecyclerView.Adapter<EditCertPdfAdapter.
 
         }
 
-        if (extension.equals(".png")||extension.equals(".jpg")||(extension.equals(".jpeg"))) {
-            Glide.with(context)
-                    .load(certificatePicBean.getBus_certif())
-                    .into(holder.pdf_file);
+        if(extension != null && !extension.isEmpty()) {
+            if (extension.equals(".png") || extension.equals(".jpg") || (extension.equals(".jpeg"))) {
+                Glide.with(context)
+                        .load(certificatePicBean.getBus_certif())
+                        .into(holder.pdf_file);
 
-        }
-
-        else {
-
+            }
+        } else {
             holder.pdf_file.setImageResource(R.drawable.pdf_icon);
         }
 

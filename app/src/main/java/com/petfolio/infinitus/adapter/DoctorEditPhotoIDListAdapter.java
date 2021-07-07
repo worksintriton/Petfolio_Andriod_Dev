@@ -61,15 +61,14 @@ public class DoctorEditPhotoIDListAdapter extends RecyclerView.Adapter<DoctorEdi
 
         }
 
-        if (extension.equals(".png")||extension.equals(".jpg")||(extension.equals(".jpeg"))) {
-            Glide.with(context)
-                    .load(photoIdPicBean.getPhoto_id_pic())
-                    .into(holder.pdf_file);
+        if(extension != null && !extension.isEmpty()) {
+            if (extension.equals(".png") || extension.equals(".jpg") || (extension.equals(".jpeg"))) {
+                Glide.with(context)
+                        .load(photoIdPicBean.getPhoto_id_pic())
+                        .into(holder.pdf_file);
 
-        }
-
-        else {
-
+            }
+        } else {
             holder.pdf_file.setImageResource(R.drawable.pdf_icon);
         }
 

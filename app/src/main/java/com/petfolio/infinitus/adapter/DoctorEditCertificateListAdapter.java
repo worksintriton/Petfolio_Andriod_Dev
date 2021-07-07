@@ -60,15 +60,14 @@ public class DoctorEditCertificateListAdapter extends RecyclerView.Adapter<Docto
             }
 
         }
+        if(extension != null && !extension.isEmpty()) {
+            if (extension.equals(".png") || extension.equals(".jpg") || (extension.equals(".jpeg"))) {
+                Glide.with(context)
+                        .load(certificatePicBean.getCertificate_pic())
+                        .into(holder.pdf_file);
 
-        if (extension.equals(".png")||extension.equals(".jpg")||(extension.equals(".jpeg"))) {
-            Glide.with(context)
-                    .load(certificatePicBean.getCertificate_pic())
-                    .into(holder.pdf_file);
-
-        }
-
-        else {
+            }
+        } else {
 
             holder.pdf_file.setImageResource(R.drawable.pdf_icon);
         }

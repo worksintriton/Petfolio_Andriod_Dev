@@ -50,15 +50,14 @@ public class AddSPCertPdfAdapter extends RecyclerView.Adapter<AddSPCertPdfAdapte
             }
 
         }
+        if(extension != null && !extension.isEmpty()) {
+            if (extension.equals(".png") || extension.equals(".jpg") || (extension.equals(".jpeg"))) {
+                Glide.with(context)
+                        .load(certificatePicBean.getBus_certif())
+                        .into(holder.certificate_pics_1);
 
-        if (extension.equals(".png")||extension.equals(".jpg")||(extension.equals(".jpeg"))) {
-            Glide.with(context)
-                    .load(certificatePicBean.getBus_certif())
-                    .into(holder.certificate_pics_1);
-
-        }
-
-        else {
+            }
+        } else {
 
             holder.certificate_pics_1.setImageResource(R.drawable.pdf_icon);
         }
