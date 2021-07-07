@@ -135,6 +135,7 @@
             android:inputType="numberDecimal"
             android:maxLength="15"
             android:maxLines="1"
+            android:imeOptions="actionDone"
             android:padding="15dp"
             android:textColor="@color/green"
             android:textColorHint="@color/dark_gray"
@@ -150,11 +151,13 @@
             android:hint="Product threshould"
             android:inputType="numberPassword"                android:maxLength="6"
             android:maxLines="1"
+            android:imeOptions="actionDone"
             android:padding="15dp"
             android:textColor="@color/green"
             android:textColorHint="@color/dark_gray"
             android:textSize="14sp"
-            tools:ignore="Autofill,LabelFor,TextFields" />
+            tools:ignore="Autofill,LabelFor,TextFields"
+            />
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="120dp"
@@ -176,7 +179,8 @@
                 tools:ignore="Autofill,LabelFor"
                 android:inputType="textMultiLine"
                 android:scrollbars="vertical"
-                android:maxLength="150"/>
+                android:maxLength="150"
+                android:imeOptions="actionDone"/>
 
         </RelativeLayout>
 
