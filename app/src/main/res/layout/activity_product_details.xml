@@ -96,8 +96,10 @@
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:layout_marginTop="20dp"
+        android:clickable="true"
         android:background="@drawable/new_rectagle_bgm_trans"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:focusable="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -105,6 +107,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginBottom="20dp"
             android:baselineAligned="false"
             android:orientation="horizontal"
             tools:ignore="UselessParent">
@@ -192,16 +195,6 @@
 
     </LinearLayout>
 
-    <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/avi_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        android:layout_gravity="center"
-        app:indicatorColor="@color/new_light_green"
-        app:indicatorName="LineSpinFadeLoaderIndicator" />
-
     <TextView
         android:id="@+id/txt_no_records"
         android:layout_width="match_parent"
@@ -213,5 +206,15 @@
         android:textColor="@color/color"
         android:textSize="16sp"
         android:visibility="gone" />
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:indicatorColor="@color/green"
+        app:indicatorName="LineSpinFadeLoaderIndicator" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

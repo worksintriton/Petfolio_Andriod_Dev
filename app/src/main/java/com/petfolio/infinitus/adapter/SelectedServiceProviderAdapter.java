@@ -21,6 +21,7 @@ import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.petlover.Service_Details_Activity;
 import com.petfolio.infinitus.responsepojo.SPSpecificServiceDetailsResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -34,12 +35,18 @@ public class SelectedServiceProviderAdapter extends  RecyclerView.Adapter<Recycl
 
     private int size;
     List<SPSpecificServiceDetailsResponse.DataBean.ServiceProviderBean> serviceProviderList;
+
+    List<SPSpecificServiceDetailsResponse.DataBean.ServiceProviderBean.BusServiceListBean> busServiceListBeanList;
     private String catid;
 
     private int distance;
     private int reviewcount;
     private int Count_value_start;
     private int Count_value_end;
+
+    // Create an ArrayList
+    ArrayList<String> serv_list
+            = new ArrayList<String>();
 
 
 
@@ -76,24 +83,101 @@ public class SelectedServiceProviderAdapter extends  RecyclerView.Adapter<Recycl
         Log.w(TAG,"distance : "+distance);
 
         currentItem = serviceProviderList.get(position);
-        holder.txt_serv_offer.setVisibility(View.GONE);
+
+//        holder.txt_serv_offer.setVisibility(View.GONE);
+
         holder.btn_book.setText("View");
-        if (serviceProviderList.get(position).getService_provider_name() != null) {
+
+        if (serviceProviderList.get(position).getService_provider_name() != null&& !serviceProviderList.get(position).getService_provider_name().isEmpty()) {
+
             holder.txt_service_providers.setText(serviceProviderList.get(position).getService_provider_name());
+
         }
+
+        else {
+
+            holder.txt_service_providers.setText("");
+
+        }
+
+        if (serviceProviderList.get(position).getCity_name() != null&& !serviceProviderList.get(position).getCity_name().isEmpty()) {
+
+            holder.txt_place.setText(serviceProviderList.get(position).getCity_name());
+
+        }
+
+        else {
+
+            holder.txt_place.setVisibility(View.GONE);
+
+            holder.view.setVisibility(View.GONE);
+
+        }
+
         if(serviceProviderList.get(position).getService_price() != 0) {
+
             holder.txt_serv_price.setVisibility(View.VISIBLE);
 
             holder.txt_serv_price.setText("\u20B9 " + serviceProviderList.get(position).getService_price());
-        }else{
+
+        }
+        else
+        {
             holder.txt_serv_price.setText("\u20B9 " + 0);
         }
-        if(serviceProviderList.get(position).getService_offer() != 0) {
-            holder.txt_serv_offer.setText(serviceProviderList.get(position).getService_offer() + "");
+
+        if(serviceProviderList.get(position).getBus_service_list()!=null&&serviceProviderList.get(position).getBus_service_list().size()>0) {
+
+            busServiceListBeanList = serviceProviderList.get(position).getBus_service_list();
+
+            if(busServiceListBeanList!= null&&busServiceListBeanList.size()>0) {
+
+                for (int i=0;i<busServiceListBeanList.size();i++){
+
+                    serv_list.add(busServiceListBeanList.get(i).getBus_service_list());
+                }
+                StringBuilder str = new StringBuilder("");
+
+                if(serv_list!=null&&serv_list.size()>0){
+
+                    // Traversing the ArrayList
+                    for (String eachstring : serv_list) {
+
+                        // Each element in ArrayList is appended
+                        // followed by comma
+                        str.append(eachstring).append(",");
+                    }
+
+                    // StringBuffer to String conversion
+                    String commaseparatedlist = str.toString();
+
+                    // By following condition you can remove the last
+                    // comma
+                    if (commaseparatedlist.length() > 0)
+                        commaseparatedlist
+                                = commaseparatedlist.substring(
+                                0, commaseparatedlist.length() - 1);
+
+                    if(commaseparatedlist!=null&&!commaseparatedlist.isEmpty()){
+
+                        holder.txt_serv_list.setText(commaseparatedlist);
+                    }
+
+                }
+            }
+
+            else {
+
+                holder.txt_serv_list.setText("");
+            }
+
         }
-//        if(serviceProviderList.get(position).getService_place() != null) {
-//            holder.txt_place.setText(serviceProviderList.get(position).getService_place());
-//        }
+
+        else {
+
+            holder.txt_serv_list.setText("");
+        }
+
         if(serviceProviderList.get(position).getDistance() != 0) {
             holder.txt_km.setText(serviceProviderList.get(position).getDistance() + " km");
         }else{
@@ -122,7 +206,7 @@ public class SelectedServiceProviderAdapter extends  RecyclerView.Adapter<Recycl
 
             }
 
-
+           String distances = String.valueOf(serviceProviderList.get(position).getDistance());
 
 
         holder.btn_book.setOnClickListener(new View.OnClickListener() {
@@ -132,7 +216,7 @@ public class SelectedServiceProviderAdapter extends  RecyclerView.Adapter<Recycl
                 i.putExtra("spid",serviceProviderList.get(position).get_id());
                 i.putExtra("catid",catid);
                 i.putExtra("from",from);
-                i.putExtra("distance",distance);
+                i.putExtra("distance",distances);
                 i.putExtra("reviewcount",reviewcount);
                 i.putExtra("Count_value_start",Count_value_start);
                 i.putExtra("Count_value_end",Count_value_end);
@@ -148,7 +232,7 @@ public class SelectedServiceProviderAdapter extends  RecyclerView.Adapter<Recycl
                 i.putExtra("spid",serviceProviderList.get(position).get_id());
                 i.putExtra("catid",catid);
                 i.putExtra("from",from);
-                i.putExtra("distance",distance);
+                i.putExtra("distance",distances);
                 i.putExtra("reviewcount",reviewcount);
                 i.putExtra("Count_value_start",Count_value_start);
                 i.putExtra("Count_value_end",Count_value_end);
@@ -177,11 +261,11 @@ public class SelectedServiceProviderAdapter extends  RecyclerView.Adapter<Recycl
     }
 
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_service_providers,txt_serv_price,txt_serv_offer,txt_place,txt_km,txt_star_rating,txt_review_count;
+        public TextView txt_service_providers,txt_serv_price,txt_serv_list,txt_place,txt_km,txt_star_rating,txt_review_count;
         public ImageView img_service;
         public Button btn_book;
         public LinearLayout ll_root;
-
+        public View view;
 
 
         public ViewHolderOne(View itemView) {
@@ -189,13 +273,14 @@ public class SelectedServiceProviderAdapter extends  RecyclerView.Adapter<Recycl
             img_service = itemView.findViewById(R.id.img_service);
             txt_service_providers = itemView.findViewById(R.id.txt_service_providers);
             txt_serv_price = itemView.findViewById(R.id.txt_price);
-            txt_serv_offer = itemView.findViewById(R.id.txt_serv_offer);
+            txt_serv_list = itemView.findViewById(R.id.txt_serv_list);
             txt_place = itemView.findViewById(R.id.txt_place);
             txt_km = itemView.findViewById(R.id.txt_dist);
             txt_star_rating = itemView.findViewById(R.id.txt_star_rating);
             txt_review_count = itemView.findViewById(R.id.txt_review_count);
             btn_book = itemView.findViewById(R.id.btn_book);
             ll_root = itemView.findViewById(R.id.ll_root);
+            view = itemView.findViewById(R.id.view9);
 
 
 

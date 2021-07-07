@@ -382,7 +382,8 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements V
                             String weight = String.valueOf(response.body().getData().getPet_id().getPet_weight());
                             String pet_dob = response.body().getData().getPet_id().getPet_dob();
 
-                            if(pet_dob != null){
+                            Log.w(TAG, "pet_dob "+pet_dob);
+                      /*      if(pet_dob != null&&!pet_dob.isEmpty()){
                                 String[] separated = pet_dob.split("-");
                                 String day = separated[0];
                                 String month = separated[1];
@@ -390,7 +391,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements V
                                 Log.w(TAG,"day : "+day+" month: "+month+" year : "+year);
 
                                 getAge(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
-                            }
+                            }*/
                             if (response.body().getData().getPet_id().isVaccinated()) {
                                 vaccinated = "Yes";
                                 ll_petlastvacinateddate.setVisibility(View.VISIBLE);
@@ -420,7 +421,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements V
 
                             setView(usrname, usr_image, servname, servcost, pet_name, pet_type, breed
 
-                                    , gender, colour, weight, order_date, orderid, payment_method, order_cost, vaccinated, addr);
+                                    , gender, colour, weight, order_date, orderid, payment_method, order_cost, vaccinated, addr,pet_dob);
                         }
                     }else{
                         scrollablContent.setVisibility(View.GONE);
@@ -451,7 +452,7 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements V
     }
 
     @SuppressLint({"SetTextI18n", "LongLogTag", "LogNotTimber"})
-    private void setView(String usrname, String usr_image, String servname, String servcost, String pet_name, String pet_type, String breed, String gender, String colour, String weight, String order_date, String orderid, String payment_method, String order_cost, String vaccinated, String addr) {
+    private void setView(String usrname, String usr_image, String servname, String servcost, String pet_name, String pet_type, String breed, String gender, String colour, String weight, String order_date, String orderid, String payment_method, String order_cost, String vaccinated, String addr, String pet_dob) {
 
 
         if(usr_image != null && !usr_image.isEmpty()){
@@ -531,9 +532,9 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements V
             txt_weight.setText(weight);
         }
 
-        if(petAgeandMonth != null && !petAgeandMonth.isEmpty()){
+        if(pet_dob != null && !pet_dob.isEmpty()){
 
-            txt_age.setText(petAgeandMonth);
+            txt_age.setText(pet_dob);
         }
 
         txt_vaccinated.setText(vaccinated);

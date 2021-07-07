@@ -238,7 +238,7 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
     String serv_name,selectedServiceImagepath;
 
 
-    private int distance;
+    private String distance;
     private int reviewcount;
     private int Count_value_start;
     private int Count_value_end;
@@ -268,8 +268,7 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
             spid = extras.getString("spid");
             catid = extras.getString("catid");
             from = extras.getString("from");
-
-            distance = extras.getInt("distance");
+            distance = extras.getString("distance");
             reviewcount = extras.getInt("reviewcount");
             Count_value_start = extras.getInt("Count_value_start");
             Count_value_end = extras.getInt("Count_value_end");
@@ -278,6 +277,10 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
 
         Log.w(TAG," userid : "+userid+ " spid : "+spid+" catid : "+catid+" from : "+from+" distance : "+distance);
 
+        if(distance!=null&&!distance.isEmpty()){
+
+            APIClient.SP_DISTANCE = distance;
+        }
         if(spid != null && userid != null) {
             if (new ConnectionDetector(Service_Details_Activity.this).isNetworkAvailable(Service_Details_Activity.this)) {
                 SPDetailsRepsonseCall();
@@ -613,14 +616,14 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
 //                        if(response.body().getData().getComments() != 0) {
 //                             comments = response.body().getData().getComments();
 //                        }
-                        if(response.body().getData().getDistance() != 0) {
-                             distance = response.body().getData().getDistance();
-                             txt_distance.setText(distance+"");
-
-                        }else{
-                            distance = 0;
-                            txt_distance.setText(0+"");
-                        }
+//                        if(response.body().getData().getDistance() != 0) {
+//                             distance = response.body().getData().getDistance();
+//                             txt_distance.setText(distance+"");
+//
+//                        }else{
+//                            distance = 0;
+//                            txt_distance.setText(0+"");
+//                        }
                         if( response.body().getData().getSp_loc() != null) {
                              location = response.body().getData().getSp_loc();
 
@@ -743,10 +746,16 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
                         if(location != null && !location.isEmpty()){
                             txt_place.setText(location);
                         }
-                        if(distance != 0 ){
+
+                        if(distance != null&&!distance.isEmpty()){
+
                             txt_distance.setText(distance+"");
-                        }else{
-                            txt_distance.setText("0");
+
+                        }
+                        else if(APIClient.SP_DISTANCE != null&&!APIClient.SP_DISTANCE.isEmpty()){
+
+                            txt_distance.setText(APIClient.SP_DISTANCE+"");
+
                         }
 
 

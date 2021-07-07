@@ -9,7 +9,7 @@ public class SPSpecificServiceDetailsResponse {
      * Status : Success
      * Message : Service Provider List
      * alert_msg : Around 15 kms no recorde found, shall i show above 15 kms
-     * Data : {"Service_Details":{"_id":"5fe185d61996f651f5133693","image_path":"http://54.212.108.156:3000/api/uploads/1624556230013.png","title":"Pet Walking","count":0},"Service_provider":[{"_id":"60b0b86d67f25056fe286c90","image":"http://54.212.108.156:3000/api/uploads/60b0b7b267f25056fe286c8f2805150112","service_provider_name":"Dinesh sp","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624014101733.jpeg","service_price":0,"service_offer":0,"service_place":"Eswaran Koil Street,, Harbour quaters, Tirusulam, Chennai, Tamil Nadu 600043, India","distance":269.84,"rating_count":5,"comments_count":12},{"_id":"60b4ea2d541a437c7b9c6102","image":"http://54.212.108.156:3000/api/uploads/60b4e9cc541a437c7b9c61013105192216","service_provider_name":"Cary Carole","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624014273333.jpeg","service_price":0,"service_offer":0,"service_place":"ARM College Road, Vadamelpakkam, Tamil Nadu 603204, India","distance":243.73,"rating_count":5,"comments_count":12},{"_id":"60b4eb0c541a437c7b9c6105","image":"http://54.212.108.156:3000/api/uploads/60b4eab6541a437c7b9c61043105192600","service_provider_name":"Clark Charlie ","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624014285183.jpeg","service_price":0,"service_offer":0,"service_place":"Palavedu Pettai Aeri Karai Road, Palavedu, Tamil Nadu 602024, India","distance":278.12,"rating_count":5,"comments_count":12},{"_id":"60b4ec5e541a437c7b9c6109","image":"http://54.212.108.156:3000/api/uploads/60b4ebe8541a437c7b9c61083105193140","service_provider_name":"dean eve","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624014296213.jpeg","service_price":0,"service_offer":0,"service_place":"50, Old GST Rd, Ponnan Nagar, Tambaram West, Irumbuliyur, Chennai, Tamil Nadu 600059, India","distance":260.54,"rating_count":5,"comments_count":12},{"_id":"60b7800933155d6d5beed8c8","image":"http://54.212.108.156:3000/api/uploads/1622638591264.jpeg","service_provider_name":"Sandy pet shop","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624014307333.jpeg","service_price":0,"service_offer":0,"service_place":"Salem 133, Vmr Theatre Back Side Rd, Shevapet, Salem, Tamil Nadu 636002, India","distance":85.67,"rating_count":5,"comments_count":12},{"_id":"60b783d133155d6d5beed8da","image":"http://54.212.108.156:3000/api/uploads/1622639541685.jpeg","service_provider_name":"Samm Pet Clinic","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624014322134.jpeg","service_price":0,"service_offer":0,"service_place":"Salem 133, Vmr Theatre Back Side Rd, Shevapet, Salem, Tamil Nadu 636002, India","distance":85.67,"rating_count":5,"comments_count":12}]}
+     * Data : {"Service_Details":{"_id":"5fe185d61996f651f5133693","image_path":"http://54.212.108.156:3000/api/uploads/1624556230013.png","title":"Pet Walking","count":0},"Service_provider":[{"_id":"60b0b86d67f25056fe286c90","image":"http://54.212.108.156:3000/api/uploads/60b0b7b267f25056fe286c8f2805150112","service_provider_name":"Dinesh sp","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624014101733.jpeg","service_price":0,"service_offer":0,"city_name":"","bus_service_list":[{"amount":200,"time_slots":"45 mins","bus_service_list":" Dog Walking"},{"amount":300,"time_slots":"15 mins","bus_service_list":" Dog Grooming"}],"service_place":"Eswaran Koil Street,, Harbour quaters, Tirusulam, Chennai, Tamil Nadu 600043, India","distance":269.84,"rating_count":5,"comments_count":12},{"_id":"60b4ea2d541a437c7b9c6102","image":"http://54.212.108.156:3000/api/uploads/60b4e9cc541a437c7b9c61013105192216","service_provider_name":"Cary Carole","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624014273333.jpeg","service_price":0,"service_offer":0,"city_name":"","bus_service_list":[{"amount":300,"time_slots":"30 mins","bus_service_list":" Dog Walking"},{"amount":259,"time_slots":"15 mins","bus_service_list":" Dog Grooming"},{"amount":300,"time_slots":"15 mins","bus_service_list":" Dog Training"}],"service_place":"ARM College Road, Vadamelpakkam, Tamil Nadu 603204, India","distance":243.73,"rating_count":5,"comments_count":12},{"_id":"60b4eb0c541a437c7b9c6105","image":"http://54.212.108.156:3000/api/uploads/60b4eab6541a437c7b9c61043105192600","service_provider_name":"Clark Charlie ","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624014285183.jpeg","service_price":0,"service_offer":0,"city_name":"","bus_service_list":[{"amount":300,"time_slots":"45 mins","bus_service_list":" Dog Walking"},{"amount":300,"time_slots":"15 mins","bus_service_list":" Dog Grooming"}],"service_place":"Palavedu Pettai Aeri Karai Road, Palavedu, Tamil Nadu 602024, India","distance":278.12,"rating_count":5,"comments_count":12},{"_id":"60b4ec5e541a437c7b9c6109","image":"http://54.212.108.156:3000/api/uploads/60b4ebe8541a437c7b9c61083105193140","service_provider_name":"dean eve","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624014296213.jpeg","service_price":0,"service_offer":0,"city_name":"","bus_service_list":[{"amount":500,"time_slots":"1 hrs","bus_service_list":" Dog Walking"},{"amount":500,"time_slots":"15 mins","bus_service_list":" Dog Grooming"},{"amount":400,"time_slots":"15 mins","bus_service_list":" Dog Training"}],"service_place":"50, Old GST Rd, Ponnan Nagar, Tambaram West, Irumbuliyur, Chennai, Tamil Nadu 600059, India","distance":260.54,"rating_count":5,"comments_count":12},{"_id":"60b7800933155d6d5beed8c8","image":"http://54.212.108.156:3000/api/uploads/1622638591264.jpeg","service_provider_name":"Sandy pet shop","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624014307333.jpeg","service_price":0,"service_offer":0,"city_name":"","bus_service_list":[{"amount":100,"bus_service_list":" Dog Walking","time_slots":"15 mins"},{"amount":200,"bus_service_list":" Dog Grooming","time_slots":"15 mins"}],"service_place":"Salem 133, Vmr Theatre Back Side Rd, Shevapet, Salem, Tamil Nadu 636002, India","distance":85.67,"rating_count":5,"comments_count":12},{"_id":"60b783d133155d6d5beed8da","image":"http://54.212.108.156:3000/api/uploads/1622639541685.jpeg","service_provider_name":"Samm Pet Clinic","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624014322134.jpeg","service_price":0,"service_offer":0,"city_name":"","bus_service_list":[{"amount":100,"bus_service_list":" Dog Walking","time_slots":"15 mins"},{"amount":200,"bus_service_list":" Dog Grooming","time_slots":"15 mins"}],"service_place":"Salem 133, Vmr Theatre Back Side Rd, Shevapet, Salem, Tamil Nadu 636002, India","distance":85.67,"rating_count":5,"comments_count":12}]}
      * banner : [{"title":"title1","image_path":"http://54.212.108.156:3000/api/uploads/60b4dc30541a437c7b9c60f43105182553"},{"title":"title1","image_path":"http://54.212.108.156:3000/api/uploads/60b4dc30541a437c7b9c60f43105182553"},{"title":"title1","image_path":"http://54.212.108.156:3000/api/uploads/60b4dc30541a437c7b9c60f43105182553"},{"title":"title1","image_path":"http://54.212.108.156:3000/api/uploads/60b4dc30541a437c7b9c60f43105182553"}]
      * Code : 200
      */
@@ -19,7 +19,7 @@ public class SPSpecificServiceDetailsResponse {
     private String alert_msg;
     /**
      * Service_Details : {"_id":"5fe185d61996f651f5133693","image_path":"http://54.212.108.156:3000/api/uploads/1624556230013.png","title":"Pet Walking","count":0}
-     * Service_provider : [{"_id":"60b0b86d67f25056fe286c90","image":"http://54.212.108.156:3000/api/uploads/60b0b7b267f25056fe286c8f2805150112","service_provider_name":"Dinesh sp","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624014101733.jpeg","service_price":0,"service_offer":0,"service_place":"Eswaran Koil Street,, Harbour quaters, Tirusulam, Chennai, Tamil Nadu 600043, India","distance":269.84,"rating_count":5,"comments_count":12},{"_id":"60b4ea2d541a437c7b9c6102","image":"http://54.212.108.156:3000/api/uploads/60b4e9cc541a437c7b9c61013105192216","service_provider_name":"Cary Carole","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624014273333.jpeg","service_price":0,"service_offer":0,"service_place":"ARM College Road, Vadamelpakkam, Tamil Nadu 603204, India","distance":243.73,"rating_count":5,"comments_count":12},{"_id":"60b4eb0c541a437c7b9c6105","image":"http://54.212.108.156:3000/api/uploads/60b4eab6541a437c7b9c61043105192600","service_provider_name":"Clark Charlie ","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624014285183.jpeg","service_price":0,"service_offer":0,"service_place":"Palavedu Pettai Aeri Karai Road, Palavedu, Tamil Nadu 602024, India","distance":278.12,"rating_count":5,"comments_count":12},{"_id":"60b4ec5e541a437c7b9c6109","image":"http://54.212.108.156:3000/api/uploads/60b4ebe8541a437c7b9c61083105193140","service_provider_name":"dean eve","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624014296213.jpeg","service_price":0,"service_offer":0,"service_place":"50, Old GST Rd, Ponnan Nagar, Tambaram West, Irumbuliyur, Chennai, Tamil Nadu 600059, India","distance":260.54,"rating_count":5,"comments_count":12},{"_id":"60b7800933155d6d5beed8c8","image":"http://54.212.108.156:3000/api/uploads/1622638591264.jpeg","service_provider_name":"Sandy pet shop","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624014307333.jpeg","service_price":0,"service_offer":0,"service_place":"Salem 133, Vmr Theatre Back Side Rd, Shevapet, Salem, Tamil Nadu 636002, India","distance":85.67,"rating_count":5,"comments_count":12},{"_id":"60b783d133155d6d5beed8da","image":"http://54.212.108.156:3000/api/uploads/1622639541685.jpeg","service_provider_name":"Samm Pet Clinic","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624014322134.jpeg","service_price":0,"service_offer":0,"service_place":"Salem 133, Vmr Theatre Back Side Rd, Shevapet, Salem, Tamil Nadu 636002, India","distance":85.67,"rating_count":5,"comments_count":12}]
+     * Service_provider : [{"_id":"60b0b86d67f25056fe286c90","image":"http://54.212.108.156:3000/api/uploads/60b0b7b267f25056fe286c8f2805150112","service_provider_name":"Dinesh sp","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624014101733.jpeg","service_price":0,"service_offer":0,"city_name":"","bus_service_list":[{"amount":200,"time_slots":"45 mins","bus_service_list":" Dog Walking"},{"amount":300,"time_slots":"15 mins","bus_service_list":" Dog Grooming"}],"service_place":"Eswaran Koil Street,, Harbour quaters, Tirusulam, Chennai, Tamil Nadu 600043, India","distance":269.84,"rating_count":5,"comments_count":12},{"_id":"60b4ea2d541a437c7b9c6102","image":"http://54.212.108.156:3000/api/uploads/60b4e9cc541a437c7b9c61013105192216","service_provider_name":"Cary Carole","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624014273333.jpeg","service_price":0,"service_offer":0,"city_name":"","bus_service_list":[{"amount":300,"time_slots":"30 mins","bus_service_list":" Dog Walking"},{"amount":259,"time_slots":"15 mins","bus_service_list":" Dog Grooming"},{"amount":300,"time_slots":"15 mins","bus_service_list":" Dog Training"}],"service_place":"ARM College Road, Vadamelpakkam, Tamil Nadu 603204, India","distance":243.73,"rating_count":5,"comments_count":12},{"_id":"60b4eb0c541a437c7b9c6105","image":"http://54.212.108.156:3000/api/uploads/60b4eab6541a437c7b9c61043105192600","service_provider_name":"Clark Charlie ","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624014285183.jpeg","service_price":0,"service_offer":0,"city_name":"","bus_service_list":[{"amount":300,"time_slots":"45 mins","bus_service_list":" Dog Walking"},{"amount":300,"time_slots":"15 mins","bus_service_list":" Dog Grooming"}],"service_place":"Palavedu Pettai Aeri Karai Road, Palavedu, Tamil Nadu 602024, India","distance":278.12,"rating_count":5,"comments_count":12},{"_id":"60b4ec5e541a437c7b9c6109","image":"http://54.212.108.156:3000/api/uploads/60b4ebe8541a437c7b9c61083105193140","service_provider_name":"dean eve","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624014296213.jpeg","service_price":0,"service_offer":0,"city_name":"","bus_service_list":[{"amount":500,"time_slots":"1 hrs","bus_service_list":" Dog Walking"},{"amount":500,"time_slots":"15 mins","bus_service_list":" Dog Grooming"},{"amount":400,"time_slots":"15 mins","bus_service_list":" Dog Training"}],"service_place":"50, Old GST Rd, Ponnan Nagar, Tambaram West, Irumbuliyur, Chennai, Tamil Nadu 600059, India","distance":260.54,"rating_count":5,"comments_count":12},{"_id":"60b7800933155d6d5beed8c8","image":"http://54.212.108.156:3000/api/uploads/1622638591264.jpeg","service_provider_name":"Sandy pet shop","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624014307333.jpeg","service_price":0,"service_offer":0,"city_name":"","bus_service_list":[{"amount":100,"bus_service_list":" Dog Walking","time_slots":"15 mins"},{"amount":200,"bus_service_list":" Dog Grooming","time_slots":"15 mins"}],"service_place":"Salem 133, Vmr Theatre Back Side Rd, Shevapet, Salem, Tamil Nadu 636002, India","distance":85.67,"rating_count":5,"comments_count":12},{"_id":"60b783d133155d6d5beed8da","image":"http://54.212.108.156:3000/api/uploads/1622639541685.jpeg","service_provider_name":"Samm Pet Clinic","thumbnail_image":"http://54.212.108.156:3000/api/uploads/1624014322134.jpeg","service_price":0,"service_offer":0,"city_name":"","bus_service_list":[{"amount":100,"bus_service_list":" Dog Walking","time_slots":"15 mins"},{"amount":200,"bus_service_list":" Dog Grooming","time_slots":"15 mins"}],"service_place":"Salem 133, Vmr Theatre Back Side Rd, Shevapet, Salem, Tamil Nadu 636002, India","distance":85.67,"rating_count":5,"comments_count":12}]
      */
 
     private DataBean Data;
@@ -95,6 +95,8 @@ public class SPSpecificServiceDetailsResponse {
          * thumbnail_image : http://54.212.108.156:3000/api/uploads/1624014101733.jpeg
          * service_price : 0
          * service_offer : 0
+         * city_name :
+         * bus_service_list : [{"amount":200,"time_slots":"45 mins","bus_service_list":" Dog Walking"},{"amount":300,"time_slots":"15 mins","bus_service_list":" Dog Grooming"}]
          * service_place : Eswaran Koil Street,, Harbour quaters, Tirusulam, Chennai, Tamil Nadu 600043, India
          * distance : 269.84
          * rating_count : 5
@@ -165,10 +167,18 @@ public class SPSpecificServiceDetailsResponse {
             private String thumbnail_image;
             private int service_price;
             private int service_offer;
+            private String city_name;
             private String service_place;
             private double distance;
             private int rating_count;
             private int comments_count;
+            /**
+             * amount : 200
+             * time_slots : 45 mins
+             * bus_service_list :  Dog Walking
+             */
+
+            private List<BusServiceListBean> bus_service_list;
 
             public String get_id() {
                 return _id;
@@ -218,6 +228,14 @@ public class SPSpecificServiceDetailsResponse {
                 this.service_offer = service_offer;
             }
 
+            public String getCity_name() {
+                return city_name;
+            }
+
+            public void setCity_name(String city_name) {
+                this.city_name = city_name;
+            }
+
             public String getService_place() {
                 return service_place;
             }
@@ -248,6 +266,44 @@ public class SPSpecificServiceDetailsResponse {
 
             public void setComments_count(int comments_count) {
                 this.comments_count = comments_count;
+            }
+
+            public List<BusServiceListBean> getBus_service_list() {
+                return bus_service_list;
+            }
+
+            public void setBus_service_list(List<BusServiceListBean> bus_service_list) {
+                this.bus_service_list = bus_service_list;
+            }
+
+            public static class BusServiceListBean {
+                private int amount;
+                private String time_slots;
+                private String bus_service_list;
+
+                public int getAmount() {
+                    return amount;
+                }
+
+                public void setAmount(int amount) {
+                    this.amount = amount;
+                }
+
+                public String getTime_slots() {
+                    return time_slots;
+                }
+
+                public void setTime_slots(String time_slots) {
+                    this.time_slots = time_slots;
+                }
+
+                public String getBus_service_list() {
+                    return bus_service_list;
+                }
+
+                public void setBus_service_list(String bus_service_list) {
+                    this.bus_service_list = bus_service_list;
+                }
             }
         }
     }

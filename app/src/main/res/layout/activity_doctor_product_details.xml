@@ -95,6 +95,8 @@
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:focusable="true"
         android:background="@drawable/new_rectagle_bgm_trans"
         android:orientation="vertical">
 

@@ -267,6 +267,11 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
             Log.w(TAG,"Bundle "+" doctorid : "+doctorid+ "fromactivity : "+fromactivity);
         }
 
+        if(distance!=null&&!distance.isEmpty()){
+
+            APIClient.DISTANCE = distance;
+        }
+
         ll_book_now.setOnClickListener(this);
 
         rl_back.setOnClickListener(this);
@@ -690,6 +695,9 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
                         }
                         if(distance != null && ClinicLocationname != null){
                             txt_distance.setText(""+distance);
+                        }
+                        else if(APIClient.DISTANCE != null && ClinicLocationname != null){
+                            txt_distance.setText(""+APIClient.DISTANCE);
                         }
 
 

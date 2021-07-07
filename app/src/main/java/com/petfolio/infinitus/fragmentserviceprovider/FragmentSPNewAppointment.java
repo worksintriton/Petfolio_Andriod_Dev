@@ -183,6 +183,7 @@ public class FragmentSPNewAppointment extends Fragment implements OnAppointmentC
                                txt_no_records.setVisibility(View.GONE);
                                rv_newappointment.setVisibility(View.VISIBLE);
                                if(newAppointmentResponseList.size()>3){
+                                   Log.w(TAG,"size init --> "+newAppointmentResponseList.size());
                                    btn_load_more.setVisibility(View.VISIBLE);
                                }else{
                                    btn_load_more.setVisibility(View.GONE);
@@ -219,6 +220,7 @@ public class FragmentSPNewAppointment extends Fragment implements OnAppointmentC
         rv_newappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_newappointment.setItemAnimator(new DefaultItemAnimator());
         int size = 3;
+        Log.w(TAG,"size set --> "+size);
         SPNewAppointmentAdapter spNewAppointmentAdapter = new SPNewAppointmentAdapter(getContext(), newAppointmentResponseList, rv_newappointment,size,this,this);
         rv_newappointment.setAdapter(spNewAppointmentAdapter);
 
@@ -227,6 +229,7 @@ public class FragmentSPNewAppointment extends Fragment implements OnAppointmentC
         rv_newappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_newappointment.setItemAnimator(new DefaultItemAnimator());
         int size = newAppointmentResponseList.size();
+        Log.w(TAG,"size onclick --> "+size);
         SPNewAppointmentAdapter spNewAppointmentAdapter = new SPNewAppointmentAdapter(getContext(), newAppointmentResponseList, rv_newappointment,size,this,this);
         rv_newappointment.setAdapter(spNewAppointmentAdapter);
 

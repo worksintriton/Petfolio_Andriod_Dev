@@ -122,10 +122,6 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
     RelativeLayout rl_filters;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.rl_sort)
-    RelativeLayout rl_sort;
-
-    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.scrollview)
     NestedScrollView scrollablContent;
 
@@ -133,9 +129,6 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
     @BindView(R.id.bottomSheetLayouts)
     CoordinatorLayout bottomSheetLayouts;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.textView20)
-    TextView textView20;
 
     private ShimmerFrameLayout mShimmerViewContainer;
     private View includelayout;
@@ -229,9 +222,8 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
         view.setVisibility(View.GONE);
         ll_root.setVisibility(View.GONE);
         bottomSheetLayouts.setVisibility(View.GONE);
-        textView20.setVisibility(View.GONE);
         rl_filters.setVisibility(View.GONE);
-        rl_sort.setVisibility(View.GONE);
+
 
         includelayout = findViewById(R.id.includelayout);
         mShimmerViewContainer = includelayout.findViewById(R.id.shimmer_layout);
@@ -385,9 +377,7 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
         view.setVisibility(View.GONE);
         ll_root.setVisibility(View.GONE);
         bottomSheetLayouts.setVisibility(View.GONE);
-        textView20.setVisibility(View.GONE);
         rl_filters.setVisibility(View.GONE);
-        rl_sort.setVisibility(View.GONE);
 
         includelayout.setVisibility(View.VISIBLE);
         mShimmerViewContainer.startShimmerAnimation();
@@ -433,9 +423,7 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
                                 bottomSheetLayouts.setVisibility(View.VISIBLE);
                                 txt_selected_service.setVisibility(View.VISIBLE);
                                 ll_root.setVisibility(View.VISIBLE);
-                                textView20.setVisibility(View.VISIBLE);
                                 rl_filters.setVisibility(View.VISIBLE);
-                                rl_sort.setVisibility(View.VISIBLE);
                                 setBottomSheet();
 
                                 if(response.body().getData().getService_Details().getTitle() != null){
@@ -458,9 +446,7 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
                         bottomSheetLayouts.setVisibility(View.VISIBLE);
                         txt_selected_service.setVisibility(View.VISIBLE);
                         ll_root.setVisibility(View.VISIBLE);
-                        textView20.setVisibility(View.VISIBLE);
                         rl_filters.setVisibility(View.VISIBLE);
-                        rl_sort.setVisibility(View.VISIBLE);
                         txt_totalproviders.setVisibility(View.GONE);
                         txt_no_records.setVisibility(View.VISIBLE);
                         txt_no_records.setText("No service found");

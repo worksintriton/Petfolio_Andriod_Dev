@@ -34,8 +34,9 @@ public class APIClient {
     public static String VENDOR_ID = "";
 
 
+    public static String DISTANCE = "";
 
-
+    public static String SP_DISTANCE = "";
 
     public static List<PetLoverDashboardResponse.DataBean.SOSBean> sosList;
 

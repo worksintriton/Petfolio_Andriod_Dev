@@ -3,6 +3,8 @@ package com.petfolio.infinitus.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +22,12 @@ import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.petlover.BookAppointmentActivity;
 import com.petfolio.infinitus.petlover.DoctorClinicDetailsActivity;
+import com.petfolio.infinitus.responsepojo.DoctorSearchResponse;
 import com.petfolio.infinitus.responsepojo.FilterDoctorResponse;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 
 public class PetLoverDoctorFilterAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -39,8 +44,7 @@ public class PetLoverDoctorFilterAdapter extends  RecyclerView.Adapter<RecyclerV
 
     private List<FilterDoctorResponse.DataBean> doctorFilterDetailsResponseList;
     FilterDoctorResponse.DataBean currentItem;
-
-
+    public String concatenatedSpcNames;
 
 
 
@@ -69,31 +73,75 @@ public class PetLoverDoctorFilterAdapter extends  RecyclerView.Adapter<RecyclerV
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
           currentItem = doctorFilterDetailsResponseList.get(position);
-          if(currentItem.getDoctor_name() != null) {
-              holder.txt_doctors_name.setText(currentItem.getDoctor_name());
-          }
-          if(currentItem.getClinic_loc() != null) {
-              holder.txt_place.setText(currentItem.getClinic_loc());
-          }
-          if(currentItem.getDistance() != null) {
-              holder.txt_km.setText(currentItem.getDistance() + "km away");
-          }
-          if(currentItem.getSpecialization() != null && currentItem.getSpecialization().size()>0) {
-              List<FilterDoctorResponse.DataBean.SpecializationBean> specializationBeanList = currentItem.getSpecialization();
-              for (int i = 0; i < specializationBeanList.size(); i++) {
-                  if(specializationBeanList.get(i).getSpecialization() != null) {
-                      holder.txt_doctors_specialization.setText(specializationBeanList.get(i).getSpecialization());
-                  }
+        if(currentItem.getDoctor_name() != null && !currentItem.getDoctor_name().isEmpty()) {
+            holder.txt_doctors_name.setText(currentItem.getDoctor_name());
+        }
+        else {
+
+            holder.txt_doctors_name.setText("");
+        }
+        if(currentItem.getClinic_loc() != null&&!currentItem.getClinic_loc().isEmpty()) {
+            holder.txt_place.setText("Chennai");
+        }else {
+
+            holder.txt_place.setVisibility(View.GONE);
+            holder.view.setVisibility(View.GONE);
+        }
+        if(currentItem.getDistance() != null&&!currentItem.getDistance().isEmpty()) {
+            holder.txt_km.setText(currentItem.getDistance() +" km");
+        }else {
+
+            holder.txt_km.setText("");
+        }
+//          if(currentItem.getDoctor_exp() != 0) {
+//              holder.txt_doctors_experience.setVisibility(View.VISIBLE);
+//              holder.txt_doctors_experience.setText(currentItem.getDoctor_exp() +" Years Experience");
+//          }else{
+//              holder.txt_doctors_experience.setVisibility(View.GONE);
+//              holder.txt_doctors_experience.setText("");
+//          }
+
+          /*if(currentItem.getSpecialization() != null && currentItem.getSpecialization().size()>0){
+              List<DoctorSearchResponse.DataBean.SpecializationBean> specializationBeanList = currentItem.getSpecialization();
+              for(int i=0;i<specializationBeanList.size();i++){
+                  holder.txt_doctors_specialization.setText(specializationBeanList.get(i).getSpecialization());
 
               }
-          }
-          if(doctorFilterDetailsResponseList.get(position).getStar_count() != 0) {
-              holder.txt_star_rating.setText(doctorFilterDetailsResponseList.get(position).getStar_count() + "");
-          }
-          if(doctorFilterDetailsResponseList.get(position).getReview_count() != 0) {
-              holder.txt_review_count.setText(doctorFilterDetailsResponseList.get(position).getReview_count() + "");
-          }
-          if (currentItem.getDoctor_img() != null && !currentItem.getDoctor_img().isEmpty()) {
+          }*/
+
+
+        if(currentItem.getSpecialization() != null && currentItem.getSpecialization().size()>0){
+                List<FilterDoctorResponse.DataBean.SpecializationBean> specializationBeanList = currentItem.getSpecialization();
+
+            for (int i = 0; i < specializationBeanList.size(); i++) {
+                concatenatedSpcNames += specializationBeanList.get(i).getSpecialization();
+                if (i < specializationBeanList.size() - 1) concatenatedSpcNames += ", ";
+            }
+            holder.txt_doctors_specialization.setText(concatenatedSpcNames);
+
+        }
+        else {
+
+            holder.txt_doctors_specialization.setText("");
+        }
+        if(doctorFilterDetailsResponseList.get(position).getStar_count() != 0) {
+            holder.txt_star_rating.setText(doctorFilterDetailsResponseList.get(position).getStar_count() + "");
+        }else {
+
+            holder.txt_star_rating.setText("");
+        }
+//          if(doctorDetailsResponseList.get(position).getClinic_name() != null) {
+//              holder.txt_doctors_clinicname.setVisibility(View.VISIBLE);
+//              holder.txt_doctors_clinicname.setText(doctorDetailsResponseList.get(position).getClinic_name());
+//          }else{
+//              holder.txt_doctors_clinicname.setVisibility(View.GONE);
+//          }
+//          if(doctorDetailsResponseList.get(position).getAmount() != 0) {
+//              holder.txt_review_count.setText("\u20B9"+doctorDetailsResponseList.get(position).getAmount());
+//          }else{
+//              holder.txt_review_count.setText("0");
+//          }
+        if (currentItem.getDoctor_img() != null && !currentItem.getDoctor_img().isEmpty()) {
 
             Glide.with(context)
                     .load(currentItem.getDoctor_img())
@@ -101,7 +149,7 @@ public class PetLoverDoctorFilterAdapter extends  RecyclerView.Adapter<RecyclerV
                     .into(holder.img_doctors_image);
 
         }
-          else{
+        else{
             Glide.with(context)
                     .load(APIClient.PROFILE_IMAGE_URL)
                     .into(holder.img_doctors_image);
@@ -189,7 +237,7 @@ public class PetLoverDoctorFilterAdapter extends  RecyclerView.Adapter<RecyclerV
         public LinearLayout ll_root;
         public ImageView img_doctors_image;
         public Button btn_book;
-
+        public View view;
 
 
 
@@ -204,6 +252,7 @@ public class PetLoverDoctorFilterAdapter extends  RecyclerView.Adapter<RecyclerV
             txt_place = itemView.findViewById(R.id.txt_place);
             txt_km = itemView.findViewById(R.id.txt_km);
             btn_book = itemView.findViewById(R.id.btn_book);
+            view = itemView.findViewById(R.id.view9);
 
 
 
@@ -214,13 +263,22 @@ public class PetLoverDoctorFilterAdapter extends  RecyclerView.Adapter<RecyclerV
 
     }
 
+    @SuppressLint("LogNotTimber")
+    public void setCity(Double lat, Double longi){
 
+        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(lat, longi, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String cityName = addresses.get(0).getAddressLine(0);
 
+        Log.w(TAG,"cityName "+cityName);
 
-
-
-
-
-
+        String stateName = addresses.get(0).getAddressLine(1);
+        String countryName = addresses.get(0).getAddressLine(2);
+    }
 
 }

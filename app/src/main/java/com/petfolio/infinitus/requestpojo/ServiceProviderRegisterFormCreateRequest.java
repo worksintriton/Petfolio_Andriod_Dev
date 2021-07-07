@@ -24,6 +24,7 @@ public class ServiceProviderRegisterFormCreateRequest {
      * bus_certif : [{"bus_certif":""},{"bus_certif":""},{"bus_certif":""}]
      * date_and_time : 23-10-2020 12:00 AM
      * mobile_type : Admin
+     * city_name : Chennai
      */
 
     private String user_id;
@@ -36,6 +37,15 @@ public class ServiceProviderRegisterFormCreateRequest {
     private String bus_proof;
     private String date_and_time;
     private String mobile_type;
+    private String city_name;
+
+    public String getCity_name() {
+        return city_name;
+    }
+
+    public void setCity_name(String city_name) {
+        this.city_name = city_name;
+    }
 
     public String get_id() {
         return _id;

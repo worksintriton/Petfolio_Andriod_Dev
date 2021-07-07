@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.transition.Fade;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,7 +30,9 @@ import com.petfolio.infinitus.petlover.DoctorClinicDetailsActivity;
 import com.petfolio.infinitus.petlover.PetAppointment_Doctor_Date_Time_Activity;
 import com.petfolio.infinitus.responsepojo.DoctorSearchResponse;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 
 public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -71,24 +75,35 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
           currentItem = doctorDetailsResponseList.get(position);
-          if(currentItem.getDoctor_name() != null) {
+          if(currentItem.getDoctor_name() != null && !currentItem.getDoctor_name().isEmpty()) {
               holder.txt_doctors_name.setText(currentItem.getDoctor_name());
           }
-          if(currentItem.getClinic_loc() != null) {
-              holder.txt_place.setText(currentItem.getClinic_loc());
-          }
-          if(currentItem.getDistance() != null) {
-              holder.txt_km.setText(currentItem.getDistance() +" km");
-          }
-          if(currentItem.getDoctor_exp() != 0) {
-              holder.txt_doctors_experience.setVisibility(View.VISIBLE);
-              holder.txt_doctors_experience.setText(currentItem.getDoctor_exp() +" Years Experience");
-          }else{
-              holder.txt_doctors_experience.setVisibility(View.GONE);
-              holder.txt_doctors_experience.setText("");
-          }
+          else {
 
-         /* if(currentItem.getSpecialization() != null && currentItem.getSpecialization().size()>0){
+              holder.txt_doctors_name.setText("");
+          }
+        if(currentItem.getClinic_loc() != null&&!currentItem.getClinic_loc().isEmpty()) {
+            holder.txt_place.setText("Chennai");
+        }else {
+
+            holder.txt_place.setVisibility(View.GONE);
+            holder.view.setVisibility(View.GONE);
+        }
+        if(currentItem.getDistance() != null&&!currentItem.getDistance().isEmpty()) {
+            holder.txt_km.setText(currentItem.getDistance() +" km");
+        }else {
+
+            holder.txt_km.setText("");
+        }
+//          if(currentItem.getDoctor_exp() != 0) {
+//              holder.txt_doctors_experience.setVisibility(View.VISIBLE);
+//              holder.txt_doctors_experience.setText(currentItem.getDoctor_exp() +" Years Experience");
+//          }else{
+//              holder.txt_doctors_experience.setVisibility(View.GONE);
+//              holder.txt_doctors_experience.setText("");
+//          }
+
+          /*if(currentItem.getSpecialization() != null && currentItem.getSpecialization().size()>0){
               List<DoctorSearchResponse.DataBean.SpecializationBean> specializationBeanList = currentItem.getSpecialization();
               for(int i=0;i<specializationBeanList.size();i++){
                   holder.txt_doctors_specialization.setText(specializationBeanList.get(i).getSpecialization());
@@ -107,21 +122,27 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
             holder.txt_doctors_specialization.setText(concatenatedSpcNames);
 
         }
+        else {
 
+            holder.txt_doctors_specialization.setText("");
+        }
           if(doctorDetailsResponseList.get(position).getStar_count() != 0) {
               holder.txt_star_rating.setText(doctorDetailsResponseList.get(position).getStar_count() + "");
+          }else {
+
+              holder.txt_star_rating.setText("");
           }
-          if(doctorDetailsResponseList.get(position).getClinic_name() != null) {
-              holder.txt_doctors_clinicname.setVisibility(View.VISIBLE);
-              holder.txt_doctors_clinicname.setText(doctorDetailsResponseList.get(position).getClinic_name());
-          }else{
-              holder.txt_doctors_clinicname.setVisibility(View.GONE);
-          }
-          if(doctorDetailsResponseList.get(position).getAmount() != 0) {
-              holder.txt_review_count.setText("\u20B9"+doctorDetailsResponseList.get(position).getAmount());
-          }else{
-              holder.txt_review_count.setText("0");
-          }
+//          if(doctorDetailsResponseList.get(position).getClinic_name() != null) {
+//              holder.txt_doctors_clinicname.setVisibility(View.VISIBLE);
+//              holder.txt_doctors_clinicname.setText(doctorDetailsResponseList.get(position).getClinic_name());
+//          }else{
+//              holder.txt_doctors_clinicname.setVisibility(View.GONE);
+//          }
+//          if(doctorDetailsResponseList.get(position).getAmount() != 0) {
+//              holder.txt_review_count.setText("\u20B9"+doctorDetailsResponseList.get(position).getAmount());
+//          }else{
+//              holder.txt_review_count.setText("0");
+//          }
           if (currentItem.getDoctor_img() != null && !currentItem.getDoctor_img().isEmpty()) {
 
             Glide.with(context)
@@ -228,11 +249,11 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
     }
 
     class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_doctors_name,txt_doctors_specialization,txt_star_rating,txt_review_count,txt_place,txt_km,txt_doctors_clinicname,txt_doctors_experience;
+        public TextView txt_doctors_name,txt_doctors_specialization,txt_star_rating,txt_place,txt_km,txt_doctors_clinicname,txt_doctors_experience;
         public LinearLayout ll_root;
         public ImageView img_doctors_image;
         public Button btn_book;
-
+        public View view;
 
 
 
@@ -243,12 +264,12 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
             img_doctors_image = itemView.findViewById(R.id.img_doctors_image);
             ll_root = itemView.findViewById(R.id.ll_root);
             txt_star_rating = itemView.findViewById(R.id.txt_star_rating);
-            txt_review_count = itemView.findViewById(R.id.txt_review_count);
             txt_place = itemView.findViewById(R.id.txt_place);
-            txt_km = itemView.findViewById(R.id.txt_km);
+            txt_km = itemView.findViewById(R.id.txt_dist);
             btn_book = itemView.findViewById(R.id.btn_book);
-            txt_doctors_clinicname = itemView.findViewById(R.id.txt_doctors_clinicname);
-            txt_doctors_experience = itemView.findViewById(R.id.txt_doctors_experience);
+            view = itemView.findViewById(R.id.view9);
+//            txt_doctors_clinicname = itemView.findViewById(R.id.txt_doctors_clinicname);
+//            txt_doctors_experience = itemView.findViewById(R.id.txt_doctors_experience);
 
 
 
@@ -260,12 +281,21 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
     }
 
 
+    @SuppressLint("LogNotTimber")
+    public void setCity(Double lat, Double longi){
 
+        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(lat, longi, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String cityName = addresses.get(0).getAddressLine(0);
 
+        Log.w(TAG,"cityName "+cityName);
 
-
-
-
-
-
+        String stateName = addresses.get(0).getAddressLine(1);
+        String countryName = addresses.get(0).getAddressLine(2);
+    }
 }
