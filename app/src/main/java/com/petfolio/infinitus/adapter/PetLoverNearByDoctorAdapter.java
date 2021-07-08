@@ -20,6 +20,7 @@ import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.petlover.DoctorClinicDetailsActivity;
@@ -109,10 +110,21 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
         if(currentItem.getSpecialization() != null && currentItem.getSpecialization().size()>0){
             List<DoctorSearchResponse.DataBean.SpecializationBean> specializationBeanList = currentItem.getSpecialization();
 
+           Log.w(TAG,"specializationBeanList "+new Gson().toJson(specializationBeanList));
+
+           concatenatedSpcNames = "";
+           
             for (int i = 0; i < specializationBeanList.size(); i++) {
+
+                Log.w(TAG,"GetSpecialization() "+ specializationBeanList.get(i).getSpecialization());
+
                 concatenatedSpcNames += specializationBeanList.get(i).getSpecialization();
+
                 if (i < specializationBeanList.size() - 1) concatenatedSpcNames += ", ";
             }
+
+            Log.w(TAG,"concatenatedSpcNames "+concatenatedSpcNames);
+
             holder.txt_doctors_specialization.setText(concatenatedSpcNames);
 
         }

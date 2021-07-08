@@ -115,6 +115,7 @@ public class PetLoverDoctorFilterAdapter extends  RecyclerView.Adapter<RecyclerV
         if(currentItem.getSpecialization() != null && currentItem.getSpecialization().size()>0){
                 List<FilterDoctorResponse.DataBean.SpecializationBean> specializationBeanList = currentItem.getSpecialization();
 
+                concatenatedSpcNames = "";
             for (int i = 0; i < specializationBeanList.size(); i++) {
                 concatenatedSpcNames += specializationBeanList.get(i).getSpecialization();
                 if (i < specializationBeanList.size() - 1) concatenatedSpcNames += ", ";

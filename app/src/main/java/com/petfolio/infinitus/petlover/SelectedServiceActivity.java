@@ -418,7 +418,7 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
                             }
 
                             if(serviceProviderList != null && serviceProviderList.size()>0){
-                                txt_totalproviders.setText(serviceProviderList.size()+" Providers");
+                                //txt_totalproviders.setText(serviceProviderList.size()+" Providers");
                                 view.setVisibility(View.VISIBLE);
                                 bottomSheetLayouts.setVisibility(View.VISIBLE);
                                 txt_selected_service.setVisibility(View.VISIBLE);

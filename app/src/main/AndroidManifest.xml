@@ -448,7 +448,9 @@
             android:name=".petlover.ProductFiltersActivity"
             android:screenOrientation="portrait"
              android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" /> <!-- Doctor -->
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- Doctor -->
         <activity
             android:name=".doctor.DoctorBusinessInfoActivity"
             android:screenOrientation="portrait"

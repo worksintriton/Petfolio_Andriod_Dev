@@ -95,17 +95,6 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/txt_no_records"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="@string/norecordsfound"
-        android:textColor="@color/color"
-        android:textSize="16sp"
-        android:visibility="gone" />
 
     <include layout="@layout/petcare_bottom_sheet" />
 

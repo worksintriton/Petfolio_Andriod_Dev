@@ -318,7 +318,8 @@
                     android:text="@string/about_service_provider"
                     android:textColor="@color/new_light_black"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
 
 
                 <TextView
@@ -332,7 +333,8 @@
                     android:maxLines="3"
                     android:text="@string/desc_content"
                     android:textColor="@color/new_light_black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/txt_spec_label"

@@ -132,6 +132,8 @@ public class SelectedServiceProviderAdapter extends  RecyclerView.Adapter<Recycl
 
             if(busServiceListBeanList!= null&&busServiceListBeanList.size()>0) {
 
+                serv_list.clear();
+
                 for (int i=0;i<busServiceListBeanList.size();i++){
 
                     serv_list.add(busServiceListBeanList.get(i).getBus_service_list());

@@ -130,9 +130,9 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
     @BindView(R.id.rl_discount)
     RelativeLayout rl_discount;
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.txt_view_details)
-    TextView txt_view_details;
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.txt_view_details)
+//    TextView txt_view_details;
 
 
     int currentPage = 0;
@@ -218,14 +218,14 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
             tag = extras.getString("tag");
         }
 
-        txt_view_details.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                showVendorDetails();
-
-            }
-        });
+//        txt_view_details.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                showVendorDetails();
+//
+//            }
+//        });
 
 
         if(userid != null && productid != null){
@@ -356,7 +356,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
         txt_prod_desc_label.setVisibility(View.GONE);
 
-        txt_view_details.setVisibility(View.GONE);
+  //      txt_view_details.setVisibility(View.GONE);
 
         txt_product_desc.setVisibility(View.GONE);
 
@@ -666,7 +666,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
                             txt_prod_desc_label.setVisibility(View.VISIBLE);
 
-                            txt_view_details.setVisibility(View.VISIBLE);
+                       //     txt_view_details.setVisibility(View.VISIBLE);
 
                             txt_product_desc.setVisibility(View.VISIBLE);
 

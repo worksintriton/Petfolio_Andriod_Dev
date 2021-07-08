@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinitus.R;
+import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.requestpojo.DocBusInfoUploadRequest;
 import com.petfolio.infinitus.responsepojo.FetchProductByIdResponse;
 
@@ -51,6 +52,12 @@ public class VendorBusinessGalleryListAdapter extends RecyclerView.Adapter<Vendo
                     .load(bussinessGalleryBean.getBussiness_gallery())
                     .into(holder.img_products_image);
 
+        }
+        else {
+
+            Glide.with(context)
+                    .load(APIClient.PROFILE_IMAGE_URL)
+                    .into(holder.img_products_image);
         }
 
 

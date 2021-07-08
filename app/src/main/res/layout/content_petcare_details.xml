@@ -17,13 +17,13 @@
         <LinearLayout
             android:id="@+id/linear1"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             tools:ignore="UselessParent">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="260dp"
                 android:elevation="9dp"
                 tools:ignore="UnusedAttribute">
 
@@ -65,14 +65,6 @@
                     android:layout_marginTop="10dp"/>
 
             </LinearLayout>-->
-
-
-
-
-
-
-
-
 
 
         </LinearLayout>

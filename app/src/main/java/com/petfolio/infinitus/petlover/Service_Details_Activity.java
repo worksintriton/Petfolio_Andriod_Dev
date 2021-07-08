@@ -573,9 +573,7 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
 
                         ll_root3.setVisibility(View.VISIBLE);
 
-                        txt_aboutsp_label.setVisibility(View.VISIBLE);
 
-                        txt_dr_desc.setVisibility(View.VISIBLE);
 
                         txt_spec_label.setVisibility(View.VISIBLE);
 

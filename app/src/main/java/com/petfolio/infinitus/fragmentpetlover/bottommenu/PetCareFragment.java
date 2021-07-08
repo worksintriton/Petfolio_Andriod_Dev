@@ -379,6 +379,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
         bottomSheetBehavior.setHalfExpandedRatio(0.9f);
 
+        bottomSheetBehavior.setPeekHeight(0);
 
         // Capturing the callbacks for bottom sheet
         bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
@@ -697,8 +698,8 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
                                 rv_nearbydoctors.setVisibility(View.VISIBLE);
                                 rl_search.setVisibility(View.VISIBLE);
                                 txt_no_records.setVisibility(View.GONE);
-                                bottomSheetBehavior.setPeekHeight(0);
-                                bottomSheetBehavior.setHalfExpandedRatio(0.8f);
+
+                                bottomSheetBehavior.setHalfExpandedRatio(0.9f);
                                // txt_totaldrs.setVisibility(View.GONE);
                                // txt_totaldrs.setText(doctorFilterDetailsResponseList.size()+" "+"Doctors");
                                 setViewDoctorFilters(doctorFilterDetailsResponseList);

@@ -119,7 +119,7 @@
                     android:layout_marginStart="10dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="Chennai"
+                    android:text=""
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"/>
@@ -225,7 +225,7 @@
             tools:ignore="ContentDescription" />
 
         <ImageView
-            android:id="@+id/img_notification"
+            android:id="@+id/img_notification1"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="20dp"

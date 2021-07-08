@@ -203,7 +203,8 @@
                         android:text="@string/view_vendor_details"
                         android:textColor="@color/new_footer_change_blue"
                         android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
