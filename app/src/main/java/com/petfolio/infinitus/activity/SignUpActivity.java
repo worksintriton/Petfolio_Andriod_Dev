@@ -153,7 +153,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         if(verified != null && verified.equalsIgnoreCase("verified")){
-            btn_verify_email.setText("Verified email");
+            btn_verify_email.setText("Verified");
+            btn_verify_email.setBackgroundResource(R.drawable.rounded_color_pr);
             user_email_verification = true;
             btn_verify_email.setEnabled(false);
 
@@ -161,6 +162,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         else{
             user_email_verification = false;
             btn_verify_email.setEnabled(true);
+            btn_verify_email.setBackgroundResource(R.drawable.rounded_color_red);
         }
 
         edt_email.addTextChangedListener(new TextWatcher() {

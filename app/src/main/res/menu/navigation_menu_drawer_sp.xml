@@ -22,7 +22,8 @@
         android:id="@+id/group3">
         <item android:id="@+id/nav_item_three"
         android:icon="@drawable/manageservices"
-        android:title="@string/manage_services" />
+        android:title="@string/manage_services"
+            android:visible="false"/>
     </group>
 
     <group android:checkableBehavior="single"
@@ -44,7 +45,8 @@
             android:id="@+id/group6">
         <item android:id="@+id/nav_item_six"
             android:icon="@drawable/discount"
-            android:title="@string/my_coupons" />
+            android:title="@string/my_coupons"
+            android:visible="false"/>
         </group>
 
     <group android:checkableBehavior="single"

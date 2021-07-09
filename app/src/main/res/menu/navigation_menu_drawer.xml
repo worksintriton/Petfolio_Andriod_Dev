@@ -32,7 +32,8 @@
         android:id="@+id/group4">
     <item android:id="@+id/nav_item_four"
         android:icon="@drawable/discount"
-        android:title="@string/my_coupons" />
+        android:title="@string/my_coupons"
+        android:visible="false"/>
     </group>
 
 
@@ -40,7 +41,8 @@
             android:id="@+id/group5">
         <item android:id="@+id/nav_item_five"
             android:icon="@drawable/medicalhistory"
-            android:title="@string/medical_history" />
+            android:title="@string/medical_history"
+            android:visible="false"/>
         </group>
 
         <group android:checkableBehavior="single"

@@ -158,7 +158,7 @@
                         android:id="@+id/btn_verify_email"
                         android:layout_width="wrap_content"
                         android:layout_height="35dp"
-                        android:background="@drawable/rounded_color_pr"
+                        android:background="@drawable/rounded_color_red"
                         android:fontFamily="@font/futuramediumbt"
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
