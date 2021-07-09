@@ -407,7 +407,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
                                 myrefcode
 
                         );
-                        Log.w(TAG,"ref_code : "+response.body().getData().getRef_code());
+                        Log.w(TAG,"ref_code : "+response.body().getData().getRef_code()+" fromactivity : "+fromactivity+" usertype : "+usertype);
 
                         if(fromactivity != null && fromactivity.equalsIgnoreCase("LoginActivity")){
                             if(usertype != 0){
@@ -425,8 +425,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
 
                                 }
                             }
-                        }
-                        else{
+                        } else{
                             if(usertype != 0){
                                 if(usertype == 1 ){
                                     startActivity(new Intent(VerifyOtpActivity.this, BasicPetDetailsNewActivity.class));

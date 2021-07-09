@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_root"
-    android:layout_width="140dp"
+    android:layout_width="150dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_margin="5dp">
@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 tools:ignore="ContentDescription"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:background="@drawable/images_avatar"/>
 
             <ImageView
@@ -36,7 +36,7 @@
                 android:adjustViewBounds="true"
                 android:background="@color/white_trans"
                 tools:ignore="ContentDescription"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:visibility="invisible"/>
 
             <LinearLayout

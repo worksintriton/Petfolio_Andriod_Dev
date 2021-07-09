@@ -36,6 +36,7 @@ import com.petfolio.infinitus.requestpojo.FetchByIdRequest;
 import com.petfolio.infinitus.responsepojo.CartDetailsResponse;
 import com.petfolio.infinitus.responsepojo.CartSuccessResponse;
 import com.petfolio.infinitus.responsepojo.SuccessResponse;
+import com.petfolio.infinitus.serviceprovider.shop.SPProductDetailsActivity;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
@@ -306,8 +307,16 @@ public class DoctorCartActivity extends AppCompatActivity implements AddandRemov
             i.putExtra("productid",productdetails_productid);
             startActivity(i);
             finish();
-        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorShopTodayDealsSeeMoreActivity")){
-            Intent i = new Intent(DoctorCartActivity.this, DoctorShopTodayDealsSeeMoreActivity.class);
+        }
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorProductDetailsActivity")){
+            Intent i = new Intent(DoctorCartActivity.this, DoctorProductDetailsActivity.class);
+            i.putExtra("productid",productdetails_productid);
+            startActivity(i);
+            finish();
+        }
+        else if(fromactivity != null && fromactivity.equalsIgnoreCase("SPProductDetailsActivity")){
+            Intent i = new Intent(DoctorCartActivity.this, SPProductDetailsActivity.class);
+            i.putExtra("productid",productdetails_productid);
             startActivity(i);
             finish();
         }else if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorListOfProductsSeeMoreActivity")){

@@ -131,9 +131,9 @@ public class PetLoverDoctorNewAdapter extends  RecyclerView.Adapter<RecyclerView
           if(doctorDetailsResponseList.get(position).getReview_count() != 0) {
               holder.txt_review_count.setText(doctorDetailsResponseList.get(position).getReview_count() + "");
           }*/
-        if (currentItem.getDoctor_img() != null && !currentItem.getDoctor_img().isEmpty()) {
+        if (currentItem.getThumbnail_image() != null && !currentItem.getThumbnail_image().isEmpty()) {
             Glide.with(context)
-                    .load(currentItem.getDoctor_img())
+                    .load(currentItem.getThumbnail_image())
                     .into(holder.img_doctors_image);
 
         }

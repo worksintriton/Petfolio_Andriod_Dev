@@ -515,7 +515,7 @@ public class FragmentSPNewAppointment extends Fragment implements OnAppointmentC
 
 
         SPNotificationSendRequest spNotificationSendRequest = new SPNotificationSendRequest();
-        spNotificationSendRequest.setStatus("Patient Appointment Cancelled");
+        spNotificationSendRequest.setStatus("Doctor Appointment Cancelled");
         spNotificationSendRequest.setDate(currentDateandTime);
         spNotificationSendRequest.setAppointment_UID(appointmentid);
         spNotificationSendRequest.setUser_id(userid);

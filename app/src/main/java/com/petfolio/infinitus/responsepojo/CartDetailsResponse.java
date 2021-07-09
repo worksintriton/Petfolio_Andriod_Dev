@@ -367,6 +367,15 @@ public class CartDetailsResponse {
             private List<Integer> age;
             private List<String> product_img;
 
+            private String thumbnail_image;
+            public String getThumbnail_image() {
+                return thumbnail_image;
+            }
+
+            public void setThumbnail_image(String thumbnail_image) {
+                this.thumbnail_image = thumbnail_image;
+            }
+
             public int getDiscount_amount() {
                 return discount_amount;
             }

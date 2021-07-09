@@ -89,10 +89,10 @@ public class PetShopProductDetailsImageAdapter extends  RecyclerView.Adapter<Rec
             holder.txt_products_offer.setVisibility(View.GONE);
         }
 
-        if (productListBean.getProduct_img() != null && !productListBean.getProduct_img() .isEmpty()) {
+        if (productListBean.getThumbnail_image() != null && !productListBean.getThumbnail_image() .isEmpty()) {
 
                 Glide.with(context)
-                        .load(productListBean.getProduct_img())
+                        .load(productListBean.getThumbnail_image())
                         .into(holder.img_products_image);
 
             }
@@ -167,6 +167,7 @@ public class PetShopProductDetailsImageAdapter extends  RecyclerView.Adapter<Rec
             img_products_image = itemView.findViewById(R.id.img_products_image);
             img_like = itemView.findViewById(R.id.img_like);
             img_dislike = itemView.findViewById(R.id.img_dislike);
+            txt_review_count.setVisibility(View.GONE);
 
 
 

@@ -720,4 +720,10 @@ public interface RestApiInterface {
     Call<SuccessResponse> vendor_product_create_ResponseCall(@Header("Content-Type") String type, @Body ProductVendorCreateRequest productVendorCreateRequest);
 
 
+
+    /*communitym text list*/
+    @GET("userdetails/community_text")
+    Call<CommunityTextResponse> getcommunitytextResponseCall(@Header("Content-Type") String type);
+
+
 }

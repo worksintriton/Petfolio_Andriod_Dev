@@ -160,7 +160,7 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
              shopDashboardResponseCall();
         }
 
-        final Handler handler = new Handler();
+       /* final Handler handler = new Handler();
         Timer timer = new Timer();
         TimerTask doAsynchronousTask = new TimerTask() {
             @Override
@@ -174,7 +174,7 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
                 });
             }
         };
-        timer.schedule(doAsynchronousTask, 0, 60000);//you can put 30000(30 secs)
+        timer.schedule(doAsynchronousTask, 0, 60000);//you can put 30000(30 secs)*/
 
         txt_seemore_todaydeals.setOnClickListener(v -> {
             Intent intent =new Intent(mContext, PetShopTodayDealsSeeMoreActivity.class);
@@ -352,7 +352,7 @@ public class VendorShopFragment extends Fragment implements Serializable,View.On
         final Handler handler = new Handler();
         final Runnable Update =  new Runnable() {
             public void run() {
-                if (currentPage == VendorShopFragment.this.listHomeBannerResponse.size()) {
+                if (currentPage == listHomeBannerResponse.size()) {
                     currentPage = 0;
                 }
                 viewPager.setCurrentItem(currentPage++, false);

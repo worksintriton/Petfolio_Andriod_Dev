@@ -572,7 +572,6 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
 
                             rl_discount.setVisibility(View.VISIBLE);
 
-                            txt_products_quantity.setVisibility(View.VISIBLE);
 
                             txt_prod_desc_label.setVisibility(View.VISIBLE);
 
@@ -714,6 +713,7 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
         }
         if(threshould != null && !threshould.isEmpty() ){
             if(threshould.equalsIgnoreCase("0")){
+                txt_products_quantity.setVisibility(View.VISIBLE);
                 txt_products_quantity.setText("Out Of Stock");
                 txt_products_quantity.setTextColor(ContextCompat.getColor(DoctorProductDetailsActivity.this, R.color.vermillion));
                 img_add_product.setVisibility(View.GONE);
@@ -721,12 +721,13 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
                 img_remove_product.setVisibility(View.GONE);
                 ll_add_to_cart.setVisibility(View.GONE);
             }else{
+                txt_products_quantity.setVisibility(View.GONE);
                 img_add_product.setVisibility(View.VISIBLE);
                 txt_cart_count.setVisibility(View.VISIBLE);
                 img_remove_product.setVisibility(View.VISIBLE);
                 ll_add_to_cart.setVisibility(View.VISIBLE);
-                txt_products_quantity.setText("Prodcut Quantity : "+threshould);
-                txt_products_quantity.setTextColor(ContextCompat.getColor(DoctorProductDetailsActivity.this, R.color.black));
+               // txt_products_quantity.setText("Prodcut Quantity : "+threshould);
+               // txt_products_quantity.setTextColor(ContextCompat.getColor(DoctorProductDetailsActivity.this, R.color.black));
 
             }
 
@@ -830,16 +831,16 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
                     if(200 == response.body().getCode()){
                         Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
 
-                        if(userid != null && productid != null){
+                        /*if(userid != null && productid != null){
                             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
                                 fetch_product_by_id_ResponseCall();
                             }
-                        }
-                        /*Intent intent = new Intent(getApplicationContext(),DoctorCartActivity.class);
+                        }*/
+                        Intent intent = new Intent(getApplicationContext(),DoctorCartActivity.class);
                         intent.putExtra("productid",productid);
                         intent.putExtra("fromactivity",TAG);
                         startActivity(intent);
-                        finish();*/
+                        finish();
                     }
                 }
             }

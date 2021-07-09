@@ -15,8 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.view.ViewCompat;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -144,17 +143,17 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
 
             holder.txt_price.setText("\u20B9 " +"0");
         }
-//          if(doctorDetailsResponseList.get(position).getClinic_name() != null) {
-//              holder.txt_doctors_clinicname.setVisibility(View.VISIBLE);
-//              holder.txt_doctors_clinicname.setText(doctorDetailsResponseList.get(position).getClinic_name());
-//          }else{
-//              holder.txt_doctors_clinicname.setVisibility(View.GONE);
-//          }
-//          if(doctorDetailsResponseList.get(position).getAmount() != 0) {
-//              holder.txt_review_count.setText("\u20B9"+doctorDetailsResponseList.get(position).getAmount());
-//          }else{
-//              holder.txt_review_count.setText("0");
-//          }
+          if(doctorDetailsResponseList.get(position).getClinic_name() != null) {
+              holder.txt_doctors_clinicname.setVisibility(View.VISIBLE);
+              holder.txt_doctors_clinicname.setText(doctorDetailsResponseList.get(position).getClinic_name());
+          }else{
+              holder.txt_doctors_clinicname.setVisibility(View.GONE);
+          }
+          /*if(doctorDetailsResponseList.get(position).getAmount() != 0) {
+              holder.txt_review_count.setText("\u20B9"+doctorDetailsResponseList.get(position).getAmount());
+          }else{
+              holder.txt_review_count.setText("0");
+          }*/
           if (currentItem.getDoctor_img() != null && !currentItem.getDoctor_img().isEmpty()) {
 
             Glide.with(context)
@@ -279,8 +278,8 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
             txt_km = itemView.findViewById(R.id.txt_dist);
             btn_book = itemView.findViewById(R.id.btn_book);
             view = itemView.findViewById(R.id.view9);
-//            txt_doctors_clinicname = itemView.findViewById(R.id.txt_doctors_clinicname);
-//            txt_doctors_experience = itemView.findViewById(R.id.txt_doctors_experience);
+          txt_doctors_clinicname = itemView.findViewById(R.id.txt_doctors_clinicname);
+           //txt_doctors_experience = itemView.findViewById(R.id.txt_doctors_experience);
 
 
 

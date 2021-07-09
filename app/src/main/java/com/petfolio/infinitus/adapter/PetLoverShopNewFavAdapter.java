@@ -118,9 +118,9 @@ public class PetLoverShopNewFavAdapter extends  RecyclerView.Adapter<RecyclerVie
           }
 
 
-        if (currentItem.getProduct_img() != null && !currentItem.getProduct_img().isEmpty()) {
+        if (currentItem.getThumbnail_image() != null && !currentItem.getThumbnail_image().isEmpty()) {
             Glide.with(context)
-                    .load(currentItem.getProduct_img())
+                    .load(currentItem.getThumbnail_image())
                     .into(holder.img_products_image);
 
         }

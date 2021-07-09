@@ -23,12 +23,10 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.adapter.PetLoverDoctorNewFavAdapter;
 import com.petfolio.infinitus.adapter.PetLoverSPNewFavAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
 import com.petfolio.infinitus.requestpojo.FetchPetloverFavListRequest;
-import com.petfolio.infinitus.responsepojo.FetchPetloverDoctorFavListResponse;
 import com.petfolio.infinitus.responsepojo.FetchPetloverSPFavListResponse;
 import com.petfolio.infinitus.sessionmanager.SessionManager;
 import com.petfolio.infinitus.utils.ConnectionDetector;

@@ -70,6 +70,15 @@ public class FetchPetloverShopFavListResponse {
         private double product_rating;
         private int product_review;
 
+        private String thumbnail_image;
+        public String getThumbnail_image() {
+            return thumbnail_image;
+        }
+
+        public void setThumbnail_image(String thumbnail_image) {
+            this.thumbnail_image = thumbnail_image;
+        }
+
         public String get_id() {
             return _id;
         }

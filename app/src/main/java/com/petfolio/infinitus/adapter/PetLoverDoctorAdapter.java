@@ -176,6 +176,7 @@ public class PetLoverDoctorAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
             ll_root = itemView.findViewById(R.id.ll_root);
             txt_star_rating = itemView.findViewById(R.id.txt_star_rating);
             txt_review_count = itemView.findViewById(R.id.txt_review_count);
+            txt_review_count.setVisibility(View.GONE);
 
 
 

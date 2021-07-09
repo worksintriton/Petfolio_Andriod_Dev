@@ -34,6 +34,15 @@ public class DoctorBusinessInfoUpdateRequest {
     private String mobile_type;
     private String communication_type;
     private int consultancy_fees;
+    private String city_name;
+
+    public String getCity_name() {
+        return city_name;
+    }
+
+    public void setCity_name(String city_name) {
+        this.city_name = city_name;
+    }
 
     private String signature;
 

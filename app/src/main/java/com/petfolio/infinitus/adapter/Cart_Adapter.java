@@ -96,9 +96,9 @@ public class Cart_Adapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             }
         }
-        if (petImagePath != null && !petImagePath.isEmpty()) {
+        if (data.get(position).getProduct_id().getThumbnail_image() != null && !data.get(position).getProduct_id().getThumbnail_image().isEmpty()) {
             Glide.with(context)
-                    .load(petImagePath)
+                    .load(data.get(position).getProduct_id().getThumbnail_image())
                     .into(holder.img_products_image);
         }
         else {

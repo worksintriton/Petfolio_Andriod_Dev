@@ -1,70 +1,37 @@
 package com.petfolio.infinitus.fragmentpetlover.bottommenu;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.location.Location;
+
 import android.os.Bundle;
-import android.os.Handler;
-import android.preference.PreferenceManager;
-import android.text.Editable;
-import android.text.TextWatcher;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
-import com.facebook.shimmer.ShimmerFrameLayout;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
+
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
-import com.petfolio.infinitus.adapter.PetLoverDoctorFilterAdapter;
-import com.petfolio.infinitus.adapter.PetLoverNearByDoctorAdapter;
-import com.petfolio.infinitus.adapter.ViewPagerPetCareAdapter;
+
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
-import com.petfolio.infinitus.petlover.FiltersActivity;
-import com.petfolio.infinitus.requestpojo.DoctorSearchRequest;
-import com.petfolio.infinitus.requestpojo.FilterDoctorRequest;
-import com.petfolio.infinitus.responsepojo.DoctorSearchResponse;
-import com.petfolio.infinitus.responsepojo.FilterDoctorResponse;
-import com.petfolio.infinitus.sessionmanager.SessionManager;
+
+import com.petfolio.infinitus.responsepojo.CommunityTextResponse;
+
 import com.petfolio.infinitus.utils.ConnectionDetector;
 import com.petfolio.infinitus.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,7 +40,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class PetCommunityFragment extends Fragment implements Serializable, View.OnClickListener {
+public class PetCommunityFragment extends Fragment  {
 
 
     private String TAG = "PetCommunityFragment";
@@ -83,6 +50,17 @@ public class PetCommunityFragment extends Fragment implements Serializable, View
     public PetCommunityFragment() {
         // Required empty public constructor
     }
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.avi_indicator)
+    AVLoadingIndicatorView avi_indicator;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_community_text)
+    TextView txt_community_text;
+
+    private Context mContext;
+
 
 
     @SuppressLint("LogNotTimber")
@@ -95,26 +73,25 @@ public class PetCommunityFragment extends Fragment implements Serializable, View
 
     }
 
-//    private Activity mActivity;
-//
-//    @Override
-//    public void onAttach(@NotNull Activity activity) {
-//        super.onAttach(activity);
-//        mActivity=activity;
-//    }
-//
-//    public Activity getMyActivity() {
-//        return mActivity;
-//    }
-
     @SuppressLint({"SetTextI18n", "LogNotTimber"})
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.w(TAG,"onCreateView-->");
 
         view = inflater.inflate(R.layout.fragment_pet_community, container, false);
+        ButterKnife.bind(this, view);
+        mContext = getActivity();
+
+
+        if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
+            getcommunitytextResponseCall();
+        }
+
         return view;
-    }
+
+
+
+        }
 
     @Override
     public void onResume() {
@@ -122,13 +99,42 @@ public class PetCommunityFragment extends Fragment implements Serializable, View
     }
 
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
+
+
+    @SuppressLint("LogNotTimber")
+    public void getcommunitytextResponseCall(){
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        //Creating an object of our api interface
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<CommunityTextResponse> call = apiInterface.getcommunitytextResponseCall(RestUtils.getContentType());
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<CommunityTextResponse>() {
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onResponse(@NonNull Call<CommunityTextResponse> call, @NonNull Response<CommunityTextResponse> response) {
+                avi_indicator.smoothToHide();
+                if (response.body() != null) {
+                    if(200 == response.body().getCode()){
+                        Log.w(TAG,"CommunityTextResponse" + new Gson().toJson(response.body()));
+                        if(response.body().getData() != null) {
+                           txt_community_text.setText(response.body().getData());
+                        }
+
+                    }
 
 
 
-        }
+                }
+
+            }
+            @Override
+            public void onFailure(@NonNull Call<CommunityTextResponse> call,@NonNull  Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"CommunityTextResponse flr"+t.getMessage());
+            }
+        });
 
     }
 

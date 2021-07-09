@@ -244,7 +244,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                     if(product_cart_counts == 1){
                         txt_cart_label.setText("Add to cart");
                     }else{
-                        txt_cart_label.setText("Go to cart");
+                       // txt_cart_label.setText("Go to cart");
                     }
 
                 }else{
@@ -282,7 +282,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                             }else{
                                 if(product_cart_counts != 1){
                                     txt_cart_count.setText(product_cart_counts+"");
-                                    txt_cart_label.setText("Go to cart");
+                                    //txt_cart_label.setText("Go to cart");
                                 }else{
                                     txt_cart_label.setText("Add to cart");
                                 }
@@ -352,7 +352,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
         rl_discount.setVisibility(View.GONE);
 
-        txt_products_quantity.setVisibility(View.GONE);
+       txt_products_quantity.setVisibility(View.GONE);
 
         txt_prod_desc_label.setVisibility(View.GONE);
 
@@ -505,7 +505,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
         bottomSheetBehavior.setFitToContents(false);
 
-        bottomSheetBehavior.setHalfExpandedRatio(0.7f);
+        bottomSheetBehavior.setHalfExpandedRatio(0.75f);
 
 
         // Capturing the callbacks for bottom sheet
@@ -662,8 +662,6 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
                             rl_discount.setVisibility(View.VISIBLE);
 
-                            txt_products_quantity.setVisibility(View.VISIBLE);
-
                             txt_prod_desc_label.setVisibility(View.VISIBLE);
 
                        //     txt_view_details.setVisibility(View.VISIBLE);
@@ -794,8 +792,9 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
         }
         if(threshould != null && !threshould.isEmpty() ){
             if(threshould.equalsIgnoreCase("0")){
-                txt_products_quantity.setText("Out Of Stock");
-                txt_products_quantity.setTextColor(ContextCompat.getColor(ProductDetailsActivity.this, R.color.vermillion));
+                txt_products_quantity.setVisibility(View.VISIBLE);
+              txt_products_quantity.setText("Out Of Stock");
+               txt_products_quantity.setTextColor(ContextCompat.getColor(ProductDetailsActivity.this, R.color.vermillion));
                 img_add_product.setVisibility(View.GONE);
                 txt_cart_count.setVisibility(View.GONE);
                 img_remove_product.setVisibility(View.GONE);
@@ -805,8 +804,9 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                 txt_cart_count.setVisibility(View.VISIBLE);
                 img_remove_product.setVisibility(View.VISIBLE);
                 ll_add_to_cart.setVisibility(View.VISIBLE);
-                txt_products_quantity.setText("Prodcut Quantity : "+threshould);
-                txt_products_quantity.setTextColor(ContextCompat.getColor(ProductDetailsActivity.this, R.color.black));
+                txt_products_quantity.setVisibility(View.GONE);
+             //   txt_products_quantity.setText("Prodcut Quantity : "+threshould);
+               // txt_products_quantity.setTextColor(ContextCompat.getColor(ProductDetailsActivity.this, R.color.black));
 
             }
 
@@ -823,6 +823,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
        /* if(product_cart_count != 0){
             txt_cart_count.setText(product_cart_count+"");
         }*/
+
     }
 
     @SuppressLint("LogNotTimber")
@@ -912,10 +913,10 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
                         Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
-
-                       /* Intent intent = new Intent(getApplicationContext(),PetCartActivity.class);
+                        /* Intent intent = new Intent(getApplicationContext(),PetCartActivity.class);
                         intent.putExtra("productid",productid);
                         intent.putExtra("fromactivity",TAG);
+                        intent.putExtra("tag",tag);
                         startActivity(intent);
                         finish();*/
                     }

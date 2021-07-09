@@ -84,6 +84,15 @@ public class PetLoverVendorOrderListResponse {
         private String p_user_feedback;
         private int p_user_rate;
 
+        private String thumbnail_image;
+        public String getThumbnail_image() {
+            return thumbnail_image;
+        }
+
+        public void setThumbnail_image(String thumbnail_image) {
+            this.thumbnail_image = thumbnail_image;
+        }
+
         public String getP_order_id() {
             return p_order_id;
         }

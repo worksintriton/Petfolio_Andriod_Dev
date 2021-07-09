@@ -232,6 +232,7 @@ public class DoctorShopTodayDealsSeeMoreActivity extends AppCompatActivity imple
 
         rl_filters.setOnClickListener(this);
         edt_filter.setOnClickListener(this);
+        rl_sort.setVisibility(View.INVISIBLE);
         rl_sort.setOnClickListener(this);
         edt_sort.setOnClickListener(this);
 

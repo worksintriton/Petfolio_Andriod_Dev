@@ -257,7 +257,7 @@ public class PetLoverDoctorFilterAdapter extends  RecyclerView.Adapter<RecyclerV
             txt_km = itemView.findViewById(R.id.txt_dist);
             btn_book = itemView.findViewById(R.id.btn_book);
             view = itemView.findViewById(R.id.view9);
-
+            txt_review_count.setVisibility(View.GONE);
 
 
         }

@@ -86,9 +86,9 @@ public class PetShopTodayDealsAdapter extends  RecyclerView.Adapter<RecyclerView
 
         }
 
-        if (today_special.get(position).getProduct_img() != null && !today_special.get(position).getProduct_img().isEmpty()) {
+        if (today_special.get(position).getThumbnail_image() != null && !today_special.get(position).getThumbnail_image().isEmpty()) {
             Glide.with(context)
-                        .load(today_special.get(position).getProduct_img())
+                        .load(today_special.get(position).getThumbnail_image())
                         .into(holder.img_products_image);
 
             }
@@ -154,6 +154,7 @@ public class PetShopTodayDealsAdapter extends  RecyclerView.Adapter<RecyclerView
             txt_products_offer = itemView.findViewById(R.id.txt_products_offer);
             txt_star_rating = itemView.findViewById(R.id.txt_star_rating);
             txt_review_count = itemView.findViewById(R.id.txt_review_count);
+            txt_review_count.setVisibility(View.GONE);
             ll_root = itemView.findViewById(R.id.ll_root);
             img_products_image = itemView.findViewById(R.id.img_products_image);
             img_like = itemView.findViewById(R.id.img_like);

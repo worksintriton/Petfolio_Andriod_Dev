@@ -111,9 +111,9 @@ public class PetLoverSPNewFavAdapter extends  RecyclerView.Adapter<RecyclerView.
           }
 
 
-        if (currentItem.getImage() != null && !currentItem.getImage().isEmpty()) {
+        if (currentItem.getThumbnail_image() != null && !currentItem.getThumbnail_image().isEmpty()) {
             Glide.with(context)
-                    .load(currentItem.getImage())
+                    .load(currentItem.getThumbnail_image())
                     .into(holder.img_doctors_image);
 
         }

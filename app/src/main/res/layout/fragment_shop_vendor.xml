@@ -1,38 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginBottom="60dp"
     android:background="@color/bg_white">
+
     <ScrollView
         android:id="@+id/scrollablContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fillViewport="true"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="10dp"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="20dp">
-            <include android:id="@+id/includelayout"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/includelayout"
                 layout="@layout/loading_layout"
-                android:visibility="gone"/>
+                android:visibility="gone" />
+
             <LinearLayout
                 android:id="@+id/headerView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp">
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
+
                 <RelativeLayout
+                    android:id="@+id/rl_search"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="5dp"
-                    android:orientation="horizontal"
-                    android:id="@+id/rl_search">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -44,8 +50,7 @@
                         android:textColor="@color/green"
                         android:textColorHint="@color/dark_gray"
                         android:textSize="16sp"
-                        tools:ignore="Autofill,LabelFor,TextFields"
-                        />
+                        tools:ignore="Autofill,LabelFor,TextFields" />
 
                     <ImageView
                         android:id="@+id/img_search"
@@ -64,25 +69,28 @@
 
 
                 </RelativeLayout>
+
                 <Button
                     android:id="@+id/btn_all_categories"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/allcategories_rounded_corner_btn"
                     android:fontFamily="@font/futuramediumbt"
                     android:text="@string/all_categories"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="18sp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/vertical_dotted_line"
                     android:layerType="software" />
+
                 <androidx.core.widget.NestedScrollView
                     android:id="@+id/scrollView"
                     android:layout_width="match_parent"
@@ -121,35 +129,30 @@
                         </RelativeLayout>
 
 
-
-
-
-
-
-
-
-
                     </LinearLayout>
                 </androidx.core.widget.NestedScrollView>
 
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp">
+                android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     tools:ignore="UselessParent">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="10dp">
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/txt_lbl_todaydeal"
@@ -173,44 +176,37 @@
                             android:text="@string/see_more"
                             android:textColor="@color/new_view_more"
                             android:textSize="14sp"
-                            android:textStyle="bold"/>
-
-
+                            android:textStyle="bold" />
 
 
                     </LinearLayout>
 
 
-
                     <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:id="@+id/rv_today_deal"
-                        android:layout_marginTop="15dp"
-                        />
-
-                    <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_productdetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:orientation="vertical"/>
+                        android:orientation="vertical" />
 
                     <TextView
-                        android:layout_marginTop="20dp"
                         android:id="@+id/txt_no_records"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"
+                        android:layout_marginTop="20dp"
                         android:gravity="center"
-                        android:visibility="gone"/>
-
-
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:visibility="gone" />
 
 
                 </LinearLayout>
-
 
 
             </LinearLayout>
@@ -218,8 +214,8 @@
         </LinearLayout>
 
 
-
     </ScrollView>
+
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/avi_indicator"
         android:layout_width="wrap_content"

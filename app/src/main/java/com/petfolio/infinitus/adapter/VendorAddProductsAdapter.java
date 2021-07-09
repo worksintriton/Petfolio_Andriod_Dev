@@ -130,6 +130,7 @@ public class VendorAddProductsAdapter extends  RecyclerView.Adapter<RecyclerView
             img_like = itemView.findViewById(R.id.img_like);
             img_dislike = itemView.findViewById(R.id.img_dislike);
             rl_add = itemView.findViewById(R.id.rl_add);
+            txt_review_count.setVisibility(View.GONE);
 
         }
 

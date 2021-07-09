@@ -352,7 +352,9 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
         super.onBackPressed();
         if(fromactivity != null && fromactivity.equalsIgnoreCase("ProductDetailsActivity")){
             Intent i = new Intent(PetCartActivity.this, ProductDetailsActivity.class);
+            i.putExtra("tag",tag);
             i.putExtra("productid",productdetails_productid);
+            i.putExtra("cat_id",cat_id);
             startActivity(i);
             finish();
         }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetShopTodayDealsSeeMoreActivity")){

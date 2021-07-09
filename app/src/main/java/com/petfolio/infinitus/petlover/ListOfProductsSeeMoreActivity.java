@@ -269,6 +269,7 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
 
         rl_filters.setOnClickListener(this);
         edt_filter.setOnClickListener(this);
+        rl_sort.setVisibility(View.INVISIBLE);
         rl_sort.setOnClickListener(this);
         edt_sort.setOnClickListener(this);
 

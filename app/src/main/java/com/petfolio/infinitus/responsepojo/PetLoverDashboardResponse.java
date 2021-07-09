@@ -515,6 +515,7 @@ public class PetLoverDashboardResponse{
                 private String _id;
                 private String doctor_name;
                 private String doctor_img;
+                private String thumbnail_image;
                 private String distance;
                 private String clinic_name;
                 private boolean fav;
@@ -548,6 +549,14 @@ public class PetLoverDashboardResponse{
 
                 public void setDoctor_img(String doctor_img) {
                     this.doctor_img = doctor_img;
+                }
+
+                public String getThumbnail_image() {
+                    return thumbnail_image;
+                }
+
+                public void setThumbnail_image(String thumbnail_image) {
+                    this.thumbnail_image = thumbnail_image;
                 }
 
                 public String getDistance() {
@@ -690,6 +699,15 @@ public class PetLoverDashboardResponse{
                 private boolean product_fav;
                 private double product_rating;
                 private int product_review;
+
+                private String thumbnail_image;
+                public String getThumbnail_image() {
+                    return thumbnail_image;
+                }
+
+                public void setThumbnail_image(String thumbnail_image) {
+                    this.thumbnail_image = thumbnail_image;
+                }
 
                 public String get_id() {
                     return _id;

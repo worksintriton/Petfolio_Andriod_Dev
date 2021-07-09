@@ -1063,9 +1063,8 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                         clinicPicBeans.add(clinicPicBean);
                         uploadimagepath = response.body().getData();
                         if (uploadimagepath != null) {
-                            setView();
-                        }else{
                             img_pet_imge.setVisibility(View.GONE);
+                            setView();
                         }
 
 

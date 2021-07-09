@@ -34,6 +34,7 @@ import com.petfolio.infinitus.adapter.VendorBusinessGalleryListAdapter;
 import com.petfolio.infinitus.adapter.ViewPagerProductDetailsAdapter;
 import com.petfolio.infinitus.api.APIClient;
 import com.petfolio.infinitus.api.RestApiInterface;
+import com.petfolio.infinitus.doctor.shop.DoctorCartActivity;
 import com.petfolio.infinitus.requestpojo.CartAddProductRequest;
 import com.petfolio.infinitus.requestpojo.DoctorProductFavListCreateRequest;
 import com.petfolio.infinitus.requestpojo.FetchByIdRequest;
@@ -568,7 +569,6 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
 
                             rl_discount.setVisibility(View.VISIBLE);
 
-                            txt_products_quantity.setVisibility(View.VISIBLE);
 
                             txt_prod_desc_label.setVisibility(View.VISIBLE);
 
@@ -710,6 +710,7 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
         }
         if(threshould != null && !threshould.isEmpty() ){
             if(threshould.equalsIgnoreCase("0")){
+                txt_products_quantity.setVisibility(View.VISIBLE);
                 txt_products_quantity.setText("Out Of Stock");
                 txt_products_quantity.setTextColor(ContextCompat.getColor(SPProductDetailsActivity.this, R.color.vermillion));
                 img_add_product.setVisibility(View.GONE);
@@ -717,12 +718,13 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
                 img_remove_product.setVisibility(View.GONE);
                 ll_add_to_cart.setVisibility(View.GONE);
             }else{
+                txt_products_quantity.setVisibility(View.GONE);
                 img_add_product.setVisibility(View.VISIBLE);
                 txt_cart_count.setVisibility(View.VISIBLE);
                 img_remove_product.setVisibility(View.VISIBLE);
                 ll_add_to_cart.setVisibility(View.VISIBLE);
-                txt_products_quantity.setText("Prodcut Quantity : "+threshould);
-                txt_products_quantity.setTextColor(ContextCompat.getColor(SPProductDetailsActivity.this, R.color.black));
+             //   txt_products_quantity.setText("Prodcut Quantity : "+threshould);
+              //  txt_products_quantity.setTextColor(ContextCompat.getColor(SPProductDetailsActivity.this, R.color.black));
 
             }
 
@@ -831,7 +833,7 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
                                 fetch_product_by_id_ResponseCall();
                             }
                         }
-                        /*Intent intent = new Intent(getApplicationContext(),DoctorCartActivity.class);
+                       /* Intent intent = new Intent(getApplicationContext(), DoctorCartActivity.class);
                         intent.putExtra("productid",productid);
                         intent.putExtra("fromactivity",TAG);
                         startActivity(intent);

@@ -74,6 +74,15 @@ public class FetchPetloverDoctorFavListResponse {
          * specialization : Surgeon
          */
 
+        private String thumbnail_image;
+        public String getThumbnail_image() {
+            return thumbnail_image;
+        }
+
+        public void setThumbnail_image(String thumbnail_image) {
+            this.thumbnail_image = thumbnail_image;
+        }
+
         private List<SpecializationBean> specialization;
 
         public String get_id() {

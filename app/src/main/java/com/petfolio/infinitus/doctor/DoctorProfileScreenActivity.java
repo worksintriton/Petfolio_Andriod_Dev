@@ -205,6 +205,10 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
     TextView title_shop;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_clinicname)
+    TextView txt_clinicname;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_shop)
     ImageView img_shop;
 
@@ -492,54 +496,55 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
 
-                        if(response.body().getData().getClinic_pic() != null) {
-                            doctorclinicdetailsResponseList = response.body().getData().getClinic_pic();
-                            Log.w(TAG,"Size"+doctorclinicdetailsResponseList.size());
-                            Log.w(TAG,"doctorclinicdetailsResponseList : "+new Gson().toJson(doctorclinicdetailsResponseList));
-                        }
-                        if(response.body().getData().getClinic_name() != null) {
-                            clinicname = response.body().getData().getClinic_name();
-                        }
-                        if(response.body().getData().getDr_name() != null) {
-                            doctorname = response.body().getData().getDr_name();
-                        }
-                        if(response.body().getData().getClinic_loc() != null){
-                        txt_clinic_address.setText(response.body().getData().getClinic_loc());
-                        }
-
-
-
-
-
-
-                        if(doctorclinicdetailsResponseList != null && doctorclinicdetailsResponseList.size()>0){
-
-                            for (int i = 0; i < doctorclinicdetailsResponseList.size(); i++) {
-                                doctorclinicdetailsResponseList.get(i).getClinic_pic();
-                                Log.w(TAG, "RES" + ", " +  doctorclinicdetailsResponseList.get(i).getClinic_pic());
+                        if(response.body().getData() != null) {
+                            if (response.body().getData().getClinic_name() != null) {
+                                txt_clinicname.setText(response.body().getData().getClinic_name());
+                            }else{
+                                txt_clinicname.setText("");
                             }
-
-
-                            viewpageData(doctorclinicdetailsResponseList);
-
-                        }
-
-
-                        if(response.body().getData().getSpecialization() != null){
-                            for (int i = 0; i < response.body().getData().getSpecialization().size(); i++) {
-                                concatenatedSpcNames += response.body().getData().getSpecialization().get(i).getSpecialization();
-                                if (i < response.body().getData().getSpecialization().size() - 1) concatenatedSpcNames += ", ";
+                            if (response.body().getData().getClinic_pic() != null) {
+                                doctorclinicdetailsResponseList = response.body().getData().getClinic_pic();
+                                Log.w(TAG, "Size" + doctorclinicdetailsResponseList.size());
+                                Log.w(TAG, "doctorclinicdetailsResponseList : " + new Gson().toJson(doctorclinicdetailsResponseList));
                             }
-                            txt_dr_specialization.setText(concatenatedSpcNames);
-
-                        }
-                        if(response.body().getData().getPet_handled() != null){
-                            for (int i = 0; i < response.body().getData().getPet_handled().size(); i++) {
-                                concatenatedPetHandled += response.body().getData().getPet_handled().get(i).getPet_handled();
-                                if (i < response.body().getData().getPet_handled().size() - 1) concatenatedPetHandled += ", ";
+                            if (response.body().getData().getClinic_name() != null) {
+                                clinicname = response.body().getData().getClinic_name();
                             }
-                            txt_pets_handled.setText(concatenatedPetHandled);
+                            if (response.body().getData().getDr_name() != null) {
+                                doctorname = response.body().getData().getDr_name();
+                            }
+                            if (response.body().getData().getClinic_loc() != null) {
+                                txt_clinic_address.setText(response.body().getData().getClinic_loc());
+                            }
+                            if (doctorclinicdetailsResponseList != null && doctorclinicdetailsResponseList.size() > 0) {
 
+                                for (int i = 0; i < doctorclinicdetailsResponseList.size(); i++) {
+                                    doctorclinicdetailsResponseList.get(i).getClinic_pic();
+                                    Log.w(TAG, "RES" + ", " + doctorclinicdetailsResponseList.get(i).getClinic_pic());
+                                }
+
+
+                                viewpageData(doctorclinicdetailsResponseList);
+
+                            }
+                            if (response.body().getData().getSpecialization() != null) {
+                                for (int i = 0; i < response.body().getData().getSpecialization().size(); i++) {
+                                    concatenatedSpcNames += response.body().getData().getSpecialization().get(i).getSpecialization();
+                                    if (i < response.body().getData().getSpecialization().size() - 1)
+                                        concatenatedSpcNames += ", ";
+                                }
+                                txt_dr_specialization.setText(concatenatedSpcNames);
+
+                            }
+                            if (response.body().getData().getPet_handled() != null) {
+                                for (int i = 0; i < response.body().getData().getPet_handled().size(); i++) {
+                                    concatenatedPetHandled += response.body().getData().getPet_handled().get(i).getPet_handled();
+                                    if (i < response.body().getData().getPet_handled().size() - 1)
+                                        concatenatedPetHandled += ", ";
+                                }
+                                txt_pets_handled.setText(concatenatedPetHandled);
+
+                            }
                         }
 
                     }

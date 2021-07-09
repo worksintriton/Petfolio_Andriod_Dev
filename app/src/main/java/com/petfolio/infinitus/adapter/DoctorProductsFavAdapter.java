@@ -181,6 +181,7 @@ public class DoctorProductsFavAdapter extends  RecyclerView.Adapter<RecyclerView
             img_like = itemView.findViewById(R.id.img_like);
             img_dislike = itemView.findViewById(R.id.img_dislike);
             img_settings = itemView.findViewById(R.id.img_settings);
+            txt_review_count.setVisibility(View.GONE);
 
 
 

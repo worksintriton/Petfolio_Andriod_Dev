@@ -283,6 +283,7 @@ public class SelectedServiceProviderAdapter extends  RecyclerView.Adapter<Recycl
             btn_book = itemView.findViewById(R.id.btn_book);
             ll_root = itemView.findViewById(R.id.ll_root);
             view = itemView.findViewById(R.id.view9);
+            txt_review_count.setVisibility(View.GONE);
 
 
 

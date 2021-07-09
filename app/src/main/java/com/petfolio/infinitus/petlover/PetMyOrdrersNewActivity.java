@@ -25,7 +25,6 @@ import com.petfolio.infinitus.activity.NotificationActivity;
 import com.petfolio.infinitus.fragmentpetlover.myordersnew.FragmentPetLoverCancelledOrders;
 import com.petfolio.infinitus.fragmentpetlover.myordersnew.FragmentPetLoverCompletedOrders;
 import com.petfolio.infinitus.fragmentpetlover.myordersnew.FragmentPetLoverNewOrders;
-import com.wang.avi.AVLoadingIndicatorView;
 
 import org.jetbrains.annotations.NotNull;
 
