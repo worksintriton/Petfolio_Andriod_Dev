@@ -938,7 +938,8 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
                 rv_sosnumbers.setItemAnimator(new DefaultItemAnimator());
                 PetLoverSOSAdapter petLoverSOSAdapter = new PetLoverSOSAdapter(getApplicationContext(), sosList,this);
                 rv_sosnumbers.setAdapter(petLoverSOSAdapter);
-            }else{
+            }
+            else{
                 rv_sosnumbers.setVisibility(View.GONE);
                 btn_call.setVisibility(View.GONE);
                 txt_no_records.setVisibility(View.VISIBLE);

@@ -38,12 +38,12 @@
     <string name="resendotp">Resend OTP in</string>
     <string name="addyourpet">Add your Pet</string>
     <string name="skip">Skip</string>
-    <string name="pet_name">Pet name</string>
-    <string name="pet_gender">Pet Gender</string>
-    <string name="pet_color">Pet color</string>
-    <string name="pet_weight">Pet weight (kg)</string>
-    <string name="pet_age">Pet age</string>
-    <string name="pet_dob">Pet Date of Birth</string>
+    <string name="pet_name">Name</string>
+    <string name="pet_gender">Gender</string>
+    <string name="pet_color">Color</string>
+    <string name="pet_weight">Weight (kg)</string>
+    <string name="pet_age">Age</string>
+    <string name="pet_dob">Date of Birth</string>
     <string name="vaccinated">Vaccinated</string>
     <string name="select_date">Select date</string>
     <string name="select_vaccinated">Select vaccinated date</string>
@@ -218,8 +218,8 @@
 
     <string name="accept">Accept</string>
     <string name="pet_details">Pet Details</string>
-    <string name="pet_name_details">Pet Name</string>
-    <string name="pet_type_details">Pet Type</string>
+    <string name="pet_name_details">Name</string>
+    <string name="pet_type_details">Type</string>
     <string name="breed">Breed</string>
     <string name="gender">Gender</string>
     <string name="colour">Color</string>
@@ -534,11 +534,11 @@
     <string name="home_address">Home Address</string>
     <string name="reports">Reports</string>
     <string name="pet_service">Pet Service</string>
-    <string name="sos">Sos</string>
+    <string name="sos">SOS</string>
     <string name="add_products">Add Products</string>
-    <string name="pet_s_genus_breed">Pet types &amp; Breed</string>
+    <string name="pet_s_genus_breed">Types &amp; Breed</string>
     <string name="date_of_birth">Date of Birth</string>
-    <string name="pet_bio">Pet Bio</string>
+    <string name="pet_bio">Bio</string>
     <string name="save_continue"><![CDATA[Save & Continue]]></string>
     <string name="err_msg_type_of_gender">Select the gender</string>
     <string name="consultation">Consultation</string>

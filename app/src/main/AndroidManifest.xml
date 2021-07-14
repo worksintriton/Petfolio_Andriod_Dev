@@ -716,6 +716,12 @@
             android:screenOrientation="portrait"
              android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".activity.SoSActivity"
+            android:screenOrientation="portrait"
+             android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".petlover.PetShopTodayDealsSeeMoreActivity"
             android:screenOrientation="portrait"

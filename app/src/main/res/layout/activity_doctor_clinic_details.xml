@@ -202,6 +202,12 @@
 
         </LinearLayout>
 
+        <include
+            android:id="@+id/include_petlover_footer"
+            layout="@layout/toolbar_layout_petlover_footer_new_shaped"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
 
     </LinearLayout>
 

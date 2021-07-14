@@ -39,6 +39,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.activity.LoginActivity;
 import com.petfolio.infinituss.activity.NotificationActivity;
+import com.petfolio.infinituss.activity.SoSActivity;
 import com.petfolio.infinituss.activity.location.ManageAddressActivity;
 import com.petfolio.infinituss.adapter.PetLoverSOSAdapter;
 import com.petfolio.infinituss.interfaces.SoSCallListener;
@@ -211,6 +212,11 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
                     showLogOutAppAlert();
                     return true;
 
+                case R.id.nav_item_nine:
+                    gotoSOS();
+                    return true;
+
+
 
 
 
@@ -219,6 +225,11 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
 
             }
         });
+
+    }
+
+    private void gotoSOS() {
+        startActivity(new Intent(getApplicationContext(), SoSActivity.class));
 
     }
 

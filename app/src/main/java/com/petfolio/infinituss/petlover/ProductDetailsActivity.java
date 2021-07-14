@@ -182,6 +182,10 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
     ImageView img_fav;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_cart)
+    ImageView img_cart;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_prod_desc_label)
     TextView txt_prod_desc_label;
 
@@ -196,6 +200,52 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
     String business_name, vendor_name, bussiness_reg, business_location;
 
     List<FetchProductByIdResponse.VendorDetailsBean.BussinessGalleryBean> bussinessGalleryBeans;
+
+
+    /* Petlover Bottom Navigation */
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_home)
+    RelativeLayout rl_home;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_care)
+    RelativeLayout rl_care;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_care)
+    TextView title_care;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_care)
+    ImageView img_care;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_service)
+    RelativeLayout rl_service;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_serv)
+    TextView title_serv;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_serv)
+    ImageView img_serv;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_shop)
+    RelativeLayout rl_shop;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_shop)
+    TextView title_shop;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_shop)
+    ImageView img_shop;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_comn)
+    RelativeLayout rl_comn;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_community)
+    TextView title_community;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_community)
+    ImageView img_community;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_homes)
+    RelativeLayout rl_homes;
+
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -308,6 +358,24 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                 cart_add_product_ResponseCall();
             }
         });
+
+        /*serv*/
+        title_care.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_care.setImageResource(R.drawable.grey_care);
+        title_shop.setTextColor(getResources().getColor(R.color.new_gree_color,getTheme()));
+        img_shop.setImageResource(R.drawable.green_shop);
+        title_community.setTextColor(getResources().getColor(R.color.new_gree_color,getTheme()));
+        img_community.setImageResource(R.drawable.grey_community);
+        title_serv.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_serv.setImageResource(R.drawable.grey_servc);
+
+        rl_home.setOnClickListener(this);
+        rl_care.setOnClickListener(this);
+        rl_service.setOnClickListener(this);
+        rl_shop.setOnClickListener(this);
+        rl_comn.setOnClickListener(this);
+        rl_homes.setOnClickListener(this);
+
 
 
       /*  txt_cart_label.setOnClickListener(new View.OnClickListener() {
@@ -673,6 +741,18 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                             setBottomSheet();
 
                             img_fav.setOnClickListener(ProductDetailsActivity.this);
+                            img_cart.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(getApplicationContext(),PetCartActivity.class);
+                                    intent.putExtra("productid",productid);
+                                    intent.putExtra("cat_id",cat_id);
+                                    intent.putExtra("fromactivity",fromactivity);
+                                    intent.putExtra("fromto",TAG);
+                                    intent.putExtra("tag",tag);
+                                    startActivity(intent);
+                                }
+                            });
 
                             if(response.body().getProduct_details().getProduct_img() != null && response.body().getProduct_details().getProduct_img().size()>0){
                                 viewpageData(response.body().getProduct_details().getProduct_img());
@@ -999,6 +1079,26 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                     favResponseCall();
                 }
                 break;
+
+            case R.id.rl_homes:
+                callDirections("1");
+                break;
+            case R.id.rl_home:
+                callDirections("1");
+                break;
+            case R.id.rl_shop:
+                callDirections("2");
+                break;
+            case R.id.rl_service:
+                callDirections("3");
+                break;
+            case R.id.rl_care:
+                callDirections("4");
+                break;
+            case R.id.rl_comn:
+                callDirections("5");
+                break;
+
 
         }
 

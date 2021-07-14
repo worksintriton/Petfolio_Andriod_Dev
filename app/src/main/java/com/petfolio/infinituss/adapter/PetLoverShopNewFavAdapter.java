@@ -117,13 +117,13 @@ public class PetLoverShopNewFavAdapter extends  RecyclerView.Adapter<RecyclerVie
           }
 
 
-        if (currentItem.getThumbnail_image() != null && !currentItem.getThumbnail_image().isEmpty()) {
+        Log.w(TAG,"getThumbnail_image : "+currentItem.getThumbnail_image());
+        if (currentItem.getThumbnail_image() != null && !currentItem.getThumbnail_image().isEmpty()){
             Glide.with(context)
                     .load(currentItem.getThumbnail_image())
                     .into(holder.img_products_image);
 
-        }
-        else{
+        } else{
             Glide.with(context)
                     .load(APIClient.PROFILE_IMAGE_URL)
                     .into(holder.img_products_image);

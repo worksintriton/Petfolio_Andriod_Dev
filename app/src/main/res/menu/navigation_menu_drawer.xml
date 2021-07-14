@@ -62,6 +62,14 @@
             android:visible="true"/>
         </group>
 
+    <group android:checkableBehavior="single"
+        android:id="@+id/group9">
+        <item android:id="@+id/nav_item_nine"
+            android:icon="@drawable/ic_sos"
+            android:title="@string/sos"
+            android:visible="true"/>
+    </group>
+
 
 
 

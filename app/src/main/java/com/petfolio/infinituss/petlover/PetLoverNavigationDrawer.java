@@ -41,6 +41,7 @@ import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.activity.LoginActivity;
 import com.petfolio.infinituss.activity.NotificationActivity;
+import com.petfolio.infinituss.activity.SoSActivity;
 import com.petfolio.infinituss.adapter.PetLoverSOSAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.interfaces.SoSCallListener;
@@ -194,6 +195,9 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
                 case R.id.nav_item_seven:
                   //  confirmLogoutDialog();
                     showLogOutAppAlert();
+                    return true;
+
+                case R.id.nav_item_nine:
                     return true;
 
 
@@ -413,6 +417,10 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
     }
     private void gotoMyOrders() {
         startActivity(new Intent(getApplicationContext(),PetMyOrdrersActivity.class));
+
+    }
+    private void gotoSOS() {
+        startActivity(new Intent(getApplicationContext(), SoSActivity.class));
 
     }
     private void gotoLogout() {

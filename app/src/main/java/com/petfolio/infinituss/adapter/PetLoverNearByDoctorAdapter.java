@@ -155,14 +155,12 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
               holder.txt_review_count.setText("0");
           }*/
           if (currentItem.getDoctor_img() != null && !currentItem.getDoctor_img().isEmpty()) {
-
-            Glide.with(context)
+              Glide.with(context)
                     .load(currentItem.getThumbnail_image())
                     //.load(R.drawable.logo)
                     .into(holder.img_doctors_image);
 
-        }
-          else{
+        }else{
             Glide.with(context)
                     .load(APIClient.PROFILE_IMAGE_URL)
                     .into(holder.img_doctors_image);

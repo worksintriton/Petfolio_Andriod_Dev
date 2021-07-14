@@ -231,6 +231,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rl_homes)
     RelativeLayout rl_homes;
+    private String fromto;
 
 
     @SuppressLint("LogNotTimber")
@@ -256,6 +257,13 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
             fromactivity = extras.getString("fromactivity");
             active_tag = extras.getString("active_tag");
             cat_id = extras.getString("cat_id");
+
+            /*ProductDetailsActivity*/
+            productid = extras.getString("productid");
+            cat_id = extras.getString("cat_id");
+            fromactivity = extras.getString("fromactivity");
+            tag = extras.getString("tag");
+            fromto = extras.getString("fromto");
         }
 
 
@@ -343,12 +351,13 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(fromactivity != null && fromactivity.equalsIgnoreCase("ProductDetailsActivity")){
-            Intent i = new Intent(PetCartActivity.this, ProductDetailsActivity.class);
-            i.putExtra("tag",tag);
-            i.putExtra("productid",productdetails_productid);
-            i.putExtra("cat_id",cat_id);
-            startActivity(i);
+        if(fromto != null && fromto.equalsIgnoreCase("ProductDetailsActivity")){
+            Intent intent = new Intent(PetCartActivity.this, ProductDetailsActivity.class);
+            intent.putExtra("productid",productid);
+            intent.putExtra("cat_id",cat_id);
+            intent.putExtra("fromactivity",fromactivity);
+            intent.putExtra("tag",tag);
+            startActivity(intent);
             finish();
         }else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetShopTodayDealsSeeMoreActivity")){
             Intent i = new Intent(PetCartActivity.this, PetShopTodayDealsSeeMoreActivity.class);
