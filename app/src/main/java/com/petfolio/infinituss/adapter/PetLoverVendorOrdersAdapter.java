@@ -117,9 +117,9 @@ public class PetLoverVendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerV
         }
 
 
-        if (orderResponseListAll.get(position).getThumbnail_image() != null && !orderResponseListAll.get(position).getThumbnail_image().isEmpty()) {
+        if (orderResponseListAll.get(position).getP_order_image() != null && !orderResponseListAll.get(position).getP_order_image().isEmpty()) {
             Glide.with(context)
-                    .load(orderResponseListAll.get(position).getThumbnail_image())
+                    .load(orderResponseListAll.get(position).getP_order_image())
                     .into(holder.img_products_image);
 
         }

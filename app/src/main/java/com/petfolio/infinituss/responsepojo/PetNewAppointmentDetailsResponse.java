@@ -310,6 +310,7 @@ public class PetNewAppointmentDetailsResponse {
          * comments : 0
          * rating : 5
          * doctor_exp : 3
+         * thumbnail_image
          * updatedAt : 2021-04-16T10:49:08.692Z
          * createdAt : 2021-04-16T05:24:30.734Z
          * __v : 0
@@ -1320,9 +1321,21 @@ public class PetNewAppointmentDetailsResponse {
             private int comments;
             private int rating;
             private int doctor_exp;
+            private String thumbnail_image;
+
+
             private String updatedAt;
             private String createdAt;
             private int __v;
+
+            public String getThumbnail_image() {
+                return thumbnail_image;
+            }
+
+            public void setThumbnail_image(String thumbnail_image) {
+                this.thumbnail_image = thumbnail_image;
+            }
+
             /**
              * year : 2019
              * education : MD

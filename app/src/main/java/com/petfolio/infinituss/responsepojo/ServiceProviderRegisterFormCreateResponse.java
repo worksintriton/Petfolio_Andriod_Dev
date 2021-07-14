@@ -93,6 +93,25 @@ public class ServiceProviderRegisterFormCreateResponse {
         private double sp_lat;
         private double sp_long;
 
+        private String city_name;
+        private String sp_info ;
+
+        public String getSp_info() {
+            return sp_info;
+        }
+
+        public void setSp_info(String sp_info) {
+            this.sp_info = sp_info;
+        }
+
+        public String getCity_name() {
+            return city_name;
+        }
+
+        public void setCity_name(String city_name) {
+            this.city_name = city_name;
+        }
+
         public String getSp_loc() {
             return sp_loc;
         }

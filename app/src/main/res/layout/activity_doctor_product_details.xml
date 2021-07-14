@@ -64,20 +64,22 @@
                 tools:ignore="ContentDescription" />
 
             <ImageView
+                android:id="@+id/img_cart"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
                 android:src="@drawable/ic_bag"
-                android:visibility="invisible"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"
+                android:layout_gravity="center"/>
 
             <ImageView
                 android:id="@+id/img_fav"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/heart_gray"
+                android:src="@drawable/heart_gray"
                 tools:ignore="ContentDescription" />
         </LinearLayout>
 

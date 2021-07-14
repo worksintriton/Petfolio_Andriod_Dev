@@ -142,6 +142,7 @@ public class DoctorCartActivity extends AppCompatActivity implements AddandRemov
 
     String tag;
     String fromactivity;
+    String fromto;
 
     private String userid;
     private String productid;
@@ -223,6 +224,15 @@ public class DoctorCartActivity extends AppCompatActivity implements AddandRemov
             fromactivity = extras.getString("fromactivity");
             active_tag = extras.getString("active_tag");
             cat_id = extras.getString("cat_id");
+
+            /*DoctorProductDetailsActivity*/
+            productid = extras.getString("productid");
+            cat_id = extras.getString("cat_id");
+            fromactivity = extras.getString("fromactivity");
+            tag = extras.getString("tag");
+            fromto = extras.getString("fromto");
+
+
         }
 
 
@@ -300,13 +310,14 @@ public class DoctorCartActivity extends AppCompatActivity implements AddandRemov
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorProductDetailsActivity")){
-            Intent i = new Intent(DoctorCartActivity.this, DoctorProductDetailsActivity.class);
-            i.putExtra("productid",productdetails_productid);
-            startActivity(i);
+        if(fromto != null && fromto.equalsIgnoreCase("DoctorProductDetailsActivity")){
+            Intent intent = new Intent(DoctorCartActivity.this, DoctorProductDetailsActivity.class);
+            intent.putExtra("productid",productid);
+            intent.putExtra("cat_id",cat_id);
+            intent.putExtra("tag",tag);
+            startActivity(intent);
             finish();
-        }
-        if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorProductDetailsActivity")){
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorProductDetailsActivity")){
             Intent i = new Intent(DoctorCartActivity.this, DoctorProductDetailsActivity.class);
             i.putExtra("productid",productdetails_productid);
             startActivity(i);

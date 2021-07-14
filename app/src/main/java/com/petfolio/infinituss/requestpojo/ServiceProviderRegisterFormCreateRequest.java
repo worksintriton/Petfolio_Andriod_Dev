@@ -38,6 +38,15 @@ public class ServiceProviderRegisterFormCreateRequest {
     private String date_and_time;
     private String mobile_type;
     private String city_name;
+    private String sp_info ;
+
+    public String getSp_info() {
+        return sp_info;
+    }
+
+    public void setSp_info(String sp_info) {
+        this.sp_info = sp_info;
+    }
 
     public String getCity_name() {
         return city_name;

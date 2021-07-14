@@ -458,7 +458,8 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
 
 
 
-                            String usr_image = response.body().getData().getDoctor_id().getProfile_img();
+                            String usr_image = null;
+                          //  String usr_image = response.body().getData().getDoctor_id().getProfile_img();
                             if(response.body().getData().getPet_id() != null){
                                  pet_name = response.body().getData().getPet_id().getPet_name();
                                 pet_image = response.body().getData().getPet_id().getPet_img();
@@ -522,6 +523,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
                                 addr = Address.get(i).getClinic_loc();
 
                                 usrname = Address.get(i).getDr_name();
+                                usr_image = Address.get(i).getThumbnail_image();
                             }
                             appoinment_status = response.body().getData().getAppoinment_status();
                             start_appointment_status = response.body().getData().getStart_appointment_status();

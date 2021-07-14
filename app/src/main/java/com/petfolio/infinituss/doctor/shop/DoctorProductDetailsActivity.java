@@ -37,6 +37,7 @@ import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.doctor.DoctorDashboardActivity;
 
 import com.petfolio.infinituss.doctor.DoctorProfileScreenActivity;
+import com.petfolio.infinituss.petlover.PetCartActivity;
 import com.petfolio.infinituss.requestpojo.CartAddProductRequest;
 import com.petfolio.infinituss.requestpojo.DoctorProductFavListCreateRequest;
 import com.petfolio.infinituss.requestpojo.FetchByIdRequest;
@@ -195,6 +196,11 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_fav)
     ImageView img_fav;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_cart)
+    ImageView img_cart;
+
 
     @SuppressLint({"LogNotTimber", "SetTextI18n", "LongLogTag"})
     @Override
@@ -581,6 +587,19 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
                             setBottomSheet();
 
                             img_fav.setOnClickListener(DoctorProductDetailsActivity.this);
+                            img_cart.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(getApplicationContext(), DoctorCartActivity.class);
+                                    intent.putExtra("productid",productid);
+                                    intent.putExtra("cat_id",cat_id);
+                                    intent.putExtra("fromactivity",fromactivity);
+                                    intent.putExtra("fromto",TAG);
+                                    intent.putExtra("tag",tag);
+                                    startActivity(intent);
+                                }
+                            });
+
 
                             if(response.body().getProduct_details().getProduct_img() != null && response.body().getProduct_details().getProduct_img().size()>0){
                                 viewpageData(response.body().getProduct_details().getProduct_img());

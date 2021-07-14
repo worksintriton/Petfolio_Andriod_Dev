@@ -34,6 +34,7 @@ import com.petfolio.infinituss.adapter.VendorBusinessGalleryListAdapter;
 import com.petfolio.infinituss.adapter.ViewPagerProductDetailsAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
+import com.petfolio.infinituss.doctor.shop.DoctorCartActivity;
 import com.petfolio.infinituss.requestpojo.CartAddProductRequest;
 import com.petfolio.infinituss.requestpojo.DoctorProductFavListCreateRequest;
 import com.petfolio.infinituss.requestpojo.FetchByIdRequest;
@@ -194,6 +195,10 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_fav)
     ImageView img_fav;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_cart)
+    ImageView img_cart;
 
     @SuppressLint({"LogNotTimber", "SetTextI18n", "LongLogTag"})
     @Override
@@ -580,6 +585,19 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
                             setBottomSheet();
 
                             img_fav.setOnClickListener(SPProductDetailsActivity.this);
+                            img_cart.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(getApplicationContext(), SPCartActivity.class);
+                                    intent.putExtra("productid",productid);
+                                    intent.putExtra("cat_id",cat_id);
+                                    intent.putExtra("fromactivity",fromactivity);
+                                    intent.putExtra("fromto",TAG);
+                                    intent.putExtra("tag",tag);
+                                    startActivity(intent);
+                                }
+                            });
+
 
                             if(response.body().getProduct_details().getProduct_img() != null && response.body().getProduct_details().getProduct_img().size()>0){
                                 viewpageData(response.body().getProduct_details().getProduct_img());

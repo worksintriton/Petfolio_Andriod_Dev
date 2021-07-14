@@ -591,7 +591,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                                 txt_visit_type.setText(response.body().getData().getCommunication_type());
                             }
 
-                            String usr_image = response.body().getData().getDoctor_id().getProfile_img();
+                           
                             String servname = response.body().getData().getService_name();
                             String pet_name = response.body().getData().getPet_id().getPet_name();
                             pet_image = response.body().getData().getPet_id().getPet_img();
@@ -697,10 +697,13 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                             String orderid = response.body().getData().getAppointment_UID();
                             String payment_method = response.body().getData().getPayment_method();
                             String order_cost = response.body().getData().getAmount();
+                            String usr_image = null;
                             List<PetNewAppointmentDetailsResponse.DataBean.DocBusinessInfoBean> Address = response.body().getData().getDoc_business_info();
                             for (int i = 0; i < Address.size(); i++) {
                                 addr = Address.get(i).getClinic_loc();
                                 usrname = Address.get(i).getDr_name();
+                                usr_image = Address.get(i).getThumbnail_image();
+
                             }
                             appoinment_status = response.body().getData().getAppoinment_status();
                             start_appointment_status = response.body().getData().getStart_appointment_status();
@@ -1200,6 +1203,12 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                             addr = response.body().getData().getSp_business_info().get(0).getSp_loc();
                             appoinment_status = response.body().getData().getAppoinment_status();
                             start_appointment_status = response.body().getData().getStart_appointment_status();
+
+                            List<SPAppointmentDetailsResponse.DataBean.SpBusinessInfoBean> Address = response.body().getData().getSp_business_info();
+                            for (int i = 0; i < Address.size(); i++) {
+                                usr_image = Address.get(i).getThumbnail_image();
+
+                            }
                             setView(usrname, usr_image, servname, pet_name, pet_type, breed, gender, colour, weight, order_date, orderid, payment_method, order_cost, vaccinated, addr);
 
 

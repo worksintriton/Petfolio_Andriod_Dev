@@ -51,9 +51,6 @@
             android:layout_marginEnd="10dp">
 
             <!--Clinic Details -->
-
-
-
             <EditText
                 android:id="@+id/edt_business_name"
                 android:layout_width="match_parent"
@@ -67,6 +64,33 @@
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp"
                 tools:ignore="Autofill,LabelFor" />
+
+            <!--About SP -->
+            <RelativeLayout
+                android:id="@+id/rl_aboutsp"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="15dp">
+
+                <EditText
+                    android:id="@+id/edt_aboutsp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rectangular_curved_corner"
+                    android:fontFamily="@font/futuramediumbt"
+                    android:gravity="start"
+                    android:hint="@string/about_service_provider"
+                    android:padding="15dp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/new_light_green"
+                    android:textColorHint="@color/dark_gray"
+                    android:textSize="14sp"
+                    tools:ignore="Autofill,LabelFor"
+                    android:inputType="textMultiLine"
+                    android:scrollbars="vertical"
+                    android:maxLength="150"/>
+
+            </RelativeLayout>
 
 
             <!--Add your service-->

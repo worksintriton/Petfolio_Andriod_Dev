@@ -1256,6 +1256,25 @@ public class SPAppointmentDetailsResponse {
             private String updatedAt;
             private String createdAt;
             private int __v;
+            private String thumbnail_image;
+            private String city_name;
+
+            public String getThumbnail_image() {
+                return thumbnail_image;
+            }
+
+            public void setThumbnail_image(String thumbnail_image) {
+                this.thumbnail_image = thumbnail_image;
+            }
+
+            public String getCity_name() {
+                return city_name;
+            }
+
+            public void setCity_name(String city_name) {
+                this.city_name = city_name;
+            }
+
             private List<BusServiceListBean> bus_service_list;
             private List<BusSpecListBean> bus_spec_list;
             private List<BusServiceGallBean> bus_service_gall;

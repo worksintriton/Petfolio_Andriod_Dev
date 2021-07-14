@@ -139,6 +139,7 @@ public class SPCartActivity extends AppCompatActivity implements AddandRemovePro
 
     String tag;
     String fromactivity;
+    String fromto;
 
     private String userid;
     private String productid;
@@ -220,6 +221,15 @@ public class SPCartActivity extends AppCompatActivity implements AddandRemovePro
             fromactivity = extras.getString("fromactivity");
             active_tag = extras.getString("active_tag");
             cat_id = extras.getString("cat_id");
+
+
+
+            /*SPProductDetailsActivity*/
+            productid = extras.getString("productid");
+            cat_id = extras.getString("cat_id");
+            fromactivity = extras.getString("fromactivity");
+            tag = extras.getString("tag");
+            fromto = extras.getString("fromto");
         }
 
 
@@ -296,16 +306,23 @@ public class SPCartActivity extends AppCompatActivity implements AddandRemovePro
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorProductDetailsActivity")){
+        if(fromto != null && fromto.equalsIgnoreCase("SPProductDetailsActivity")){
+            Intent intent = new Intent(SPCartActivity.this, SPProductDetailsActivity.class);
+            intent.putExtra("productid",productid);
+            intent.putExtra("cat_id",cat_id);
+            intent.putExtra("tag",tag);
+            startActivity(intent);
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("SPProductDetailsActivity")){
             Intent i = new Intent(SPCartActivity.this, SPProductDetailsActivity.class);
             i.putExtra("productid",productdetails_productid);
             startActivity(i);
             finish();
-        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorShopTodayDealsSeeMoreActivity")){
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("SPShopTodayDealsSeeMoreActivity")){
             Intent i = new Intent(SPCartActivity.this, SPShopTodayDealsSeeMoreActivity.class);
             startActivity(i);
             finish();
-        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorListOfProductsSeeMoreActivity")){
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("SPListOfProductsSeeMoreActivity")){
             Intent i = new Intent(SPCartActivity.this, SPListOfProductsSeeMoreActivity.class);
             i.putExtra("cat_id",cat_id);
             startActivity(i);
