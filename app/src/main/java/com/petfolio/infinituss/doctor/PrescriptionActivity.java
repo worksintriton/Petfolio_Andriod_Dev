@@ -1,38 +1,68 @@
 package com.petfolio.infinituss.doctor;
 
+import android.Manifest;
 import android.animation.LayoutTransition;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.provider.OpenableColumns;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
+import com.petfolio.infinituss.adapter.AddGovtIdPdfAdapter;
+import com.petfolio.infinituss.adapter.AddImageListAdapter;
+import com.petfolio.infinituss.adapter.DiagnosiTypesListAdapter;
+import com.petfolio.infinituss.adapter.SubDiagnosiTypesListAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
+import com.petfolio.infinituss.appUtils.FileUtil;
 import com.petfolio.infinituss.appUtils.NumericKeyBoardTransformationMethod;
+import com.petfolio.infinituss.interfaces.DiagnosisTypeListener;
+import com.petfolio.infinituss.interfaces.SubDiagnosisTypeListener;
 import com.petfolio.infinituss.requestpojo.AppoinmentCompleteRequest;
+import com.petfolio.infinituss.requestpojo.DocBusInfoUploadRequest;
 import com.petfolio.infinituss.requestpojo.PrescriptionCreateRequest;
 import com.petfolio.infinituss.requestpojo.SubDiagnosisRequest;
 import com.petfolio.infinituss.responsepojo.AppoinmentCompleteResponse;
 import com.petfolio.infinituss.responsepojo.DiagnosisListResponse;
+import com.petfolio.infinituss.responsepojo.FileUploadResponse;
 import com.petfolio.infinituss.responsepojo.PrescriptionCreateResponse;
 import com.petfolio.infinituss.responsepojo.SubDiagnosisListResponse;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
@@ -40,6 +70,9 @@ import com.petfolio.infinituss.utils.ConnectionDetector;
 import com.petfolio.infinituss.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,16 +80,21 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class PrescriptionActivity extends AppCompatActivity {
+public class PrescriptionActivity extends AppCompatActivity implements DiagnosisTypeListener, SubDiagnosisTypeListener {
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.et_tabletname)
@@ -111,23 +149,54 @@ public class PrescriptionActivity extends AppCompatActivity {
       RelativeLayout back_rela;
 
       @SuppressLint("NonConstantResourceId")
-      @BindView(R.id.sprdiagnosistype)
-      Spinner sprdiagnosistype;
+      @BindView(R.id.ll_diagnosis)
+      LinearLayout ll_diagnosis;
 
       @SuppressLint("NonConstantResourceId")
-      @BindView(R.id.rl_sub_diagnosis)
-      RelativeLayout rl_sub_diagnosis;
+      @BindView(R.id.ll_subdiagnosis)
+      LinearLayout ll_subdiagnosis;
 
       @SuppressLint("NonConstantResourceId")
-      @BindView(R.id.sprsub_diagnosis)
-      Spinner sprsub_diagnosis;
+      @BindView(R.id.ll_manual_prescription)
+      LinearLayout ll_manual_prescription;
 
       @SuppressLint("NonConstantResourceId")
-      @BindView(R.id.txt_sub_diagnosis)
-      TextView txt_sub_diagnosis;
+      @BindView(R.id.ll_uploadImage)
+      LinearLayout ll_uploadImage;
 
+//      @SuppressLint("NonConstantResourceId")
+//      @BindView(R.id.sprdiagnosistype)
+//      Spinner sprdiagnosistype;
+//
+//      @SuppressLint("NonConstantResourceId")
+//      @BindView(R.id.rl_sub_diagnosis)
+//      RelativeLayout rl_sub_diagnosis;
+//
+//      @SuppressLint("NonConstantResourceId")
+//      @BindView(R.id.sprsub_diagnosis)
+//      Spinner sprsub_diagnosis;
+//
+      @SuppressLint("NonConstantResourceId")
+      @BindView(R.id.txt_diagnosis)
+      TextView txt_diagnosis;
+
+      @SuppressLint("NonConstantResourceId")
+      @BindView(R.id.txt_subdiagnosis)
+      TextView txt_subdiagnosis;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rgprescription_method)
+    RadioGroup rgprescription_method;
 
     String TAG = "PrescriptionActivity";
+
+    private String selectedRadioButton = "Manual";
+
+
+
+    Button btn_done,btn_done1;
+
+    ArrayList<FileUploadResponse>  govtIdPicResponse = new ArrayList<>();
 
 
     AlertDialog.Builder alertDialogBuilder;
@@ -155,15 +224,45 @@ public class PrescriptionActivity extends AppCompatActivity {
     private String appoinmentid;
     private List<DiagnosisListResponse.DataBean> diagnosisList;
 
+    MultipartBody.Part govIdPart;
+
     HashMap<String, String> hashMap_diagnosis_id = new HashMap<>();
     private List<SubDiagnosisListResponse.DataBean> subDiagnosisList;
     private String DiagnosisType;
     private String DiagnosisTypeId;
     private String SubDiagnosisType;
 
+    private static final int SELECT_GOVTID_CAMERA = 1007;
+
+    private static final int REQUEST_READ_GOVT_ID_PDF_PERMISSION = 788;
+
+    private static final int REQUEST_GOVTID_CAMERA_PERMISSION_CODE = 792;
+
+    private static final int SELECT_GOVTID_PICTURE = 1008;
+
+    private static final int SELECT_GOVTID_PDF = 1003;
+
+    private static final int REQUEST_READ_GOVTID_PIC_PERMISSION = 793;
+
     PrescriptionCreateRequest.PrescriptionDataBean.ConsumptionBean consumptionBean;
 
+    DiagnosiTypesListAdapter diagnosiTypesListAdapter;
 
+    AddGovtIdPdfAdapter addGovtIdPdfAdapter;
+
+    SubDiagnosiTypesListAdapter subDiagnosiTypesListAdapter;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.edtx_uploadImage)
+    EditText edtx_uploadImage;
+
+    String currentDateandTime;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rcylr_uploadImage)
+    RecyclerView rcylr_uploadImage;
+
+    private final List<DocBusInfoUploadRequest.GovtIdPicBean> govtIdPicBeans = new ArrayList<>();
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -179,9 +278,13 @@ public class PrescriptionActivity extends AppCompatActivity {
         Doctor_ID = user.get(SessionManager.KEY_ID);
 
         avi_indicator.setVisibility(View.GONE);
-        txt_sub_diagnosis.setVisibility(View.GONE);
-        rl_sub_diagnosis.setVisibility(View.GONE);
 
+        txt_subdiagnosis.setVisibility(View.GONE);
+
+        /* *************** Get Current Date and Time ************************ */
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+        currentDateandTime = sdf.format(new Date());
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -192,50 +295,77 @@ public class PrescriptionActivity extends AppCompatActivity {
 
         }
 
+        edtx_uploadImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                chooseGovIDPdf();
+            }
+        });
+
         if (new ConnectionDetector(PrescriptionActivity.this).isNetworkAvailable(PrescriptionActivity.this)) {
               diagnosisListResponseCall();
         }
 
         back_rela.setOnClickListener(v -> onBackPressed());
-        sprdiagnosistype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @SuppressLint("LogNotTimber")
+
+//        sprdiagnosistype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @SuppressLint("LogNotTimber")
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int arg2, long arg3) {
+//                ((TextView) parent.getChildAt(0)).setTextColor(getResources().getColor(R.color.green));
+//                DiagnosisType = sprdiagnosistype.getSelectedItem().toString();
+//                DiagnosisTypeId = hashMap_diagnosis_id.get(DiagnosisType);
+//                subDiagnosisListResponseCall(DiagnosisTypeId);
+//                Log.w(TAG, "DiagnosisTypeId : " + DiagnosisTypeId + " DiagnosisType :" + DiagnosisType);
+//
+//                if(DiagnosisType != null && !DiagnosisType.equalsIgnoreCase("Diagnosis Type")){
+//                    rl_sub_diagnosis.setVisibility(View.VISIBLE);
+//                }else{
+//                    rl_sub_diagnosis.setVisibility(View.GONE);
+//                }
+//
+//
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> arg0) {
+//                // TODO Auto-generated method stub
+//
+//            }
+//        });
+//        sprsub_diagnosis.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int arg2, long arg3) {
+//                ((TextView) parent.getChildAt(0)).setTextColor(getResources().getColor(R.color.green));
+//                SubDiagnosisType = sprsub_diagnosis.getSelectedItem().toString();
+//                Log.w(TAG, "SubDiagnosisType :" + SubDiagnosisType);
+//
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> arg0) {
+//                // TODO Auto-generated method stub
+//
+//            }
+//        });
+
+        ll_diagnosis.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int arg2, long arg3) {
-                ((TextView) parent.getChildAt(0)).setTextColor(getResources().getColor(R.color.green));
-                DiagnosisType = sprdiagnosistype.getSelectedItem().toString();
-                DiagnosisTypeId = hashMap_diagnosis_id.get(DiagnosisType);
-                subDiagnosisListResponseCall(DiagnosisTypeId);
-                Log.w(TAG, "DiagnosisTypeId : " + DiagnosisTypeId + " DiagnosisType :" + DiagnosisType);
+            public void onClick(View v) {
 
-                if(DiagnosisType != null && !DiagnosisType.equalsIgnoreCase("Diagnosis Type")){
-                    rl_sub_diagnosis.setVisibility(View.VISIBLE);
-                }else{
-                    rl_sub_diagnosis.setVisibility(View.GONE);
-                }
-
-
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
+                showDiagnosisListType();
 
             }
         });
-        sprsub_diagnosis.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        ll_subdiagnosis.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int arg2, long arg3) {
-                ((TextView) parent.getChildAt(0)).setTextColor(getResources().getColor(R.color.green));
-                SubDiagnosisType = sprsub_diagnosis.getSelectedItem().toString();
-                Log.w(TAG, "SubDiagnosisType :" + SubDiagnosisType);
+            public void onClick(View v) {
 
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
+                showSubDiagnosisListType();
 
             }
         });
@@ -378,9 +508,13 @@ public class PrescriptionActivity extends AppCompatActivity {
                         etdoctorcomments.setError("Please enter the comments ");
                         etdoctorcomments.requestFocus();
                     }
-                    else if(prescriptionDataList.isEmpty()){
+                    else if(prescriptionDataList.isEmpty()&&selectedRadioButton.equalsIgnoreCase("Manual")){
                     showErrorLoading("Please fill the prescription fields");
                      }
+                            else if(govtIdPicBeans.isEmpty()&&selectedRadioButton.equalsIgnoreCase("Upload Image")){
+                                showErrorLoading("Please Upload Prescription Image");
+                            }
+
                     else{
                         if (new ConnectionDetector(PrescriptionActivity.this).isNetworkAvailable(PrescriptionActivity.this)) {
                             if(Treatment_Done_by.equalsIgnoreCase("Self")){
@@ -392,6 +526,13 @@ public class PrescriptionActivity extends AppCompatActivity {
                                 Family_ID = Family_ID;
                             }
 
+                            String image = "";
+
+                            if(govtIdPicBeans!=null&&govtIdPicBeans.size()>0){
+
+                                image = govtIdPicBeans.get(0).getGovt_id_pic();
+                            }
+
                             Log.w(TAG,"prescriptionDataList : "+new Gson().toJson(prescriptionDataList));
 
                             Intent intent = new Intent(getApplicationContext(),PrescriptionDetailsActivity.class);
@@ -400,6 +541,8 @@ public class PrescriptionActivity extends AppCompatActivity {
                             intent.putExtra("prescriptionDataList", (Serializable) prescriptionDataList);
                             intent.putExtra("Treatment_Done_by", Treatment_Done_by);
                             intent.putExtra("id", appoinmentid);
+                            intent.putExtra("image",image);
+                            intent.putExtra("selectedRadioButton",selectedRadioButton);
                             intent.putExtra("userid", userid);
                             intent.putExtra("DiagnosisType", DiagnosisType);
                             intent.putExtra("SubDiagnosisType", SubDiagnosisType);
@@ -416,6 +559,25 @@ public class PrescriptionActivity extends AppCompatActivity {
 
 
             }});
+
+        rgprescription_method.setOnCheckedChangeListener((group, checkedId) -> {
+            int radioButtonID = rgprescription_method.getCheckedRadioButtonId();
+            RadioButton radioButton = rgprescription_method.findViewById(radioButtonID);
+            selectedRadioButton = (String) radioButton.getText();
+            Log.w(TAG,"selectedRadioButton" + selectedRadioButton);
+            if(selectedRadioButton.equalsIgnoreCase("Manual")){
+                ll_manual_prescription.setVisibility(View.VISIBLE);
+                ll_uploadImage.setVisibility(View.GONE);
+            }
+            else{
+
+                ll_manual_prescription.setVisibility(View.GONE);
+                ll_uploadImage.setVisibility(View.VISIBLE);
+
+            }
+
+        });
+
     }
 
     public void clearField(){
@@ -479,7 +641,7 @@ public class PrescriptionActivity extends AppCompatActivity {
          * PDF_format :
          * Prescription_type : Image / PDF
          * Prescription_img : http://mysalveo.com/api/public/prescriptions/231afd32-6d68-4288-a8e5-1c599833c0e8.pdf
-         * user_id : 5ef2c092c006bb0ed174c771
+         * Doctor_ID : 5ef2c092c006bb0ed174c771
          * Prescription_data : [{"Quantity":"3","Tablet_name":"dolo","consumption":"twice"}]
          * Treatment_Done_by : Self
          * Appointment_ID
@@ -495,7 +657,7 @@ public class PrescriptionActivity extends AppCompatActivity {
         prescriptionCreateRequest.setPrescription_type("PDF");
         prescriptionCreateRequest.setPrescription_img("");
         prescriptionCreateRequest.setUser_id(userid);
-        Log.w(TAG, "User_ID" + userid);
+        Log.w(TAG, "Doctor_ID" + userid);
         prescriptionCreateRequest.setPrescription_data(prescriptionDataList);
         prescriptionCreateRequest.setTreatment_Done_by(Treatment_Done_by);
         prescriptionCreateRequest.setAppointment_ID(appoinmentid);
@@ -614,7 +776,7 @@ public class PrescriptionActivity extends AppCompatActivity {
                             diagnosisList = response.body().getData();
                         }
                         if (diagnosisList != null && diagnosisList.size() > 0) {
-                            setDiagnosisType(diagnosisList);
+                          //  setDiagnosisType(diagnosisList);
                         }
                     }
 
@@ -633,25 +795,25 @@ public class PrescriptionActivity extends AppCompatActivity {
         });
 
     }
-    private void setDiagnosisType(List<DiagnosisListResponse.DataBean> diagnosisList) {
-        ArrayList<String> diagnosistypeArrayList = new ArrayList<>();
-        diagnosistypeArrayList.add("Diagnosis Type");
-        for (int i = 0; i < diagnosisList.size(); i++) {
-
-            String diagnosisType = diagnosisList.get(i).getDiagnosis();
-            hashMap_diagnosis_id.put(diagnosisList.get(i).getDiagnosis(), diagnosisList.get(i).get_id());
-
-            Log.w(TAG, "diagnosisType-->" + diagnosisType);
-            diagnosistypeArrayList.add(diagnosisType);
-
-            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(PrescriptionActivity.this, R.layout.spinner_item, diagnosistypeArrayList);
-            spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item); // The drop down view
-            sprdiagnosistype.setAdapter(spinnerArrayAdapter);
-
-
-
-        }
-    }
+//    private void setDiagnosisType(List<DiagnosisListResponse.DataBean> diagnosisList) {
+//        ArrayList<String> diagnosistypeArrayList = new ArrayList<>();
+//        diagnosistypeArrayList.add("Diagnosis Type");
+//        for (int i = 0; i < diagnosisList.size(); i++) {
+//
+//            String diagnosisType = diagnosisList.get(i).getDiagnosis();
+//            hashMap_diagnosis_id.put(diagnosisList.get(i).getDiagnosis(), diagnosisList.get(i).get_id());
+//
+//            Log.w(TAG, "diagnosisType-->" + diagnosisType);
+//            diagnosistypeArrayList.add(diagnosisType);
+//
+//            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(PrescriptionActivity.this, R.layout.spinner_item, diagnosistypeArrayList);
+//            spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item); // The drop down view
+//            sprdiagnosistype.setAdapter(spinnerArrayAdapter);
+//
+//
+//
+//        }
+//    }
     @SuppressLint("LogNotTimber")
     private void subDiagnosisListResponseCall(String diagnosis_id) {
         avi_indicator.setVisibility(View.VISIBLE);
@@ -673,11 +835,10 @@ public class PrescriptionActivity extends AppCompatActivity {
                         if(response.body().getData() != null) {
                             subDiagnosisList = response.body().getData();
                             if (subDiagnosisList != null && subDiagnosisList.size() > 0) {
-                                txt_sub_diagnosis.setVisibility(View.VISIBLE);
-                                setSubDiagnosisType(subDiagnosisList);
+
+
                             }else{
-                                rl_sub_diagnosis.setVisibility(View.GONE);
-                                txt_sub_diagnosis.setVisibility(View.GONE);
+                                ll_subdiagnosis.setVisibility(View.GONE);
                             }
                         }
 
@@ -699,23 +860,23 @@ public class PrescriptionActivity extends AppCompatActivity {
 
     }
 
-    private void setSubDiagnosisType(List<SubDiagnosisListResponse.DataBean> subDiagnosisList) {
-        ArrayList<String> subDiagnosisArrayList = new ArrayList<>();
-        subDiagnosisArrayList.add("SubDiagnosis Type");
-        for (int i = 0; i < subDiagnosisList.size(); i++) {
-
-            String SubDiagnosisType = subDiagnosisList.get(i).getSub_diagnosis();
-
-            Log.w(TAG, "SubDiagnosisType-->" + SubDiagnosisType);
-            subDiagnosisArrayList.add(SubDiagnosisType);
-
-            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(PrescriptionActivity.this, R.layout.spinner_item, subDiagnosisArrayList);
-            spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item); // The drop down view
-            sprsub_diagnosis.setAdapter(spinnerArrayAdapter);
-
-
-        }
-    }
+//    private void setSubDiagnosisType(List<SubDiagnosisListResponse.DataBean> subDiagnosisList) {
+//        ArrayList<String> subDiagnosisArrayList = new ArrayList<>();
+//        subDiagnosisArrayList.add("SubDiagnosis Type");
+//        for (int i = 0; i < subDiagnosisList.size(); i++) {
+//
+//            String SubDiagnosisType = subDiagnosisList.get(i).getSub_diagnosis();
+//
+//            Log.w(TAG, "SubDiagnosisType-->" + SubDiagnosisType);
+//            subDiagnosisArrayList.add(SubDiagnosisType);
+//
+//            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(PrescriptionActivity.this, R.layout.spinner_item, subDiagnosisArrayList);
+//            spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item); // The drop down view
+//            sprsub_diagnosis.setAdapter(spinnerArrayAdapter);
+//
+//
+//        }
+//    }
 
     @SuppressLint("LogNotTimber")
     private SubDiagnosisRequest subDiagnosisRequest(String diagnosis_id) {
@@ -751,6 +912,667 @@ public class PrescriptionActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    private void showDiagnosisListType() {
+
+        try {
+
+            Dialog dialog = new Dialog(PrescriptionActivity.this);
+            dialog.setContentView(R.layout.alert_diagnosis_layout);
+            dialog.setCanceledOnTouchOutside(false);
+
+            ImageView img_close = dialog.findViewById(R.id.img_close);
+            btn_done = dialog.findViewById(R.id.btn_done);
+            LinearLayout ll_diagnosistype = dialog.findViewById(R.id.ll_diagnosistype);
+            RecyclerView rv_diagnosistype = dialog.findViewById(R.id.rv_diagnosistype);
+            TextView tv_norecords = dialog.findViewById(R.id.tv_norecords);
+            EditText edt_search_diagnosistype = dialog.findViewById(R.id.edt_search_diagnosistype);
+
+            btn_done.setVisibility(View.GONE);
+            img_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+
+            if(diagnosisList != null && diagnosisList.size()>0){
+                rv_diagnosistype.setVisibility(View.VISIBLE);
+                tv_norecords.setVisibility(View.GONE);
+                setView(rv_diagnosistype,diagnosisList);
+
+            }else{
+                rv_diagnosistype.setVisibility(View.GONE);
+                tv_norecords.setVisibility(View.VISIBLE);
+                tv_norecords.setText("No Diagnosis Type Found");
+            }
+
+
+            img_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+
+                }
+            });
+
+            btn_done.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    txt_diagnosis.setText(DiagnosisType);
+
+                    txt_subdiagnosis.setVisibility(View.GONE);
+
+                    subDiagnosisListResponseCall(DiagnosisTypeId);
+
+                    dialog.dismiss();
+
+                }
+            });
+
+
+            edt_search_diagnosistype.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @SuppressLint("LogNotTimber")
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    //after the change calling the method and passing the search input
+                    filter(editable.toString());
+                    Log.w(TAG,"afterTextChanged : "+editable.toString());
+                }
+            });
+
+
+
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
+    private void setView(RecyclerView rv_diagnosistype, List<DiagnosisListResponse.DataBean> diagnosisList) {
+
+        rv_diagnosistype.setNestedScrollingEnabled(true);
+        rv_diagnosistype.setLayoutManager(new LinearLayoutManager(this));
+        rv_diagnosistype.setItemAnimator(new DefaultItemAnimator());
+        diagnosiTypesListAdapter = new DiagnosiTypesListAdapter(getApplicationContext(), diagnosisList,this);
+        rv_diagnosistype.setAdapter(diagnosiTypesListAdapter);
+
+    }
+
+    private void filter(String text) {
+        //new array list that will hold the filtered data
+        List<DiagnosisListResponse.DataBean> dataBeanList = new ArrayList<>();
+
+
+        //looping through existing elements
+        for (DiagnosisListResponse.DataBean s : diagnosisList) {
+            //if the existing elements contains the search input
+            if (s.getDiagnosis().toLowerCase().contains(text.toLowerCase())) {
+                //adding the element to filtered list
+                dataBeanList.add(s);
+            }
+        }
+
+        Log.w(TAG, "dataBeanList" + new Gson().toJson(dataBeanList));
+        //calling a method of the adapter class and passing the filtered list
+        diagnosiTypesListAdapter.filterList(dataBeanList);
+    }
+
+
+    @Override
+    public void diagnosisTypeSelectListener(String id, String diagnosis) {
+
+        Log.w(TAG, "Diagnosis ID " + id + "Diagnosis Type "+diagnosis);
+
+        DiagnosisTypeId = id;
+
+        DiagnosisType = diagnosis;
+
+        btn_done.setVisibility(View.VISIBLE);
+
+
+    }
+
+    //Sub Diagnosis
+
+    private void showSubDiagnosisListType() {
+
+        try {
+
+            Dialog dialog = new Dialog(PrescriptionActivity.this);
+            dialog.setContentView(R.layout.alert_subdiagnosis_layout);
+            dialog.setCanceledOnTouchOutside(false);
+
+            ImageView img_close = dialog.findViewById(R.id.img_close);
+            btn_done1 = dialog.findViewById(R.id.btn_done1);
+            LinearLayout ll_diagnosistype = dialog.findViewById(R.id.ll_diagnosistype);
+            RecyclerView rv_diagnosistype = dialog.findViewById(R.id.rv_diagnosistype);
+            TextView tv_norecords = dialog.findViewById(R.id.tv_norecords);
+            EditText edt_search_diagnosistype = dialog.findViewById(R.id.edt_search_diagnosistype);
+
+            btn_done1.setVisibility(View.GONE);
+            img_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+
+            btn_done1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    txt_subdiagnosis.setVisibility(View.VISIBLE);
+
+                    txt_subdiagnosis.setText(SubDiagnosisType);
+
+                    dialog.dismiss();
+
+
+                }
+            });
+
+            if(subDiagnosisList != null && subDiagnosisList.size()>0){
+                rv_diagnosistype.setVisibility(View.VISIBLE);
+                tv_norecords.setVisibility(View.GONE);
+                setSubDiagnosisView(rv_diagnosistype,subDiagnosisList);
+
+            }else{
+                rv_diagnosistype.setVisibility(View.GONE);
+                tv_norecords.setVisibility(View.VISIBLE);
+                tv_norecords.setText("No Sub Diagnosis Found");
+            }
+
+
+            img_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+
+                }
+            });
+
+
+            edt_search_diagnosistype.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @SuppressLint("LogNotTimber")
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    //after the change calling the method and passing the search input
+                    filterSubDiagnosis(editable.toString());
+                    Log.w(TAG,"afterTextChanged : "+editable.toString());
+                }
+            });
+
+
+
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
+    private void setSubDiagnosisView(RecyclerView rv_diagnosistype, List<SubDiagnosisListResponse.DataBean> diagnosisList) {
+
+        rv_diagnosistype.setNestedScrollingEnabled(true);
+        rv_diagnosistype.setLayoutManager(new LinearLayoutManager(this));
+        rv_diagnosistype.setItemAnimator(new DefaultItemAnimator());
+        subDiagnosiTypesListAdapter = new SubDiagnosiTypesListAdapter(getApplicationContext(), diagnosisList,this);
+        rv_diagnosistype.setAdapter(subDiagnosiTypesListAdapter);
+
+    }
+
+    private void filterSubDiagnosis(String text) {
+        //new array list that will hold the filtered data
+        List<SubDiagnosisListResponse.DataBean> dataBeanList = new ArrayList<>();
+
+
+        //looping through existing elements
+        for (SubDiagnosisListResponse.DataBean s : subDiagnosisList) {
+            //if the existing elements contains the search input
+            if (s.getSub_diagnosis().toLowerCase().contains(text.toLowerCase())) {
+                //adding the element to filtered list
+                dataBeanList.add(s);
+            }
+        }
+
+        Log.w(TAG, "dataBeanList" + new Gson().toJson(dataBeanList));
+        //calling a method of the adapter class and passing the filtered list
+        subDiagnosiTypesListAdapter.filterList(dataBeanList);
+    }
+
+
+    @Override
+    public void subdiagnosisTypeSelectListener(String id, String diagnosis) {
+
+        Log.w(TAG, "SubDiagnosis ID " + id + "SubDiagnosis Type "+diagnosis);
+
+        SubDiagnosisType = diagnosis;
+
+        btn_done1.setVisibility(View.VISIBLE);
+
+    }
+
+    private void chooseGovIDPdf() {
+
+        if(govtIdPicResponse.size()>=1){
+
+            Toasty.warning(getApplicationContext(), "Sorry you can't Add more than 1", Toast.LENGTH_SHORT).show();
+
+        }
+
+        else {
+
+            final CharSequence[] items = {"Take Photo", "Pick from Galley", "Select File","Cancel"};
+            //AlertDialog.Builder alert=new AlertDialog.Builder(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(PrescriptionActivity.this);
+            builder.setTitle("Choose option");
+            builder.setItems(items, (dialog, item) -> {
+                if (items[item].equals("Take Photo"))
+                {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(PrescriptionActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+                    {
+                        requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_GOVTID_CAMERA_PERMISSION_CODE);
+                    }
+                    else
+                    {
+
+
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                        startActivityForResult(intent, SELECT_GOVTID_CAMERA);
+                    }
+
+                }
+
+                else if (items[item].equals("Pick from Galley"))
+                {
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+                    {
+                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_GOVTID_PIC_PERMISSION);
+                    }
+
+                    else{
+
+                        Intent intent = new Intent();
+                        intent.setType("image/*");
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_GOVTID_PICTURE);
+
+
+                    }
+                }
+
+                else if (items[item].equals("Select File")){
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M   && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+                    {
+                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_GOVT_ID_PDF_PERMISSION);
+                    }
+
+                    else{
+
+                        Intent intent = new Intent();
+                        intent.setType("application/pdf");
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(Intent.createChooser(intent, "Select PDF"), SELECT_GOVTID_PDF);
+
+
+                    }
+
+
+                }
+
+                else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            });
+            builder.show();
+
+        }
+
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+     if (requestCode == REQUEST_READ_GOVT_ID_PDF_PERMISSION) {
+
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                Intent intent = new Intent();
+                intent.setType("application/pdf");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select PDF"), SELECT_GOVTID_PDF);
+
+            } else {
+                new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Permisson Required")
+                        .setContentText("Plz Allow Permissions for choosing Pdf Files ")
+                        .setConfirmText("Ok")
+                        .setConfirmClickListener(sDialog -> {
+
+                            sDialog.dismissWithAnimation();
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_GOVT_ID_PDF_PERMISSION);
+                            }
+
+
+                        })
+                        .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.dismissWithAnimation();
+
+                            }
+                        })
+                        .show();
+
+            }
+
+        }
+
+
+        else if (requestCode == REQUEST_READ_GOVTID_PIC_PERMISSION) {
+
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_GOVTID_PICTURE);
+
+            } else {
+                new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Permisson Required")
+                        .setContentText("Plz Allow Permissions for choosing Images from Gallery ")
+                        .setConfirmText("Ok")
+                        .setConfirmClickListener(sDialog -> {
+
+                            sDialog.dismissWithAnimation();
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_GOVTID_PIC_PERMISSION);
+                            }
+
+
+                        })
+                        .setCancelButton("Cancel", SweetAlertDialog::dismissWithAnimation)
+                        .show();
+
+            }
+
+        }
+
+        else if (requestCode == REQUEST_GOVTID_CAMERA_PERMISSION_CODE) {
+
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                //    intent.putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+                startActivityForResult(intent, SELECT_GOVTID_CAMERA);
+
+            } else {
+                new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Permisson Required")
+                        .setContentText("Plz Allow Camera for taking picture")
+                        .setConfirmText("Ok")
+                        .setConfirmClickListener(sDialog -> {
+
+                            sDialog.dismissWithAnimation();
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_GOVTID_CAMERA_PERMISSION_CODE);
+                            }
+
+
+                        })
+                        .setCancelButton("Cancel", SweetAlertDialog::dismissWithAnimation)
+                        .show();
+
+            }
+
+        }
+
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+       if(requestCode == SELECT_GOVTID_CAMERA)
+        {
+            Bitmap photo = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
+
+            File file = new File(getFilesDir(), "Petfolio1" + ".jpg");
+
+            OutputStream os;
+            try {
+                os = new FileOutputStream(file);
+                if (photo != null) {
+                    photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
+                }
+                os.flush();
+                os.close();
+            } catch (Exception e) {
+                Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
+            }
+
+            RequestBody requestFile = RequestBody.create(MediaType.parse("image*/"), file);
+
+            govIdPart = MultipartBody.Part.createFormData("sampleFile",  Doctor_ID+currentDateandTime+file.getName(), requestFile);
+
+            uploadGovtIDPdf();
+
+        }
+
+        else if(requestCode == SELECT_GOVTID_PICTURE){
+
+            try {
+                if (resultCode == Activity.RESULT_OK) {
+
+                    Log.w("VALUEEEEEEE1111", " " + data);
+
+                    Uri selectedImageUri = data.getData();
+
+                    Log.w("selectedImageUri", " " + selectedImageUri);
+
+                    String filename = null;
+                    if (selectedImageUri != null) {
+                        filename = getFileName(selectedImageUri);
+                    }
+
+                    Log.w("filename", " " + filename);
+
+                    String filePath = FileUtil.getPath(PrescriptionActivity.this,selectedImageUri);
+
+                    assert filePath != null;
+
+                    File file = new File(filePath); // initialize file here
+
+                    long length = file.length() / 1024; // Size in KB
+
+                    Log.w("filesize", " " + length);
+
+                    govIdPart = MultipartBody.Part.createFormData("sampleFile", Doctor_ID+currentDateandTime+file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+
+                    uploadGovtIDPdf();
+
+
+                }
+            } catch (Exception e) {
+
+                Log.w("Exception", " " + e);
+            }
+
+        }
+
+        else if(requestCode== SELECT_GOVTID_PDF){
+
+            try {
+                if (resultCode == Activity.RESULT_OK)
+                {
+
+                    Log.w("URI", " " + data);
+
+                    Uri selectedFileUri = data.getData();
+
+                    Log.w("selectedFileUri", " " + selectedFileUri);
+
+                    String filename = getFileName(selectedFileUri);
+
+                    Log.w("filename", " " + filename);
+
+                    String filePath = FileUtil.getPath(PrescriptionActivity.this,selectedFileUri);
+
+                    assert filePath != null;
+
+                    File file = new File(filePath); // initialize file here
+
+                    long length = file.length() / 1024; // Size in KB
+
+                    Log.w("filesize", " " + length);
+
+//                    if(length>200){
+//
+//                        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+//                                .setTitleText("File Size")
+//                                .setContentText("Plz choose file size less than 200 kb ")
+//                                .setConfirmText("Ok")
+//                                .show();
+//                    }
+//
+//                    else{
+
+                    govIdPart = MultipartBody.Part.createFormData("sampleFile", Doctor_ID + currentDateandTime + file.getName(), RequestBody.create(MediaType.parse("pdf/*"), file));
+
+                    uploadGovtIDPdf();
+                    //}
+
+                }
+            } catch (Exception e) {
+
+                Log.w("Exception", " " + e);
+            }
+        }
+
+       }
+
+    @SuppressLint("LogNotTimber")
+    private void uploadGovtIDPdf() {
+
+        avi_indicator.show();
+
+        RestApiInterface apiInterface = APIClient.getImageClient().create(RestApiInterface.class);
+
+        //RestApiInterface ApiService = RetrofitClient.getApiService();
+
+        Call<FileUploadResponse> call = apiInterface.getImageStroeResponse(govIdPart);
+
+//        Call<ImageFileUploadResponse> call = apiInterface.getImageStroeResponse(getProfileImagePicMultipart());
+
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<FileUploadResponse>() {
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onResponse(@NonNull Call<FileUploadResponse> call, @NonNull Response<FileUploadResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"PdfFileLink"+ "--->" + new Gson().toJson(response.body()));
+
+                if (response.body() != null) {
+
+                    if (200 == response.body().getCode()) {
+
+
+                        DocBusInfoUploadRequest.GovtIdPicBean govtIdPicBean = new DocBusInfoUploadRequest.GovtIdPicBean (response.body().getData());
+
+                        govtIdPicBeans.add(govtIdPicBean);
+
+                        if(govtIdPicBeans!=null&&govtIdPicBeans.size()>0){
+
+                            addGovtIdPdfAdapter = new AddGovtIdPdfAdapter(getApplicationContext(), govtIdPicBeans);
+
+                            rcylr_uploadImage.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
+                            rcylr_uploadImage.setAdapter(addGovtIdPdfAdapter);
+
+                        }
+
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<FileUploadResponse> call, @NonNull Throwable t) {
+                // avi_indicator.smoothToHide();
+                Log.w(TAG,"ServerUrlImagePath"+ "On failure working"+ t.getMessage());
+                //Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
+
+    public String getFileName(Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            try (Cursor cursor = getContentResolver().query(uri, null, null, null, null)) {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
     }
 
 }

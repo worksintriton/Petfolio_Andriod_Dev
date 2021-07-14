@@ -569,6 +569,13 @@
 
     <string name="no_holidays">Have a great Holiday Doc. You need it!</string>
 
+    <string name="clinic_number">Clinic Number</string>
+    <string name="doctor_id">Doctor ID</string>
+    <string name="about_doctor">About Doctor</string>
+    <string name="select_diagnosis">Select the Diagnosis Type</string>
+    <string name="select_sub_diagnosis">Select the Sub Diagnosis Type</string>
+    <string name="prescription_method">Prescription Method</string>
+    <string name="manual">Manual</string>
 
 
 

@@ -57,6 +57,69 @@
 
             <!--Clinic Details -->
 
+            <EditText
+                android:id="@+id/edtx_clinic_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rectangle_corner"
+                android:fontFamily="@font/futuramediumbt"
+                android:hint="@string/clinic_number"
+                android:inputType="number"
+                android:maxLength="50"
+                android:maxLines="1"
+                android:padding="15dp"
+                android:textColorHint="@color/dark_gray"
+                android:textSize="14sp"
+                tools:ignore="Autofill,LabelFor" />
+
+            <EditText
+                android:id="@+id/edtx_doctor_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rectangle_corner"
+                android:fontFamily="@font/futuramediumbt"
+                android:hint="@string/doctor_id"
+                android:inputType="text"
+                android:maxLength="50"
+                android:maxLines="1"
+                android:padding="15dp"
+                android:textColorHint="@color/dark_gray"
+                android:textSize="14sp"
+                tools:ignore="Autofill,LabelFor" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cdvw_about_doctor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:cardBackgroundColor="@color/light_green"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <EditText
+                    android:id="@+id/edtx_about_doctor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rectangle_corner"
+                    android:fontFamily="@font/futuramediumbt"
+                    android:gravity="start"
+                    android:hint="@string/about_doctor"
+                    android:inputType="textMultiLine"
+                    android:lines="3"
+                    android:maxLength="150"
+                    android:maxLines="3"
+                    android:minLines="2"
+                    android:padding="15dp"
+                    android:scrollbars="vertical"
+                    android:textAlignment="viewStart"
+                    android:textColorHint="@color/dark_gray"
+                    android:textSize="14sp"
+                    tools:ignore="Autofill,LabelFor" />
+
+            </androidx.cardview.widget.CardView>
+
             <TextView
                 android:id="@+id/txt_no_records"
                 android:layout_width="match_parent"
@@ -72,7 +135,7 @@
                 android:id="@+id/edtx_clinic_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/rectangle_corner"
                 android:fontFamily="@font/futuramediumbt"
                 android:hint="@string/clinic_name"

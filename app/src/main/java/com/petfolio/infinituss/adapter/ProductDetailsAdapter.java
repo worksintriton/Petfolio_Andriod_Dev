@@ -203,8 +203,6 @@ public class ProductDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
 
             }
         });
-
-
         if(product_details.get(position).getProduct_stauts() != null ){
             Log.w(TAG,"Product_stauts : "+product_details.get(position).getProduct_stauts());
 
@@ -253,8 +251,6 @@ public class ProductDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
     static class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_orderid, txt_producttitle, txt_products_price, txt_bookedon, txt_track_order, txt_cancell_order,txt_product_status;
         public ImageView img_products_image;
-
-
         public ViewHolderOne(View itemView) {
             super(itemView);
             img_products_image = itemView.findViewById(R.id.img_products_image);

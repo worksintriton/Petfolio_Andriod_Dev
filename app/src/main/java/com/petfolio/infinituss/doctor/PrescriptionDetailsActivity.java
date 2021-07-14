@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.dropbox.core.v2.teamlog.SharedContentAddLinkExpiryDetails;
 import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
 
@@ -64,7 +67,7 @@ public class PrescriptionDetailsActivity extends AppCompatActivity {
     SessionManager session;
 
 
-    private String userid;
+    private String userid,image;
     private String appoinmentid,doctor_id,DiagnosisType,SubDiagnosisType;
 
     RecyclerView rv_prescriptiondetails;
@@ -73,12 +76,17 @@ public class PrescriptionDetailsActivity extends AppCompatActivity {
 
     List<PrescriptionCreateRequest.PrescriptionDataBean> prescriptionDataList ;
 
-
-
-
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.include_petlover_header)
     View include_petlover_header;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_manual_prescription)
+    LinearLayout ll_manual_prescription;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_uploadImage_prescription)
+    LinearLayout ll_uploadImage_prescription;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_lbl_diagnosis)
@@ -108,9 +116,13 @@ public class PrescriptionDetailsActivity extends AppCompatActivity {
     @BindView(R.id.btn_submit)
     Button btn_submit;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_prescriptiondetails)
+    ImageView img_prescriptiondetails;
+
     private String Doctor_Comments;
     private String Doctor_ID;
-    private String Treatment_Done_by;
+    private String Treatment_Done_by,selectedRadioButton,prescription_type;
 
 
     @SuppressLint("LogNotTimber")
@@ -146,17 +158,64 @@ public class PrescriptionDetailsActivity extends AppCompatActivity {
             Doctor_Comments = extras.getString("Doctor_Comments");
             Doctor_ID = extras.getString("Doctor_ID");
             Treatment_Done_by = extras.getString("Treatment_Done_by");
+            image = extras.getString("image");
+            selectedRadioButton = extras.getString("selectedRadioButton");
             Log.w(TAG,"AppointID :"+" "+appoinmentid);
             Log.w(TAG,"userid :"+" "+userid);
             Log.w(TAG,"doctorid :"+" "+doctor_id);
+            Log.w(TAG,"image " + image);
+            Log.w(TAG,"selectedRadioButton " + selectedRadioButton);
             prescriptionDataList = (ArrayList<PrescriptionCreateRequest.PrescriptionDataBean>) getIntent().getSerializableExtra("prescriptionDataList");
 
             Log.w(TAG,"prescriptionDataList : "+ new Gson().toJson(prescriptionDataList));
 
 
-            if(prescriptionDataList != null && prescriptionDataList.size()>0){
-                setView();
+            if(selectedRadioButton!=null&&!selectedRadioButton.isEmpty()&&selectedRadioButton.equals("Manual")){
+
+                Log.w(TAG,"true-->");
+
+                if(prescriptionDataList != null && prescriptionDataList.size()>0){
+
+                    image = "";
+
+                    prescription_type = "PDF";
+
+                    ll_manual_prescription.setVisibility(View.VISIBLE);
+
+                    ll_uploadImage_prescription.setVisibility(View.GONE);
+
+                    setView();
+                }
+
             }
+
+            else {
+
+                Log.w(TAG,"false-->");
+
+                prescription_type = "Image";
+
+                ll_manual_prescription.setVisibility(View.GONE);
+
+                ll_uploadImage_prescription.setVisibility(View.VISIBLE);
+
+                if(image!=null&&!image.isEmpty()){
+
+                    Glide.with(PrescriptionDetailsActivity.this)
+                            .load(image)
+                            .into(img_prescriptiondetails);
+
+                }
+                else {
+
+                    img_prescriptiondetails.setVisibility(View.GONE);
+
+                }
+
+
+
+            }
+
 
 
         }
@@ -326,8 +385,8 @@ public class PrescriptionDetailsActivity extends AppCompatActivity {
         prescriptionCreateRequest.setDate(currentDateandTime);
         prescriptionCreateRequest.setDoctor_Comments(Doctor_Comments);
         prescriptionCreateRequest.setPDF_format("");
-        prescriptionCreateRequest.setPrescription_type("PDF");
-        prescriptionCreateRequest.setPrescription_img("");
+        prescriptionCreateRequest.setPrescription_type(prescription_type);
+        prescriptionCreateRequest.setPrescription_img(image);
         prescriptionCreateRequest.setUser_id(userid);
         Log.w(TAG, "User_ID" + userid);
         prescriptionCreateRequest.setPrescription_data(prescriptionDataList);

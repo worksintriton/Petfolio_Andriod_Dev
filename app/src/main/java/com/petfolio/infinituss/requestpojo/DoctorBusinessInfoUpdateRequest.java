@@ -36,6 +36,34 @@ public class DoctorBusinessInfoUpdateRequest {
     private int consultancy_fees;
     private String city_name;
 
+    private String doctor_info;
+    private String clinic_no ;
+    private String doctor_id;
+
+    public String getDoctor_info() {
+        return doctor_info;
+    }
+
+    public void setDoctor_info(String doctor_info) {
+        this.doctor_info = doctor_info;
+    }
+
+    public String getClinic_no() {
+        return clinic_no;
+    }
+
+    public void setClinic_no(String clinic_no) {
+        this.clinic_no = clinic_no;
+    }
+
+    public String getDoctor_id() {
+        return doctor_id;
+    }
+
+    public void setDoctor_id(String doctor_id) {
+        this.doctor_id = doctor_id;
+    }
+
     public String getCity_name() {
         return city_name;
     }

@@ -44,6 +44,35 @@ public class DocBusInfoUploadRequest {
     private String signature;
     private String city_name;
 
+    private String doctor_info;
+    private String clinic_no ;
+    private String doctor_id;
+
+    public String getDoctor_info() {
+
+        return doctor_info;
+    }
+
+    public void setDoctor_info(String doctor_info) {
+        this.doctor_info = doctor_info;
+    }
+
+    public String getClinic_no() {
+        return clinic_no;
+    }
+
+    public void setClinic_no(String clinic_no) {
+        this.clinic_no = clinic_no;
+    }
+
+    public String getDoctor_id() {
+        return doctor_id;
+    }
+
+    public void setDoctor_id(String doctor_id) {
+        this.doctor_id = doctor_id;
+    }
+
     public String getCity_name() {
         return city_name;
     }
@@ -146,7 +175,7 @@ public class DocBusInfoUploadRequest {
 
 
 
-    public DocBusInfoUploadRequest(String user_id, String dr_title, String dr_name, String clinic_name, String clinic_loc, double clinic_lat, double clinic_long, List<EducationDetailsBean> education_details, List<ExperienceDetailsBean> experience_details, List<SpecializationBean> specialization, List<PetHandledBean> pet_handled, List<ClinicPicBean> clinic_pic, List<CertificatePicBean> certificate_pic, List<GovtIdPicBean> govt_id_pic, List<PhotoIdPicBean> photo_id_pic, boolean profile_status, String profile_verification_status, String date_and_time,String mobile_type,String communication_type,int consultancy_fees, String signature,String city_name) {
+    public DocBusInfoUploadRequest(String user_id, String dr_title, String dr_name, String clinic_name, String clinic_loc, double clinic_lat, double clinic_long, List<EducationDetailsBean> education_details, List<ExperienceDetailsBean> experience_details, List<SpecializationBean> specialization, List<PetHandledBean> pet_handled, List<ClinicPicBean> clinic_pic, List<CertificatePicBean> certificate_pic, List<GovtIdPicBean> govt_id_pic, List<PhotoIdPicBean> photo_id_pic, boolean profile_status, String profile_verification_status, String date_and_time,String mobile_type,String communication_type,int consultancy_fees, String signature,String city_name,String doctor_info,String clinic_no,String doctor_id) {
         this.user_id = user_id;
         this.dr_title = dr_title;
         this.dr_name = dr_name;
@@ -170,6 +199,9 @@ public class DocBusInfoUploadRequest {
         this.consultancy_fees = consultancy_fees;
         this.signature = signature;
         this.city_name=city_name;
+        this.doctor_info =doctor_info;
+        this.doctor_id=doctor_id;
+        this.clinic_no=clinic_no;
     }
 
     public String getUser_id() {
