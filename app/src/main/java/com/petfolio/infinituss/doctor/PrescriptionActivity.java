@@ -190,6 +190,7 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
 
     private String selectedRadioButton = "Manual";
 
+    View addView;
 
 
     Button btn_done,btn_done1;
@@ -261,6 +262,8 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
     RecyclerView rcylr_uploadImage;
 
     private final List<DocBusInfoUploadRequest.GovtIdPicBean> govtIdPicBeans = new ArrayList<>();
+
+    int i =0;
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -380,7 +383,7 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
 
                 LayoutInflater layoutInflater =
                         (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                final View addView = layoutInflater.inflate(R.layout.row, null);
+                addView = layoutInflater.inflate(R.layout.row, null);
                 final TextView tvtabletname = addView.findViewById(R.id.tv_tabletname);
                 tvtabletname.setText(et_tabletname.getText().toString());
                 final TextView tvquantity = addView.findViewById(R.id.tv_quanity);
@@ -566,11 +569,19 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
             if(selectedRadioButton.equalsIgnoreCase("Manual")){
                 ll_manual_prescription.setVisibility(View.VISIBLE);
                 ll_uploadImage.setVisibility(View.GONE);
+                govtIdPicBeans.clear();
             }
             else{
 
                 ll_manual_prescription.setVisibility(View.GONE);
                 ll_uploadImage.setVisibility(View.VISIBLE);
+                if(i==0){
+                    ((LinearLayout)addView.getParent()).removeView(addView);
+                    clearField();
+                    prescriptionDataList.clear();
+                    i = i+1;
+                }
+
 
             }
 
@@ -963,6 +974,12 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
 
                     txt_subdiagnosis.setVisibility(View.GONE);
 
+                    for (int i=0;i<diagnosisList.size();i++){
+                        diagnosisList.get(i).setSelected(false);
+                    }
+
+                    diagnosiTypesListAdapter.notifyDataSetChanged();
+
                     subDiagnosisListResponseCall(DiagnosisTypeId);
 
                     dialog.dismiss();
@@ -1082,6 +1099,13 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
 
                     txt_subdiagnosis.setText(SubDiagnosisType);
 
+                    for (int i=0;i<subDiagnosisList.size();i++){
+                        subDiagnosisList.get(i).setSelected(false);
+                    }
+
+                    subDiagnosiTypesListAdapter.notifyDataSetChanged();
+
+
                     dialog.dismiss();
 
 
@@ -1186,7 +1210,7 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
 
     private void chooseGovIDPdf() {
 
-        if(govtIdPicResponse.size()>=1){
+        if(govtIdPicBeans.size()>=1){
 
             Toasty.warning(getApplicationContext(), "Sorry you can't Add more than 1", Toast.LENGTH_SHORT).show();
 
@@ -1194,7 +1218,7 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
 
         else {
 
-            final CharSequence[] items = {"Take Photo", "Pick from Galley", "Select File","Cancel"};
+            final CharSequence[] items = {"Take Photo", "Pick from Galley","Cancel"};
             //AlertDialog.Builder alert=new AlertDialog.Builder(this);
             AlertDialog.Builder builder = new AlertDialog.Builder(PrescriptionActivity.this);
             builder.setTitle("Choose option");

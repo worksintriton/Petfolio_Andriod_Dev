@@ -408,7 +408,7 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
 
                             if(response.body().getData().getPrescription_id() != null && !response.body().getData().getPrescription_id().isEmpty() ){
 
-                                txt_prescno.setText("P_NO: " +response.body().getData().getPrescription_id());
+                                txt_prescno.setText("" +response.body().getData().getPrescription_id());
                             }
 
                             else {
@@ -418,7 +418,7 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
 
                             if(response.body().getData().getDoctor_id() != null && !response.body().getData().getDoctor_id().isEmpty() ){
 
-                                txt_doctorid.setText("DR_ID : " +response.body().getData().getDoctor_id());
+                                txt_doctorid.setText(""+response.body().getData().getDoctor_id());
                             }
 
                             else {
