@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
@@ -23,7 +24,9 @@ import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.doctor.DoctorDashboardActivity;
 import com.petfolio.infinituss.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinituss.requestpojo.NotificationGetlistRequest;
+import com.petfolio.infinituss.requestpojo.NotificationsMarkRequest;
 import com.petfolio.infinituss.responsepojo.NotificationGetlistResponse;
+import com.petfolio.infinituss.responsepojo.SuccessResponse;
 import com.petfolio.infinituss.serviceprovider.ServiceProviderDashboardActivity;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
 import com.petfolio.infinituss.utils.ConnectionDetector;
@@ -60,6 +63,11 @@ public class NotificationActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
     ImageView img_back;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout refresh_layout;
+
 
 
 
@@ -109,11 +117,94 @@ public class NotificationActivity extends AppCompatActivity {
         if (new ConnectionDetector(NotificationActivity.this).isNetworkAvailable(NotificationActivity.this)) {
             notificationGetlistResponseCall();
         }
+
+        refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (new ConnectionDetector(NotificationActivity.this).isNetworkAvailable(NotificationActivity.this)) {
+                    notificationGetlistResponseCall();
+                }
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+    }
+
+    @SuppressLint("LogNotTimber")
+    private void notificationMarkResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<SuccessResponse> call = ApiService.notificationMarkResponseCall(RestUtils.getContentType(),notificationsMarkRequest());
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<SuccessResponse>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"notificationMarkResponseCall SuccessResponse"+ "--->" + new Gson().toJson(response.body()));
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+
+                    }
+
+                }
+
+
+            }
+
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+
+                Log.w(TAG,"notificationMarkResponseCall SuccessResponse flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint("LogNotTimber")
+    private NotificationsMarkRequest notificationsMarkRequest() {
+        /*
+         * user_id : 5ee3666a5dfb34019b13c3a2
+         */
+        NotificationsMarkRequest notificationsMarkRequest = new NotificationsMarkRequest();
+        notificationsMarkRequest.setUser_id(userid);
+        Log.w(TAG,"notificationsMarkRequest"+ "--->" + new Gson().toJson(notificationsMarkRequest));
+        return notificationsMarkRequest;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("PetLoverNavigationDrawerNew")){
+            startActivity(new Intent(getApplicationContext(), PetLoverDashboardActivity.class));
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorNavigationDrawer")){
+            startActivity(new Intent(getApplicationContext(), DoctorDashboardActivity.class));
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("VendorNavigationDrawer")){
+            startActivity(new Intent(getApplicationContext(), VendorDashboardActivity.class));
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("ServiceProviderNavigationDrawer")){
+            startActivity(new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class));
+            finish();
+        }else{
+            finish();
+        }
+
+    }
+    private void setView() {
+        rvnotifiaction.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        rvnotifiaction.setItemAnimator(new DefaultItemAnimator());
+        NotificationDashboardAdapter notificationDashboardAdapter = new NotificationDashboardAdapter(getApplicationContext(), notificationGetlistResponseList);
+        rvnotifiaction.setAdapter(notificationDashboardAdapter);
 
     }
 
@@ -131,10 +222,11 @@ public class NotificationActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<NotificationGetlistResponse> call, @NonNull Response<NotificationGetlistResponse> response) {
                 avi_indicator.smoothToHide();
                 Log.w(TAG,"NotificationGetlistResponse"+ "--->" + new Gson().toJson(response.body()));
-
+                refresh_layout.setRefreshing(false);
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
+                        notificationMarkResponseCall();
 
                         if(response.body().getData() != null && response.body().getData().size()>0){
                             notificationGetlistResponseList = response.body().getData();
@@ -175,39 +267,5 @@ public class NotificationActivity extends AppCompatActivity {
         notificationGetlistRequest.setUser_id(userid);
         Log.w(TAG,"notificationGetlistRequest"+ "--->" + new Gson().toJson(notificationGetlistRequest));
         return notificationGetlistRequest;
-    }
-
-
-
-
-
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if(fromactivity != null && fromactivity.equalsIgnoreCase("PetLoverNavigationDrawerNew")){
-            startActivity(new Intent(getApplicationContext(), PetLoverDashboardActivity.class));
-            finish();
-        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorNavigationDrawer")){
-            startActivity(new Intent(getApplicationContext(), DoctorDashboardActivity.class));
-            finish();
-        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("VendorNavigationDrawer")){
-            startActivity(new Intent(getApplicationContext(), VendorDashboardActivity.class));
-            finish();
-        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("ServiceProviderNavigationDrawer")){
-            startActivity(new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class));
-            finish();
-        }else{
-            finish();
-        }
-
-    }
-
-    private void setView() {
-        rvnotifiaction.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        rvnotifiaction.setItemAnimator(new DefaultItemAnimator());
-        NotificationDashboardAdapter notificationDashboardAdapter = new NotificationDashboardAdapter(getApplicationContext(), notificationGetlistResponseList);
-        rvnotifiaction.setAdapter(notificationDashboardAdapter);
-
     }
 }

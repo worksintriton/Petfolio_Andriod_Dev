@@ -482,7 +482,10 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                             btn_cancel.setVisibility(View.GONE);
                         }
                         if(startappointmentstatus != null && !startappointmentstatus.equalsIgnoreCase("Not Started")) {
+                            img_videocall.setBackgroundResource(R.drawable.video_camera_gray);
                             btn_cancel.setVisibility(View.GONE);
+                        }else{
+                            img_videocall.setBackgroundResource(R.drawable.video_camera_green);
                         }
 
 
@@ -601,7 +604,13 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                             String colour = response.body().getData().getPet_id().getPet_color();
                             double weight = response.body().getData().getPet_id().getPet_weight();
                             String pet_dob = response.body().getData().getPet_id().getPet_dob();
-                            if(pet_dob != null){
+                            if(pet_dob != null && !pet_dob.isEmpty()){
+                                txt_age.setText(pet_dob);
+                            }else {
+                                txt_age.setText("");
+                            }
+
+                            /*if(pet_dob != null){
                             String[] separated = pet_dob.split("-");
                             String day = separated[0];
                             String month = separated[1];
@@ -609,7 +618,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                             Log.w(TAG,"day : "+day+" month: "+month+" year : "+year);
 
                             getAge(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
-                            }
+                            }*/
 
 
                             if(from != null){
@@ -1173,7 +1182,13 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                             String colour = response.body().getData().getPet_id().getPet_color();
                             double weight = response.body().getData().getPet_id().getPet_weight();
                             String pet_dob = response.body().getData().getPet_id().getPet_dob();
-                            if(pet_dob != null){
+                            if(pet_dob != null && !pet_dob.isEmpty()){
+                                txt_age.setText(pet_dob);
+                            }else {
+                                txt_age.setText("");
+                            }
+
+                           /* if(pet_dob != null){
                                 String[] separated = pet_dob.split("-");
                                 String day = separated[0];
                                 String month = separated[1];
@@ -1181,7 +1196,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                                 Log.w(TAG,"day : "+day+" month: "+month+" year : "+year);
 
                                 getAge(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
-                            }
+                            }*/
 
                             if (response.body().getData().getPet_id().isVaccinated()) {
                                 vaccinated = "Yes";

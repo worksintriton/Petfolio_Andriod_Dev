@@ -10,6 +10,7 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
@@ -39,14 +40,11 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.activity.NotificationActivity;
-import com.petfolio.infinituss.adapter.PetLoverSOSAdapter;
 import com.petfolio.infinituss.adapter.SelectedServiceProviderAdapter;
 import com.petfolio.infinituss.adapter.ViewPagerPetServiceAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
-import com.petfolio.infinituss.interfaces.SoSCallListener;
 import com.petfolio.infinituss.requestpojo.SPSpecificServiceDetailsRequest;
-import com.petfolio.infinituss.responsepojo.PetLoverDashboardResponse;
 import com.petfolio.infinituss.responsepojo.SPSpecificServiceDetailsResponse;
 import com.petfolio.infinituss.serviceprovider.SPFiltersActivity;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
@@ -65,7 +63,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SelectedServiceActivity extends AppCompatActivity implements View.OnClickListener, SoSCallListener {
+public class SelectedServiceActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     private String TAG = "SelectedServiceActivity";
@@ -197,6 +195,10 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
     @BindView(R.id.rl_homes)
     RelativeLayout rl_homes;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout refresh_layout;
+
 
 
 
@@ -294,6 +296,17 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
             }
         }
 
+        refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if(catid != null && userid != null) {
+                    if (new ConnectionDetector(SelectedServiceActivity.this).isNetworkAvailable(SelectedServiceActivity.this)) {
+                        SPSpecificServiceDetailsResponseCall(distance,reviewcount,Count_value_start,Count_value_end);
+                    }
+                }
+            }
+        });
+
 
 
         img_back.setOnClickListener(this);
@@ -384,7 +397,7 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
             @Override
             public void onResponse(@NonNull Call<SPSpecificServiceDetailsResponse> call, @NonNull Response<SPSpecificServiceDetailsResponse> response) {
                 //avi_indicator.smoothToHide();
-
+                refresh_layout.setRefreshing(false);
 
                 mShimmerViewContainer.stopShimmerAnimation();
                 includelayout.setVisibility(View.GONE);
@@ -557,9 +570,7 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
             case R.id.img_back:
                 onBackPressed();
                 break;
-            case R.id.img_sos:
-                goto_SOS();
-                break;
+
             case R.id.img_notification:
                 startActivity(new Intent(SelectedServiceActivity.this, NotificationActivity.class));
                 break;
@@ -634,83 +645,7 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
         startActivity(intent);
     }
 
-    private void goto_SOS() {
-        showSOSAlert(APIClient.sosList);
-    }
-    private void showSOSAlert(List<PetLoverDashboardResponse.DataBean.SOSBean> sosList) {
 
-        try {
-
-            dialog = new Dialog(SelectedServiceActivity.this);
-            dialog.setContentView(R.layout.sos_popup_layout);
-            RecyclerView rv_sosnumbers = (RecyclerView)dialog.findViewById(R.id.rv_sosnumbers);
-            Button btn_call = (Button)dialog.findViewById(R.id.btn_call);
-            TextView txt_no_records = (TextView)dialog.findViewById(R.id.txt_no_records);
-            ImageView img_close = (ImageView)dialog.findViewById(R.id.img_close);
-            img_close.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
-            if(sosList != null && sosList.size()>0){
-                rv_sosnumbers.setVisibility(View.VISIBLE);
-                btn_call.setVisibility(View.VISIBLE);
-                txt_no_records.setVisibility(View.GONE);
-                rv_sosnumbers.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                rv_sosnumbers.setItemAnimator(new DefaultItemAnimator());
-                PetLoverSOSAdapter petLoverSOSAdapter = new PetLoverSOSAdapter(getApplicationContext(), sosList,this);
-                rv_sosnumbers.setAdapter(petLoverSOSAdapter);
-            }else{
-                rv_sosnumbers.setVisibility(View.GONE);
-                btn_call.setVisibility(View.GONE);
-                txt_no_records.setVisibility(View.VISIBLE);
-                txt_no_records.setText(getResources().getString(R.string.no_phone_numbers));
-
-            }
-
-            btn_call.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(SelectedServiceActivity.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
-                    }
-                    else
-                    {
-                        gotoPhone();
-                    }
-
-                }
-            });
-
-
-
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.show();
-
-
-        } catch (WindowManager.BadTokenException e) {
-            e.printStackTrace();
-        }
-
-
-
-
-    }
-    private void gotoPhone() {
-        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + sosPhonenumber));
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        startActivity(intent);
-    }
-    @Override
-    public void soSCallListener(long phonenumber) {
-        if(phonenumber != 0){
-            sosPhonenumber = String.valueOf(phonenumber);
-        }
-
-    }
 
     public void showAlertSPNotAvlLoading(String errormesage){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SelectedServiceActivity.this);

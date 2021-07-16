@@ -38,7 +38,6 @@ public class APIClient {
 
     public static String SP_DISTANCE = "";
 
-    public static List<PetLoverDashboardResponse.DataBean.SOSBean> sosList;
 
     public static Retrofit getClient() {
         client = new OkHttpClient();

@@ -39,7 +39,6 @@ import com.petfolio.infinituss.adapter.PetLoverPaymDetailsAdapter;
 import com.petfolio.infinituss.adapter.PetLoverSOSAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
-import com.petfolio.infinituss.interfaces.SoSCallListener;
 import com.petfolio.infinituss.requestpojo.FetchPetloverPaymDetaRequest;
 
 import com.petfolio.infinituss.responsepojo.FetchPetloverPaymDetaResponse;
@@ -70,7 +69,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PetloverPaymentDetailsActivity extends AppCompatActivity implements View.OnClickListener, SoSCallListener {
+public class PetloverPaymentDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private final String TAG = "PetloverPaymentDetailsActivity";
 
@@ -475,9 +474,7 @@ public class PetloverPaymentDetailsActivity extends AppCompatActivity implements
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.img_sos:
-                showSOSAlert(APIClient.sosList);
-                break;
+
             case R.id.img_notification:
                 startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
                 break;
@@ -519,84 +516,5 @@ public class PetloverPaymentDetailsActivity extends AppCompatActivity implements
 
     }
 
-    @Override
-    public void soSCallListener(long phonenumber) {
-        if(phonenumber != 0){
-            sosPhonenumber = String.valueOf(phonenumber);
-        }
 
-    }
-
-    private void showSOSAlert(List<PetLoverDashboardResponse.DataBean.SOSBean> sosList) {
-
-        try {
-
-            dialog = new Dialog(PetloverPaymentDetailsActivity.this);
-            dialog.setContentView(R.layout.sos_popup_layout);
-            RecyclerView rv_sosnumbers = (RecyclerView)dialog.findViewById(R.id.rv_sosnumbers);
-            Button btn_call = (Button)dialog.findViewById(R.id.btn_call);
-            TextView txt_no_records = (TextView)dialog.findViewById(R.id.txt_no_records);
-            ImageView img_close = (ImageView)dialog.findViewById(R.id.img_close);
-            img_close.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
-            if(sosList != null && sosList.size()>0){
-                rv_sosnumbers.setVisibility(View.VISIBLE);
-                btn_call.setVisibility(View.VISIBLE);
-                txt_no_records.setVisibility(View.GONE);
-                rv_sosnumbers.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                rv_sosnumbers.setItemAnimator(new DefaultItemAnimator());
-                PetLoverSOSAdapter petLoverSOSAdapter = new PetLoverSOSAdapter(getApplicationContext(), sosList,this);
-                rv_sosnumbers.setAdapter(petLoverSOSAdapter);
-            }else{
-                rv_sosnumbers.setVisibility(View.GONE);
-                btn_call.setVisibility(View.GONE);
-                txt_no_records.setVisibility(View.VISIBLE);
-                txt_no_records.setText(getResources().getString(R.string.no_phone_numbers));
-
-            }
-
-            btn_call.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(PetloverPaymentDetailsActivity.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
-                    }
-                    else
-                    {
-                        gotoPhone();
-                    }
-
-                }
-            });
-
-
-
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.show();
-
-
-        } catch (WindowManager.BadTokenException e) {
-            e.printStackTrace();
-        }
-
-
-
-
-    }
-    private void gotoPhone() {
-        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + sosPhonenumber));
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        startActivity(intent);
-    }
-    private void setMargins(RelativeLayout rl_layout, int i, int i1, int i2, int i3) {
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)rl_layout.getLayoutParams();
-        params.setMargins(i, i1, i2, i3);
-        rl_layout.setLayoutParams(params);
-    }
 }

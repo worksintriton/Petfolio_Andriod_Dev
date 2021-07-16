@@ -2,6 +2,7 @@ package com.petfolio.infinituss.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -13,31 +14,47 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
+
 import com.petfolio.infinituss.adapter.PetLoverSOSAdapter;
 import com.petfolio.infinituss.api.APIClient;
+import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.doctor.DoctorDashboardActivity;
 import com.petfolio.infinituss.interfaces.SoSCallListener;
 import com.petfolio.infinituss.petlover.PetLoverDashboardActivity;
 
+import com.petfolio.infinituss.requestpojo.SOSListRequest;
+import com.petfolio.infinituss.responsepojo.SOSListResponse;
 import com.petfolio.infinituss.serviceprovider.ServiceProviderDashboardActivity;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
 
+import com.petfolio.infinituss.utils.ConnectionDetector;
+import com.petfolio.infinituss.utils.RestUtils;
+import com.petfolio.infinituss.vendor.VendorCreateProductsActivity;
 import com.petfolio.infinituss.vendor.VendorDashboardActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
+
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class SoSActivity extends AppCompatActivity implements SoSCallListener {
@@ -75,6 +92,9 @@ public class SoSActivity extends AppCompatActivity implements SoSCallListener {
 
     private static final int REQUEST_PHONE_CALL =1 ;
     private String sosPhonenumber;
+    private Dialog alertDialog;
+
+    List<SOSListResponse.DataBean> sosList;
 
 
     @SuppressLint("LogNotTimber")
@@ -106,22 +126,20 @@ public class SoSActivity extends AppCompatActivity implements SoSCallListener {
         Log.w(TAG,"session--->"+"type :"+type+" "+"name :"+" "+name);
         img_back.setOnClickListener(v -> onBackPressed());
 
-        if(APIClient.sosList != null && APIClient.sosList.size()>0){
-            rv_sosnumbers.setVisibility(View.VISIBLE);
-            btn_call.setVisibility(View.VISIBLE);
-            txt_no_records.setVisibility(View.GONE);
-            rv_sosnumbers.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-            rv_sosnumbers.setItemAnimator(new DefaultItemAnimator());
-            PetLoverSOSAdapter petLoverSOSAdapter = new PetLoverSOSAdapter(getApplicationContext(), APIClient.sosList,this);
-            rv_sosnumbers.setAdapter(petLoverSOSAdapter);
+        if(userid != null) {
+            if (new ConnectionDetector(SoSActivity.this).isNetworkAvailable(SoSActivity.this)) {
+                SOSListResponseCall();
+            }
         }
-        else{
-            rv_sosnumbers.setVisibility(View.GONE);
-            btn_call.setVisibility(View.GONE);
-            txt_no_records.setVisibility(View.VISIBLE);
-            txt_no_records.setText(getResources().getString(R.string.no_phone_numbers));
 
-        }
+
+
+
+
+
+
+
+
 
         btn_call.setOnClickListener(v -> {
             if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
@@ -136,6 +154,91 @@ public class SoSActivity extends AppCompatActivity implements SoSCallListener {
 
 
 
+    }
+
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
+    private void SOSListResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<SOSListResponse> call = apiInterface.SOSListResponseCall(RestUtils.getContentType(), sosListRequest());
+        Log.w(TAG,"SOSListResponseCall url  :%s"+" "+ call.request().url().toString());
+        call.enqueue(new Callback<SOSListResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<SOSListResponse> call, @NonNull Response<SOSListResponse> response) {
+
+                Log.w(TAG,"vendor_product_create_ResponseCall"+ "--->" + new Gson().toJson(response.body()));
+
+                avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+
+                  if(response.body().getData() != null && response.body().getData().size()>0){
+                      sosList =  response.body().getData();
+                    rv_sosnumbers.setVisibility(View.VISIBLE);
+                    btn_call.setVisibility(View.VISIBLE);
+                    txt_no_records.setVisibility(View.GONE);
+                    rv_sosnumbers.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    rv_sosnumbers.setItemAnimator(new DefaultItemAnimator());
+                    PetLoverSOSAdapter petLoverSOSAdapter = new PetLoverSOSAdapter(getApplicationContext(), sosList,SoSActivity.this);
+                    rv_sosnumbers.setAdapter(petLoverSOSAdapter);
+                }
+                else{
+                    rv_sosnumbers.setVisibility(View.GONE);
+                    btn_call.setVisibility(View.GONE);
+                    txt_no_records.setVisibility(View.VISIBLE);
+                    txt_no_records.setText(getResources().getString(R.string.no_phone_numbers));
+
+                }
+                    }
+                    else{
+                        showErrorLoading(response.body().getMessage());
+                    }
+                }
+
+
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onFailure(@NonNull Call<SOSListResponse> call, @NonNull Throwable t) {
+
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"SOSListResponse flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
+    private SOSListRequest sosListRequest() {
+
+        /*
+         * user_id : 60a5df0f785e571920ac46f0
+          */
+        SOSListRequest sosListRequest = new SOSListRequest();
+        sosListRequest.setUser_id(userid);
+        Log.w(TAG,"sosListRequest"+ "--->" + new Gson().toJson(sosListRequest));
+        return sosListRequest;
+    }
+
+    public void showErrorLoading(String errormesage){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(errormesage);
+        alertDialogBuilder.setPositiveButton("ok",
+                (arg0, arg1) -> hideLoading());
+
+
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+    public void hideLoading(){
+        try {
+            alertDialog.dismiss();
+        }catch (Exception ignored){
+
+        }
     }
 
     private void gotoPhone() {
@@ -182,11 +285,10 @@ public class SoSActivity extends AppCompatActivity implements SoSCallListener {
     }
 
 
-
     @Override
-    public void soSCallListener(long phonenumber) {
-        if(phonenumber != 0){
-            sosPhonenumber = String.valueOf(phonenumber);
+    public void soSCallListener(String phonenumber) {
+        if(phonenumber != null){
+            sosPhonenumber = phonenumber;
         }
     }
 }

@@ -39,6 +39,8 @@ import com.petfolio.infinituss.utils.RestUtils;
 import com.vivekkaushik.datepicker.DatePickerTimeline;
 import com.vivekkaushik.datepicker.OnDateSelectedListener;
 import com.wang.avi.AVLoadingIndicatorView;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.Calendar;
@@ -126,6 +128,9 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
     private Dialog dialog;
     private String id;
     private String distance;
+    private String currentDateandTime;
+    private String currenttime;
+    private String currentdate;
 
 
     @SuppressLint("LogNotTimber")
@@ -197,23 +202,42 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         Log.w(TAG,"userid :"+ userid);
 
 
-
-
-
-
-
-
-
-
         Date c = Calendar.getInstance().getTime();
         System.out.println("Current time => " + c);
 
         @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         String formattedDate = df.format(c);
 
-        if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
-            petDoctorAvailableTimeResponseCall(formattedDate);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        currentDateandTime = sf.format(new Date());
+
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+        String currentDateandTime24hrs = simpleDateFormat.format(new Date());
+        currenttime = currentDateandTime24hrs.substring(currentDateandTime24hrs.indexOf(' ') + 1);
+        currentdate =  currentDateandTime24hrs.substring(0, currentDateandTime24hrs.indexOf(' '));
+
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("PetAppointmentDetailsActivity")){
+            currentDateandTime = sf.format(new Date(System.currentTimeMillis() + 3600000));
+            Log.w(TAG,"currentDateandTime : "+currentDateandTime);
+
+            String newcurrentDateandTime12hrs = simpleDateFormat.format(new Date(System.currentTimeMillis() + 3600000));
+            Log.w(TAG,"newcurrentDateandTime12hrs : "+newcurrentDateandTime12hrs);
+            currenttime = newcurrentDateandTime12hrs.substring(currentDateandTime24hrs.indexOf(' ') + 1);
+            currentdate =  newcurrentDateandTime12hrs.substring(0, currentDateandTime24hrs.indexOf(' '));
+
+            if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
+                petDoctorAvailableTimeResponseCall(formattedDate,currentDateandTime,currenttime,currentdate);
+            }
+
+
         }
+        else{
+            if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
+                petDoctorAvailableTimeResponseCall(formattedDate,currentDateandTime,currenttime,currentdate);
+            }
+        }
+
+
 
 
         btn_bookappointment.setOnClickListener(v -> {
@@ -271,7 +295,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
                 Log.w(TAG,"Selected Date-->"+Date);
 
                 if (new ConnectionDetector(PetAppointment_Doctor_Date_Time_Activity.this).isNetworkAvailable(PetAppointment_Doctor_Date_Time_Activity.this)) {
-                    petDoctorAvailableTimeResponseCall(Date);
+                    petDoctorAvailableTimeResponseCall(formattedDate, currentDateandTime, currenttime, Date);
                 }
 
 
@@ -291,7 +315,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
 
     }
     @SuppressLint("LogNotTimber")
-    private void petDoctorAvailableTimeResponseCall(String Date) {
+    private void petDoctorAvailableTimeResponseCall(String formattedDate, String currentDateandTime, String currenttime, String Date) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
@@ -402,13 +426,6 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
          * cur_time : 01:00 AM
          * current_time
          */
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String currentDateandTime = sf.format(new Date());
-
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
-        String currentDateandTime24hrs = simpleDateFormat.format(new Date());
-        String currenttime = currentDateandTime24hrs.substring(currentDateandTime24hrs.indexOf(' ') + 1);
-        String currentdate =  currentDateandTime24hrs.substring(0, currentDateandTime24hrs.indexOf(' '));
 
         PetDoctorAvailableTimeRequest petDoctorAvailableTimeRequest = new PetDoctorAvailableTimeRequest();
         petDoctorAvailableTimeRequest.setUser_id(doctorid);
@@ -419,6 +436,8 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
         Log.w(TAG,"petDoctorAvailableTimeRequest"+ "--->" + new Gson().toJson(petDoctorAvailableTimeRequest));
         return petDoctorAvailableTimeRequest;
     }
+
+
     private void setViewAvlDays() {
         rv_doctoravailabeslottime.setVisibility(View.VISIBLE);
         rv_doctoravailabeslottime.setLayoutManager(new GridLayoutManager(this, 4));

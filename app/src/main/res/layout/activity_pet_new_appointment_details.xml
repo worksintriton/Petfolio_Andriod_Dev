@@ -55,7 +55,7 @@
                     android:layout_gravity="end"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="10dp"
-                    android:src="@drawable/ic_chat"
+                    android:src="@drawable/video_camera_gray"
                     android:layout_alignParentEnd="true"
                     tools:ignore="ContentDescription" />
 

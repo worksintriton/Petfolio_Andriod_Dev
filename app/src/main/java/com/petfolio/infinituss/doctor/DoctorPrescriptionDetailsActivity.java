@@ -36,7 +36,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -164,12 +163,40 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
 
     private String concatenatedSpcNames= "";
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_prescno)
+    TextView txt_prescno;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_doctorid)
+    TextView txt_doctorid;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_clinic_name)
+    TextView txt_clinic_name;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_clinic_loc)
+    TextView txt_clinic_loc;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_clinic_number)
+    TextView txt_clinic_number;
 
     private List<PrescriptionFetchResponse.DataBean.PrescriptionDataBean> prescriptionDataList;
     private String pdfUrl;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_manual_prescription)
+    LinearLayout ll_manual_prescription;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_uploadImage_prescription)
+    LinearLayout ll_uploadImage_prescription;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_prescriptiondetails)
+    ImageView img_prescriptiondetails;
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -332,7 +359,8 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
                                 txt_owners_name.setText(response.body().getData().getOwner_name());
                             }else{
                                 txt_owners_name.setText("");
-                            } if(response.body().getData().getPet_name() != null && !response.body().getData().getPet_name().isEmpty()){
+                            }
+                            if(response.body().getData().getPet_name() != null && !response.body().getData().getPet_name().isEmpty()){
                                 txt_pet_name.setText(response.body().getData().getPet_name());
                             }else{
                                 txt_pet_name.setText("");
@@ -358,7 +386,8 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
                                 txt_age.setText(response.body().getData().getAge());
                             }else{
                                 txt_age.setText("");
-                            } if(response.body().getData().getDiagnosis() != null && !response.body().getData().getDiagnosis().isEmpty()){
+                            }
+                             if(response.body().getData().getDiagnosis() != null && !response.body().getData().getDiagnosis().isEmpty()){
                                 txt_diagnosis.setText(response.body().getData().getDiagnosis());
                             }else{
                                 txt_diagnosis.setText("");
@@ -377,8 +406,55 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
                                 ll_doctor_comment.setVisibility(View.GONE);
                             }
 
+                            if(response.body().getData().getPrescription_id() != null && !response.body().getData().getPrescription_id().isEmpty() ){
+
+                                txt_prescno.setText("P_NO: " +response.body().getData().getPrescription_id());
+                            }
+
+                            else {
+
+                                txt_prescno.setText("");
+                            }
+
+                            if(response.body().getData().getDoctor_id() != null && !response.body().getData().getDoctor_id().isEmpty() ){
+
+                                txt_doctorid.setText("DR_ID : " +response.body().getData().getDoctor_id());
+                            }
+
+                            else {
+
+                                txt_doctorid.setText("");
+                            }
 
 
+                           if(response.body().getData().getClinic_name() != null && !response.body().getData().getClinic_name().isEmpty() ){
+
+                                txt_clinic_name.setText(response.body().getData().getClinic_name());
+                            }
+
+                            else {
+
+                                txt_clinic_name.setText("");
+                            }
+                            if(response.body().getData().getClinic_no() != null && !response.body().getData().getClinic_no().isEmpty() ){
+
+                                txt_clinic_number.setText(response.body().getData().getClinic_no());
+                            }
+
+                            else {
+
+                                txt_clinic_number.setText("");
+                            }
+
+                            if(response.body().getData().getClinic_loc() != null && !response.body().getData().getClinic_loc().isEmpty() ){
+
+                                txt_clinic_loc.setText(response.body().getData().getClinic_loc());
+                            }
+
+                            else {
+
+                                txt_clinic_loc.setText("");
+                            }
 
 
                             if(response.body().getData().getAllergies() != null && !response.body().getData().getAllergies().isEmpty() ){
@@ -389,21 +465,63 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
                                 ll_allergies.setVisibility(View.GONE);
                             }
 
+                            if(response.body().getData().getPrescription_type()!=null&&!response.body().getData().getPrescription_type().isEmpty()){
 
 
-                            if(response.body().getData().getPrescription_data() != null){
-                                prescriptionDataList = response.body().getData().getPrescription_data();
-                                pdfUrl = response.body().getData().getPDF_format();
+                                if(response.body().getData().getPrescription_type().equals("PDF")){
 
-                          if(prescriptionDataList.size()>0){
-                              rv_prescriptiondetails.setVisibility(View.VISIBLE);
-                              txt_no_records.setVisibility(View.GONE);
-                              setView();
-                          }else{
-                              rv_prescriptiondetails.setVisibility(View.GONE);
-                              txt_no_records.setVisibility(View.VISIBLE);
+                                    ll_manual_prescription.setVisibility(View.VISIBLE);
 
-                          }
+                                    ll_uploadImage_prescription.setVisibility(View.GONE);
+
+                                    if(response.body().getData().getPrescription_data() != null){
+                                        prescriptionDataList = response.body().getData().getPrescription_data();
+                                        pdfUrl = response.body().getData().getPDF_format();
+
+                                        if(prescriptionDataList.size()>0){
+                                            rv_prescriptiondetails.setVisibility(View.VISIBLE);
+                                            txt_no_records.setVisibility(View.GONE);
+                                            setView();
+                                        }else{
+                                            rv_prescriptiondetails.setVisibility(View.GONE);
+                                            txt_no_records.setVisibility(View.VISIBLE);
+
+                                        }
+
+                                    }
+
+                                }
+
+                                else {
+
+                                    ll_manual_prescription.setVisibility(View.GONE);
+
+                                    ll_uploadImage_prescription.setVisibility(View.VISIBLE);
+
+                                    if(response.body().getData().getPrescription_img()!=null&&!response.body().getData().getPrescription_img().isEmpty()){
+
+                                        Glide.with(DoctorPrescriptionDetailsActivity.this)
+                                                .load(response.body().getData().getPrescription_img())
+                                                .into(img_prescriptiondetails);
+
+                                    }
+                                    else {
+
+                                        Glide.with(DoctorPrescriptionDetailsActivity.this)
+                                                .load(APIClient.BANNER_IMAGE_URL)
+                                                .into(img_prescriptiondetails);
+
+                                    }
+
+
+                                }
+                            }
+
+                            else {
+
+                                ll_manual_prescription.setVisibility(View.GONE);
+
+                                ll_uploadImage_prescription.setVisibility(View.GONE);
 
                             }
 

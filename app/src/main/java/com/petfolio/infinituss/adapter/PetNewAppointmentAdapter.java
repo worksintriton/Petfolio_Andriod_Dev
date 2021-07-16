@@ -172,6 +172,14 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
             holder.btn_cancel.setOnClickListener(v -> {
                 onAppointmentCancel.onAppointmentCancel(newAppointmentResponseList.get(position).get_id(), newAppointmentResponseList.get(position).getAppointment_for(), newAppointmentResponseList.get(position).getUser_id(), newAppointmentResponseList.get(position).getDoctor_id(), newAppointmentResponseList.get(position).getBooking_Id(), newAppointmentResponseList.get(position).getSp_id());
             });
+
+        if(newAppointmentResponseList.get(position).getStart_appointment_status() != null && newAppointmentResponseList.get(position).getStart_appointment_status().equalsIgnoreCase("Not Started")){
+            holder.img_videocall.setBackgroundResource(R.drawable.video_camera_gray);
+        }else{
+            holder.img_videocall.setBackgroundResource(R.drawable.video_camera_green);
+        }
+
+
             holder.img_videocall.setOnClickListener(v -> {
                 Log.w(TAG,"Start_appointment_status : "+newAppointmentResponseList.get(position).getStart_appointment_status());
                 if(newAppointmentResponseList.get(position).getStart_appointment_status() != null && newAppointmentResponseList.get(position).getStart_appointment_status().equalsIgnoreCase("Not Started")){

@@ -70,7 +70,7 @@
                         android:layout_height="24dp"
                         android:layout_gravity="end"
                         android:layout_marginTop="5dp"
-                        android:src="@drawable/ic_chat"
+                        android:src="@drawable/video_camera_gray"
                         tools:ignore="ContentDescription" />
 
                 </LinearLayout>

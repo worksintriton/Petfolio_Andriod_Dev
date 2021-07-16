@@ -56,8 +56,10 @@ import com.petfolio.infinituss.fragmentpetlover.bottommenu.PetCommunityFragment;
 import com.petfolio.infinituss.fragmentpetlover.bottommenu.PetHomeNewFragment;
 import com.petfolio.infinituss.fragmentpetlover.bottommenu.PetServicesFragment;
 import com.petfolio.infinituss.fragmentpetlover.bottommenu.VendorShopFragment;
+import com.petfolio.infinituss.requestpojo.NotificationCartCountRequest;
 import com.petfolio.infinituss.requestpojo.ShippingAddressFetchByUserIDRequest;
 import com.petfolio.infinituss.responsepojo.GetAddressResultResponse;
+import com.petfolio.infinituss.responsepojo.NotificationCartCountResponse;
 import com.petfolio.infinituss.responsepojo.ShippingAddressFetchByUserIDResponse;
 import com.petfolio.infinituss.service.GPSTracker;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
@@ -187,6 +189,7 @@ public class PetLoverDashboardActivity extends PetLoverNavigationDrawerNew imple
     private String searchString ;
     private String doctorid;
 
+
     @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -223,9 +226,7 @@ public class PetLoverDashboardActivity extends PetLoverNavigationDrawerNew imple
 
 
         }
-        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-            shippingAddressresponseCall();
-        }
+
 
         rl_home.setOnClickListener(this);
 
@@ -812,78 +813,6 @@ public class PetLoverDashboardActivity extends PetLoverNavigationDrawerNew imple
 
     }
 
-    @SuppressLint("LogNotTimber")
-    private void shippingAddressresponseCall() {
-
-       /* avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();*/
-
-        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-
-        Call<ShippingAddressFetchByUserIDResponse> call = apiInterface.fetch_shipp_addr_ResponseCall(RestUtils.getContentType(), shippingAddressFetchByUserIDRequest());
-
-        Log.w(TAG,"ShippingAddressFetchByUserIDResponse url  :%s"+" "+ call.request().url().toString());
-
-        call.enqueue(new Callback<ShippingAddressFetchByUserIDResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<ShippingAddressFetchByUserIDResponse> call, @NonNull Response<ShippingAddressFetchByUserIDResponse> response) {
-
-                Log.w(TAG,"ShippingAddressFetchByUserIDResponse"+ "--->" + new Gson().toJson(response.body()));
-
-                //  avi_indicator.smoothToHide();
-
-                if (response.body() != null) {
-                    if(response.body().getCode() == 200) {
-                        if(response.body().getData()!=null){
-                            ShippingAddressFetchByUserIDResponse.DataBean dataBeanList = response.body().getData();
-
-                            if(dataBeanList!=null) {
-                                if(dataBeanList.isDefault_status()){
-                                    Log.w(TAG,"true-->");
-                                    String city = dataBeanList.getLocation_city();
-                                    if(city !=null){
-                                        //txt_location.setText(city);
-                                    }
-
-                                }
-
-
-                            }
-
-                        }
-                    }
-
-
-
-                }
-
-
-
-
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ShippingAddressFetchByUserIDResponse> call, @NonNull Throwable t) {
-
-                //  avi_indicator.smoothToHide();
-                Log.w(TAG,"ShippingAddressFetchByUserIDResponse flr"+"--->" + t.getMessage());
-            }
-        });
-
-
-    }
-    @SuppressLint("LogNotTimber")
-    private ShippingAddressFetchByUserIDRequest shippingAddressFetchByUserIDRequest() {
-        /*
-         * user_id : 6048589d0b3a487571a1c567
-         */
-
-        ShippingAddressFetchByUserIDRequest shippingAddressFetchByUserIDRequest = new ShippingAddressFetchByUserIDRequest();
-        shippingAddressFetchByUserIDRequest.setUser_id(userid);
-
-        Log.w(TAG,"shippingAddressFetchByUserIDRequest"+ "--->" + new Gson().toJson(shippingAddressFetchByUserIDRequest));
-        return shippingAddressFetchByUserIDRequest;
-    }
 
 
     @Override

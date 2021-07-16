@@ -726,4 +726,22 @@ public interface RestApiInterface {
     Call<CommunityTextResponse> getcommunitytextResponseCall(@Header("Content-Type") String type);
 
 
+    /*sos list*/
+    @POST("sos_pet/create")
+    Call<SOSListResponse> SOSListResponseCall(@Header("Content-Type") String type, @Body SOSListRequest sosListRequest);
+
+    /*sos update*/
+    @POST("sos_pet/edit")
+    Call<SuccessResponse> SOSUpdateResponseCall(@Header("Content-Type") String type, @Body SOSUpdateRequest sosUpdateRequest);
+
+    /*notification mark*/
+    @POST("notification/mark_readed")
+    Call<SuccessResponse> notificationMarkResponseCall(@Header("Content-Type") String type, @Body NotificationsMarkRequest notificationsMarkRequest);
+
+    /*notification and cart count*/
+    @POST("product_cart_detail/getlist_count")
+    Call<NotificationCartCountResponse> notificationandCartCountResponseCall(@Header("Content-Type") String type, @Body NotificationCartCountRequest notificationCartCountRequest);
+
+
+
 }

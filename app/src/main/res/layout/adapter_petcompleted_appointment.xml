@@ -169,7 +169,7 @@
                         android:ellipsize="end"
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"
-                        android:text="@string/pet_name"
+                        android:text="@string/petname"
                         android:textColor="@color/new_sec_txt_color"
                         android:textSize="12sp" />
 

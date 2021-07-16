@@ -38,7 +38,6 @@ import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.fragmentpetlover.myappointments.FragmentPetMissedAppointment;
 import com.petfolio.infinituss.fragmentpetlover.myappointments.FragmentPetCompletedAppointment;
 import com.petfolio.infinituss.fragmentpetlover.myappointments.FragmentPetNewAppointment;
-import com.petfolio.infinituss.interfaces.SoSCallListener;
 import com.petfolio.infinituss.responsepojo.PetLoverDashboardResponse;
 
 
@@ -54,7 +53,7 @@ import androidx.viewpager.widget.ViewPager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PetMyappointmentsActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SoSCallListener {
+public class PetMyappointmentsActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private String TAG = "PetMyappointmentsActivity";
 
@@ -174,7 +173,6 @@ public class PetMyappointmentsActivity extends AppCompatActivity implements Bott
 
         img_sos.setVisibility(View.GONE);
         img_cart.setVisibility(View.GONE);
-        img_sos.setOnClickListener(this);
         img_notification.setOnClickListener(this);
         img_cart.setOnClickListener(this);
         img_profile.setOnClickListener(this);
@@ -261,13 +259,7 @@ public class PetMyappointmentsActivity extends AppCompatActivity implements Bott
         finish();
     }
 
-    @Override
-    public void soSCallListener(long phonenumber) {
-        if(phonenumber != 0){
-            sosPhonenumber = String.valueOf(phonenumber);
-        }
 
-    }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
@@ -313,21 +305,7 @@ public class PetMyappointmentsActivity extends AppCompatActivity implements Bott
                     dialog.dismiss();
                 }
             });
-            if(sosList != null && sosList.size()>0){
-                rv_sosnumbers.setVisibility(View.VISIBLE);
-                btn_call.setVisibility(View.VISIBLE);
-                txt_no_records.setVisibility(View.GONE);
-                rv_sosnumbers.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                rv_sosnumbers.setItemAnimator(new DefaultItemAnimator());
-                PetLoverSOSAdapter petLoverSOSAdapter = new PetLoverSOSAdapter(getApplicationContext(), sosList,this);
-                rv_sosnumbers.setAdapter(petLoverSOSAdapter);
-            }else{
-                rv_sosnumbers.setVisibility(View.GONE);
-                btn_call.setVisibility(View.GONE);
-                txt_no_records.setVisibility(View.VISIBLE);
-                txt_no_records.setText(getResources().getString(R.string.no_phone_numbers));
 
-            }
 
             btn_call.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -371,9 +349,7 @@ public class PetMyappointmentsActivity extends AppCompatActivity implements Bott
     public void onClick(View v) {
         switch (v.getId()){
 
-            case R.id.img_sos:
-                showSOSAlert(APIClient.sosList);
-                break;
+
             case R.id.img_notification:
                 startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
                 break;

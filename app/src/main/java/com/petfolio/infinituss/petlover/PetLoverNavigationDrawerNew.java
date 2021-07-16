@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -36,28 +37,35 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.activity.LoginActivity;
 import com.petfolio.infinituss.activity.NotificationActivity;
 import com.petfolio.infinituss.activity.SoSActivity;
 import com.petfolio.infinituss.activity.location.ManageAddressActivity;
 import com.petfolio.infinituss.adapter.PetLoverSOSAdapter;
+import com.petfolio.infinituss.api.APIClient;
+import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.interfaces.SoSCallListener;
+import com.petfolio.infinituss.requestpojo.NotificationCartCountRequest;
+import com.petfolio.infinituss.responsepojo.NotificationCartCountResponse;
 import com.petfolio.infinituss.responsepojo.PetLoverDashboardResponse;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
+import com.petfolio.infinituss.utils.ConnectionDetector;
+import com.petfolio.infinituss.utils.RestUtils;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
-public class PetLoverNavigationDrawerNew extends AppCompatActivity implements View.OnClickListener,
-        SoSCallListener {
-
-
-    private String TAG ="PetLoverNavigationDrawerNew";
+public class PetLoverNavigationDrawerNew extends AppCompatActivity implements View.OnClickListener{
+         private String TAG ="PetLoverNavigationDrawerNew";
 
     private DrawerLayout drawerLayout;
     LayoutInflater inflater;
@@ -100,6 +108,10 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
     TextView txt_location;
     private String refcode;
 
+    TextView txt_notification_count_badge;
+    TextView txt_cart_count_badge;
+    private String userid;
+
 
     @SuppressLint({"InflateParams", "LogNotTimber"})
     @Override
@@ -139,13 +151,14 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
 
         //Initializing NavigationView
         NavigationView navigationView = view.findViewById(R.id.nav_view);
-
         navigationView.setItemIconTintList(null);
-
         frameLayout = view.findViewById(R.id.base_container);
+        menu = navigationView.getMenu();
 
+        SessionManager session = new SessionManager(getApplicationContext());
+        HashMap<String, String> user = session.getProfileDetails();
+        userid = user.get(SessionManager.KEY_ID);
 
-         menu = navigationView.getMenu();
 
 
 
@@ -258,6 +271,7 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
     }
 
 
+    @SuppressLint("SetTextI18n")
     private void initToolBar(View view) {
         toolbar = view.findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -280,6 +294,14 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
 
         ImageView img_cart = toolbar_layout.findViewById(R.id.img_cart);
         ImageView img_notification = toolbar_layout.findViewById(R.id.img_notification);
+         txt_notification_count_badge = toolbar_layout.findViewById(R.id.txt_notification_count_badge);
+         txt_cart_count_badge = toolbar_layout.findViewById(R.id.txt_cart_count_badge);
+
+      
+
+
+
+
         img_notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -296,6 +318,10 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
                 startActivity(new Intent(getApplicationContext(), PetCartActivity.class));
             }
         });
+
+        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+            notificationandCartCountResponseCall();
+        }
 
 
        /*
@@ -352,7 +378,7 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
                     dialog.dismiss();
                 }
             });
-            if(sosList != null && sosList.size()>0){
+           /* if(sosList != null && sosList.size()>0){
                 rv_sosnumbers.setVisibility(View.VISIBLE);
                 btn_call.setVisibility(View.VISIBLE);
                 txt_no_records.setVisibility(View.GONE);
@@ -360,13 +386,14 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
                 rv_sosnumbers.setItemAnimator(new DefaultItemAnimator());
                 PetLoverSOSAdapter petLoverSOSAdapter = new PetLoverSOSAdapter(getApplicationContext(), sosList,this);
                 rv_sosnumbers.setAdapter(petLoverSOSAdapter);
-            }else{
+            }
+            else{
                 rv_sosnumbers.setVisibility(View.GONE);
                 btn_call.setVisibility(View.GONE);
                 txt_no_records.setVisibility(View.VISIBLE);
                 txt_no_records.setText(getResources().getString(R.string.no_phone_numbers));
 
-            }
+            }*/
 
             btn_call.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -498,12 +525,12 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
 
 
     }
-    @Override
+   /* @Override
     public void soSCallListener(long phonenumber) {
         if(phonenumber != 0){
             sosPhonenumber = String.valueOf(phonenumber);
         }
-    }
+    }*/
 
     private void showLogOutAppAlert() {
         try {
@@ -538,6 +565,78 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
 
 
     }
+
+    @SuppressLint("LogNotTimber")
+    private void notificationandCartCountResponseCall() {
+       /* avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();*/
+
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<NotificationCartCountResponse> call = apiInterface.notificationandCartCountResponseCall(RestUtils.getContentType(), notificationCartCountRequest());
+        Log.w(TAG,"NotificationCartCountResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<NotificationCartCountResponse>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(@NonNull Call<NotificationCartCountResponse> call, @NonNull Response<NotificationCartCountResponse> response) {
+
+                Log.w(TAG,"NotificationCartCountResponse"+ "--->" + new Gson().toJson(response.body()));
+
+               // avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200) {
+                        if(response.body().getData()!=null){
+                            int Notification_count = response.body().getData().getNotification_count();
+                            int Product_count = response.body().getData().getProduct_count();
+                            if(Notification_count != 0){
+                                txt_notification_count_badge.setVisibility(View.VISIBLE);
+                                txt_notification_count_badge.setText(""+Notification_count);
+                            }else{
+                                txt_notification_count_badge.setVisibility(View.GONE);
+                            }
+                            if(Product_count != 0){
+                                txt_cart_count_badge.setVisibility(View.VISIBLE);
+                                txt_cart_count_badge.setText(""+Product_count);
+                            }else{
+                                txt_cart_count_badge.setVisibility(View.GONE);
+                            }
+
+
+                        }
+                    }
+
+
+
+                }
+
+
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NotificationCartCountResponse> call, @NonNull Throwable t) {
+
+                // avi_indicator.smoothToHide();
+                Log.w(TAG,"NotificationCartCountResponse flr"+"--->" + t.getMessage());
+            }
+        });
+
+
+    }
+    @SuppressLint("LogNotTimber")
+    private NotificationCartCountRequest notificationCartCountRequest() {
+        /*
+         * user_id : 6048589d0b3a487571a1c567
+         */
+
+        NotificationCartCountRequest notificationCartCountRequest = new NotificationCartCountRequest();
+        notificationCartCountRequest.setUser_id(userid);
+        Log.w(TAG,"notificationCartCountRequest"+ "--->" + new Gson().toJson(notificationCartCountRequest));
+        return notificationCartCountRequest;
+    }
+
 
 
 

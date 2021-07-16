@@ -56,8 +56,8 @@ import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class PetLoverNavigationDrawer extends AppCompatActivity implements View.OnClickListener,
-        SoSCallListener {
+public class PetLoverNavigationDrawer extends AppCompatActivity implements View.OnClickListener{
+
 
 
     private String TAG ="PetLoverNavigationDrawer";
@@ -227,8 +227,8 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
         ImageView img_profile = toolbar.findViewById(R.id.img_profile);
 
         img_sos.setOnClickListener(v -> {
-            Log.w(TAG,"SOSLIST"+new Gson().toJson(APIClient.sosList));
-            showSOSAlert(APIClient.sosList);
+            /*Log.w(TAG,"SOSLIST"+new Gson().toJson(APIClient.sosList));
+            showSOSAlert(APIClient.sosList);*/
 
         });
         img_notification.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), NotificationActivity.class)));
@@ -279,7 +279,7 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
             });
 
 
-            if(sosList != null && sosList.size()>0){
+          /*  if(sosList != null && sosList.size()>0){
                 rv_sosnumbers.setVisibility(View.VISIBLE);
                 btn_call.setVisibility(View.VISIBLE);
                 txt_no_records.setVisibility(View.GONE);
@@ -294,7 +294,7 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
                 txt_no_records.setVisibility(View.VISIBLE);
                 txt_no_records.setText(getResources().getString(R.string.no_phone_numbers));
 
-            }
+            }*/
 
             btn_call.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -433,12 +433,12 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
 
     }
-    @Override
+   /* @Override
     public void soSCallListener(long phonenumber) {
         if(phonenumber != 0){
             sosPhonenumber = String.valueOf(phonenumber);
         }
-    }
+    }*/
 
     private void showLogOutAppAlert() {
         try {

@@ -460,9 +460,7 @@ public class PetHomeFragment extends Fragment implements Serializable,
 
                         }
 
-                        if(response.body().getData().getSOS() != null && response.body().getData().getSOS().size()>0){
-                            APIClient.sosList = response.body().getData().getSOS();
-                        }
+
 
 
                     }

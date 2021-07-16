@@ -38,6 +38,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -85,12 +86,6 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
 
     private String TAG = "PetCareFragment";
-
-
-
-
-
-
     int currentPage = 0;
 
     String token = "";
@@ -187,7 +182,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     }
 
 
-    @SuppressLint("LogNotTimber")
+   @SuppressLint("LogNotTimber")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

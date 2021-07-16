@@ -39,6 +39,7 @@
     <string name="addyourpet">Add your Pet</string>
     <string name="skip">Skip</string>
     <string name="pet_name">Name</string>
+    <string name="petname">Pet Name</string>
     <string name="pet_gender">Gender</string>
     <string name="pet_color">Color</string>
     <string name="pet_weight">Weight (kg)</string>
@@ -576,8 +577,7 @@
     <string name="select_sub_diagnosis">Select the Sub Diagnosis Type</string>
     <string name="prescription_method">Prescription Method</string>
     <string name="manual">Manual</string>
-
-
-
+    <string name="prescription_no">Prescription NO</string>
+    <string name="clinic_loc">Clinic Location</string>
 
 </resources>
