@@ -3,6 +3,7 @@ package com.petfolio.infinituss.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinituss.R;
+import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.doctor.shop.DoctorProductDetailsActivity;
 import com.petfolio.infinituss.petlover.ProductDetailsActivity;
 import com.petfolio.infinituss.responsepojo.FetctProductByCatResponse;
@@ -64,6 +66,15 @@ public class PetShopCategorySeeMoreAdapter extends  RecyclerView.Adapter<Recycle
             holder.txt_products_price.setText("\u20B9 "+data.get(position).getProduct_price());
             }
 
+        if(currentItem.getProduct_discount_price() != 0){
+            holder.txt_product_discount_price.setVisibility(View.VISIBLE);
+            holder.txt_product_discount_price.setText("\u20B9 "+currentItem.getProduct_discount_price());
+            holder.txt_product_discount_price.setPaintFlags(holder.txt_product_discount_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }else{
+            holder.txt_product_discount_price.setText("\u20B9 "+0);
+            holder.txt_product_discount_price.setVisibility(View.GONE);
+        }
+
 
         if(data.get(position).isProduct_fav()){
             holder.img_like.setVisibility(View.VISIBLE);
@@ -91,14 +102,14 @@ public class PetShopCategorySeeMoreAdapter extends  RecyclerView.Adapter<Recycle
 
         if (data.get(position).getThumbnail_image() != null && !data.get(position).getThumbnail_image().isEmpty()) {
 
-                Glide.with(context)
+            Glide.with(context)
                         .load(data.get(position).getThumbnail_image())
                         .into(holder.img_products_image);
 
             }
            else{
                 Glide.with(context)
-                        .load(R.drawable.app_logo)
+                        .load(APIClient.PROFILE_IMAGE_URL)
                         .into(holder.img_products_image);
 
             }
@@ -150,7 +161,7 @@ public class PetShopCategorySeeMoreAdapter extends  RecyclerView.Adapter<Recycle
         return position;
     }
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_products_title,txt_products_price,txt_products_offer,txt_star_rating,txt_review_count;
+        public TextView txt_products_title,txt_products_price,txt_products_offer,txt_star_rating,txt_review_count,txt_product_discount_price;
         public ImageView img_products_image,img_like,img_dislike;
         LinearLayout ll_root;
 
@@ -166,6 +177,7 @@ public class PetShopCategorySeeMoreAdapter extends  RecyclerView.Adapter<Recycle
             img_products_image = itemView.findViewById(R.id.img_products_image);
             img_like = itemView.findViewById(R.id.img_like);
             img_dislike = itemView.findViewById(R.id.img_dislike);
+            txt_product_discount_price = itemView.findViewById(R.id.txt_product_discount_price);
             txt_review_count.setVisibility(View.GONE);
 
 

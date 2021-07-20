@@ -21,7 +21,7 @@
             tools:ignore="UselessParent">
             <ImageView
                 android:id="@+id/img_products_image"
-                android:layout_width="120dp"
+                android:layout_width="130dp"
                 android:layout_height="120dp"
                 android:contentDescription="@string/image"
                 android:scaleType="fitXY"
@@ -55,7 +55,7 @@
                 android:layout_marginStart="5dp">
                 <TextView
                     android:id="@+id/txt_products_title"
-                    android:layout_width="120dp"
+                    android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/futuramediumbt"
@@ -79,12 +79,23 @@
                         android:text="@string/product_price"
                         android:textColor="@color/new_txt_color"
                         android:textSize="12sp" />
+                    <TextView
+                        android:id="@+id/txt_product_discount_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="5dp"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:maxLines="1"
+                        android:text="@string/product_price"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/txt_products_offer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/futuramediumbt"
                         android:maxLines="1"

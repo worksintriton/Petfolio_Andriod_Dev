@@ -347,25 +347,30 @@ public class DoctorShopTodayDealsSeeMoreActivity extends AppCompatActivity imple
                         if (response.body().getData() != null && response.body().getData().size() > 0) {
                             todayDealsList = response.body().getData();
                             for (int i = 0; i < todayDealsList.size(); i++) {
-                                /**
-                                 * _id : 602e11404775fa0735d7bf40
-                                 * product_img : http://54.212.108.156:3000/api/uploads/resize-1613548631141238608collar.jpg
-                                 * product_title : DOGISTA PET PRODUCTS Dog Rope Leash,Brass
-                                 * product_price : 180
-                                 * product_discount : 0
+                                /*
+                                 * _id : 60ae2c0c48ffef65a41bc546
+                                 * product_img : http://54.212.108.156:3000/api/uploads/1625750185578.png
+                                 * product_title : Pedigree Vegetarian Adult Dry Food
+                                 * thumbnail_image : http://54.212.108.156:3000/api/uploads/1625752843017.png
+                                 * product_price : 108
+                                 * product_discount : 10
+                                 * product_discount_price : 120
                                  * product_fav : false
-                                 * product_rating : 4.8
-                                 * product_review : 232
+                                 * product_rating : 5
+                                 * product_review : 0
                                  */
+
                                 TodayDealMoreResponse.DataBean dataBean = new TodayDealMoreResponse.DataBean();
                                 dataBean.set_id(todayDealsList.get(i).get_id());
                                 dataBean.setProduct_img(todayDealsList.get(i).getProduct_img());
                                 dataBean.setProduct_title(todayDealsList.get(i).getProduct_title());
+                                dataBean.setThumbnail_image(todayDealsList.get(i).getThumbnail_image());
                                 dataBean.setProduct_price(todayDealsList.get(i).getProduct_price());
                                 dataBean.setProduct_discount(todayDealsList.get(i).getProduct_discount());
+                                dataBean.setProduct_discount_price(todayDealsList.get(i).getProduct_discount_price());
                                 dataBean.setProduct_fav(todayDealsList.get(i).isProduct_fav());
                                 dataBean.setProduct_rating(todayDealsList.get(i).getProduct_rating());
-                                dataBean.setProduct_rating(todayDealsList.get(i).getProduct_review());
+                                dataBean.setProduct_review(todayDealsList.get(i).getProduct_review());
                                 todayDealsListSeeMore.add(dataBean);
 
 

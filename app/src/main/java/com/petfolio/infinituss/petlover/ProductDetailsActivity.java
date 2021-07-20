@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
@@ -93,6 +94,10 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_products_price)
     TextView txt_products_price;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_product_discount_price)
+    TextView txt_product_discount_price;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_discount)
@@ -263,6 +268,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
         avi_indicator.setVisibility(View.GONE);
         txt_cart_count_badge.setVisibility(View.GONE);
 
+
         rl_back.setOnClickListener(v -> onBackPressed());
         SessionManager sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getProfileDetails();
@@ -424,6 +430,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
         txt_prod_type.setVisibility(View.GONE);
 
         txt_products_price.setVisibility(View.GONE);
+        txt_product_discount_price.setVisibility(View.GONE);
 
         rl_discount.setVisibility(View.GONE);
 
@@ -666,7 +673,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<FetchProductByIdResponse>() {
-            @SuppressLint("LogNotTimber")
+            @SuppressLint({"LogNotTimber", "SetTextI18n"})
             @Override
             public void onResponse(@NonNull Call<FetchProductByIdResponse> call, @NonNull Response<FetchProductByIdResponse> response) {
                 avi_indicator.smoothToHide();
@@ -689,6 +696,16 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                             int product_review = response.body().getProduct_details().getProduct_review();
                             double product_rating = response.body().getProduct_details().getProduct_rating();
                             int product_price = response.body().getProduct_details().getProduct_price();
+                            int product_discount_price = response.body().getProduct_details().getProduct_discount_price();
+                            if(product_discount_price != 0 ){
+                                txt_product_discount_price.setVisibility(View.VISIBLE);
+                                txt_product_discount_price.setPaintFlags(txt_product_discount_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                                txt_product_discount_price.setText("INR "+product_price);
+
+                            }else{
+                                txt_product_discount_price.setVisibility(View.GONE);
+                                txt_product_discount_price.setText("INR "+0);
+                            }
                             int product_discount = response.body().getProduct_details().getProduct_discount();
                             String  product_discription = response.body().getProduct_details().getProduct_discription();
                             int product_cart_count = response.body().getProduct_details().getProduct_cart_count();

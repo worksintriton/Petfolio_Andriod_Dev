@@ -3,6 +3,7 @@ package com.petfolio.infinituss.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
+import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.doctor.shop.DoctorProductDetailsActivity;
 import com.petfolio.infinituss.petlover.ProductDetailsActivity;
 import com.petfolio.infinituss.responsepojo.TodayDealMoreResponse;
@@ -60,49 +63,61 @@ public class PetShopTodayDealsSeeMoreAdapter extends  RecyclerView.Adapter<Recyc
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
         currentItem = data.get(position);
-        if(data.get(position).getProduct_title() != null) {
-            holder.txt_products_title.setText(data.get(position).getProduct_title());
+        Log.w(TAG,"data : "+new Gson().toJson(data));
+
+        if(currentItem.getProduct_title() != null) {
+            holder.txt_products_title.setText(currentItem.getProduct_title());
         }
-        if(data.get(position).getProduct_price() != 0){
-            holder.txt_products_price.setText("\u20B9 "+data.get(position).getProduct_price());
+        if(currentItem.getProduct_price() != 0){
+            holder.txt_products_price.setText("\u20B9 "+currentItem.getProduct_price());
         }else{
             holder.txt_products_price.setText("\u20B9 "+0);
         }
 
+        if(currentItem.getProduct_discount_price() != 0){
+            holder.txt_product_discount_price.setVisibility(View.VISIBLE);
+            holder.txt_product_discount_price.setText("\u20B9 "+currentItem.getProduct_discount_price());
+            holder.txt_product_discount_price.setPaintFlags(holder.txt_product_discount_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }else{
+            holder.txt_product_discount_price.setText("\u20B9 "+0);
+            holder.txt_product_discount_price.setVisibility(View.GONE);
+        }
 
-        if(data.get(position).isProduct_fav()){
+
+
+
+        if(currentItem.isProduct_fav()){
             holder.img_like.setVisibility(View.VISIBLE);
             holder.img_dislike.setVisibility(View.GONE);
-
         }
         else{
             holder.img_dislike.setVisibility(View.VISIBLE);
             holder.img_like.setVisibility(View.GONE);
-
-
-
         }
         Log.w(TAG,"discount : "+data.get(position).getProduct_discount());
 
 
-        if(data.get(position).getProduct_discount() != 0){
+        if(currentItem.getProduct_discount() != 0){
             holder.txt_products_offer.setVisibility(View.VISIBLE);
-            holder.txt_products_offer.setText(data.get(position).getProduct_discount()+" % off");
+            holder.txt_products_offer.setText(currentItem.getProduct_discount()+" % off");
         }
         else{
             holder.txt_products_offer.setVisibility(View.GONE);
 
         }
 
-        if (data.get(position).getThumbnail_image() != null && !data.get(position).getThumbnail_image().isEmpty()) {
+
+        Log.w(TAG,"getThumbnail_image : "+currentItem.getThumbnail_image());
+
+        if (currentItem.getThumbnail_image() != null && !currentItem.getThumbnail_image().isEmpty()) {
             Glide.with(context)
-                    .load(data.get(position).getThumbnail_image())
+                    .load(currentItem.getThumbnail_image())
                     .into(holder.img_products_image);
 
         }
         else{
             Glide.with(context)
-                    .load(R.drawable.app_logo)
+                    .load(APIClient.PROFILE_IMAGE_URL)
                     .into(holder.img_products_image);
 
         }
@@ -122,19 +137,19 @@ public class PetShopTodayDealsSeeMoreAdapter extends  RecyclerView.Adapter<Recyc
         holder.ll_root.setOnClickListener(v -> {
             if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorShopTodayDealsSeeMoreActivity")){
                 Intent intent = new Intent(context, DoctorProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("productid",data.get(position).get_id());
+                intent.putExtra("productid",currentItem.get_id());
                 intent.putExtra("fromactivity",fromactivity);
                 intent.putExtra("tag",tag);
                 context.startActivity(intent);
             } else if(fromactivity != null && fromactivity.equalsIgnoreCase("SPShopTodayDealsSeeMoreActivity")){
                 Intent intent = new Intent(context, SPProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("productid",data.get(position).get_id());
+                intent.putExtra("productid",currentItem.get_id());
                 intent.putExtra("fromactivity",fromactivity);
                 intent.putExtra("tag",tag);
                 context.startActivity(intent);
             }else{
                 Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("productid",data.get(position).get_id());
+                intent.putExtra("productid",currentItem.get_id());
                 intent.putExtra("fromactivity",fromactivity);
                 intent.putExtra("tag",tag);
                 context.startActivity(intent);
@@ -154,7 +169,7 @@ public class PetShopTodayDealsSeeMoreAdapter extends  RecyclerView.Adapter<Recyc
         return position;
     }
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_products_title,txt_products_price,txt_products_offer,txt_star_rating,txt_review_count;
+        public TextView txt_products_title,txt_products_price,txt_products_offer,txt_star_rating,txt_review_count,txt_product_discount_price;
         public ImageView img_products_image,img_like,img_dislike;
         LinearLayout ll_root;
 
@@ -170,6 +185,7 @@ public class PetShopTodayDealsSeeMoreAdapter extends  RecyclerView.Adapter<Recyc
             img_products_image = itemView.findViewById(R.id.img_products_image);
             img_like = itemView.findViewById(R.id.img_like);
             img_dislike = itemView.findViewById(R.id.img_dislike);
+            txt_product_discount_price = itemView.findViewById(R.id.txt_product_discount_price);
             txt_review_count.setVisibility(View.GONE);
 
         }

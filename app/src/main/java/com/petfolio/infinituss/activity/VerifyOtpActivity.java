@@ -102,6 +102,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
     private String myrefcode = "";
 
 
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

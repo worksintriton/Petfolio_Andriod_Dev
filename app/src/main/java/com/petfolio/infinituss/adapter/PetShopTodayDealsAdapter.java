@@ -3,6 +3,7 @@ package com.petfolio.infinituss.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,6 +65,14 @@ public class PetShopTodayDealsAdapter extends  RecyclerView.Adapter<RecyclerView
             holder.txt_products_price.setText("\u20B9 "+today_special.get(position).getProduct_price());
         }else{
             holder.txt_products_price.setText("\u20B9 "+0);
+        }
+        if(today_special.get(position).getProduct_discount_price() != 0){
+            holder.txt_product_discount_price.setVisibility(View.VISIBLE);
+            holder.txt_product_discount_price.setText("\u20B9 "+today_special.get(position).getProduct_discount_price());
+            holder.txt_product_discount_price.setPaintFlags(holder.txt_product_discount_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }else{
+            holder.txt_product_discount_price.setText("\u20B9 "+0);
+            holder.txt_product_discount_price.setVisibility(View.GONE);
         }
 
         if(today_special.get(position).isProduct_fav()){
@@ -144,7 +153,7 @@ public class PetShopTodayDealsAdapter extends  RecyclerView.Adapter<RecyclerView
         return position;
     }
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_products_title,txt_products_price,txt_products_offer,txt_star_rating,txt_review_count;
+        public TextView txt_products_title,txt_products_price,txt_products_offer,txt_star_rating,txt_review_count,txt_product_discount_price;
         public ImageView img_products_image,img_like,img_dislike;
         LinearLayout ll_root;
         public ViewHolderOne(View itemView) {
@@ -159,6 +168,8 @@ public class PetShopTodayDealsAdapter extends  RecyclerView.Adapter<RecyclerView
             img_products_image = itemView.findViewById(R.id.img_products_image);
             img_like = itemView.findViewById(R.id.img_like);
             img_dislike = itemView.findViewById(R.id.img_dislike);
+            txt_product_discount_price = itemView.findViewById(R.id.txt_product_discount_price);
+
 
 
 

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinituss.R;
+import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.doctor.shop.DoctorProductDetailsActivity;
 import com.petfolio.infinituss.petlover.ProductDetailsActivity;
 import com.petfolio.infinituss.responsepojo.ProductSearchResponse;
@@ -98,7 +99,7 @@ public class ProductsSearchAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
         }
         else{
             Glide.with(context)
-                    .load(R.drawable.app_logo)
+                    .load(APIClient.PROFILE_IMAGE_URL)
                     .into(holder.img_products_image);
 
         }
