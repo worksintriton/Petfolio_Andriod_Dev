@@ -44,7 +44,7 @@ public class VendorBusinessGalleryListAdapter extends RecyclerView.Adapter<Vendo
     public void onBindViewHolder(@NonNull AddImageListHolder holder, final int position) {
         final FetchProductByIdResponse.VendorDetailsBean.BussinessGalleryBean bussinessGalleryBean = bussinessGalleryBeans.get(position);
 
-        Log.w(TAG,"ImagePic : "+ bussinessGalleryBean.getBussiness_gallery());
+        /*Log.w(TAG,"ImagePic : "+ bussinessGalleryBean.getBussiness_gallery());
 
         if (bussinessGalleryBean.getBussiness_gallery()!= null) {
             Glide.with(context)
@@ -57,7 +57,7 @@ public class VendorBusinessGalleryListAdapter extends RecyclerView.Adapter<Vendo
             Glide.with(context)
                     .load(APIClient.PROFILE_IMAGE_URL)
                     .into(holder.img_products_image);
-        }
+        }*/
 
 
     }

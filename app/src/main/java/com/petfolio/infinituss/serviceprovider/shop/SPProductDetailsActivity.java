@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,7 +39,9 @@ import com.petfolio.infinituss.doctor.shop.DoctorCartActivity;
 import com.petfolio.infinituss.requestpojo.CartAddProductRequest;
 import com.petfolio.infinituss.requestpojo.DoctorProductFavListCreateRequest;
 import com.petfolio.infinituss.requestpojo.FetchByIdRequest;
+import com.petfolio.infinituss.requestpojo.NotificationCartCountRequest;
 import com.petfolio.infinituss.responsepojo.FetchProductByIdResponse;
+import com.petfolio.infinituss.responsepojo.NotificationCartCountResponse;
 import com.petfolio.infinituss.responsepojo.SuccessResponse;
 import com.petfolio.infinituss.serviceprovider.SPProfileScreenActivity;
 import com.petfolio.infinituss.serviceprovider.ServiceProviderDashboardActivity;
@@ -63,7 +66,7 @@ import retrofit2.Response;
 
 public class SPProductDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private final String TAG = "SPProductDetailsActivity";
+    private String TAG = "SPProductDetailsActivity";
 
     String prod_type ="";
 
@@ -86,6 +89,10 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_products_price)
     TextView txt_products_price;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_product_discount_price)
+    TextView txt_product_discount_price;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_discount)
@@ -200,6 +207,10 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
     @BindView(R.id.img_cart)
     ImageView img_cart;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_cart_count_badge)
+    TextView txt_cart_count_badge;
+
     @SuppressLint({"LogNotTimber", "SetTextI18n", "LongLogTag"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,6 +219,7 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
         Log.w(TAG,"onCreate -->");
         ButterKnife.bind(this);
         avi_indicator.setVisibility(View.GONE);
+        txt_cart_count_badge.setVisibility(View.GONE);
 
 
 
@@ -327,6 +339,7 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
         txt_prod_type.setVisibility(View.GONE);
 
         txt_products_price.setVisibility(View.GONE);
+        txt_product_discount_price.setVisibility(View.GONE);
 
         rl_discount.setVisibility(View.GONE);
 
@@ -513,12 +526,26 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
                 avi_indicator.smoothToHide();
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
+
+                        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                            notificationandCartCountResponseCall();
+                        }
                         Log.w(TAG,"FetchProductByIdResponse" + new Gson().toJson(response.body()));
                         if(response.body().getProduct_details() != null){
                             String product_title = response.body().getProduct_details().getProduct_title();
                             int product_review = response.body().getProduct_details().getProduct_review();
                             double product_rating = response.body().getProduct_details().getProduct_rating();
                             int product_price = response.body().getProduct_details().getProduct_price();
+                            int product_discount_price = response.body().getProduct_details().getProduct_discount_price();
+                            if(product_discount_price != 0 ){
+                                txt_product_discount_price.setVisibility(View.VISIBLE);
+                                txt_product_discount_price.setPaintFlags(txt_product_discount_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                                txt_product_discount_price.setText("INR "+product_discount_price);
+
+                            }else{
+                                txt_product_discount_price.setVisibility(View.GONE);
+                                txt_product_discount_price.setText("INR "+0);
+                            }
                             int product_discount = response.body().getProduct_details().getProduct_discount();
                             String  product_discription = response.body().getProduct_details().getProduct_discription();
                             int product_cart_count = response.body().getProduct_details().getProduct_cart_count();
@@ -633,6 +660,64 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
 
     }
 
+    @SuppressLint("LogNotTimber")
+    private void notificationandCartCountResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<NotificationCartCountResponse> call = apiInterface.notificationandCartCountResponseCall(RestUtils.getContentType(), notificationCartCountRequest());
+        Log.w(TAG,"NotificationCartCountResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<NotificationCartCountResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<NotificationCartCountResponse> call, @NonNull Response<NotificationCartCountResponse> response) {
+
+                Log.w(TAG,"NotificationCartCountResponse"+ "--->" + new Gson().toJson(response.body()));
+
+                avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200) {
+                        if(response.body().getData()!=null){
+                            int Notification_count = response.body().getData().getNotification_count();
+                            int Product_count = response.body().getData().getProduct_count();
+                            if(Product_count != 0){
+                                txt_cart_count_badge.setVisibility(View.VISIBLE);
+                                txt_cart_count_badge.setText(""+Product_count);
+                            }else{
+                                txt_cart_count_badge.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+                }
+
+
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NotificationCartCountResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"NotificationCartCountResponse flr"+"--->" + t.getMessage());
+            }
+        });
+
+
+    }
+    @SuppressLint("LogNotTimber")
+    private NotificationCartCountRequest notificationCartCountRequest() {
+        /*
+         * user_id : 6048589d0b3a487571a1c567
+         */
+
+        NotificationCartCountRequest notificationCartCountRequest = new NotificationCartCountRequest();
+        notificationCartCountRequest.setUser_id(userid);
+        Log.w(TAG,"notificationCartCountRequest"+ "--->" + new Gson().toJson(notificationCartCountRequest));
+        return notificationCartCountRequest;
+    }
+
     private void setView(List<FetchProductByIdResponse.ProductDetailsBean.ProductRelatedBean> product_related) {
         rv_relatedproducts.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
         rv_relatedproducts.setItemAnimator(new DefaultItemAnimator());
@@ -721,7 +806,7 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
         }
         if(product_discount != 0 ){
             rl_discount.setVisibility(View.VISIBLE);
-            txt_discount.setText(product_discount+" % discount");
+            txt_discount.setText(product_discount+" % off");
         }else{
             rl_discount.setVisibility(View.GONE);
         }

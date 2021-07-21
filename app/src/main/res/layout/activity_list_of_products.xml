@@ -16,14 +16,117 @@
             android:id="@+id/headerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:orientation="vertical">
-
-            <include
-                android:id="@+id/include_petlover_header"
-                layout="@layout/toolbar_layout_petlover_header"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_header"
                 android:layout_width="match_parent"
-                android:layout_height="50dp" />
+                android:layout_height="?attr/actionBarSize"
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:titleTextAppearance="@style/TitleBarTextAppearance"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="10dp">
+
+                <ImageView
+                    android:id="@+id/img_back"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/left_arrow"
+                    tools:ignore="ContentDescription"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/txt_toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/futuramediumbt"
+                    android:text="@string/shop"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/big_txt_size"
+                    android:layout_marginTop="10dp"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:layout_marginStart="10dp">
+
+                    <ImageView
+                        android:id="@+id/img_sos"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="20dp"
+                        android:src="@drawable/ic_sos"
+                        tools:ignore="ContentDescription"
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone"/>
+
+                    <ImageView
+                        android:id="@+id/img_notification"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="20dp"
+                        android:src="@drawable/ic_notifications"
+                        tools:ignore="ContentDescription"
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone"/>
+
+
+                    <ImageView
+                        android:id="@+id/img_cart"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_bag"
+                        tools:ignore="ContentDescription"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"/>
+                    <TextView
+                        android:id="@+id/txt_cart_count_badge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="-16dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/badge_background"
+                        android:ellipsize="marquee"
+                        android:gravity="center"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:minWidth="20dp"
+                        android:minHeight="20dp"
+                        android:padding="3dp"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:paddingBottom="5dp"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/futuramediumbt"
+                        android:textStyle="bold"
+                        android:text="0"/>
+                    <ImageView
+                        android:id="@+id/img_profile"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_user"
+                        tools:ignore="ContentDescription"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"/>
+                </LinearLayout>
+
+
+            </androidx.appcompat.widget.Toolbar>
+
+
+            <!--  <include
+                  android:id="@+id/include_petlover_header"
+                  layout="@layout/toolbar_layout_petlover_header"
+                  android:layout_width="match_parent"
+                  android:layout_height="50dp" />-->
 
 
         </LinearLayout>
@@ -110,7 +213,8 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/new_rounded_corner_btn"
                             android:orientation="horizontal"
-                            android:padding="5dp">
+                            android:padding="5dp"
+                            android:visibility="gone">
 
 
                             <EditText

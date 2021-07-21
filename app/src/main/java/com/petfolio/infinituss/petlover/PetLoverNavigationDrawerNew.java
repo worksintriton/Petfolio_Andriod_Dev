@@ -296,6 +296,8 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
         ImageView img_notification = toolbar_layout.findViewById(R.id.img_notification);
          txt_notification_count_badge = toolbar_layout.findViewById(R.id.txt_notification_count_badge);
          txt_cart_count_badge = toolbar_layout.findViewById(R.id.txt_cart_count_badge);
+        txt_notification_count_badge.setVisibility(View.GONE);
+        txt_cart_count_badge.setVisibility(View.GONE);
 
       
 

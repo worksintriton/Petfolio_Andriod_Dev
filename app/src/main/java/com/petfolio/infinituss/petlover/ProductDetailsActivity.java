@@ -700,7 +700,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                             if(product_discount_price != 0 ){
                                 txt_product_discount_price.setVisibility(View.VISIBLE);
                                 txt_product_discount_price.setPaintFlags(txt_product_discount_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                                txt_product_discount_price.setText("INR "+product_price);
+                                txt_product_discount_price.setText("INR "+product_discount_price);
 
                             }else{
                                 txt_product_discount_price.setVisibility(View.GONE);
@@ -1021,6 +1021,9 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
                         Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
+                        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                            fetch_product_by_id_ResponseCall();
+                        }
                         /* Intent intent = new Intent(getApplicationContext(),PetCartActivity.class);
                         intent.putExtra("productid",productid);
                         intent.putExtra("fromactivity",TAG);

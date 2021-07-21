@@ -60,7 +60,8 @@
                     android:layout_marginStart="20dp"
                     android:src="@drawable/ic_notifications"
                     tools:ignore="ContentDescription"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"/>
 
 
                 <ImageView

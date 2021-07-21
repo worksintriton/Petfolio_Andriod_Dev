@@ -3,6 +3,7 @@ package com.petfolio.infinituss.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -119,6 +120,24 @@ public class RelatedProductsAdapter extends  RecyclerView.Adapter<RecyclerView.V
             holder.txt_products_price.setText("INR 0");
         }
 
+        if(currentItem.getProduct_discount_price() != 0){
+            holder.txt_product_discount_price.setVisibility(View.VISIBLE);
+            holder.txt_product_discount_price.setText("\u20B9 "+currentItem.getProduct_discount_price());
+            holder.txt_product_discount_price.setPaintFlags(holder.txt_product_discount_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }else{
+            holder.txt_product_discount_price.setText("\u20B9 "+0);
+            holder.txt_product_discount_price.setVisibility(View.GONE);
+        }
+
+        if(currentItem.getProduct_discount() != 0){
+            holder.txt_products_offer.setVisibility(View.VISIBLE);
+            holder.txt_products_offer.setText(currentItem.getProduct_discount()+" % off");
+        }else{
+            holder.txt_products_offer.setVisibility(View.GONE);
+
+        }
+
+
         if(currentItem.isProduct_fav()){
             Glide.with(context)
                     .load(R.drawable.ic_fav)
@@ -169,7 +188,7 @@ public class RelatedProductsAdapter extends  RecyclerView.Adapter<RecyclerView.V
     }
     static class ViewHolderOne extends RecyclerView.ViewHolder {
 
-        public TextView txt_products_title,txt_category_title,txt_products_price;
+        public TextView txt_products_title,txt_category_title,txt_products_price,txt_product_discount_price,txt_products_offer;
         public ImageView img_products_image,img_fav;
         public ImageView hand_img1,hand_img2,hand_img3,hand_img4,hand_img5;
         public LinearLayout ll_root;
@@ -191,6 +210,8 @@ public class RelatedProductsAdapter extends  RecyclerView.Adapter<RecyclerView.V
             hand_img3 = itemView.findViewById(R.id.hand_img3);
             hand_img4 = itemView.findViewById(R.id.hand_img4);
             hand_img5 = itemView.findViewById(R.id.hand_img5);
+            txt_product_discount_price = itemView.findViewById(R.id.txt_product_discount_price);
+            txt_products_offer = itemView.findViewById(R.id.txt_products_offer);
 
         }
 

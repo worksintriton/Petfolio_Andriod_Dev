@@ -46,25 +46,20 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.api.API;
-import com.petfolio.infinituss.api.APIClient;
-import com.petfolio.infinituss.api.RestApiInterface;
+
 import com.petfolio.infinituss.fragmentpetlover.bottommenu.PetCareFragment;
 import com.petfolio.infinituss.fragmentpetlover.bottommenu.PetCommunityFragment;
 import com.petfolio.infinituss.fragmentpetlover.bottommenu.PetHomeNewFragment;
 import com.petfolio.infinituss.fragmentpetlover.bottommenu.PetServicesFragment;
 import com.petfolio.infinituss.fragmentpetlover.bottommenu.VendorShopFragment;
-import com.petfolio.infinituss.requestpojo.NotificationCartCountRequest;
-import com.petfolio.infinituss.requestpojo.ShippingAddressFetchByUserIDRequest;
+
 import com.petfolio.infinituss.responsepojo.GetAddressResultResponse;
-import com.petfolio.infinituss.responsepojo.NotificationCartCountResponse;
-import com.petfolio.infinituss.responsepojo.ShippingAddressFetchByUserIDResponse;
+
 import com.petfolio.infinituss.service.GPSTracker;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
-import com.petfolio.infinituss.utils.ConnectionDetector;
-import com.petfolio.infinituss.utils.RestUtils;
+
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.jetbrains.annotations.NotNull;
@@ -421,7 +416,7 @@ public class PetLoverDashboardActivity extends PetLoverNavigationDrawerNew imple
         Fragment fragment = Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.frame_schedule));
         fragment.onActivityResult(requestCode,resultCode,data);
     }
-
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NotNull String @NotNull [] permissions, @NotNull int @NotNull [] grantResults) {
         if (requestCode == MY_PERMISSIONS_REQUEST_LOCATION) {
@@ -470,7 +465,6 @@ public class PetLoverDashboardActivity extends PetLoverNavigationDrawerNew imple
             e.printStackTrace();
         }
     }
-
     private void googleApiConnected() {
 
         googleApiClient = new GoogleApiClient.Builder(Objects.requireNonNull(getApplicationContext())).
@@ -623,7 +617,6 @@ public class PetLoverDashboardActivity extends PetLoverNavigationDrawerNew imple
 
         }
     }
-
     private void getAddressResultResponse(LatLng latLng) {
         //avi_indicator.setVisibility(View.VISIBLE);
         // avi_indicator.smoothToShow();

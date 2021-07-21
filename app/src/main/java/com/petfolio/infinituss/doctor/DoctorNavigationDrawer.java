@@ -27,16 +27,29 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.activity.LoginActivity;
 import com.petfolio.infinituss.activity.NotificationActivity;
 
+import com.petfolio.infinituss.api.APIClient;
+import com.petfolio.infinituss.api.RestApiInterface;
+import com.petfolio.infinituss.doctor.shop.DoctorCartActivity;
+import com.petfolio.infinituss.petlover.PetCartActivity;
+import com.petfolio.infinituss.petlover.PetLoverDashboardActivity;
+import com.petfolio.infinituss.requestpojo.NotificationCartCountRequest;
+import com.petfolio.infinituss.responsepojo.NotificationCartCountResponse;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
+import com.petfolio.infinituss.utils.ConnectionDetector;
+import com.petfolio.infinituss.utils.RestUtils;
 
 import java.util.HashMap;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class DoctorNavigationDrawer extends AppCompatActivity implements View.OnClickListener {
@@ -80,6 +93,11 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
     private Dialog dialog;
     private String refcode;
 
+    TextView txt_notification_count_badge;
+    TextView txt_cart_count_badge;
+    private String userid;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +110,7 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
 
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
+        userid = user.get(SessionManager.KEY_ID);
         name = user.get(SessionManager.KEY_FIRST_NAME);
         emailid = user.get(SessionManager.KEY_EMAIL_ID);
         phoneNo = user.get(SessionManager.KEY_MOBILE);
@@ -107,6 +126,79 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
 
        // myBoradcastReceiver();
     }
+
+    @SuppressLint("LogNotTimber")
+    private void notificationandCartCountResponseCall() {
+       /* avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();*/
+
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<NotificationCartCountResponse> call = apiInterface.notificationandCartCountResponseCall(RestUtils.getContentType(), notificationCartCountRequest());
+        Log.w(TAG,"NotificationCartCountResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<NotificationCartCountResponse>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(@NonNull Call<NotificationCartCountResponse> call, @NonNull Response<NotificationCartCountResponse> response) {
+
+                Log.w(TAG,"NotificationCartCountResponse"+ "--->" + new Gson().toJson(response.body()));
+
+                // avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200) {
+                        if(response.body().getData()!=null){
+                            int Notification_count = response.body().getData().getNotification_count();
+                            int Product_count = response.body().getData().getProduct_count();
+                            if(Notification_count != 0){
+                                txt_notification_count_badge.setVisibility(View.VISIBLE);
+                                txt_notification_count_badge.setText(""+Notification_count);
+                            }else{
+                                txt_notification_count_badge.setVisibility(View.GONE);
+                            }
+                            if(Product_count != 0){
+                                txt_cart_count_badge.setVisibility(View.VISIBLE);
+                                txt_cart_count_badge.setText(""+Product_count);
+                            }else{
+                                txt_cart_count_badge.setVisibility(View.GONE);
+                            }
+
+
+                        }
+                    }
+
+
+
+                }
+
+
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NotificationCartCountResponse> call, @NonNull Throwable t) {
+
+                // avi_indicator.smoothToHide();
+                Log.w(TAG,"NotificationCartCountResponse flr"+"--->" + t.getMessage());
+            }
+        });
+
+
+    }
+    @SuppressLint("LogNotTimber")
+    private NotificationCartCountRequest notificationCartCountRequest() {
+        /*
+         * user_id : 6048589d0b3a487571a1c567
+         */
+
+        NotificationCartCountRequest notificationCartCountRequest = new NotificationCartCountRequest();
+        notificationCartCountRequest.setUser_id(userid);
+        Log.w(TAG,"notificationCartCountRequest"+ "--->" + new Gson().toJson(notificationCartCountRequest));
+        return notificationCartCountRequest;
+    }
+
+
 
     @Override
     protected void onDestroy() {
@@ -275,25 +367,35 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
         drawerImg = toolbar.findViewById(R.id.img_menu);
        // header_title = (TextView) toolbar.findViewById(R.id.header_title);
 
+
+        ImageView img_cart = toolbar.findViewById(R.id.img_cart);
         ImageView img_notification = toolbar.findViewById(R.id.img_notification);
-        ImageView img_profile = toolbar.findViewById(R.id.img_profile);
+        txt_notification_count_badge = toolbar.findViewById(R.id.txt_notification_count_badge);
+        txt_cart_count_badge = toolbar.findViewById(R.id.txt_cart_count_badge);
+        txt_notification_count_badge.setVisibility(View.GONE);
+        txt_cart_count_badge.setVisibility(View.GONE);
 
         img_notification.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
-
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),NotificationActivity.class));
             }
         });
-        img_profile.setOnClickListener(new View.OnClickListener() {
+        img_cart.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(new Intent(getApplicationContext(), DoctorProfileScreenActivity.class));
-                intent.putExtra("fromactivity",TAG);
-                startActivity(intent);
-
+                if(DoctorDashboardActivity.active_tag != null){
+                    Log.w(TAG,"active_tag : "+DoctorDashboardActivity.active_tag);
+                }
+                startActivity(new Intent(getApplicationContext(), DoctorCartActivity.class));
             }
         });
+
+        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+            notificationandCartCountResponseCall();
+        }
+
 
 
 

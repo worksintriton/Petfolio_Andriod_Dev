@@ -31,8 +31,10 @@ import com.petfolio.infinituss.interfaces.AddandRemoveProductListener;
 
 import com.petfolio.infinituss.petlover.ShippingAddressActivity;
 import com.petfolio.infinituss.requestpojo.FetchByIdRequest;
+import com.petfolio.infinituss.requestpojo.NotificationCartCountRequest;
 import com.petfolio.infinituss.responsepojo.CartDetailsResponse;
 import com.petfolio.infinituss.responsepojo.CartSuccessResponse;
+import com.petfolio.infinituss.responsepojo.NotificationCartCountResponse;
 import com.petfolio.infinituss.responsepojo.SuccessResponse;
 import com.petfolio.infinituss.serviceprovider.shop.SPProductDetailsActivity;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
@@ -213,6 +215,7 @@ public class DoctorCartActivity extends AppCompatActivity implements AddandRemov
         btn_procced_to_buy.setVisibility(View.GONE);
         ll_content_amount.setVisibility(View.GONE);
         footerView.setVisibility(View.GONE);
+        txt_cart_count_badge.setVisibility(View.GONE);
 
         SessionManager sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getProfileDetails();
@@ -358,11 +361,14 @@ public class DoctorCartActivity extends AppCompatActivity implements AddandRemov
                 avi_indicator.smoothToHide();
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
+                        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                            notificationandCartCountResponseCall();
+                        }
+
                         Log.w(TAG,"CartDetailsResponse" + new Gson().toJson(response.body()));
                         footerView.setVisibility(View.VISIBLE);
 
                         if(response.body().getData() != null && response.body().getData().size()>0){
-                            txt_cart_count_badge.setText(response.body().getData().size()+"");
                             scrollablContent.setVisibility(View.VISIBLE);
                             ll_content.setVisibility(View.VISIBLE);
                             ll_cart_is_empty.setVisibility(View.GONE);
@@ -854,5 +860,63 @@ public class DoctorCartActivity extends AppCompatActivity implements AddandRemov
 
         }
 
+    }
+
+    @SuppressLint("LogNotTimber")
+    private void notificationandCartCountResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<NotificationCartCountResponse> call = apiInterface.notificationandCartCountResponseCall(RestUtils.getContentType(), notificationCartCountRequest());
+        Log.w(TAG,"NotificationCartCountResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<NotificationCartCountResponse>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(@NonNull Call<NotificationCartCountResponse> call, @NonNull Response<NotificationCartCountResponse> response) {
+
+                Log.w(TAG,"NotificationCartCountResponse"+ "--->" + new Gson().toJson(response.body()));
+
+                avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200) {
+                        if(response.body().getData()!=null){
+                            int Notification_count = response.body().getData().getNotification_count();
+                            int Product_count = response.body().getData().getProduct_count();
+                            if(Product_count != 0){
+                                txt_cart_count_badge.setVisibility(View.VISIBLE);
+                                txt_cart_count_badge.setText(""+Product_count);
+                            }else{
+                                txt_cart_count_badge.setVisibility(View.GONE);
+                            }
+
+                        }
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NotificationCartCountResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"NotificationCartCountResponse flr"+"--->" + t.getMessage());
+            }
+        });
+
+
+    }
+    @SuppressLint("LogNotTimber")
+    private NotificationCartCountRequest notificationCartCountRequest() {
+        /*
+         * user_id : 6048589d0b3a487571a1c567
+         */
+
+        NotificationCartCountRequest notificationCartCountRequest = new NotificationCartCountRequest();
+        notificationCartCountRequest.setUser_id(userid);
+        Log.w(TAG,"notificationCartCountRequest"+ "--->" + new Gson().toJson(notificationCartCountRequest));
+        return notificationCartCountRequest;
     }
 }

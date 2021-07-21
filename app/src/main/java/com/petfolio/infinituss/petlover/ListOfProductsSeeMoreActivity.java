@@ -33,10 +33,12 @@ import com.petfolio.infinituss.adapter.ProductsSearchAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.requestpojo.FetctProductByCatRequest;
+import com.petfolio.infinituss.requestpojo.NotificationCartCountRequest;
 import com.petfolio.infinituss.requestpojo.ProductFiltersRequest;
 import com.petfolio.infinituss.requestpojo.ProductSearchRequest;
 import com.petfolio.infinituss.requestpojo.ProductSortByRequest;
 import com.petfolio.infinituss.responsepojo.FetctProductByCatResponse;
+import com.petfolio.infinituss.responsepojo.NotificationCartCountResponse;
 import com.petfolio.infinituss.responsepojo.ProductSearchResponse;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
 import com.petfolio.infinituss.utils.ConnectionDetector;
@@ -70,14 +72,7 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
     @BindView(R.id.rv_today_deal)
     RecyclerView rv_today_deal;
 
-
-
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.img_back)
-    ImageView img_back;
-
-
-    @SuppressLint("NonConstantResourceId")
+   @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rl_sort)
     RelativeLayout rl_sort;
 
@@ -104,9 +99,9 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
 
 
 
-    @SuppressLint("NonConstantResourceId")
+    /*@SuppressLint("NonConstantResourceId")
     @BindView(R.id.include_petlover_header)
-    View include_petlover_header;
+    View include_petlover_header;*/
 
 
     /* Petlover Bottom Navigation */
@@ -199,6 +194,32 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
     private String strCategoryTypeId = "";
     private String fromactivity;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_back)
+    ImageView img_back;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_sos)
+    ImageView img_sos;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_notification)
+    ImageView img_notification;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_cart)
+    ImageView img_cart;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_cart_count_badge)
+    TextView txt_cart_count_badge;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_profile)
+    ImageView img_profile;
+
+    private String userid;
+
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -208,10 +229,20 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
         ButterKnife.bind(this);
         avi_indicator.setVisibility(View.GONE);
 
+        img_sos.setVisibility(View.GONE);
+        img_notification.setVisibility(View.GONE);
+        txt_cart_count_badge.setVisibility(View.GONE);
+
+
         SessionManager sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getProfileDetails();
-        String userid = user.get(SessionManager.KEY_ID);
+        userid = user.get(SessionManager.KEY_ID);
         Log.w(TAG, "customerid-->" + userid);
+
+        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+            notificationandCartCountResponseCall();
+        }
+
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -224,15 +255,7 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
 
 
         }
-        ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
-        ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
-        ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
-        ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
-        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
-        TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
-        toolbar_title.setText(getResources().getString(R.string.shop));
 
-        img_sos.setVisibility(View.GONE);
 
         rv_today_deal.setHasFixedSize(true);
         gridLayoutManager = new GridLayoutManager(this, 2);
@@ -337,6 +360,65 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
         });
 
     }
+
+    @SuppressLint("LogNotTimber")
+    private void notificationandCartCountResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<NotificationCartCountResponse> call = apiInterface.notificationandCartCountResponseCall(RestUtils.getContentType(), notificationCartCountRequest());
+        Log.w(TAG,"NotificationCartCountResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<NotificationCartCountResponse>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(@NonNull Call<NotificationCartCountResponse> call, @NonNull Response<NotificationCartCountResponse> response) {
+
+                Log.w(TAG,"NotificationCartCountResponse"+ "--->" + new Gson().toJson(response.body()));
+
+                avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200) {
+                        if(response.body().getData()!=null){
+                            int Notification_count = response.body().getData().getNotification_count();
+                            int Product_count = response.body().getData().getProduct_count();
+                            if(Product_count != 0){
+                                txt_cart_count_badge.setVisibility(View.VISIBLE);
+                                txt_cart_count_badge.setText(""+Product_count);
+                            }else{
+                                txt_cart_count_badge.setVisibility(View.GONE);
+                            }
+
+                        }
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NotificationCartCountResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"NotificationCartCountResponse flr"+"--->" + t.getMessage());
+            }
+        });
+
+
+    }
+    @SuppressLint("LogNotTimber")
+    private NotificationCartCountRequest notificationCartCountRequest() {
+        /*
+         * user_id : 6048589d0b3a487571a1c567
+         */
+
+        NotificationCartCountRequest notificationCartCountRequest = new NotificationCartCountRequest();
+        notificationCartCountRequest.setUser_id(userid);
+        Log.w(TAG,"notificationCartCountRequest"+ "--->" + new Gson().toJson(notificationCartCountRequest));
+        return notificationCartCountRequest;
+    }
+
 
     @Override
     public void onBackPressed() {
