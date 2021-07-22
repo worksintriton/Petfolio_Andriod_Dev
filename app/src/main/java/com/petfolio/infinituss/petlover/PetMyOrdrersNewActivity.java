@@ -116,6 +116,8 @@ public class PetMyOrdrersNewActivity extends AppCompatActivity implements View.O
     @BindView(R.id.include_petlover_header)
     View include_petlover_header;
 
+    String orders;
+
 
     @SuppressLint({"LogNotTimber", "NonConstantResourceId"})
     @Override
@@ -124,6 +126,12 @@ public class PetMyOrdrersNewActivity extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_pet_myorders);
         Log.w(TAG,"onCreate");
         ButterKnife.bind(this);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            orders = bundle.getString("orders");
+            Log.w(TAG,"orders : "+orders);
+        }
 
 
         ImageView img_back = include_petlover_header.findViewById(R.id.img_back);

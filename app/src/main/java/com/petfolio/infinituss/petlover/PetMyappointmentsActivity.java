@@ -150,7 +150,7 @@ public class PetMyappointmentsActivity extends AppCompatActivity implements Bott
     RelativeLayout rl_homes;
 
 
-
+    String appintments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +158,12 @@ public class PetMyappointmentsActivity extends AppCompatActivity implements Bott
         setContentView(R.layout.activity_pet_myappointments);
         ButterKnife.bind(this);
         Log.w(TAG,"onCreate");
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            appintments = bundle.getString("appintments");
+            Log.w(TAG,"appintments : "+appintments);
+        }
 
         ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
         ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);

@@ -2,12 +2,32 @@
 package com.petfolio.infinituss.fcm;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Build;
 import android.util.Log;
 
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.petfolio.infinituss.R;
+import com.petfolio.infinituss.activity.SplashActivity;
+import com.petfolio.infinituss.doctor.DoctorDashboardActivity;
+import com.petfolio.infinituss.doctor.DoctorMyOrdrersActivity;
+import com.petfolio.infinituss.petlover.PetLoverDashboardActivity;
+import com.petfolio.infinituss.petlover.PetMyOrdrersNewActivity;
+import com.petfolio.infinituss.petlover.PetMyappointmentsActivity;
+import com.petfolio.infinituss.serviceprovider.SPMyCalendarActivity;
+import com.petfolio.infinituss.serviceprovider.ServiceProviderDashboardActivity;
+import com.petfolio.infinituss.serviceprovider.shop.SPMyOrdrersActivity;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
+import com.petfolio.infinituss.vendor.VendorDashboardActivity;
 
 import java.util.HashMap;
 
@@ -26,13 +46,18 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFirebaseMessagingService";
 
+    private String usertype;
+    private String appintments;
+    private String orders;
+    Intent intent;
+
     /**
      * Called when message is received.
      *
      * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
      */
     // [START receive_message]
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
@@ -42,6 +67,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.w(TAG, "Message data payload: " + remoteMessage.getData());
+
+            usertype = remoteMessage.getData().get("usertype");
+            appintments = remoteMessage.getData().get("appintments");
+            orders = remoteMessage.getData().get("orders");
+
+           Log.w(TAG,"usertype : "+usertype);
+           Log.w(TAG,"appintments : "+appintments);
+           Log.w(TAG,"orders : "+orders);
 
           /*  if (*//* Check if data needs to be processed by long running job *//* true) {
                 // For long-running tasks (10 seconds or more) use WorkManager.
@@ -115,7 +148,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      * @param title
      * @param messageBody FCM message body received.
      */
-    private void sendNotification(String title, String messageBody) {
+    private void sendNotification1(String title, String messageBody) {
         SessionManager session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
         String type = user.get(SessionManager.KEY_TYPE);
@@ -123,7 +156,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         /*if(type.equalsIgnoreCase("0")){
             Intent intent = new Intent(this, PatientDashboardActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 *//* Request code *//*, intent,
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 */
+        /* Request code *//*, intent,
                     PendingIntent.FLAG_ONE_SHOT);
 
             String channelId = getString(R.string.default_notification_channel_id);
@@ -188,5 +222,91 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
 
+    }
+
+
+    private void sendNotification(String title, String messageBody) {
+
+        if(usertype != null){
+            if(usertype.equalsIgnoreCase("1")){
+                if(appintments != null && !appintments.isEmpty()){
+                    intent = new Intent(this, PetMyappointmentsActivity.class);
+                    intent.putExtra("appintments",appintments);
+                }else if(orders != null && !orders.isEmpty()){
+                    intent = new Intent(this, PetMyOrdrersNewActivity.class);
+                    intent.putExtra("orders",orders);
+                }
+
+
+            }
+            if(usertype.equalsIgnoreCase("2")){
+                if(appintments != null && !appintments.isEmpty()){
+                    intent = new Intent(this, ServiceProviderDashboardActivity.class);
+                    intent.putExtra("appintments",appintments);
+                }else if(orders != null && !orders.isEmpty()){
+                    intent = new Intent(this, SPMyOrdrersActivity.class);
+                    intent.putExtra("orders",orders);
+                }
+
+
+            }
+            if(usertype.equalsIgnoreCase("3")){
+                if(orders != null && !orders.isEmpty()){
+                    intent = new Intent(this, VendorDashboardActivity.class);
+                    intent.putExtra("orders",orders);
+                }
+
+
+            }
+            if(usertype.equalsIgnoreCase("4")){
+                if(appintments != null && !appintments.isEmpty()){
+                    intent = new Intent(this, DoctorDashboardActivity.class);
+                    intent.putExtra("appintments",appintments);
+                }else if(orders != null && !orders.isEmpty()){
+                    intent = new Intent(this, DoctorMyOrdrersActivity.class);
+                    intent.putExtra("orders",orders);
+                }
+
+
+            }
+
+
+        }
+
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "1")
+                .setSmallIcon(R.drawable.app_logo)
+                .setContentTitle(title)
+                .setContentText(messageBody)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)// Set the intent that will fire when the user taps the notification
+                .setAutoCancel(true);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        // notificationId is a unique int for each notification that you must define
+        notificationManager.notify(1, mBuilder.build());
+
+        createNotificationChannel();
+
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.app_name);
+            String description = getString(R.string.make_an_appointment);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("1", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }

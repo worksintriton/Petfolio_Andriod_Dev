@@ -215,7 +215,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
                            rv_newappointment.setVisibility(View.GONE);
                            btn_load_more.setVisibility(View.GONE);
                            txt_no_records.setVisibility(View.VISIBLE);
-                           txt_no_records.setText(getResources().getString(R.string.no_new_appointments_petlover));
+                           txt_no_records.setText("Is it time for the Doc yet?");
                        }
 
                    }

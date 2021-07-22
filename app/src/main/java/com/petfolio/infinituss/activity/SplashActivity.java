@@ -8,10 +8,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.doctor.DoctorDashboardActivity;
+import com.petfolio.infinituss.doctor.DoctorMyOrdrersActivity;
+import com.petfolio.infinituss.doctor.shop.DoctorCartActivity;
 import com.petfolio.infinituss.petlover.PetLoverDashboardActivity;
+import com.petfolio.infinituss.petlover.PetMyOrdrersNewActivity;
+import com.petfolio.infinituss.petlover.PetMyappointmentsActivity;
 import com.petfolio.infinituss.serviceprovider.ServiceProviderDashboardActivity;
+import com.petfolio.infinituss.serviceprovider.shop.SPMyOrdrersActivity;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
 import com.petfolio.infinituss.vendor.VendorDashboardActivity;
 
@@ -24,6 +30,8 @@ public class SplashActivity extends AppCompatActivity {
     private SessionManager session;
     private String usertype;
 
+    Boolean isNotifications = false;
+
     @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,50 +42,130 @@ public class SplashActivity extends AppCompatActivity {
         boolean islogedin = session.isLoggedIn();
         Log.w(TAG,"islogedin-->"+islogedin);
 
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            for(String key: bundle.keySet()){
+                Log.w(TAG,"key : "+key);
 
-        new Handler().postDelayed(() -> {
+            }
+            isNotifications = true;
+            Log.w(TAG,"bundle usertype : "+ bundle.getString("usertype"));
+            Log.w(TAG,"bundle appintments : "+ bundle.getString("appintments"));
+            Log.w(TAG,"bundle orders : "+ bundle.getString("orders"));
 
-            boolean islogedin1 = session.isLoggedIn();
-            if(!islogedin1) {
+            String user_type = bundle.getString("usertype");
+            String appintments = bundle.getString("appintments");
+            String orders = bundle.getString("orders");
+
+            if(!islogedin) {
                 Intent i = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(i);
                 finish();
+            }else{
+                if(user_type != null){
+                    if(user_type.equalsIgnoreCase("1")){
+                        if(appintments != null && !appintments.isEmpty()){
+                            Intent intent = new Intent(SplashActivity.this, PetMyappointmentsActivity.class);
+                            intent.putExtra("appintments",appintments);
+                            startActivity(intent);
+                            finish();
+                        }else if(orders != null && !orders.isEmpty()){
+                            Intent intent = new Intent(SplashActivity.this, PetMyOrdrersNewActivity.class);
+                            intent.putExtra("orders",orders);
+                            startActivity(intent);
+                            finish();
+                        }
+
+
+                    }else if(user_type.equalsIgnoreCase("2")){
+                        if(appintments != null && !appintments.isEmpty()){
+                            Intent intent = new Intent(SplashActivity.this, ServiceProviderDashboardActivity.class);
+                            intent.putExtra("appintments",appintments);
+                            startActivity(intent);
+                            finish();
+                        }else if(orders != null && !orders.isEmpty()){
+                            Intent intent = new Intent(SplashActivity.this, SPMyOrdrersActivity.class);
+                            intent.putExtra("orders",orders);
+                            startActivity(intent);
+                            finish();
+                        }
+
+                    }else if(user_type.equalsIgnoreCase("3")){
+                        if(orders != null && !orders.isEmpty()){
+                            Intent intent = new Intent(SplashActivity.this, VendorDashboardActivity.class);
+                            intent.putExtra("orders",orders);
+                            startActivity(intent);
+                            finish();
+                        }
+
+
+                    }else if(user_type.equalsIgnoreCase("4")){
+                        if(appintments != null && !appintments.isEmpty()){
+                            Intent intent = new Intent(SplashActivity.this, DoctorDashboardActivity.class);
+                            intent.putExtra("appintments",appintments);
+                            startActivity(intent);
+                            finish();
+                        }else if(orders != null && !orders.isEmpty()){
+                            Intent intent = new Intent(SplashActivity.this, DoctorMyOrdrersActivity.class);
+                            intent.putExtra("orders",orders);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+
+                }
             }
-            else{
 
-                session = new SessionManager(getApplicationContext());
-                HashMap<String, String> user = session.getProfileDetails();
-                usertype = user.get(SessionManager.KEY_TYPE);
-                Log.w(TAG,"usertype-->"+usertype);
 
-                if(usertype != null){
-                    if(usertype.equalsIgnoreCase("1")){
-                        startActivity(new Intent(SplashActivity.this, PetLoverDashboardActivity.class));
-                        finish();
+        }
 
-                    }else if(usertype.equalsIgnoreCase("2")){
-                        startActivity(new Intent(SplashActivity.this, ServiceProviderDashboardActivity.class));
-                        finish();
 
-                    }else if(usertype.equalsIgnoreCase("3")){
-                        startActivity(new Intent(SplashActivity.this, VendorDashboardActivity.class));
-                        finish();
+        if(!isNotifications){
+            new Handler().postDelayed(() -> {
 
-                    }else if(usertype.equalsIgnoreCase("4")){
-                        startActivity(new Intent(SplashActivity.this, DoctorDashboardActivity.class));
-                        finish();
+                boolean islogedin1 = session.isLoggedIn();
+                if(!islogedin1) {
+                    Intent i = new Intent(SplashActivity.this, LoginActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+                else{
+
+                    session = new SessionManager(getApplicationContext());
+                    HashMap<String, String> user = session.getProfileDetails();
+                    usertype = user.get(SessionManager.KEY_TYPE);
+                    Log.w(TAG,"usertype-->"+usertype);
+
+                    if(usertype != null){
+                        if(usertype.equalsIgnoreCase("1")){
+                            startActivity(new Intent(SplashActivity.this, PetLoverDashboardActivity.class));
+                            finish();
+
+                        }else if(usertype.equalsIgnoreCase("2")){
+                            startActivity(new Intent(SplashActivity.this, ServiceProviderDashboardActivity.class));
+                            finish();
+
+                        }else if(usertype.equalsIgnoreCase("3")){
+                            startActivity(new Intent(SplashActivity.this, VendorDashboardActivity.class));
+                            finish();
+
+                        }else if(usertype.equalsIgnoreCase("4")){
+                            startActivity(new Intent(SplashActivity.this, DoctorDashboardActivity.class));
+                            finish();
+
+                        }
 
                     }
+
+
 
                 }
 
 
 
-            }
+            }, SPLASH_TIME_OUT);
+        }
 
-
-
-        }, SPLASH_TIME_OUT);
 
     }
 }
