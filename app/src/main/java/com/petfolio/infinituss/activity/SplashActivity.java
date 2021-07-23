@@ -74,6 +74,10 @@ public class SplashActivity extends AppCompatActivity {
                             intent.putExtra("orders",orders);
                             startActivity(intent);
                             finish();
+                        }else{
+                            Intent intent = new Intent(SplashActivity.this, PetLoverDashboardActivity.class);
+                            startActivity(intent);
+                            finish();
                         }
 
 
@@ -88,12 +92,20 @@ public class SplashActivity extends AppCompatActivity {
                             intent.putExtra("orders",orders);
                             startActivity(intent);
                             finish();
+                        }else{
+                            Intent intent = new Intent(SplashActivity.this, ServiceProviderDashboardActivity.class);
+                            startActivity(intent);
+                            finish();
                         }
 
                     }else if(user_type.equalsIgnoreCase("3")){
                         if(orders != null && !orders.isEmpty()){
                             Intent intent = new Intent(SplashActivity.this, VendorDashboardActivity.class);
                             intent.putExtra("orders",orders);
+                            startActivity(intent);
+                            finish();
+                        }else{
+                            Intent intent = new Intent(SplashActivity.this, VendorDashboardActivity.class);
                             startActivity(intent);
                             finish();
                         }
@@ -108,6 +120,10 @@ public class SplashActivity extends AppCompatActivity {
                         }else if(orders != null && !orders.isEmpty()){
                             Intent intent = new Intent(SplashActivity.this, DoctorMyOrdrersActivity.class);
                             intent.putExtra("orders",orders);
+                            startActivity(intent);
+                            finish();
+                        }else{
+                            Intent intent = new Intent(SplashActivity.this, DoctorDashboardActivity.class);
                             startActivity(intent);
                             finish();
                         }

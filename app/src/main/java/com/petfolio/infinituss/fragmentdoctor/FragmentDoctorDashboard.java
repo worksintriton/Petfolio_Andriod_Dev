@@ -31,6 +31,7 @@ import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.doctor.DoctorBusinessInfoActivity;
+import com.petfolio.infinituss.doctor.DoctorDashboardActivity;
 import com.petfolio.infinituss.doctor.DoctorMyCalendarNewUserActivity;
 import com.petfolio.infinituss.fragmentdoctor.myappointments.FragmentDoctorCompletedAppointment;
 import com.petfolio.infinituss.fragmentdoctor.myappointments.FragmentDoctorMissedAppointment;
@@ -81,6 +82,8 @@ public class FragmentDoctorDashboard extends Fragment  {
     SessionManager session;
 
     FragmentManager  childFragMang;
+
+    private int someIndex = 0;
 
     public FragmentDoctorDashboard() {
         // Required empty public constructor
@@ -217,7 +220,20 @@ public class FragmentDoctorDashboard extends Fragment  {
 
                                     if(isDoctorStatus){
                                         setupViewPager(viewPager);
+                                        if(DoctorDashboardActivity.appintments != null && DoctorDashboardActivity.appintments.equalsIgnoreCase("New")){
+                                            someIndex = 0;
+                                        }
+                                        else if(DoctorDashboardActivity.appintments != null && DoctorDashboardActivity.appintments.equalsIgnoreCase("Completed")){
+                                            someIndex = 1;
+                                        }
+                                        else if(DoctorDashboardActivity.appintments != null && DoctorDashboardActivity.appintments.equalsIgnoreCase("Missed")){
+                                            someIndex = 2;
+                                        }
+
                                         tablayout.setupWithViewPager(viewPager);
+                                        TabLayout.Tab tab = tablayout.getTabAt(someIndex);
+                                        tab.select();
+
                                     }
 
                                 }

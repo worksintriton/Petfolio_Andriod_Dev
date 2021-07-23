@@ -37,6 +37,7 @@ import com.petfolio.infinituss.fragmentserviceprovider.myappointments.FragmentSP
 import com.petfolio.infinituss.requestpojo.SPCheckStatusRequest;
 import com.petfolio.infinituss.responsepojo.SPCheckStatusResponse;
 import com.petfolio.infinituss.serviceprovider.SPMyCalendarNewUserActivity;
+import com.petfolio.infinituss.serviceprovider.ServiceProviderDashboardActivity;
 import com.petfolio.infinituss.serviceprovider.ServiceProviderRegisterFormActivity;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
 import com.petfolio.infinituss.utils.ConnectionDetector;
@@ -79,6 +80,8 @@ public class FragmentSPDashboard extends Fragment  {
     private boolean isDoctorStatus = false;
     SessionManager session;
     private boolean isProfileUpdatedClose;
+
+    private int someIndex = 0;
 
     public FragmentSPDashboard() {
         // Required empty public constructor
@@ -214,6 +217,19 @@ public class FragmentSPDashboard extends Fragment  {
 
                                     if (isDoctorStatus) {
                                         setupViewPager(viewPager);
+                                        if(ServiceProviderDashboardActivity.appintments != null && ServiceProviderDashboardActivity.appintments.equalsIgnoreCase("New")){
+                                            someIndex = 0;
+                                        }
+                                        else if(ServiceProviderDashboardActivity.appintments != null && ServiceProviderDashboardActivity.appintments.equalsIgnoreCase("Completed")){
+                                            someIndex = 1;
+                                        }
+                                        else if(ServiceProviderDashboardActivity.appintments != null && ServiceProviderDashboardActivity.appintments.equalsIgnoreCase("Missed")){
+                                            someIndex = 2;
+                                        }
+
+                                        //tablayout.setupWithViewPager(viewPager);
+                                        TabLayout.Tab tab = tablayout.getTabAt(someIndex);
+                                        tab.select();
                                         tablayout.setupWithViewPager(viewPager);
                                     }
 

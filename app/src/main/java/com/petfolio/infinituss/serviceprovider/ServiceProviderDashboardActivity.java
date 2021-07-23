@@ -171,6 +171,9 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
     @BindView(R.id.rl_homes)
     RelativeLayout rl_homes;
 
+    public static String appintments;
+    private int someIndex = 0;
+
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -179,6 +182,13 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
         setContentView(R.layout.activity_service_provider_dashboard);
         ButterKnife.bind(this);
         Log.w(TAG, "onCreate-->");
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            appintments = bundle.getString("appintments");
+            Log.w(TAG,"appintments : "+appintments);
+        }
+
 
 //        bottom_navigation_view = include_doctor_footer.findViewById(R.id.bottom_navigation_view);
 //        bottom_navigation_view.setItemIconTintList(null);
@@ -398,6 +408,7 @@ public class ServiceProviderDashboardActivity  extends ServiceProviderNavigation
         Fragment fragment = Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.frame_schedule));
         fragment.onActivityResult(requestCode,resultCode,data);
     }
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NotNull String @NotNull [] permissions, @NotNull int @NotNull [] grantResults) {
         if (requestCode == MY_PERMISSIONS_REQUEST_LOCATION) {

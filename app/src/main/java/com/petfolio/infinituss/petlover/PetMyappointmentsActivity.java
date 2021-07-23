@@ -151,6 +151,7 @@ public class PetMyappointmentsActivity extends AppCompatActivity implements Bott
 
 
     String appintments;
+    private int someIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,7 +175,21 @@ public class PetMyappointmentsActivity extends AppCompatActivity implements Bott
         toolbar_title.setText(getResources().getString(R.string.my_appointments));
 
         setupViewPager(viewPager);
+
+        if(appintments != null && appintments.equalsIgnoreCase("New")){
+            someIndex = 0;
+        }
+        else if(appintments != null && appintments.equalsIgnoreCase("Completed")){
+            someIndex = 1;
+        }
+        else if(appintments != null && appintments.equalsIgnoreCase("Missed")){
+            someIndex = 2;
+        }
+
         tabLayout.setupWithViewPager(viewPager);
+        TabLayout.Tab tab = tabLayout.getTabAt(someIndex);
+        tab.select();
+
         img_back.setOnClickListener(v -> onBackPressed());
 
         img_sos.setVisibility(View.GONE);
@@ -220,7 +235,7 @@ public class PetMyappointmentsActivity extends AppCompatActivity implements Bott
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new FragmentPetNewAppointment(), "New");
         adapter.addFragment(new FragmentPetCompletedAppointment(), "Completed");
-         adapter.addFragment(new FragmentPetMissedAppointment(), "Missed");
+        adapter.addFragment(new FragmentPetMissedAppointment(), "Missed");
         viewPager.setAdapter(adapter);
     }
 

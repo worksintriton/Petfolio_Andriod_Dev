@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 
 
@@ -87,13 +88,19 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         }
 
-        // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
-            String title = remoteMessage.getNotification().getTitle(); //get title
-            String message = remoteMessage.getNotification().getBody();
-            sendNotification(title,message);
-            Log.w(TAG, "Message Notification Body: " + remoteMessage.getNotification().getTitle()+" "+remoteMessage.getNotification().getBody());
+        SessionManager sessionManager = new SessionManager(this);
+        boolean isloggedin = sessionManager.isLoggedIn();
+        if(isloggedin){
+            // Check if message contains a notification payload.
+            if (remoteMessage.getNotification() != null) {
+                String title = remoteMessage.getNotification().getTitle(); //get title
+                String message = remoteMessage.getNotification().getBody();
+                sendNotification(title,message);
+                Log.w(TAG, "Message Notification Body: " + remoteMessage.getNotification().getTitle()+" "+remoteMessage.getNotification().getBody());
+            }
         }
+
+
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
@@ -225,6 +232,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
 
+    @SuppressLint("LongLogTag")
     private void sendNotification(String title, String messageBody) {
 
         if(usertype != null){
@@ -232,9 +240,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 if(appintments != null && !appintments.isEmpty()){
                     intent = new Intent(this, PetMyappointmentsActivity.class);
                     intent.putExtra("appintments",appintments);
+                    Log.w(TAG,"usertype 1 appintments : "+appintments);
                 }else if(orders != null && !orders.isEmpty()){
                     intent = new Intent(this, PetMyOrdrersNewActivity.class);
                     intent.putExtra("orders",orders);
+                }else{
+                    intent = new Intent(this, PetLoverDashboardActivity.class);
                 }
 
 
@@ -246,6 +257,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 }else if(orders != null && !orders.isEmpty()){
                     intent = new Intent(this, SPMyOrdrersActivity.class);
                     intent.putExtra("orders",orders);
+                }else{
+                    intent = new Intent(this, ServiceProviderDashboardActivity.class);
                 }
 
 
@@ -254,6 +267,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 if(orders != null && !orders.isEmpty()){
                     intent = new Intent(this, VendorDashboardActivity.class);
                     intent.putExtra("orders",orders);
+                }else {
+                    intent = new Intent(this, VendorDashboardActivity.class);
                 }
 
 
@@ -265,6 +280,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 }else if(orders != null && !orders.isEmpty()){
                     intent = new Intent(this, DoctorMyOrdrersActivity.class);
                     intent.putExtra("orders",orders);
+                }else{
+                    intent = new Intent(this, DoctorDashboardActivity.class);
                 }
 
 
@@ -274,12 +291,23 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
 
+
+        if (intent != null) {
+            for (String key : intent.getExtras().keySet()) {
+                Log.w(TAG, "key : " + key);
+
+            }
+            String appintments = intent.getExtras().getString("appintments");
+            Log.w(TAG, "key appintments : " + appintments);
+
+        }
+
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "1")
-                .setSmallIcon(R.drawable.app_logo)
+                .setSmallIcon(R.drawable.ic_app_logo)
                 .setContentTitle(title)
                 .setContentText(messageBody)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)

@@ -13,11 +13,13 @@
 
         <ImageView
             android:id="@+id/logo"
-            android:src="@drawable/app_logo"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:scaleType="fitXY"
-            tools:ignore="ContentDescription" />
+            android:src="@drawable/app_logo"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
+            tools:ignore="ContentDescription"
+            android:scaleType="centerInside"/>
 
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

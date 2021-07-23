@@ -188,6 +188,8 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
     @BindView(R.id.rl_homes)
     RelativeLayout rl_homes;
 
+    public static String appintments;
+
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -198,6 +200,13 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
         Log.w(TAG,"onCreate-->");
 
         googleApiConnected();
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            appintments = bundle.getString("appintments");
+            Log.w(TAG,"appintments : "+appintments);
+        }
+
 
 //        bottom_navigation_view = include_doctor_footer.findViewById(R.id.bottom_navigation_view);
 //        bottom_navigation_view.setItemIconTintList(null);

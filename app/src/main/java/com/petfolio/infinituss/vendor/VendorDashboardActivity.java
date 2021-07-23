@@ -114,6 +114,8 @@ public class VendorDashboardActivity  extends VendorNavigationDrawer implements 
     private Dialog dialog;
     private String userid;
 
+    public static String orders;
+
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -122,6 +124,12 @@ public class VendorDashboardActivity  extends VendorNavigationDrawer implements 
         setContentView(R.layout.activity_vendor_dashboard);
         ButterKnife.bind(this);
         Log.w(TAG,"onCreate-->");
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            orders = bundle.getString("orders");
+            Log.w(TAG,"orders : "+orders);
+        }
 
 //        bottom_navigation_view = include_vendor_footer.findViewById(R.id.bottom_navigation_view);
 //        bottom_navigation_view.setItemIconTintList(null);

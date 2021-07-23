@@ -34,9 +34,11 @@ import com.petfolio.infinituss.fragmentvendor.myorders.FragmentCancelledOrders;
 import com.petfolio.infinituss.fragmentvendor.myorders.FragmentCompletedOrders;
 import com.petfolio.infinituss.requestpojo.SPCheckStatusRequest;
 import com.petfolio.infinituss.responsepojo.SPCheckStatusResponse;
+import com.petfolio.infinituss.serviceprovider.ServiceProviderDashboardActivity;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
 import com.petfolio.infinituss.utils.ConnectionDetector;
 import com.petfolio.infinituss.utils.RestUtils;
+import com.petfolio.infinituss.vendor.VendorDashboardActivity;
 import com.petfolio.infinituss.vendor.VendorRegisterFormActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -78,6 +80,7 @@ public class FragmentVendorDashboard extends Fragment  {
     private boolean isProfileUpdatedClose;
 
     SessionManager session;
+    private int someIndex = 0;
 
     public FragmentVendorDashboard() {
         // Required empty public constructor
@@ -203,6 +206,19 @@ public class FragmentVendorDashboard extends Fragment  {
                                     if(isDoctorStatus){
                                         if(viewPager != null) {
                                             setupViewPager(viewPager);
+                                            if(VendorDashboardActivity.orders != null && VendorDashboardActivity.orders.equalsIgnoreCase("New")){
+                                                someIndex = 0;
+                                            }
+                                            else if(VendorDashboardActivity.orders != null && VendorDashboardActivity.orders.equalsIgnoreCase("Completed")){
+                                                someIndex = 1;
+                                            }
+                                            else if(VendorDashboardActivity.orders != null && VendorDashboardActivity.orders.equalsIgnoreCase("Cancelled")){
+                                                someIndex = 2;
+                                            }
+
+                                            //tablayout.setupWithViewPager(viewPager);
+                                            TabLayout.Tab tab = tablayout.getTabAt(someIndex);
+                                            tab.select();
                                             tablayout.setupWithViewPager(viewPager);
                                         }
                                     }

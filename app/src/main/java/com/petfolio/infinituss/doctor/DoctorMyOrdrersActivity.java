@@ -94,6 +94,9 @@ public class DoctorMyOrdrersActivity extends AppCompatActivity implements View.O
     @BindView(R.id.rl_homes)
     RelativeLayout rl_homes;
 
+    String orders;
+    private int someIndex = 0;
+
 
     @SuppressLint({"LogNotTimber", "NonConstantResourceId"})
     @Override
@@ -102,6 +105,13 @@ public class DoctorMyOrdrersActivity extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_doctor_myorders);
         Log.w(TAG,"onCreate");
         ButterKnife.bind(this);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            orders = bundle.getString("orders");
+            Log.w(TAG,"orders : "+orders);
+        }
+
 
 
         ImageView img_back = include_doctor_header.findViewById(R.id.img_back);
@@ -129,7 +139,20 @@ public class DoctorMyOrdrersActivity extends AppCompatActivity implements View.O
         });
 
         setupViewPager(viewPager);
+        if(orders != null && orders.equalsIgnoreCase("New")){
+            someIndex = 0;
+        }
+        else if(orders != null && orders.equalsIgnoreCase("Completed")){
+            someIndex = 1;
+        }
+        else if(orders != null && orders.equalsIgnoreCase("Cancelled")){
+            someIndex = 2;
+        }
+
         tablayout.setupWithViewPager(viewPager);
+        TabLayout.Tab tab = tablayout.getTabAt(someIndex);
+        tab.select();
+
         img_back.setOnClickListener(v -> onBackPressed());
 
 

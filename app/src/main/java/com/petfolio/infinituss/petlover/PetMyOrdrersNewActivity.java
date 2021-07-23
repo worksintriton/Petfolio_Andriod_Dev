@@ -117,6 +117,8 @@ public class PetMyOrdrersNewActivity extends AppCompatActivity implements View.O
     View include_petlover_header;
 
     String orders;
+    private int someIndex = 0;
+
 
 
     @SuppressLint({"LogNotTimber", "NonConstantResourceId"})
@@ -160,7 +162,22 @@ public class PetMyOrdrersNewActivity extends AppCompatActivity implements View.O
         });
 
         setupViewPager(viewPager);
+
+        if(orders != null && orders.equalsIgnoreCase("New")){
+            someIndex = 0;
+        }
+        else if(orders != null && orders.equalsIgnoreCase("Completed")){
+            someIndex = 1;
+        }
+        else if(orders != null && orders.equalsIgnoreCase("Cancelled")){
+            someIndex = 2;
+        }
+
         tablayout.setupWithViewPager(viewPager);
+        TabLayout.Tab tab = tablayout.getTabAt(someIndex);
+        tab.select();
+
+
         img_back.setOnClickListener(v -> onBackPressed());
 
 //        bottom_navigation_view = include_petlover_footer.findViewById(R.id.bottom_navigation_view);
