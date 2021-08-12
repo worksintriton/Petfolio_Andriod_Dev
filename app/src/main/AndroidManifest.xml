@@ -23,6 +23,7 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
@@ -963,7 +964,7 @@
 
 
 
-        <receiver
+       <receiver
             android:name=".receiver.SmsBroadcastListener"
             android:permission="android.permission.BROADCAST_SMS">
             <intent-filter>
