@@ -130,7 +130,6 @@
     <string name="payment_details">Payment Details</string>
 
 
-
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tabnew">New</string>
@@ -579,5 +578,10 @@
     <string name="manual">Manual</string>
     <string name="prescription_no">Prescription NO</string>
     <string name="clinic_loc">Clinic Location</string>
+    <string name="apply_coupon">Apply Coupon</string>
+    <string name="enter_coupon">Enter Coupon</string>
+    <string name="cash">Cash</string>
+    <string name="make_payment">Make Payment</string>
+    <string name="choose__payment_method">Payment Method</string>
 
 </resources>
