@@ -23,7 +23,9 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+<!--
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+-->
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
@@ -929,13 +931,13 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
 
-        <receiver
+       <!-- <receiver
             android:name=".receiver.SmsBroadcastListener"
             android:permission="android.permission.BROADCAST_SMS">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
-        </receiver>
+        </receiver>-->
 
         <service
             android:name=".fcm.MyFirebaseMessagingService"
@@ -952,14 +954,7 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/app_logo" />
-        <!--
-   <meta-data
-            android:name="firebase_messaging_auto_init_enabled"
-            android:value="false" />
-        <meta-data
-            android:name="firebase_analytics_collection_enabled"
-            android:value="false" />
-        -->
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"

@@ -165,6 +165,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
         btn_verify.setOnClickListener(this);
         txt_resend.setOnClickListener(this);
 
+/*
         SmsBroadcastListener.bindListener(otpText -> {
             avi_indicator.smoothToHide();
             Log.w(TAG,"extractedOTP--->"+otpText);
@@ -176,6 +177,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
 
 
         });
+*/
 
 
 
