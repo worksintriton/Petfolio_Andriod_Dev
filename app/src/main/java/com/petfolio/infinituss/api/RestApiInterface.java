@@ -742,6 +742,15 @@ public interface RestApiInterface {
     @POST("product_cart_detail/getlist_count")
     Call<NotificationCartCountResponse> notificationandCartCountResponseCall(@Header("Content-Type") String type, @Body NotificationCartCountRequest notificationCartCountRequest);
 
+    /*appoitments cash edit*/
+    @POST("appointments/mobile/doctor/app_edit")
+    Call<SuccessResponse> AppointmentCashRequestCall(@Header("Content-Type") String type, @Body AppointmentCashRequest appointmentCashRequest);
+
+
+    /*CouponCodeCheckResponseCall*/
+    @POST("coupon_code/check_coupon")
+    Call<CouponCodeCheckResponse> CouponCodeCheckResponseCall(@Header("Content-Type") String type, @Body CouponCodeCheckRequest couponCodeCheckRequest);
+
 
 
 }

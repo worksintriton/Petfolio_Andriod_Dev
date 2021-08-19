@@ -221,6 +221,7 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
     private String Patient_Email_id = "";
     private String userid;
     private String appoinmentid;
+    private String paymentmethod;
     private List<DiagnosisListResponse.DataBean> diagnosisList;
 
     MultipartBody.Part govIdPart;
@@ -255,6 +256,15 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
     @BindView(R.id.edtx_uploadImage)
     EditText edtx_uploadImage;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.edtx_service_charge_amount)
+    EditText edtx_service_charge_amount;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_lbl_serviceamout)
+    TextView txt_lbl_serviceamout;
+
+
     String currentDateandTime;
 
     @SuppressLint("NonConstantResourceId")
@@ -282,6 +292,11 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
 
         txt_subdiagnosis.setVisibility(View.GONE);
 
+        txt_lbl_serviceamout.setVisibility(View.GONE);
+        edtx_service_charge_amount.setVisibility(View.GONE);
+
+
+
         /* *************** Get Current Date and Time ************************ */
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
@@ -291,8 +306,19 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
         if (extras != null) {
             appoinmentid = extras.getString("id");
             userid = extras.getString("patient_id");
-            Log.w(TAG,"appoinmentid :"+" "+appoinmentid);
+            paymentmethod = extras.getString("paymentmethod");
+            Log.w(TAG,"appoinmentid :"+" "+appoinmentid+" paymentmethod  : "+paymentmethod);
             Log.w(TAG,"userid :"+" "+userid);
+
+        }
+
+        if(paymentmethod != null && paymentmethod.equalsIgnoreCase("Cash")){
+            txt_lbl_serviceamout.setVisibility(View.VISIBLE);
+            edtx_service_charge_amount.setVisibility(View.VISIBLE);
+
+        } else{
+            txt_lbl_serviceamout.setVisibility(View.GONE);
+            edtx_service_charge_amount.setVisibility(View.GONE);
 
         }
 
@@ -505,18 +531,70 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
                     if(validSelectDiagnosisType()){
                         if(validdSubDiagnosisType()){
                             if(etdoctorcomments.getText().toString().isEmpty()){
-                    //showErrorLoading("Please fill all the fields");
-                        etdoctorcomments.setError("Please enter the comments ");
-                        etdoctorcomments.requestFocus();
-                    }
-                    else if(prescriptionDataList.isEmpty()&&selectedRadioButton.equalsIgnoreCase("Manual")){
+                                etdoctorcomments.setError("Please enter the comments ");
+                                etdoctorcomments.requestFocus();
+                             }
+                             else if(paymentmethod != null && paymentmethod.equalsIgnoreCase("Cash")){
+                                if(edtx_service_charge_amount.getText().toString().isEmpty()){
+                                    edtx_service_charge_amount.setError("Please enter the service amount ");
+                                    edtx_service_charge_amount.requestFocus();
+                                }else{
+                                     if(prescriptionDataList.isEmpty()&&selectedRadioButton.equalsIgnoreCase("Manual")){
+                                        showErrorLoading("Please fill the prescription fields");
+                                    }
+                                    else if(govtIdPicBeans.isEmpty()&&selectedRadioButton.equalsIgnoreCase("Upload Image")){
+                                        showErrorLoading("Please Upload Prescription Image");
+                                    }
+                                    else{
+
+                                        if (new ConnectionDetector(PrescriptionActivity.this).isNetworkAvailable(PrescriptionActivity.this)) {
+                                            if(Treatment_Done_by.equalsIgnoreCase("Self")){
+                                                Family_ID = "";
+                                                Family_Name = "";
+
+                                            }else{
+                                                Family_Name = Family_Name;
+                                                Family_ID = Family_ID;
+                                            }
+
+                                            String image = "";
+
+                                            if(govtIdPicBeans!=null&&govtIdPicBeans.size()>0){
+
+                                                image = govtIdPicBeans.get(0).getGovt_id_pic();
+                                            }
+
+                                            Log.w(TAG,"prescriptionDataList : "+new Gson().toJson(prescriptionDataList));
+
+                                            Intent intent = new Intent(getApplicationContext(),PrescriptionDetailsActivity.class);
+                                            intent.putExtra("Doctor_ID",Doctor_ID);
+                                            intent.putExtra("Doctor_Comments",etdoctorcomments.getText().toString().trim());
+                                            intent.putExtra("prescriptionDataList", (Serializable) prescriptionDataList);
+                                            intent.putExtra("Treatment_Done_by", Treatment_Done_by);
+                                            intent.putExtra("id", appoinmentid);
+                                            intent.putExtra("image",image);
+                                            intent.putExtra("selectedRadioButton",selectedRadioButton);
+                                            intent.putExtra("userid", userid);
+                                            intent.putExtra("DiagnosisType", DiagnosisType);
+                                            intent.putExtra("SubDiagnosisType", SubDiagnosisType);
+                                            intent.putExtra("Doctor_ID", Doctor_ID);
+                                            intent.putExtra("Treatment_Done_by", Treatment_Done_by);
+                                            intent.putExtra("paymentmethod", paymentmethod);
+                                            intent.putExtra("servicecost", edtx_service_charge_amount.getText().toString());
+                                            startActivity(intent);
+                                            //prescriptionCreateRequestCall();
+                                        }
+                                    }
+                                }
+                             }
+                             else if(prescriptionDataList.isEmpty()&&selectedRadioButton.equalsIgnoreCase("Manual")){
                     showErrorLoading("Please fill the prescription fields");
                      }
-                            else if(govtIdPicBeans.isEmpty()&&selectedRadioButton.equalsIgnoreCase("Upload Image")){
+                             else if(govtIdPicBeans.isEmpty()&&selectedRadioButton.equalsIgnoreCase("Upload Image")){
                                 showErrorLoading("Please Upload Prescription Image");
                             }
+                             else{
 
-                    else{
                         if (new ConnectionDetector(PrescriptionActivity.this).isNetworkAvailable(PrescriptionActivity.this)) {
                             if(Treatment_Done_by.equalsIgnoreCase("Self")){
                                 Family_ID = "";
@@ -549,6 +627,8 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
                             intent.putExtra("SubDiagnosisType", SubDiagnosisType);
                             intent.putExtra("Doctor_ID", Doctor_ID);
                             intent.putExtra("Treatment_Done_by", Treatment_Done_by);
+                            intent.putExtra("paymentmethod", paymentmethod);
+                            intent.putExtra("servicecost", edtx_service_charge_amount.getText().toString());
                             startActivity(intent);
                             //prescriptionCreateRequestCall();
                         }
@@ -1271,6 +1351,7 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
 
     }
 
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 

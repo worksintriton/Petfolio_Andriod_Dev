@@ -170,6 +170,7 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
                 i.putExtra("allergies",newAppointmentResponseList.get(position).getAllergies());
                 i.putExtra("probleminfo",newAppointmentResponseList.get(position).getProblem_info());
                 i.putExtra("doctorid",newAppointmentResponseList.get(position).getDoctor_id().get_id());
+                i.putExtra("paymentmethod",newAppointmentResponseList.get(position).getPayment_method());
                 context.startActivity(i);
 
             }
@@ -195,6 +196,7 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
         });
 
         holder.img_videocall.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onClick(View v) {
                 Log.w(TAG,"Start_appointment_status : "+newAppointmentResponseList.get(position).getStart_appointment_status());
@@ -225,6 +227,7 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
                     Intent i = new Intent(context, DoctorAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.putExtra("appointment_id",newAppointmentResponseList.get(position).get_id());
                     i.putExtra("bookedat",newAppointmentResponseList.get(position).getBooking_date_time());
+                    i.putExtra("paymentmethod",newAppointmentResponseList.get(position).getPayment_method());
                     i.putExtra("from",TAG);
                     context.startActivity(i);
 

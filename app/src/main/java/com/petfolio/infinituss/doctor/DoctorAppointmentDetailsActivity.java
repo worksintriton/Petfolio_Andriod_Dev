@@ -202,6 +202,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
     private boolean isVaildDate;
 
     private String from;
+    private String paymentmethod;
     private List<PetNewAppointmentDetailsResponse.DataBean.PetIdBean.PetImgBean> pet_image;
     private String petAgeandMonth;
 
@@ -322,6 +323,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
             appointment_id = extras.getString("appointment_id");
             bookedat = extras.getString("bookedat");
             from = extras.getString("from");
+            paymentmethod = extras.getString("paymentmethod");
             Log.w(TAG,"from : "+from);
         }
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
@@ -329,6 +331,13 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
 
         if(bookedat != null){
             compareDatesandTime(currentDateandTime,bookedat);
+        }
+
+        if(paymentmethod != null && paymentmethod.equalsIgnoreCase("Cash")){
+
+        }
+        else{
+
         }
 
 
@@ -482,13 +491,16 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
 
 
                             if(pet_dob != null){
-                                String[] separated = pet_dob.split("-");
+                                txt_age.setText(pet_dob);
+                               /* String[] separated = pet_dob.split("-");
                                 String day = separated[0];
                                 String month = separated[1];
                                 String year = separated[2];
                                 Log.w(TAG,"day : "+day+" month: "+month+" year : "+year);
 
-                                getAge(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
+                                getAge(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));*/
+                            }else{
+                                txt_age.setText("");
                             }
 
 
@@ -724,6 +736,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
             i.putExtra("allergies", allergies);
             i.putExtra("probleminfo", problem_info );
             i.putExtra("doctorid",doctorid);
+            i.putExtra("paymentmethod",paymentmethod);
             Log.w(TAG, "ID-->" + appointment_id);
             startActivity(i);
 

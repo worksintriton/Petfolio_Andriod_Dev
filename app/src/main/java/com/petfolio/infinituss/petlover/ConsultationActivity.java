@@ -73,6 +73,7 @@ public class ConsultationActivity extends AppCompatActivity implements View.OnCl
     private String selectedAppointmentType = "Normal";
     private String selectedVisitType = "";
     private String petId;
+    private String petname;
     private String doctorid;
     private String fromactivity;
     private String fromto;
@@ -93,7 +94,8 @@ public class ConsultationActivity extends AppCompatActivity implements View.OnCl
     private String petage;
     private int distance;
     private String SP_ava_Date;
-
+    private String doctorname;
+    private String clinicname;
 
 
     @SuppressLint({"LogNotTimber", "SetTextI18n"})
@@ -123,7 +125,9 @@ public class ConsultationActivity extends AppCompatActivity implements View.OnCl
             amount = extras.getInt("amount");
             Log.w(TAG,"amount : "+amount);
             communicationtype = extras.getString("communicationtype");
-            Log.w(TAG,"Bundle "+" doctorid : "+doctorid+" selectedTimeSlot : "+selectedTimeSlot+"communicationtype : "+communicationtype+" amount : "+amount);
+            doctorname = extras.getString("doctorname");
+            clinicname = extras.getString("clinicname");
+            Log.w(TAG,"Bundle "+" doctorid : "+doctorid+" selectedTimeSlot : "+selectedTimeSlot+"communicationtype : "+communicationtype+" amount : "+amount+" clinicname : "+clinicname);
 
 
             /*PetServiceAppointment_Doctor_Date_Time_Activity*/
@@ -178,6 +182,9 @@ public class ConsultationActivity extends AppCompatActivity implements View.OnCl
                     intent.putExtra("communicationtype", communicationtype);
                     intent.putExtra("fromto", fromto);
                     intent.putExtra("petId", petId);
+                    intent.putExtra("doctorname", doctorname);
+                    intent.putExtra("clinicname", clinicname);
+                    intent.putExtra("petname", petname);
                     startActivity(intent);
                     Log.w(TAG, "petId : " + petId);
                 }
@@ -240,6 +247,8 @@ public class ConsultationActivity extends AppCompatActivity implements View.OnCl
             intent.putExtra("SP_ava_Date",SP_ava_Date);
             intent.putExtra("selectedTimeSlot",selectedTimeSlot);
             intent.putExtra("distance",distance);
+            intent.putExtra("doctorname",doctorname);
+            intent.putExtra("clinicname",clinicname);
             intent.putExtra("fromactivity",TAG);
             startActivity(intent);
         }else{
@@ -248,6 +257,8 @@ public class ConsultationActivity extends AppCompatActivity implements View.OnCl
             intent.putExtra("communicationtype",communicationtype);
             intent.putExtra("fromactivity",fromactivity);
             intent.putExtra("fromto",fromto);
+            intent.putExtra("doctorname",doctorname);
+            intent.putExtra("clinicname",clinicname);
             startActivity(intent);
         }
 
@@ -334,10 +345,11 @@ public class ConsultationActivity extends AppCompatActivity implements View.OnCl
 
     @SuppressLint("LogNotTimber")
     @Override
-    public void myPetsSelectListener(String petid) {
+    public void myPetsSelectListener(String petid,String pet_name) {
         Log.w(TAG,"myPetsSelectListener : petid "+petid);
         if(petid != null){
             petId = petid;
+            petname = pet_name;
             ll_save_continue.setVisibility(View.VISIBLE);
         }else{
             ll_save_continue.setVisibility(View.GONE);

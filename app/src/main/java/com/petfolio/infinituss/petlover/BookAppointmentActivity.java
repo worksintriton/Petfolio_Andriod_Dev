@@ -279,6 +279,10 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     private boolean isVisit;
     private String health_issue_title;
 
+    private String doctorname;
+    private String clinicname;
+    private String petname;
+
     @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -301,6 +305,10 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
             Log.w(TAG,"Bundle "+" doctorid : "+doctorid+" selectedTimeSlot : "+selectedTimeSlot+"communicationtype : "+communicationtype+" amount : "+amount+" fromactivity : "+fromactivity);
 
             Log.w(TAG, "petId : " + petId);
+
+            doctorname = extras.getString("doctorname");
+            clinicname = extras.getString("clinicname");
+            petname = extras.getString("petname");
 
         }
 
@@ -576,15 +584,26 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
             }*/
 
-            if(amount != 0){
-                startPayment();
+
+            if (isVisit && selectedVisitType != null && selectedVisitType.isEmpty()) {
+                showErrorLoading("Please select visit type");
+            }
+            else{
+                 if(amount != 0){
+              //  startPayment();
+                     petAppointmentCreateRequest();
+
             }
             else {
                 if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                    petAppointmentCreateResponseCall();
+                    //petAppointmentCreateResponseCall();
+                    petAppointmentCreateRequest();
                 }
 
             }
+            }
+
+
 
         });
 
@@ -1131,7 +1150,8 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                             startPayment();
                         }else {
                             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                                petAppointmentCreateResponseCall();
+                                //petAppointmentCreateResponseCall();
+                                petAppointmentCreateRequest();
                             }
 
                         }
@@ -1242,6 +1262,9 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         intent.putExtra("communicationtype",communicationtype);
         intent.putExtra("fromactivity",fromactivity);
         intent.putExtra("fromto",fromto);
+        intent.putExtra("doctorname", doctorname);
+        intent.putExtra("clinicname", clinicname);
+        intent.putExtra("petname", petname);
         startActivity(intent);
 
 
@@ -1292,6 +1315,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
                 petAppointmentCreateResponseCall();
+
             }
 
 
@@ -1422,7 +1446,11 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         }
         String displaydateandtime = outputDateStr+" "+outputTimeStr;
 
-
+        if(userid != null){
+            userid = userid;
+        }else{
+            userid = "";
+        }
 
         PetAppointmentCreateRequest petAppointmentCreateRequest = new PetAppointmentCreateRequest();
         petAppointmentCreateRequest.setDoctor_id(doctorid);
@@ -1431,13 +1459,6 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         petAppointmentCreateRequest.setBooking_date_time(Doctor_ava_Date+" "+selectedTimeSlot);
         petAppointmentCreateRequest.setCommunication_type(selectedCommunicationtype);
         petAppointmentCreateRequest.setVideo_id("");
-        if(userid != null){
-            petAppointmentCreateRequest.setUser_id(userid);
-
-        }else{
-            petAppointmentCreateRequest.setUser_id("");
-
-        }
         petAppointmentCreateRequest.setUser_id(userid);
         petAppointmentCreateRequest.setPet_id(petId);
         petAppointmentCreateRequest.setProblem_info(edt_comment.getText().toString());
@@ -1460,8 +1481,31 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         petAppointmentCreateRequest.setVisit_type(selectedVisitType);
         petAppointmentCreateRequest.setLocation_id(locationid);
         petAppointmentCreateRequest.setHealth_issue_title(health_issue_title);
+
+        ArrayList<PetAppointmentCreateRequest> PetAppointmentCreateRequestList = new ArrayList<>();
+        PetAppointmentCreateRequestList.add(petAppointmentCreateRequest);
         Log.w(TAG,"petAppointmentCreateRequest"+ "--->" + new Gson().toJson(petAppointmentCreateRequest));
+
+        Intent intent = new Intent(getApplicationContext(),PetLoverDoctorChoosePaymentMethodActivity.class);
+        intent.putExtra("PetAppointmentCreateRequestList",PetAppointmentCreateRequestList);
+        intent.putExtra("doctorname", doctorname);
+        intent.putExtra("clinicname", clinicname);
+        intent.putExtra("petname", petname);
+        intent.putExtra("doctorid", doctorid);
+        intent.putExtra("fromactivity", fromactivity);
+        intent.putExtra("fromto", fromto);
+        intent.putExtra("Doctor_ava_Date", Doctor_ava_Date);
+        intent.putExtra("selectedTimeSlot", selectedTimeSlot);
+        intent.putExtra("amount", amount);
+        intent.putExtra("communicationtype", communicationtype);
+        intent.putExtra("petId", petId);
+        intent.putExtra("health_issue_title", health_issue_title);
+        startActivity(intent);
+
+
+
         return petAppointmentCreateRequest;
+
     }
     public void showSuceessLoading(String errormesage){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);

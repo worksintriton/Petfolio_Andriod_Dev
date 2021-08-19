@@ -1,7 +1,5 @@
 package com.petfolio.infinituss.petlover;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,14 +7,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.petfolio.infinituss.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PetLoverChoosePaymentMethodActivity extends AppCompatActivity {
+public class PetLoverServiceChoosePaymentMethodActivity extends AppCompatActivity {
 
-    public static String TAG = "PetLoverChoosePaymentMethodActivity";
+    public static String TAG = "PetLoverServiceChoosePaymentMethodActivity";
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.include_petlover_header)
@@ -25,7 +25,7 @@ public class PetLoverChoosePaymentMethodActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_petlover_choose_payment_method);
+        setContentView(R.layout.activity_petlover_service_choose_payment_method);
         ButterKnife.bind(this);
         Log.w(TAG,"onCreate");
 

@@ -583,5 +583,6 @@
     <string name="cash">Cash</string>
     <string name="make_payment">Make Payment</string>
     <string name="choose__payment_method">Payment Method</string>
+    <string name="shop_name">Shop Name</string>
 
 </resources>

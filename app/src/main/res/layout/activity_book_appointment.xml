@@ -32,7 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -176,7 +177,17 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="horizontal" >
+                <RadioButton
+                    android:id="@+id/radioButton2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/new_green_btn"
+                    android:fontFamily="@font/futuramediumbt"
+                    android:text="@string/normal"
+                    android:textColor="@color/new_txt_color"
+                    tools:ignore="UnusedAttribute"
+                    android:checked="true" />
                 <RadioButton
                     android:id="@+id/radioButton1"
                     android:layout_width="wrap_content"
@@ -185,18 +196,9 @@
                     android:fontFamily="@font/futuramediumbt"
                     android:text="@string/emergency"
                     android:textColor="@color/new_txt_color"
-                    tools:ignore="UnusedAttribute" />
-                <RadioButton
-                    android:id="@+id/radioButton2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:buttonTint="@color/new_green_btn"
-                    android:fontFamily="@font/futuramediumbt"
-                    android:text="@string/normal"
-                    android:textColor="@color/new_txt_color"
                     tools:ignore="UnusedAttribute"
-                    android:checked="true"/>
+                    android:layout_marginStart="10dp"/>
+
 
 
             </RadioGroup>
@@ -343,10 +345,10 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/futuramediumbt"
-                    android:gravity="center"
+                    android:gravity="end|center_vertical"
                     android:text="@string/communicationtype"
                     android:textColor="@color/new_txt_color"
                     android:textSize="14sp" />
@@ -360,13 +362,13 @@
 
                     <RadioButton
                         android:id="@+id/radioButton_online"
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/new_green_btn"
                         android:fontFamily="@font/futuramediumbt"
                         android:text="@string/online"
                         android:textColor="@color/new_txt_color"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <RadioButton
                         android:id="@+id/radioButton_visit"
@@ -377,7 +379,7 @@
                         android:fontFamily="@font/futuramediumbt"
                         android:text="@string/visit"
                         android:textColor="@color/new_txt_color"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                 </RadioGroup>
 
@@ -386,15 +388,16 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal"
-                android:id="@+id/ll_visit_group">
+                android:id="@+id/ll_visit_group"
+                android:layout_marginBottom="20dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/futuramediumbt"
-                    android:gravity="center"
+                    android:gravity="end|center_vertical"
                     android:text="@string/visittype"
                     android:textColor="@color/new_txt_color"
                     android:textSize="14sp" />
@@ -408,13 +411,13 @@
 
                     <RadioButton
                         android:id="@+id/radioButton_home"
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/new_green_btn"
                         android:fontFamily="@font/futuramediumbt"
                         android:text="@string/visithome"
                         android:textColor="@color/new_txt_color"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <RadioButton
                         android:id="@+id/radioButton_clinic"
@@ -425,7 +428,7 @@
                         android:fontFamily="@font/futuramediumbt"
                         android:text="@string/visitclinic"
                         android:textColor="@color/new_txt_color"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                 </RadioGroup>
 
@@ -451,7 +454,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/new_rounded_corner_btn"
             android:fontFamily="@font/futuramediumbt"
-            android:text="@string/book_appointment"
+            android:text="@string/continues"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/normal_text_size_for_header" />

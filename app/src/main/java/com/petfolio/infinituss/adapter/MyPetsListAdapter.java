@@ -111,7 +111,7 @@ public class MyPetsListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHo
                 petListResponseList.get(position).setSelected(true);
                 notifyDataSetChanged();
                 if(petListResponseList.get(position).get_id() != null ){
-                    myPetsSelectListener.myPetsSelectListener(petListResponseList.get(position).get_id());
+                    myPetsSelectListener.myPetsSelectListener(petListResponseList.get(position).get_id(),petListResponseList.get(position).getPet_name());
 
                 }
             }

@@ -2,6 +2,7 @@ package com.petfolio.infinituss.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.requestpojo.PrescriptionCreateRequest;
 
@@ -47,9 +49,11 @@ public class PrescriptionsDetailsAdapter extends  RecyclerView.Adapter<RecyclerV
 
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "LogNotTimber"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
             currentItem = prescriptionDataList.get(position);
+
+            Log.w(TAG,"prescriptionDataList : "+new Gson().toJson(prescriptionDataList));
             holder.txt_medicine.setText(prescriptionDataList.get(position).getTablet_name());
             holder.txt_noofdays.setText(prescriptionDataList.get(position).getQuantity());
 

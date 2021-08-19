@@ -131,6 +131,8 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
     private String currentDateandTime;
     private String currenttime;
     private String currentdate;
+    private String doctorname;
+    private String clinicname;
 
 
     @SuppressLint("LogNotTimber")
@@ -149,7 +151,9 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
             doctorid = extras.getString("doctorid");
             fromactivity = extras.getString("fromactivity");
             fromto = extras.getString("fromto");
-            Log.w(TAG,"doctorid : "+doctorid+"fromactivity : "+fromactivity+ " fromto : "+fromto);
+            doctorname = extras.getString("doctorname");
+            clinicname = extras.getString("clinicname");
+            Log.w(TAG,"doctorid : "+doctorid+"fromactivity : "+fromactivity+ " fromto : "+fromto+" clinicname : "+clinicname);
 
 
             String petid = extras.getString("petid");
@@ -555,6 +559,8 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
                             intent.putExtra("communicationtype", communicationtype);
                             intent.putExtra("fromto", fromto);
                             intent.putExtra("distance",distance);
+                            intent.putExtra("doctorname",doctorname);
+                            intent.putExtra("clinicname",clinicname);
                             startActivity(intent);
                             Log.w(TAG, "communicationtype : " + communicationtype);
                         }

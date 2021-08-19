@@ -31,9 +31,11 @@ import com.petfolio.infinituss.adapter.PrescriptionsDetailsAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.requestpojo.AppoinmentCompleteRequest;
+import com.petfolio.infinituss.requestpojo.AppointmentCashRequest;
 import com.petfolio.infinituss.requestpojo.PrescriptionCreateRequest;
 import com.petfolio.infinituss.responsepojo.AppoinmentCompleteResponse;
 import com.petfolio.infinituss.responsepojo.PrescriptionCreateResponse;
+import com.petfolio.infinituss.responsepojo.SuccessResponse;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
 
 import com.petfolio.infinituss.utils.ConnectionDetector;
@@ -105,6 +107,14 @@ public class PrescriptionDetailsActivity extends AppCompatActivity {
     TextView txt_sub_diagnosis;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_lbl_serviceamout)
+    TextView txt_lbl_serviceamout;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_serviceamout)
+    TextView txt_serviceamout;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_doctor_comments)
     TextView txt_doctor_comments;
 
@@ -123,6 +133,8 @@ public class PrescriptionDetailsActivity extends AppCompatActivity {
     private String Doctor_Comments;
     private String Doctor_ID;
     private String Treatment_Done_by,selectedRadioButton,prescription_type;
+    private String paymentmethod;
+    private String servicecost = "";
 
 
     @SuppressLint("LogNotTimber")
@@ -147,6 +159,8 @@ public class PrescriptionDetailsActivity extends AppCompatActivity {
         txt_lbl_sub_diagnosis.setVisibility(View.GONE);
         txt_sub_diagnosis.setVisibility(View.GONE);
 
+        txt_lbl_serviceamout.setVisibility(View.GONE);
+        txt_serviceamout.setVisibility(View.GONE);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -160,6 +174,8 @@ public class PrescriptionDetailsActivity extends AppCompatActivity {
             Treatment_Done_by = extras.getString("Treatment_Done_by");
             image = extras.getString("image");
             selectedRadioButton = extras.getString("selectedRadioButton");
+            paymentmethod = extras.getString("paymentmethod");
+            servicecost = extras.getString("servicecost");
             Log.w(TAG,"AppointID :"+" "+appoinmentid);
             Log.w(TAG,"userid :"+" "+userid);
             Log.w(TAG,"doctorid :"+" "+doctor_id);
@@ -217,6 +233,17 @@ public class PrescriptionDetailsActivity extends AppCompatActivity {
             }
 
 
+
+        }
+
+        if(paymentmethod != null && paymentmethod.equalsIgnoreCase("Cash")){
+            txt_lbl_serviceamout.setVisibility(View.VISIBLE);
+            txt_serviceamout.setVisibility(View.VISIBLE);
+            txt_serviceamout.setText(servicecost);
+
+        } else{
+            txt_lbl_serviceamout.setVisibility(View.GONE);
+            txt_serviceamout.setVisibility(View.GONE);
 
         }
 
@@ -335,7 +362,7 @@ public class PrescriptionDetailsActivity extends AppCompatActivity {
             @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<PrescriptionCreateResponse> call, @NonNull Response<PrescriptionCreateResponse> response) {
-                avi_indicator.smoothToHide();
+               // avi_indicator.smoothToHide();
                 Log.w(TAG,"PrescriptionCreateResponse"+ "--->" + new Gson().toJson(response.body()));
 
 
@@ -399,8 +426,8 @@ public class PrescriptionDetailsActivity extends AppCompatActivity {
     }
 
     private void appoinmentCompleteResponseCall() {
-        avi_indicator.setVisibility(View.VISIBLE);
-        avi_indicator.smoothToShow();
+        //avi_indicator.setVisibility(View.VISIBLE);
+       // avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
         Call<AppoinmentCompleteResponse> call = apiInterface.appoinmentCompleteResponseCall(RestUtils.getContentType(), appoinmentCompleteRequest());
         Log.w(TAG,"AppoinmentCompleteResponse url  :%s"+" "+ call.request().url().toString());
@@ -411,13 +438,14 @@ public class PrescriptionDetailsActivity extends AppCompatActivity {
 
                 Log.w(TAG,"AppoinmentCompleteResponse"+ "--->" + new Gson().toJson(response.body()));
 
-                avi_indicator.smoothToHide();
+               // avi_indicator.smoothToHide();
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
+                        AppointmentCashRequestCall();
+                        //Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
 
-                        startActivity(new Intent(PrescriptionDetailsActivity.this, DoctorDashboardActivity.class));
+                        //startActivity(new Intent(PrescriptionDetailsActivity.this, DoctorDashboardActivity.class));
                     }
 
                 }
@@ -453,6 +481,58 @@ public class PrescriptionDetailsActivity extends AppCompatActivity {
         appoinmentCompleteRequest.setDoctor_comment(Doctor_Comments);
         Log.w(TAG,"appoinmentCompleteRequest"+ "--->" + new Gson().toJson(appoinmentCompleteRequest));
         return appoinmentCompleteRequest;
+    }
+
+ private void AppointmentCashRequestCall () {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<SuccessResponse> call = apiInterface.AppointmentCashRequestCall(RestUtils.getContentType(), appointmentCashRequest());
+        Log.w(TAG,"AppointmentCashRequestCall url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<SuccessResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
+
+                Log.w(TAG,"AppointmentCashRequestCall"+ "--->" + new Gson().toJson(response.body()));
+
+                avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
+
+                        startActivity(new Intent(PrescriptionDetailsActivity.this, DoctorDashboardActivity.class));
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull Throwable t) {
+
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"AppointmentCashRequestCall"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    private AppointmentCashRequest appointmentCashRequest() {
+        /*
+         * _id : 611cd34e0f35883dd3b7183f
+         * amount : 200
+         */
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
+
+        AppointmentCashRequest appointmentCashRequest = new AppointmentCashRequest();
+        appointmentCashRequest.set_id(appoinmentid);
+        appointmentCashRequest.setAmount(txt_serviceamout.getText().toString());
+        Log.w(TAG,"appointmentCashRequest"+ "--->" + new Gson().toJson(appointmentCashRequest));
+        return appointmentCashRequest;
     }
 
 

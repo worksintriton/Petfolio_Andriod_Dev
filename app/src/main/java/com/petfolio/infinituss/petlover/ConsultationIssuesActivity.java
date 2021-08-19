@@ -93,6 +93,10 @@ public class ConsultationIssuesActivity extends AppCompatActivity implements Vie
     private String SP_ava_Date;
     private String health_issue_title;
 
+    private String doctorname;
+    private String clinicname;
+    private String petname;
+
 
     @SuppressLint({"LogNotTimber", "SetTextI18n", "LongLogTag"})
     @Override
@@ -121,6 +125,9 @@ public class ConsultationIssuesActivity extends AppCompatActivity implements Vie
             Log.w(TAG,"amount : "+amount);
             communicationtype = extras.getString("communicationtype");
             petId = extras.getString("petId");
+            doctorname = extras.getString("doctorname");
+            clinicname = extras.getString("clinicname");
+            petname = extras.getString("petname");
             Log.w(TAG,"Bundle "+" doctorid : "+doctorid+" selectedTimeSlot : "+selectedTimeSlot+"communicationtype : "+communicationtype+" amount : "+amount+" fromactivity : "+fromactivity);
 
             /*PetServiceAppointment_Doctor_Date_Time_Activity*/
@@ -162,6 +169,9 @@ public class ConsultationIssuesActivity extends AppCompatActivity implements Vie
                     intent.putExtra("distance",distance);
                     intent.putExtra("fromactivity",fromactivity);
                     intent.putExtra("health_issue_title",health_issue_title);
+                    intent.putExtra("doctorname", doctorname);
+                    intent.putExtra("clinicname", clinicname);
+                    intent.putExtra("petname", petname);
                     startActivity(intent);
                 }
                 else {
@@ -175,6 +185,9 @@ public class ConsultationIssuesActivity extends AppCompatActivity implements Vie
                     intent.putExtra("fromto", fromto);
                     intent.putExtra("petId", petId);
                     intent.putExtra("health_issue_title", health_issue_title);
+                    intent.putExtra("doctorname", doctorname);
+                    intent.putExtra("clinicname", clinicname);
+                    intent.putExtra("petname", petname);
                     startActivity(intent);
                     Log.w(TAG, "communicationtype : " + communicationtype);
                 }
@@ -203,6 +216,9 @@ public class ConsultationIssuesActivity extends AppCompatActivity implements Vie
             intent.putExtra("selectedTimeSlot",selectedTimeSlot);
             intent.putExtra("distance",distance);
             intent.putExtra("fromactivity",fromactivity);
+            intent.putExtra("doctorname", doctorname);
+            intent.putExtra("clinicname", clinicname);
+            intent.putExtra("petname", petname);
             startActivity(intent);
         }
         else {
@@ -215,6 +231,9 @@ public class ConsultationIssuesActivity extends AppCompatActivity implements Vie
             intent.putExtra("communicationtype", communicationtype);
             intent.putExtra("fromto", fromto);
             intent.putExtra("petId", petId);
+            intent.putExtra("doctorname", doctorname);
+            intent.putExtra("clinicname", clinicname);
+            intent.putExtra("petname", petname);
             startActivity(intent);
         }
     }
@@ -296,7 +315,7 @@ public class ConsultationIssuesActivity extends AppCompatActivity implements Vie
 
     @SuppressLint("LogNotTimber")
     @Override
-    public void myPetsSelectListener(String Health_issue_title) {
+    public void myPetsSelectListener(String Health_issue_title,String name) {
         Log.w(TAG,"myPetsSelectListener : Health_issue_title "+Health_issue_title);
         if(Health_issue_title != null){
            // petId = petid;

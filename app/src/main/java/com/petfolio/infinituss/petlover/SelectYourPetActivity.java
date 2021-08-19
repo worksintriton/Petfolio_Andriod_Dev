@@ -378,7 +378,7 @@ public class SelectYourPetActivity extends AppCompatActivity implements View.OnC
 
     @SuppressLint("LogNotTimber")
     @Override
-    public void myPetsSelectListener(String petid) {
+    public void myPetsSelectListener(String petid, String petname) {
         Log.w(TAG,"myPetsSelectListener : petid "+petid);
         if(petid != null){
             petId = petid;
