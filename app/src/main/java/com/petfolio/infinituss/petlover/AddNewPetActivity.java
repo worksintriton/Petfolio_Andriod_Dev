@@ -190,6 +190,7 @@ public class AddNewPetActivity extends AppCompatActivity implements PetTypeSelec
     private String spid,catid,from;
     private String spuserid;
     private String selectedServiceTitle;
+    private String serviceprovidingcompanyname;
     private String petcolor;
     private double petweight;
     private String servicetime;
@@ -236,6 +237,7 @@ public class AddNewPetActivity extends AppCompatActivity implements PetTypeSelec
             from = extras.getString("from");
             spuserid = extras.getString("spuserid");
             selectedServiceTitle = extras.getString("selectedServiceTitle");
+            serviceprovidingcompanyname = extras.getString("serviceprovidingcompanyname");
             serviceamount = extras.getInt("serviceamount");
             servicetime = extras.getString("servicetime");
             SP_ava_Date = extras.getString("SP_ava_Date");

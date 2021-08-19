@@ -29,6 +29,11 @@ public class SPCreateAppointmentRequest {
      * mobile_type : Admin
      * sp_business_info : []
      * health_issue_title
+     * original_price : 100
+     * discount_price : 10
+     * total_price : 90
+     * coupon_status : String,
+     *  coupon_code : String,
      */
 
     private String sp_id;
@@ -55,6 +60,52 @@ public class SPCreateAppointmentRequest {
     private List<SpAttchedBean> sp_attched;
     private String date_and_time;
     private String health_issue_title;
+
+    private int original_price;
+    private int discount_price;
+    private int total_price;
+    private String coupon_status;
+    private String coupon_code;
+
+    public int getOriginal_price() {
+        return original_price;
+    }
+
+    public void setOriginal_price(int original_price) {
+        this.original_price = original_price;
+    }
+
+    public int getDiscount_price() {
+        return discount_price;
+    }
+
+    public void setDiscount_price(int discount_price) {
+        this.discount_price = discount_price;
+    }
+
+    public int getTotal_price() {
+        return total_price;
+    }
+
+    public void setTotal_price(int total_price) {
+        this.total_price = total_price;
+    }
+
+    public String getCoupon_status() {
+        return coupon_status;
+    }
+
+    public void setCoupon_status(String coupon_status) {
+        this.coupon_status = coupon_status;
+    }
+
+    public String getCoupon_code() {
+        return coupon_code;
+    }
+
+    public void setCoupon_code(String coupon_code) {
+        this.coupon_code = coupon_code;
+    }
 
     public String getHealth_issue_title() {
         return health_issue_title;

@@ -55,6 +55,43 @@ public class CartDetailsResponse {
     private String billing_address;
     private String payment_id ;
 
+    private int original_price;
+    private int coupon_discount_price;
+    private int total_price;
+    private String coupon_status;
+
+    public int getOriginal_price() {
+        return original_price;
+    }
+
+    public void setOriginal_price(int original_price) {
+        this.original_price = original_price;
+    }
+
+    public int getCoupon_discount_price() {
+        return coupon_discount_price;
+    }
+
+    public void setCoupon_discount_price(int coupon_discount_price) {
+        this.coupon_discount_price = coupon_discount_price;
+    }
+
+    public int getTotal_price() {
+        return total_price;
+    }
+
+    public void setTotal_price(int total_price) {
+        this.total_price = total_price;
+    }
+
+    public String getCoupon_status() {
+        return coupon_status;
+    }
+
+    public void setCoupon_status(String coupon_status) {
+        this.coupon_status = coupon_status;
+    }
+
     public String getPayment_id() {
         return payment_id;
     }

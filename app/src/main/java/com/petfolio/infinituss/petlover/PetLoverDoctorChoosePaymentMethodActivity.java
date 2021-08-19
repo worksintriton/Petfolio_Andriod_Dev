@@ -217,6 +217,8 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
 
         img_sos.setVisibility(View.GONE);
         img_cart.setVisibility(View.GONE);
+        img_notification.setVisibility(View.GONE);
+        img_profile.setVisibility(View.GONE);
         avi_indicator.setVisibility(View.GONE);
 
         viewapply.setVisibility(View.GONE);
@@ -346,7 +348,7 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
             txt_total_amount.setText("\u20B9 "+Amount);
             Total_price = Amount;
         }
-        if(txt_booked_date != null){
+        if(Booking_date_time != null){
             txt_booked_date.setText(Booking_date_time);
         }
         if(Appointment_types != null){
@@ -357,9 +359,9 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                if(btn_apply_coupon.getText().toString().equalsIgnoreCase("Clear")){
+                if(btn_apply_coupon.getText().toString().equalsIgnoreCase("Remove")){
                     edt_coupon.setText("");
-                    btn_apply_coupon.setText("Apply Coupon");
+                    btn_apply_coupon.setText("Apply");
                     viewapply.setVisibility(View.GONE);
                     ll_cost.setVisibility(View.GONE);
                     ll_discount.setVisibility(View.GONE);
@@ -370,7 +372,7 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
                     Discount_price = 0;
                     Total_price = Amount;
 
-                }else if(btn_apply_coupon.getText().toString().equalsIgnoreCase("Apply Coupon")){
+                }else if(btn_apply_coupon.getText().toString().equalsIgnoreCase("Apply")){
                     if(edt_coupon.getText().toString().isEmpty()){
                         edt_coupon.setError("Please enter the coupon code");
                         edt_coupon.requestFocus();
@@ -460,7 +462,9 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        btn_apply_coupon.setText("Clear");
+                        Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
+
+                        btn_apply_coupon.setText("Remove");
                         viewapply.setVisibility(View.VISIBLE);
                         ll_cost.setVisibility(View.VISIBLE);
                         ll_discount.setVisibility(View.VISIBLE);

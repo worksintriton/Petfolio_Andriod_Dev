@@ -291,6 +291,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rl_homes)
     RelativeLayout rl_homes;
+    private String petage;
 
 
     @SuppressLint("LongLogTag")
@@ -483,6 +484,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
                                  weight = String.valueOf(response.body().getData().getPet_id().getPet_weight());
 
                                  pet_dob = response.body().getData().getPet_id().getPet_dob();
+                                 petage = response.body().getData().getPet_id().getPet_age();
 
                             }
 
@@ -490,8 +492,8 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
 
 
 
-                            if(pet_dob != null){
-                                txt_age.setText(pet_dob);
+                            if(petage != null){
+                                txt_age.setText(petage);
                                /* String[] separated = pet_dob.split("-");
                                 String day = separated[0];
                                 String month = separated[1];

@@ -212,6 +212,9 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
             grand_total = extras.getInt("grand_total");
 
+            Log.w(TAG,"bundle grand_total : "+grand_total);
+
+
             if (grand_total!=0){
 
                 txt_grand_total.setText("\u20B9 "+ grand_total);

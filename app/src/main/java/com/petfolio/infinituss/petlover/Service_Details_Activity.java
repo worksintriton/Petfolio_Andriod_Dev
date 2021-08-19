@@ -590,6 +590,7 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
         intent.putExtra("from",from);
         intent.putExtra("spuserid",spuserid);
         intent.putExtra("selectedServiceTitle",selectedServiceTitle);
+        intent.putExtra("serviceprovidingcompanyname",serviceprovidingcompanyname);
         intent.putExtra("serviceamount",serviceamount);
         intent.putExtra("servicetime",servicetime);
         intent.putExtra("distance",distance);
@@ -695,6 +696,7 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
                         if(response.body().getData().getRating() != 0) {
                              ratingcount = response.body().getData().getRating();
                         }
+
 //                        if(response.body().getData().getComments() != 0) {
 //                             comments = response.body().getData().getComments();
 //                        }

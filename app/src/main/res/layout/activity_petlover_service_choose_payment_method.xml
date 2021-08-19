@@ -44,18 +44,19 @@
                     android:id="@+id/textView5"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/shop_name"
+                    android:text="@string/service_name"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/txt_shop_name"
+                    android:id="@+id/txt_servicename"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:textColor="@color/new_txt_color"
                     android:textSize="14sp"
+                    android:layout_marginStart="5dp"
                     />
 
             </LinearLayout>
@@ -70,12 +71,12 @@
                     android:id="@+id/textView6"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/service_name"
+                    android:text="@string/business_name"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/txt_servicename"
+                    android:id="@+id/txt_business_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
@@ -140,6 +141,37 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bookingdate"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txt_booked_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/new_txt_color"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/vertical_dotted_line"
+                android:layerType="software" />
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginTop="10dp">
@@ -164,6 +196,7 @@
                         android:text="@string/online"
                         android:textColor="@color/new_txt_color"
                         android:textSize="14sp"
+                        android:checked="true"
                         />
 
                     <RadioButton
@@ -267,13 +300,15 @@
                     android:layout_height="10dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/vertical_dotted_line"
-                    android:layerType="software" />
+                    android:layerType="software"
+                    android:id="@+id/viewapply"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:id="@+id/ll_cost">
 
                     <TextView
                         android:id="@+id/txt_lbl_subtotal"
@@ -305,7 +340,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:id="@+id/ll_discount">
 
                     <TextView
                         android:layout_width="0dp"
@@ -339,14 +375,16 @@
                     android:layout_height="10dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/vertical_dotted_line"
-                    android:layerType="software" />
+                    android:layerType="software"
+                    android:id="@+id/viewTotalamout"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:id="@+id/ll_totalamount">
 
                     <TextView
                         android:layout_width="0dp"
@@ -388,12 +426,12 @@
         android:layout_margin="20dp">
 
         <Button
-            android:id="@+id/btn_make_payment"
+            android:id="@+id/btn_bookappointment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/new_rounded_corner_btn"
             android:fontFamily="@font/futuramediumbt"
-            android:text="@string/make_payment"
+            android:text="@string/book_appointment"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/normal_text_size_for_header" />
@@ -406,7 +444,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="gone"
+        android:visibility="visible"
         app:indicatorColor="@color/new_light_green"
         app:indicatorName="LineSpinFadeLoaderIndicator" />
 

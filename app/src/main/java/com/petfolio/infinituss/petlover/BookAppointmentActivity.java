@@ -322,6 +322,8 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
         img_sos.setVisibility(View.GONE);
         img_cart.setVisibility(View.GONE);
+        img_notification.setVisibility(View.GONE);
+        img_profile.setVisibility(View.GONE);
 
         img_notification.setOnClickListener(new View.OnClickListener() {
             @Override

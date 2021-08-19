@@ -30,6 +30,7 @@ import com.petfolio.infinituss.adapter.MyPetsListAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.interfaces.MyPetsSelectListener;
+import com.petfolio.infinituss.requestpojo.PetAppointmentCreateRequest;
 import com.petfolio.infinituss.requestpojo.PetListRequest;
 import com.petfolio.infinituss.requestpojo.SPCreateAppointmentRequest;
 import com.petfolio.infinituss.requestpojo.SPNotificationSendRequest;
@@ -115,6 +116,7 @@ public class SelectYourPetActivity extends AppCompatActivity implements View.OnC
     private String spid,catid,from;
     private String spuserid;
     private String selectedServiceTitle;
+    private String serviceprovidingcompanyname;
     private String petcolor;
     private double petweight;
     private String servicetime;
@@ -124,6 +126,9 @@ public class SelectYourPetActivity extends AppCompatActivity implements View.OnC
     private String SP_ava_Date;
     private Dialog alertDialog;
     private Dialog dialog;
+    private String petname;
+
+
 
 
     @SuppressLint({"LogNotTimber", "SetTextI18n"})
@@ -163,6 +168,7 @@ public class SelectYourPetActivity extends AppCompatActivity implements View.OnC
             from = extras.getString("from");
             spuserid = extras.getString("spuserid");
             selectedServiceTitle = extras.getString("selectedServiceTitle");
+            serviceprovidingcompanyname = extras.getString("serviceprovidingcompanyname");
             serviceamount = extras.getInt("serviceamount");
             servicetime = extras.getString("servicetime");
             SP_ava_Date = extras.getString("SP_ava_Date");
@@ -182,12 +188,17 @@ public class SelectYourPetActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onClick(View view) {
 
-                if(serviceamount != 0) {
+                spCreateAppointmentRequest1();
+
+
+              /*  if(serviceamount != 0) {
                     startPayment();
                 } else if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
                     spCreateAppointmentResponseCall();
 
-                }
+                }*/
+
+
                 /*if(fromactivity != null && fromactivity.equalsIgnoreCase("PetServiceAppointment_Doctor_Date_Time_Activity")){
                     Intent intent = new Intent(getApplicationContext(),ServiceBookAppointmentActivity.class);
                     intent.putExtra("spid",spid);
@@ -231,6 +242,7 @@ public class SelectYourPetActivity extends AppCompatActivity implements View.OnC
                     intent.putExtra("from",from);
                     intent.putExtra("spuserid",spuserid);
                     intent.putExtra("selectedServiceTitle",selectedServiceTitle);
+                    intent.putExtra("serviceprovidingcompanyname",serviceprovidingcompanyname);
                     intent.putExtra("serviceamount",serviceamount);
                     intent.putExtra("servicetime",servicetime);
                     intent.putExtra("SP_ava_Date",SP_ava_Date);
@@ -272,6 +284,7 @@ public class SelectYourPetActivity extends AppCompatActivity implements View.OnC
             intent.putExtra("from",from);
             intent.putExtra("spuserid",spuserid);
             intent.putExtra("selectedServiceTitle",selectedServiceTitle);
+            intent.putExtra("serviceprovidingcompanyname",serviceprovidingcompanyname);
             intent.putExtra("serviceamount",serviceamount);
             intent.putExtra("servicetime",servicetime);
             intent.putExtra("SP_ava_Date",SP_ava_Date);
@@ -286,6 +299,7 @@ public class SelectYourPetActivity extends AppCompatActivity implements View.OnC
             intent.putExtra("from",from);
             intent.putExtra("spuserid",spuserid);
             intent.putExtra("selectedServiceTitle",selectedServiceTitle);
+            intent.putExtra("serviceprovidingcompanyname",serviceprovidingcompanyname);
             intent.putExtra("serviceamount",serviceamount);
             intent.putExtra("servicetime",servicetime);
             intent.putExtra("SP_ava_Date",SP_ava_Date);
@@ -378,10 +392,11 @@ public class SelectYourPetActivity extends AppCompatActivity implements View.OnC
 
     @SuppressLint("LogNotTimber")
     @Override
-    public void myPetsSelectListener(String petid, String petname) {
+    public void myPetsSelectListener(String petid, String pet_name) {
         Log.w(TAG,"myPetsSelectListener : petid "+petid);
         if(petid != null){
             petId = petid;
+            petname = pet_name;
             ll_save_continue.setVisibility(View.VISIBLE);
         }else{
             ll_save_continue.setVisibility(View.GONE);
@@ -594,6 +609,113 @@ public class SelectYourPetActivity extends AppCompatActivity implements View.OnC
         spCreateAppointmentRequest.setDate_and_time(currentDateandTime);
         spCreateAppointmentRequest.setHealth_issue_title("");
         Log.w(TAG,"spCreateAppointmentRequest"+ "--->" + new Gson().toJson(spCreateAppointmentRequest));
+        return spCreateAppointmentRequest;
+    }
+    private SPCreateAppointmentRequest spCreateAppointmentRequest1() {
+        /*
+         * sp_id : 5ff7ef9b1c72093650a13a10
+         * booking_date : 23/10/2020
+         * booking_time : 12:00 AM
+         * booking_date_time : 23/10/2020 12:00 AM
+         * user_id : 5fd841a67aa4cc1c6a1e5636
+         * pet_id : 5fdc46be1e5d8b0eb31c3699
+         * additional_info : this if is for the comments
+         * sp_attched : []
+         * sp_feedback :
+         * sp_rate :
+         * user_feedback :
+         * user_rate :
+         * display_date : 23/10/2020 10:10 AM
+         * server_date_time : 23/10/2020 10:10 AM
+         * payment_id : 12345
+         * payment_method : Card
+         * service_name : Grooming
+         * service_amount : 200
+         * service_time : 15 mins
+         * completed_at :
+         * missed_at :
+         * mobile_type : Admin
+         */
+
+
+
+        @SuppressLint("SimpleDateFormat") DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy");
+        @SuppressLint("SimpleDateFormat") DateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        Date date = null;
+        try {
+            date = inputFormat.parse(SP_ava_Date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String outputDateStr = outputFormat.format(date);
+        String outputTimeStr = null;
+
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat h_mm_a   = new SimpleDateFormat("hh:mm aa");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat hh_mm_ss = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
+        try {
+            Date d1 = h_mm_a.parse(selectedTimeSlot);
+            outputTimeStr =hh_mm_ss.format(d1);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String displaydateandtime = outputDateStr+" "+outputTimeStr;
+
+        List<SPCreateAppointmentRequest.SpAttchedBean> sp_attched = new ArrayList<>();
+
+
+        SPCreateAppointmentRequest spCreateAppointmentRequest = new SPCreateAppointmentRequest();
+        spCreateAppointmentRequest.setSp_id(spuserid);
+        spCreateAppointmentRequest.setBooking_date(SP_ava_Date);
+        spCreateAppointmentRequest.setBooking_time(selectedTimeSlot);
+        spCreateAppointmentRequest.setBooking_date_time(SP_ava_Date+" "+selectedTimeSlot);
+        spCreateAppointmentRequest.setUser_id(userid);
+        spCreateAppointmentRequest.setPet_id(petId);
+        spCreateAppointmentRequest.setAdditional_info("");
+        spCreateAppointmentRequest.setSp_attched(sp_attched);
+        spCreateAppointmentRequest.setSp_feedback("");
+        spCreateAppointmentRequest.setSp_rate("");
+        spCreateAppointmentRequest.setUser_feedback("");
+        spCreateAppointmentRequest.setUser_rate("0");
+        spCreateAppointmentRequest.setDisplay_date(displaydateandtime);
+        spCreateAppointmentRequest.setServer_date_time("");
+        spCreateAppointmentRequest.setPayment_id(Payment_id);
+        spCreateAppointmentRequest.setPayment_method("Online");
+        spCreateAppointmentRequest.setService_name(selectedServiceTitle);
+        spCreateAppointmentRequest.setService_amount(String.valueOf(serviceamount));
+        spCreateAppointmentRequest.setService_time(servicetime);
+        spCreateAppointmentRequest.setCompleted_at("");
+        spCreateAppointmentRequest.setMissed_at("");
+        spCreateAppointmentRequest.setMobile_type("Android");
+        spCreateAppointmentRequest.setDate_and_time(currentDateandTime);
+        spCreateAppointmentRequest.setHealth_issue_title("");
+        Log.w(TAG,"spCreateAppointmentRequest"+ "--->" + new Gson().toJson(spCreateAppointmentRequest));
+
+        /*ArrayList<SPCreateAppointmentRequest> SPCreateAppointmentRequestList = new ArrayList<>();
+        SPCreateAppointmentRequestList.add(spCreateAppointmentRequest);*/
+
+
+        Intent intent = new Intent(getApplicationContext(),PetLoverServiceChoosePaymentMethodActivity.class);
+      //  intent.putExtra("SPCreateAppointmentRequestList",SPCreateAppointmentRequestList);
+        intent.putExtra("spid",spid);
+        intent.putExtra("catid",catid);
+        intent.putExtra("from",from);
+        intent.putExtra("spuserid",spuserid);
+        intent.putExtra("selectedServiceTitle",selectedServiceTitle);
+        intent.putExtra("serviceprovidingcompanyname",serviceprovidingcompanyname);
+        intent.putExtra("serviceamount",serviceamount);
+        intent.putExtra("servicetime",servicetime);
+        intent.putExtra("SP_ava_Date",SP_ava_Date);
+        intent.putExtra("selectedTimeSlot",selectedTimeSlot);
+        intent.putExtra("distance",distance);
+        intent.putExtra("fromactivity",fromactivity);
+        intent.putExtra("petId", petId);
+        intent.putExtra("petname", petname);
+        startActivity(intent);
+        Log.w(TAG, "petId : " + petId);
         return spCreateAppointmentRequest;
     }
 

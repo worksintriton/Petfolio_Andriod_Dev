@@ -113,6 +113,7 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
     private String spid,catid,from;
     private String spuserid;
     private String selectedServiceTitle;
+    private String serviceprovidingcompanyname;
 
     private String servicetime;
     private int serviceamount;
@@ -182,6 +183,7 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
             from = extras.getString("from");
             spuserid = extras.getString("spuserid");
             selectedServiceTitle = extras.getString("selectedServiceTitle");
+            serviceprovidingcompanyname = extras.getString("serviceprovidingcompanyname");
             serviceamount = extras.getInt("serviceamount");
             servicetime = extras.getString("servicetime");
             distance = extras.getInt("distance");
@@ -531,6 +533,7 @@ public class PetServiceAppointment_Doctor_Date_Time_Activity extends AppCompatAc
         intent.putExtra("from",from);
         intent.putExtra("spuserid",spuserid);
         intent.putExtra("selectedServiceTitle",selectedServiceTitle);
+        intent.putExtra("serviceprovidingcompanyname",serviceprovidingcompanyname);
         intent.putExtra("serviceamount",serviceamount);
         intent.putExtra("servicetime",servicetime);
         intent.putExtra("SP_ava_Date",SP_ava_Date);
