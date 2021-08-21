@@ -548,7 +548,9 @@
             android:name=".doctor.ManageAddressDoctorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" /> <!-- Service Provider -->
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- Service Provider -->
         <activity
             android:name=".serviceprovider.ServiceProviderRegisterFormActivity"
             android:screenOrientation="portrait"
@@ -678,7 +680,16 @@
             android:name=".serviceprovider.shop.SPProductsFavActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" /> <!-- Vendor -->
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".serviceprovider.ServiceAppointment_Doctor_Date_Time_Activity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
+
+        <!-- Vendor -->
         <activity
             android:name=".vendor.VendorRegisterFormActivity"
             android:screenOrientation="portrait"

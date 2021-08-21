@@ -587,5 +587,6 @@
 
 
     <string name="successfullycancelled">Successfully Cancelled</string>
+    <string name="turn_off">Turn off</string>
 
 </resources>

@@ -51,6 +51,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -100,11 +102,17 @@ public class SP_Holiday_Activity extends AppCompatActivity implements OnItemDele
     private Dialog dialog;
     private String userid;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_turnoff)
+    TextView txt_turnoff;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctor_holiday);
+        setContentView(R.layout.activity_sp_holiday);
         Log.w(TAG,"onCreateView");
+
+        ButterKnife.bind(this);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         avi_indicator = findViewById(R.id.avi_indicator);
@@ -140,6 +148,14 @@ public class SP_Holiday_Activity extends AppCompatActivity implements OnItemDele
             public void onClick(View v) {
                 onBackPressed();
 
+            }
+        });
+
+
+        txt_turnoff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),ServiceAppointment_Doctor_Date_Time_Activity.class));
             }
         });
 

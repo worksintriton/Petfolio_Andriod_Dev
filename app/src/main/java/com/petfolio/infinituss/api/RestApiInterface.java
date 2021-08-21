@@ -764,4 +764,15 @@ public interface RestApiInterface {
     Call<CouponCodeListResponse> CouponCodeListResponseCall(@Header("Content-Type") String type, @Body CouponCodeListRequest couponCodeListRequest);
 
 
+    /*SP available timeslot*/
+    @POST("sp_available_time/slot/get_sp_new")
+    Call<SPAvailableTimeResponse> spAvailableTimeNewResponseCall(@Header("Content-Type") String type, @Body PetDoctorAvailableTimeRequest petDoctorAvailableTimeRequest);
+
+
+    /*SP turn off update*/
+    @POST("block_slot/create")
+    Call<SuccessResponse> sptimeslotturnoffUpdateResonsecall(@Header("Content-Type") String type, @Body SPUpdateTurnoffRequest spUpdateTurnoffRequest);
+
+
+
 }

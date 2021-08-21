@@ -137,7 +137,15 @@ public class SPAvailableTimeResponse {
              */
 
             private String time;
+            private boolean book_status;
 
+            public boolean isBook_status() {
+                return book_status;
+            }
+
+            public void setBook_status(boolean book_status) {
+                this.book_status = book_status;
+            }
 
             public String getTime() {
                 return time;
