@@ -28,18 +28,23 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
+import com.petfolio.infinituss.adapter.MyCouponsTextAdapter;
 import com.petfolio.infinituss.adapter.PetNewAppointmentAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.interfaces.OnAppointmentCancel;
+import com.petfolio.infinituss.interfaces.OnAppointmentSuccessfullyCancel;
 import com.petfolio.infinituss.petlover.PetMyappointmentsActivity;
 import com.petfolio.infinituss.requestpojo.AppoinmentCancelledRequest;
 import com.petfolio.infinituss.requestpojo.NotificationSendRequest;
 import com.petfolio.infinituss.requestpojo.PetLoverAppointmentRequest;
+import com.petfolio.infinituss.requestpojo.RefundCouponCreateRequest;
 import com.petfolio.infinituss.requestpojo.SPNotificationSendRequest;
 import com.petfolio.infinituss.responsepojo.AppoinmentCancelledResponse;
+import com.petfolio.infinituss.responsepojo.CouponCodeTextResponse;
 import com.petfolio.infinituss.responsepojo.NotificationSendResponse;
 import com.petfolio.infinituss.responsepojo.PetAppointmentResponse;
+import com.petfolio.infinituss.responsepojo.SuccessResponse;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
 import com.petfolio.infinituss.utils.ConnectionDetector;
 import com.petfolio.infinituss.utils.RestUtils;
@@ -50,6 +55,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -60,7 +66,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentPetNewAppointment extends Fragment implements OnAppointmentCancel, View.OnClickListener {
+public class FragmentPetNewAppointment extends Fragment implements OnAppointmentCancel, View.OnClickListener, OnAppointmentSuccessfullyCancel {
     private String TAG = "FragmentPetNewAppointment";
 
     @SuppressLint("NonConstantResourceId")
@@ -97,6 +103,15 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
     private List<PetAppointmentResponse.DataBean> newAppointmentResponseList;
     private Dialog dialog;
     private String doctorid;
+
+    TextView txt_no_records_coupon;
+    RecyclerView rv_successfully_cancelled;
+    private List<CouponCodeTextResponse.DataBean> myCouponsTextList;
+    private String ServiceCost ="";
+    private String Appointmenttype = "";
+    private String Paymentmethod;
+    private String Appointmetnt_id;
+    private boolean isrefund;
 
 
     public FragmentPetNewAppointment() {
@@ -265,9 +280,12 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
     }
 
     @Override
-    public void onAppointmentCancel(String id,String appointmenttype,String userid, String doctorid,String appointmentid,String spid) {
+    public void onAppointmentCancel(String id,String appointmenttype,String userid, String doctorid,String appointmentid,String spid,String cost,String paymentmethod) {
+        Paymentmethod =paymentmethod;
+        Appointmetnt_id =id;
         if(id != null){
             showStatusAlert(id,appointmenttype,userid,doctorid,appointmentid,spid);
+            ServiceCost = cost;
         }
     }
 
@@ -287,9 +305,13 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
                 public void onClick(View view) {
                     dialog.dismiss();
                     if(appointmenttype != null && appointmenttype.equalsIgnoreCase("Doctor")){
-                        appoinmentCancelledResponseCall(id,appointmenttype,userid,doctorid,appointmentid);
+                        Appointmenttype = "1";
+                       appoinmentCancelledResponseCall(id,appointmenttype,userid,doctorid,appointmentid,"1");
+                       // showSuccessfullyCancelled(Appointmenttype);
                     } else if(appointmenttype != null && appointmenttype.equalsIgnoreCase("SP")){
-                        spappoinmentCancelledResponseCall(id,appointmenttype,userid,doctorid,appointmentid,spid);
+                        Appointmenttype = "2";
+                        spappoinmentCancelledResponseCall(id,appointmenttype,userid,doctorid,appointmentid,spid,"2");
+                        //showSuccessfullyCancelled(Appointmenttype);
                     }
 
 
@@ -318,6 +340,33 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
 
 
     }
+    private void showSuccessfullyCancelled(String type) {
+        try {
+            dialog = new Dialog(mContext);
+            dialog.setContentView(R.layout.alert_successfulley_cancelled_layout);
+            dialog.setCancelable(false);
+            txt_no_records_coupon = dialog.findViewById(R.id.txt_no_records);
+            rv_successfully_cancelled = dialog.findViewById(R.id.rv_successfully_cancelled);
+            txt_no_records_coupon.setVisibility(View.GONE);
+            rv_successfully_cancelled.setVisibility(View.GONE);
+
+            if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
+                CouponCodeTextResponseCall();
+            }
+
+
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
 
 
     @Override
@@ -329,7 +378,8 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
         }
     }
 
-    private void appoinmentCancelledResponseCall(String id,String appointmenttype,String userid, String doctorid,String appointmentid) {
+    @SuppressLint("LogNotTimber")
+    private void appoinmentCancelledResponseCall(String id, String appointmenttype, String userid, String doctorid, String appointmentid, String type) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
@@ -337,6 +387,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
         Log.w(TAG,"appoinmentCancelledResponseCall url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<AppoinmentCancelledResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<AppoinmentCancelledResponse> call, @NonNull Response<AppoinmentCancelledResponse> response) {
 
@@ -346,7 +397,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        notificationSendResponseCall(userid,doctorid,appointmentid);
+                        notificationSendResponseCall(userid,doctorid,appointmentid,type);
                     }
                     else{
                         //showErrorLoading(response.body().getMessage());
@@ -367,7 +418,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
     }
 
     @SuppressLint("LogNotTimber")
-    private void spappoinmentCancelledResponseCall(String id, String appointmenttype, String userid, String doctorid, String appointmentid, String spid) {
+    private void spappoinmentCancelledResponseCall(String id, String appointmenttype, String userid, String doctorid, String appointmentid, String spid, String s) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
@@ -430,7 +481,8 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
         return appoinmentCancelledRequest;
     }
 
-    private void notificationSendResponseCall(String userid, String doctorid, String appointmentid) {
+    @SuppressLint("LogNotTimber")
+    private void notificationSendResponseCall(String userid, String doctorid, String appointmentid, String type) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
@@ -439,6 +491,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<NotificationSendResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NonNull Call<NotificationSendResponse> call, @NonNull Response<NotificationSendResponse> response) {
                 avi_indicator.smoothToHide();
@@ -447,7 +500,13 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        startActivity(new Intent(mContext, PetMyappointmentsActivity.class));
+                        if(Paymentmethod != null && Paymentmethod.equalsIgnoreCase("Online")){
+                            showSuccessfullyCancelled(type);
+                        }else{
+                            startActivity(new Intent(mContext, PetMyappointmentsActivity.class));
+                        }
+
+
 
                     }
 
@@ -509,7 +568,12 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        startActivity(new Intent(mContext, PetMyappointmentsActivity.class));
+                        if(Paymentmethod != null && Paymentmethod.equalsIgnoreCase("Online")){
+                            showSuccessfullyCancelled(type);
+                        }else{
+                            startActivity(new Intent(mContext, PetMyappointmentsActivity.class));
+                        }
+
 
                     }
 
@@ -551,6 +615,206 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
 
         Log.w(TAG,"spNotificationSendRequest"+ "--->" + new Gson().toJson(spNotificationSendRequest));
         return spNotificationSendRequest;
+    }
+
+
+    @SuppressLint("LogNotTimber")
+    private void CouponCodeTextResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<CouponCodeTextResponse> call = apiInterface.CouponCodeTextResponseCall(RestUtils.getContentType());
+        Log.w(TAG,"CouponCodeTextResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<CouponCodeTextResponse>() {
+            @SuppressLint({"SetTextI18n", "LogNotTimber"})
+            @Override
+            public void onResponse(@NonNull Call<CouponCodeTextResponse> call, @NonNull Response<CouponCodeTextResponse> response) {
+
+                Log.w(TAG,"CouponCodeTextResponse"+ "--->" + new Gson().toJson(response.body()));
+
+                avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        if(response.body().getData() != null && response.body().getData().size()>0){
+                            txt_no_records_coupon.setVisibility(View.GONE);
+                            rv_successfully_cancelled.setVisibility(View.VISIBLE);
+                            myCouponsTextList = response.body().getData();
+                            setViewCouponText();
+
+                        }
+                        else{
+                            rv_successfully_cancelled.setVisibility(View.GONE);
+                            txt_no_records_coupon.setVisibility(View.VISIBLE);
+                            txt_no_records_coupon.setText("No data found");
+
+                        }
+
+
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<CouponCodeTextResponse> call, @NonNull Throwable t) {
+
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"CouponCodeTextResponse flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    private void setViewCouponText() {
+        rv_successfully_cancelled.setLayoutManager(new LinearLayoutManager(mContext));
+        rv_successfully_cancelled.setItemAnimator(new DefaultItemAnimator());
+        MyCouponsTextAdapter myCouponsTextAdapter = new MyCouponsTextAdapter(mContext, myCouponsTextList,ServiceCost,this);
+        rv_successfully_cancelled.setAdapter(myCouponsTextAdapter);
+
+    }
+
+    @Override
+    public void onAppointmentSuccessfullyCancel(String refund, String cost) {
+        Log.w(TAG,"onAppointmentSuccessfullyCancel : "+"refund : "+refund+"cost : "+cost);
+        if(refund != null && !refund.isEmpty()){
+            RefundCouponCreateRequestCall(refund,cost);
+        }else{
+            RefundCouponBankCreateRequestCall(refund,cost);
+
+        }
+
+    }
+
+    private void RefundCouponCreateRequestCall(String refund, String cost) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<SuccessResponse> call = ApiService.RefundCouponCreateRequestCall(RestUtils.getContentType(),refundCouponCreateRequest(refund,cost));
+
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<SuccessResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"RefundCouponCreateRequestCall"+ "--->" + new Gson().toJson(response.body()));
+
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        dialog.dismiss();
+                        startActivity(new Intent(mContext, PetMyappointmentsActivity.class));
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+
+                Log.w(TAG,"RefundCouponCreateRequestCall flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    private RefundCouponCreateRequest refundCouponCreateRequest(String refund, String cost) {
+
+        /*
+         * created_by : User
+         * coupon_type : 1
+         * code : REF100
+         * amount : 100
+         * user_details : 123123
+         * used_status : Not Used
+         */
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+        String currentDateandTime = simpleDateFormat.format(new Date());
+
+
+
+        RefundCouponCreateRequest refundCouponCreateRequest = new RefundCouponCreateRequest();
+        refundCouponCreateRequest.setCreated_by("User");
+        refundCouponCreateRequest.setCoupon_type(Appointmenttype);
+        refundCouponCreateRequest.setCode("REF"+cost);
+        refundCouponCreateRequest.setAmount(Integer.parseInt(cost));
+        refundCouponCreateRequest.setUser_details(userid);
+        refundCouponCreateRequest.setUsed_status("Not Used");
+
+
+        Log.w(TAG,"refundCouponCreateRequest"+ "--->" + new Gson().toJson(refundCouponCreateRequest));
+        return refundCouponCreateRequest;
+    }
+
+    private void RefundCouponBankCreateRequestCall(String refund, String cost) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<SuccessResponse> call = ApiService.RefundCouponCreateRequestCall(RestUtils.getContentType(),refundCouponCreateRequest1(refund,cost));
+
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<SuccessResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"RefundCouponCreateRequestCall"+ "--->" + new Gson().toJson(response.body()));
+
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        dialog.dismiss();
+                        startActivity(new Intent(mContext, PetMyappointmentsActivity.class));
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+
+                Log.w(TAG,"RefundCouponCreateRequestCall flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    private RefundCouponCreateRequest refundCouponCreateRequest1(String refund, String cost) {
+
+        /*
+         * created_by : User
+         * coupon_type : 1
+         * code : REF100
+         * amount : 100
+         * user_details : 123123
+         * used_status : Not Used
+         */
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+        String currentDateandTime = simpleDateFormat.format(new Date());
+
+
+
+        RefundCouponCreateRequest refundCouponCreateRequest = new RefundCouponCreateRequest();
+        refundCouponCreateRequest.setCreated_by("");
+        refundCouponCreateRequest.setCoupon_type(Appointmenttype);
+        refundCouponCreateRequest.setCode("Bank");
+        refundCouponCreateRequest.setAmount(0);
+        refundCouponCreateRequest.setUser_details(Appointmetnt_id);
+        refundCouponCreateRequest.setUsed_status("");
+
+
+        Log.w(TAG,"refundCouponCreateRequest"+ "--->" + new Gson().toJson(refundCouponCreateRequest));
+        return refundCouponCreateRequest;
     }
 
 }

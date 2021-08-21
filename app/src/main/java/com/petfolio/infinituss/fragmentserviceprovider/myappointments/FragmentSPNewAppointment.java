@@ -236,7 +236,7 @@ public class FragmentSPNewAppointment extends Fragment implements OnAppointmentC
 
 
     @Override
-    public void onAppointmentCancel(String id,String appointmenttype,String userid, String doctorid,String appointmentid,String spid) {
+    public void onAppointmentCancel(String id,String appointmenttype,String userid, String doctorid,String appointmentid,String spid,String cost,String paymentmethod) {
         if(id != null){
             Log.w(TAG,"userid : "+userid+" spid :"+doctorid+"appointmentid : "+appointmentid);
             showStatusAlert(id,appointmenttype,userid,doctorid,appointmentid,spid);

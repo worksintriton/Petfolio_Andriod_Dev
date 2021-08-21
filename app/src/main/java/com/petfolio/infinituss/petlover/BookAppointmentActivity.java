@@ -1642,7 +1642,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
             dialog = new Dialog(BookAppointmentActivity.this);
             dialog.setContentView(R.layout.alert_manage_addresses_layout);
             dialog.setCancelable(false);
-             txt_no_records = dialog.findViewById(R.id.txt_no_records);
+            txt_no_records = dialog.findViewById(R.id.txt_no_records);
             txt_savedaddress = dialog.findViewById(R.id.txt_savedaddress);
             rv_manage_address = dialog.findViewById(R.id.rv_manage_address);
             btn_use_this_addreess = dialog.findViewById(R.id.btn_use_this_addreess);

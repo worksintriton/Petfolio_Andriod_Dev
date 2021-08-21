@@ -111,6 +111,15 @@ public class PetAppointmentResponse {
         private String user_id;
         private String doctor_id;
         private String sp_id;
+        private String payment_method;
+
+        public String getPayment_method() {
+            return payment_method;
+        }
+
+        public void setPayment_method(String payment_method) {
+            this.payment_method = payment_method;
+        }
 
         public String getUser_id() {
             return user_id;

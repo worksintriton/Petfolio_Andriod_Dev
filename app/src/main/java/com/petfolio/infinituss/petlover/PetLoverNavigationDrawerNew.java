@@ -208,6 +208,7 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
                     return true;
 
                 case R.id.nav_item_four:
+                    gotoMyCoupons();
                     return true;
 
                 case R.id.nav_item_five:
@@ -238,6 +239,11 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
 
             }
         });
+
+    }
+
+    private void gotoMyCoupons() {
+        startActivity(new Intent(getApplicationContext(), MyCouponsActivity.class));
 
     }
 

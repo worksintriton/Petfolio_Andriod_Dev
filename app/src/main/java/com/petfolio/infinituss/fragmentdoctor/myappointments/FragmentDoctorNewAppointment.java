@@ -235,7 +235,7 @@ public class FragmentDoctorNewAppointment extends Fragment implements OnAppointm
 
 
     @Override
-    public void onAppointmentCancel(String id,String appointmenttype,String userid, String doctorid,String appointmentid, String spid) {
+    public void onAppointmentCancel(String id,String appointmenttype,String userid, String doctorid,String appointmentid, String spid, String cost,String paymentmethod) {
         if(id != null){
             showStatusAlert(id,appointmenttype,userid,doctorid,appointmentid);
         }

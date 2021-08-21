@@ -161,6 +161,11 @@ public class ShippingAddressSPActivity extends AppCompatActivity implements View
 
     private int prodcut_item_count;
 
+    private String Coupon_code = "";
+    private String Coupon_status = "";
+    private int Original_price = 0;
+    private int Coupon_discount_price = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -220,6 +225,11 @@ public class ShippingAddressSPActivity extends AppCompatActivity implements View
             prodcut_count = extras.getInt("prodcut_count");
 
             prodcut_item_count = extras.getInt("prodcut_item_count");
+
+            Original_price = extras.getInt("Original_price");
+            Coupon_discount_price = extras.getInt("Coupon_discount_price");
+            Coupon_code = extras.getString("Coupon_code");
+            Coupon_status = extras.getString("Coupon_status");
 
             if (new ConnectionDetector(ShippingAddressSPActivity.this).isNetworkAvailable(ShippingAddressSPActivity.this)) {
                 shippingAddressresponseCall(userid);
@@ -673,6 +683,10 @@ public class ShippingAddressSPActivity extends AppCompatActivity implements View
         intent.putExtra("grand_total",grand_total);
         intent.putExtra("prodcut_count",prodcut_count);
         intent.putExtra("prodcut_item_count",prodcut_item_count);
+        intent.putExtra("Original_price",Original_price);
+        intent.putExtra("Coupon_discount_price",Coupon_discount_price);
+        intent.putExtra("Coupon_code",Coupon_code);
+        intent.putExtra("Coupon_status",Coupon_status);
         startActivity(intent);
         finish();
 
@@ -688,6 +702,10 @@ public class ShippingAddressSPActivity extends AppCompatActivity implements View
         intent.putExtra("prodcut_count",prodcut_count);
         intent.putExtra("prodcut_item_count",prodcut_item_count);
         intent.putExtra("fromactivity",TAG);
+        intent.putExtra("Original_price",Original_price);
+        intent.putExtra("Coupon_discount_price",Coupon_discount_price);
+        intent.putExtra("Coupon_code",Coupon_code);
+        intent.putExtra("Coupon_status",Coupon_status);
         startActivity(intent);
 
     }

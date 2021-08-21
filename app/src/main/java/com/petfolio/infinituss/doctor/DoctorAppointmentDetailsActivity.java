@@ -485,6 +485,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
 
                                  pet_dob = response.body().getData().getPet_id().getPet_dob();
                                  petage = response.body().getData().getPet_id().getPet_age();
+                                 Log.w(TAG,"pet_dob : "+pet_dob+" petage : "+petage);
 
                             }
 
@@ -492,8 +493,8 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
 
 
 
-                            if(petage != null){
-                                txt_age.setText(petage);
+                            if(pet_dob != null){
+                                txt_age.setText(pet_dob);
                                /* String[] separated = pet_dob.split("-");
                                 String day = separated[0];
                                 String month = separated[1];
@@ -692,10 +693,10 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
             txt_weight.setText(weight);
         }
 
-        if(petAgeandMonth != null && !petAgeandMonth.isEmpty()){
+        /*if(petAgeandMonth != null && !petAgeandMonth.isEmpty()){
 
             txt_age.setText(petAgeandMonth);
-        }
+        }*/
 
         if(vaccinated != null && !vaccinated.isEmpty()){
             txt_vaccinated.setText(vaccinated);

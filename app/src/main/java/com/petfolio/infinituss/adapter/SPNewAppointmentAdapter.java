@@ -142,7 +142,7 @@ public class SPNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.
         holder.btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onAppointmentCancel.onAppointmentCancel(newAppointmentResponseList.get(position).get_id(),newAppointmentResponseList.get(position).getAppointment_types(),newAppointmentResponseList.get(position).getUser_id().get_id(),newAppointmentResponseList.get(position).getSp_id(),newAppointmentResponseList.get(position).getAppointment_UID(),"");
+                onAppointmentCancel.onAppointmentCancel(newAppointmentResponseList.get(position).get_id(),newAppointmentResponseList.get(position).getAppointment_types(),newAppointmentResponseList.get(position).getUser_id().get_id(),newAppointmentResponseList.get(position).getSp_id(),newAppointmentResponseList.get(position).getAppointment_UID(),"",newAppointmentResponseList.get(position).getAmount(),newAppointmentResponseList.get(position).getPayment_method());
 
             }
         });

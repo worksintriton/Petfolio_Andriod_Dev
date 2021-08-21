@@ -161,6 +161,11 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
     private int prodcut_item_count;
 
+    private String Coupon_code = "";
+    private String Coupon_status = "";
+    private int Original_price = 0;
+    private int Coupon_discount_price = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -211,6 +216,14 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
             discount_price = extras.getInt("discount_price");
 
             grand_total = extras.getInt("grand_total");
+
+            Original_price = extras.getInt("Original_price");
+            Coupon_discount_price = extras.getInt("Coupon_discount_price");
+            Coupon_code = extras.getString("Coupon_code");
+            Coupon_status = extras.getString("Coupon_status");
+
+
+
 
             Log.w(TAG,"bundle grand_total : "+grand_total);
 
@@ -603,6 +616,10 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
         vendorOrderBookingCreateRequest.setBilling_address("");
         vendorOrderBookingCreateRequest.setPayment_id(Payment_id);
         vendorOrderBookingCreateRequest.setShipping_details_id(shipid);
+        vendorOrderBookingCreateRequest.setOriginal_price(Original_price);
+        vendorOrderBookingCreateRequest.setCoupon_discount_price(Coupon_discount_price);
+        vendorOrderBookingCreateRequest.setCoupon_code(Coupon_code);
+        vendorOrderBookingCreateRequest.setCoupon_status(Coupon_status);
         Log.w(TAG,"vendorOrderBookingCreateRequest"+ "--->" + new Gson().toJson(vendorOrderBookingCreateRequest));
         return vendorOrderBookingCreateRequest;
     }
@@ -648,7 +665,12 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
         intent.putExtra("prodcut_count",prodcut_count);
         intent.putExtra("prodcut_item_count",prodcut_item_count);
         intent.putExtra("fromactivity",fromactivity);
+        intent.putExtra("Original_price",Original_price);
+        intent.putExtra("Coupon_discount_price",Coupon_discount_price);
+        intent.putExtra("Coupon_code",Coupon_code);
+        intent.putExtra("Coupon_status",Coupon_status);
         startActivity(intent);
+
 
     }
 
@@ -691,6 +713,10 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
         intent.putExtra("prodcut_count",prodcut_count);
         intent.putExtra("prodcut_item_count",prodcut_item_count);
         intent.putExtra("fromactivity",fromactivity);
+        intent.putExtra("Original_price",Original_price);
+        intent.putExtra("Coupon_discount_price",Coupon_discount_price);
+        intent.putExtra("Coupon_code",Coupon_code);
+        intent.putExtra("Coupon_status",Coupon_status);
         startActivity(intent);
 
     }

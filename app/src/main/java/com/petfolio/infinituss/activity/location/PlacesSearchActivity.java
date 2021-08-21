@@ -94,6 +94,12 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
     private int prodcut_count;
     private int prodcut_item_count;
 
+    private String Coupon_code = "";
+    private String Coupon_status = "";
+    private int Original_price = 0;
+    private int Coupon_discount_price = 0;
+
+
     @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +131,11 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
             grand_total = extras.getInt("grand_total");
             prodcut_count = extras.getInt("prodcut_count");
             prodcut_item_count = extras.getInt("prodcut_item_count");
+
+            Original_price = extras.getInt("Original_price");
+            Coupon_discount_price = extras.getInt("Coupon_discount_price");
+            Coupon_code = extras.getString("Coupon_code");
+            Coupon_status = extras.getString("Coupon_status");
 
         }
 
@@ -195,6 +206,7 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
 
         String key = API.MAP_KEY;
         service.getCityResults(places, key).enqueue(new Callback<PlacesResultsResponse>() {
+            @SuppressLint("LogNotTimber")
             @Override
             public void onResponse(@NotNull Call<PlacesResultsResponse> call, @NotNull Response<PlacesResultsResponse> response) {
                 avi_indicator.smoothToHide();
@@ -373,6 +385,10 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
                         i.putExtra("prodcut_count",prodcut_count);
                         i.putExtra("prodcut_item_count",prodcut_item_count);
                         i.putExtra("fromactivity",fromactivity);
+                        i.putExtra("Original_price",Original_price);
+                        i.putExtra("Coupon_discount_price",Coupon_discount_price);
+                        i.putExtra("Coupon_code",Coupon_code);
+                        i.putExtra("Coupon_status",Coupon_status);
                         startActivity(i);
                     }
                     else if(fromactivity != null && fromactivity.equalsIgnoreCase("PickUpLocationAddNewAddressSPActivity")){

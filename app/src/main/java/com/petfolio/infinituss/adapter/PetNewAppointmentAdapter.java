@@ -170,7 +170,8 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
 
 
             holder.btn_cancel.setOnClickListener(v -> {
-                onAppointmentCancel.onAppointmentCancel(newAppointmentResponseList.get(position).get_id(), newAppointmentResponseList.get(position).getAppointment_for(), newAppointmentResponseList.get(position).getUser_id(), newAppointmentResponseList.get(position).getDoctor_id(), newAppointmentResponseList.get(position).getBooking_Id(), newAppointmentResponseList.get(position).getSp_id());
+                Log.w(TAG,"paymentmethod : "+newAppointmentResponseList.get(position).getPayment_method());
+                onAppointmentCancel.onAppointmentCancel(newAppointmentResponseList.get(position).get_id(), newAppointmentResponseList.get(position).getAppointment_for(), newAppointmentResponseList.get(position).getUser_id(), newAppointmentResponseList.get(position).getDoctor_id(), newAppointmentResponseList.get(position).getBooking_Id(), newAppointmentResponseList.get(position).getSp_id(),newAppointmentResponseList.get(position).getCost(),newAppointmentResponseList.get(position).getPayment_method());
             });
 
         if(newAppointmentResponseList.get(position).getStart_appointment_status() != null && newAppointmentResponseList.get(position).getStart_appointment_status().equalsIgnoreCase("Not Started")){

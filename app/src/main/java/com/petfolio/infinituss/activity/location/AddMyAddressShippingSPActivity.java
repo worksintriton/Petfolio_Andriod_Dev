@@ -153,6 +153,13 @@ public class AddMyAddressShippingSPActivity extends FragmentActivity implements 
     private int prodcut_item_count;
     private String fromactivity;
 
+    private String Coupon_code = "";
+    private String Coupon_status = "";
+    private int Original_price = 0;
+    private int Coupon_discount_price = 0;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -231,6 +238,12 @@ public class AddMyAddressShippingSPActivity extends FragmentActivity implements 
             grand_total = extras.getInt("grand_total");
             prodcut_count = extras.getInt("prodcut_count");
             prodcut_item_count = extras.getInt("prodcut_item_count");
+
+            Original_price = extras.getInt("Original_price");
+            Coupon_discount_price = extras.getInt("Coupon_discount_price");
+            Coupon_code = extras.getString("Coupon_code");
+            Coupon_status = extras.getString("Coupon_status");
+
 
 
 
@@ -380,6 +393,10 @@ public class AddMyAddressShippingSPActivity extends FragmentActivity implements 
                         intent.putExtra("prodcut_count",prodcut_count);
                         intent.putExtra("prodcut_item_count",prodcut_item_count);
                         intent.putExtra("fromactivity",TAG);
+                        intent.putExtra("Original_price",Original_price);
+                        intent.putExtra("Coupon_discount_price",Coupon_discount_price);
+                        intent.putExtra("Coupon_code",Coupon_code);
+                        intent.putExtra("Coupon_status",Coupon_status);
                         startActivity(intent);
 
 

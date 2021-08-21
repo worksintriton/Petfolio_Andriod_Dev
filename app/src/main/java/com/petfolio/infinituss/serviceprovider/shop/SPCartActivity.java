@@ -2,11 +2,13 @@ package com.petfolio.infinituss.serviceprovider.shop;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,10 +29,12 @@ import com.petfolio.infinituss.adapter.Cart_Adapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.interfaces.AddandRemoveProductListener;
+import com.petfolio.infinituss.requestpojo.CouponCodeCheckRequest;
 import com.petfolio.infinituss.requestpojo.FetchByIdRequest;
 import com.petfolio.infinituss.requestpojo.NotificationCartCountRequest;
 import com.petfolio.infinituss.responsepojo.CartDetailsResponse;
 import com.petfolio.infinituss.responsepojo.CartSuccessResponse;
+import com.petfolio.infinituss.responsepojo.CouponCodeCheckResponse;
 import com.petfolio.infinituss.responsepojo.NotificationCartCountResponse;
 import com.petfolio.infinituss.responsepojo.SuccessResponse;
 import com.petfolio.infinituss.serviceprovider.ServiceProviderDashboardActivity;
@@ -49,6 +54,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -200,6 +206,32 @@ public class SPCartActivity extends AppCompatActivity implements AddandRemovePro
     @BindView(R.id.rl_homes)
     RelativeLayout rl_homes;
 
+     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.edt_coupon)
+     EditText edt_coupon;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.btn_apply_coupon)
+    Button btn_apply_coupon;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_coupon_discount_amount)
+    LinearLayout ll_coupon_discount_amount;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_coupon_discount_amount)
+    TextView txt_coupon_discount_amount;
+
+    private String Coupon_code = "";
+    private String Coupon_status = "Not Applied";
+    private int Original_price = 0;
+    private int Discount_price = 0;
+    private int Total_price = 0;
+    private Dialog alertDialog;
+    private int Original_Discount_Price;
+    private int Grand_total;
+    private int Coupon_discount_price;
+
     @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -213,6 +245,9 @@ public class SPCartActivity extends AppCompatActivity implements AddandRemovePro
         ll_content_amount.setVisibility(View.GONE);
         footerView.setVisibility(View.GONE);
         txt_cart_count_badge.setVisibility(View.GONE);
+
+        ll_coupon_discount_amount.setVisibility(View.GONE);
+
 
         SessionManager sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getProfileDetails();
@@ -265,6 +300,10 @@ public class SPCartActivity extends AppCompatActivity implements AddandRemovePro
                 i.putExtra("grand_total",grand_total);
                 i.putExtra("prodcut_count",prodcut_count);
                 i.putExtra("prodcut_item_count",prodcut_item_count);
+                i.putExtra("Original_price",Original_price);
+                i.putExtra("Coupon_discount_price",Coupon_discount_price);
+                i.putExtra("Coupon_code",Coupon_code);
+                i.putExtra("Coupon_status",Coupon_status);
                 startActivity(i);
 
             }
@@ -291,6 +330,39 @@ public class SPCartActivity extends AppCompatActivity implements AddandRemovePro
         rl_shop.setOnClickListener(this);
         rl_comn.setOnClickListener(this);
         rl_homes.setOnClickListener(this);
+
+        btn_apply_coupon.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onClick(View view) {
+                if(btn_apply_coupon.getText().toString().equalsIgnoreCase("Remove")){
+                    edt_coupon.setText("");
+                    btn_apply_coupon.setText("Apply");
+                    ll_coupon_discount_amount.setVisibility(View.GONE);
+                    txt_total_amount.setText("\u20B9 "+Grand_total);
+                    Coupon_status = "Not Applied";
+                    Coupon_code = "";
+                    Original_price = 0;
+                    Discount_price = 0;
+                    grand_total = Grand_total;
+
+                }else if(btn_apply_coupon.getText().toString().equalsIgnoreCase("Apply")){
+                    if(edt_coupon.getText().toString().isEmpty()){
+                        edt_coupon.setError("Please enter the coupon code");
+                        edt_coupon.requestFocus();
+                    }else {
+                        Coupon_status = "Applied";
+                        Coupon_code = edt_coupon.getText().toString();
+                        CouponCodeCheckResponseCall();
+                    }
+
+
+                }
+
+
+            }
+        });
+
 
 
 
@@ -916,6 +988,113 @@ public class SPCartActivity extends AppCompatActivity implements AddandRemovePro
         notificationCartCountRequest.setUser_id(userid);
         Log.w(TAG,"notificationCartCountRequest"+ "--->" + new Gson().toJson(notificationCartCountRequest));
         return notificationCartCountRequest;
+    }
+
+    @SuppressLint("LogNotTimber")
+    private void CouponCodeCheckResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<CouponCodeCheckResponse> call = ApiService.CouponCodeCheckResponseCall(RestUtils.getContentType(),couponCodeCheckRequest());
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<CouponCodeCheckResponse>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(@NonNull Call<CouponCodeCheckResponse> call, @NonNull Response<CouponCodeCheckResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"notificationMarkResponseCall SuccessResponse"+ "--->" + new Gson().toJson(response.body()));
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
+
+                        btn_apply_coupon.setText("Remove");
+
+                        ll_coupon_discount_amount.setVisibility(View.VISIBLE);
+
+                        if(response.body().getData().getDiscount_price() != 0){
+                            Coupon_discount_price = response.body().getData().getDiscount_price();
+                            txt_coupon_discount_amount.setText("\u20B9 "+response.body().getData().getDiscount_price());
+                        }else{
+                            txt_coupon_discount_amount.setText("\u20B9 "+0);
+                        }
+                        if(response.body().getData().getOriginal_price() != 0){
+                            Original_price = response.body().getData().getOriginal_price();
+                            // txt_serv_cost.setText("\u20B9 "+response.body().getData().getOriginal_price());
+
+                        }else{
+                            // txt_serv_cost.setText("\u20B9 "+0);
+
+                        }
+
+                        if(response.body().getData().getTotal_price() != 0){
+                            Total_price = response.body().getData().getTotal_price();
+                            grand_total = Total_price;
+                            txt_total_amount.setText("\u20B9 "+response.body().getData().getTotal_price());
+
+                        }else{
+                            txt_total_amount.setText("\u20B9 "+0);
+                        }
+
+
+                    }else{
+                        showErrorLoading(response.body().getMessage());
+                    }
+
+                }
+
+
+            }
+
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onFailure(@NonNull Call<CouponCodeCheckResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+
+                Log.w(TAG,"CouponCodeCheckResponse SuccessResponse flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint("LogNotTimber")
+    private CouponCodeCheckRequest couponCodeCheckRequest() {
+        /*
+         * current_date : 10/09/2021
+         * total_amount : 10000
+         * coupon_type : 2
+         * user_id :
+         * code : TRITON123
+         */
+
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
+        String currentDate = sdf.format(new Date());
+
+        CouponCodeCheckRequest couponCodeCheckRequest = new CouponCodeCheckRequest();
+        couponCodeCheckRequest.setCurrent_date(currentDate);
+        couponCodeCheckRequest.setTotal_amount(grand_total);
+        couponCodeCheckRequest.setCoupon_type("3");
+        couponCodeCheckRequest.setUser_id(userid);
+        couponCodeCheckRequest.setCode(edt_coupon.getText().toString());
+        Log.w(TAG,"couponCodeCheckRequest"+ "--->" + new Gson().toJson(couponCodeCheckRequest));
+        return couponCodeCheckRequest;
+    }
+    public void showErrorLoading(String errormesage) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(errormesage);
+        alertDialogBuilder.setPositiveButton("ok",
+                (arg0, arg1) -> hideLoading());
+
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+    public void hideLoading() {
+        try {
+            alertDialog.dismiss();
+        } catch (Exception ignored) {
+
+        }
     }
 
 }

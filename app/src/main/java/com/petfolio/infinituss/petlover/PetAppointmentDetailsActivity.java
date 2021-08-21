@@ -22,25 +22,34 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.activity.NotificationActivity;
+import com.petfolio.infinituss.adapter.MyCouponsTextAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.doctor.DoctorPrescriptionDetailsActivity;
+import com.petfolio.infinituss.interfaces.OnAppointmentSuccessfullyCancel;
 import com.petfolio.infinituss.requestpojo.AddReviewRequest;
 import com.petfolio.infinituss.requestpojo.AppoinmentCancelledRequest;
 import com.petfolio.infinituss.requestpojo.AppointmentDetailsRequest;
+import com.petfolio.infinituss.requestpojo.NotificationSendRequest;
 import com.petfolio.infinituss.requestpojo.PetNewAppointmentDetailsRequest;
+import com.petfolio.infinituss.requestpojo.RefundCouponCreateRequest;
 import com.petfolio.infinituss.requestpojo.SPNotificationSendRequest;
 import com.petfolio.infinituss.responsepojo.AddReviewResponse;
 import com.petfolio.infinituss.responsepojo.AppoinmentCancelledResponse;
+import com.petfolio.infinituss.responsepojo.CouponCodeTextResponse;
 import com.petfolio.infinituss.responsepojo.NotificationSendResponse;
 import com.petfolio.infinituss.responsepojo.PetNewAppointmentDetailsResponse;
 import com.petfolio.infinituss.responsepojo.SPAppointmentDetailsResponse;
+import com.petfolio.infinituss.responsepojo.SuccessResponse;
 import com.petfolio.infinituss.utils.ConnectionDetector;
 import com.petfolio.infinituss.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -60,9 +69,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PetAppointmentDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+public class PetAppointmentDetailsActivity extends AppCompatActivity implements View.OnClickListener, OnAppointmentSuccessfullyCancel {
 
-    private static final String TAG = "PetAppointmentDetailsActivity";
+    private String TAG = "PetAppointmentDetailsActivity";
 
 
     @SuppressLint("NonConstantResourceId")
@@ -339,9 +348,13 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
     @BindView(R.id.rl_homes)
     RelativeLayout rl_homes;
 
-
-
-
+    TextView txt_no_records_coupon;
+    RecyclerView rv_successfully_cancelled;
+    private List<CouponCodeTextResponse.DataBean> myCouponsTextList;
+    private String ServiceCost ="";
+    private String Appointmenttype = "";
+    private String Paymentmethod;
+    private String doctorid;
 
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
@@ -605,11 +618,14 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                             double weight = response.body().getData().getPet_id().getPet_weight();
                             String pet_dob = response.body().getData().getPet_id().getPet_dob();
                             String pet_age = response.body().getData().getPet_id().getPet_age();
-                            if(pet_age != null && !pet_age.isEmpty()){
-                                txt_age.setText(pet_age);
+                            if(pet_dob != null && !pet_dob.isEmpty()){
+                                txt_age.setText(pet_dob);
                             }else {
                                 txt_age.setText("");
                             }
+
+                            Paymentmethod = response.body().getData().getPayment_method();
+                            doctorid = response.body().getData().getDoc_business_info().get(0).getUser_id();
 
                             /*if(pet_dob != null){
                             String[] separated = pet_dob.split("-");
@@ -984,8 +1000,10 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                 dialog.dismiss();
                 if(appointmentfor != null) {
                     if (appointmentfor.equalsIgnoreCase("Doctor")) {
+                        Appointmenttype = "1";
                         appoinmentCancelledResponseCall(id);
                     } else if (appointmentfor.equalsIgnoreCase("SP")) {
+                        Appointmenttype = "2";
                         spappoinmentCancelledResponseCall(id);
 
                     }
@@ -1024,11 +1042,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        startActivity(new Intent(PetAppointmentDetailsActivity.this, PetMyappointmentsActivity.class));
-
-
-
-
+                        notificationSendResponseCall();
 
                     }
 
@@ -1071,6 +1085,36 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
         Log.w(TAG,"appoinmentCancelledRequest"+ "--->" + new Gson().toJson(appoinmentCancelledRequest));
         return appoinmentCancelledRequest;
     }
+
+
+    private void showSuccessfullyCancelled() {
+        try {
+            dialog = new Dialog(PetAppointmentDetailsActivity.this);
+            dialog.setContentView(R.layout.alert_successfulley_cancelled_layout);
+            dialog.setCancelable(false);
+            txt_no_records_coupon = dialog.findViewById(R.id.txt_no_records);
+            rv_successfully_cancelled = dialog.findViewById(R.id.rv_successfully_cancelled);
+            txt_no_records_coupon.setVisibility(View.GONE);
+            rv_successfully_cancelled.setVisibility(View.GONE);
+
+            if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                CouponCodeTextResponseCall();
+            }
+
+
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -1188,6 +1232,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                             }else {
                                 txt_age.setText("");
                             }
+                            Paymentmethod = response.body().getData().getPayment_method();
 
                            /* if(pet_dob != null){
                                 String[] separated = pet_dob.split("-");
@@ -1309,7 +1354,11 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        startActivity(new Intent(getApplicationContext(), PetMyappointmentsActivity.class));
+                        if(Paymentmethod != null && Paymentmethod.equalsIgnoreCase("Online")){
+                            showSuccessfullyCancelled();
+                        }else{
+                            startActivity(new Intent(PetAppointmentDetailsActivity.this, PetMyappointmentsActivity.class));
+                        }
 
                     }
 
@@ -1353,6 +1402,79 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
         Log.w(TAG,"spNotificationSendRequest"+ "--->" + new Gson().toJson(spNotificationSendRequest));
         return spNotificationSendRequest;
     }
+
+
+
+    @SuppressLint("LogNotTimber")
+    private void notificationSendResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<NotificationSendResponse> call = ApiService.notificationSendResponseCall(RestUtils.getContentType(),notificationSendRequest());
+
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<NotificationSendResponse>() {
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onResponse(@NonNull Call<NotificationSendResponse> call, @NonNull Response<NotificationSendResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"notificationSendResponseCall"+ "--->" + new Gson().toJson(response.body()));
+
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        if(Paymentmethod != null && Paymentmethod.equalsIgnoreCase("Online")){
+                            showSuccessfullyCancelled();
+                        }else{
+                            startActivity(new Intent(PetAppointmentDetailsActivity.this, PetMyappointmentsActivity.class));
+                        }
+
+
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NotificationSendResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+
+                Log.w(TAG,"NotificationSendResponse flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint("LogNotTimber")
+    private NotificationSendRequest notificationSendRequest() {
+
+        /*
+         * status : Payment Failed
+         * date : 23-10-2020 11:00 AM
+         * appointment_UID :
+         * user_id : 601b8ac3204c595ee52582f2
+         * doctor_id :
+         */
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+        String currentDateandTime = simpleDateFormat.format(new Date());
+
+
+
+        NotificationSendRequest notificationSendRequest = new NotificationSendRequest();
+        notificationSendRequest.setStatus("Patient Appointment Cancelled");
+        notificationSendRequest.setDate(currentDateandTime);
+        notificationSendRequest.setAppointment_UID(appointmentid);
+        notificationSendRequest.setUser_id(userid);
+        notificationSendRequest.setDoctor_id(doctorid);
+
+
+        Log.w(TAG,"notificationSendRequest"+ "--->" + new Gson().toJson(notificationSendRequest));
+        return notificationSendRequest;
+    }
+
 
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
@@ -1645,5 +1767,208 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)rl_layout.getLayoutParams();
         params.setMargins(i, i1, i2, i3);
         rl_layout.setLayoutParams(params);
+    }
+
+    @SuppressLint({"LogNotTimber", "LongLogTag"})
+    private void CouponCodeTextResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<CouponCodeTextResponse> call = apiInterface.CouponCodeTextResponseCall(RestUtils.getContentType());
+        Log.w(TAG,"CouponCodeTextResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<CouponCodeTextResponse>() {
+            @SuppressLint({"SetTextI18n", "LogNotTimber", "LongLogTag"})
+            @Override
+            public void onResponse(@NonNull Call<CouponCodeTextResponse> call, @NonNull Response<CouponCodeTextResponse> response) {
+
+                Log.w(TAG,"CouponCodeTextResponse"+ "--->" + new Gson().toJson(response.body()));
+
+                avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        if(response.body().getData() != null && response.body().getData().size()>0){
+                            txt_no_records_coupon.setVisibility(View.GONE);
+                            rv_successfully_cancelled.setVisibility(View.VISIBLE);
+                            myCouponsTextList = response.body().getData();
+                            setViewCouponText();
+
+                        }
+                        else{
+                            rv_successfully_cancelled.setVisibility(View.GONE);
+                            txt_no_records_coupon.setVisibility(View.VISIBLE);
+                            txt_no_records_coupon.setText("No data found");
+
+                        }
+
+
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<CouponCodeTextResponse> call, @NonNull Throwable t) {
+
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"CouponCodeTextResponse flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    private void setViewCouponText() {
+        rv_successfully_cancelled.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        rv_successfully_cancelled.setItemAnimator(new DefaultItemAnimator());
+        MyCouponsTextAdapter myCouponsTextAdapter = new MyCouponsTextAdapter(getApplicationContext(), myCouponsTextList,ServiceCost,this);
+        rv_successfully_cancelled.setAdapter(myCouponsTextAdapter);
+
+    }
+
+    @SuppressLint("LongLogTag")
+    private void RefundCouponCreateRequestCall(String refund, String cost) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<SuccessResponse> call = ApiService.RefundCouponCreateRequestCall(RestUtils.getContentType(),refundCouponCreateRequest(refund,cost));
+
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<SuccessResponse>() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"RefundCouponCreateRequestCall"+ "--->" + new Gson().toJson(response.body()));
+
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        dialog.dismiss();
+                        startActivity(new Intent(getApplicationContext(), PetMyappointmentsActivity.class));
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+
+                Log.w(TAG,"RefundCouponCreateRequestCall flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint("LongLogTag")
+    private RefundCouponCreateRequest refundCouponCreateRequest(String refund, String cost) {
+
+        /*
+         * created_by : User
+         * coupon_type : 1
+         * code : REF100
+         * amount : 100
+         * user_details : 123123
+         * used_status : Not Used
+         */
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+        String currentDateandTime = simpleDateFormat.format(new Date());
+
+
+
+        RefundCouponCreateRequest refundCouponCreateRequest = new RefundCouponCreateRequest();
+        refundCouponCreateRequest.setCreated_by("User");
+        refundCouponCreateRequest.setCoupon_type(Appointmenttype);
+        refundCouponCreateRequest.setCode("REF"+cost);
+        refundCouponCreateRequest.setAmount(Integer.parseInt(cost));
+        refundCouponCreateRequest.setUser_details(userid);
+        refundCouponCreateRequest.setUsed_status("Not Used");
+
+
+        Log.w(TAG,"refundCouponCreateRequest"+ "--->" + new Gson().toJson(refundCouponCreateRequest));
+        return refundCouponCreateRequest;
+    }
+
+
+    private void RefundCouponBankCreateRequestCall(String refund, String cost) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<SuccessResponse> call = ApiService.RefundCouponCreateRequestCall(RestUtils.getContentType(),refundCouponCreateRequest1(refund,cost));
+
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<SuccessResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"RefundCouponCreateRequestCall"+ "--->" + new Gson().toJson(response.body()));
+
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        dialog.dismiss();
+                        startActivity(new Intent(getApplicationContext(), PetMyappointmentsActivity.class));
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+
+                Log.w(TAG,"RefundCouponCreateRequestCall flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    private RefundCouponCreateRequest refundCouponCreateRequest1(String refund, String cost) {
+
+        /*
+         * created_by : User
+         * coupon_type : 1
+         * code : REF100
+         * amount : 100
+         * user_details : 123123
+         * used_status : Not Used
+         */
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+        String currentDateandTime = simpleDateFormat.format(new Date());
+
+
+
+        RefundCouponCreateRequest refundCouponCreateRequest = new RefundCouponCreateRequest();
+        refundCouponCreateRequest.setCreated_by("");
+        refundCouponCreateRequest.setCoupon_type(Appointmenttype);
+        refundCouponCreateRequest.setCode("Bank");
+        refundCouponCreateRequest.setAmount(0);
+        refundCouponCreateRequest.setUser_details(appointment_id);
+        refundCouponCreateRequest.setUsed_status("");
+
+
+        Log.w(TAG,"refundCouponCreateRequest"+ "--->" + new Gson().toJson(refundCouponCreateRequest));
+        return refundCouponCreateRequest;
+    }
+
+    @Override
+    public void onAppointmentSuccessfullyCancel(String refund, String cost) {
+        Log.w(TAG,"onAppointmentSuccessfullyCancel : "+"refund : "+refund+"cost : "+cost);
+        if(refund != null && !refund.isEmpty()){
+            RefundCouponCreateRequestCall(refund,cost);
+        }else{
+            RefundCouponBankCreateRequestCall(refund,cost);
+
+        }
+
     }
 }

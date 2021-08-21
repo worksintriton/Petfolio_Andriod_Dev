@@ -339,6 +339,10 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                 i.putExtra("grand_total",grand_total);
                 i.putExtra("prodcut_count",prodcut_count);
                 i.putExtra("prodcut_item_count",prodcut_item_count);
+                i.putExtra("Original_price",Original_price);
+                i.putExtra("Coupon_discount_price",Coupon_discount_price);
+                i.putExtra("Coupon_code",Coupon_code);
+                i.putExtra("Coupon_status",Coupon_status);
                 startActivity(i);
 
 
@@ -908,7 +912,6 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
         vendorOrderBookingCreateRequest.setProdcut_item_count(prodcut_item_count);
         vendorOrderBookingCreateRequest.setDate_of_booking_display(currentDateandTime);
         vendorOrderBookingCreateRequest.setDate_of_booking(currentDateandTime);
-        vendorOrderBookingCreateRequest.setCoupon_code("");
         vendorOrderBookingCreateRequest.setShipping_address_id("");
         vendorOrderBookingCreateRequest.setBillling_address_id("");
         vendorOrderBookingCreateRequest.setShipping_address("");
@@ -1166,7 +1169,6 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
         Log.w(TAG,"couponCodeCheckRequest"+ "--->" + new Gson().toJson(couponCodeCheckRequest));
         return couponCodeCheckRequest;
     }
-
     public void showErrorLoading(String errormesage) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage(errormesage);
@@ -1177,7 +1179,6 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
-
     public void hideLoading() {
         try {
             alertDialog.dismiss();

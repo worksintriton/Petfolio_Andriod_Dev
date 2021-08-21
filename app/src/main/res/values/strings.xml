@@ -585,4 +585,7 @@
     <string name="choose__payment_method">Payment Method</string>
     <string name="shop_name">Shop Name</string>
 
+
+    <string name="successfullycancelled">Successfully Cancelled</string>
+
 </resources>

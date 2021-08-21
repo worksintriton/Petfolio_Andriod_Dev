@@ -452,6 +452,12 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
 
+        <activity
+            android:name=".petlover.MyCouponsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+
         <!-- Doctor -->
         <activity
             android:name=".doctor.DoctorBusinessInfoActivity"

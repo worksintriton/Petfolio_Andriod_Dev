@@ -137,6 +137,12 @@ public class PickUpLocationAddNewAddressSPActivity extends FragmentActivity impl
     private int prodcut_count;
     private int prodcut_item_count;
 
+    private String Coupon_code = "";
+    private String Coupon_status = "";
+    private int Original_price = 0;
+    private int Coupon_discount_price = 0;
+
+
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -174,6 +180,12 @@ public class PickUpLocationAddNewAddressSPActivity extends FragmentActivity impl
             prodcut_count = extras.getInt("prodcut_count");
             prodcut_item_count = extras.getInt("prodcut_item_count");
 
+            Original_price = extras.getInt("Original_price");
+            Coupon_discount_price = extras.getInt("Coupon_discount_price");
+            Coupon_code = extras.getString("Coupon_code");
+            Coupon_status = extras.getString("Coupon_status");
+
+
         }else{
             fromactivity  = TAG;
             Log.w(TAG,"fromactivity else: "+fromactivity);
@@ -193,6 +205,11 @@ public class PickUpLocationAddNewAddressSPActivity extends FragmentActivity impl
             intent.putExtra("prodcut_count",prodcut_count);
             intent.putExtra("prodcut_item_count",prodcut_item_count);
             intent.putExtra("fromactivity",TAG);
+
+            intent.putExtra("Original_price",Original_price);
+            intent.putExtra("Coupon_discount_price",Coupon_discount_price);
+            intent.putExtra("Coupon_code",Coupon_code);
+            intent.putExtra("Coupon_status",Coupon_status);
            /* intent.putExtra("id",id);
             intent.putExtra("userid",userid);*/
             startActivity(intent);
@@ -240,6 +257,10 @@ public class PickUpLocationAddNewAddressSPActivity extends FragmentActivity impl
                     intent.putExtra("grand_total",grand_total);
                     intent.putExtra("prodcut_count",prodcut_count);
                     intent.putExtra("prodcut_item_count",prodcut_item_count);
+                    intent.putExtra("Original_price",Original_price);
+                    intent.putExtra("Coupon_discount_price",Coupon_discount_price);
+                    intent.putExtra("Coupon_code",Coupon_code);
+                    intent.putExtra("Coupon_status",Coupon_status);
                     startActivity(intent);
             }else{
                 Toasty.warning(PickUpLocationAddNewAddressSPActivity.this,"Please select citynmae",Toasty.LENGTH_SHORT).show();
@@ -281,12 +302,8 @@ public class PickUpLocationAddNewAddressSPActivity extends FragmentActivity impl
             public void onLocationResult(LocationResult locationResult) {
 
                 if (locationResult.getLastLocation() != null) {
-
                     latitude = locationResult.getLastLocation().getLatitude();
                     longitude = locationResult.getLastLocation().getLongitude();
-
-
-
                     LatLng sourcePoint = new LatLng(latitude, longitude);
                     googleMap.addMarker(new MarkerOptions().position(sourcePoint).icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin)));
                     mFusedLocationClient.removeLocationUpdates(locationCallback);
@@ -551,6 +568,7 @@ public class PickUpLocationAddNewAddressSPActivity extends FragmentActivity impl
             }
         }
     }
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NotNull String @NotNull [] permissions, @NotNull int @NotNull [] grantResults) {
         if (requestCode == MY_PERMISSIONS_REQUEST_LOCATION) {
@@ -679,6 +697,10 @@ public class PickUpLocationAddNewAddressSPActivity extends FragmentActivity impl
         intent.putExtra("prodcut_count",prodcut_count);
         intent.putExtra("prodcut_item_count",prodcut_item_count);
         intent.putExtra("fromactivity",TAG);
+        intent.putExtra("Original_price",Original_price);
+        intent.putExtra("Coupon_discount_price",Coupon_discount_price);
+        intent.putExtra("Coupon_code",Coupon_code);
+        intent.putExtra("Coupon_status",Coupon_status);
         startActivity(intent);
         finish();
 
