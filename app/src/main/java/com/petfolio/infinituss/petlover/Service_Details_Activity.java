@@ -299,6 +299,7 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
 
         txt_seemore_spec.setVisibility(View.GONE);
         avi_indicator.setVisibility(View.GONE);
+        ll_book_now.setVisibility(View.GONE);
 
         rl_back.setOnClickListener(this);
         ll_book_now.setOnClickListener(this);
@@ -637,6 +638,7 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
                     if (200 == response.body().getCode()) {
 
                         viewPager.setVisibility(View.VISIBLE);
+                        ll_book_now.setVisibility(View.VISIBLE);
 
                         tabLayout.setVisibility(View.VISIBLE);
 

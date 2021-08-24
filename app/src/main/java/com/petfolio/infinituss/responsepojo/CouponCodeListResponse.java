@@ -65,6 +65,15 @@ public class CouponCodeListResponse {
         private String title;
         private String descri;
         private String used_status;
+        private String coupon_img;
+
+        public String getCoupon_img() {
+            return coupon_img;
+        }
+
+        public void setCoupon_img(String coupon_img) {
+            this.coupon_img = coupon_img;
+        }
 
         public String getCoupon_type() {
             return coupon_type;

@@ -744,7 +744,12 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
         refundCouponCreateRequest.setCreated_by("User");
         refundCouponCreateRequest.setCoupon_type(Appointmenttype);
         refundCouponCreateRequest.setCode("REF"+cost);
-        refundCouponCreateRequest.setAmount(Integer.parseInt(cost));
+        if(cost != null && !cost.isEmpty()){
+            refundCouponCreateRequest.setAmount(Integer.parseInt(cost));
+        }else{
+            refundCouponCreateRequest.setAmount(0);
+        }
+
         refundCouponCreateRequest.setUser_details(userid);
         refundCouponCreateRequest.setUsed_status("Not Used");
 

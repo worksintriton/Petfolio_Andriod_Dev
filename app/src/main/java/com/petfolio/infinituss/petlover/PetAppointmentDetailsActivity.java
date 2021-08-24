@@ -50,6 +50,7 @@ import com.petfolio.infinituss.responsepojo.NotificationSendResponse;
 import com.petfolio.infinituss.responsepojo.PetNewAppointmentDetailsResponse;
 import com.petfolio.infinituss.responsepojo.SPAppointmentDetailsResponse;
 import com.petfolio.infinituss.responsepojo.SuccessResponse;
+import com.petfolio.infinituss.sessionmanager.SessionManager;
 import com.petfolio.infinituss.utils.ConnectionDetector;
 import com.petfolio.infinituss.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -58,6 +59,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -355,6 +357,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
     private String Appointmenttype = "";
     private String Paymentmethod;
     private String doctorid;
+    private SessionManager session;
 
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
@@ -376,6 +379,10 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
         txt_diagnosis.setVisibility(View.GONE);
         txt_sub_diagnosis.setVisibility(View.GONE);
         txt_doctor_comment.setVisibility(View.GONE);
+
+        session = new SessionManager(getApplicationContext());
+        HashMap<String, String> user = session.getProfileDetails();
+        userid = user.get(SessionManager.KEY_ID);
 
 
 
@@ -955,9 +962,9 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
         }
 
         if(order_cost != null && !order_cost.isEmpty()){
-
             txt_order_cost.setText("\u20B9 "+order_cost);
             txt_serv_cost.setText("\u20B9 "+order_cost);
+            ServiceCost = order_cost;
         }
 
         if(addr != null && !addr.isEmpty()){
@@ -1877,6 +1884,8 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
          * user_details : 123123
          * used_status : Not Used
          */
+
+
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
         String currentDateandTime = simpleDateFormat.format(new Date());
 
@@ -1886,7 +1895,12 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
         refundCouponCreateRequest.setCreated_by("User");
         refundCouponCreateRequest.setCoupon_type(Appointmenttype);
         refundCouponCreateRequest.setCode("REF"+cost);
-        refundCouponCreateRequest.setAmount(Integer.parseInt(cost));
+        if(cost != null && !cost.isEmpty()){
+            refundCouponCreateRequest.setAmount(Integer.parseInt(cost));
+        }else{
+            refundCouponCreateRequest.setAmount(0);
+        }
+
         refundCouponCreateRequest.setUser_details(userid);
         refundCouponCreateRequest.setUsed_status("Not Used");
 

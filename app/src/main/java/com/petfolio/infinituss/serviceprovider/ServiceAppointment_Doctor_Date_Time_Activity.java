@@ -567,8 +567,8 @@ public class ServiceAppointment_Doctor_Date_Time_Activity extends AppCompatActiv
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        startActivity(new Intent(getApplicationContext(),ServiceProviderDashboardActivity.class));
-                        finish();
+                        startActivity(new Intent(getApplicationContext(),ServiceAppointment_Doctor_Date_Time_Activity.class));
+
 
                     }
                     else{

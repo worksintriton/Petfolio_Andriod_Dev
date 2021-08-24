@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -20,11 +21,13 @@ import com.petfolio.infinituss.responsepojo.SPAvailableTimeResponse;
 
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 
 public class PetServiceMyCalendarAvailableAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_ONE = 1;
     private static final int TYPE_LOADING = 5;
-    private  String TAG = "PetMyCalendarAvailableAdapter";
+    private  String TAG = "PetServiceMyCalendarAvailableAdapter";
 
 
     private List<SPAvailableTimeResponse.DataBean.TimesBean> timesBeanList;
@@ -81,9 +84,16 @@ public class PetServiceMyCalendarAvailableAdapter extends  RecyclerView.Adapter<
         holder.txt_days.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCallback.onItemSelectedTime(timesBeanList.get(position).getTime());
-                selectedPosition=position;
-                notifyDataSetChanged();
+                if(timesBeanList.get(position).isBook_status()) {
+                    mCallback.onItemSelectedTime(timesBeanList.get(position).getTime());
+                    selectedPosition = position;
+                    notifyDataSetChanged();
+                }else{
+                    Toasty.warning(context, "Slot Not Available", Toast.LENGTH_SHORT, true).show();
+
+                }
+
+
 
 
             }
@@ -97,6 +107,12 @@ public class PetServiceMyCalendarAvailableAdapter extends  RecyclerView.Adapter<
             holder.txt_days.setTextColor(ContextCompat.getColor(context, R.color.black));
 
         }
+
+        if(!timesBeanList.get(position).isBook_status()){
+            holder.txt_days.setBackgroundResource(R.drawable.button_gray_rounded_corner);
+
+        }
+
 
 
 

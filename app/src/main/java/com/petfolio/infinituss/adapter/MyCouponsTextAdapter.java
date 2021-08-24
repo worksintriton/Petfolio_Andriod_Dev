@@ -2,6 +2,7 @@ package com.petfolio.infinituss.adapter;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,8 @@ public class MyCouponsTextAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
     }
 
   private void initLayoutOne(ViewHolderOne holder, final int position) {
+
+        Log.w(TAG,"ServiceCost : "+ServiceCost);
         currentItem = myCouponsTextList.get(position);
         if(currentItem.getTitle() != null) {
             holder.txt_notification_title.setText(currentItem.getTitle());

@@ -1,6 +1,7 @@
 package com.petfolio.infinituss.adapter;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,7 +20,11 @@ import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.responsepojo.CouponCodeListResponse;
 import com.petfolio.infinituss.responsepojo.NotificationGetlistResponse;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 
 public class MyCouponsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -53,6 +58,7 @@ public class MyCouponsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHol
 
     }
 
+  @SuppressLint({"LogNotTimber", "SetTextI18n"})
   private void initLayoutOne(ViewHolderOne holder, final int position) {
         currentItem = couponcoderesponseList.get(position);
 
@@ -73,31 +79,47 @@ public class MyCouponsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHol
             holder.txt_coupon_code.setText(currentItem.getCoupon_code());
         }
         Log.w(TAG,"getExpired_date : "+currentItem.getExpired_date());
+
+
+
+
         if(currentItem.getExpired_date() != null && !currentItem.getExpired_date().isEmpty()) {
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat output = new SimpleDateFormat("dd-MM-yyyy");
+            Date d = null;
+            try {
+                d = sdf.parse(currentItem.getExpired_date());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            String formattedDate = null;
+            if (d != null) {
+                formattedDate = output.format(d);
+            }
+            Log.w(TAG,"formattedDate : "+formattedDate);
             holder.txt_expired.setVisibility(View.VISIBLE);
-            holder.txt_expired.setText(currentItem.getExpired_date());
+            holder.txt_expired.setText("Expires on:"+formattedDate);
         }else{
             holder.txt_expired.setVisibility(View.INVISIBLE);
         }
 
-      /*  if (currentItem.getNotify_img() != null && !currentItem.getNotify_img().isEmpty()) {
 
-            Glide.with(context)
-                    .load(currentItem.getNotify_img())
-                    //.load(R.drawable.logo)
-                    .into(holder.img_notify_imge);
 
-        }
-        else{
-            Glide.with(context)
-                    .load(APIClient.PROFILE_IMAGE_URL)
-                    .into(holder.img_notify_imge);
 
-        }*/
+      if (currentItem.getCoupon_img() != null && !currentItem.getCoupon_img().isEmpty()) {
+          Glide.with(context)
+                  .load(currentItem.getCoupon_img())
+                 // .load(R.drawable.app_logo)
+                  .into(holder.img_notify_imge);
+          Log.w(TAG,"getCoupon_img : "+currentItem.getCoupon_img());
+      } else{
+          Glide.with(context)
+                  .load(APIClient.PROFILE_IMAGE_URL)
+                  .into(holder.img_notify_imge);
 
-      Glide.with(context)
-              .load(APIClient.PROFILE_IMAGE_URL)
-              .into(holder.img_notify_imge);
+      }
+
+
 
         holder.ll_root.setOnClickListener(new View.OnClickListener() {
             @Override
