@@ -49,7 +49,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private String usertype;
     private String appintments;
-    private String orders;
+    public static String orders;
     Intent intent;
 
     /**
@@ -73,9 +73,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             appintments = remoteMessage.getData().get("appintments");
             orders = remoteMessage.getData().get("orders");
 
-           Log.w(TAG,"usertype : "+usertype);
-           Log.w(TAG,"appintments : "+appintments);
-           Log.w(TAG,"orders : "+orders);
+
+
+           Log.w(TAG,"remoteMessage usertype : "+usertype);
+           Log.w(TAG,"remoteMessage appintments : "+appintments);
+           Log.w(TAG,"remoteMessage orders : "+orders);
 
           /*  if (*//* Check if data needs to be processed by long running job *//* true) {
                 // For long-running tasks (10 seconds or more) use WorkManager.
@@ -244,6 +246,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 }else if(orders != null && !orders.isEmpty()){
                     intent = new Intent(this, PetMyOrdrersNewActivity.class);
                     intent.putExtra("orders",orders);
+                    Log.w(TAG,"usertype 1 orders : "+orders);
                 }else{
                     intent = new Intent(this, PetLoverDashboardActivity.class);
                 }
@@ -300,6 +303,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String appintments = intent.getExtras().getString("appintments");
             Log.w(TAG, "key appintments : " + appintments);
 
+            orders = intent.getExtras().getString("orders");
+            Log.w(TAG, "key orders : " + orders);
+
         }
 
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -307,7 +313,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "1")
-                .setSmallIcon(R.drawable.ic_app_logo)
+                .setSmallIcon(R.drawable.app_logo_new)
                 .setContentTitle(title)
                 .setContentText(messageBody)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)

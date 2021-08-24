@@ -12,7 +12,7 @@ import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.doctor.DoctorDashboardActivity;
 import com.petfolio.infinituss.doctor.DoctorMyOrdrersActivity;
-import com.petfolio.infinituss.doctor.shop.DoctorCartActivity;
+
 import com.petfolio.infinituss.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinituss.petlover.PetMyOrdrersNewActivity;
 import com.petfolio.infinituss.petlover.PetMyappointmentsActivity;
@@ -57,6 +57,15 @@ public class SplashActivity extends AppCompatActivity {
             String appintments = bundle.getString("appintments");
             String orders = bundle.getString("orders");
 
+            if(user_type == null){
+                HashMap<String, String> user = session.getProfileDetails();
+                user_type = user.get(SessionManager.KEY_TYPE);
+                Log.w(TAG,"user_type if :"+user_type);
+            }else{
+                user_type = bundle.getString("usertype");
+                Log.w(TAG,"user_type else :"+user_type);
+            }
+
             if(!islogedin) {
                 Intent i = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(i);
@@ -82,6 +91,7 @@ public class SplashActivity extends AppCompatActivity {
 
 
                     }else if(user_type.equalsIgnoreCase("2")){
+                        Log.w(TAG,"appintments : "+appintments);
                         if(appintments != null && !appintments.isEmpty()){
                             Intent intent = new Intent(SplashActivity.this, ServiceProviderDashboardActivity.class);
                             intent.putExtra("appintments",appintments);

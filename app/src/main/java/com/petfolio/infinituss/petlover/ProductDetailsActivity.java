@@ -125,6 +125,10 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
     ImageView img_remove_product;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_increment_add_to_cart)
+    LinearLayout ll_increment_add_to_cart;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_add_product)
     ImageView img_add_product;
 
@@ -289,6 +293,9 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 //
 //            }
 //        });
+
+
+        ll_increment_add_to_cart.setVisibility(View.GONE);
 
 
         if(userid != null && productid != null){
@@ -901,13 +908,15 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
         if(threshould != null && !threshould.isEmpty() ){
             if(threshould.equalsIgnoreCase("0")){
                 txt_products_quantity.setVisibility(View.VISIBLE);
-              txt_products_quantity.setText("Out Of Stock");
-               txt_products_quantity.setTextColor(ContextCompat.getColor(ProductDetailsActivity.this, R.color.vermillion));
+                txt_products_quantity.setText("Out Of Stock");
+                ll_increment_add_to_cart.setVisibility(View.GONE);
+                txt_products_quantity.setTextColor(ContextCompat.getColor(ProductDetailsActivity.this, R.color.vermillion));
                 img_add_product.setVisibility(View.GONE);
                 txt_cart_count.setVisibility(View.GONE);
                 img_remove_product.setVisibility(View.GONE);
                 ll_add_to_cart.setVisibility(View.GONE);
             }else{
+                ll_increment_add_to_cart.setVisibility(View.VISIBLE);
                 img_add_product.setVisibility(View.VISIBLE);
                 txt_cart_count.setVisibility(View.VISIBLE);
                 img_remove_product.setVisibility(View.VISIBLE);

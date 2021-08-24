@@ -232,7 +232,9 @@ public class FragmentDoctorDashboard extends Fragment  {
 
                                         tablayout.setupWithViewPager(viewPager);
                                         TabLayout.Tab tab = tablayout.getTabAt(someIndex);
-                                        tab.select();
+                                        if (tab != null) {
+                                            tab.select();
+                                        }
 
                                     }
 

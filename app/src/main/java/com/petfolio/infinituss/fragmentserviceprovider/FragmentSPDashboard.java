@@ -215,6 +215,8 @@ public class FragmentSPDashboard extends Fragment  {
                                     isDoctorStatus = true;
                                     Log.w(TAG, "isDoctorStatus else : " + isDoctorStatus);
 
+                                    Log.w(TAG,"appintments : "+ServiceProviderDashboardActivity.appintments);
+
                                     if (isDoctorStatus) {
                                         setupViewPager(viewPager);
                                         if(ServiceProviderDashboardActivity.appintments != null && ServiceProviderDashboardActivity.appintments.equalsIgnoreCase("New")){
@@ -227,10 +229,13 @@ public class FragmentSPDashboard extends Fragment  {
                                             someIndex = 2;
                                         }
 
-                                        //tablayout.setupWithViewPager(viewPager);
-                                        TabLayout.Tab tab = tablayout.getTabAt(someIndex);
-                                        tab.select();
                                         tablayout.setupWithViewPager(viewPager);
+                                        TabLayout.Tab tab = tablayout.getTabAt(someIndex);
+                                        if (tab != null) {
+                                            tab.select();
+                                        }
+
+
                                     }
 
                                 }

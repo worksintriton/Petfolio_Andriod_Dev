@@ -202,6 +202,7 @@ public class FragmentVendorDashboard extends Fragment  {
                                 }else{
                                     isDoctorStatus = true;
                                     Log.w(TAG,"isDoctorStatus else : "+isDoctorStatus);
+                                    Log.w(TAG,"isDoctorStatus orders : "+VendorDashboardActivity.orders );
 
                                     if(isDoctorStatus){
                                         if(viewPager != null) {
@@ -216,10 +217,12 @@ public class FragmentVendorDashboard extends Fragment  {
                                                 someIndex = 2;
                                             }
 
-                                            //tablayout.setupWithViewPager(viewPager);
-                                            TabLayout.Tab tab = tablayout.getTabAt(someIndex);
-                                            tab.select();
                                             tablayout.setupWithViewPager(viewPager);
+                                            TabLayout.Tab tab = tablayout.getTabAt(someIndex);
+                                            if (tab != null) {
+                                                tab.select();
+                                            }
+
                                         }
                                     }
 

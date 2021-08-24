@@ -20,6 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.activity.NotificationActivity;
+import com.petfolio.infinituss.fcm.MyFirebaseMessagingService;
 import com.petfolio.infinituss.fragmentpetlover.myordersnew.FragmentPetLoverCancelledOrders;
 import com.petfolio.infinituss.fragmentpetlover.myordersnew.FragmentPetLoverCompletedOrders;
 import com.petfolio.infinituss.fragmentpetlover.myordersnew.FragmentPetLoverNewOrders;
@@ -132,8 +133,17 @@ public class PetMyOrdrersNewActivity extends AppCompatActivity implements View.O
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             orders = bundle.getString("orders");
-            Log.w(TAG,"orders : "+orders);
+            Log.w(TAG,"bundle orders : "+orders);
+
+            String orders1 = MyFirebaseMessagingService.orders;
+            if(orders1 != null){
+                orders = orders1;
+                Log.w(TAG,"MyFirebaseMessagingService orders : "+orders1);
+            }
         }
+
+
+
 
 
         ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
@@ -175,7 +185,10 @@ public class PetMyOrdrersNewActivity extends AppCompatActivity implements View.O
 
         tablayout.setupWithViewPager(viewPager);
         TabLayout.Tab tab = tablayout.getTabAt(someIndex);
-        tab.select();
+        if (tab != null) {
+            tab.select();
+        }
+
 
 
         img_back.setOnClickListener(v -> onBackPressed());

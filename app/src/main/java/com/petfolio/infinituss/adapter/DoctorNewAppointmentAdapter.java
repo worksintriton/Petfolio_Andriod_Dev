@@ -219,9 +219,7 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
             }
         });
 
-
-
-            holder.ll_new.setOnClickListener(new View.OnClickListener() {
+        holder.ll_new.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(context, DoctorAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -357,16 +355,19 @@ public class DoctorNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
 
             Log.w(TAG,"compareDatesandTime--->"+"responseDate :"+responseDate+" "+"currentDate :"+currentDate);
 
-            if (currentDate.compareTo(responseDate)<0 || responseDate.compareTo(currentDate) == 0)
-            {
-                Log.w(TAG,"date is equal");
-                isVaildDate = true;
+            if (currentDate != null) {
+                if (responseDate != null) {
+                    if (currentDate.compareTo(responseDate)<0 || responseDate.compareTo(currentDate) == 0)
+                    {
+                        Log.w(TAG,"date is equal");
+                        isVaildDate = true;
 
-            }else{
-                Log.w(TAG,"date is not equal");
-                isVaildDate = false;
+                    }else{
+                        Log.w(TAG,"date is not equal");
+                        isVaildDate = false;
+                    }
+                }
             }
-
 
 
         }catch (ParseException e1){

@@ -117,7 +117,7 @@
     <string name="deleteholidaymsg">"Are you sure you want to delete this holiday? "</string>
 
 
-    <string name="my_orders">My orders</string>
+    <string name="my_orders">My Orders</string>
     <string name="my_appointments">My Appointments</string>
     <string name="manage_services">Manage Services</string>
     <string name="favourites">Favourites</string>
@@ -397,7 +397,7 @@
     <string name="status">Status</string>
     <string name="view_prescription">View Prescription</string>
     <string name="consultation_fees">Consultation Fee</string>
-    <string name="notification">Notification</string>
+    <string name="notification">Notifications</string>
 
     <string name="service_details">Service Details</string>
 

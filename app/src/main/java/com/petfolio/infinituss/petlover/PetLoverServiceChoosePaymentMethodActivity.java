@@ -274,10 +274,11 @@ public class PetLoverServiceChoosePaymentMethodActivity extends AppCompatActivit
             servicetime = extras.getString("servicetime");
             SP_ava_Date = extras.getString("SP_ava_Date");
             selectedTimeSlot = extras.getString("selectedTimeSlot");
+            petId = extras.getString("petId");
             distance = extras.getInt("distance");
             Log.w(TAG,"spid : "+spid +" catid : "+catid+" from : "+from+" serviceamount : "+serviceamount+" servicetime : "+servicetime+" SP_ava_Date : "+SP_ava_Date+" selectedTimeSlot : "+selectedTimeSlot);
             Total_price = serviceamount;
-            Log.w(TAG,"fromactivity : "+fromactivity+" from : "+from);
+            Log.w(TAG,"fromactivity : "+fromactivity+" from : "+from+" petId : "+petId);
         }
 
 
