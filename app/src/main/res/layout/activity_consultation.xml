@@ -84,7 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/futuramediumbt"
-                android:text="Choose/Add the pet which need consultation"
+                android:text="Choose/Add your pet"
                 android:textColor="@color/dark_gray"
                 android:textSize="16sp"
                 android:gravity="center"

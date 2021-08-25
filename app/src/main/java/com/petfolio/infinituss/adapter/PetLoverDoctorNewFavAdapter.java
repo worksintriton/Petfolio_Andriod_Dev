@@ -56,7 +56,7 @@ public class PetLoverDoctorNewFavAdapter extends  RecyclerView.Adapter<RecyclerV
 
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "LogNotTimber"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
           currentItem = dataBeanList.get(position);
           if(currentItem.getDoctor_name() != null){
@@ -97,6 +97,12 @@ public class PetLoverDoctorNewFavAdapter extends  RecyclerView.Adapter<RecyclerV
               holder.hand_img3.setBackgroundResource(R.drawable.ic_logo_color);
               holder.hand_img4.setBackgroundResource(R.drawable.ic_logo_color);
               holder.hand_img5.setBackgroundResource(R.drawable.ic_logo_color);
+          }else{
+              holder.hand_img1.setBackgroundResource(R.drawable.ic_logo_graycolor);
+              holder.hand_img2.setBackgroundResource(R.drawable.ic_logo_graycolor);
+              holder.hand_img3.setBackgroundResource(R.drawable.ic_logo_graycolor);
+              holder.hand_img4.setBackgroundResource(R.drawable.ic_logo_graycolor);
+              holder.hand_img5.setBackgroundResource(R.drawable.ic_logo_graycolor);
           }
 
           if(currentItem.isFav()){
@@ -109,7 +115,7 @@ public class PetLoverDoctorNewFavAdapter extends  RecyclerView.Adapter<RecyclerV
                       .into(holder.img_fav);
           }
 
-
+          Log.w(TAG,"Thumbnail_image : "+currentItem.getThumbnail_image());
         if (currentItem.getThumbnail_image() != null && !currentItem.getThumbnail_image().isEmpty()) {
             Glide.with(context)
                     .load(currentItem.getThumbnail_image())

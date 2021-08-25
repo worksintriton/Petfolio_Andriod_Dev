@@ -90,6 +90,12 @@ public class PetLoverShopNewAdapter extends  RecyclerView.Adapter<RecyclerView.V
             holder.hand_img3.setBackgroundResource(R.drawable.ic_logo_color);
             holder.hand_img4.setBackgroundResource(R.drawable.ic_logo_color);
             holder.hand_img5.setBackgroundResource(R.drawable.ic_logo_color);
+        }else{
+            holder.hand_img1.setBackgroundResource(R.drawable.ic_logo_graycolor);
+            holder.hand_img2.setBackgroundResource(R.drawable.ic_logo_graycolor);
+            holder.hand_img3.setBackgroundResource(R.drawable.ic_logo_graycolor);
+            holder.hand_img4.setBackgroundResource(R.drawable.ic_logo_graycolor);
+            holder.hand_img5.setBackgroundResource(R.drawable.ic_logo_graycolor);
         }
 
 
@@ -103,23 +109,31 @@ public class PetLoverShopNewAdapter extends  RecyclerView.Adapter<RecyclerView.V
 
         Log.w(TAG,"Product_price : "+currentItem.getProduct_price());
           if(currentItem.getProduct_price() != 0){
+              holder.txt_products_price.setVisibility(View.VISIBLE);
               holder.txt_products_price.setText("INR "+currentItem.getProduct_price());
           }else{
+              holder.txt_products_price.setVisibility(View.GONE);
               holder.txt_products_price.setText("INR 0");
           }
 
 
+        holder.txt_products_offer.setVisibility(View.GONE);
+        holder.txt_product_discount_price.setVisibility(View.GONE);
 
-        if(currentItem.getProduct_discount() != 0){
+        if( productDetailsResponseList.get(position).getProduct_discount() != 0) {
+            Log.w(TAG, "Product_discount if" + productDetailsResponseList.get(position).getProduct_discount());
             holder.txt_product_discount_price.setVisibility(View.VISIBLE);
-            holder.txt_product_discount_price.setText(currentItem.getProduct_discount()+" % off");
+            holder.txt_product_discount_price.setText(productDetailsResponseList.get(position).getProduct_discount() + " % off");
             holder.txt_product_discount_price.setPaintFlags(holder.txt_product_discount_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-
         }else{
+            Log.w(TAG,"Product_discount else"+ productDetailsResponseList.get(position).getProduct_discount());
             holder.txt_product_discount_price.setVisibility(View.GONE);
 
 
         }
+
+
+
 
 
 
@@ -199,6 +213,7 @@ public class PetLoverShopNewAdapter extends  RecyclerView.Adapter<RecyclerView.V
             txt_products_offer.setVisibility(View.GONE);
 
             txt_product_discount_price = itemView.findViewById(R.id.txt_product_discount_price);
+            txt_product_discount_price.setVisibility(View.GONE);
             hand_img1 = itemView.findViewById(R.id.hand_img1);
             hand_img2 = itemView.findViewById(R.id.hand_img2);
             hand_img3 = itemView.findViewById(R.id.hand_img3);

@@ -828,6 +828,12 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
                             }
 
 
+                        }else{
+                            hand_img1.setBackgroundResource(R.drawable.ic_logo_graycolor);
+                            hand_img2.setBackgroundResource(R.drawable.ic_logo_graycolor);
+                            hand_img3.setBackgroundResource(R.drawable.ic_logo_graycolor);
+                            hand_img4.setBackgroundResource(R.drawable.ic_logo_graycolor);
+                            hand_img5.setBackgroundResource(R.drawable.ic_logo_graycolor);
                         }
                         if(location != null && !location.isEmpty()){
                             txt_place.setText(location);
@@ -835,12 +841,12 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
 
                         if(distance != null&&!distance.isEmpty()){
 
-                            txt_distance.setText(distance+"");
+                            txt_distance.setText(distance+" KM Away");
 
                         }
                         else if(APIClient.SP_DISTANCE != null&&!APIClient.SP_DISTANCE.isEmpty()){
 
-                            txt_distance.setText(APIClient.SP_DISTANCE+"");
+                            txt_distance.setText(APIClient.SP_DISTANCE+" KM Away");
 
                         }
 

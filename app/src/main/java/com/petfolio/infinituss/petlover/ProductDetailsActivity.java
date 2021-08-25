@@ -893,6 +893,15 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
 
         }
+        else{
+            hand_img1.setBackgroundResource(R.drawable.ic_logo_graycolor);
+            hand_img2.setBackgroundResource(R.drawable.ic_logo_graycolor);
+            hand_img3.setBackgroundResource(R.drawable.ic_logo_graycolor);
+            hand_img4.setBackgroundResource(R.drawable.ic_logo_graycolor);
+            hand_img5.setBackgroundResource(R.drawable.ic_logo_graycolor);
+
+        }
+
         if(product_price != 0 ){
             txt_products_price.setText("INR "+product_price);
 

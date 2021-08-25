@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
-import com.google.gson.Gson;
+
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.doctor.DoctorDashboardActivity;
 import com.petfolio.infinituss.doctor.DoctorMyOrdrersActivity;
