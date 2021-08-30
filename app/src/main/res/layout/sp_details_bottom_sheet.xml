@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/new_topcorner_radius"
         android:orientation="vertical"
-        tools:ignore="UselessParent">
+        tools:ignore="UselessParent"
+        android:layout_marginBottom="30dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -456,7 +457,8 @@
                     android:id="@+id/ll_map"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginBottom="30dp">
 
                     <fragment
                         android:id="@+id/map"

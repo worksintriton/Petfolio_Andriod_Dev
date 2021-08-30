@@ -523,68 +523,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
         btn_continue.setOnClickListener(v -> {
             Log.w(TAG,"btn_continue selectedCommunicationtype : "+selectedCommunicationtype+" selectedVisitType : "+selectedVisitType);
-           /* if (isSelectYourPet) {
-                if(validdSelectYourPetType()){
-                    if (edt_allergies.getText().toString().trim().equals("")) {
-                        edt_allergies.setError("Please enter allergies");
-                        edt_allergies.requestFocus();
-                    }
-                    else if (edt_comment.getText().toString().trim().equals("")) {
-                        edt_comment.setError("Please enter comment");
-                        edt_comment.requestFocus();
-                    }
-                    else if (selectedCommunicationtype != null && selectedCommunicationtype.isEmpty()) {
-                        showErrorLoading("Please select communication type");
-                    }
-                    else if (isVisit && selectedVisitType != null && selectedVisitType.isEmpty()) {
-                        showErrorLoading("Please select visit type");
-                    }
-                    else{
-                        if(amount != 0){
-                            startPayment();
-                        }
-                        else {
-                            if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                                petAppointmentCreateResponseCall();
-                            }
 
-                        }
-
-
-
-
-
-                    }
-
-                }
-
-            }
-            else {
-                if( bookAppointmentValidator()){
-                    if (validdSelectPetType()) {
-                        if(validdSelectPetBreedType()){
-                            if (edt_allergies.getText().toString().trim().equals("")) {
-                                edt_allergies.setError("Please enter allergies");
-                                edt_allergies.requestFocus();
-                            }else if (edt_comment.getText().toString().trim().equals("")) {
-                                edt_comment.setError("Please enter comment");
-                                edt_comment.requestFocus();
-                            }else if (selectedCommunicationtype != null && selectedCommunicationtype.isEmpty()) {
-                                showErrorLoading("Please select communication type");
-                            }else {
-                                if (new ConnectionDetector(BookAppointmentActivity.this).isNetworkAvailable(BookAppointmentActivity.this)) {
-                                    addYourPetResponseCall();
-                                }
-                            }
-                        }
-
-                    }
-
-
-
-                }
-
-            }*/
 
 
             if (isVisit && selectedVisitType != null && selectedVisitType.isEmpty()) {

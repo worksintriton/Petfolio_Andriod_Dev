@@ -349,7 +349,7 @@
                     android:layout_height="match_parent"
                     android:fontFamily="@font/futuramediumbt"
                     android:gravity="end|center_vertical"
-                    android:text="@string/communicationtype"
+                    android:text="@string/consulationtype"
                     android:textColor="@color/new_txt_color"
                     android:textSize="14sp" />
 

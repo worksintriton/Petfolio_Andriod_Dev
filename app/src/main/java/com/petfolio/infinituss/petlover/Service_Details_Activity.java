@@ -11,6 +11,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -972,6 +973,18 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
             mMap.animateCamera(CameraUpdateFactory.zoomIn());
             // Zoom out to zoom level 10, animating with a duration of 2 seconds.
             mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+
+            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(@NonNull LatLng latLng) {
+                    Log.w(TAG,"mMap onclick : "+"latitude : "+latitude+" longitude : "+longitude+" location : "+location);
+                    String strUri = "http://maps.google.com/maps?q=loc:" + latitude + "," + longitude + " (" + location + ")";
+                    Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(strUri));
+                    intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+                    startActivity(intent);
+                }
+            });
+
 
         }
 

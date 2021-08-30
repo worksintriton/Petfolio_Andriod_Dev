@@ -248,7 +248,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
         if(communication_type == 1){
             switchButton_communcationtype.setChecked(true);
-            txt_communicationtype.setText("Online Doctors");
+            txt_communicationtype.setText("Online");
 
         }
 
@@ -257,13 +257,13 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    txt_communicationtype.setText("Online Doctors");
+                    txt_communicationtype.setText("Online");
                     communication_type = 1;
                     if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
                         doctorSearchResponseCall(searchString,communication_type);
                     }
                 }else{
-                    txt_communicationtype.setText("Offline Doctors");
+                    txt_communicationtype.setText("Clinic vists");
                     communication_type = 0;
                     if (new ConnectionDetector(mContext).isNetworkAvailable(mContext)) {
                         doctorSearchResponseCall(searchString,communication_type);

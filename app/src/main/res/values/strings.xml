@@ -324,8 +324,9 @@
     <string name="average">Average</string>
     <string name="below_average">Below Average</string>
     <string name="poor">Poor</string>
-    <string name="communication_type">Offline Doctors</string>
+    <string name="communication_type">Clinic vists</string>
     <string name="communicationtype">Communication Type</string>
+    <string name="consulationtype">Consultation Type</string>
     <string name="visittype">Visit Type</string>
 
     <string name="review_added">Review Added</string>
