@@ -64,6 +64,7 @@
             android:padding="15dp"
             android:textColor="@color/new_light_green"
             android:textColorHint="@color/dark_gray"
+            android:textCursorDrawable="@null"
             android:textSize="14sp"
             tools:ignore="Autofill,LabelFor,TextFields" />
 

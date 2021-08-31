@@ -491,8 +491,6 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
                 }
             });
 
-
-
             Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
 

@@ -74,8 +74,9 @@
                     android:maxLength="25"
                     android:maxLines="1"
                     android:padding="15dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/green"
                     android:textColorHint="@color/dark_gray"
+                    android:textCursorDrawable="@null"
                     android:textSize="16sp"
                     tools:ignore="Autofill,LabelFor"
                     android:ellipsize="end"
@@ -105,8 +106,9 @@
                 android:maxLength="25"
                 android:maxLines="1"
                 android:padding="15dp"
-                android:textColor="@color/black"
+                android:textColor="@color/green"
                 android:textColorHint="@color/dark_gray"
+                android:textCursorDrawable="@null"
                 android:textSize="16sp"
                 tools:ignore="Autofill,LabelFor,TextFields" />
             <LinearLayout
@@ -206,8 +208,9 @@
                     android:layout_height="match_parent"
                     android:fontFamily="@font/futuramediumbt"
                     android:hint="@string/date_of_birth"
-                    android:textColor="@color/black"
+                    android:textColor="@color/green"
                     android:textColorHint="@color/dark_gray"
+                    android:textCursorDrawable="@null"
                     android:textSize="16sp" />
 
                 <ImageView
@@ -236,8 +239,9 @@
                 android:padding="15dp"
                 android:scrollbars="vertical"
                 android:textAlignment="viewStart"
+                android:textColor="@color/green"
                 android:textColorHint="@color/dark_gray"
-                android:textColor="@color/black"
+                android:textCursorDrawable="@null"
                 android:textSize="16sp"
                 tools:ignore="Autofill,LabelFor" />
 
@@ -319,6 +323,7 @@
                         android:hint="@string/select_vaccinated"
                         android:textColor="@color/green"
                         android:textColorHint="@color/dark_gray"
+                        android:textCursorDrawable="@null"
                         android:textSize="16sp" />
 
                     <ImageView
@@ -349,6 +354,7 @@
                 android:padding="15dp"
                 android:textColor="@color/green"
                 android:textColorHint="@color/dark_gray"
+                android:textCursorDrawable="@null"
                 android:textSize="14sp"
                 tools:ignore="Autofill,LabelFor" />
 
@@ -366,6 +372,7 @@
                 android:padding="15dp"
                 android:textColor="@color/green"
                 android:textColorHint="@color/dark_gray"
+                android:textCursorDrawable="@null"
                 android:textSize="14sp"
                 tools:ignore="Autofill,LabelFor,TextFields" />
 

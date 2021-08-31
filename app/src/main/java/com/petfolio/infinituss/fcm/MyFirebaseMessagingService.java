@@ -295,7 +295,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
 
-        if (intent != null) {
+        if (intent.getExtras().keySet() != null) {
             for (String key : intent.getExtras().keySet()) {
                 Log.w(TAG, "key : " + key);
 

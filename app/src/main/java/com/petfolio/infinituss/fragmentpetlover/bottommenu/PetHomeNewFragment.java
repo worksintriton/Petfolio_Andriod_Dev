@@ -494,7 +494,7 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
                // avi_indicator.smoothToHide();
                 mShimmerViewContainer.stopShimmerAnimation();
                 includelayout.setVisibility(View.GONE);
-                Log.e("PetLoverDashboardResponseflr", "--->" + t.getMessage());
+                Log.w(TAG,"PetLoverDashboardResponseflr--->" + t.getMessage());
                 Toast.makeText(mContext, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
