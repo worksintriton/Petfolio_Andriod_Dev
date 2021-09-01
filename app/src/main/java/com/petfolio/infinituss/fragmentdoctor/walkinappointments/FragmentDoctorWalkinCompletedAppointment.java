@@ -1,4 +1,4 @@
-package com.petfolio.infinituss.fragmentdoctor.myappointments;
+package com.petfolio.infinituss.fragmentdoctor.walkinappointments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
-import com.petfolio.infinituss.adapter.DoctorMissedAppointmentAdapter;
+import com.petfolio.infinituss.adapter.DoctorWalkinCompletedAppointmentAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.requestpojo.DoctorNewAppointmentRequest;
@@ -45,10 +45,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentDoctorMissedAppointment extends Fragment implements View.OnClickListener {
-    private String TAG = "FragmentDoctorMissedAppointment";
-
-
+public class FragmentDoctorWalkinCompletedAppointment extends Fragment implements View.OnClickListener {
+    private String TAG = "FragmentDoctorWalkinCompletedAppointment";
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
@@ -59,9 +57,8 @@ public class FragmentDoctorMissedAppointment extends Fragment implements View.On
     TextView txt_no_records;
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.rv_missedappointment)
-    RecyclerView rv_missedappointment;
-
+    @BindView(R.id.rv_completedappointment)
+    RecyclerView rv_completedappointment;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_load_more)
@@ -73,14 +70,15 @@ public class FragmentDoctorMissedAppointment extends Fragment implements View.On
 
 
 
+
     SessionManager session;
     String type = "",name = "",doctorid = "";
     private SharedPreferences preferences;
     private Context mContext;
-    private List<DoctorAppointmentsResponse.DataBean> missedAppointmentResponseList;
+    private List<DoctorAppointmentsResponse.DataBean> completedAppointmentResponseList;
 
 
-    public FragmentDoctorMissedAppointment() {
+    public FragmentDoctorWalkinCompletedAppointment() {
 
     }
 
@@ -90,7 +88,7 @@ public class FragmentDoctorMissedAppointment extends Fragment implements View.On
         Log.w(TAG,"onCreateView");
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        View view = inflater.inflate(R.layout.fragment_doctor_missed, container, false);
+        View view = inflater.inflate(R.layout.fragment_doctor_completed_appointment, container, false);
 
         ButterKnife.bind(this, view);
         mContext = getActivity();
@@ -113,7 +111,7 @@ public class FragmentDoctorMissedAppointment extends Fragment implements View.On
       
 
         if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-            doctorMissedAppointmentResponseCall();
+            doctorCompletedAppointmentResponseCall();
         }
 
 
@@ -127,7 +125,7 @@ public class FragmentDoctorMissedAppointment extends Fragment implements View.On
                         try {
                             //your method here
                             if (new ConnectionDetector(getActivity()).isNetworkAvailable(getActivity())) {
-                                doctorMissedAppointmentResponseCall();
+                                doctorCompletedAppointmentResponseCall();
                             }
 
                         } catch (Exception e) {
@@ -144,11 +142,11 @@ public class FragmentDoctorMissedAppointment extends Fragment implements View.On
 
 
     @SuppressLint("LogNotTimber")
-    private void doctorMissedAppointmentResponseCall() {
+    private void doctorCompletedAppointmentResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<DoctorAppointmentsResponse> call = ApiService.doctorMissedAppointmentResponseCall(RestUtils.getContentType(),doctorNewAppointmentRequest());
+        Call<DoctorAppointmentsResponse> call = ApiService.doctorWalkinCompletedAppointmentResponseCall(RestUtils.getContentType(),doctorNewAppointmentRequest());
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<DoctorAppointmentsResponse>() {
@@ -156,33 +154,38 @@ public class FragmentDoctorMissedAppointment extends Fragment implements View.On
             @Override
             public void onResponse(@NonNull Call<DoctorAppointmentsResponse> call, @NonNull Response<DoctorAppointmentsResponse> response) {
                avi_indicator.smoothToHide();
-                Log.w(TAG,"DoctorMissedAppointmentResponse"+ "--->" + new Gson().toJson(response.body()));
+                Log.w(TAG,"DoctorCompletedAppointmentResponse"+ "--->" + new Gson().toJson(response.body()));
 
 
                if (response.body() != null) {
+
                    if(200 == response.body().getCode()){
                        if(response.body().getData() != null) {
-                           missedAppointmentResponseList = response.body().getData();
-                           Log.w(TAG, "Size" + missedAppointmentResponseList.size());
-                           Log.w(TAG, "missedAppointmentResponseList : " + new Gson().toJson(missedAppointmentResponseList));
+                           completedAppointmentResponseList = response.body().getData();
+                           Log.w(TAG, "Size" + completedAppointmentResponseList.size());
+                           Log.w(TAG, "completedAppointmentResponseList : " + new Gson().toJson(completedAppointmentResponseList));
                        }
                        if(response.body().getData() != null && response.body().getData().isEmpty()){
                            txt_no_records.setVisibility(View.VISIBLE);
-                           txt_no_records.setText("You make this world a Woofer place");
-                           rv_missedappointment.setVisibility(View.GONE);
+                           txt_no_records.setText(getResources().getString(R.string.no_completed_appointments_doctor));
+                           rv_completedappointment.setVisibility(View.GONE);
                            btn_load_more.setVisibility(View.GONE);
                            btn_filter.setVisibility(View.GONE);
                        }else{
                            txt_no_records.setVisibility(View.GONE);
-                           rv_missedappointment.setVisibility(View.VISIBLE);
-                           if(missedAppointmentResponseList.size()>3){
+                           rv_completedappointment.setVisibility(View.VISIBLE);
+                           Log.w(TAG,"Size : "+completedAppointmentResponseList.size());
+                           if(completedAppointmentResponseList.size() > 3){
                                btn_load_more.setVisibility(View.VISIBLE);
                            }else{
                                btn_load_more.setVisibility(View.GONE);
+
                            }
                            setView();
                        }
+
                    }
+
 
 
                 }
@@ -192,7 +195,7 @@ public class FragmentDoctorMissedAppointment extends Fragment implements View.On
             public void onFailure(@NonNull Call<DoctorAppointmentsResponse> call, @NonNull Throwable t) {
                 avi_indicator.smoothToHide();
 
-                Log.w(TAG,"DoctorMissedAppointmentResponse flr"+"--->" + t.getMessage());
+                Log.w(TAG,"DoctorCompletedAppointmentResponseflr"+"--->" + t.getMessage());
             }
         });
 
@@ -208,22 +211,23 @@ public class FragmentDoctorMissedAppointment extends Fragment implements View.On
         return doctorNewAppointmentRequest;
     }
     private void setView() {
-        rv_missedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv_missedappointment.setItemAnimator(new DefaultItemAnimator());
+        rv_completedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv_completedappointment.setItemAnimator(new DefaultItemAnimator());
         int size = 3;
-        DoctorMissedAppointmentAdapter doctorMissedAppointmentAdapter = new DoctorMissedAppointmentAdapter(getContext(), missedAppointmentResponseList, rv_missedappointment,size);
-        rv_missedappointment.setAdapter(doctorMissedAppointmentAdapter);
+        DoctorWalkinCompletedAppointmentAdapter doctorWalkinCompletedAppointmentAdapter = new DoctorWalkinCompletedAppointmentAdapter(getContext(), completedAppointmentResponseList, rv_completedappointment,size);
+        rv_completedappointment.setAdapter(doctorWalkinCompletedAppointmentAdapter);
 
     }
     private void setViewLoadMore() {
-        rv_missedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv_missedappointment.setItemAnimator(new DefaultItemAnimator());
-        int size = missedAppointmentResponseList.size();
-        DoctorMissedAppointmentAdapter doctorMissedAppointmentAdapter = new DoctorMissedAppointmentAdapter(getContext(), missedAppointmentResponseList, rv_missedappointment,size);
-        rv_missedappointment.setAdapter(doctorMissedAppointmentAdapter);
+        rv_completedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv_completedappointment.setItemAnimator(new DefaultItemAnimator());
+        int size = completedAppointmentResponseList.size();
+        DoctorWalkinCompletedAppointmentAdapter doctorWalkinCompletedAppointmentAdapter = new DoctorWalkinCompletedAppointmentAdapter(getContext(), completedAppointmentResponseList, rv_completedappointment,size);
+        rv_completedappointment.setAdapter(doctorWalkinCompletedAppointmentAdapter);
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()){

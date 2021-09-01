@@ -581,6 +581,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
             selectedVisitType = (String) radioButton.getText();
             Log.w(TAG,"selectedVisitType : " + selectedVisitType);
             if(selectedVisitType != null && selectedVisitType.equalsIgnoreCase("Home")){
+                selectedVisitType = "Home Visit";
                 showManageAddressAlert();
                 btn_use_this_addreess.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -590,6 +591,8 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                     }
                 });
 
+            }else{
+                selectedVisitType = "Clinic Visit";
             }
 
 
@@ -1439,6 +1442,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         intent.putExtra("selectedTimeSlot", selectedTimeSlot);
         intent.putExtra("amount", amount);
         intent.putExtra("communicationtype", communicationtype);
+        intent.putExtra("selectedVisitType", selectedVisitType);
         intent.putExtra("petId", petId);
         intent.putExtra("health_issue_title", health_issue_title);
         startActivity(intent);

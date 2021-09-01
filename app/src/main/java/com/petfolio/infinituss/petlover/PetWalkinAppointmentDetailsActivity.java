@@ -35,6 +35,7 @@ import com.petfolio.infinituss.adapter.MyCouponsTextAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.doctor.DoctorPrescriptionDetailsActivity;
+import com.petfolio.infinituss.doctor.DoctorWalkinPrescriptionDetailsActivity;
 import com.petfolio.infinituss.interfaces.OnAppointmentSuccessfullyCancel;
 import com.petfolio.infinituss.requestpojo.AddReviewRequest;
 import com.petfolio.infinituss.requestpojo.AppoinmentCancelledRequest;
@@ -71,9 +72,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PetAppointmentDetailsActivity extends AppCompatActivity implements View.OnClickListener, OnAppointmentSuccessfullyCancel {
+public class PetWalkinAppointmentDetailsActivity extends AppCompatActivity implements View.OnClickListener, OnAppointmentSuccessfullyCancel {
 
-    private String TAG = "PetAppointmentDetailsActivity";
+    private String TAG = "PetWalkinAppointmentDetailsActivity";
 
 
     @SuppressLint("NonConstantResourceId")
@@ -489,41 +490,40 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
         }
 
         if(from != null){
-            if(from.equalsIgnoreCase("PetNewAppointmentAdapter")){
+            if(from.equalsIgnoreCase("PetWalkinNewAppointmentAdapter")){
                 if(appointmentfor != null){
                     if(appointmentfor.equalsIgnoreCase("Doctor")){
                         img_videocall.setVisibility(View.VISIBLE);
                         btn_cancel.setVisibility(View.VISIBLE);
-
 
                         if(isVaildDate){
                             btn_cancel.setVisibility(View.VISIBLE);
                         }else{
                             btn_cancel.setVisibility(View.GONE);
                         }
-                        if(startappointmentstatus != null && !startappointmentstatus.equalsIgnoreCase("Not Started")) {
+                        /*if(startappointmentstatus != null && !startappointmentstatus.equalsIgnoreCase("Not Started")) {
                             img_videocall.setBackgroundResource(R.drawable.video_camera_gray);
                             btn_cancel.setVisibility(View.GONE);
                         }else{
                             img_videocall.setBackgroundResource(R.drawable.video_camera_green);
                         }
+*/
 
 
 
-
-                    }else if(appointmentfor.equalsIgnoreCase("SP")){
-                        btn_cancel.setVisibility(View.VISIBLE);
-                        if(userrate != null && userrate.equalsIgnoreCase("0")){
-                            btn_add_review.setVisibility(View.VISIBLE);
-                        }else{
-                            btn_add_review.setVisibility(View.GONE);
-
-                        }
                     }
+                }else{
+                    btn_cancel.setVisibility(View.VISIBLE);
+                    if(isVaildDate){
+                        btn_cancel.setVisibility(View.VISIBLE);
+                    }else{
+                        btn_cancel.setVisibility(View.GONE);
+                    }
+
                 }
 
             }
-             else if(from.equalsIgnoreCase("PetMissedAppointmentAdapter")){
+             else if(from.equalsIgnoreCase("PetWalkinMissedAppointmentAdapter")){
                 btn_cancel.setVisibility(View.GONE);
                 img_videocall.setVisibility(View.GONE);
                 btn_add_review.setVisibility(View.GONE);
@@ -531,11 +531,11 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                 img_videocall.setVisibility(View.GONE);
 
             }
-             else if(from.equalsIgnoreCase("PetCompletedAppointmentAdapter")) {
+             else if(from.equalsIgnoreCase("PetWalkinCompletedAppointmentAdapter")) {
                  img_videocall.setVisibility(View.GONE);
 
                 if (userrate != null && userrate.equalsIgnoreCase("0")) {
-                    btn_add_review.setVisibility(View.VISIBLE);
+                    btn_add_review.setVisibility(View.GONE);
                 }
                 else {
                     btn_add_review.setVisibility(View.GONE);
@@ -552,7 +552,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
         }
 
         btn_prescriptiondetails.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), DoctorPrescriptionDetailsActivity.class);
+            Intent intent = new Intent(getApplicationContext(), DoctorWalkinPrescriptionDetailsActivity.class);
             intent.putExtra("id",appointment_id);
             startActivity(intent);
         });
@@ -561,12 +561,12 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
 
         if(appointmentfor != null){
             if(appointmentfor.equalsIgnoreCase("Doctor")){
-                if (new ConnectionDetector(PetAppointmentDetailsActivity.this).isNetworkAvailable(PetAppointmentDetailsActivity.this)) {
+                if (new ConnectionDetector(PetWalkinAppointmentDetailsActivity.this).isNetworkAvailable(PetWalkinAppointmentDetailsActivity.this)) {
                     petNewAppointmentResponseCall();
                 }
             }
             else if(appointmentfor.equalsIgnoreCase("SP")){
-                if (new ConnectionDetector(PetAppointmentDetailsActivity.this).isNetworkAvailable(PetAppointmentDetailsActivity.this)) {
+                if (new ConnectionDetector(PetWalkinAppointmentDetailsActivity.this).isNetworkAvailable(PetWalkinAppointmentDetailsActivity.this)) {
                     spAppointmentDetailsResponse();
                 }
             }
@@ -580,7 +580,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<PetNewAppointmentDetailsResponse> call = ApiService.petNewAppointDetailResponseCall(RestUtils.getContentType(), petNewAppointmentDetailsRequest());
+        Call<PetNewAppointmentDetailsResponse> call = ApiService.petWalkinAppointDetailResponseCall(RestUtils.getContentType(), petNewAppointmentDetailsRequest());
         Log.w(TAG, "url  :%s" + call.request().url().toString());
 
         call.enqueue(new Callback<PetNewAppointmentDetailsResponse>() {
@@ -625,8 +625,8 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                             double weight = response.body().getData().getPet_id().getPet_weight();
                             String pet_dob = response.body().getData().getPet_id().getPet_dob();
                             String pet_age = response.body().getData().getPet_id().getPet_age();
-                            if(pet_age != null && !pet_age.isEmpty()){
-                                txt_age.setText(pet_age);
+                            if(pet_dob != null && !pet_dob.isEmpty()){
+                                txt_age.setText(pet_dob);
                             }else {
                                 txt_age.setText("");
                             }
@@ -759,11 +759,10 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                             Log.w(TAG,"userid : "+response.body().getData().getDoc_business_info().get(0).getUser_id()+" _id  : "+response.body().getData().getDoc_business_info().get(0).get_id());
 
                             if(response.body().getData().getReshedule_status() != null && response.body().getData().getReshedule_status().isEmpty()){
-                                btn_reschedule_appointment.setVisibility(View.VISIBLE);
                                 btn_reschedule_appointment.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent = new Intent(PetAppointmentDetailsActivity.this,PetAppointment_Doctor_Date_Time_Activity.class);
+                                        Intent intent = new Intent(PetWalkinAppointmentDetailsActivity.this,PetAppointment_Doctor_Date_Time_Activity.class);
                                         intent.putExtra("doctorid",response.body().getData().getDoc_business_info().get(0).getUser_id());
                                         intent.putExtra("fromactivity",TAG);
                                         intent.putExtra("serviceamount",response.body().getData().getService_amount());
@@ -868,12 +867,12 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
 
 
         if(usr_image != null && !usr_image.isEmpty()){
-            Glide.with(PetAppointmentDetailsActivity.this)
+            Glide.with(PetWalkinAppointmentDetailsActivity.this)
                     .load(usr_image)
                     .into(img_user);
 
         }else{
-            Glide.with(PetAppointmentDetailsActivity.this)
+            Glide.with(PetWalkinAppointmentDetailsActivity.this)
                     .load(APIClient.PROFILE_IMAGE_URL)
                     .into(img_user);
         }
@@ -898,11 +897,11 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                 petimage = pet_image.get(i).getPet_img();
             }
         
-            Glide.with(PetAppointmentDetailsActivity.this)
+            Glide.with(PetWalkinAppointmentDetailsActivity.this)
                     .load(petimage)
                     .into(img_petimg);
         }else{
-            Glide.with(PetAppointmentDetailsActivity.this)
+            Glide.with(PetWalkinAppointmentDetailsActivity.this)
                     .load(APIClient.PROFILE_IMAGE_URL)
                     .into(img_petimg);
         }
@@ -976,9 +975,9 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
         img_videocall.setOnClickListener(v -> {
             Log.w(TAG,"Start_appointment_status : "+start_appointment_status);
             if(start_appointment_status != null && start_appointment_status.equalsIgnoreCase("Not Started")){
-                Toasty.warning(PetAppointmentDetailsActivity.this,"Doctor is yet to start the Appointment. Please wait for the doctor to initiate the Appointment", Toast.LENGTH_SHORT, true).show();
+                Toasty.warning(PetWalkinAppointmentDetailsActivity.this,"Doctor is yet to start the Appointment. Please wait for the doctor to initiate the Appointment", Toast.LENGTH_SHORT, true).show();
             }else {
-                Intent i = new Intent(PetAppointmentDetailsActivity.this, VideoCallPetLoverActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent i = new Intent(PetWalkinAppointmentDetailsActivity.this, VideoCallPetLoverActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra("id", appointment_id);
                 Log.w(TAG, "ID-->" + appointment_id);
                 startActivity(i);
@@ -994,7 +993,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
     @SuppressLint("SetTextI18n")
     private void showStatusAlert(String id, String appointmentfor) {
         try {
-            dialog = new Dialog(PetAppointmentDetailsActivity.this);
+            dialog = new Dialog(PetWalkinAppointmentDetailsActivity.this);
             dialog.setContentView(R.layout.alert_approve_reject_layout);
             TextView tvheader = dialog.findViewById(R.id.tvInternetNotConnected);
             tvheader.setText(R.string.cancelappointment);
@@ -1006,14 +1005,15 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
             dialogButtonApprove.setOnClickListener(view -> {
                 dialog.dismiss();
                 if(appointmentfor != null) {
-                    if (appointmentfor.equalsIgnoreCase("Doctor")) {
+                    appoinmentCancelledResponseCall(id);
+                   /* if (appointmentfor.equalsIgnoreCase("Doctor")) {
                         Appointmenttype = "1";
                         appoinmentCancelledResponseCall(id);
                     } else if (appointmentfor.equalsIgnoreCase("SP")) {
                         Appointmenttype = "2";
                         spappoinmentCancelledResponseCall(id);
 
-                    }
+                    }*/
                 }
 
 
@@ -1035,7 +1035,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-        Call<AppoinmentCancelledResponse> call = apiInterface.appoinmentCancelledResponseCall(RestUtils.getContentType(), appoinmentCancelledRequest(id));
+        Call<AppoinmentCancelledResponse> call = apiInterface.walkinappoinmentCancelledResponseCall(RestUtils.getContentType(), appoinmentCancelledRequest(id));
         Log.w(TAG,"appoinmentCancelledResponseCall url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<AppoinmentCancelledResponse>() {
@@ -1049,7 +1049,8 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        notificationSendResponseCall();
+                     //   notificationSendResponseCall();
+                        startActivity(new Intent(getApplicationContext(), PetWalkinappointmentsActivity.class));
 
                     }
 
@@ -1096,7 +1097,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
 
     private void showSuccessfullyCancelled() {
         try {
-            dialog = new Dialog(PetAppointmentDetailsActivity.this);
+            dialog = new Dialog(PetWalkinAppointmentDetailsActivity.this);
             dialog.setContentView(R.layout.alert_successfulley_cancelled_layout);
             dialog.setCancelable(false);
             txt_no_records_coupon = dialog.findViewById(R.id.txt_no_records);
@@ -1364,7 +1365,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                         if(Paymentmethod != null && Paymentmethod.equalsIgnoreCase("Online")){
                             showSuccessfullyCancelled();
                         }else{
-                            startActivity(new Intent(PetAppointmentDetailsActivity.this, PetMyappointmentsActivity.class));
+                            startActivity(new Intent(PetWalkinAppointmentDetailsActivity.this, PetMyappointmentsActivity.class));
                         }
 
                     }
@@ -1434,7 +1435,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                         if(Paymentmethod != null && Paymentmethod.equalsIgnoreCase("Online")){
                             showSuccessfullyCancelled();
                         }else{
-                            startActivity(new Intent(PetAppointmentDetailsActivity.this, PetMyappointmentsActivity.class));
+                            startActivity(new Intent(PetWalkinAppointmentDetailsActivity.this, PetMyappointmentsActivity.class));
                         }
 
 
@@ -1488,7 +1489,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
     private void showAddReview(String appointment_id,String appointmentfor) {
         try {
 
-            Dialog dialog = new Dialog(PetAppointmentDetailsActivity.this);
+            Dialog dialog = new Dialog(PetWalkinAppointmentDetailsActivity.this);
             dialog.setContentView(R.layout.addreview_popup_layout);
             dialog.setCancelable(true);
             RatingBar ratingBar = dialog.findViewById(R.id.ratingBar);
@@ -1642,7 +1643,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
     private void showAddReviewSuccess() {
         try {
 
-            Dialog dialog = new Dialog(PetAppointmentDetailsActivity.this);
+            Dialog dialog = new Dialog(PetWalkinAppointmentDetailsActivity.this);
             dialog.setContentView(R.layout.addreview_review_success_layout);
             dialog.setCancelable(false);
 
@@ -1651,7 +1652,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
 
             btn_back.setOnClickListener(view -> {
                 dialog.dismiss();
-                startActivity(new Intent(PetAppointmentDetailsActivity.this,PetMyappointmentsActivity.class));
+                startActivity(new Intent(PetWalkinAppointmentDetailsActivity.this,PetMyappointmentsActivity.class));
 
 
             });

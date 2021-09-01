@@ -230,6 +230,10 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
                     gotoSOS();
                     return true;
 
+                case R.id.nav_item_ten:
+                    gotoMyWalkinAppointments();
+                    return true;
+
 
 
 
@@ -240,6 +244,10 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
             }
         });
 
+    }
+
+    private void gotoMyWalkinAppointments() {
+        startActivity(new Intent(getApplicationContext(),PetWalkinappointmentsActivity.class));
     }
 
     private void gotoMyCoupons() {

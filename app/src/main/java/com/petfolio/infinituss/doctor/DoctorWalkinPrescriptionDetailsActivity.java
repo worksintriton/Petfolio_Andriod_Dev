@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.adapter.DoctorPrescriptionsDetailsAdapter;
+import com.petfolio.infinituss.adapter.DoctorWalkinPrescriptionsDetailsAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.requestpojo.PrescriptionCreateRequest;
@@ -41,8 +42,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
-    String TAG = "DoctorPrescriptionDetailsActivity";
+public class DoctorWalkinPrescriptionDetailsActivity extends AppCompatActivity {
+    String TAG = "DoctorWalkinPrescriptionDetailsActivity";
     AlertDialog.Builder alertDialogBuilder;
     AlertDialog alertDialog;
 
@@ -202,7 +203,7 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctor_prescription_details);
+        setContentView(R.layout.activity_doctor_walkin_prescription_details);
         ButterKnife.bind(this);
         Log.w(TAG,"Oncreate");
 
@@ -283,7 +284,7 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
       avi_indicator.setVisibility(View.VISIBLE);
       avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<PrescriptionFetchResponse> call = ApiService.prescriptionDetailsResponseCall(RestUtils.getContentType(),prescriptionDetailsRequest());
+        Call<PrescriptionFetchResponse> call = ApiService.prescriptionwalkinDetailsResponseCall(RestUtils.getContentType(),prescriptionDetailsRequest());
         Log.w(TAG,"url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<PrescriptionFetchResponse>() {
@@ -345,12 +346,12 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
                             }*/
 
                             if (response.body().getData().getDigital_sign() != null && !response.body().getData().getDigital_sign().isEmpty()) {
-                                Glide.with(DoctorPrescriptionDetailsActivity.this)
+                                Glide.with(DoctorWalkinPrescriptionDetailsActivity.this)
                                         .load(response.body().getData().getDigital_sign())
                                         .into(img_signature);
                             }
                             else {
-                                Glide.with(DoctorPrescriptionDetailsActivity.this)
+                                Glide.with(DoctorWalkinPrescriptionDetailsActivity.this)
                                         .load(APIClient.PROFILE_IMAGE_URL)
                                         .into(img_signature);
                             }
@@ -500,14 +501,14 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
 
                                     if(response.body().getData().getPrescription_img()!=null&&!response.body().getData().getPrescription_img().isEmpty()){
 
-                                        Glide.with(DoctorPrescriptionDetailsActivity.this)
+                                        Glide.with(DoctorWalkinPrescriptionDetailsActivity.this)
                                                 .load(response.body().getData().getPrescription_img())
                                                 .into(img_prescriptiondetails);
 
                                     }
                                     else {
 
-                                        Glide.with(DoctorPrescriptionDetailsActivity.this)
+                                        Glide.with(DoctorWalkinPrescriptionDetailsActivity.this)
                                                 .load(APIClient.BANNER_IMAGE_URL)
                                                 .into(img_prescriptiondetails);
 
@@ -602,8 +603,8 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
     private void setView() {
         rv_prescriptiondetails.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rv_prescriptiondetails.setItemAnimator(new DefaultItemAnimator());
-        DoctorPrescriptionsDetailsAdapter doctorPrescriptionsDetailsAdapter = new DoctorPrescriptionsDetailsAdapter(getApplicationContext(), prescriptionDataList);
-        rv_prescriptiondetails.setAdapter(doctorPrescriptionsDetailsAdapter);
+        DoctorWalkinPrescriptionsDetailsAdapter doctorWalkinPrescriptionsDetailsAdapter = new DoctorWalkinPrescriptionsDetailsAdapter(getApplicationContext(), prescriptionDataList);
+        rv_prescriptiondetails.setAdapter(doctorWalkinPrescriptionsDetailsAdapter);
 
     }
 

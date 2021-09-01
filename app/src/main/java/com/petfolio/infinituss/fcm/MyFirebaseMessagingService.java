@@ -21,9 +21,11 @@ import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.activity.SplashActivity;
 import com.petfolio.infinituss.doctor.DoctorDashboardActivity;
 import com.petfolio.infinituss.doctor.DoctorMyOrdrersActivity;
+import com.petfolio.infinituss.doctor.DoctorWalkinAppointmentsActivity;
 import com.petfolio.infinituss.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinituss.petlover.PetMyOrdrersNewActivity;
 import com.petfolio.infinituss.petlover.PetMyappointmentsActivity;
+import com.petfolio.infinituss.petlover.PetWalkinappointmentsActivity;
 import com.petfolio.infinituss.serviceprovider.SPMyCalendarActivity;
 import com.petfolio.infinituss.serviceprovider.ServiceProviderDashboardActivity;
 import com.petfolio.infinituss.serviceprovider.shop.SPMyOrdrersActivity;
@@ -240,9 +242,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if(usertype != null){
             if(usertype.equalsIgnoreCase("1")){
                 if(appintments != null && !appintments.isEmpty()){
-                    intent = new Intent(this, PetMyappointmentsActivity.class);
-                    intent.putExtra("appintments",appintments);
-                    Log.w(TAG,"usertype 1 appintments : "+appintments);
+                    if(appintments.equalsIgnoreCase("Walkin")){
+                        intent = new Intent(this, PetWalkinappointmentsActivity.class);
+                        intent.putExtra("appintments",appintments);
+                        Log.w(TAG,"usertype 1 appintments : "+appintments);
+                    }else{
+                        intent = new Intent(this, PetMyappointmentsActivity.class);
+                        intent.putExtra("appintments",appintments);
+                        Log.w(TAG,"usertype 1 appintments : "+appintments);
+                    }
+
                 }else if(orders != null && !orders.isEmpty()){
                     intent = new Intent(this, PetMyOrdrersNewActivity.class);
                     intent.putExtra("orders",orders);
@@ -278,8 +287,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             }
             if(usertype.equalsIgnoreCase("4")){
                 if(appintments != null && !appintments.isEmpty()){
-                    intent = new Intent(this, DoctorDashboardActivity.class);
-                    intent.putExtra("appintments",appintments);
+                    if(appintments.equalsIgnoreCase("Walkin")){
+                        intent = new Intent(this, DoctorWalkinAppointmentsActivity.class);
+                        intent.putExtra("appintments",appintments);
+                    }else{
+                        intent = new Intent(this, DoctorDashboardActivity.class);
+                        intent.putExtra("appintments",appintments);
+                    }
+
                 }else if(orders != null && !orders.isEmpty()){
                     intent = new Intent(this, DoctorMyOrdrersActivity.class);
                     intent.putExtra("orders",orders);

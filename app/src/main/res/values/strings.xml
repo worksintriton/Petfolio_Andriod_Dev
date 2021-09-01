@@ -119,6 +119,7 @@
 
     <string name="my_orders">My Orders</string>
     <string name="my_appointments">My Appointments</string>
+    <string name="walking_appointments">Walk-in Appointments</string>
     <string name="manage_services">Manage Services</string>
     <string name="favourites">Favourites</string>
     <string name="my_coupons">My Coupons</string>

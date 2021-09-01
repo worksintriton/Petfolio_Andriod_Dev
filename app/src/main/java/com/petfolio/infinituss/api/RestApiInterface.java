@@ -773,6 +773,53 @@ public interface RestApiInterface {
     @POST("block_slot/create")
     Call<SuccessResponse> sptimeslotturnoffUpdateResonsecall(@Header("Content-Type") String type, @Body SPUpdateTurnoffRequest spUpdateTurnoffRequest);
 
+    /*Pet Walkin New Appointment*/
+    @POST("walkin_appointment/mobile/plove_getlist/newapp1")
+    Call<PetAppointmentResponse> petWalkinNewAppointmentResponseCall(@Header("Content-Type") String type, @Body PetLoverAppointmentRequest petLoverAppointmentRequest);
+
+    /*Pet Walkin Completed Appointment*/
+    @POST("walkin_appointment/mobile/plove_getlist/comapp1")
+    Call<PetAppointmentResponse> petWalkinCompletedAppointmentResponseCall(@Header("Content-Type") String type, @Body PetLoverAppointmentRequest petLoverAppointmentRequest);
+
+    /*Pet Walkin Cancelled Appointment*/
+    @POST("walkin_appointment/mobile/plove_getlist/missapp1")
+    Call<PetAppointmentResponse> petWalkinMissedAppointmentResponseCall(@Header("Content-Type") String type, @Body PetLoverAppointmentRequest petLoverAppointmentRequest);
+
+    /*Pet Walkin Appointment Details*/
+    @POST("walkin_appointment/mobile/fetch_appointment_id")
+    Call<PetNewAppointmentDetailsResponse> petWalkinAppointDetailResponseCall(@Header("Content-Type") String type, @Body PetNewAppointmentDetailsRequest petNewAppointmentDetailsRequest);
+
+
+
+    /*Doctor Walkin New Appointment*/
+    @POST("walkin_appointment/mobile/doc_getlist/newapp")
+    Call<DoctorAppointmentsResponse> doctorWalkinNewAppointmentResponseCall(@Header("Content-Type") String type, @Body DoctorNewAppointmentRequest doctorNewAppointmentRequest);
+
+    /*Doctor Walkin Completed Appointment*/
+    @POST("walkin_appointment/mobile/doc_getlist/comapp")
+    Call<DoctorAppointmentsResponse> doctorWalkinCompletedAppointmentResponseCall(@Header("Content-Type") String type, @Body DoctorNewAppointmentRequest doctorNewAppointmentRequest);
+
+    /*Doctor Walkin  Missed Appointment*/
+    @POST("walkin_appointment/mobile/doc_getlist/missapp")
+    Call<DoctorAppointmentsResponse> doctorWalkinMissedAppointmentResponseCall(@Header("Content-Type") String type, @Body DoctorNewAppointmentRequest doctorNewAppointmentRequest);
+
+
+    /*Update Appointment Status cancel*/
+    @POST("walkin_appointment/edit")
+    Call<AppoinmentCancelledResponse> walkinappoinmentCancelledResponseCall(@Header("Content-Type") String type, @Body AppoinmentCancelledRequest appoinmentCancelledRequest);
+
+
+    /*Update Appointment Status complete*/
+    @POST("walkin_appointment/edit")
+    Call<AppoinmentCompleteResponse> walkinappoinmentCompleteResponseCall(@Header("Content-Type") String type, @Body AppoinmentCompleteRequest appoinmentCompleteRequest);
+
+    /*Prescriptoin walkin Create*/
+    @POST("prescription/walkin/create")
+    Call<PrescriptionCreateResponse> prescriptionwalkinCreateRequestCall(@Header("Content-Type") String type, @Body PrescriptionCreateRequest prescriptionCreateRequest);
+
+    /*Prescriptoin Details*/
+    @POST("prescription/walkin/fetch_by_appointment_id")
+    Call<PrescriptionFetchResponse> prescriptionwalkinDetailsResponseCall(@Header("Content-Type") String type, @Body PrescriptionDetailsRequest prescriptionDetailsRequest);
 
 
 }

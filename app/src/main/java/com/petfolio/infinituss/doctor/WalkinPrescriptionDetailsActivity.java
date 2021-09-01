@@ -10,7 +10,6 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,10 +22,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.dropbox.core.v2.teamlog.SharedContentAddLinkExpiryDetails;
 import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
-
 import com.petfolio.infinituss.adapter.PrescriptionsDetailsAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
@@ -37,7 +34,6 @@ import com.petfolio.infinituss.responsepojo.AppoinmentCompleteResponse;
 import com.petfolio.infinituss.responsepojo.PrescriptionCreateResponse;
 import com.petfolio.infinituss.responsepojo.SuccessResponse;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
-
 import com.petfolio.infinituss.utils.ConnectionDetector;
 import com.petfolio.infinituss.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -57,9 +53,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class PrescriptionDetailsActivity extends AppCompatActivity {
+public class WalkinPrescriptionDetailsActivity extends AppCompatActivity {
     EditText etdoctorcomments;
-    String TAG = "PrescriptionDetailsActivity";
+    String TAG = "WalkinPrescriptionDetailsActivity";
     AVLoadingIndicatorView avi_indicator;
     AlertDialog.Builder alertDialogBuilder;
     AlertDialog alertDialog;
@@ -217,7 +213,7 @@ public class PrescriptionDetailsActivity extends AppCompatActivity {
 
                 if(image!=null&&!image.isEmpty()){
 
-                    Glide.with(PrescriptionDetailsActivity.this)
+                    Glide.with(WalkinPrescriptionDetailsActivity.this)
                             .load(image)
                             .into(img_prescriptiondetails);
 
@@ -271,7 +267,7 @@ public class PrescriptionDetailsActivity extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (new ConnectionDetector(PrescriptionDetailsActivity.this).isNetworkAvailable(PrescriptionDetailsActivity.this)) {
+                if (new ConnectionDetector(WalkinPrescriptionDetailsActivity.this).isNetworkAvailable(WalkinPrescriptionDetailsActivity.this)) {
 
                     prescriptionCreateRequestCall();
                 }
@@ -355,7 +351,7 @@ public class PrescriptionDetailsActivity extends AppCompatActivity {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<PrescriptionCreateResponse> call = ApiService.prescriptionCreateRequestCall(RestUtils.getContentType(),prescriptionCreateRequest());
+        Call<PrescriptionCreateResponse> call = ApiService.prescriptionwalkinCreateRequestCall(RestUtils.getContentType(),prescriptionCreateRequest());
         Log.w(TAG,"url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<PrescriptionCreateResponse>() {
@@ -369,7 +365,7 @@ public class PrescriptionDetailsActivity extends AppCompatActivity {
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
-                        appoinmentCompleteResponseCall();
+                        walkinappoinmentCompleteResponseCall();
 
                     }
                     else{
@@ -425,11 +421,11 @@ public class PrescriptionDetailsActivity extends AppCompatActivity {
         return prescriptionCreateRequest;
     }
 
-    private void appoinmentCompleteResponseCall() {
+    private void walkinappoinmentCompleteResponseCall() {
         //avi_indicator.setVisibility(View.VISIBLE);
        // avi_indicator.smoothToShow();
         RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
-        Call<AppoinmentCompleteResponse> call = apiInterface.appoinmentCompleteResponseCall(RestUtils.getContentType(), appoinmentCompleteRequest());
+        Call<AppoinmentCompleteResponse> call = apiInterface.walkinappoinmentCompleteResponseCall(RestUtils.getContentType(), appoinmentCompleteRequest());
         Log.w(TAG,"AppoinmentCompleteResponse url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<AppoinmentCompleteResponse>() {
@@ -504,7 +500,7 @@ public class PrescriptionDetailsActivity extends AppCompatActivity {
                     if(response.body().getCode() == 200){
                         Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
 
-                        startActivity(new Intent(PrescriptionDetailsActivity.this, DoctorDashboardActivity.class));
+                        startActivity(new Intent(WalkinPrescriptionDetailsActivity.this, DoctorWalkinAppointmentsActivity.class));
                     }
 
                 }

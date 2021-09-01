@@ -197,8 +197,8 @@
 
             <ImageView
                 android:id="@+id/img_home"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="13dp"
+                android:layout_height="7dp"
                 android:layout_centerHorizontal="true"
                 android:src="@drawable/ic_pet_care_fill"
                 tools:ignore="ContentDescription" />

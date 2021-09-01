@@ -5,23 +5,20 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.petfolio.infinituss.R;
-
 import com.petfolio.infinituss.responsepojo.PrescriptionFetchResponse;
-
 
 import java.util.List;
 
 
-public class DoctorPrescriptionsDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class DoctorWalkinPrescriptionsDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private  String TAG = "DoctorPrescriptionsDetailsAdapter";
+    private  String TAG = "DoctorWalkinPrescriptionsDetailsAdapter";
     private Context mcontext;
 
     PrescriptionFetchResponse.DataBean.PrescriptionDataBean currentItem;
@@ -30,7 +27,7 @@ public class DoctorPrescriptionsDetailsAdapter extends  RecyclerView.Adapter<Rec
 
 
 
-    public DoctorPrescriptionsDetailsAdapter(Context context, List<PrescriptionFetchResponse.DataBean.PrescriptionDataBean> prescriptionDataList) {
+    public DoctorWalkinPrescriptionsDetailsAdapter(Context context, List<PrescriptionFetchResponse.DataBean.PrescriptionDataBean> prescriptionDataList) {
         this.prescriptionDataList = prescriptionDataList;
         this.mcontext = context;
     }
@@ -38,7 +35,7 @@ public class DoctorPrescriptionsDetailsAdapter extends  RecyclerView.Adapter<Rec
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_doctor_prescriptions_details, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_doctor_walkin_prescriptions_details_list, parent, false);
         return new ViewHolderOne(view);
     }
 

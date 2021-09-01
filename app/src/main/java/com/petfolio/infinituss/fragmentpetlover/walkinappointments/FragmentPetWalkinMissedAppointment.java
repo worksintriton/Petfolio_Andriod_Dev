@@ -1,4 +1,4 @@
-package com.petfolio.infinituss.fragmentpetlover.myappointments;
+package com.petfolio.infinituss.fragmentpetlover.walkinappointments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -23,7 +23,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
-import com.petfolio.infinituss.adapter.PetMissedAppointmentAdapter;
+import com.petfolio.infinituss.adapter.PetWalkinMissedAppointmentAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.requestpojo.PetLoverAppointmentRequest;
@@ -47,8 +47,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentPetMissedAppointment extends Fragment implements View.OnClickListener {
-    private String TAG = "FragmentPetMissedAppointment";
+public class FragmentPetWalkinMissedAppointment extends Fragment implements View.OnClickListener {
+    private String TAG = "FragmentPetWalkinMissedAppointment";
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.avi_indicator)
@@ -87,7 +87,7 @@ public class FragmentPetMissedAppointment extends Fragment implements View.OnCli
     private View includelayout;
 
 
-    public FragmentPetMissedAppointment() {
+    public FragmentPetWalkinMissedAppointment() {
 
     }
 
@@ -167,7 +167,7 @@ public class FragmentPetMissedAppointment extends Fragment implements View.OnCli
         mShimmerViewContainer.startShimmerAnimation();
 
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<PetAppointmentResponse> call = ApiService.petMissedAppointmentResponseCall(RestUtils.getContentType(),petLoverAppointmentRequest());
+        Call<PetAppointmentResponse> call = ApiService.petWalkinMissedAppointmentResponseCall(RestUtils.getContentType(),petLoverAppointmentRequest());
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<PetAppointmentResponse>() {
@@ -236,16 +236,16 @@ public class FragmentPetMissedAppointment extends Fragment implements View.OnCli
         rv_missedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_missedappointment.setItemAnimator(new DefaultItemAnimator());
         int size =3;
-        PetMissedAppointmentAdapter petMissedAppointmentAdapter = new PetMissedAppointmentAdapter(getContext(), missedAppointmentResponseList, rv_missedappointment,size);
-        rv_missedappointment.setAdapter(petMissedAppointmentAdapter);
+        PetWalkinMissedAppointmentAdapter petWalkinMissedAppointmentAdapter = new PetWalkinMissedAppointmentAdapter(getContext(), missedAppointmentResponseList, rv_missedappointment,size);
+        rv_missedappointment.setAdapter(petWalkinMissedAppointmentAdapter);
 
     }
     private void setViewLoadMore() {
         rv_missedappointment.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_missedappointment.setItemAnimator(new DefaultItemAnimator());
         int size = missedAppointmentResponseList.size();
-        PetMissedAppointmentAdapter petMissedAppointmentAdapter = new PetMissedAppointmentAdapter(getContext(), missedAppointmentResponseList, rv_missedappointment,size);
-        rv_missedappointment.setAdapter(petMissedAppointmentAdapter);
+        PetWalkinMissedAppointmentAdapter petWalkinMissedAppointmentAdapter = new PetWalkinMissedAppointmentAdapter(getContext(), missedAppointmentResponseList, rv_missedappointment,size);
+        rv_missedappointment.setAdapter(petWalkinMissedAppointmentAdapter);
 
     }
 

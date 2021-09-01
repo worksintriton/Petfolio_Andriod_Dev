@@ -34,7 +34,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
 
@@ -189,6 +188,7 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
     RelativeLayout rl_homes;
 
     public static String appintments;
+    String gotoWalkinAppointments;
 
 
     @SuppressLint("LogNotTimber")
@@ -204,7 +204,8 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             appintments = bundle.getString("appintments");
-            Log.w(TAG,"appintments : "+appintments);
+            gotoWalkinAppointments = bundle.getString("gotoWalkinAppointments");
+            Log.w(TAG,"appintments : "+appintments+" gotoWalkinAppointments : "+gotoWalkinAppointments);
         }
 
 
@@ -282,7 +283,7 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
             }
         }
         else{
-//            bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
+//          bottom_navigation_view.getMenu().findItem(R.id.home).setChecked(true);
             title_shop.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
             img_shop.setImageResource(R.drawable.grey_shop);
             title_community.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
@@ -335,38 +336,7 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
 
     @Override
     public void onBackPressed() {
-        Log.w(TAG,"tag : "+tag);
-//        if (bottom_navigation_view.getSelectedItemId() == R.id.home) {
-            showExitAppAlert();
-          /*  new android.app.AlertDialog.Builder(PetLoverDashboardActivity.this)
-                    .setMessage("Are you sure you want to exit?")
-                    .setCancelable(false)
-                    .setPositiveButton("Yes", (dialog, id) -> PetLoverDashboardActivity.this.finishAffinity())
-                    .setNegativeButton("No", null)
-//                    .show();*/
-//        }
-//        else if(tag != null ){
-//            Log.w(TAG,"Else IF--->"+"fromactivity : "+fromactivity);
-//            if(fromactivity != null){
-//
-//
-//            }else{
-//                bottom_navigation_view.setSelectedItemId(R.id.home);
-//                // load fragment
-//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.frame_schedule,new FragmentDoctorDashboard());
-//                transaction.commitNowAllowingStateLoss();
-//            }
-//
-//
-//        }
-//        else{
-//            bottom_navigation_view.setSelectedItemId(R.id.home);
-//            // load fragment
-//            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//            transaction.replace(R.id.frame_schedule,new FragmentDoctorDashboard());
-//            transaction.commitNowAllowingStateLoss();
-//        }
+        showExitAppAlert();
 
     }
 

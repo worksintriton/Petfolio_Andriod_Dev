@@ -48,9 +48,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DoctorAppointmentDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+public class DoctorWalkinAppointmentDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private String TAG = "DoctorAppointmentDetailsActivity";
+    private String TAG = "DoctorWalkinAppointmentDetailsActivity";
 
 
     @SuppressLint("NonConstantResourceId")
@@ -379,7 +379,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
 
 
         btn_prescriptiondetails.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), DoctorPrescriptionDetailsActivity.class);
+            Intent intent = new Intent(getApplicationContext(), DoctorWalkinPrescriptionDetailsActivity.class);
             intent.putExtra("id",appointment_id);
             startActivity(intent);
         });
@@ -390,7 +390,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
 
         
 
-        if (new ConnectionDetector(DoctorAppointmentDetailsActivity.this).isNetworkAvailable(DoctorAppointmentDetailsActivity.this)) {
+        if (new ConnectionDetector(DoctorWalkinAppointmentDetailsActivity.this).isNetworkAvailable(DoctorWalkinAppointmentDetailsActivity.this)) {
             petNewAppointmentResponseCall();
         }
 
@@ -401,7 +401,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
-        Call<PetNewAppointmentDetailsResponse> call = ApiService.petNewAppointDetailResponseCall(RestUtils.getContentType(), petNewAppointmentDetailsRequest());
+        Call<PetNewAppointmentDetailsResponse> call = ApiService.petWalkinAppointDetailResponseCall(RestUtils.getContentType(), petNewAppointmentDetailsRequest());
         Log.w(TAG, "url  :%s" + call.request().url().toString());
 
         call.enqueue(new Callback<PetNewAppointmentDetailsResponse>() {
@@ -434,9 +434,9 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
                                 txt_visit_type.setText(response.body().getData().getCommunication_type());
                             }
 
-                            if(from != null && from.equalsIgnoreCase("DoctorNewAppointmentAdapter")){
+                            if(from != null && from.equalsIgnoreCase("DoctorWalkinNewAppointmentAdapter")){
                                 btn_prescriptiondetails.setVisibility(View.GONE);
-                                btn_cancel.setVisibility(View.VISIBLE);
+                                btn_cancel.setVisibility(View.GONE);
                                 btn_complete.setVisibility(View.VISIBLE);
                                 if(isVaildDate){
                                     btn_cancel.setVisibility(View.VISIBLE);
@@ -451,7 +451,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
                                 }
 
                             }
-                            else if(from != null && from.equalsIgnoreCase("DoctorCompletedAppointmentAdapter")){
+                            else if(from != null && from.equalsIgnoreCase("DoctorWalkinCompletedAppointmentAdapter")){
                                 btn_prescriptiondetails.setVisibility(View.VISIBLE);
                                 btn_cancel.setVisibility(View.GONE);
                                 btn_complete.setVisibility(View.GONE);
@@ -493,8 +493,8 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
 
 
 
-                            if(petage != null){
-                                txt_age.setText(petage);
+                            if(pet_dob != null){
+                                txt_age.setText(pet_dob);
                                /* String[] separated = pet_dob.split("-");
                                 String day = separated[0];
                                 String month = separated[1];
@@ -630,12 +630,12 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
     @SuppressLint({"SetTextI18n", "LongLogTag", "LogNotTimber"})
     private void setView(String usrname, String usr_image, String pet_name, String pet_type, String breed, String gender, String colour, String weight, String order_date, String orderid, String payment_method, String order_cost, String vaccinated, String addr) {
         if(usr_image != null && !usr_image.isEmpty()){
-            Glide.with(DoctorAppointmentDetailsActivity.this)
+            Glide.with(DoctorWalkinAppointmentDetailsActivity.this)
                     .load(usr_image)
                     .into(img_user);
 
         }else{
-            Glide.with(DoctorAppointmentDetailsActivity.this)
+            Glide.with(DoctorWalkinAppointmentDetailsActivity.this)
                     .load(APIClient.PROFILE_IMAGE_URL)
                     .into(img_user);
         }
@@ -654,11 +654,11 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
                 petimage = pet_image.get(i).getPet_img();
             }
 
-            Glide.with(DoctorAppointmentDetailsActivity.this)
+            Glide.with(DoctorWalkinAppointmentDetailsActivity.this)
                     .load(petimage)
                     .into(img_petimg);
         }else{
-            Glide.with(DoctorAppointmentDetailsActivity.this)
+            Glide.with(DoctorWalkinAppointmentDetailsActivity.this)
                     .load(APIClient.PROFILE_IMAGE_URL)
                     .into(img_petimg);
         }
@@ -731,7 +731,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
 
 
         btn_complete.setOnClickListener(v -> {
-            Intent i = new Intent(DoctorAppointmentDetailsActivity.this, PrescriptionActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            Intent i = new Intent(DoctorWalkinAppointmentDetailsActivity.this, WalkinPrescriptionActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.putExtra("id", appointment_id);
             i.putExtra("petname", pet_name);
             i.putExtra("pettype", pet_type);
@@ -751,7 +751,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
         if (start_appointment_status != null && start_appointment_status.equalsIgnoreCase("Not Started")) {
             doctorStartAppointmentResponseCall(appointment_id);
         } else {
-            Intent i = new Intent(DoctorAppointmentDetailsActivity.this, VideoCallDoctorActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            Intent i = new Intent(DoctorWalkinAppointmentDetailsActivity.this, VideoCallDoctorActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.putExtra("id", appointment_id);
             i.putExtra("petname", pet_name);
             i.putExtra("pettype", pet_type);
@@ -771,7 +771,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
     @SuppressLint("SetTextI18n")
     private void showStatusAlert(String id) {
         try {
-            dialog = new Dialog(DoctorAppointmentDetailsActivity.this);
+            dialog = new Dialog(DoctorWalkinAppointmentDetailsActivity.this);
             dialog.setContentView(R.layout.alert_approve_reject_layout);
             TextView tvheader = (TextView)dialog.findViewById(R.id.tvInternetNotConnected);
             tvheader.setText(R.string.cancelappointment);
@@ -814,7 +814,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        Intent i = new Intent(DoctorAppointmentDetailsActivity.this, VideoCallDoctorActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        Intent i = new Intent(DoctorWalkinAppointmentDetailsActivity.this, VideoCallDoctorActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         i.putExtra("id", appointment_id);
                         i.putExtra("petname", pet_name);
                         i.putExtra("pettype", pet_type);
@@ -873,7 +873,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
-                        startActivity(new Intent(DoctorAppointmentDetailsActivity.this, DoctorDashboardActivity.class));
+                        startActivity(new Intent(DoctorWalkinAppointmentDetailsActivity.this, DoctorWalkinAppointmentsActivity.class));
 
                     }
 

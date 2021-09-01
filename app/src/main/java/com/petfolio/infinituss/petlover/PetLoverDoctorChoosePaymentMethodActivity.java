@@ -248,6 +248,7 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
             Total_price = amount;
             Log.w(TAG,"amount : "+amount);
             communicationtype = extras.getString("communicationtype");
+            selectedVisitType = extras.getString("selectedVisitType");
             petId = extras.getString("petId");
             health_issue_title = extras.getString("health_issue_title");
             Log.w(TAG,"Bundle "+" doctorid : "+doctorid+" selectedTimeSlot : "+selectedTimeSlot+"communicationtype : "+communicationtype+" amount : "+amount+" fromactivity : "+fromactivity);
@@ -436,6 +437,7 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
         intent.putExtra("selectedTimeSlot", selectedTimeSlot);
         intent.putExtra("amount", amount);
         intent.putExtra("communicationtype", communicationtype);
+        intent.putExtra("selectedVisitType", selectedVisitType);
         intent.putExtra("petId", petId);
         intent.putExtra("health_issue_title", health_issue_title);
         intent.putExtra("doctorname", doctorname);

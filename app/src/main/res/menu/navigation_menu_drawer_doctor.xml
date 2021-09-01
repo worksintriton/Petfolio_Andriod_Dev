@@ -10,6 +10,13 @@
     </group>
 
     <group android:checkableBehavior="single"
+        android:id="@+id/group10">
+        <item android:id="@+id/nav_item_ten"
+            android:icon="@drawable/walking_the_dog"
+            android:title="@string/walking_appointments" />
+    </group>
+
+    <group android:checkableBehavior="single"
         android:id="@+id/group2">
         <item android:id="@+id/nav_item_two"
             android:icon="@drawable/calendermenu"

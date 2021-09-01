@@ -317,6 +317,9 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
                         showLogOutAppAlert();
                         return true;
 
+                        case R.id.nav_item_ten:
+                        gotoWalkinAppointments();
+                        return true;
 
                     default:
                         return true;
@@ -329,6 +332,10 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
     private void gotoMyAppointments() {
         Intent intent = new Intent(getApplicationContext(),DoctorDashboardActivity.class);
         intent.putExtra("fromactivity",TAG);
+        startActivity(intent);
+    }
+    private void gotoWalkinAppointments() {
+        Intent intent = new Intent(getApplicationContext(),DoctorWalkinAppointmentsActivity.class);
         startActivity(intent);
     }
 
