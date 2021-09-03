@@ -262,7 +262,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
     RelativeLayout rl_homes;
 
 
-    @SuppressLint("LogNotTimber")
+    @SuppressLint({"LogNotTimber", "SetTextI18n"})
     @Override
     protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -379,6 +379,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
             }
         });
 
+
         /*serv*/
         title_care.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
         img_care.setImageResource(R.drawable.grey_care);
@@ -396,8 +397,6 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
         rl_comn.setOnClickListener(this);
         rl_homes.setOnClickListener(this);
 
-
-
       /*  txt_cart_label.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -411,12 +410,6 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
             }
         });*/
-
-
-
-
-
-
 
         viewPager.setVisibility(View.GONE);
 
@@ -453,6 +446,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
     }
 
+    @SuppressLint("LogNotTimber")
     private void favResponseCall() {
 
         avi_indicator.setVisibility(View.VISIBLE);
@@ -497,7 +491,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
     @SuppressLint("LogNotTimber")
     private ProductFavCreateRequest productFavCreateRequest() {
 
-        /**
+        /*
          * product_id : 602e11404775fa0735d7bf40
          * user_id : 604081d12c2b43125f8cb840
          */
@@ -693,6 +687,8 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                         Log.w(TAG,"FetchProductByIdResponse" + new Gson().toJson(response.body()));
                         if(response.body().getProduct_details() != null){
 
+                            Log.w(TAG,"Product_fav : "+response.body().getProduct_details().isProduct_fav());
+
                             if(response.body().getProduct_details().isProduct_fav()){
                                 img_fav.setBackgroundResource(R.drawable.ic_fav);
                             }else{
@@ -776,17 +772,14 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                             setBottomSheet();
 
                             img_fav.setOnClickListener(ProductDetailsActivity.this);
-                            img_cart.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Intent intent = new Intent(getApplicationContext(),PetCartActivity.class);
-                                    intent.putExtra("productid",productid);
-                                    intent.putExtra("cat_id",cat_id);
-                                    intent.putExtra("fromactivity",fromactivity);
-                                    intent.putExtra("fromto",TAG);
-                                    intent.putExtra("tag",tag);
-                                    startActivity(intent);
-                                }
+                            img_cart.setOnClickListener(view -> {
+                                Intent intent = new Intent(getApplicationContext(),PetCartActivity.class);
+                                intent.putExtra("productid",productid);
+                                intent.putExtra("cat_id",cat_id);
+                                intent.putExtra("fromactivity",fromactivity);
+                                intent.putExtra("fromto",TAG);
+                                intent.putExtra("tag",tag);
+                                startActivity(intent);
                             });
 
                             if(response.body().getProduct_details().getProduct_img() != null && response.body().getProduct_details().getProduct_img().size()>0){
@@ -964,8 +957,9 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
         Log.w(TAG,"fetchByIdRequest"+ "--->" + new Gson().toJson(fetchByIdRequest));
         return fetchByIdRequest;
     }
+    @SuppressLint("LogNotTimber")
     private CartAddProductRequest cartAddProductRequest() {
-        /**
+        /*
          * user_id : 603e27792c2b43125f8cb802
          * product_id : 602e4940f62e8d2089fba978
          * count : 3
@@ -1021,6 +1015,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
         });
 
     }
+    @SuppressLint("LogNotTimber")
     public void cart_add_product_ResponseCall(){
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
@@ -1163,6 +1158,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
         Log.w(TAG,"NotificationCartCountResponse url  :%s"+" "+ call.request().url().toString());
 
         call.enqueue(new Callback<NotificationCartCountResponse>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(@NonNull Call<NotificationCartCountResponse> call, @NonNull Response<NotificationCartCountResponse> response) {
 
@@ -1173,8 +1169,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                 if (response.body() != null) {
                     if(response.body().getCode() == 200) {
                         if(response.body().getData()!=null){
-                           int Notification_count = response.body().getData().getNotification_count();
-                           int Product_count = response.body().getData().getProduct_count();
+                            int Product_count = response.body().getData().getProduct_count();
                             if(Product_count != 0){
                                 txt_cart_count_badge.setVisibility(View.VISIBLE);
                                 txt_cart_count_badge.setText(""+Product_count);

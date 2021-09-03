@@ -32,6 +32,8 @@ import com.petfolio.infinituss.serviceprovider.shop.SPMyOrdrersActivity;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
 import com.petfolio.infinituss.vendor.VendorDashboardActivity;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 
 /**
@@ -121,7 +123,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      */
     @SuppressLint("LongLogTag")
     @Override
-    public void onNewToken(String token) {
+    public void onNewToken(@NotNull String token) {
         Log.w(TAG, "Refreshed token: " + token);
 
         // If you want to send messages to this application instance or

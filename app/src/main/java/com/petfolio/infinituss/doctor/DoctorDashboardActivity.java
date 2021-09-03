@@ -122,8 +122,6 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
     @BindView(R.id.include_doctor_footer)
     View include_doctor_footer;
 
-
-
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_location)
     TextView txt_location;
@@ -154,7 +152,6 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
     private String userid;
 
     /* Bottom Navigation */
-
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rl_home)
     RelativeLayout rl_home;
