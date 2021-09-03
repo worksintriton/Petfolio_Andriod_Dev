@@ -148,14 +148,14 @@ public class RelatedProductsAdapter extends  RecyclerView.Adapter<RecyclerView.V
                     .into(holder.img_fav);
         }
 
+        Log.w(TAG,"Thumbnail_image"+currentItem.getThumbnail_image());
 
         if (currentItem.getThumbnail_image() != null && !currentItem.getThumbnail_image().isEmpty()) {
             Glide.with(context)
                     .load(currentItem.getThumbnail_image())
                     .into(holder.img_products_image);
 
-        }
-        else{
+        } else{
             Glide.with(context)
                     .load(APIClient.PROFILE_IMAGE_URL)
                     .into(holder.img_products_image);

@@ -2,6 +2,7 @@ package com.petfolio.infinituss.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -81,11 +82,38 @@ public class DoctorProductsFavAdapter extends  RecyclerView.Adapter<RecyclerView
         Log.w(TAG,"discount : "+productsList.get(position).getProduct_discount());
 
 
+        Log.w(TAG,"Product_price : "+currentItem.getProduct_price());
+        if(currentItem.getProduct_price() != 0){
+            holder.txt_products_price.setVisibility(View.VISIBLE);
+            holder.txt_products_price.setText("INR "+currentItem.getProduct_price());
+        }else{
+            holder.txt_products_price.setVisibility(View.GONE);
+            holder.txt_products_price.setText("INR 0");
+        }
+
+
+        holder.txt_products_offer.setVisibility(View.GONE);
+        holder.txt_product_discount_price.setVisibility(View.GONE);
+
         if(productsList.get(position).getProduct_discount() != 0){
             holder.txt_products_offer.setVisibility(View.VISIBLE);
             holder.txt_products_offer.setText(productsList.get(position).getProduct_discount()+" % off");
         }else{
-            holder.txt_products_offer.setVisibility(View.GONE);
+            holder.txt_products_offer.setVisibility(View.INVISIBLE);
+
+        }
+
+
+        if( productsList.get(position).getProduct_discount_price() != 0) {
+            Log.w(TAG, "Product_discount_price if" + productsList.get(position).getProduct_discount_price());
+            holder.txt_product_discount_price.setVisibility(View.VISIBLE);
+            holder.txt_product_discount_price.setText(productsList.get(position).getProduct_discount_price()+"");
+            holder.txt_product_discount_price.setPaintFlags(holder.txt_product_discount_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }
+        else{
+            Log.w(TAG,"Product_discount_price else"+ productsList.get(position).getProduct_discount_price());
+            holder.txt_product_discount_price.setVisibility(View.GONE);
+
 
         }
 
@@ -102,11 +130,7 @@ public class DoctorProductsFavAdapter extends  RecyclerView.Adapter<RecyclerView
 
             }
 
-        if(currentItem.getProduct_rating() != 0){
-            holder.txt_star_rating.setText(currentItem.getProduct_rating()+"");
-        }else{
-            holder.txt_star_rating.setText("0");
-        }
+
         if(currentItem.getProduct_review() != 0){
             holder.txt_review_count.setText(currentItem.getProduct_review()+"");
         }else{
@@ -160,15 +184,15 @@ public class DoctorProductsFavAdapter extends  RecyclerView.Adapter<RecyclerView
         return position;
     }
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_products_title,txt_products_price,txt_products_offer,txt_star_rating,txt_review_count;
+        public TextView txt_products_title,txt_products_price,txt_products_offer,txt_review_count,txt_product_discount_price;
         public ImageView img_products_image,img_like,img_dislike,img_settings;
         LinearLayout ll_root;
         public ViewHolderOne(View itemView) {
             super(itemView);
             txt_products_title = itemView.findViewById(R.id.txt_products_title);
             txt_products_price = itemView.findViewById(R.id.txt_products_price);
+            txt_product_discount_price = itemView.findViewById(R.id.txt_product_discount_price);
             txt_products_offer = itemView.findViewById(R.id.txt_products_offer);
-            txt_star_rating = itemView.findViewById(R.id.txt_star_rating);
             txt_review_count = itemView.findViewById(R.id.txt_review_count);
             ll_root = itemView.findViewById(R.id.ll_root);
             img_products_image = itemView.findViewById(R.id.img_products_image);

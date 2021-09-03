@@ -1234,11 +1234,13 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                             String colour = response.body().getData().getPet_id().getPet_color();
                             double weight = response.body().getData().getPet_id().getPet_weight();
                             String pet_dob = response.body().getData().getPet_id().getPet_dob();
-                            if(pet_dob != null && !pet_dob.isEmpty()){
-                                txt_age.setText(pet_dob);
+                            String pet_age = response.body().getData().getPet_id().getPet_age();
+                            if(pet_age != null && !pet_age.isEmpty()){
+                                txt_age.setText(pet_age);
                             }else {
                                 txt_age.setText("");
                             }
+
                             Paymentmethod = response.body().getData().getPayment_method();
 
                            /* if(pet_dob != null){

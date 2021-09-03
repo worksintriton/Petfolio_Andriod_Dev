@@ -120,13 +120,23 @@ public class PetLoverShopNewAdapter extends  RecyclerView.Adapter<RecyclerView.V
         holder.txt_products_offer.setVisibility(View.GONE);
         holder.txt_product_discount_price.setVisibility(View.GONE);
 
-        if( productDetailsResponseList.get(position).getProduct_discount() != 0) {
-            Log.w(TAG, "Product_discount if" + productDetailsResponseList.get(position).getProduct_discount());
-            holder.txt_product_discount_price.setVisibility(View.VISIBLE);
-            holder.txt_product_discount_price.setText(productDetailsResponseList.get(position).getProduct_discount() + " % off");
-            holder.txt_product_discount_price.setPaintFlags(holder.txt_product_discount_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+       if(productDetailsResponseList.get(position).getProduct_discount() != 0){
+            holder.txt_products_offer.setVisibility(View.VISIBLE);
+            holder.txt_products_offer.setText(productDetailsResponseList.get(position).getProduct_discount()+" % off");
         }else{
-            Log.w(TAG,"Product_discount else"+ productDetailsResponseList.get(position).getProduct_discount());
+            holder.txt_products_offer.setVisibility(View.INVISIBLE);
+
+        }
+
+
+        if( productDetailsResponseList.get(position).getProduct_discount_price() != 0) {
+            Log.w(TAG, "Product_discount_price if" + productDetailsResponseList.get(position).getProduct_discount_price());
+            holder.txt_product_discount_price.setVisibility(View.VISIBLE);
+            holder.txt_product_discount_price.setText(productDetailsResponseList.get(position).getProduct_discount_price()+"");
+            holder.txt_product_discount_price.setPaintFlags(holder.txt_product_discount_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }
+        else{
+            Log.w(TAG,"Product_discount_price else"+ productDetailsResponseList.get(position).getProduct_discount_price());
             holder.txt_product_discount_price.setVisibility(View.GONE);
 
 
@@ -134,24 +144,16 @@ public class PetLoverShopNewAdapter extends  RecyclerView.Adapter<RecyclerView.V
 
 
 
-
-
-
-
-
-
-
         if(currentItem.isProduct_fav()){
               Glide.with(context)
                       .load(R.drawable.ic_fav)
                       .into(holder.img_fav);
-          }else{
+          }
+        else{
               Glide.with(context)
                       .load(R.drawable.heart_gray)
                       .into(holder.img_fav);
           }
-
-
         if (currentItem.getThumbnail_image() != null && !currentItem.getThumbnail_image().isEmpty()) {
             Glide.with(context)
                     .load(currentItem.getThumbnail_image())
@@ -164,6 +166,7 @@ public class PetLoverShopNewAdapter extends  RecyclerView.Adapter<RecyclerView.V
                     .into(holder.img_products_image);
 
         }
+
         holder.ll_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -384,7 +384,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
         title_care.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
         img_care.setImageResource(R.drawable.grey_care);
         title_shop.setTextColor(getResources().getColor(R.color.new_gree_color,getTheme()));
-        img_shop.setImageResource(R.drawable.green_shop);
+      //  img_shop.setImageResource(R.drawable.green_shop);
         title_community.setTextColor(getResources().getColor(R.color.new_gree_color,getTheme()));
         img_community.setImageResource(R.drawable.grey_community);
         title_serv.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));

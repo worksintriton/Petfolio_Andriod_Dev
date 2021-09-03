@@ -377,17 +377,13 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements V
 
                             String weight = String.valueOf(response.body().getData().getPet_id().getPet_weight());
                             String pet_dob = response.body().getData().getPet_id().getPet_dob();
+                            String pet_age = response.body().getData().getPet_id().getPet_age();
+                            if(pet_age != null && !pet_age.isEmpty()){
+                                txt_age.setText(pet_age);
+                            }else {
+                                txt_age.setText("");
+                            }
 
-                            Log.w(TAG, "pet_dob "+pet_dob);
-                      /*      if(pet_dob != null&&!pet_dob.isEmpty()){
-                                String[] separated = pet_dob.split("-");
-                                String day = separated[0];
-                                String month = separated[1];
-                                String year = separated[2];
-                                Log.w(TAG,"day : "+day+" month: "+month+" year : "+year);
-
-                                getAge(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
-                            }*/
                             if (response.body().getData().getPet_id().isVaccinated()) {
                                 vaccinated = "Yes";
                                 ll_petlastvacinateddate.setVisibility(View.VISIBLE);
@@ -528,10 +524,6 @@ public class SPAppointmentDetailsActivity extends AppCompatActivity implements V
             txt_weight.setText(weight);
         }
 
-        if(pet_dob != null && !pet_dob.isEmpty()){
-
-            txt_age.setText(pet_dob);
-        }
 
         txt_vaccinated.setText(vaccinated);
 
