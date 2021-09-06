@@ -560,13 +560,16 @@ public class AddNewPetActivity extends AppCompatActivity implements PetTypeSelec
         List<BreedTypeResponse.DataBean> breedTypedataBeanListFiltered = new ArrayList<>();
 
 
-        //looping through existing elements
-        for (BreedTypeResponse.DataBean s : breedTypedataBeanList) {
-            //if the existing elements contains the search input
-            if (s.getPet_breed().toLowerCase().contains(text.toLowerCase())) {
-                //adding the element to filtered list
-                breedTypedataBeanListFiltered.add(s);
-            }
+        if(breedTypedataBeanList !=null && breedTypedataBeanList.size()>0){
+            //looping through existing elements
+            for (BreedTypeResponse.DataBean s : breedTypedataBeanList) {
+                //if the existing elements contains the search input
+                if (s.getPet_breed().toLowerCase().contains(text.toLowerCase())) {
+                    //adding the element to filtered list
+                    breedTypedataBeanListFiltered.add(s);
+                }
+        }
+
         }
 
         //calling a method of the adapter class and passing the filtered list

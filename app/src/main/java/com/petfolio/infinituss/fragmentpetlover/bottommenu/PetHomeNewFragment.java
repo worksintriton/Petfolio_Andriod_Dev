@@ -225,7 +225,7 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
 
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "LogNotTimber"})
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.w(TAG,"onCreateView-->");
@@ -234,9 +234,7 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
         ButterKnife.bind(this, view);
         mContext = getActivity();
 
-        GPSTracker gpsTracker = new GPSTracker(mContext);
 
-        // SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         if (mapFragment == null) {
             mapFragment = SupportMapFragment.newInstance();
             mapFragment.getMapAsync(this);

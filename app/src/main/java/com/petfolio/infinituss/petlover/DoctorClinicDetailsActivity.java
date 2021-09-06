@@ -752,11 +752,10 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
                                     .findFragmentById(R.id.map);
 
 
-                            assert mapFragment != null;
+                            if(mapFragment != null){
+                                mapFragment.getMapAsync(DoctorClinicDetailsActivity.this);
+                            }
 
-
-
-                            mapFragment.getMapAsync(DoctorClinicDetailsActivity.this);
 
 
                         }

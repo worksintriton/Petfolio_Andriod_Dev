@@ -223,7 +223,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     private List<PetTypeListResponse.DataBean.UsertypedataBean> usertypedataBeanList;
     private String strPetType;
     private String strPetBreedType;
-    private String userid;
+    private String userid = "";
     private String strSelectyourPetType;
 
     HashMap<String, String> hashMap_PetTypeid = new HashMap<>();
@@ -282,6 +282,8 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     private String doctorname;
     private String clinicname;
     private String petname;
+    private String Problem_info = "";
+    private String Allergies = "";
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -972,10 +974,12 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                         assert filePath != null;
 
                         File file = new File(filePath); // initialize file here
+                        if(file != null) {
+                            long length = file.length() / 1024; // Size in KB
+                            Log.w("filesize", " " + length);
+                        }
 
-                        long length = file.length() / 1024; // Size in KB
 
-                        Log.w("filesize", " " + length);
                         filePart = MultipartBody.Part.createFormData("sampleFile", userid+currentDateandTime+file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
                         uploadPetImage();
 
@@ -1370,32 +1374,34 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         @SuppressLint("SimpleDateFormat") DateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         Date date = null;
-        try {
+        if(Doctor_ava_Date != null && !Doctor_ava_Date.isEmpty()){
+            try {
             date = inputFormat.parse(Doctor_ava_Date);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        }
+
         String outputDateStr = outputFormat.format(date);
         String outputTimeStr = null;
 
         @SuppressLint("SimpleDateFormat") SimpleDateFormat h_mm_a   = new SimpleDateFormat("hh:mm aa");
         @SuppressLint("SimpleDateFormat") SimpleDateFormat hh_mm_ss = new SimpleDateFormat("HH:mm:ss");
 
-        try {
+        if(selectedTimeSlot != null && !selectedTimeSlot.isEmpty()){
+           try {
             Date d1 = h_mm_a.parse(selectedTimeSlot);
             outputTimeStr =hh_mm_ss.format(d1);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String displaydateandtime = outputDateStr+" "+outputTimeStr;
-
-        if(userid != null){
-            userid = userid;
-        }else{
-            userid = "";
         }
 
+        Problem_info = edt_comment.getText().toString();
+        Allergies = edt_allergies.getText().toString();
+
+        String displaydateandtime = outputDateStr+" "+outputTimeStr;
         PetAppointmentCreateRequest petAppointmentCreateRequest = new PetAppointmentCreateRequest();
         petAppointmentCreateRequest.setDoctor_id(doctorid);
         petAppointmentCreateRequest.setBooking_date(Doctor_ava_Date);
@@ -1405,7 +1411,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         petAppointmentCreateRequest.setVideo_id("");
         petAppointmentCreateRequest.setUser_id(userid);
         petAppointmentCreateRequest.setPet_id(petId);
-        petAppointmentCreateRequest.setProblem_info(edt_comment.getText().toString());
+        petAppointmentCreateRequest.setProblem_info(Problem_info);
         petAppointmentCreateRequest.setDoc_attched(doc_attched);
         petAppointmentCreateRequest.setDoc_feedback("");
         petAppointmentCreateRequest.setDoc_rate(0);
@@ -1416,7 +1422,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         petAppointmentCreateRequest.setPayment_id(Payment_id);
         petAppointmentCreateRequest.setPayment_method("Online");
         petAppointmentCreateRequest.setAppointment_types(selectedAppointmentType);
-        petAppointmentCreateRequest.setAllergies(edt_allergies.getText().toString());
+        petAppointmentCreateRequest.setAllergies(Allergies);
         petAppointmentCreateRequest.setAmount(amount);
         petAppointmentCreateRequest.setMobile_type("Android");
         petAppointmentCreateRequest.setService_name("");
@@ -1429,7 +1435,6 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         ArrayList<PetAppointmentCreateRequest> PetAppointmentCreateRequestList = new ArrayList<>();
         PetAppointmentCreateRequestList.add(petAppointmentCreateRequest);
         Log.w(TAG,"petAppointmentCreateRequest"+ "--->" + new Gson().toJson(petAppointmentCreateRequest));
-
         Intent intent = new Intent(getApplicationContext(),PetLoverDoctorChoosePaymentMethodActivity.class);
         intent.putExtra("PetAppointmentCreateRequestList",PetAppointmentCreateRequestList);
         intent.putExtra("doctorname", doctorname);
