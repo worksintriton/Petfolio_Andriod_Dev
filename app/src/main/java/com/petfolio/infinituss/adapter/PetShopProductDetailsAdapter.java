@@ -3,6 +3,7 @@ package com.petfolio.infinituss.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,8 @@ public class PetShopProductDetailsAdapter extends  RecyclerView.Adapter<Recycler
 
     @SuppressLint({"SetTextI18n", "LogNotTimber"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
+        Log.w(TAG,"fromactivity : "+fromactivity);
+
 
         currentItem = product_details.get(position);
         if(product_details.get(position).getProduct_list() != null && product_details.get(position).getProduct_list().size()>0){

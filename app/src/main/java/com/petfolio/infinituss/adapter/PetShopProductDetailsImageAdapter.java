@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.doctor.shop.DoctorProductDetailsActivity;
 import com.petfolio.infinituss.petlover.ProductDetailsActivity;
 import com.petfolio.infinituss.responsepojo.ShopDashboardResponse;
+import com.petfolio.infinituss.serviceprovider.shop.SPProductDetailsActivity;
 
 import java.util.List;
 
@@ -61,6 +63,8 @@ public class PetShopProductDetailsImageAdapter extends  RecyclerView.Adapter<Rec
     @SuppressLint({"SetTextI18n", "LogNotTimber"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
         ShopDashboardResponse.DataBean.ProductDetailsBean.ProductListBean productListBean = productList.get(position);
+
+        Log.w(TAG,"fromactivity : "+fromactivity);
         holder.txt_products_title.setText(productListBean.getProduct_title());
         if(productListBean.getProduct_price() != 0){
             holder.txt_products_price.setText("\u20B9 "+productListBean.getProduct_price());
@@ -135,7 +139,13 @@ public class PetShopProductDetailsImageAdapter extends  RecyclerView.Adapter<Rec
                     Intent intent = new Intent(context, DoctorProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("productid",productListBean.get_id());
                     context.startActivity(intent);
-                }else{
+                }else if(fromactivity != null && fromactivity.equalsIgnoreCase("SPShopFragment")){
+                        Intent intent = new Intent(context, SPProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                         intent.putExtra("productid",productListBean.get_id());
+                         context.startActivity(intent);
+
+                }
+                else{
                     Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("productid",productListBean.get_id());
                     context.startActivity(intent);

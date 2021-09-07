@@ -21,6 +21,7 @@ import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.doctor.shop.DoctorProductDetailsActivity;
 import com.petfolio.infinituss.petlover.ProductDetailsActivity;
 import com.petfolio.infinituss.responsepojo.FetctProductByCatResponse;
+import com.petfolio.infinituss.serviceprovider.shop.SPProductDetailsActivity;
 
 import java.util.List;
 
@@ -59,6 +60,7 @@ public class PetShopCategorySeeMoreAdapter extends  RecyclerView.Adapter<Recycle
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
         currentItem = data.get(position);
+        Log.w(TAG,"fromactivity : "+fromactivity);
         if(data.get(position).getProduct_title() != null) {
             holder.txt_products_title.setText(data.get(position).getProduct_title());
         }
@@ -130,6 +132,12 @@ public class PetShopCategorySeeMoreAdapter extends  RecyclerView.Adapter<Recycle
                public void onClick(View v) {
                    if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorListOfProductsSeeMoreActivity")){
                        Intent intent = new Intent(context, DoctorProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                       intent.putExtra("productid",data.get(position).get_id());
+                       intent.putExtra("fromactivity",fromactivity);
+                       intent.putExtra("cat_id",cat_id);
+                       context.startActivity(intent);
+                   }else if(fromactivity != null && fromactivity.equalsIgnoreCase("SPListOfProductsSeeMoreActivity")){
+                       Intent intent = new Intent(context, SPProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                        intent.putExtra("productid",data.get(position).get_id());
                        intent.putExtra("fromactivity",fromactivity);
                        intent.putExtra("cat_id",cat_id);

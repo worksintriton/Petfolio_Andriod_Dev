@@ -223,6 +223,8 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
 
 
 
+
+
         rl_back.setOnClickListener(v -> onBackPressed());
         SessionManager sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getProfileDetails();
@@ -234,6 +236,9 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
             fromactivity = extras.getString("fromactivity");
             tag = extras.getString("tag");
         }
+
+        Log.w(TAG,"fromactivity : "+fromactivity);
+
         if(userid != null && productid != null){
             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
                 fetch_product_by_id_ResponseCall();
@@ -494,7 +499,16 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
             intent.putExtra("cat_id",cat_id);
             startActivity(intent);
             finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("SPListOfProductsSeeMoreActivity")){
+            Intent intent = new Intent(SPProductDetailsActivity.this, SPListOfProductsSeeMoreActivity.class);
+            intent.putExtra("cat_id",cat_id);
+            startActivity(intent);
+            finish();
         }else if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorShopTodayDealsSeeMoreActivity")){
+            Intent intent = new Intent(SPProductDetailsActivity.this, SPShopTodayDealsSeeMoreActivity.class);
+            startActivity(intent);
+            finish();
+        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("SPShopTodayDealsSeeMoreActivity")){
             Intent intent = new Intent(SPProductDetailsActivity.this, SPShopTodayDealsSeeMoreActivity.class);
             startActivity(intent);
             finish();

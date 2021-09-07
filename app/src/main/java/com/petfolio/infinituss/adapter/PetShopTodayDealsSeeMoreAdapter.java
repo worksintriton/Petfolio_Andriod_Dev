@@ -62,6 +62,8 @@ public class PetShopTodayDealsSeeMoreAdapter extends  RecyclerView.Adapter<Recyc
     @SuppressLint({"SetTextI18n", "LogNotTimber"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
+        Log.w(TAG,"fromactivity : "+fromactivity);
+
         currentItem = data.get(position);
         Log.w(TAG,"data : "+new Gson().toJson(data));
 

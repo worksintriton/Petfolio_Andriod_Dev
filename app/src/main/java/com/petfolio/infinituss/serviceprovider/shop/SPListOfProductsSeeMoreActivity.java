@@ -240,6 +240,8 @@ public class SPListOfProductsSeeMoreActivity extends AppCompatActivity implement
 
 
         }
+
+        Log.w(TAG,"fromactivity : "+fromactivity);
        /* ImageView img_back = include_doctor_header.findViewById(R.id.img_back);
         ImageView img_notification = include_doctor_header.findViewById(R.id.img_notification);
         ImageView img_cart = include_doctor_header.findViewById(R.id.img_cart);
