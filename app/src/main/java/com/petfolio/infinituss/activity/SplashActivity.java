@@ -69,7 +69,10 @@ public class SplashActivity extends AppCompatActivity {
             }
 
             if(!islogedin) {
-                Intent i = new Intent(SplashActivity.this, LoginActivity.class);
+              /*  Intent i = new Intent(SplashActivity.this, LoginActivity.class);
+                startActivity(i);
+                finish();*/
+                Intent i = new Intent(SplashActivity.this, SliderAfterSplashActivity.class);
                 startActivity(i);
                 finish();
             }else{
@@ -169,7 +172,10 @@ public class SplashActivity extends AppCompatActivity {
 
                 boolean islogedin1 = session.isLoggedIn();
                 if(!islogedin1) {
-                    Intent i = new Intent(SplashActivity.this, LoginActivity.class);
+                   /* Intent i = new Intent(SplashActivity.this, LoginActivity.class);
+                    startActivity(i);
+                    finish(); */
+                    Intent i = new Intent(SplashActivity.this, SliderAfterSplashActivity.class);
                     startActivity(i);
                     finish();
                 }

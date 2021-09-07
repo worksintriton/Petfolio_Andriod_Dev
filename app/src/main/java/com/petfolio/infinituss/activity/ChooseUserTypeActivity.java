@@ -63,6 +63,7 @@ public class ChooseUserTypeActivity extends AppCompatActivity implements UserTyp
     private String UserType;
     private int UserTypeValue;
 
+    @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

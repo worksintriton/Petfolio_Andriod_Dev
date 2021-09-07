@@ -195,6 +195,14 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
     LinearLayout ll_uploadImage_prescription;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.content)
+    LinearLayout content;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.footerView)
+    LinearLayout footerView;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_prescriptiondetails)
     ImageView img_prescriptiondetails;
 
@@ -205,6 +213,9 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_doctor_prescription_details);
         ButterKnife.bind(this);
         Log.w(TAG,"Oncreate");
+
+        content.setVisibility(View.GONE);
+        footerView.setVisibility(View.GONE);
 
 
 
@@ -296,6 +307,8 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
+                        content.setVisibility(View.VISIBLE);
+                        footerView.setVisibility(View.VISIBLE);
 
                         if(response.body().getData()!=null) {
 

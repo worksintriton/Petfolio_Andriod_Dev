@@ -716,7 +716,7 @@
                 android:layout_height="20dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="20dp"
-                android:background="@drawable/app_logo"
+                android:background="@drawable/app_logo_new"
                 android:scaleType="fitXY"
                 tools:ignore="ContentDescription" />
         </LinearLayout>

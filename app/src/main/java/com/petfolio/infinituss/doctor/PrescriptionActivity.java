@@ -652,15 +652,28 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
                 govtIdPicBeans.clear();
             }
             else{
-
                 ll_manual_prescription.setVisibility(View.GONE);
                 ll_uploadImage.setVisibility(View.VISIBLE);
-                if(i==0){
-                    ((LinearLayout)addView.getParent()).removeView(addView);
-                    clearField();
-                    prescriptionDataList.clear();
-                    i = i+1;
+                try{
+                    if(i==0){
+                        if(addView !=null){
+                            ((LinearLayout)addView.getParent()).removeView(addView);
+                        }
+
+                        clearField();
+                        if(prescriptionDataList !=null && prescriptionDataList.size()>0){
+                            prescriptionDataList.clear();
+                        }
+                        i = i+1;
+                    }
+                }catch (Exception e){
+                    Log.e(TAG, "exception", e);
+                    Log.e(TAG, "Exception: "+Log.getStackTraceString(e));
+                    Log.e(TAG, Log.getStackTraceString(new Exception()));
+
+
                 }
+
 
 
             }

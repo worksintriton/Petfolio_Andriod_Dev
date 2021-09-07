@@ -64,6 +64,11 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activity.SliderAfterSplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".petlover.ShippingAddressEditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"

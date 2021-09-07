@@ -279,7 +279,11 @@ public class VideoCallDoctorActivity extends AppCompatActivity implements JitsiM
                     public void onClick(DialogInterface arg0, int arg1)
                     {
                         if (new ConnectionDetector(VideoCallDoctorActivity.this).isNetworkAvailable(VideoCallDoctorActivity.this)) {
-                            appoinmentCloseConversationResponseCall();
+                            //appoinmentCloseConversationResponseCall();
+                            Intent intent = new Intent(getApplicationContext(), PrescriptionActivity.class);
+                            intent.putExtra("id",appointmentid);
+                            intent.putExtra("patient_id",patientid);
+                            startActivity(intent);
 
                         }
 
