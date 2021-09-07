@@ -236,6 +236,8 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
             fromactivity = extras.getString("fromactivity");
             tag = extras.getString("tag");
         }
+
+        Log.w(TAG,"fromactivity : "+fromactivity);
         if(userid != null && productid != null){
             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
                 fetch_product_by_id_ResponseCall();
