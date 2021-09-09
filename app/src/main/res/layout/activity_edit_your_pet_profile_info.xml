@@ -208,7 +208,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/new_green_btn"
-                        android:checked="true"
                         android:fontFamily="@font/futuramediumbt"
                         android:text="@string/yes"
                         android:textColor="@color/new_txt_color"
@@ -222,6 +221,7 @@
                         android:buttonTint="@color/new_green_btn"
                         android:fontFamily="@font/futuramediumbt"
                         android:text="@string/no"
+                        android:checked="true"
                         android:textColor="@color/new_txt_color"
                         android:textSize="16sp" />
 

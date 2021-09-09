@@ -3,6 +3,7 @@ package com.petfolio.infinituss.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -99,6 +100,14 @@ public class MyCouponsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHol
             Log.w(TAG,"formattedDate : "+formattedDate);
             holder.txt_expired.setVisibility(View.VISIBLE);
             holder.txt_expired.setText("Expires on:"+formattedDate);
+        }else{
+            holder.txt_expired.setVisibility(View.INVISIBLE);
+        }
+
+        if(currentItem.getUsed_status() != null && currentItem.getUsed_status().equalsIgnoreCase("Used")){
+            holder.txt_expired.setVisibility(View.VISIBLE);
+            holder.txt_expired.setText(currentItem.getUsed_status());
+            holder.txt_expired.setTextColor(Color.parseColor("#2896c2"));
         }else{
             holder.txt_expired.setVisibility(View.INVISIBLE);
         }

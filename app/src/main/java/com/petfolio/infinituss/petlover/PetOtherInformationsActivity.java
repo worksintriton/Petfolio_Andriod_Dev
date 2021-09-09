@@ -400,7 +400,8 @@ public class PetOtherInformationsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+       // super.onBackPressed();
+        Log.w(TAG,"onBackPressed fromactivity : "+fromactivity);
         if(fromactivity != null && fromactivity.equalsIgnoreCase("BasicPetDetailsActivity")) {
             startActivity(new Intent(getApplicationContext(), PetLoverProfileScreenActivity.class));
             finish();
@@ -416,7 +417,7 @@ public class PetOtherInformationsActivity extends AppCompatActivity {
             intent.putExtra("petId", petId);
             startActivity(intent);
         }
-        if(fromactivity != null && fromactivity.equalsIgnoreCase("PetServiceAppointment_Doctor_Date_Time_Activity")){
+       else if(fromactivity != null && fromactivity.equalsIgnoreCase("PetServiceAppointment_Doctor_Date_Time_Activity")){
             Intent intent = new Intent(getApplicationContext(),ConsultationActivity.class);
             intent.putExtra("spid",spid);
             intent.putExtra("catid",catid);

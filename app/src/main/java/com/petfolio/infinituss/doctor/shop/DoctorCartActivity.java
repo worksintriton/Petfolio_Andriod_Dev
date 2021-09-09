@@ -4,9 +4,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -32,6 +35,7 @@ import com.petfolio.infinituss.doctor.DoctorDashboardActivity;
 import com.petfolio.infinituss.interfaces.AddandRemoveProductListener;
 
 
+import com.petfolio.infinituss.petlover.PetCartActivity;
 import com.petfolio.infinituss.petlover.ShippingAddressActivity;
 import com.petfolio.infinituss.requestpojo.CouponCodeCheckRequest;
 import com.petfolio.infinituss.requestpojo.FetchByIdRequest;
@@ -236,6 +240,7 @@ public class DoctorCartActivity extends AppCompatActivity implements AddandRemov
     private int Original_Discount_Price;
     private int Grand_total;
     private int Coupon_discount_price;
+    private Dialog dialog;
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -316,7 +321,8 @@ public class DoctorCartActivity extends AppCompatActivity implements AddandRemov
         txt_removeall_products.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    remove_overall_products_ResponseCall();
+                    //remove_overall_products_ResponseCall();
+                    showremove_overall_products_ResponseCall();
                 }
             });
 
@@ -575,8 +581,9 @@ public class DoctorCartActivity extends AppCompatActivity implements AddandRemov
                 productid = id;
                 if(productid != null){
                     if(prodcutcount != 0) {
+                        showremove_single_products_ResponseCall();
                         if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                            remove_single_products_ResponseCall();
+                            //remove_single_products_ResponseCall();
                         }
                     }
                 }
@@ -1097,6 +1104,75 @@ public class DoctorCartActivity extends AppCompatActivity implements AddandRemov
             alertDialog.dismiss();
         } catch (Exception ignored) {
 
+        }
+    }
+
+
+    private void showremove_overall_products_ResponseCall() {
+        try{
+            dialog = new Dialog(DoctorCartActivity.this);
+            dialog.setContentView(R.layout.alert_yes_no);
+            dialog.setCanceledOnTouchOutside(false);
+            Button btn_yes = dialog.findViewById(R.id.btn_yes);
+            Button btn_no = dialog.findViewById(R.id.btn_no);
+            TextView txt_msg = dialog.findViewById(R.id.txt_content_message);
+            txt_msg.setText("Are you sure that you need to Empty the Cart?");
+            btn_yes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if (new ConnectionDetector(DoctorCartActivity.this).isNetworkAvailable(DoctorCartActivity.this)) {
+                        remove_overall_products_ResponseCall();
+                    }
+
+                    dialog.dismiss();
+
+                }
+            });
+            btn_no.setOnClickListener(view -> dialog.dismiss());
+
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+            dialog.show();
+
+
+        }
+        catch(
+                WindowManager.BadTokenException e){
+            e.printStackTrace();
+        }
+    }
+    private void showremove_single_products_ResponseCall() {
+        try{
+            dialog = new Dialog(DoctorCartActivity.this);
+            dialog.setContentView(R.layout.alert_yes_no);
+            dialog.setCanceledOnTouchOutside(false);
+            Button btn_yes = dialog.findViewById(R.id.btn_yes);
+            Button btn_no = dialog.findViewById(R.id.btn_no);
+            TextView txt_msg = dialog.findViewById(R.id.txt_content_message);
+            txt_msg.setText("Are you sure that you need to delete the products?");
+            btn_yes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if (new ConnectionDetector(DoctorCartActivity.this).isNetworkAvailable(DoctorCartActivity.this)) {
+                        remove_single_products_ResponseCall();
+                    }
+                    dialog.dismiss();
+
+                }
+            });
+            btn_no.setOnClickListener(view -> dialog.dismiss());
+
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+            dialog.show();
+
+
+        }
+        catch(
+                WindowManager.BadTokenException e){
+            e.printStackTrace();
         }
     }
 }

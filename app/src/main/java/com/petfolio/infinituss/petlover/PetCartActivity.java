@@ -4,11 +4,14 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import android.util.Log;
 
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,6 +37,7 @@ import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 
 import com.petfolio.infinituss.interfaces.AddandRemoveProductListener;
+import com.petfolio.infinituss.petlover.myaddresses.MyAddressesListActivity;
 import com.petfolio.infinituss.requestpojo.CouponCodeCheckRequest;
 import com.petfolio.infinituss.requestpojo.FetchByIdRequest;
 import com.petfolio.infinituss.requestpojo.NotificationCartCountRequest;
@@ -268,6 +272,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
     private int Original_Discount_Price;
     private int Grand_total;
     private int Coupon_discount_price;
+    private Dialog dialog;
 
 
     @SuppressLint("LogNotTimber")
@@ -352,7 +357,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
         txt_removeall_products.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    remove_overall_products_ResponseCall();
+                    showremove_overall_products_ResponseCall();
                 }
             });
 
@@ -660,6 +665,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                 productid = id;
                 if(productid != null){
                     if(prodcutcount != 0) {
+                       // showremove_product_ResponseCall();
                         if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
                             remove_product_ResponseCall();
                         }
@@ -670,14 +676,20 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                 productid = id;
                 if(productid != null){
                     if(prodcutcount != 0) {
-                        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                        showremove_single_products_ResponseCall();
+                       /* if (new ConnectionDetector(PetCartActivity.this).isNetworkAvailable(PetCartActivity.this)) {
                             remove_single_products_ResponseCall();
-                        }
+                        }*/
+
                     }
                 }
             }
         }
     }
+
+
+
+
     @SuppressLint("LogNotTimber")
     public void remove_product_ResponseCall(){
         avi_indicator.setVisibility(View.VISIBLE);
@@ -1184,6 +1196,74 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
             alertDialog.dismiss();
         } catch (Exception ignored) {
 
+        }
+    }
+
+    private void showremove_overall_products_ResponseCall() {
+        try{
+            dialog = new Dialog(PetCartActivity.this);
+            dialog.setContentView(R.layout.alert_yes_no);
+            dialog.setCanceledOnTouchOutside(false);
+            Button btn_yes = dialog.findViewById(R.id.btn_yes);
+            Button btn_no = dialog.findViewById(R.id.btn_no);
+            TextView txt_msg = dialog.findViewById(R.id.txt_content_message);
+            txt_msg.setText("Are you sure that you need to Empty the Cart?");
+            btn_yes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if (new ConnectionDetector(PetCartActivity.this).isNetworkAvailable(PetCartActivity.this)) {
+                        remove_overall_products_ResponseCall();
+                    }
+
+                    dialog.dismiss();
+
+                }
+            });
+            btn_no.setOnClickListener(view -> dialog.dismiss());
+
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+            dialog.show();
+
+
+        }
+        catch(
+                WindowManager.BadTokenException e){
+            e.printStackTrace();
+        }
+    }
+    private void showremove_single_products_ResponseCall() {
+        try{
+            dialog = new Dialog(PetCartActivity.this);
+            dialog.setContentView(R.layout.alert_yes_no);
+            dialog.setCanceledOnTouchOutside(false);
+            Button btn_yes = dialog.findViewById(R.id.btn_yes);
+            Button btn_no = dialog.findViewById(R.id.btn_no);
+            TextView txt_msg = dialog.findViewById(R.id.txt_content_message);
+            txt_msg.setText("Are you sure that you need to delete the products?");
+            btn_yes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if (new ConnectionDetector(PetCartActivity.this).isNetworkAvailable(PetCartActivity.this)) {
+                        remove_single_products_ResponseCall();
+                    }
+                    dialog.dismiss();
+
+                }
+            });
+            btn_no.setOnClickListener(view -> dialog.dismiss());
+
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+            dialog.show();
+
+
+        }
+        catch(
+                WindowManager.BadTokenException e){
+            e.printStackTrace();
         }
     }
 }

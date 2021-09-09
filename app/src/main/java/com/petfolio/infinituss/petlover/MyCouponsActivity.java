@@ -18,21 +18,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.adapter.MyCouponsAdapter;
-import com.petfolio.infinituss.adapter.NotificationDashboardAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
-import com.petfolio.infinituss.doctor.DoctorDashboardActivity;
 import com.petfolio.infinituss.requestpojo.CouponCodeListRequest;
-import com.petfolio.infinituss.requestpojo.NotificationGetlistRequest;
-import com.petfolio.infinituss.requestpojo.NotificationsMarkRequest;
+
 import com.petfolio.infinituss.responsepojo.CouponCodeListResponse;
-import com.petfolio.infinituss.responsepojo.NotificationGetlistResponse;
-import com.petfolio.infinituss.responsepojo.SuccessResponse;
-import com.petfolio.infinituss.serviceprovider.ServiceProviderDashboardActivity;
+
 import com.petfolio.infinituss.sessionmanager.SessionManager;
 import com.petfolio.infinituss.utils.ConnectionDetector;
 import com.petfolio.infinituss.utils.RestUtils;
-import com.petfolio.infinituss.vendor.VendorDashboardActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.HashMap;

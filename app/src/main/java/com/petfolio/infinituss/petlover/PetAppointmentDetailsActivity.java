@@ -1888,7 +1888,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
          */
 
 
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyyhhmmss");
         String currentDateandTime = simpleDateFormat.format(new Date());
 
 
@@ -1896,7 +1896,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
         RefundCouponCreateRequest refundCouponCreateRequest = new RefundCouponCreateRequest();
         refundCouponCreateRequest.setCreated_by("User");
         refundCouponCreateRequest.setCoupon_type(Appointmenttype);
-        refundCouponCreateRequest.setCode("REF"+cost);
+        refundCouponCreateRequest.setCode("REF"+cost+currentDateandTime);
         if(cost != null && !cost.isEmpty()){
             refundCouponCreateRequest.setAmount(Integer.parseInt(cost));
         }else{
