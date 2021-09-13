@@ -226,7 +226,9 @@ public class VendorProfileScreenActivity extends AppCompatActivity implements Vi
 
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
-        name = user.get(SessionManager.KEY_FIRST_NAME);
+        String firstname = user.get(SessionManager.KEY_FIRST_NAME);
+        String lastname = user.get(SessionManager.KEY_LAST_NAME);
+        name = firstname+" "+lastname;
         emailid = user.get(SessionManager.KEY_EMAIL_ID);
         phoneNo = user.get(SessionManager.KEY_MOBILE);
         userid = user.get(SessionManager.KEY_ID);

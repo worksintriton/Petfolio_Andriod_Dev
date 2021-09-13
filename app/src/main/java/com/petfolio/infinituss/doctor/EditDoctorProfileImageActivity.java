@@ -141,6 +141,17 @@ public class EditDoctorProfileImageActivity extends AppCompatActivity implements
         verifyemailstatus = user.get(SessionManager.KEY_VERIFY_EMAIL_STATUS);
         refcode = user.get(SessionManager.KEY_REF_CODE);
 
+        if(profileimage != null && !profileimage.isEmpty()){
+            Glide.with(EditDoctorProfileImageActivity.this)
+                    .load(profileimage)
+                    .into(img_pet_imge);
+        }else{
+            Glide.with(EditDoctorProfileImageActivity.this)
+                    .load(R.drawable.image_thumbnail)
+                    .into(img_pet_imge);
+
+        }
+
 
 
 
@@ -398,6 +409,7 @@ public class EditDoctorProfileImageActivity extends AppCompatActivity implements
 
 
 
+    @SuppressLint("MissingSuperCall")
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onRequestPermissionsResult(int requestCode,

@@ -142,6 +142,18 @@ public class PetLoverEditProfileImageActivity extends AppCompatActivity implemen
         verifyemailstatus = user.get(SessionManager.KEY_VERIFY_EMAIL_STATUS);
         refcode = user.get(SessionManager.KEY_REF_CODE);
 
+        if(profileimage != null && !profileimage.isEmpty()){
+            Glide.with(PetLoverEditProfileImageActivity.this)
+                    .load(profileimage)
+                    .into(img_pet_imge);
+        }else{
+            Glide.with(PetLoverEditProfileImageActivity.this)
+                    .load(R.drawable.image_thumbnail)
+                    .into(img_pet_imge);
+
+        }
+
+
 
 
 
@@ -397,6 +409,7 @@ public class PetLoverEditProfileImageActivity extends AppCompatActivity implemen
 
 
 
+    @SuppressLint("MissingSuperCall")
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -569,8 +582,7 @@ public class PetLoverEditProfileImageActivity extends AppCompatActivity implemen
                         );
                         onBackPressed();
                         //gotoDoctorProfileScreenActivity();
-                    }
-                    else{
+                    } else{
                         //showErrorLoading(response.body().getMessage());
                     }
                 }

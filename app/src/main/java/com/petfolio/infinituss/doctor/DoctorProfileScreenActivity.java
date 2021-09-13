@@ -229,7 +229,9 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
 
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
-        name = user.get(SessionManager.KEY_FIRST_NAME);
+        String firstname = user.get(SessionManager.KEY_FIRST_NAME);
+        String lastname = user.get(SessionManager.KEY_LAST_NAME);
+        name = firstname+" "+lastname;
         emailid = user.get(SessionManager.KEY_EMAIL_ID);
         phoneNo = user.get(SessionManager.KEY_MOBILE);
         userid = user.get(SessionManager.KEY_ID);
@@ -387,7 +389,8 @@ public class DoctorProfileScreenActivity extends AppCompatActivity implements Vi
                 startActivity(new Intent(getApplicationContext(), DoctorEditProfileActivity.class));
                 break;
                 case R.id.txt_edit_image:
-                startActivity(new Intent(getApplicationContext(), EditDoctorProfileImageActivity.class));
+                    Intent intent = new Intent(getApplicationContext(), EditDoctorProfileImageActivity.class);
+                    startActivity(intent);
                 break;
                 case R.id.txt_edit_doc_business_info:
                 startActivity(new Intent(getApplicationContext(), EditDoctorBusinessInfoActivity.class));

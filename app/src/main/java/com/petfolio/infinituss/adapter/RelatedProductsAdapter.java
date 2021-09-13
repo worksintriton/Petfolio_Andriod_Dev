@@ -19,8 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.api.APIClient;
+import com.petfolio.infinituss.doctor.shop.DoctorProductDetailsActivity;
 import com.petfolio.infinituss.petlover.ProductDetailsActivity;
 import com.petfolio.infinituss.responsepojo.FetchProductByIdResponse;
+import com.petfolio.infinituss.serviceprovider.shop.SPProductDetailsActivity;
 
 import java.util.List;
 
@@ -34,13 +36,16 @@ public class RelatedProductsAdapter extends  RecyclerView.Adapter<RecyclerView.V
     FetchProductByIdResponse.ProductDetailsBean.ProductRelatedBean currentItem;
     String prod_type;
     boolean check;
+    String fromactivity;
 
 
-    public RelatedProductsAdapter(Context context, List<FetchProductByIdResponse.ProductDetailsBean.ProductRelatedBean> product_related, String prod_type, boolean b) {
+    public RelatedProductsAdapter(Context context, List<FetchProductByIdResponse.ProductDetailsBean.ProductRelatedBean> product_related, String prod_type, boolean b,String fromactivity) {
         this.product_related = product_related;
         this.context = context;
         this.prod_type=prod_type;
         this.check=b;
+        this.fromactivity=fromactivity;
+
 
     }
 
@@ -164,10 +169,25 @@ public class RelatedProductsAdapter extends  RecyclerView.Adapter<RecyclerView.V
         holder.ll_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("productid",product_related.get(position).get_id());
-                intent.putExtra("fromactivity",TAG);
-                context.startActivity(intent);
+                if(fromactivity != null){
+                    if(fromactivity.equalsIgnoreCase("DoctorProductDetailsActivity")){
+                        Intent intent = new Intent(context, DoctorProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("productid",product_related.get(position).get_id());
+                        intent.putExtra("fromactivity",TAG);
+                        context.startActivity(intent);
+                    } else if(fromactivity.equalsIgnoreCase("ProductDetailsActivity")){
+                        Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("productid",product_related.get(position).get_id());
+                        intent.putExtra("fromactivity",TAG);
+                        context.startActivity(intent);
+                    } else if(fromactivity.equalsIgnoreCase("SPProductDetailsActivity")){
+                        Intent intent = new Intent(context, SPProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("productid",product_related.get(position).get_id());
+                        intent.putExtra("fromactivity",TAG);
+                        context.startActivity(intent);
+                    }
+                }
+
             }
 
         });

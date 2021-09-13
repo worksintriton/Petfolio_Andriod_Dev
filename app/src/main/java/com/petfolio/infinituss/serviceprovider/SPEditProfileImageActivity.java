@@ -144,6 +144,18 @@ public class SPEditProfileImageActivity extends AppCompatActivity implements Vie
         refcode = user.get(SessionManager.KEY_REF_CODE);
 
 
+        if(profileimage != null && !profileimage.isEmpty()){
+            Glide.with(SPEditProfileImageActivity.this)
+                    .load(profileimage)
+                    .into(img_pet_imge);
+        }else{
+            Glide.with(SPEditProfileImageActivity.this)
+                    .load(R.drawable.image_thumbnail)
+                    .into(img_pet_imge);
+
+        }
+
+
 
 
     }

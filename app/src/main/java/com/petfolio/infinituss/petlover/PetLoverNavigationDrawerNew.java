@@ -111,6 +111,7 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
     TextView txt_notification_count_badge;
     TextView txt_cart_count_badge;
     private String userid;
+    private String profileimage;
 
 
     @SuppressLint({"InflateParams", "LogNotTimber"})
@@ -126,7 +127,9 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
 
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
-        name = user.get(SessionManager.KEY_FIRST_NAME);
+        String firstname = user.get(SessionManager.KEY_FIRST_NAME);
+        String lastname = user.get(SessionManager.KEY_LAST_NAME);
+        name = firstname+" "+lastname;
         emailid = user.get(SessionManager.KEY_EMAIL_ID);
         phoneNo = user.get(SessionManager.KEY_MOBILE);
         String userid = user.get(SessionManager.KEY_ID);
@@ -158,6 +161,7 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
         SessionManager session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
+        profileimage = user.get(SessionManager.KEY_PROFILE_IMAGE);
 
 
 
@@ -178,7 +182,11 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
             nav_header_ref_code.setText("");
         }
 
-        Glide.with(this).load(R.drawable.profile).circleCrop().into(nav_header_imageView);
+        if(profileimage != null && !profileimage.isEmpty()) {
+            Glide.with(this).load(profileimage).circleCrop().into(nav_header_imageView);
+        }else{
+            Glide.with(this).load(APIClient.PROFILE_IMAGE_URL).circleCrop().into(nav_header_imageView);
+        }
 
         nav_header_emailid.setText(emailid);
         nav_header_profilename.setText(name);

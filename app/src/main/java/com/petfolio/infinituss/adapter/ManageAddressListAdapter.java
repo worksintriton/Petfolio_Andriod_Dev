@@ -42,10 +42,6 @@ public class ManageAddressListAdapter extends  RecyclerView.Adapter<RecyclerView
     private Context context;
 
     LocationListAddressResponse.DataBean currentItem;
-
-
-
-
     public static String id = "";
 
     private LocationDeleteListener locationDeleteListener;
@@ -97,7 +93,7 @@ public class ManageAddressListAdapter extends  RecyclerView.Adapter<RecyclerView
                 //Creating the instance of PopupMenu
                 PopupMenu popup = new PopupMenu(context, v);
                 //Inflating the Popup using xml file
-                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+                popup.getMenuInflater().inflate(R.menu.popup_menu_edit_delete, popup.getMenu());
 
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -184,8 +180,9 @@ public class ManageAddressListAdapter extends  RecyclerView.Adapter<RecyclerView
         holder.rl_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                locationDefaultListener.locationDefaultListener(locationListResponseList.get(position).isDefault_status(),locationListResponseList.get(position).get_id(),locationListResponseList.get(position).getUser_id());
-
+                if(!locationListResponseList.get(position).isDefault_status()) {
+                    locationDefaultListener.locationDefaultListener(locationListResponseList.get(position).isDefault_status(), locationListResponseList.get(position).get_id(), locationListResponseList.get(position).getUser_id());
+                }
             }
         });
 

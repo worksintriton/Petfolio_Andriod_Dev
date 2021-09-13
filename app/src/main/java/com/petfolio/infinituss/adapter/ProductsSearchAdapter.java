@@ -3,6 +3,7 @@ package com.petfolio.infinituss.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,6 +64,15 @@ public class ProductsSearchAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
         }
         if(productSearchResponseCall.get(position).getProduct_price() != 0){
             holder.txt_products_price.setText("\u20B9 "+productSearchResponseCall.get(position).getProduct_price());
+        }
+
+        if(currentItem.getProduct_discount_price() != 0){
+            holder.txt_product_discount_price.setVisibility(View.VISIBLE);
+            holder.txt_product_discount_price.setText("\u20B9 "+currentItem.getProduct_discount_price());
+            holder.txt_product_discount_price.setPaintFlags(holder.txt_product_discount_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }else{
+            holder.txt_product_discount_price.setText("\u20B9 "+0);
+            holder.txt_product_discount_price.setVisibility(View.GONE);
         }
 
 
@@ -153,7 +163,7 @@ public class ProductsSearchAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
         return position;
     }
     static class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_products_title,txt_products_price,txt_products_offer,txt_star_rating,txt_review_count;
+        public TextView txt_products_title,txt_products_price,txt_product_discount_price,txt_products_offer,txt_star_rating,txt_review_count;
         public ImageView img_products_image,img_like,img_dislike;
         LinearLayout ll_root;
 
@@ -162,6 +172,7 @@ public class ProductsSearchAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
             super(itemView);
             txt_products_title = itemView.findViewById(R.id.txt_products_title);
             txt_products_price = itemView.findViewById(R.id.txt_products_price);
+            txt_product_discount_price = itemView.findViewById(R.id.txt_product_discount_price);
             txt_products_offer = itemView.findViewById(R.id.txt_products_offer);
             txt_star_rating = itemView.findViewById(R.id.txt_star_rating);
             txt_review_count = itemView.findViewById(R.id.txt_review_count);

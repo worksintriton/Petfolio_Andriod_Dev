@@ -25,6 +25,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
@@ -103,12 +105,13 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
-        name = user.get(SessionManager.KEY_FIRST_NAME);
+        String firstname = user.get(SessionManager.KEY_FIRST_NAME);
+        String lastname = user.get(SessionManager.KEY_LAST_NAME);
+        name = firstname+" "+lastname;
         emailid = user.get(SessionManager.KEY_EMAIL_ID);
         phoneNo = user.get(SessionManager.KEY_MOBILE);
         refcode = user.get(SessionManager.KEY_REF_CODE);
-
-
+        image_url = user.get(SessionManager.KEY_PROFILE_IMAGE);
 
         String userid = user.get(SessionManager.KEY_ID);
         Log.w(TAG, "userid : " + userid+"refcode : "+refcode);
@@ -151,7 +154,12 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
         nav_header_emailid = header.findViewById(R.id.nav_header_emailid);
         nav_header_profilename = header.findViewById(R.id.nav_header_profilename);
         nav_header_edit = header.findViewById(R.id.nav_header_edit);
-        // Glide.with(this).load(image_url).into(nav_header_imageView);
+        if(image_url != null && !image_url.isEmpty()){
+            Glide.with(this).load(image_url).into(nav_header_imageView);
+        }else{
+            Glide.with(this).load(APIClient.PROFILE_IMAGE_URL).into(nav_header_imageView);
+        }
+
         nav_header_ref_code = view.findViewById(R.id.nav_header_ref_code);
         if(refcode != null && !refcode.isEmpty() ){
             nav_header_ref_code.setVisibility(View.VISIBLE);

@@ -35,7 +35,7 @@
                 android:id="@+id/img_products_image"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
-                android:layout_weight="0.95"
+                android:layout_weight="1"
                 android:scaleType="fitXY"
                 android:src="@drawable/upload"
                 tools:ignore="ContentDescription"

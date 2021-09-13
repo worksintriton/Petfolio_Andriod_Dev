@@ -113,11 +113,17 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
-        name = user.get(SessionManager.KEY_FIRST_NAME);
+        String firstname = user.get(SessionManager.KEY_FIRST_NAME);
+        String lastname = user.get(SessionManager.KEY_LAST_NAME);
+        name = firstname+" "+lastname;
         emailid = user.get(SessionManager.KEY_EMAIL_ID);
         phoneNo = user.get(SessionManager.KEY_MOBILE);
         refcode = user.get(SessionManager.KEY_REF_CODE);
         image_url = user.get(SessionManager.KEY_PROFILE_IMAGE);
+
+
+
+
 
 
 
@@ -234,6 +240,12 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
                     .error(R.drawable.profile)
+                    .into(nav_header_imageView);
+        }else{
+            Glide.with(this)
+                    .load(APIClient.PROFILE_IMAGE_URL)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
                     .into(nav_header_imageView);
         }
 

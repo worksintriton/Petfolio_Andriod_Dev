@@ -73,6 +73,16 @@ public class ProductSearchResponse {
         private String product_img;
         private String product_title;
         private int product_price;
+        private int product_discount_price;
+
+        public int getProduct_discount_price() {
+            return product_discount_price;
+        }
+
+        public void setProduct_discount_price(int product_discount_price) {
+            this.product_discount_price = product_discount_price;
+        }
+
         private int product_discount;
         private boolean product_fav;
         private double product_rating;

@@ -81,6 +81,10 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
     TextView txt_edit_profile;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_profile1)
+    ImageView img_profile1;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_manage_address)
     TextView txt_manage_address;
 
@@ -199,7 +203,9 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
 
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
-        name = user.get(SessionManager.KEY_FIRST_NAME);
+        String firstname = user.get(SessionManager.KEY_FIRST_NAME);
+        String lastname = user.get(SessionManager.KEY_LAST_NAME);
+        name = firstname+" "+lastname;
         emailid = user.get(SessionManager.KEY_EMAIL_ID);
         phoneNo = user.get(SessionManager.KEY_MOBILE);
         userid = user.get(SessionManager.KEY_ID);
@@ -258,13 +264,15 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
 
 
         if(profileimage != null && !profileimage.isEmpty()){
+            Log.w(TAG,"session profileimage if : "+profileimage);
             Glide.with(SPProfileScreenActivity.this)
                     .load(profileimage)
-                    .into(img_profile);
+                    .into(img_profile1);
         }else{
+            Log.w(TAG,"session profileimage else : "+profileimage);
             Glide.with(SPProfileScreenActivity.this)
                     .load(R.drawable.upload)
-                    .into(img_profile);
+                    .into(img_profile1);
 
         }
 

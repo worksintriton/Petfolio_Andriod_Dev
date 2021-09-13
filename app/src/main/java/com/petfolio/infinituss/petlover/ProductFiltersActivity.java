@@ -19,9 +19,13 @@ import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
+import com.petfolio.infinituss.doctor.shop.DoctorListOfProductsSeeMoreActivity;
+import com.petfolio.infinituss.doctor.shop.DoctorShopTodayDealsSeeMoreActivity;
 import com.petfolio.infinituss.requestpojo.BreedTypeRequest;
 import com.petfolio.infinituss.responsepojo.BreedTypeResponse;
 import com.petfolio.infinituss.responsepojo.PetTypeListResponse;
+import com.petfolio.infinituss.serviceprovider.shop.SPListOfProductsSeeMoreActivity;
+import com.petfolio.infinituss.serviceprovider.shop.SPShopTodayDealsSeeMoreActivity;
 import com.petfolio.infinituss.utils.ConnectionDetector;
 import com.petfolio.infinituss.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -375,10 +379,19 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
                 break;
 
             case  R.id.btn_apply:
+
                 if(fromactivity != null && fromactivity.equalsIgnoreCase("PetShopTodayDealsSeeMoreActivity")){
                     gotoPetShopTodayDealsSeeMoreActivity();
+                } else if(fromactivity != null && fromactivity.equalsIgnoreCase("SPShopTodayDealsSeeMoreActivity")){
+                    gotoSPShopTodayDealsSeeMoreActivity();
+                } else if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorShopTodayDealsSeeMoreActivity")){
+                    gotoDoctorShopTodayDealsSeeMoreActivity();
                 }
-                else if(fromactivity != null && fromactivity.equalsIgnoreCase("ListOfProductsSeeMoreActivity")){
+                else if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorListOfProductsSeeMoreActivity")){
+                    gotoDoctorListOfProductsSeeMoreActivity();
+                } else if(fromactivity != null && fromactivity.equalsIgnoreCase("SPListOfProductsSeeMoreActivity")){
+                    gotoSPListOfProductsSeeMoreActivity();
+                } else if(fromactivity != null && fromactivity.equalsIgnoreCase("ListOfProductsSeeMoreActivity")){
                     gotoListOfProductsSeeMoreActivity();
                 }
                 break;
@@ -452,10 +465,56 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
         intent.putExtra("fromactivity",TAG);
         startActivity(intent);
     }
+    private void gotoSPShopTodayDealsSeeMoreActivity() {
+        Log.w(TAG,"petTypeId : "+petTypeId+" petBreedTypeId : "+petBreedTypeId+" discount_value : "+discount_value);
+        Intent intent = new Intent(getApplicationContext(), SPShopTodayDealsSeeMoreActivity.class);
+        intent.putExtra("tag","2");
+        intent.putExtra("petTypeId",petTypeId);
+        intent.putExtra("petBreedTypeId",petBreedTypeId);
+        intent.putExtra("discount_value",discount_value);
+        intent.putExtra("strCategoryTypeId",strCategoryTypeId);
+        intent.putExtra("fromactivity",TAG);
+        startActivity(intent);
+    }
+    private void gotoDoctorShopTodayDealsSeeMoreActivity() {
+        Log.w(TAG,"petTypeId : "+petTypeId+" petBreedTypeId : "+petBreedTypeId+" discount_value : "+discount_value);
+        Intent intent = new Intent(getApplicationContext(), DoctorShopTodayDealsSeeMoreActivity.class);
+        intent.putExtra("tag","2");
+        intent.putExtra("petTypeId",petTypeId);
+        intent.putExtra("petBreedTypeId",petBreedTypeId);
+        intent.putExtra("discount_value",discount_value);
+        intent.putExtra("strCategoryTypeId",strCategoryTypeId);
+        intent.putExtra("fromactivity",TAG);
+        startActivity(intent);
+    }
     @SuppressLint("LogNotTimber")
     private void gotoListOfProductsSeeMoreActivity() {
         Log.w(TAG,"petTypeId : "+petTypeId+" petBreedTypeId : "+petBreedTypeId+" discount_value : "+discount_value);
         Intent intent = new Intent(getApplicationContext(), ListOfProductsSeeMoreActivity.class);
+        intent.putExtra("tag","2");
+        intent.putExtra("petTypeId",petTypeId);
+        intent.putExtra("petBreedTypeId",petBreedTypeId);
+        intent.putExtra("discount_value",discount_value);
+        intent.putExtra("fromactivity",TAG);
+        intent.putExtra("cat_id",cat_id);
+        intent.putExtra("strCategoryTypeId",strCategoryTypeId);
+        startActivity(intent);
+    }
+    private void gotoDoctorListOfProductsSeeMoreActivity() {
+        Log.w(TAG,"petTypeId : "+petTypeId+" petBreedTypeId : "+petBreedTypeId+" discount_value : "+discount_value);
+        Intent intent = new Intent(getApplicationContext(), DoctorListOfProductsSeeMoreActivity.class);
+        intent.putExtra("tag","2");
+        intent.putExtra("petTypeId",petTypeId);
+        intent.putExtra("petBreedTypeId",petBreedTypeId);
+        intent.putExtra("discount_value",discount_value);
+        intent.putExtra("fromactivity",TAG);
+        intent.putExtra("cat_id",cat_id);
+        intent.putExtra("strCategoryTypeId",strCategoryTypeId);
+        startActivity(intent);
+    }
+    private void gotoSPListOfProductsSeeMoreActivity() {
+        Log.w(TAG,"petTypeId : "+petTypeId+" petBreedTypeId : "+petBreedTypeId+" discount_value : "+discount_value);
+        Intent intent = new Intent(getApplicationContext(), SPListOfProductsSeeMoreActivity.class);
         intent.putExtra("tag","2");
         intent.putExtra("petTypeId",petTypeId);
         intent.putExtra("petBreedTypeId",petBreedTypeId);
