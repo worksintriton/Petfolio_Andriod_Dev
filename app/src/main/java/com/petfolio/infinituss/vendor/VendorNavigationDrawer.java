@@ -192,6 +192,7 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
                         return true;
 
                     case R.id.nav_item_three:
+                        gotoDashboard();
                         return true;
 
                     case R.id.nav_item_five:
@@ -219,6 +220,12 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
             }
         });
 
+    }
+
+    private void gotoDashboard() {
+        Intent intent = new Intent(getApplicationContext(),VendorDashboardActivity.class);
+        intent.putExtra("fromactivity",TAG);
+        startActivity(intent);
     }
 
     private void gotoNotifications() {

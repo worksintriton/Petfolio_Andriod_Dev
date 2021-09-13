@@ -1301,7 +1301,7 @@ public class WalkinPrescriptionActivity extends AppCompatActivity implements Dia
 
         else {
 
-            final CharSequence[] items = {"Take Photo", "Pick from Galley","Cancel"};
+            final CharSequence[] items = {"Take Photo", "Pick from Gallery","Cancel"};
             //AlertDialog.Builder alert=new AlertDialog.Builder(this);
             AlertDialog.Builder builder = new AlertDialog.Builder(WalkinPrescriptionActivity.this);
             builder.setTitle("Choose option");
@@ -1323,7 +1323,7 @@ public class WalkinPrescriptionActivity extends AppCompatActivity implements Dia
 
                 }
 
-                else if (items[item].equals("Pick from Galley"))
+                else if (items[item].equals("Pick from Gallery"))
                 {
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)

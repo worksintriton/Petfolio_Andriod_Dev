@@ -26,6 +26,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
@@ -115,6 +117,7 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
         emailid = user.get(SessionManager.KEY_EMAIL_ID);
         phoneNo = user.get(SessionManager.KEY_MOBILE);
         refcode = user.get(SessionManager.KEY_REF_CODE);
+        image_url = user.get(SessionManager.KEY_PROFILE_IMAGE);
 
 
 
@@ -216,12 +219,7 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
         navigationView.setItemIconTintList(null);
 
         frameLayout = view.findViewById(R.id.base_container);
-
-
-
-
         menu = navigationView.getMenu();
-
 
         // Initializing Drawer Layout and ActionBarToggle
         drawerLayout = view.findViewById(R.id.drawer_layout);
@@ -229,13 +227,24 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
         nav_header_imageView = header.findViewById(R.id.nav_header_imageView);
         nav_header_emailid = header.findViewById(R.id.nav_header_emailid);
         nav_header_profilename = header.findViewById(R.id.nav_header_profilename);
-        // Glide.with(this).load(image_url).into(nav_header_imageView);
+
+        if(image_url != null && !image_url.isEmpty()){
+            Glide.with(this)
+                    .load(image_url)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .error(R.drawable.profile)
+                    .into(nav_header_imageView);
+        }
+
+
 
         nav_header_ref_code = view.findViewById(R.id.nav_header_ref_code);
         if(refcode != null && !refcode.isEmpty() ){
             nav_header_ref_code.setVisibility(View.VISIBLE);
             nav_header_ref_code.setText(getResources().getString(R.string.ref_code)+" : "+refcode);
-        }else{
+        }
+        else{
             nav_header_ref_code.setVisibility(View.GONE);
             nav_header_ref_code.setText("");
         }
