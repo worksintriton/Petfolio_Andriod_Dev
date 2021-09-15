@@ -22,6 +22,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -46,7 +47,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.adapter.AddGovtIdPdfAdapter;
+import com.petfolio.infinituss.adapter.AddPrescriptionsListAdapter;
 import com.petfolio.infinituss.adapter.DiagnosiTypesListAdapter;
+import com.petfolio.infinituss.adapter.NotificationDashboardAdapter;
 import com.petfolio.infinituss.adapter.SubDiagnosiTypesListAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
@@ -185,6 +188,10 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rgprescription_method)
     RadioGroup rgprescription_method;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rv_prescriptiondetails)
+    RecyclerView rv_prescriptiondetails;
 
     String TAG = "PrescriptionActivity";
 
@@ -404,19 +411,24 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
 
         add.setOnClickListener(new View.OnClickListener(){
 
+            @SuppressLint({"InflateParams", "SetTextI18n"})
             @Override
             public void onClick(View arg0) {
+
 
                 LayoutInflater layoutInflater =
                         (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 addView = layoutInflater.inflate(R.layout.row, null);
+                final LinearLayout parent_linear_layout = addView.findViewById(R.id.parent_linear_layout);
                 final TextView tvtabletname = addView.findViewById(R.id.tv_tabletname);
                 tvtabletname.setText(et_tabletname.getText().toString());
                 final TextView tvquantity = addView.findViewById(R.id.tv_quanity);
                 tvquantity.setText(et_quanity.getText().toString());
-                final TextView tvconsumption = addView.findViewById(R.id.tv_consumption);
-                tvconsumption.setText(et_consumption.getText().toString());
-                Button buttonRemove = addView.findViewById(R.id.remove);
+               // final TextView tvconsumption = addView.findViewById(R.id.tv_consumption);
+               // tvconsumption.setText(et_consumption.getText().toString());
+                final Button buttonRemove = addView.findViewById(R.id.remove);
+                buttonRemove.setText("Remove");
+
 
                 final CheckBox chx_mg = addView.findViewById(R.id.chx_m);
                 final CheckBox chx_an = addView.findViewById(R.id.chx_a);
@@ -453,15 +465,24 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
 
                     @Override
                     public void onClick(View v) {
-                        ((LinearLayout)addView.getParent()).removeView(addView);
+
+                        if (addView != null) {
+                            //((LinearLayout) addView.getParent()).removeView(addView);
+                            ViewGroup parent = (ViewGroup) addView.getParent();
+                            if (parent != null) {
+                                parent.removeView(addView);
+                            }
+                        }
+
+
                     }});
+
+                parent_linear_layout.setVisibility(View.GONE);
 
 
                 if(!et_tabletname.getText().toString().isEmpty() && !et_quanity.getText().toString().isEmpty() && chx_m.isChecked() || chx_a.isChecked() || chx_n.isChecked()){
-
                     Log.w(TAG,"prescriptionDataList  : tablet name "+et_tabletname.getText().toString()+" qty : "+et_quanity.getText().toString());
                     prescriptionData  = new PrescriptionCreateRequest.PrescriptionDataBean();
-
                     prescriptionData.setTablet_name(et_tabletname.getText().toString());
                     prescriptionData.setQuantity(et_quanity.getText().toString());
                     prescriptionData.setConsumption(consumptionBean);
@@ -469,15 +490,16 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
 
                     Log.w(TAG,"prescriptionDataList add : "+new Gson().toJson(prescriptionDataList));
                     ll_headername.setVisibility(View.VISIBLE);
-                    container.addView(addView, 0);
+                   // container.addView(addView, 0);
+                    setView();
                     clearField();
 
 
-                }else{
+                }
+                else{
                     showErrorLoading("Please fill all the fields");
                     //ll_headername.setVisibility(View.GONE);
                 }
-
 
             }});
 
@@ -1670,6 +1692,14 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
             }
         }
         return result;
+    }
+
+    private void setView() {
+        rv_prescriptiondetails.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        rv_prescriptiondetails.setItemAnimator(new DefaultItemAnimator());
+        AddPrescriptionsListAdapter addPrescriptionsListAdapter = new AddPrescriptionsListAdapter(getApplicationContext(), prescriptionDataList);
+        rv_prescriptiondetails.setAdapter(addPrescriptionsListAdapter);
+
     }
 
 }

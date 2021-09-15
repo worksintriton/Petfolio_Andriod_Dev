@@ -144,6 +144,7 @@ public class PetLoverServiceChoosePaymentMethodActivity extends AppCompatActivit
     @BindView(R.id.btn_bookappointment)
     Button btn_bookappointment;
 
+
     ArrayList<SPCreateAppointmentRequest> SPCreateAppointmentRequestList = new ArrayList<>();
 
     private String sp_id;
@@ -280,6 +281,9 @@ public class PetLoverServiceChoosePaymentMethodActivity extends AppCompatActivit
             Total_price = serviceamount;
             Log.w(TAG,"fromactivity : "+fromactivity+" from : "+from+" petId : "+petId);
         }
+
+
+
 
 
         rdGroupPayment.setOnCheckedChangeListener((group, checkedId) -> {

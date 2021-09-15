@@ -147,6 +147,15 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
     @BindView(R.id.btn_bookappointment)
     Button btn_bookappointment;
 
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rdonline)
+    RadioButton rdonline;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rdcod)
+    RadioButton rdcod;
+
     ArrayList<PetAppointmentCreateRequest> PetAppointmentCreateRequestList = new ArrayList<>();
     private String Doctor_id;
     private String Booking_date;
@@ -194,6 +203,7 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
     private int Original_price = 0;
     private int Discount_price = 0;
     private int Total_price = 0;
+    private String selectedCommunicationtype;
 
     @SuppressLint({"LogNotTimber", "SetTextI18n"})
     @Override
@@ -249,11 +259,12 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
             Log.w(TAG,"amount : "+amount);
             communicationtype = extras.getString("communicationtype");
             selectedVisitType = extras.getString("selectedVisitType");
+            selectedCommunicationtype = extras.getString("selectedCommunicationtype");
             petId = extras.getString("petId");
             health_issue_title = extras.getString("health_issue_title");
             Log.w(TAG,"Bundle "+" doctorid : "+doctorid+" selectedTimeSlot : "+selectedTimeSlot+"communicationtype : "+communicationtype+" amount : "+amount+" fromactivity : "+fromactivity);
 
-            Log.w(TAG, "petId : " + petId);
+            Log.w(TAG, "selectedCommunicationtype : " + selectedCommunicationtype);
 
             doctorname = extras.getString("doctorname");
             clinicname = extras.getString("clinicname");
@@ -263,6 +274,11 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
             Log.w(TAG,"Bundle "+" doctorname : "+doctorname+" clinicname : "+clinicname+"petname : "+petname);
         }
 
+        if(selectedCommunicationtype != null && selectedCommunicationtype.equalsIgnoreCase("Online")){
+            rdcod.setVisibility(View.GONE);
+        }else{
+            rdcod.setVisibility(View.VISIBLE);
+        }
 
         rdGroupPayment.setOnCheckedChangeListener((group, checkedId) -> {
             int radioButtonID = rdGroupPayment.getCheckedRadioButtonId();

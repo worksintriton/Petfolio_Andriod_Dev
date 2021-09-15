@@ -207,7 +207,8 @@
                     app:fabSize="normal"
                     android:src="@drawable/ic_baseline_check_24"
                     app:backgroundTint="@color/medium_green"
-                    tools:ignore="ContentDescription" />
+                    tools:ignore="ContentDescription"
+                    android:background="@color/bg_white"/>
 
 
 
@@ -218,7 +219,8 @@
                 android:orientation="horizontal"
                 android:gravity="end"
                 android:layout_marginBottom="10dp"
-                android:id="@+id/ll_discard_deal">
+                android:id="@+id/ll_discard_deal"
+                android:background="@color/white">
                 <TextView
                     android:id="@+id/txt_discard_deal"
                     android:layout_width="wrap_content"
@@ -236,7 +238,8 @@
                     app:fabSize="normal"
                     android:src="@drawable/ic_baseline_close_white24"
                     app:backgroundTint="@color/red_back"
-                    tools:ignore="ContentDescription" />
+                    tools:ignore="ContentDescription"
+                    android:background="@color/bg_white"/>
 
 
 
@@ -247,7 +250,8 @@
                 android:orientation="horizontal"
                 android:gravity="end"
                 android:layout_marginBottom="10dp"
-                android:id="@+id/ll_add_deal">
+                android:id="@+id/ll_add_deal"
+                android:background="@color/white">
                 <TextView
                     android:id="@+id/add_deal_text"
                     android:layout_width="wrap_content"
@@ -265,7 +269,8 @@
                     app:fabSize="normal"
                     android:src="@drawable/ic_baseline_add_24"
                     app:backgroundTint="@color/new_green_btn"
-                    tools:ignore="ContentDescription" />
+                    tools:ignore="ContentDescription"
+                    android:background="@color/bg_white"/>
 
 
 
@@ -276,7 +281,8 @@
                 android:layout_marginBottom="15dp"
                 android:orientation="horizontal"
                 android:visibility="gone"
-                tools:ignore="DisableBaselineAlignment">
+                tools:ignore="DisableBaselineAlignment"
+                android:background="@color/white">
 
                 <LinearLayout
                     android:id="@+id/ll_discard"

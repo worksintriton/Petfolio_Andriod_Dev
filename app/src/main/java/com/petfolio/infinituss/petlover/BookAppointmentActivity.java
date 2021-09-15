@@ -1450,6 +1450,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         intent.putExtra("selectedVisitType", selectedVisitType);
         intent.putExtra("petId", petId);
         intent.putExtra("health_issue_title", health_issue_title);
+        intent.putExtra("selectedCommunicationtype", selectedCommunicationtype);
         startActivity(intent);
 
 

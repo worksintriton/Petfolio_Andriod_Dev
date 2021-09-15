@@ -88,7 +88,7 @@
     <string name="business_name">Business name</string>
     <string name="education">Education</string>
     <string name="year_of_completion">Year of Completion</string>
-    <string name="add">Add</string>
+    <string name="add">Save</string>
     <string name="education1">Education :</string>
     <string name="year_of_completion1">Year of Completion : </string>
     <string name="experience">Experience</string>
@@ -586,10 +586,10 @@
     <string name="make_payment">Make Payment</string>
     <string name="choose__payment_method">Payment Method</string>
     <string name="shop_name">Shop Name</string>
-
-
     <string name="successfullycancelled">Successfully Cancelled</string>
     <string name="turn_off">Turn off</string>
-    <string name="version">Version 13.9.2021</string>
+    <string name="version">Version 14.9.2021</string>
+    <string name="tablet_name">Tablet Name</string>
+    <string name="consumption">Consumption</string>
 
 </resources>
