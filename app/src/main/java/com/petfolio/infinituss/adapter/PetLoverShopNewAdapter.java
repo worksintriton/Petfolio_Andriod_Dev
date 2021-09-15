@@ -132,7 +132,7 @@ public class PetLoverShopNewAdapter extends  RecyclerView.Adapter<RecyclerView.V
         if( productDetailsResponseList.get(position).getProduct_discount_price() != 0) {
             Log.w(TAG, "Product_discount_price if" + productDetailsResponseList.get(position).getProduct_discount_price());
             holder.txt_product_discount_price.setVisibility(View.VISIBLE);
-            holder.txt_product_discount_price.setText(productDetailsResponseList.get(position).getProduct_discount_price()+"");
+            holder.txt_product_discount_price.setText("INR "+productDetailsResponseList.get(position).getProduct_discount_price()+"");
             holder.txt_product_discount_price.setPaintFlags(holder.txt_product_discount_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }
         else{

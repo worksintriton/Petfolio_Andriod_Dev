@@ -138,7 +138,7 @@ public class RelatedProductsAdapter extends  RecyclerView.Adapter<RecyclerView.V
             holder.txt_products_offer.setVisibility(View.VISIBLE);
             holder.txt_products_offer.setText(currentItem.getProduct_discount()+" % off");
         }else{
-            holder.txt_products_offer.setVisibility(View.GONE);
+            holder.txt_products_offer.setVisibility(View.INVISIBLE);
 
         }
 

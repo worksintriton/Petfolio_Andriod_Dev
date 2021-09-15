@@ -3,6 +3,7 @@ package com.petfolio.infinituss.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,10 +75,11 @@ public class SPCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycle
             holder.txt_service_cost.setText("\u20B9 "+completedAppointmentResponseList.get(position).getService_amount());
         }
 
-        if (completedAppointmentResponseList.get(position).getPet_id().getPet_img() != null && !completedAppointmentResponseList.get(0).getPet_id().getPet_img().isEmpty()) {
+        Log.w(TAG,"PetImage : "+completedAppointmentResponseList.get(position).getPet_id().getPet_img().get(0).getPet_img());
 
+        if (completedAppointmentResponseList.get(position).getPet_id().getPet_img().get(0).getPet_img() != null && !completedAppointmentResponseList.get(position).getPet_id().getPet_img().get(0).getPet_img().isEmpty()) {
             Glide.with(context)
-                    .load(completedAppointmentResponseList.get(position).getPet_id().getPet_img())
+                    .load(completedAppointmentResponseList.get(position).getPet_id().getPet_img().get(0).getPet_img())
                     .into(holder.img_pet_imge);
 
         }

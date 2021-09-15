@@ -226,7 +226,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:orientation="horizontal"
-                        app:reverseLayout="true"/>
+                        app:reverseLayout="true" />
 
 
                 </RelativeLayout>

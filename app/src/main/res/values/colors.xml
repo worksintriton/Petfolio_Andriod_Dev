@@ -43,7 +43,7 @@
    <!-- <color name="green_color">#56B9A4</color>-->
     <color name="green_color">#2896c2</color>
     <color name="light_green">#e3f9ff</color>
-    <color name="cardview_bg">#E7F5F2</color>
+    <color name="cardview_bg">#e3f9ff</color>
 
     <color name="whitelight">#F6F3F3</color>
 
@@ -90,7 +90,7 @@
     <color name="new_red">#E8571E</color>
     <color name="new_light_black">#2E2E2E</color>
     <color name="new_off">#9BD152</color>
-    <color name="solid_bg">#7AD1C0</color>
+    <color name="solid_bg">#e3f9ff</color>
     <color name="new_thick_orange_bgm_color">#F8B232</color>
 
     <color name="new_green_bgm_color">#7AD1C0</color>

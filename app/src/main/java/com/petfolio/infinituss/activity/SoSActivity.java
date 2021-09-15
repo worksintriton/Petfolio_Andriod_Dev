@@ -31,19 +31,16 @@ import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.adapter.PetLoverSOSAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
-import com.petfolio.infinituss.doctor.DoctorDashboardActivity;
 import com.petfolio.infinituss.interfaces.SoSCallListener;
 import com.petfolio.infinituss.petlover.PetLoverDashboardActivity;
 
 import com.petfolio.infinituss.requestpojo.SOSListRequest;
 import com.petfolio.infinituss.responsepojo.SOSListResponse;
-import com.petfolio.infinituss.serviceprovider.ServiceProviderDashboardActivity;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
 
 import com.petfolio.infinituss.utils.ConnectionDetector;
 import com.petfolio.infinituss.utils.RestUtils;
-import com.petfolio.infinituss.vendor.VendorCreateProductsActivity;
-import com.petfolio.infinituss.vendor.VendorDashboardActivity;
+
 import com.wang.avi.AVLoadingIndicatorView;
 
 
@@ -269,16 +266,8 @@ public class SoSActivity extends AppCompatActivity implements SoSCallListener {
         if(fromactivity != null && fromactivity.equalsIgnoreCase("PetLoverNavigationDrawerNew")){
             startActivity(new Intent(getApplicationContext(), PetLoverDashboardActivity.class));
             finish();
-        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorNavigationDrawer")){
-            startActivity(new Intent(getApplicationContext(), DoctorDashboardActivity.class));
-            finish();
-        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("VendorNavigationDrawer")){
-            startActivity(new Intent(getApplicationContext(), VendorDashboardActivity.class));
-            finish();
-        }else if(fromactivity != null && fromactivity.equalsIgnoreCase("ServiceProviderNavigationDrawer")){
-            startActivity(new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class));
-            finish();
         }else{
+            startActivity(new Intent(getApplicationContext(), PetLoverDashboardActivity.class));
             finish();
         }
 

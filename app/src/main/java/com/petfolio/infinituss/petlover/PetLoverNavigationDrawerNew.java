@@ -264,7 +264,10 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
     }
 
     private void gotoSOS() {
-        startActivity(new Intent(getApplicationContext(), SoSActivity.class));
+        Intent intent = new Intent(getApplicationContext(),SoSActivity.class);
+        intent.putExtra("fromactivity",TAG);
+        startActivity(intent);
+
 
     }
 
@@ -287,7 +290,6 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
     }
 
     private void gotoMyFavourites() {
-
         Intent intent = new Intent(getApplicationContext(),PetloverFavListActivity.class);
         startActivity(intent);
     }
@@ -576,6 +578,8 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
                 @Override
                 public void onClick(View view) {
                     dialog.dismiss();
+                   /* startActivity(new Intent(getApplicationContext(),PetLoverDashboardActivity.class));
+                    finish();*/
                 }
             });
             Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

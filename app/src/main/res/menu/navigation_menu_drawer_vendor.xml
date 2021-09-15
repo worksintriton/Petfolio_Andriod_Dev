@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single"
+    <group
         android:id="@+id/group7">
         <item android:id="@+id/nav_item_seven"
             android:icon="@drawable/add"
             android:title="@string/add_products" />
     </group>
 
-    <group android:checkableBehavior="single"
+    <group
         android:id="@+id/group1">
         <item android:id="@+id/nav_item_one"
             android:icon="@drawable/myorders"
             android:title="@string/customer_orders"
             android:visible="false"/>
     </group>
-    <group android:checkableBehavior="single"
+    <group
         android:id="@+id/group2">
         <item android:id="@+id/nav_item_two"
             android:icon="@drawable/ic_shopss"
             android:title="@string/manage_products" />
     </group>
-    <group android:checkableBehavior="single"
+    <group
         android:id="@+id/group3">
         <item android:id="@+id/nav_item_three"
             android:icon="@drawable/myorders"
             android:title="@string/my_orders" />
     </group>
-    <group android:checkableBehavior="single"
+    <group
         android:id="@+id/group4">
         <item android:id="@+id/nav_item_four"
             android:icon="@drawable/like"
@@ -37,7 +37,7 @@
 
 
 
-    <group android:checkableBehavior="single"
+    <group
         android:id="@+id/group5">
         <item android:id="@+id/nav_item_five"
             android:icon="@drawable/discount"
@@ -46,7 +46,7 @@
     </group>
 
 
-    <group android:checkableBehavior="single"
+    <group
         android:id="@+id/group6">
         <item android:id="@+id/nav_item_six"
             android:icon="@drawable/report"
@@ -56,7 +56,7 @@
 
 
 
-    <group android:checkableBehavior="single"
+    <group
         android:id="@+id/group8">
         <item android:id="@+id/nav_item_eight"
             android:icon="@drawable/ic_notifications"
@@ -68,7 +68,7 @@
 
 
 
-    <group android:checkableBehavior="single"
+    <group
         android:id="@+id/group9">
         <item android:id="@+id/nav_item_nine"
             android:icon="@drawable/logout"

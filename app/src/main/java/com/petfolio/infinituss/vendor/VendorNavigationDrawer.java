@@ -392,6 +392,8 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
                 @Override
                 public void onClick(View view) {
                     dialog.dismiss();
+                    startActivity(new Intent(getApplicationContext(),VendorDashboardActivity.class));
+                    finish();
                 }
             });
             Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

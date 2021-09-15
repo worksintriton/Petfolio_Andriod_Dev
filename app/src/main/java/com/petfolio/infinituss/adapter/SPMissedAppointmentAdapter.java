@@ -45,7 +45,7 @@ public class SPMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerVi
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_doctor_missed_appointment, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_sp_missed_appointment, parent, false);
         return new ViewHolderOne(view);
     }
 
@@ -79,10 +79,10 @@ public class SPMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerVi
         if(missedAppointmentResponseList.get(position).getService_amount() != null){
             holder.txt_service_cost.setText("\u20B9 "+missedAppointmentResponseList.get(position).getService_amount());
         }
-        if (missedAppointmentResponseList.get(position).getPet_id().getPet_img() != null && !missedAppointmentResponseList.get(position).getPet_id().getPet_img().isEmpty()) {
+        if (missedAppointmentResponseList.get(position).getPet_id().getPet_img().get(0).getPet_img() != null && !missedAppointmentResponseList.get(position).getPet_id().getPet_img().get(0).getPet_img().isEmpty()) {
 
             Glide.with(context)
-                    .load(missedAppointmentResponseList.get(position).getPet_id().getPet_img())
+                    .load(missedAppointmentResponseList.get(position).getPet_id().getPet_img().get(0).getPet_img())
                     .into(holder.img_pet_imge);
 
         }

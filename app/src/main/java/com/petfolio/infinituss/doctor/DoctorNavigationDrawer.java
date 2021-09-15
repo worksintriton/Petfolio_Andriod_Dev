@@ -588,6 +588,8 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
                 @Override
                 public void onClick(View view) {
                     dialog.dismiss();
+                    startActivity(new Intent(getApplicationContext(),DoctorDashboardActivity.class));
+                    finish();
                 }
             });
             Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
