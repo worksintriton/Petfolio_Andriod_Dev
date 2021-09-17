@@ -268,7 +268,7 @@ public class DoctorProductsFavActivity extends AppCompatActivity implements View
                     if(response.body().getCode() == 200){
                         if(response.body().getData() != null && response.body().getData().isEmpty()){
                             txt_no_records.setVisibility(View.VISIBLE);
-                            txt_no_records.setText("No favourites found");
+                            txt_no_records.setText("No favourites");
                             rv_product_list.setVisibility(View.GONE);
 
                         }
