@@ -38,7 +38,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -54,6 +53,7 @@ import com.petfolio.infinituss.adapter.PetLoverDoctorFilterAdapter;
 import com.petfolio.infinituss.adapter.PetLoverNearByDoctorAdapter;
 
 import com.petfolio.infinituss.adapter.ViewPagerPetCareAdapter;
+import com.petfolio.infinituss.adapter.ViewPagerPetCareFilterAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.petlover.FiltersActivity;
@@ -87,17 +87,6 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
     private String TAG = "PetCareFragment";
     int currentPage = 0;
-
-    String token = "";
-    String type ="";
-    String name = "",patientid = "";
-
-    static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    double latitude, longitude;
-
-    private Handler handler = new Handler();
-    Runnable runnable;
-    private TextView headertitle;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_communicationtype)
@@ -150,13 +139,8 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     private ShimmerFrameLayout mShimmerViewContainer;
     private View includelayout;
 
-    private String AddressLine;
-    private SharedPreferences preferences;
     private Context mContext;
 
-    private static final int REQUEST_CHECK_SETTINGS_GPS = 0x1;
-    private GoogleApiClient googleApiClient;
-    Location mLastLocation;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
     private List<DoctorSearchResponse.DataBean> doctorDetailsResponseList;
@@ -166,16 +150,17 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
     private int reviewcount;
     private String fromactivity,specialization;
 
-    private List<FilterDoctorResponse.DataBean> doctorFilterDetailsResponseList;
+    private List<FilterDoctorResponse.DataBean> doctorFilterDetailsResponseList = new ArrayList<>();
+
     private String doctorid;
 
     // BottomSheetBehavior variable
     @SuppressWarnings("rawtypes")
     public BottomSheetBehavior bottomSheetBehavior;
 
-    List<String> imagelist = new ArrayList();
 
     View view;
+    private List<FilterDoctorResponse.BannerBean> doctorFilterBannerResponseList;
 
     public PetCareFragment() {
         // Required empty public constructor
@@ -210,7 +195,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
         Log.w(TAG,"onCreateView-->");
 
         view = inflater.inflate(R.layout.fragment_pet_care, container, false);
-        preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         ButterKnife.bind(this, view);
         mContext = getActivity();
 
@@ -249,6 +234,9 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
         if(communication_type == 1){
             switchButton_communcationtype.setChecked(true);
             txt_communicationtype.setText("Online");
+
+        }else{
+            txt_communicationtype.setText("Clinic vists");
 
         }
 
@@ -334,6 +322,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
                 Intent intent = new Intent(mContext, FiltersActivity.class);
                 intent.putExtra("specialization",specialization);
                 intent.putExtra("reviewcount",reviewcount);
+                intent.putExtra("communication_type",communication_type);
                 startActivity(intent);
             }
         });
@@ -437,6 +426,42 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
         final Handler handler = new Handler();
         final Runnable Update = () -> {
             if (currentPage == banner.size()) {
+                currentPage = 0;
+            }
+            viewPager.setCurrentItem(currentPage++, true);
+        };
+
+        timer = new Timer(); // This will create a new Thread
+
+        timer.schedule(new TimerTask() { // task to be scheduled
+            @Override
+            public void run() {
+
+                handler.post(Update);
+            }
+        }, DELAY_MS, PERIOD_MS);
+
+    }
+    private void viewpageFilterData(List<FilterDoctorResponse.BannerBean> doctorFilterBannerResponseList) {
+
+        ViewPager viewPager = view.findViewById(R.id.pager);
+
+        TabLayout tabLayout = view.findViewById(R.id.tabDots);
+
+        Timer timer;
+        final long DELAY_MS = 600;//delay in milliseconds before task is to be executed
+        final long PERIOD_MS = 3000;
+
+        currentPage = 0;
+
+        tabLayout.setupWithViewPager(viewPager, true);
+
+        ViewPagerPetCareFilterAdapter viewPagerPetCareFilterAdapter = new ViewPagerPetCareFilterAdapter(getContext(), doctorFilterBannerResponseList);
+        viewPager.setAdapter(viewPagerPetCareFilterAdapter);
+        /*After setting the adapter use the timer */
+        final Handler handler = new Handler();
+        final Runnable Update = () -> {
+            if (currentPage == doctorFilterBannerResponseList.size()) {
                 currentPage = 0;
             }
             viewPager.setCurrentItem(currentPage++, true);
@@ -688,7 +713,11 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
                         setBottomSheet();
 
                         if (response.body().getData() != null) {
+                            doctorFilterDetailsResponseList.clear();
                             doctorFilterDetailsResponseList = response.body().getData();
+                            doctorFilterBannerResponseList = response.body().getBanner();
+                            Log.w(TAG,"doctorFilterDetailsResponseList size :"+doctorFilterDetailsResponseList.size());
+                            Log.w(TAG,"doctorFilterDetailsResponseList :"+new Gson().toJson(doctorFilterDetailsResponseList));
                             if (doctorFilterDetailsResponseList != null && doctorFilterDetailsResponseList.size()>0) {
                                 rv_nearbydoctors.setVisibility(View.VISIBLE);
                                 rl_search.setVisibility(View.VISIBLE);
@@ -734,33 +763,39 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
         });
 
     }
+    @SuppressLint("LogNotTimber")
     private void setViewDoctorFilters(List<FilterDoctorResponse.DataBean> doctorFilterDetailsResponseList) {
-
-        List<DoctorSearchResponse.BannerBean> banner = new ArrayList();
-
         if(doctorFilterDetailsResponseList!=null&&doctorFilterDetailsResponseList.size()>0){
+
+            List<DoctorSearchResponse.BannerBean> banner = new ArrayList<>();
 
             for(int i=0; i<doctorFilterDetailsResponseList.size(); i++){
 
-                if(doctorFilterDetailsResponseList.get(i).getDoctor_img()!=null&&!doctorFilterDetailsResponseList.get(i).getDoctor_img().isEmpty()){
+                Log.w(TAG,""+doctorFilterDetailsResponseList.get(i).getDoctor_img());
 
-                    banner.add(new DoctorSearchResponse.BannerBean(doctorFilterDetailsResponseList.get(i).getDoctor_img()));
+                if(doctorFilterBannerResponseList != null
+                        &&doctorFilterBannerResponseList.size()>0){
+
+                   // banner.add(new DoctorSearchResponse.BannerBean(doctorFilterDetailsResponseList.get(i).getDoctor_img()));
+                    viewpageFilterData(doctorFilterBannerResponseList);
                 }
                 else {
 
                     banner.add(new DoctorSearchResponse.BannerBean(doctorFilterDetailsResponseList.get(i).getDoctor_img()));
+                    viewpageData(banner);
                 }
 
 
             }
+            Log.w(TAG,"banner if size1 : "+banner.size());
 
-            viewpageData(banner);
+
 
         }
         else {
-
+            List<DoctorSearchResponse.BannerBean> banner = new ArrayList<>();
+            Log.w(TAG,"banner size else : "+banner.size());
             banner.add(new DoctorSearchResponse.BannerBean(APIClient.BANNER_IMAGE_URL));
-
             viewpageData(banner);
         }
 

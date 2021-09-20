@@ -86,6 +86,7 @@ public class FiltersActivity extends AppCompatActivity implements View.OnClickLi
 
     private String specialization;
     private int reviewcount;
+    private int communication_type;
 
 
     @SuppressLint("LogNotTimber")
@@ -109,7 +110,8 @@ public class FiltersActivity extends AppCompatActivity implements View.OnClickLi
 
             specialization = extras.getString("specialization");
             reviewcount = extras.getInt("reviewcount");
-            Log.w(TAG,"Bundle : "+" specialization : "+specialization+" reviewcount : "+reviewcount);
+            communication_type = extras.getInt("communication_type");
+            Log.w(TAG,"Bundle : "+" specialization : "+specialization+" reviewcount : "+reviewcount+" communication_type : "+communication_type);
 
             if(reviewcount != 0){
                 if (reviewcount == 1) {
@@ -277,6 +279,7 @@ public class FiltersActivity extends AppCompatActivity implements View.OnClickLi
         intent.putExtra("tag","4");
         intent.putExtra("reviewcount",reviewcount);
         intent.putExtra("specialization",specialization);
+        intent.putExtra("communication_type",communication_type);
         intent.putExtra("fromactivity",TAG);
         startActivity(intent);
     }

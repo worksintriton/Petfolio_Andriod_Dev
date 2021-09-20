@@ -220,12 +220,8 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
 
 
         rl_home.setOnClickListener(this);
-
         rl_shop.setOnClickListener(this);
-
         rl_comn.setOnClickListener(this);
-
-
         rl_homes.setOnClickListener(this);
 
 
@@ -827,6 +823,7 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
 
 
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
 

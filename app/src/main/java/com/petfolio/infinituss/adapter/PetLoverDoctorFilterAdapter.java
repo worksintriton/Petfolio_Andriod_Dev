@@ -95,6 +95,14 @@ public class PetLoverDoctorFilterAdapter extends  RecyclerView.Adapter<RecyclerV
 
             holder.txt_price.setText("\u20B9 " +"0");
         }
+
+        Log.w(TAG,"Clinic name : "+doctorFilterDetailsResponseList.get(position).getClinic_name());
+        if(doctorFilterDetailsResponseList.get(position).getClinic_name() != null) {
+            holder.txt_doctors_clinicname.setVisibility(View.VISIBLE);
+            holder.txt_doctors_clinicname.setText(doctorFilterDetailsResponseList.get(position).getClinic_name());
+        }else{
+            holder.txt_doctors_clinicname.setVisibility(View.GONE);
+        }
 //          if(currentItem.getDoctor_exp() != 0) {
 //              holder.txt_doctors_experience.setVisibility(View.VISIBLE);
 //              holder.txt_doctors_experience.setText(currentItem.getDoctor_exp() +" Years Experience");
@@ -236,7 +244,7 @@ public class PetLoverDoctorFilterAdapter extends  RecyclerView.Adapter<RecyclerV
     }
 
     class ViewHolderOne extends RecyclerView.ViewHolder {
-        public TextView txt_doctors_name,txt_doctors_specialization,txt_price,txt_star_rating,txt_review_count,txt_place,txt_km;
+        public TextView txt_doctors_name,txt_doctors_specialization,txt_price,txt_star_rating,txt_review_count,txt_place,txt_km,txt_doctors_clinicname;
         public LinearLayout ll_root;
         public ImageView img_doctors_image;
         public Button btn_book;
@@ -258,6 +266,8 @@ public class PetLoverDoctorFilterAdapter extends  RecyclerView.Adapter<RecyclerV
             btn_book = itemView.findViewById(R.id.btn_book);
             view = itemView.findViewById(R.id.view9);
             txt_review_count.setVisibility(View.GONE);
+            txt_doctors_clinicname = itemView.findViewById(R.id.txt_doctors_clinicname);
+
 
 
         }

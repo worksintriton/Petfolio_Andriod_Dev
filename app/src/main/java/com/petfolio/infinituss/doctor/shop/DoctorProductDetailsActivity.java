@@ -38,7 +38,7 @@ import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.doctor.DoctorDashboardActivity;
 
 import com.petfolio.infinituss.doctor.DoctorProfileScreenActivity;
-import com.petfolio.infinituss.petlover.PetCartActivity;
+
 import com.petfolio.infinituss.requestpojo.CartAddProductRequest;
 import com.petfolio.infinituss.requestpojo.DoctorProductFavListCreateRequest;
 import com.petfolio.infinituss.requestpojo.FetchByIdRequest;
@@ -212,6 +212,46 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
     @BindView(R.id.txt_cart_count_badge)
     TextView txt_cart_count_badge;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_increment_add_to_cart)
+    LinearLayout ll_increment_add_to_cart;
+
+
+    /* Bottom Navigation */
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_home)
+    RelativeLayout rl_home;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_shop)
+    RelativeLayout rl_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_shop)
+    TextView title_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_shop)
+    ImageView img_shop;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_comn)
+    RelativeLayout rl_comn;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.title_community)
+    TextView title_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_community)
+    ImageView img_community;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rl_homes)
+    RelativeLayout rl_homes;
+
+    public static String active_tag = "1";
+
 
     @SuppressLint({"LogNotTimber", "SetTextI18n", "LongLogTag"})
     @Override
@@ -222,8 +262,6 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
         ButterKnife.bind(this);
         avi_indicator.setVisibility(View.GONE);
         txt_cart_count_badge.setVisibility(View.GONE);
-
-
 
         rl_back.setOnClickListener(v -> onBackPressed());
         SessionManager sessionManager = new SessionManager(getApplicationContext());
@@ -236,6 +274,24 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
             fromactivity = extras.getString("fromactivity");
             tag = extras.getString("tag");
         }
+
+        ll_increment_add_to_cart.setVisibility(View.GONE);
+
+
+        /*Shop*/
+        title_community.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_community.setImageResource(R.drawable.grey_community);
+
+        title_shop.setTextColor(getResources().getColor(R.color.new_gree_color,getTheme()));
+        img_shop.setBackgroundResource(R.drawable.green_shop);
+
+
+
+
+        rl_home.setOnClickListener(this);
+        rl_shop.setOnClickListener(this);
+        rl_comn.setOnClickListener(this);
+        rl_homes.setOnClickListener(this);
 
         Log.w(TAG,"fromactivity : "+fromactivity);
         if(userid != null && productid != null){
@@ -769,19 +825,21 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
             if(threshould.equalsIgnoreCase("0")){
                 txt_products_quantity.setVisibility(View.VISIBLE);
                 txt_products_quantity.setText("Out Of Stock");
+                ll_increment_add_to_cart.setVisibility(View.GONE);
                 txt_products_quantity.setTextColor(ContextCompat.getColor(DoctorProductDetailsActivity.this, R.color.vermillion));
                 img_add_product.setVisibility(View.GONE);
                 txt_cart_count.setVisibility(View.GONE);
                 img_remove_product.setVisibility(View.GONE);
                 ll_add_to_cart.setVisibility(View.GONE);
             }else{
-                txt_products_quantity.setVisibility(View.GONE);
+                ll_increment_add_to_cart.setVisibility(View.VISIBLE);
                 img_add_product.setVisibility(View.VISIBLE);
                 txt_cart_count.setVisibility(View.VISIBLE);
                 img_remove_product.setVisibility(View.VISIBLE);
                 ll_add_to_cart.setVisibility(View.VISIBLE);
-               // txt_products_quantity.setText("Prodcut Quantity : "+threshould);
-               // txt_products_quantity.setTextColor(ContextCompat.getColor(DoctorProductDetailsActivity.this, R.color.black));
+                txt_products_quantity.setVisibility(View.GONE);
+                //   txt_products_quantity.setText("Prodcut Quantity : "+threshould);
+                // txt_products_quantity.setTextColor(ContextCompat.getColor(ProductDetailsActivity.this, R.color.black));
 
             }
 
@@ -990,6 +1048,21 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
                 if (new ConnectionDetector(DoctorProductDetailsActivity.this).isNetworkAvailable(DoctorProductDetailsActivity.this)) {
                     doctorProductFavListCreateResponseCall();
                 }
+                break;
+
+
+            case R.id.rl_homes:
+                callDirections("1");
+                break;
+            case R.id.rl_home:
+                callDirections("1");
+                break;
+            case R.id.rl_shop:
+                callDirections("2");
+                break;
+
+            case R.id.rl_comn:
+                callDirections("3");
                 break;
 
         }

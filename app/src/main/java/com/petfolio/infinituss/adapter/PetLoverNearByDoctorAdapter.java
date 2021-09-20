@@ -65,7 +65,7 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
 
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "LogNotTimber"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
           currentItem = doctorDetailsResponseList.get(position);
@@ -143,6 +143,8 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
 
             holder.txt_price.setText("\u20B9 " +"0");
         }
+
+        Log.w(TAG,"Clinic name : "+doctorDetailsResponseList.get(position).getClinic_name());
           if(doctorDetailsResponseList.get(position).getClinic_name() != null) {
               holder.txt_doctors_clinicname.setVisibility(View.VISIBLE);
               holder.txt_doctors_clinicname.setText(doctorDetailsResponseList.get(position).getClinic_name());

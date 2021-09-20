@@ -327,6 +327,7 @@ public class PetLoverDashboardActivity extends PetLoverNavigationDrawerNew imple
                 bundle.putString("fromactivity", fromactivity);
                 bundle.putString("specialization", specialization);
                 bundle.putInt("reviewcount", reviewcount);
+                bundle.putInt("communication_type", communication_type);
                 // set Fragmentclass Arguments
                 fragment.setArguments(bundle);
                 Log.w(TAG,"fromactivity : "+fromactivity);
