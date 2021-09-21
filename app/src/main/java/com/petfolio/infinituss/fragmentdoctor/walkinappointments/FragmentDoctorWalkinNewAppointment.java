@@ -175,7 +175,7 @@ public class FragmentDoctorWalkinNewAppointment extends Fragment implements OnAp
 
                        if(response.body().getData() != null && response.body().getData().isEmpty()){
                            txt_no_records.setVisibility(View.VISIBLE);
-                           txt_no_records.setText("Someone needs your love");
+                           txt_no_records.setText("No new appointments");
                            rv_newappointment.setVisibility(View.GONE);
                            btn_load_more.setVisibility(View.GONE);
                        }

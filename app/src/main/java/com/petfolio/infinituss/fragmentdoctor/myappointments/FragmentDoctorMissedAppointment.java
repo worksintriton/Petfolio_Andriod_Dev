@@ -168,7 +168,7 @@ public class FragmentDoctorMissedAppointment extends Fragment implements View.On
                        }
                        if(response.body().getData() != null && response.body().getData().isEmpty()){
                            txt_no_records.setVisibility(View.VISIBLE);
-                           txt_no_records.setText("You make this world a Woofer place");
+                           txt_no_records.setText("No missed appointments");
                            rv_missedappointment.setVisibility(View.GONE);
                            btn_load_more.setVisibility(View.GONE);
                            btn_filter.setVisibility(View.GONE);

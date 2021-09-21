@@ -167,7 +167,7 @@ public class FragmentDoctorWalkinCompletedAppointment extends Fragment implement
                        }
                        if(response.body().getData() != null && response.body().getData().isEmpty()){
                            txt_no_records.setVisibility(View.VISIBLE);
-                           txt_no_records.setText(getResources().getString(R.string.no_completed_appointments_doctor));
+                           txt_no_records.setText("No completed appointnments");
                            rv_completedappointment.setVisibility(View.GONE);
                            btn_load_more.setVisibility(View.GONE);
                            btn_filter.setVisibility(View.GONE);

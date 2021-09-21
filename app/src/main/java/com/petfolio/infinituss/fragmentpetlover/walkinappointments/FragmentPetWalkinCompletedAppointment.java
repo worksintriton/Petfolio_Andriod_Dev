@@ -218,7 +218,7 @@ public class FragmentPetWalkinCompletedAppointment extends Fragment implements V
                             btn_load_more.setVisibility(View.GONE);
                             btn_filter.setVisibility(View.GONE);
                             txt_no_records.setVisibility(View.VISIBLE);
-                            txt_no_records.setText(getResources().getString(R.string.no_completed_appointments_petlover));
+                            txt_no_records.setText("No completed appointments");
 
                         }
 

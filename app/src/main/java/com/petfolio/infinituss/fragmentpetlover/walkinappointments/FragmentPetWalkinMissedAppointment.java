@@ -200,7 +200,7 @@ public class FragmentPetWalkinMissedAppointment extends Fragment implements View
                             rv_missedappointment.setVisibility(View.GONE);
                             btn_load_more.setVisibility(View.GONE);
                             txt_no_records.setVisibility(View.VISIBLE);
-                            txt_no_records.setText("I miss my Doc");
+                            txt_no_records.setText("No missed appointments");
 
                         }
 

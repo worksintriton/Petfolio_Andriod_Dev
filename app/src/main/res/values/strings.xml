@@ -553,23 +553,23 @@
     <string name="owner_s_name">Owner\'s Name</string>
     <string name="_200_km">266.68 KM</string>
 
-    <string name="no_new_appointments_petlover">Is it time for the Doc yet?</string>
-    <string name="no_missed_appointments_petlover">I miss my Doc</string>
-    <string name="no_completed_appointments_petlover">I miss my Doc</string>
+    <string name="no_new_appointments_petlover">No new appointments</string>
+    <string name="no_missed_appointments_petlover">No missed appointments</string>
+    <string name="no_completed_appointments_petlover">No completed appointments</string>
 
-    <string name="no_phone_numbers">I know you got me!</string>
-    <string name="no_notifications">I\'m bored</string>
-    <string name="no_new_pets">Add your loved one!</string>
-    <string name="no_pet_service">Groom me please!</string>
+    <string name="no_phone_numbers">No phone numbers</string>
+    <string name="no_notifications">No notifications</string>
+    <string name="no_new_pets">No new pets</string>
+    <string name="no_pet_service">No pet service</string>
     <string name="cart_empty">Buy me something please</string>
 
-    <string name="no_new_appointments_doctor">Someone needs your love</string>
-    <string name="no_missed_appointments_doctor">You make this world a Woofer place</string>
-    <string name="no_completed_appointments_doctor">Time to get Jiggy with it</string>
+    <string name="no_new_appointments_doctor">No new appointments</string>
+    <string name="no_missed_appointments_doctor">No missed appointments</string>
+    <string name="no_completed_appointments_doctor">No completed appointments</string>
 
-    <string name="no_new_appointments_sp">Someone needs your love</string>
-    <string name="no_missed_appointments_sp">You make this world a Woofer place</string>
-    <string name="no_completed_appointments_sp">Time to get Jiggy with it</string>
+    <string name="no_new_appointments_sp">No new appointments</string>
+    <string name="no_missed_appointments_sp">No missed appointments</string>
+    <string name="no_completed_appointments_sp">No completed appointments</string>
 
     <string name="no_holidays">Have a great Holiday Doc. You need it!</string>
 
