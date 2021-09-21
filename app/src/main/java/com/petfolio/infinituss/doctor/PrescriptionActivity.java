@@ -278,6 +278,10 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
     @BindView(R.id.rcylr_uploadImage)
     RecyclerView rcylr_uploadImage;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_sub_diagnosis)
+    TextView txt_sub_diagnosis;
+
     private final List<DocBusInfoUploadRequest.GovtIdPicBean> govtIdPicBeans = new ArrayList<>();
 
     int i =0;
@@ -297,10 +301,13 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
 
         avi_indicator.setVisibility(View.GONE);
 
-        txt_subdiagnosis.setVisibility(View.GONE);
+       // txt_subdiagnosis.setVisibility(View.GONE);
 
         txt_lbl_serviceamout.setVisibility(View.GONE);
         edtx_service_charge_amount.setVisibility(View.GONE);
+
+        txt_sub_diagnosis.setVisibility(View.GONE);
+        ll_subdiagnosis.setVisibility(View.GONE);
 
 
 
@@ -480,7 +487,35 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
                 parent_linear_layout.setVisibility(View.GONE);
 
 
-                if(!et_tabletname.getText().toString().isEmpty() && !et_quanity.getText().toString().isEmpty() && chx_m.isChecked() || chx_a.isChecked() || chx_n.isChecked()){
+                Log.w(TAG,"Qty : "+et_quanity.getText().toString());
+                Log.w(TAG," chx_m : "+chx_m.isChecked()+" chx_a :  "+chx_a.isChecked()+" chx_n : "+chx_n.isChecked());
+
+
+                if(et_tabletname.getText().toString().equalsIgnoreCase("") && et_quanity.getText().toString().equalsIgnoreCase("") && !chx_m.isChecked() && !chx_a.isChecked() && !chx_n.isChecked()){
+                    showErrorLoading("Please fill all the fields");
+                }else if (et_tabletname.getText().toString().trim().equals("")) {
+                    showErrorLoading("Please enter tablet name");
+                }else if (et_quanity.getText().toString().trim().equals("")) {
+                    showErrorLoading("Please enter no of days");
+                }else if (!chx_m.isChecked() && !chx_a.isChecked() && !chx_n.isChecked()) {
+                    showErrorLoading("Please enter consumption");
+                }
+                else{
+                    Log.w(TAG,"prescriptionDataList  : tablet name "+et_tabletname.getText().toString()+" qty : "+et_quanity.getText().toString());
+                    prescriptionData  = new PrescriptionCreateRequest.PrescriptionDataBean();
+                    prescriptionData.setTablet_name(et_tabletname.getText().toString());
+                    prescriptionData.setQuantity(et_quanity.getText().toString());
+                    prescriptionData.setConsumption(consumptionBean);
+                    prescriptionDataList.add(prescriptionData);
+
+                    Log.w(TAG,"prescriptionDataList add : "+new Gson().toJson(prescriptionDataList));
+                    ll_headername.setVisibility(View.VISIBLE);
+                    // container.addView(addView, 0);
+                    setView();
+                    clearField();
+                }
+
+                /*if(!et_tabletname.getText().toString().isEmpty() && !et_quanity.getText().toString().isEmpty() && chx_m.isChecked() || chx_a.isChecked() || chx_n.isChecked()){
                     Log.w(TAG,"prescriptionDataList  : tablet name "+et_tabletname.getText().toString()+" qty : "+et_quanity.getText().toString());
                     prescriptionData  = new PrescriptionCreateRequest.PrescriptionDataBean();
                     prescriptionData.setTablet_name(et_tabletname.getText().toString());
@@ -499,7 +534,7 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
                 else{
                     showErrorLoading("Please fill all the fields");
                     //ll_headername.setVisibility(View.GONE);
-                }
+                }*/
 
             }});
 
@@ -1084,10 +1119,10 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
             btn_done.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     txt_diagnosis.setText(DiagnosisType);
 
-                    txt_subdiagnosis.setVisibility(View.GONE);
+                    txt_sub_diagnosis.setVisibility(View.VISIBLE);
+                    ll_subdiagnosis.setVisibility(View.VISIBLE);
 
                     for (int i=0;i<diagnosisList.size();i++){
                         diagnosisList.get(i).setSelected(false);
