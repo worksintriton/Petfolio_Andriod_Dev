@@ -584,6 +584,9 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
                     //  Toast.makeText(PrescriptionExActivity.this, showallPrompt, Toast.LENGTH_LONG).show();
 
                     Log.w(TAG,"showallPrompt-->"+showallPrompt);
+                DiagnosisType = txt_diagnosis.getText().toString();
+                SubDiagnosisType = txt_subdiagnosis.getText().toString();
+                    Log.w(TAG,"DiagnosisType-->"+DiagnosisType+" SubDiagnosisType : "+SubDiagnosisType);
 
                     if(validSelectDiagnosisType()){
                         if(validdSubDiagnosisType()){
@@ -848,9 +851,11 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
 
     @Override
     public void onBackPressed() {
-        Toasty.warning(getApplicationContext(), "This action is disabled in this screen..", Toast.LENGTH_SHORT, true).show();
-    }
+        super.onBackPressed();
+        finish();
+        //Toasty.warning(getApplicationContext(), "This action is disabled in this screen..", Toast.LENGTH_SHORT, true).show();
 
+    }
 
     private void appoinmentCompleteResponseCall() {
         avi_indicator.setVisibility(View.VISIBLE);
@@ -1046,7 +1051,7 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
     }
 
     public boolean validSelectDiagnosisType() {
-        if (DiagnosisType != null && DiagnosisType.equalsIgnoreCase("Diagnosis Type")) {
+        if (DiagnosisType != null && DiagnosisType.equalsIgnoreCase("") || DiagnosisType.equalsIgnoreCase("Diagnosis Type")) {
             final AlertDialog alertDialog = new AlertDialog.Builder(PrescriptionActivity.this).create();
             alertDialog.setMessage(getString(R.string.err_msg_type_of_diagnosis));
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
@@ -1060,7 +1065,7 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
     }
 
     public boolean validdSubDiagnosisType() {
-        if (SubDiagnosisType != null && SubDiagnosisType.equalsIgnoreCase("SubDiagnosis Type")) {
+        if (SubDiagnosisType != null && SubDiagnosisType.equalsIgnoreCase("") || SubDiagnosisType.equalsIgnoreCase("SubDiagnosis Type")) {
             final AlertDialog alertDialog = new AlertDialog.Builder(PrescriptionActivity.this).create();
             alertDialog.setMessage(getString(R.string.err_msg_type_of_sub_diagnosis));
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
@@ -1074,7 +1079,6 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
     }
 
     private void showDiagnosisListType() {
-
         try {
 
             Dialog dialog = new Dialog(PrescriptionActivity.this);
@@ -1437,7 +1441,7 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
             } else {
                 new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Permisson Required")
-                        .setContentText("Plz Allow Permissions for choosing Pdf Files ")
+                        .setContentText("Please Allow Permissions for choosing Pdf Files ")
                         .setConfirmText("Ok")
                         .setConfirmClickListener(sDialog -> {
 
@@ -1474,7 +1478,7 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
             } else {
                 new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Permisson Required")
-                        .setContentText("Plz Allow Permissions for choosing Images from Gallery ")
+                        .setContentText("Please Allow Permissions for choosing Images from Gallery ")
                         .setConfirmText("Ok")
                         .setConfirmClickListener(sDialog -> {
 
@@ -1506,7 +1510,7 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
             } else {
                 new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Permisson Required")
-                        .setContentText("Plz Allow Camera for taking picture")
+                        .setContentText("Please Allow Camera for taking picture")
                         .setConfirmText("Ok")
                         .setConfirmClickListener(sDialog -> {
 
@@ -1532,14 +1536,13 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-       if(requestCode == SELECT_GOVTID_CAMERA)
-        {
-            Bitmap photo = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
-
-            File file = new File(getFilesDir(), "Petfolio1" + ".jpg");
-
+       if(requestCode == SELECT_GOVTID_CAMERA) {
+            Bitmap photo;
+            File file = null;
             OutputStream os;
             try {
+                photo = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
+                file = new File(getFilesDir(), "Petfolio1" + ".jpg");
                 os = new FileOutputStream(file);
                 if (photo != null) {
                     photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
@@ -1549,12 +1552,15 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
             } catch (Exception e) {
                 Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
             }
+            if(file != null){
+                RequestBody requestFile = RequestBody.create(MediaType.parse("image*/"), file);
+                govIdPart = MultipartBody.Part.createFormData("sampleFile",  Doctor_ID+currentDateandTime+file.getName(), requestFile);
+                uploadGovtIDPdf();
+            }
 
-            RequestBody requestFile = RequestBody.create(MediaType.parse("image*/"), file);
 
-            govIdPart = MultipartBody.Part.createFormData("sampleFile",  Doctor_ID+currentDateandTime+file.getName(), requestFile);
 
-            uploadGovtIDPdf();
+
 
         }
 
@@ -1629,7 +1635,7 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
 //
 //                        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
 //                                .setTitleText("File Size")
-//                                .setContentText("Plz choose file size less than 200 kb ")
+//                                .setContentText("Please choose file size less than 200 kb ")
 //                                .setConfirmText("Ok")
 //                                .show();
 //                    }

@@ -84,6 +84,9 @@ public class AddPrescriptionsListAdapter extends RecyclerView.Adapter<AddPrescri
             chx_a = itemView.findViewById(R.id.chx_a);
             chx_n = itemView.findViewById(R.id.chx_n);
             removeImg = itemView.findViewById(R.id.removeImg);
+            chx_m.setClickable(false);
+            chx_a.setClickable(false);
+            chx_n.setClickable(false);
         }
     }
 

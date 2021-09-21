@@ -203,6 +203,7 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
         ivfemale.setOnClickListener(this);
         ivothers.setOnClickListener(this);
         ll_save_continue.setOnClickListener(this);
+        rlpetlastvaccinatedagedate.setVisibility(View.GONE);
 
 
 
@@ -603,7 +604,6 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
         ivothers.setBackgroundResource(R.drawable.others_color);
     }
 
-    @SuppressLint("LogNotTimber")
     public void addPetDetailsValidator() {
         boolean can_proceed = true;
         String petandbreedtypes = txt_petandbreedtype.getText().toString();
@@ -623,7 +623,13 @@ public class BasicPetDetailsActivity extends AppCompatActivity implements PetTyp
             edt_petname.setError("Please enter pet name");
             edt_petname.requestFocus();
             can_proceed = false;
-        } /*else if (txt_petdob.getText().toString().trim().equals("")) {
+        } else if(isvaccinated){
+            if(txt_petlastvaccinatedage.getText().toString().trim().equals("")){
+                showErrorLoading("Please select vaccinated date");
+                can_proceed = false;
+            }
+        }
+        /*else if (txt_petdob.getText().toString().trim().equals("")) {
            showErrorLoading("Please select date of birth");
            can_proceed = false;
         }*/

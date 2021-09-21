@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -174,7 +175,7 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rl_relat_prod)
-    RelativeLayout rl_relat_prod;
+    LinearLayout rl_relat_prod;
 
 
     Dialog dialog;
@@ -283,7 +284,7 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
         img_community.setImageResource(R.drawable.grey_community);
 
         title_shop.setTextColor(getResources().getColor(R.color.new_gree_color,getTheme()));
-        img_shop.setBackgroundResource(R.drawable.green_shop);
+        img_shop.setImageResource(R.drawable.green_shop);
 
 
 
@@ -299,6 +300,9 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
                 fetch_product_by_id_ResponseCall();
             }
         }
+
+
+
         txt_cart_count.setText("1");
         img_remove_product.setOnClickListener(v -> {
             Log.w(TAG,"img_remove_product setOnClickListener : product_cart_counts "+product_cart_counts);
@@ -411,7 +415,7 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
 
         txt_product_desc.setVisibility(View.GONE);
 
-        rl_relat_prod.setVisibility(View.GONE);
+      rl_relat_prod.setVisibility(View.GONE);
 
 
     }
@@ -722,6 +726,7 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
     }
 
     private void setView(List<FetchProductByIdResponse.ProductDetailsBean.ProductRelatedBean> product_related) {
+        rv_relatedproducts.setNestedScrollingEnabled(false);
         rv_relatedproducts.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
         rv_relatedproducts.setItemAnimator(new DefaultItemAnimator());
         RelatedProductsAdapter relatedProductsAdapter = new RelatedProductsAdapter(getApplicationContext(), product_related, prod_type,true,TAG);

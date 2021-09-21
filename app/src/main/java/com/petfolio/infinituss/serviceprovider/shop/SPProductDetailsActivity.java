@@ -174,7 +174,7 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rl_relat_prod)
-    RelativeLayout rl_relat_prod;
+    LinearLayout rl_relat_prod;
 
 
     Dialog dialog;
@@ -261,11 +261,6 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
         ButterKnife.bind(this);
         avi_indicator.setVisibility(View.GONE);
         txt_cart_count_badge.setVisibility(View.GONE);
-
-
-
-
-
         rl_back.setOnClickListener(v -> onBackPressed());
         SessionManager sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getProfileDetails();
@@ -788,6 +783,7 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
     }
 
     private void setView(List<FetchProductByIdResponse.ProductDetailsBean.ProductRelatedBean> product_related) {
+        rv_relatedproducts.setNestedScrollingEnabled(false);
         rv_relatedproducts.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
         rv_relatedproducts.setItemAnimator(new DefaultItemAnimator());
         RelatedProductsAdapter relatedProductsAdapter = new RelatedProductsAdapter(getApplicationContext(), product_related, prod_type,true,TAG);

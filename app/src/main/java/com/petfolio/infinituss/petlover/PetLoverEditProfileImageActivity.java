@@ -425,7 +425,7 @@ public class PetLoverEditProfileImageActivity extends AppCompatActivity implemen
             } else {
                 new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Permisson Required")
-                        .setContentText("Plz Allow Permissions for choosing Images from Gallery ")
+                        .setContentText("Please Allow Permissions for choosing Images from Gallery ")
                         .setConfirmText("Ok")
                         .setConfirmClickListener(sDialog -> {
 
@@ -459,7 +459,7 @@ public class PetLoverEditProfileImageActivity extends AppCompatActivity implemen
             } else {
                 new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Permisson Required")
-                        .setContentText("Plz Allow Camera for taking picture")
+                        .setContentText("Please Allow Camera for taking picture")
                         .setConfirmText("Ok")
                         .setConfirmClickListener(sDialog -> {
 

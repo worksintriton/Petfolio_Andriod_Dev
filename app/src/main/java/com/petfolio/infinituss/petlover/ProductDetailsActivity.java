@@ -811,6 +811,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
     }
 
     private void setView(List<FetchProductByIdResponse.ProductDetailsBean.ProductRelatedBean> product_related) {
+        rv_relatedproducts.setNestedScrollingEnabled(false);
         rv_relatedproducts.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
         rv_relatedproducts.setItemAnimator(new DefaultItemAnimator());
         RelatedProductsAdapter relatedProductsAdapter = new RelatedProductsAdapter(getApplicationContext(), product_related,prod_type, false,TAG);

@@ -1391,7 +1391,7 @@ public class WalkinPrescriptionActivity extends AppCompatActivity implements Dia
             } else {
                 new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Permisson Required")
-                        .setContentText("Plz Allow Permissions for choosing Pdf Files ")
+                        .setContentText("Please Allow Permissions for choosing Pdf Files ")
                         .setConfirmText("Ok")
                         .setConfirmClickListener(sDialog -> {
 
@@ -1428,7 +1428,7 @@ public class WalkinPrescriptionActivity extends AppCompatActivity implements Dia
             } else {
                 new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Permisson Required")
-                        .setContentText("Plz Allow Permissions for choosing Images from Gallery ")
+                        .setContentText("Please Allow Permissions for choosing Images from Gallery ")
                         .setConfirmText("Ok")
                         .setConfirmClickListener(sDialog -> {
 
@@ -1460,7 +1460,7 @@ public class WalkinPrescriptionActivity extends AppCompatActivity implements Dia
             } else {
                 new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Permisson Required")
-                        .setContentText("Plz Allow Camera for taking picture")
+                        .setContentText("Please Allow Camera for taking picture")
                         .setConfirmText("Ok")
                         .setConfirmClickListener(sDialog -> {
 
@@ -1583,7 +1583,7 @@ public class WalkinPrescriptionActivity extends AppCompatActivity implements Dia
 //
 //                        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
 //                                .setTitleText("File Size")
-//                                .setContentText("Plz choose file size less than 200 kb ")
+//                                .setContentText("Please choose file size less than 200 kb ")
 //                                .setConfirmText("Ok")
 //                                .show();
 //                    }

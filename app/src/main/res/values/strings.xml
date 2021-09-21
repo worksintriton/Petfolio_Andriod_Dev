@@ -343,8 +343,7 @@
     <string name="community">Community</string>
 
 
-    <string name="review_msg">Our team is reviewing your profile and will get in touch with you to close the formalities</string>
-    <string name="back_to_login">Back to login</string>
+    <string name="review_msg">Our team is reviewing your profile and will get in touch with you to close the formalities.</string>
 
     <string name="near_by_services">Near by Services</string>
     <string name="popular_services">Popular Services</string>
@@ -491,6 +490,8 @@
     <string name="confirm_all">Confirm All</string>
     <string name="payment_successful">Payment successful</string>
     <string name="back_to_shop">Back to shop</string>
+    <string name="back_to_login">Back to login</string>
+    <string name="back_to_profile">Back to profile</string>
     <string name="return_product">Return product</string>
     <string name="shipping_address">Shipping Address</string>
 

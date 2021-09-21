@@ -92,13 +92,15 @@ public class PetLoverDashboardPubbyLoveAdapter extends  RecyclerView.Adapter<Rec
             @Override
             public void onClick(View v) {
                 if(currentItem.getTitle() != null && !currentItem.getTitle().isEmpty()){
-                    if(currentItem.getTitle().equalsIgnoreCase("Pet Care")){
+                    Log.w(TAG,"ll_root onclick Title : "+middleBannerDetailsBeanList.get(position).getTitle());
+
+                    if(middleBannerDetailsBeanList.get(position).getTitle().equalsIgnoreCase("Pet Care")){
                         callDirections("4");
                     }
-                    else if(currentItem.getTitle().equalsIgnoreCase("Pet Service")) {
+                    else if(middleBannerDetailsBeanList.get(position).getTitle().equalsIgnoreCase("Pet Service")) {
                         callDirections("3");
                     }
-                    else if(currentItem.getTitle().equalsIgnoreCase("Shop")) {
+                    else if(middleBannerDetailsBeanList.get(position).getTitle().equalsIgnoreCase("Shop")) {
                         callDirections("2");
                     }
 

@@ -770,7 +770,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
                 finish();
             }
 
-            //Toasty.warning(ShippingAddressAddActivity.this,"Plz choose shipping address ", Toasty.LENGTH_LONG).show();
+            //Toasty.warning(ShippingAddressAddActivity.this,"Please choose shipping address ", Toasty.LENGTH_LONG).show();
         }
 
 

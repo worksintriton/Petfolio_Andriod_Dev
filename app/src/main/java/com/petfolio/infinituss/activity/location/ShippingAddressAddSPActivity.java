@@ -759,7 +759,7 @@ public class ShippingAddressAddSPActivity extends AppCompatActivity implements V
                 finish();
             }
 
-            //Toasty.warning(ShippingAddressAddActivity.this,"Plz choose shipping address ", Toasty.LENGTH_LONG).show();
+            //Toasty.warning(ShippingAddressAddActivity.this,"Please choose shipping address ", Toasty.LENGTH_LONG).show();
         }
 
 

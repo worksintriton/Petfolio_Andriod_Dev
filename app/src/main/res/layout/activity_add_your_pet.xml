@@ -224,7 +224,8 @@
                         android:fontFamily="@font/futuramediumbt"
                         android:text="@string/yes"
                         android:textColor="@color/new_txt_color"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:checked="true"/>
 
                     <RadioButton
                         android:id="@+id/radioButton2"
@@ -234,7 +235,6 @@
                         android:buttonTint="@color/new_green_btn"
                         android:fontFamily="@font/futuramediumbt"
                         android:text="@string/no"
-                        android:checked="true"
                         android:textColor="@color/new_txt_color"
                         android:textSize="16sp" />
 

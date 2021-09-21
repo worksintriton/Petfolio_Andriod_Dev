@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="40dp"
+    android:orientation="vertical"
+    android:fillViewport="true"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
     <LinearLayout
@@ -218,11 +220,12 @@
 
                 </LinearLayout>
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/rl_relat_prod"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="20dp"
+                    android:orientation="vertical"
                     android:background="@drawable/new_solid_bgm">
 
                     <TextView
@@ -241,11 +244,13 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_relatedproducts"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/txt_prod_related"
-                        android:layout_margin="10dp" />
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp" />
 
-                </RelativeLayout>
+                </LinearLayout>
 
             </LinearLayout>
 

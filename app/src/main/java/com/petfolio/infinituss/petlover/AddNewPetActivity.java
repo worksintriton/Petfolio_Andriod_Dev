@@ -254,6 +254,7 @@ public class AddNewPetActivity extends AppCompatActivity implements PetTypeSelec
         ivfemale.setOnClickListener(this);
         ivothers.setOnClickListener(this);
         ll_save_continue.setOnClickListener(this);
+        rlpetlastvaccinatedagedate.setVisibility(View.GONE);
 
 
 
@@ -678,7 +679,13 @@ public class AddNewPetActivity extends AppCompatActivity implements PetTypeSelec
             edt_petname.setError("Please enter pet name");
             edt_petname.requestFocus();
             can_proceed = false;
-        } /*else if (txt_petdob.getText().toString().trim().equals("")) {
+        } else if(isvaccinated){
+            if(txt_petlastvaccinatedage.getText().toString().trim().equals("")){
+                showErrorLoading("Please select vaccinated date");
+                can_proceed = false;
+            }
+        }
+        /*else if (txt_petdob.getText().toString().trim().equals("")) {
            showErrorLoading("Please select date of birth");
            can_proceed = false;
         }*/
