@@ -295,6 +295,12 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.w(TAG,"onTextChanged-->"+s.toString());
                 searchString = s.toString();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.w(TAG,"afterTextChanged-->"+s.toString());
                 if(!searchString.isEmpty()){
                     doctorSearchResponseCall(searchString, communication_type);
                    /* img_search.setVisibility(View.VISIBLE);
@@ -307,11 +313,6 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
                     img_clear.setVisibility(View.GONE);*/
                 }
 
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                Log.w(TAG,"afterTextChanged-->"+s.toString());
 
             }
         });
@@ -512,6 +513,7 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
                     if (200 == response.body().getCode()) {
 
                         setBottomSheet();
+                        bottomSheetBehavior.setHalfExpandedRatio(0.9f);
 
                         if (response.body().getData() != null) {
                             doctorDetailsResponseList = response.body().getData();

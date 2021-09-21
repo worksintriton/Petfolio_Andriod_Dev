@@ -62,6 +62,9 @@ public class ChooseUserTypeActivity extends AppCompatActivity implements UserTyp
     List<UserTypeListResponse.DataBean.UsertypedataBean> usertypedataBeanList;
     private String UserType;
     private int UserTypeValue;
+    private String firstname,lastname,useremail,referralcode,userphone;
+    private String verified;
+
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -76,6 +79,12 @@ public class ChooseUserTypeActivity extends AppCompatActivity implements UserTyp
         if (extras != null) {
             UserType = extras.getString("UserType");
             UserTypeValue = extras.getInt("UserTypeValue");
+            verified = extras.getString("verified");
+            firstname = extras.getString("firstname");
+            lastname = extras.getString("lastname");
+            useremail = extras.getString("useremail");
+            userphone = extras.getString("userphone");
+            referralcode = extras.getString("referralcode");
             Log.w(TAG,"UserType : "+UserType +"UserTypeValue : "+UserTypeValue);
         }
 
@@ -191,6 +200,12 @@ public class ChooseUserTypeActivity extends AppCompatActivity implements UserTyp
         Intent intent = new Intent(ChooseUserTypeActivity.this,SignUpActivity.class);
         intent.putExtra("UserType",UserType);
         intent.putExtra("UserTypeValue",UserTypeValue);
+        intent.putExtra("verified",verified);
+        intent.putExtra("firstname",firstname);
+        intent.putExtra("lastname",lastname);
+        intent.putExtra("useremail",useremail);
+        intent.putExtra("userphone",userphone);
+        intent.putExtra("referralcode",referralcode);
         Log.w(TAG,"gotoSignup UserType : "+UserType +"UserTypeValue : "+UserTypeValue);
 
         startActivity(intent);

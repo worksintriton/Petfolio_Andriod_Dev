@@ -46,7 +46,6 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.api.API;
 

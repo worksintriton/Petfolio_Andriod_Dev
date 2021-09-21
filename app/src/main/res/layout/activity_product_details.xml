@@ -192,7 +192,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/img_shop"
+                    android:id="@+id/img_shops"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center"

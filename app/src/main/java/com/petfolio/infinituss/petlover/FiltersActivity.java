@@ -67,6 +67,10 @@ public class FiltersActivity extends AppCompatActivity implements View.OnClickLi
     RadioGroup rg_review;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rb_five_star)
+    RadioButton rb_five_star;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rb_four_star)
     RadioButton rb_four_star;
 
@@ -100,6 +104,7 @@ public class FiltersActivity extends AppCompatActivity implements View.OnClickLi
         btn_apply.setOnClickListener(this);
         btn_clear.setOnClickListener(this);
 
+        rb_five_star.setOnClickListener(this);
         rb_four_star.setOnClickListener(this);
         rb_three_star.setOnClickListener(this);
         rb_two_star.setOnClickListener(this);
@@ -122,6 +127,8 @@ public class FiltersActivity extends AppCompatActivity implements View.OnClickLi
                     rb_three_star.setChecked(true);
                 }else if (reviewcount == 4) {
                     rb_four_star.setChecked(true);
+                }else if (reviewcount == 5) {
+                    rb_five_star.setChecked(true);
                 }
 
             }
@@ -246,7 +253,13 @@ public class FiltersActivity extends AppCompatActivity implements View.OnClickLi
                 reviewcount = 0;
                 break;
 
-            case R.id.rb_four_star:
+            case R.id.rb_five_star:
+                reviewcount = 5;
+                clearRadioChecked();
+                rb_five_star.setChecked(true);
+                break;
+
+                case R.id.rb_four_star:
                 reviewcount = 4;
                 clearRadioChecked();
                 rb_four_star.setChecked(true);
@@ -285,6 +298,7 @@ public class FiltersActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public void clearRadioChecked() {
+        rb_five_star.setChecked(false);
         rb_four_star.setChecked(false);
         rb_three_star.setChecked(false);
         rb_two_star.setChecked(false);

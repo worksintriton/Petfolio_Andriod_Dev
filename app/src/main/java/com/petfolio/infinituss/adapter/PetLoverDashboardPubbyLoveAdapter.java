@@ -2,6 +2,8 @@ package com.petfolio.infinituss.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.petfolio.infinituss.R;
+import com.petfolio.infinituss.activity.location.EditMyAddressActivity;
+import com.petfolio.infinituss.activity.location.EditMyAddressDoctorActivity;
 import com.petfolio.infinituss.api.APIClient;
+import com.petfolio.infinituss.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinituss.responsepojo.PetLoverDashboardResponse;
+import com.petfolio.infinituss.serviceprovider.EditMyAddressSPActivity;
 
 import java.util.List;
 
@@ -60,11 +66,12 @@ public class PetLoverDashboardPubbyLoveAdapter extends  RecyclerView.Adapter<Rec
 
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "LogNotTimber"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
           currentItem = middleBannerDetailsBeanList.get(position);
           Log.w(TAG,"getImg_path :"+currentItem.getImg_path());
+          Log.w(TAG,"Title : "+currentItem.getTitle());
 
           if (currentItem.getImg_path() != null && !currentItem.getImg_path().isEmpty()) {
 
@@ -84,8 +91,24 @@ public class PetLoverDashboardPubbyLoveAdapter extends  RecyclerView.Adapter<Rec
         holder.ll_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(currentItem.getTitle() != null && !currentItem.getTitle().isEmpty()){
+                    if(currentItem.getTitle().equalsIgnoreCase("Pet Care")){
+                        callDirections("4");
+                    }
+                    else if(currentItem.getTitle().equalsIgnoreCase("Pet Service")) {
+                        callDirections("3");
+                    }
+                    else if(currentItem.getTitle().equalsIgnoreCase("Shop")) {
+                        callDirections("2");
+                    }
 
                 }
+
+
+
+
+
+            }
 
 
 
@@ -103,15 +126,11 @@ public class PetLoverDashboardPubbyLoveAdapter extends  RecyclerView.Adapter<Rec
 
     }
 
-
-
-
-
-
-
-
-
-
+    private void callDirections(String tag) {
+        Intent i = new Intent(context, PetLoverDashboardActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra("tag",tag);
+        context.startActivity(i);
+    }
 
 
     @Override

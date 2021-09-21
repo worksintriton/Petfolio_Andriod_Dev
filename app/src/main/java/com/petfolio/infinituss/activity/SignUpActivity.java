@@ -106,7 +106,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             Manifest.permission.RECEIVE_SMS,
             "check"};
     private boolean user_email_verification;
-    private String firstname,lastname,useremail;
+    private String firstname,lastname,useremail,userphone,referralcode;
     private String verified;
     private String ref_code = "";
 
@@ -133,6 +133,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             firstname = extras.getString("firstname");
             lastname = extras.getString("lastname");
             useremail = extras.getString("useremail");
+            userphone = extras.getString("userphone");
+            referralcode = extras.getString("referralcode");
         }else{
             UserType = "Pet Lover";
             UserTypeValue = 1;
@@ -150,6 +152,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             edt_lastname.setText(lastname);
         }if(useremail != null){
             edt_email.setText(useremail);
+        }if(userphone != null){
+            edt_phone.setText(userphone);
+        }if(referralcode != null){
+            edt_ref_code.setText(referralcode);
         }
 
         if(verified != null && verified.equalsIgnoreCase("verified")){
@@ -223,6 +229,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     Intent intent = new Intent(SignUpActivity.this,ChooseUserTypeActivity.class);
                     intent.putExtra("UserType",UserType);
                     intent.putExtra("UserTypeValue",UserTypeValue);
+                    intent.putExtra("verified",verified);
+                    intent.putExtra("firstname",edt_firstname.getText().toString());
+                    intent.putExtra("lastname",edt_lastname.getText().toString());
+                    intent.putExtra("useremail",edt_email.getText().toString());
+                    intent.putExtra("userphone",edt_phone.getText().toString());
+                    intent.putExtra("referralcode",edt_ref_code.getText().toString());
                     startActivity(intent);
                     break;
         }
