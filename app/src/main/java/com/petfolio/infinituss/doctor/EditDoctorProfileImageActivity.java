@@ -268,80 +268,84 @@ public class EditDoctorProfileImageActivity extends AppCompatActivity implements
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        try{
+            if(requestCode== SELECT_CLINIC_PICTURE || requestCode == SELECT_CLINIC_CAMERA) {
 
-        //	Toast.makeText(getActivity(),"kk",Toast.LENGTH_SHORT).show();
-        if(requestCode== SELECT_CLINIC_PICTURE || requestCode == SELECT_CLINIC_CAMERA)
-        {
+                if(requestCode == SELECT_CLINIC_CAMERA)
+                {
+                    Bitmap photo = (Bitmap) data.getExtras().get("data");
 
-            if(requestCode == SELECT_CLINIC_CAMERA)
-            {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                    File file = new File(getFilesDir(), "Petfolio1" + ".jpg");
 
-                File file = new File(getFilesDir(), "Petfolio1" + ".jpg");
-
-                OutputStream os;
-                try {
-                    os = new FileOutputStream(file);
-                    photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
-                    os.flush();
-                    os.close();
-                } catch (Exception e) {
-                    Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
-                }
-                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
-                String currentDateandTime = sdf.format(new Date());
-
-                RequestBody requestFile = RequestBody.create(MediaType.parse("image*/"), file);
-
-                filePart = MultipartBody.Part.createFormData("sampleFile",  userid+currentDateandTime+file.getName(), requestFile);
-
-                uploadPetImage();
-
-            }
-
-            else{
-
-                try {
-                    if (resultCode == Activity.RESULT_OK)
-                    {
-
-                        Log.w("VALUEEEEEEE1111", " " + data);
-
-                        Uri selectedImageUri = data.getData();
-
-                        Log.w("selectedImageUri", " " + selectedImageUri);
-
-                        String filename = getFileName(selectedImageUri);
-
-                        Log.w("filename", " " + filename);
-
-                        String filePath = FileUtil.getPath(EditDoctorProfileImageActivity.this,selectedImageUri);
-
-                        assert filePath != null;
-
-                        File file = new File(filePath); // initialize file here
-
-                        long length = file.length() / 1024; // Size in KB
-
-                        Log.w("filesize", " " + length);
-
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
-                        String currentDateandTime = sdf.format(new Date());
-
-                        filePart = MultipartBody.Part.createFormData("sampleFile", userid+currentDateandTime+file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-
-                        uploadPetImage();
-
-
+                    OutputStream os;
+                    try {
+                        os = new FileOutputStream(file);
+                        photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
+                        os.flush();
+                        os.close();
+                    } catch (Exception e) {
+                        Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
                     }
-                } catch (Exception e) {
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+                    String currentDateandTime = sdf.format(new Date());
 
-                    Log.w("Exception", " " + e);
+                    RequestBody requestFile = RequestBody.create(MediaType.parse("image*/"), file);
+
+                    filePart = MultipartBody.Part.createFormData("sampleFile",  userid+currentDateandTime+file.getName(), requestFile);
+
+                    uploadPetImage();
+
+                }
+
+                else{
+
+                    try {
+                        if (resultCode == Activity.RESULT_OK)
+                        {
+
+                            Log.w("VALUEEEEEEE1111", " " + data);
+
+                            Uri selectedImageUri = data.getData();
+
+                            Log.w("selectedImageUri", " " + selectedImageUri);
+
+                            String filename = getFileName(selectedImageUri);
+
+                            Log.w("filename", " " + filename);
+
+                            String filePath = FileUtil.getPath(EditDoctorProfileImageActivity.this,selectedImageUri);
+
+                            assert filePath != null;
+
+                            File file = new File(filePath); // initialize file here
+
+                            long length = file.length() / 1024; // Size in KB
+
+                            Log.w("filesize", " " + length);
+
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+                            String currentDateandTime = sdf.format(new Date());
+
+                            filePart = MultipartBody.Part.createFormData("sampleFile", userid+currentDateandTime+file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+
+                            uploadPetImage();
+
+
+                        }
+                    } catch (Exception e) {
+
+                        Log.w("Exception", " " + e);
+                    }
+
                 }
 
             }
+
+        }catch (Exception e){
 
         }
+
+
 
 
 

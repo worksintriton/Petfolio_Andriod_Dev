@@ -234,8 +234,6 @@ public class PickUpLocationEditDoctorActivity extends FragmentActivity implement
                     intent.putExtra("defaultstatus",defaultstatus);
                     intent.putExtra("lat",latitude);
                     intent.putExtra("lon",longitude);
-
-
                     intent.putExtra("fromactivity",fromactivity);
                     startActivity(intent);
             }else{

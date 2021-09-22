@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -299,21 +301,55 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
 
     private void choosePetImage() {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(AddYourPetImageOlduserActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-        {
-            requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CLINIC_CAMERA_PERMISSION_CODE);
-        }
 
-        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(AddYourPetImageOlduserActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-        {
-            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_CLINIC_PIC_PERMISSION);
-        }
+            final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
+            //AlertDialog.Builder alert=new AlertDialog.Builder(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(AddYourPetImageOlduserActivity.this);
+            builder.setTitle("Choose option");
+            builder.setItems(items, (dialog, item) -> {
+                if (items[item].equals("Take Photo"))
+                {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(AddYourPetImageOlduserActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+                    {
+                        requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CLINIC_CAMERA_PERMISSION_CODE);
+                    }
+                    else
+                    {
 
-        else
-        {
-            CropImage.activity().start(AddYourPetImageOlduserActivity.this);
-            /*CropImage.activity().start(AddYourPetImageOlduserActivity.this);*/
-        }
+
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                        startActivityForResult(intent, SELECT_CLINIC_CAMERA);
+                    }
+
+                }
+
+                else if (items[item].equals("Choose from Library"))
+                {
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(AddYourPetImageOlduserActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+                    {
+                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_CLINIC_PIC_PERMISSION);
+                    }
+
+                    else{
+
+                        Intent intent = new Intent();
+                        intent.setType("image/*");
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_CLINIC_PICTURE);
+
+
+                    }
+                }
+
+                else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            });
+            builder.show();
+
+
 
     }
 
@@ -322,50 +358,6 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
-                Uri resultUri = result.getUri();
-
-                Log.w("selectedImageUri", " " + resultUri);
-
-                String filename = getFileName(resultUri);
-
-                Log.w("filename", " " + filename);
-
-                String filePath = FileUtil.getPath(AddYourPetImageOlduserActivity.this,resultUri);
-
-                assert filePath != null;
-
-                File file = new File(filePath); // initialize file here
-
-                long length = file.length() / 1024; // Size in KB
-
-                Log.w("filesize", " " + length);
-
-                if(length>2000){
-
-                    new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                            .setTitleText("File Size")
-                            .setContentText("Plz choose file size less than 2 MB ")
-                            .setConfirmText("Ok")
-                            .show();
-                }
-
-                else{
-
-
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
-                    String currentDateandTime = sdf.format(new Date());
-
-                    filePart = MultipartBody.Part.createFormData("sampleFile", userid+currentDateandTime+file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-
-                    uploadPetImage();
-
-                }
-
-            }
-        }
 
         //	Toast.makeText(getActivity(),"kk",Toast.LENGTH_SHORT).show();
         if(requestCode== SELECT_CLINIC_PICTURE || requestCode == SELECT_CLINIC_CAMERA)
@@ -565,8 +557,10 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
         if (requestCode == REQUEST_READ_CLINIC_PIC_PERMISSION) {
 
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                CropImage.activity().start(AddYourPetImageOlduserActivity.this);
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_CLINIC_PICTURE);
 
             } else {
                 new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
@@ -596,7 +590,9 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
 
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                CropImage.activity().start(AddYourPetImageOlduserActivity.this);
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                startActivityForResult(intent, SELECT_CLINIC_CAMERA);
 
             } else {
                 new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)

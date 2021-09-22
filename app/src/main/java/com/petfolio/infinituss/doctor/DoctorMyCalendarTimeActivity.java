@@ -254,7 +254,7 @@ public class DoctorMyCalendarTimeActivity extends AppCompatActivity implements O
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
-                        startActivity(new Intent(DoctorMyCalendarTimeActivity.this, DoctorDashboardActivity.class));
+                        startActivity(new Intent(DoctorMyCalendarTimeActivity.this, DoctorMyCalendarActivity.class));
 
                     }else{
                         Toasty.error(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();

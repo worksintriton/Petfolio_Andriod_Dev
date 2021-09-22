@@ -44,6 +44,7 @@ public class SplashActivity extends AppCompatActivity {
         boolean islogedin = session.isLoggedIn();
         Log.w(TAG,"islogedin-->"+islogedin);
 
+
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             for(String key: bundle.keySet()){

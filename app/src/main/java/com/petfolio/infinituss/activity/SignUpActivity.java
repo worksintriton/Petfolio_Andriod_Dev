@@ -504,12 +504,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             edt_phone.setError("Please enter valid mobile number");
             edt_phone.requestFocus();
             can_proceed = false;
-        }else if(!emailAddress.matches(emailPattern)){
+        }/*else if(!emailAddress.matches(emailPattern)){
             edt_email.setError("Please enter correct email address");
             edt_email.requestFocus();
             can_proceed = false;
         }
-
+*/
 
 
 

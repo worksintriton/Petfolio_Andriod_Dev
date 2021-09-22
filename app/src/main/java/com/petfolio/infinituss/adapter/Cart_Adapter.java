@@ -21,9 +21,11 @@ import com.bumptech.glide.Glide;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.api.APIClient;
 
+import com.petfolio.infinituss.doctor.shop.DoctorProductDetailsActivity;
 import com.petfolio.infinituss.interfaces.AddandRemoveProductListener;
 import com.petfolio.infinituss.petlover.ProductDetailsActivity;
 import com.petfolio.infinituss.responsepojo.CartDetailsResponse;
+import com.petfolio.infinituss.serviceprovider.shop.SPProductDetailsActivity;
 
 import java.util.List;
 
@@ -37,12 +39,14 @@ public class Cart_Adapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder>
     private String petImagePath;
     private List<String> petImgBeanList;
     private AddandRemoveProductListener addandRemoveProductListener;
+    private String fromactivity;
 
 
-    public Cart_Adapter(Context context, List<CartDetailsResponse.DataBean> data,AddandRemoveProductListener addandRemoveProductListener) {
+    public Cart_Adapter(Context context, List<CartDetailsResponse.DataBean> data,AddandRemoveProductListener addandRemoveProductListener, String fromactivity) {
         this.context = context;
         this.data = data;
         this.addandRemoveProductListener = addandRemoveProductListener;
+        this.fromactivity = fromactivity;
 
     }
 
@@ -153,10 +157,25 @@ public class Cart_Adapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder>
         holder.rl_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("productid",data.get(position).getProduct_id().get_id());
-                intent.putExtra("fromactivity",TAG);
-                context.startActivity(intent);
+                if(fromactivity != null && fromactivity.equalsIgnoreCase("PetCartActivity")){
+                    Intent intent = new Intent(context, ProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("productid",data.get(position).getProduct_id().get_id());
+                    intent.putExtra("fromactivity",TAG);
+                    context.startActivity(intent);
+                }
+                else if(fromactivity != null && fromactivity.equalsIgnoreCase("SPCartActivity")){
+                    Intent intent = new Intent(context, SPProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("productid",data.get(position).getProduct_id().get_id());
+                    intent.putExtra("fromactivity",TAG);
+                    context.startActivity(intent);
+                }
+                else if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorCartActivity")){
+                    Intent intent = new Intent(context, DoctorProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("productid",data.get(position).getProduct_id().get_id());
+                    intent.putExtra("fromactivity",TAG);
+                    context.startActivity(intent);
+                }
+
             }
         });
 

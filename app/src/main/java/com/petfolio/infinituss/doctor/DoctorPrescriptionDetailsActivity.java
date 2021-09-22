@@ -2,6 +2,7 @@ package com.petfolio.infinituss.doctor;
 
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -206,6 +207,8 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
     @BindView(R.id.img_prescriptiondetails)
     ImageView img_prescriptiondetails;
 
+    ImageView img_profile;
+
     @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -254,7 +257,7 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
         ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
         ImageView img_notification = include_petlover_header.findViewById(R.id.img_notification);
         ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
-        ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
+        img_profile = include_petlover_header.findViewById(R.id.img_profile);
         TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.prescriptiondetails));
 
@@ -268,12 +271,33 @@ public class DoctorPrescriptionDetailsActivity extends AppCompatActivity {
         img_sos.setVisibility(View.GONE);
         img_notification.setVisibility(View.GONE);
         img_cart.setVisibility(View.GONE);
-        img_profile.setVisibility(View.GONE);
+       // img_profile.setVisibility(View.GONE);
+
+        img_profile.setImageResource(R.drawable.share);
+
 
 
         if(appoinmentid != null){
             prescriptionDetailsResponseCall();
         }
+
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "PetFolio");
+                    String shareMessage= "\nLet me recommend you this application\n\n";
+                    shareMessage = shareMessage + "https://www.google.com/"+"\n\n";
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                    startActivity(Intent.createChooser(shareIntent, "choose one"));
+                } catch(Exception e) {
+                    //e.toString();
+                }
+
+            }
+        });
 
 
 

@@ -533,7 +533,7 @@ public class DoctorCartActivity extends AppCompatActivity implements AddandRemov
     private void setView(List<CartDetailsResponse.DataBean> data) {
         rv_cart.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         rv_cart.setItemAnimator(new DefaultItemAnimator());
-        Cart_Adapter cart_adapter = new Cart_Adapter(getApplicationContext(), data,this);
+        Cart_Adapter cart_adapter = new Cart_Adapter(getApplicationContext(), data,this,TAG);
         rv_cart.setAdapter(cart_adapter);
     }
 

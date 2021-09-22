@@ -51,6 +51,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private String appintments;
     public static String orders;
     Intent intent;
+    String logedusertype;
 
     /**
      * Called when message is received.
@@ -92,6 +93,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         SessionManager sessionManager = new SessionManager(this);
         boolean isloggedin = sessionManager.isLoggedIn();
+
+        HashMap<String, String> user = sessionManager.getProfileDetails();
+        String usertype = user.get(SessionManager.KEY_TYPE);
+
+
         if(isloggedin){
             // Check if message contains a notification payload.
             if (remoteMessage.getNotification() != null) {

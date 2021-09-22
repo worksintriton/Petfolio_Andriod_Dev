@@ -38,6 +38,7 @@ import com.petfolio.infinituss.activity.NotificationActivity;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 
+import com.petfolio.infinituss.doctor.ManageAddressDoctorActivity;
 import com.petfolio.infinituss.petlover.PetLoverProfileScreenActivity;
 import com.petfolio.infinituss.requestpojo.LocationUpdateRequest;
 import com.petfolio.infinituss.responsepojo.LocationUpdateResponse;
@@ -444,8 +445,14 @@ public class EditMyAddressActivity extends FragmentActivity implements OnMapRead
                 if (response.body() != null) {
 
                     if(response.body().getCode() == 200){
-                        Intent i = new Intent(EditMyAddressActivity.this, ManageAddressActivity.class);
-                        startActivity(i);
+                        if(fromactivity != null && fromactivity.equalsIgnoreCase("EditMyAddressDoctorActivity")){
+                            Intent i = new Intent(EditMyAddressActivity.this, ManageAddressDoctorActivity.class);
+                            startActivity(i);
+                        }else{
+                            Intent i = new Intent(EditMyAddressActivity.this, ManageAddressActivity.class);
+                            startActivity(i);
+                        }
+
 
                     }
                     else{
