@@ -1632,10 +1632,21 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
             addReviewRequest.setUser_feedback("");
 
         }if(userrate != null){
-            addReviewRequest.setUser_rate(userrate);
+            int c = 0;
+            try {
 
+                c = Integer.parseInt(userrate);
+
+            }
+            catch(NumberFormatException e) {
+
+                double d = Double.parseDouble(userrate);
+
+                c = (int) d;
+            }
+            addReviewRequest.setUser_rate(c);
         }else{
-            addReviewRequest.setUser_rate("");
+            addReviewRequest.setUser_rate(0);
 
         }
         Log.w(TAG,"addReviewRequest"+ "--->" + new Gson().toJson(addReviewRequest));

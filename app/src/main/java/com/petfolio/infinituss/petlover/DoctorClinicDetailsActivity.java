@@ -301,6 +301,7 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
         avi_indicator.setVisibility(View.GONE);
         txt_seemore_spec.setVisibility(View.GONE);
         txt_seemore_petshandle.setVisibility(View.GONE);
+        ll_book_now.setVisibility(View.GONE);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             doctorid = extras.getString("doctorid");
@@ -598,6 +599,7 @@ public class DoctorClinicDetailsActivity extends AppCompatActivity implements Vi
 
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
+                        ll_book_now.setVisibility(View.VISIBLE);
                         if(response.body().getData().getClinic_pic() != null) {
                             doctorclinicdetailsResponseList = response.body().getData().getClinic_pic();
                         }

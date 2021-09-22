@@ -332,43 +332,52 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
             if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
                 if (resultCode == RESULT_OK) {
+
                     Uri resultUri = result.getUri();
 
-                    Log.w("selectedImageUri", " " + resultUri);
+                    if(resultUri!=null){
 
-                    String filename = getFileName(resultUri);
+                        Log.w("selectedImageUri", " " + resultUri);
 
-                    Log.w("filename", " " + filename);
+                        String filename = getFileName(resultUri);
 
-                    String filePath = FileUtil.getPath(AddYourPetImageOlduserActivity.this,resultUri);
+                        Log.w("filename", " " + filename);
 
-                    assert filePath != null;
+                        String filePath = FileUtil.getPath(AddYourPetImageOlduserActivity.this, resultUri);
 
-                    File file = new File(filePath); // initialize file here
+                        assert filePath != null;
 
-                    long length = file.length() / 1024; // Size in KB
+                        File file = new File(filePath); // initialize file here
 
-                    Log.w("filesize", " " + length);
+                        long length = file.length() / 1024; // Size in KB
 
-                    if(length>2000){
+                        Log.w("filesize", " " + length);
 
-                        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                                .setTitleText("File Size")
-                                .setContentText("Plz choose file size less than 2 MB ")
-                                .setConfirmText("Ok")
-                                .show();
+                        if (length > 2000) {
+
+                            new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                                    .setTitleText("File Size")
+                                    .setContentText("Please choose file size less than 2 MB ")
+                                    .setConfirmText("Ok")
+                                    .show();
+                        } else {
+
+
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+                            String currentDateandTime = sdf.format(new Date());
+
+                            filePart = MultipartBody.Part.createFormData("sampleFile", userid + currentDateandTime + file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+
+                            uploadPetImage();
+
+                        }
+
+
                     }
 
-                    else{
+                    else {
 
-
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
-                        String currentDateandTime = sdf.format(new Date());
-
-                        filePart = MultipartBody.Part.createFormData("sampleFile", userid+currentDateandTime+file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-
-                        uploadPetImage();
-
+                        Toasty.warning(AddYourPetImageOlduserActivity.this,"Image Error!!Please upload Some other image",Toasty.LENGTH_LONG).show();
                     }
 
                 }
@@ -499,9 +508,9 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
                         Log.w(TAG, "ServerUrlImagePath " + ServerUrlImagePath);
 
 
-                        if(pet_img.size()>=3){
+                        if(pet_img!=null&&pet_img.size()>=3){
 
-                            Toasty.warning(AddYourPetImageOlduserActivity.this,"Sorry You can't Upload more than 4", Toasty.LENGTH_LONG).show();
+                            Toasty.warning(AddYourPetImageOlduserActivity.this,"Sorry You can't Upload more than 3", Toasty.LENGTH_LONG).show();
 
                         }
 

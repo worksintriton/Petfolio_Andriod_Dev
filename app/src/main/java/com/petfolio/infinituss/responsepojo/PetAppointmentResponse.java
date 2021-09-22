@@ -102,7 +102,7 @@ public class PetAppointmentResponse {
         private String missed_at;
         private String completed_at;
         private String status;
-        private String user_rate;
+        private int user_rate;
         private String user_feedback;
         private String communication_type;
         private String start_appointment_status;
@@ -185,11 +185,11 @@ public class PetAppointmentResponse {
             this.user_feedback = user_feedback;
         }
 
-        public String getUser_rate() {
+        public int getUser_rate() {
             return user_rate;
         }
 
-        public void setUser_rate(String user_rate) {
+        public void setUser_rate(int user_rate) {
             this.user_rate = user_rate;
         }
 

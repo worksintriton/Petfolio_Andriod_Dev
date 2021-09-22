@@ -115,7 +115,6 @@ public class DoctorDetailsByUserIdResponse {
         private boolean calender_status;
         private int comments;
         private String city_name;
-        private int rating;
         private int doctor_exp;
         private String doctor_info;
         private String clinic_no;
@@ -352,13 +351,7 @@ public class DoctorDetailsByUserIdResponse {
             this.city_name = city_name;
         }
 
-        public int getRating() {
-            return rating;
-        }
 
-        public void setRating(int rating) {
-            this.rating = rating;
-        }
 
         public int getDoctor_exp() {
             return doctor_exp;

@@ -103,7 +103,7 @@ public class PetCompletedAppointmentAdapter extends  RecyclerView.Adapter<Recycl
 
         Log.w(TAG,"userrate: "+completedAppointmentResponseList.get(position).getUser_rate());
 
-        if(completedAppointmentResponseList.get(position).getUser_rate() != null && completedAppointmentResponseList.get(position).getUser_rate().equalsIgnoreCase("0")){
+        if(completedAppointmentResponseList.get(position).getUser_rate() == 0 ){
             holder.btn_add_review.setVisibility(View.VISIBLE);
         }else{
             holder.btn_add_review.setVisibility(View.GONE);

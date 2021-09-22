@@ -100,14 +100,14 @@ public class PetVendorOrderResponse {
         private String user_return_date;
         private String user_return_pic;
         private String vendor_accept_cancel_date;
-        private String user_rate;
+        private int user_rate;
         private String user_feedback;
 
-        public String getUser_rate() {
+        public int getUser_rate() {
             return user_rate;
         }
 
-        public void setUser_rate(String user_rate) {
+        public void setUser_rate(int user_rate) {
             this.user_rate = user_rate;
         }
 

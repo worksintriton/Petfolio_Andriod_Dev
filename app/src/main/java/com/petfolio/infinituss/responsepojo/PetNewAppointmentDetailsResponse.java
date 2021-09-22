@@ -1319,7 +1319,6 @@ public class PetNewAppointmentDetailsResponse {
             private int consultancy_fees;
             private boolean calender_status;
             private int comments;
-            private int rating;
             private int doctor_exp;
             private String thumbnail_image;
 
@@ -1549,13 +1548,6 @@ public class PetNewAppointmentDetailsResponse {
                 this.comments = comments;
             }
 
-            public int getRating() {
-                return rating;
-            }
-
-            public void setRating(int rating) {
-                this.rating = rating;
-            }
 
             public int getDoctor_exp() {
                 return doctor_exp;

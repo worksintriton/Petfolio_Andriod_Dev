@@ -94,7 +94,7 @@ public class DoctorSearchResponse {
         private String clinic_loc;
         private String communication_type;
         private String distance;
-        private double star_count;
+        private int star_count;
         private int review_count;
         private int doctor_exp;
         private String city_name;
@@ -185,11 +185,11 @@ public class DoctorSearchResponse {
             this.distance = distance;
         }
 
-        public double getStar_count() {
+        public int getStar_count() {
             return star_count;
         }
 
-        public void setStar_count(double star_count) {
+        public void setStar_count(int star_count) {
             this.star_count = star_count;
         }
 

@@ -95,7 +95,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         boolean isloggedin = sessionManager.isLoggedIn();
 
         HashMap<String, String> user = sessionManager.getProfileDetails();
-        String usertype = user.get(SessionManager.KEY_TYPE);
+        logedusertype = user.get(SessionManager.KEY_TYPE);
 
 
         if(isloggedin){

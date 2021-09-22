@@ -75,6 +75,7 @@ import com.petfolio.infinituss.utils.ConnectionDetector;
 import com.petfolio.infinituss.utils.RestUtils;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
+import com.theartofdev.edmodo.cropper.CropImage;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONObject;
@@ -96,6 +97,7 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -877,12 +879,12 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
     private void choosePetImage() {
 
-        if (clinicPicBeans.size() >= 1) {
+        if (clinicPicBeans!=null&&clinicPicBeans.size() >= 1) {
 
             Toasty.warning(getApplicationContext(), "Sorry you can't Add more than 1", Toast.LENGTH_SHORT).show();
 
         } else {
-            final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
+         /*   final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
             //AlertDialog.Builder alert=new AlertDialog.Builder(this);
             AlertDialog.Builder builder = new AlertDialog.Builder(BookAppointmentActivity.this);
             builder.setTitle("Choose option");
@@ -915,7 +917,27 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                     dialog.dismiss();
                 }
             });
-            builder.show();
+            builder.show();*/
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(BookAppointmentActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+            {
+                requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CLINIC_CAMERA_PERMISSION_CODE);
+            }
+
+            else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(BookAppointmentActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            {
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_CLINIC_PIC_PERMISSION);
+            }
+
+            else
+            {
+
+
+                CropImage.activity().start(BookAppointmentActivity.this);
+
+                /*CropImage.activity().start(AddYourPetImageOlduserActivity.this);*/
+            }
+
 
         }
 
@@ -925,74 +947,138 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //	Toast.makeText(getActivity(),"kk",Toast.LENGTH_SHORT).show();
-        if (requestCode == SELECT_CLINIC_PICTURE || requestCode == SELECT_CLINIC_CAMERA) {
+       //	Toast.makeText(getActivity(),"kk",Toast.LENGTH_SHORT).show();
 
-            if (requestCode == SELECT_CLINIC_CAMERA) {
-                Bitmap photo = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
+         try {
+             if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                 if (resultCode == RESULT_OK) {
+                     Uri resultUri = result.getUri();
 
-                File file = new File(getFilesDir(), "Petfolio1" + ".jpg");
+                     if (resultUri != null) {
 
-                OutputStream os;
-                try {
-                    os = new FileOutputStream(file);
-                    if (photo != null) {
-                        photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
-                    }
-                    os.flush();
-                    os.close();
-                } catch (Exception e) {
-                    Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
-                }
+                         Log.w("selectedImageUri", " " + resultUri);
 
-                RequestBody requestFile = RequestBody.create(MediaType.parse("image*/"), file);
+                         String filename = getFileName(resultUri);
 
-                filePart = MultipartBody.Part.createFormData("sampleFile", userid+file.getName().trim(), requestFile);
+                         Log.w("filename", " " + filename);
 
-                uploadPetImage();
+                         String filePath = FileUtil.getPath(BookAppointmentActivity.this, resultUri);
 
-            } else {
+                         assert filePath != null;
 
-                try {
-                    if (resultCode == Activity.RESULT_OK) {
+                         File file = new File(filePath); // initialize file here
 
-                        Log.w("VALUEEEEEEE1111", " " + data);
+                         long length = file.length() / 1024; // Size in KB
 
-                        Uri selectedImageUri = data.getData();
+                         Log.w("filesize", " " + length);
 
-                        Log.w("selectedImageUri", " " + selectedImageUri);
+                         if (length > 2000) {
 
-                        String filename = null;
-                        if (selectedImageUri != null) {
-                            filename = getFileName(selectedImageUri);
-                        }
-
-                        Log.w("filename", " " + filename);
-
-                        String filePath = FileUtil.getPath(BookAppointmentActivity.this, selectedImageUri);
-
-                        assert filePath != null;
-
-                        File file = new File(filePath); // initialize file here
-                        if(file != null) {
-                            long length = file.length() / 1024; // Size in KB
-                            Log.w("filesize", " " + length);
-                        }
+                             new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                                     .setTitleText("File Size")
+                                     .setContentText("Please choose file size less than 2 MB ")
+                                     .setConfirmText("Ok")
+                                     .show();
+                         } else {
 
 
-                        filePart = MultipartBody.Part.createFormData("sampleFile", userid+currentDateandTime+file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-                        uploadPetImage();
+                             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+                             String currentDateandTime = sdf.format(new Date());
+
+                             filePart = MultipartBody.Part.createFormData("sampleFile", userid + currentDateandTime + file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+
+                             uploadPetImage();
+
+                         }
 
 
-                    }
-                } catch (Exception e) {
+                     } else {
 
-                    Log.w("Exception", " " + e);
-                }
+                         Toasty.warning(BookAppointmentActivity.this, "Image Error!!Please upload Some other image", Toasty.LENGTH_LONG).show();
+                     }
 
-            }
 
-        }
+                 }
+             }
+
+             if (requestCode == SELECT_CLINIC_PICTURE || requestCode == SELECT_CLINIC_CAMERA) {
+
+                 if (requestCode == SELECT_CLINIC_CAMERA) {
+                     Bitmap photo = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
+
+                     File file = new File(getFilesDir(), "Petfolio1" + ".jpg");
+
+                     OutputStream os;
+                     try {
+                         os = new FileOutputStream(file);
+                         if (photo != null) {
+                             photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
+                         }
+                         os.flush();
+                         os.close();
+                     } catch (Exception e) {
+                         Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
+                     }
+
+                     RequestBody requestFile = RequestBody.create(MediaType.parse("image*/"), file);
+
+                     filePart = MultipartBody.Part.createFormData("sampleFile", userid+file.getName().trim(), requestFile);
+
+                     uploadPetImage();
+
+                 } else {
+
+                     try {
+                         if (resultCode == Activity.RESULT_OK) {
+
+                             Log.w("VALUEEEEEEE1111", " " + data);
+
+                             Uri selectedImageUri = data.getData();
+
+                             Log.w("selectedImageUri", " " + selectedImageUri);
+
+                             String filename = null;
+                             if (selectedImageUri != null) {
+                                 filename = getFileName(selectedImageUri);
+                             }
+
+                             Log.w("filename", " " + filename);
+
+                             String filePath = FileUtil.getPath(BookAppointmentActivity.this, selectedImageUri);
+
+                             assert filePath != null;
+
+                             File file = new File(filePath); // initialize file here
+                             if(file != null) {
+                                 long length = file.length() / 1024; // Size in KB
+                                 Log.w("filesize", " " + length);
+                             }
+
+
+                             filePart = MultipartBody.Part.createFormData("sampleFile", userid+currentDateandTime+file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                             uploadPetImage();
+
+
+                         }
+                     } catch (Exception e) {
+
+                         Log.w("Exception", " " + e);
+                     }
+
+                 }
+
+             }
+
+         }
+
+
+         catch (Exception e){
+             Log.w(TAG,"onActivityResult exception"+e.toString());
+         }
+
+
+
 
 
     }

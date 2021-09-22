@@ -305,7 +305,7 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
                     if(product_cart_counts == 1){
                         txt_cart_label.setText("Add to cart");
                     }else{
-                        txt_cart_label.setText("Go to cart");
+                        //txt_cart_label.setText("Go to cart");
                     }
 
                 }else{

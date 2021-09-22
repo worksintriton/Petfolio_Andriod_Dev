@@ -42,6 +42,7 @@ import com.petfolio.infinituss.responsepojo.FileUploadResponse;
 import com.petfolio.infinituss.responsepojo.PetAddImageResponse;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
 import com.petfolio.infinituss.utils.RestUtils;
+import com.theartofdev.edmodo.cropper.CropImage;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.File;
@@ -210,6 +211,7 @@ public class RegisterYourPetActivity extends AppCompatActivity implements View.O
 
     private void choosePetImage() {
 
+/*
 
             final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
             //AlertDialog.Builder alert=new AlertDialog.Builder(this);
@@ -257,7 +259,25 @@ public class RegisterYourPetActivity extends AppCompatActivity implements View.O
                 }
             });
             builder.show();
+*/
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(RegisterYourPetActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+        {
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CLINIC_CAMERA_PERMISSION_CODE);
+        }
 
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(RegisterYourPetActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+        {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_CLINIC_PIC_PERMISSION);
+        }
+
+        else
+        {
+
+
+            CropImage.activity().start(RegisterYourPetActivity.this);
+
+            /*CropImage.activity().start(AddYourPetImageOlduserActivity.this);*/
+        }
 
 
     }
@@ -267,54 +287,21 @@ public class RegisterYourPetActivity extends AppCompatActivity implements View.O
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        try {
+            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                if (resultCode == RESULT_OK) {
+                    Uri resultUri = result.getUri();
 
-        //	Toast.makeText(getActivity(),"kk",Toast.LENGTH_SHORT).show();
-        if(requestCode== SELECT_CLINIC_PICTURE || requestCode == SELECT_CLINIC_CAMERA)
-        {
+                    if(resultUri!=null){
 
-            if(requestCode == SELECT_CLINIC_CAMERA)
-            {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                        Log.w("selectedImageUri", " " + resultUri);
 
-                File file = new File(getFilesDir(), "Petfolio1" + ".jpg");
-
-                OutputStream os;
-                try {
-                    os = new FileOutputStream(file);
-                    photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
-                    os.flush();
-                    os.close();
-                } catch (Exception e) {
-                    Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
-                }
-                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
-                String currentDateandTime = sdf.format(new Date());
-
-                RequestBody requestFile = RequestBody.create(MediaType.parse("image*/"), file);
-
-                filePart = MultipartBody.Part.createFormData("sampleFile",  userid+currentDateandTime+file.getName(), requestFile);
-
-                uploadPetImage();
-
-            }
-
-            else{
-
-                try {
-                    if (resultCode == Activity.RESULT_OK)
-                    {
-
-                        Log.w("VALUEEEEEEE1111", " " + data);
-
-                        Uri selectedImageUri = data.getData();
-
-                        Log.w("selectedImageUri", " " + selectedImageUri);
-
-                        String filename = getFileName(selectedImageUri);
+                        String filename = getFileName(resultUri);
 
                         Log.w("filename", " " + filename);
 
-                        String filePath = FileUtil.getPath(RegisterYourPetActivity.this,selectedImageUri);
+                        String filePath = FileUtil.getPath(RegisterYourPetActivity.this, resultUri);
 
                         assert filePath != null;
 
@@ -324,24 +311,118 @@ public class RegisterYourPetActivity extends AppCompatActivity implements View.O
 
                         Log.w("filesize", " " + length);
 
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
-                        String currentDateandTime = sdf.format(new Date());
+                        if (length > 2000) {
 
-                        filePart = MultipartBody.Part.createFormData("sampleFile", userid+currentDateandTime+file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                            new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                                    .setTitleText("File Size")
+                                    .setContentText("Please choose file size less than 2 MB ")
+                                    .setConfirmText("Ok")
+                                    .show();
+                        } else {
 
-                        uploadPetImage();
+
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+                            String currentDateandTime = sdf.format(new Date());
+
+                            filePart = MultipartBody.Part.createFormData("sampleFile", userid + currentDateandTime + file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+
+                            uploadPetImage();
+
+                        }
 
 
                     }
-                } catch (Exception e) {
 
-                    Log.w("Exception", " " + e);
+                    else {
+
+                        Toasty.warning(RegisterYourPetActivity.this,"Image Error!!Please upload Some other image",Toasty.LENGTH_LONG).show();
+                    }
+
+
+                }
+            }
+
+            if(requestCode== SELECT_CLINIC_PICTURE || requestCode == SELECT_CLINIC_CAMERA)
+            {
+
+                if(requestCode == SELECT_CLINIC_CAMERA)
+                {
+                    Bitmap photo = (Bitmap) data.getExtras().get("data");
+
+                    File file = new File(getFilesDir(), "Petfolio1" + ".jpg");
+
+                    OutputStream os;
+                    try {
+                        os = new FileOutputStream(file);
+                        photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
+                        os.flush();
+                        os.close();
+                    } catch (Exception e) {
+                        Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
+                    }
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+                    String currentDateandTime = sdf.format(new Date());
+
+                    RequestBody requestFile = RequestBody.create(MediaType.parse("image*/"), file);
+
+                    filePart = MultipartBody.Part.createFormData("sampleFile",  userid+currentDateandTime+file.getName(), requestFile);
+
+                    uploadPetImage();
+
+                }
+
+                else{
+
+                    try {
+                        if (resultCode == Activity.RESULT_OK)
+                        {
+
+                            Log.w("VALUEEEEEEE1111", " " + data);
+
+                            Uri selectedImageUri = data.getData();
+
+                            Log.w("selectedImageUri", " " + selectedImageUri);
+
+                            String filename = getFileName(selectedImageUri);
+
+                            Log.w("filename", " " + filename);
+
+                            String filePath = FileUtil.getPath(RegisterYourPetActivity.this,selectedImageUri);
+
+                            assert filePath != null;
+
+                            File file = new File(filePath); // initialize file here
+
+                            long length = file.length() / 1024; // Size in KB
+
+                            Log.w("filesize", " " + length);
+
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+                            String currentDateandTime = sdf.format(new Date());
+
+                            filePart = MultipartBody.Part.createFormData("sampleFile", userid+currentDateandTime+file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+
+                            uploadPetImage();
+
+
+                        }
+                    } catch (Exception e) {
+
+                        Log.w("Exception", " " + e);
+                    }
+
                 }
 
             }
 
+
         }
 
+        catch (Exception e){
+            Log.w(TAG,"onActivityResult exception"+e.toString());
+        }
+
+        //	Toast.makeText(getActivity(),"kk",Toast.LENGTH_SHORT).show();
 
 
     }
@@ -378,9 +459,9 @@ public class RegisterYourPetActivity extends AppCompatActivity implements View.O
                         if( response.body().getData() != null)
                         {
 
-                            if(pet_img.size()>=3){
+                            if(pet_img!=null&&pet_img.size()>=3){
 
-                                Toasty.warning(RegisterYourPetActivity.this,"Sorry You can't Upload more than 4", Toasty.LENGTH_LONG).show();
+                                Toasty.warning(RegisterYourPetActivity.this,"Sorry You can't Upload more than 3", Toasty.LENGTH_LONG).show();
 
                             }
 
@@ -458,6 +539,7 @@ public class RegisterYourPetActivity extends AppCompatActivity implements View.O
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_READ_CLINIC_PIC_PERMISSION) {
 
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -476,7 +558,7 @@ public class RegisterYourPetActivity extends AppCompatActivity implements View.O
                             sDialog.dismissWithAnimation();
 
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_CLINIC_PIC_PERMISSION);
+                                requestPermissions(new String[]{READ_EXTERNAL_STORAGE}, REQUEST_READ_CLINIC_PIC_PERMISSION);
                             }
 
 
@@ -490,9 +572,7 @@ public class RegisterYourPetActivity extends AppCompatActivity implements View.O
 
             }
 
-        }
-
-        else if (requestCode == REQUEST_CLINIC_CAMERA_PERMISSION_CODE) {
+        } else if (requestCode == REQUEST_CLINIC_CAMERA_PERMISSION_CODE) {
 
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
@@ -510,7 +590,7 @@ public class RegisterYourPetActivity extends AppCompatActivity implements View.O
                             sDialog.dismissWithAnimation();
 
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CLINIC_CAMERA_PERMISSION_CODE);
+                                requestPermissions(new String[]{CAMERA}, REQUEST_CLINIC_CAMERA_PERMISSION_CODE);
                             }
 
 

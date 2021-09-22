@@ -304,7 +304,7 @@ public class FragmentPetCompletedOrders extends Fragment implements View.OnClick
 
     @SuppressLint("LongLogTag")
     @Override
-    public void addReviewListener(String id, String userrate, String userfeedback, String appointment_for) {
+    public void addReviewListener(String id, int userrate, String userfeedback, String appointment_for) {
         Log.w(TAG,"addReviewListener : "+"id : "+id+" userrate : "+userrate+" userfeedback : "+userfeedback+" appointment_for : "+appointment_for);
         showAddReview(id,appointment_for);
     }
@@ -391,7 +391,7 @@ public class FragmentPetCompletedOrders extends Fragment implements View.OnClick
     @SuppressLint({"LogNotTimber", "LongLogTag"})
     private AddShopReviewRequest addShopReviewRequest(String id, String userfeedback, String userrate) {
 
-        /**
+        /*
          * order_id : 5fd30a701978e618628c966c
          * user_feedback :
          * user_rate : 0
@@ -406,10 +406,10 @@ public class FragmentPetCompletedOrders extends Fragment implements View.OnClick
             addShopReviewRequest.setUser_feedback("");
 
         }if(userrate != null){
-            addShopReviewRequest.setUser_rate(userrate);
+            addShopReviewRequest.setUser_rate(Integer.parseInt(userrate));
 
         }else{
-            addShopReviewRequest.setUser_rate("");
+            addShopReviewRequest.setUser_rate(0);
 
         }
         Log.w(TAG,"addShopReviewRequest"+ "--->" + new Gson().toJson(addShopReviewRequest));

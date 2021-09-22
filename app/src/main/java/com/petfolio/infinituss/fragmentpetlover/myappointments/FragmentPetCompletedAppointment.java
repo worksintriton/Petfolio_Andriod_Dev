@@ -277,7 +277,7 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
     @Override
-    public void addReviewListener(String id, String userrate, String userfeedback,String appointment_for) {
+    public void addReviewListener(String id, int userrate, String userfeedback,String appointment_for) {
         Log.w(TAG,"addReviewListener : "+"id : "+id+" userrate : "+userrate+" userfeedback : "+userfeedback+" appointment_for : "+appointment_for);
         showAddReview(id,appointment_for);
     }
@@ -426,10 +426,23 @@ public class FragmentPetCompletedAppointment extends Fragment implements View.On
             addReviewRequest.setUser_feedback("");
 
         }if(userrate != null){
-            addReviewRequest.setUser_rate(userrate);
+
+            int c = 0;
+            try {
+
+                c = Integer.parseInt(userrate);
+
+            }
+            catch(NumberFormatException e) {
+
+                double d = Double.parseDouble(userrate);
+
+                c = (int) d;
+            }
+            addReviewRequest.setUser_rate(c);
 
         }else{
-            addReviewRequest.setUser_rate("");
+            addReviewRequest.setUser_rate(0);
 
         }
         Log.w(TAG,"addReviewRequest"+ "--->" + new Gson().toJson(addReviewRequest));

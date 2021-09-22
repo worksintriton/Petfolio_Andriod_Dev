@@ -19,7 +19,7 @@ public class AddShopReviewRequest {
     }
 
     private String user_feedback;
-    private String user_rate;
+    private int user_rate;
 
 
 
@@ -35,11 +35,11 @@ public class AddShopReviewRequest {
     }
 
 
-    public String getUser_rate() {
+    public int getUser_rate() {
         return user_rate;
     }
 
-    public void setUser_rate(String user_rate) {
+    public void setUser_rate(int user_rate) {
         this.user_rate = user_rate;
 
     }

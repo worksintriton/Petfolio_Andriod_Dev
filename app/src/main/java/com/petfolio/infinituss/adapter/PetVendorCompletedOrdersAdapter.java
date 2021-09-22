@@ -137,8 +137,8 @@ public class PetVendorCompletedOrdersAdapter extends  RecyclerView.Adapter<Recyc
 
         });
 
-        if(newOrderResponseList.get(position).getUser_rate() != null && newOrderResponseList.get(position).getUser_rate().equalsIgnoreCase("0")){
-            holder.btn_add_review.setVisibility(View.VISIBLE);
+        if(newOrderResponseList.get(position).getUser_rate() ==0){
+            holder.btn_add_review.setVisibility(View.GONE);
         }else{
             holder.btn_add_review.setVisibility(View.GONE);
 

@@ -314,7 +314,7 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
                     if(product_cart_counts == 1){
                         txt_cart_label.setText("Add to cart");
                     }else{
-                        txt_cart_label.setText("Go to cart");
+                        //txt_cart_label.setText("Go to cart");
                     }
 
                 }else{
@@ -347,7 +347,7 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
                             }else{
                                 if(product_cart_counts != 1){
                                     txt_cart_count.setText(product_cart_counts+"");
-                                    txt_cart_label.setText("Go to cart");
+                                    //txt_cart_label.setText("Go to cart");
                                 }else{
                                     txt_cart_label.setText("Add to cart");
                                 }
