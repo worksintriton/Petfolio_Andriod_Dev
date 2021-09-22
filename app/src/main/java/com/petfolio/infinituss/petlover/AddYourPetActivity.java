@@ -138,7 +138,7 @@ public class AddYourPetActivity extends AppCompatActivity {
     String SelectedLastVaccinateddate = "";
     private static final int DATE_PICKER_ID = 0 ;
     private static final int PET_DATE_PICKER_ID = 1 ;
-    Boolean isvaccinated = true;
+    Boolean isvaccinated = false;
     private Dialog alertDialog;
     private String userid;
 

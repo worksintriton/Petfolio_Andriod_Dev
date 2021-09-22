@@ -361,7 +361,7 @@ public class DoctorWalkinAppointmentDetailsActivity extends AppCompatActivity im
         ImageView img_cart = include_doctor_header.findViewById(R.id.img_cart);
         ImageView img_profile = include_doctor_header.findViewById(R.id.img_profile);
         TextView toolbar_title = include_doctor_header.findViewById(R.id.toolbar_title);
-        toolbar_title.setText(getResources().getString(R.string.appointment));
+        toolbar_title.setText("Appointment Details");
 
         img_notification.setVisibility(View.GONE);
         img_cart.setVisibility(View.GONE);

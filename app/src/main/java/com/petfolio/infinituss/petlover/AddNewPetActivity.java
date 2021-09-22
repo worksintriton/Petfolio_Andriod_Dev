@@ -170,7 +170,7 @@ public class AddNewPetActivity extends AppCompatActivity implements PetTypeSelec
     private String SelectedPetDOB;
     private String petAgeandMonth = "";
     private String selectedRadioButton = "Yes";
-    Boolean isvaccinated = true;
+    Boolean isvaccinated = false;
     private String userid;
     private String PetBreedType = "";
 
