@@ -122,7 +122,7 @@ public class PetMyOrdrersNewActivity extends AppCompatActivity implements View.O
 
 
 
-    @SuppressLint({"LogNotTimber", "NonConstantResourceId"})
+    @SuppressLint({"LogNotTimber", "NonConstantResourceId", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,7 +152,7 @@ public class PetMyOrdrersNewActivity extends AppCompatActivity implements View.O
         ImageView img_cart = include_petlover_header.findViewById(R.id.img_cart);
         ImageView img_profile = include_petlover_header.findViewById(R.id.img_profile);
         TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
-        toolbar_title.setText(getResources().getString(R.string.my_orders));
+        toolbar_title.setText("My orders");
 
         img_sos.setVisibility(View.GONE);
         img_cart.setVisibility(View.GONE);
@@ -204,8 +204,8 @@ public class PetMyOrdrersNewActivity extends AppCompatActivity implements View.O
         img_care.setImageResource(R.drawable.grey_care);
         title_serv.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
         img_serv.setImageResource(R.drawable.grey_servc);
-        title_shop.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
-        img_shop.setImageResource(R.drawable.grey_shop);
+        title_shop.setTextColor(getResources().getColor(R.color.green_color,getTheme()));
+        img_shop.setImageResource(R.drawable.green_shop);
         title_community.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
         img_community.setImageResource(R.drawable.grey_community);
 

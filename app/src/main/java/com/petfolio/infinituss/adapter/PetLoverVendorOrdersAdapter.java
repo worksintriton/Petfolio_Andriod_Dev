@@ -99,7 +99,7 @@ public class PetLoverVendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerV
 
                 }
                 if(orderResponseListAll.get(position).getP_user_rate() == 0){
-                    holder.btn_add_review.setVisibility(View.VISIBLE);
+                    holder.btn_add_review.setVisibility(View.GONE);
                 }else{
                     holder.btn_add_review.setVisibility(View.GONE);
 
