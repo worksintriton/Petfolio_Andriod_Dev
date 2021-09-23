@@ -122,6 +122,16 @@ public class PrescriptionFetchResponse {
         private String clinic_loc;
         private String clinic_name;
         private String Prescription_id;
+        private String share_msg;
+
+        public String getShare_msg() {
+            return share_msg;
+        }
+
+        public void setShare_msg(String share_msg) {
+            this.share_msg = share_msg;
+        }
+
         /**
          * specialization : General Consultant
          */
