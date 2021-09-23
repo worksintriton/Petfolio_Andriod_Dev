@@ -347,7 +347,7 @@ public class EditDoctorProfileImageActivity extends AppCompatActivity implements
                 }
             }
 
-            if(requestCode== SELECT_CLINIC_PICTURE || requestCode == SELECT_CLINIC_CAMERA) {
+            else if(requestCode== SELECT_CLINIC_PICTURE || requestCode == SELECT_CLINIC_CAMERA) {
 
                 if(requestCode == SELECT_CLINIC_CAMERA)
                 {
@@ -499,14 +499,16 @@ public class EditDoctorProfileImageActivity extends AppCompatActivity implements
         if (requestCode == REQUEST_READ_CLINIC_PIC_PERMISSION) {
 
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_CLINIC_PICTURE);
+//                Intent intent = new Intent();
+//                intent.setType("image/*");
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_CLINIC_PICTURE);
+
+                choosePetImage();
 
             } else {
                 new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("Permisson Required")
+                        .setTitleText("Permission Required")
                         .setContentText("Please Allow Permissions for choosing Images from Gallery ")
                         .setConfirmText("Ok")
                         .setConfirmClickListener(sDialog -> {
@@ -534,9 +536,11 @@ public class EditDoctorProfileImageActivity extends AppCompatActivity implements
 
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//
+//                startActivityForResult(intent, SELECT_CLINIC_CAMERA);
 
-                startActivityForResult(intent, SELECT_CLINIC_CAMERA);
+                choosePetImage();
 
             } else {
                 new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)

@@ -70,6 +70,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/button_capsule_green"
                 android:text="Retry"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:fontFamily="@font/futuramediumbt"/>
 

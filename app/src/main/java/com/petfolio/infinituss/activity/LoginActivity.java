@@ -76,11 +76,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         ButterKnife.bind(this);
         edt_emailorphone.setTransformationMethod(new NumericKeyBoardTransformationMethod());
 
-
         avi_indicator.setVisibility(View.GONE);
-
         txt_signup.setOnClickListener(this);
         btn_verifyotp.setOnClickListener(this);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String phonenumber = extras.getString("phonemumber");
+            if(phonenumber != null){
+                edt_emailorphone.setText(phonenumber);
+            }
+        }
 
     }
 

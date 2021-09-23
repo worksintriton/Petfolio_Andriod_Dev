@@ -1,6 +1,10 @@
 package com.petfolio.infinituss.petlover;
 
+import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -919,14 +923,14 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
             });
             builder.show();*/
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(BookAppointmentActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(BookAppointmentActivity.this, CAMERA) != PackageManager.PERMISSION_GRANTED)
             {
-                requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CLINIC_CAMERA_PERMISSION_CODE);
+                requestPermissions(new String[]{CAMERA}, REQUEST_CLINIC_CAMERA_PERMISSION_CODE);
             }
 
-            else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(BookAppointmentActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(BookAppointmentActivity.this, READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
             {
-                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_CLINIC_PIC_PERMISSION);
+                requestPermissions(new String[]{READ_EXTERNAL_STORAGE}, REQUEST_READ_CLINIC_PIC_PERMISSION);
             }
 
             else
@@ -1779,6 +1783,103 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     public void locationDefaultListener(boolean status, String location_id, String userid) {
         locationid = location_id;
         Log.w(TAG,"locationDefaultListener : "+"status : "+status+" locationid : "+locationid+" userid : "+userid);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_READ_CLINIC_PIC_PERMISSION) {
+
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                Intent intent = new Intent();
+//                intent.setType("image/*");
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_CLINIC_PICTURE);
+
+                choosePetImage();
+
+            } else {
+                new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Permission Required")
+                        .setContentText("Please Allow Permissions for choosing Images from Gallery ")
+                        .setConfirmText("Ok")
+                        .setConfirmClickListener(sDialog -> {
+
+                            sDialog.dismissWithAnimation();
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                requestPermissions(new String[]{READ_EXTERNAL_STORAGE}, REQUEST_READ_CLINIC_PIC_PERMISSION);
+                            }
+
+
+                        })
+                        .setCancelButton("Cancel", sDialog -> {
+                            sDialog.dismissWithAnimation();
+
+                            showWarning(REQUEST_READ_CLINIC_PIC_PERMISSION);
+                        })
+                        .show();
+
+            }
+
+        } else if (requestCode == REQUEST_CLINIC_CAMERA_PERMISSION_CODE) {
+
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+              /*  Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                startActivityForResult(intent, SELECT_CLINIC_CAMERA);*/
+
+                choosePetImage();
+
+            } else {
+                new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Permission Required")
+                        .setContentText("Please Allow Camera for taking picture")
+                        .setConfirmText("Ok")
+                        .setConfirmClickListener(sDialog -> {
+
+                            sDialog.dismissWithAnimation();
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                requestPermissions(new String[]{CAMERA}, REQUEST_CLINIC_CAMERA_PERMISSION_CODE);
+                            }
+
+
+                        })
+                        .setCancelButton("Cancel", sDialog -> {
+                            sDialog.dismissWithAnimation();
+
+                            showWarning(REQUEST_CLINIC_CAMERA_PERMISSION_CODE);
+                        })
+                        .show();
+
+            }
+
+        }
+    }
+
+    private void showWarning(int REQUEST_PERMISSION_CODE) {
+
+        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Sorry!!")
+                .setContentText("You Can't proceed further unless you allow permission")
+                .setConfirmText("Ok")
+                .setConfirmClickListener(sDialog -> {
+
+                    sDialog.dismissWithAnimation();
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                    {
+                        requestPermissions(new String[]{READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION_CODE);
+                    }
+
+
+                })
+                .setCancelButton("Cancel", SweetAlertDialog::dismissWithAnimation)
+                .show();
     }
 
 }

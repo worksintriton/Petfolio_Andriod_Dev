@@ -57,6 +57,8 @@ import com.petfolio.infinituss.appUtils.FileUtil;
 import com.petfolio.infinituss.appUtils.NumericKeyBoardTransformationMethod;
 import com.petfolio.infinituss.interfaces.DiagnosisTypeListener;
 import com.petfolio.infinituss.interfaces.SubDiagnosisTypeListener;
+import com.petfolio.infinituss.doctor.PrescriptionActivity;
+import com.petfolio.infinituss.doctor.PrescriptionActivity;
 import com.petfolio.infinituss.requestpojo.AppoinmentCompleteRequest;
 import com.petfolio.infinituss.requestpojo.DocBusInfoUploadRequest;
 import com.petfolio.infinituss.requestpojo.PrescriptionCreateRequest;
@@ -69,6 +71,7 @@ import com.petfolio.infinituss.responsepojo.SubDiagnosisListResponse;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
 import com.petfolio.infinituss.utils.ConnectionDetector;
 import com.petfolio.infinituss.utils.RestUtils;
+import com.theartofdev.edmodo.cropper.CropImage;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.File;
@@ -1364,7 +1367,7 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
 
     private void chooseGovIDPdf() {
 
-        if(govtIdPicBeans.size()>=1){
+        if(govtIdPicBeans!=null&&govtIdPicBeans.size()>=1){
 
             Toasty.warning(getApplicationContext(), "Sorry you can't Add more than 1", Toast.LENGTH_SHORT).show();
 
@@ -1372,53 +1375,72 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
 
         else {
 
-            final CharSequence[] items = {"Take Photo", "Pick from Gallery","Cancel"};
-            //AlertDialog.Builder alert=new AlertDialog.Builder(this);
-            AlertDialog.Builder builder = new AlertDialog.Builder(PrescriptionActivity.this);
-            builder.setTitle("Choose option");
-            builder.setItems(items, (dialog, item) -> {
-                if (items[item].equals("Take Photo"))
-                {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(PrescriptionActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-                    {
-                        requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_GOVTID_CAMERA_PERMISSION_CODE);
-                    }
-                    else
-                    {
+//            final CharSequence[] items = {"Take Photo", "Pick from Gallery","Cancel"};
+//            //AlertDialog.Builder alert=new AlertDialog.Builder(this);
+//            AlertDialog.Builder builder = new AlertDialog.Builder(PrescriptionActivity.this);
+//            builder.setTitle("Choose option");
+//            builder.setItems(items, (dialog, item) -> {
+//                if (items[item].equals("Take Photo"))
+//                {
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(PrescriptionActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+//                    {
+//                        requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_GOVTID_CAMERA_PERMISSION_CODE);
+//                    }
+//                    else
+//                    {
+//
+//
+//                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//
+//                        startActivityForResult(intent, SELECT_GOVTID_CAMERA);
+//                    }
+//
+//                }
+//
+//                else if (items[item].equals("Pick from Gallery"))
+//                {
+//
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+//                    {
+//                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_GOVTID_PIC_PERMISSION);
+//                    }
+//
+//                    else{
+//
+//                        Intent intent = new Intent();
+//                        intent.setType("image/*");
+//                        intent.setAction(Intent.ACTION_GET_CONTENT);
+//                        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_GOVTID_PICTURE);
+//
+//
+//                    }
+//                }
+//
+//
+//                else if (items[item].equals("Cancel")) {
+//                    dialog.dismiss();
+//                }
+//            });
+//            builder.show();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(PrescriptionActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+            {
+                requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_GOVTID_CAMERA_PERMISSION_CODE);
+            }
+
+            else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(PrescriptionActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            {
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_GOVTID_PIC_PERMISSION);
+            }
+
+            else
+            {
 
 
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                CropImage.activity().start(PrescriptionActivity.this);
 
-                        startActivityForResult(intent, SELECT_GOVTID_CAMERA);
-                    }
-
-                }
-
-                else if (items[item].equals("Pick from Gallery"))
-                {
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-                    {
-                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_GOVTID_PIC_PERMISSION);
-                    }
-
-                    else{
-
-                        Intent intent = new Intent();
-                        intent.setType("image/*");
-                        intent.setAction(Intent.ACTION_GET_CONTENT);
-                        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_GOVTID_PICTURE);
-
-
-                    }
-                }
-
-
-                else if (items[item].equals("Cancel")) {
-                    dialog.dismiss();
-                }
-            });
-            builder.show();
+                /*CropImage.activity().start(AddYourPetImageOlduserActivity.this);*/
+            }
 
         }
 
@@ -1470,10 +1492,12 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
         else if (requestCode == REQUEST_READ_GOVTID_PIC_PERMISSION) {
 
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Intent intent = new Intent();
+               /* Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_GOVTID_PICTURE);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_GOVTID_PICTURE);*/
+
+                chooseGovIDPdf();
 
             } else {
                 new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
@@ -1501,11 +1525,13 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
 
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+              /*  Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
                 //    intent.putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-                startActivityForResult(intent, SELECT_GOVTID_CAMERA);
+                startActivityForResult(intent, SELECT_GOVTID_CAMERA);*/
+
+                chooseGovIDPdf();
 
             } else {
                 new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
@@ -1535,101 +1561,146 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        try {
+            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                if (resultCode == RESULT_OK) {
+                    Uri resultUri = result.getUri();
 
-       if(requestCode == SELECT_GOVTID_CAMERA) {
-            Bitmap photo;
-            File file = null;
-            OutputStream os;
-            try {
-                photo = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
-                file = new File(getFilesDir(), "Petfolio1" + ".jpg");
-                os = new FileOutputStream(file);
-                if (photo != null) {
-                    photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
-                }
-                os.flush();
-                os.close();
-            } catch (Exception e) {
-                Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
-            }
-            if(file != null){
-                RequestBody requestFile = RequestBody.create(MediaType.parse("image*/"), file);
-                govIdPart = MultipartBody.Part.createFormData("sampleFile",  Doctor_ID+currentDateandTime+file.getName(), requestFile);
-                uploadGovtIDPdf();
-            }
+                    if (resultUri != null) {
+
+                        Log.w("selectedImageUri", " " + resultUri);
+
+                        String filename = getFileName(resultUri);
+
+                        Log.w("filename", " " + filename);
+
+                        String filePath = FileUtil.getPath(PrescriptionActivity.this, resultUri);
+
+                        assert filePath != null;
+
+                        File file = new File(filePath); // initialize file here
+
+                        long length = file.length() / 1024; // Size in KB
+
+                        Log.w("filesize", " " + length);
+
+                        if (length > 2000) {
+
+                            new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                                    .setTitleText("File Size")
+                                    .setContentText("Please choose file size less than 2 MB ")
+                                    .setConfirmText("Ok")
+                                    .show();
+                        } else {
 
 
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+                            String currentDateandTime = sdf.format(new Date());
+
+                            govIdPart = MultipartBody.Part.createFormData("sampleFile", userid + currentDateandTime + file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+
+                            uploadGovtIDPdf();
+
+                        }
 
 
+                    } else {
 
-        }
-
-        else if(requestCode == SELECT_GOVTID_PICTURE){
-
-            try {
-                if (resultCode == Activity.RESULT_OK) {
-
-                    Log.w("VALUEEEEEEE1111", " " + data);
-
-                    Uri selectedImageUri = data.getData();
-
-                    Log.w("selectedImageUri", " " + selectedImageUri);
-
-                    String filename = null;
-                    if (selectedImageUri != null) {
-                        filename = getFileName(selectedImageUri);
+                        Toasty.warning(PrescriptionActivity.this, "Image Error!!Please upload Some other image", Toasty.LENGTH_LONG).show();
                     }
 
-                    Log.w("filename", " " + filename);
-
-                    String filePath = FileUtil.getPath(PrescriptionActivity.this,selectedImageUri);
-
-                    assert filePath != null;
-
-                    File file = new File(filePath); // initialize file here
-
-                    long length = file.length() / 1024; // Size in KB
-
-                    Log.w("filesize", " " + length);
-
-                    govIdPart = MultipartBody.Part.createFormData("sampleFile", Doctor_ID+currentDateandTime+file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-
-                    uploadGovtIDPdf();
-
 
                 }
-            } catch (Exception e) {
-
-                Log.w("Exception", " " + e);
             }
 
-        }
 
-        else if(requestCode== SELECT_GOVTID_PDF){
+            else if (requestCode == SELECT_GOVTID_CAMERA) {
+                Bitmap photo;
+                File file = null;
+                OutputStream os;
+                try {
+                    photo = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
+                    file = new File(getFilesDir(), "Petfolio1" + ".jpg");
+                    os = new FileOutputStream(file);
+                    if (photo != null) {
+                        photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
+                    }
+                    os.flush();
+                    os.close();
+                } catch (Exception e) {
+                    Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
+                }
+                if (file != null) {
+                    RequestBody requestFile = RequestBody.create(MediaType.parse("image*/"), file);
+                    govIdPart = MultipartBody.Part.createFormData("sampleFile", Doctor_ID + currentDateandTime + file.getName(), requestFile);
+                    uploadGovtIDPdf();
+                }
 
-            try {
-                if (resultCode == Activity.RESULT_OK)
-                {
 
-                    Log.w("URI", " " + data);
+            } else if (requestCode == SELECT_GOVTID_PICTURE) {
 
-                    Uri selectedFileUri = data.getData();
+                try {
+                    if (resultCode == Activity.RESULT_OK) {
 
-                    Log.w("selectedFileUri", " " + selectedFileUri);
+                        Log.w("VALUEEEEEEE1111", " " + data);
 
-                    String filename = getFileName(selectedFileUri);
+                        Uri selectedImageUri = data.getData();
 
-                    Log.w("filename", " " + filename);
+                        Log.w("selectedImageUri", " " + selectedImageUri);
 
-                    String filePath = FileUtil.getPath(PrescriptionActivity.this,selectedFileUri);
+                        String filename = null;
+                        if (selectedImageUri != null) {
+                            filename = getFileName(selectedImageUri);
+                        }
 
-                    assert filePath != null;
+                        Log.w("filename", " " + filename);
 
-                    File file = new File(filePath); // initialize file here
+                        String filePath = FileUtil.getPath(PrescriptionActivity.this, selectedImageUri);
 
-                    long length = file.length() / 1024; // Size in KB
+                        assert filePath != null;
 
-                    Log.w("filesize", " " + length);
+                        File file = new File(filePath); // initialize file here
+
+                        long length = file.length() / 1024; // Size in KB
+
+                        Log.w("filesize", " " + length);
+
+                        govIdPart = MultipartBody.Part.createFormData("sampleFile", Doctor_ID + currentDateandTime + file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+
+                        uploadGovtIDPdf();
+
+
+                    }
+                } catch (Exception e) {
+
+                    Log.w("Exception", " " + e);
+                }
+
+            } else if (requestCode == SELECT_GOVTID_PDF) {
+
+                try {
+                    if (resultCode == Activity.RESULT_OK) {
+
+                        Log.w("URI", " " + data);
+
+                        Uri selectedFileUri = data.getData();
+
+                        Log.w("selectedFileUri", " " + selectedFileUri);
+
+                        String filename = getFileName(selectedFileUri);
+
+                        Log.w("filename", " " + filename);
+
+                        String filePath = FileUtil.getPath(PrescriptionActivity.this, selectedFileUri);
+
+                        assert filePath != null;
+
+                        File file = new File(filePath); // initialize file here
+
+                        long length = file.length() / 1024; // Size in KB
+
+                        Log.w("filesize", " " + length);
 
 //                    if(length>200){
 //
@@ -1642,19 +1713,23 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
 //
 //                    else{
 
-                    govIdPart = MultipartBody.Part.createFormData("sampleFile", Doctor_ID + currentDateandTime + file.getName(), RequestBody.create(MediaType.parse("pdf/*"), file));
+                        govIdPart = MultipartBody.Part.createFormData("sampleFile", Doctor_ID + currentDateandTime + file.getName(), RequestBody.create(MediaType.parse("pdf/*"), file));
 
-                    uploadGovtIDPdf();
-                    //}
+                        uploadGovtIDPdf();
+                        //}
 
+                    }
+                } catch (Exception e) {
+
+                    Log.w("Exception", " " + e);
                 }
-            } catch (Exception e) {
-
-                Log.w("Exception", " " + e);
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-       }
+    }
 
     @SuppressLint("LogNotTimber")
     private void uploadGovtIDPdf() {

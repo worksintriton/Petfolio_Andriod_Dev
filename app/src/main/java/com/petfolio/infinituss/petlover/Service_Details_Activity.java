@@ -696,6 +696,8 @@ public class Service_Details_Activity extends AppCompatActivity implements View.
                         if(response.body().getData().getBus_user_name() != null) {
                             spprovidername = response.body().getData().getBus_user_name();
                         }
+
+                        Log.w(TAG,"RatingCount : "+response.body().getData().getRating());
                         if(response.body().getData().getRating() != 0) {
                              ratingcount = response.body().getData().getRating();
                         }

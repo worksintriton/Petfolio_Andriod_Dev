@@ -72,7 +72,8 @@
                 android:id="@+id/rl_aboutsp"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="15dp"
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/edt_aboutsp"

@@ -226,7 +226,7 @@ public class SPEditProfileActivity extends AppCompatActivity implements View.OnC
                                 refcode
 
                         );
-                        Intent intent = new Intent(getApplicationContext(), ServiceProviderDashboardActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), SPProfileScreenActivity.class);
                         startActivity(intent);
                         finish();
 

@@ -225,7 +225,7 @@ public class VendorEditProfileActivity extends AppCompatActivity implements View
                                 refcode
 
                         );
-                        Intent intent = new Intent(getApplicationContext(), VendorDashboardActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), VendorProfileScreenActivity.class);
                         startActivity(intent);
                         finish();
 

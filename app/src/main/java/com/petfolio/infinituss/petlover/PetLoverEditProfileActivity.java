@@ -230,7 +230,7 @@ public class PetLoverEditProfileActivity extends AppCompatActivity implements Vi
                                 refcode
 
                         );
-                        Intent intent = new Intent(getApplicationContext(),PetLoverDashboardActivity.class);
+                        Intent intent = new Intent(getApplicationContext(),PetLoverProfileScreenActivity.class);
                         startActivity(intent);
                         finish();
 

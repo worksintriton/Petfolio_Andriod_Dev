@@ -284,7 +284,9 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
             timer = null;
 
         }
-        startActivity(new Intent(VerifyOtpActivity.this,LoginActivity.class));
+        Intent intent = new Intent(VerifyOtpActivity.this,LoginActivity.class);
+        intent.putExtra("phonemumber", phonenumber);
+        startActivity(intent);
         finish();
     }
 

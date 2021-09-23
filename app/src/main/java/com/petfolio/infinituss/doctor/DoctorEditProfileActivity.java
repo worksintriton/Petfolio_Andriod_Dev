@@ -227,7 +227,7 @@ public class DoctorEditProfileActivity extends AppCompatActivity implements View
                                 refcode
 
                         );
-                        Intent intent = new Intent(getApplicationContext(),DoctorDashboardActivity.class);
+                        Intent intent = new Intent(getApplicationContext(),DoctorProfileScreenActivity.class);
                         startActivity(intent);
                         finish();
 
