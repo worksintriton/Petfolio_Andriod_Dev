@@ -441,8 +441,8 @@ public class DoctorMissedAppointmentDetailsActivity extends AppCompatActivity im
         }
 
         if(order_cost != null && !order_cost.equals("")){
-            txt_order_cost.setText("\u20B9 "+order_cost);
-            txt_serv_cost.setText("\u20B9 "+order_cost);
+            txt_order_cost.setText("INR "+order_cost);
+            txt_serv_cost.setText("INR "+order_cost);
         }
 //
 //        if(!addr.equals("")){

@@ -815,10 +815,10 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
 
         }
         if(product_price != 0 ){
-            txt_products_price.setText("\u20B9 "+product_price);
+            txt_products_price.setText("INR "+product_price);
 
         }else{
-            txt_products_price.setText("\u20B9 "+0);
+            txt_products_price.setText("INR "+0);
         }
         if(product_discount != 0 ){
             rl_discount.setVisibility(View.VISIBLE);

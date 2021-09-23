@@ -726,7 +726,9 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                                 ll_petlastvacinateddate.setVisibility(View.GONE);
                                 vaccinated = "No";
                             }
+
                             String order_date = response.body().getData().getDate_and_time();
+                            Log.w(TAG,"PetAppointmentDetailsResponse order_date : "+order_date);
                             String orderid = response.body().getData().getAppointment_UID();
                             String payment_method = response.body().getData().getPayment_method();
                             String order_cost = response.body().getData().getAmount();
@@ -962,8 +964,8 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
         }
 
         if(order_cost != null && !order_cost.isEmpty()){
-            txt_order_cost.setText("\u20B9 "+order_cost);
-            txt_serv_cost.setText("\u20B9 "+order_cost);
+            txt_order_cost.setText("INR "+order_cost);
+            txt_serv_cost.setText("INR "+order_cost);
             ServiceCost = order_cost;
         }
 

@@ -631,6 +631,10 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
             Dialog dialog = new Dialog(mContext);
             dialog.setContentView(R.layout.alert_location_allow_deny_layout);
             dialog.setCanceledOnTouchOutside(false);
+            TextView txt_lbl1 = dialog.findViewById(R.id.txt_lbl1);
+            TextView txt_lbl2 = dialog.findViewById(R.id.txt_lbl2);
+            txt_lbl1.setText("Petfolio would like to");
+            txt_lbl2.setText("track your current location");
             Button btn_allow = dialog.findViewById(R.id.btn_allow);
             Button btn_deny = dialog.findViewById(R.id.btn_deny);
             btn_deny.setOnClickListener(new View.OnClickListener() {

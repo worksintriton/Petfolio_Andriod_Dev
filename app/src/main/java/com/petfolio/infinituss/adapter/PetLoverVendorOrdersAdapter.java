@@ -74,15 +74,15 @@ public class PetLoverVendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerV
         }
         if (orderResponseListAll.get(position).getP_order_price() != 0 && orderResponseListAll.get(position).getP_order_product_count() != 0) {
             if (orderResponseListAll.get(position).getP_order_product_count() == 1) {
-                holder.txt_products_price.setText("\u20B9 " + orderResponseListAll.get(position).getP_order_price() + " (" + orderResponseListAll.get(position).getP_order_product_count() + " product )");
+                holder.txt_products_price.setText("INR " + orderResponseListAll.get(position).getP_order_price() + " (" + orderResponseListAll.get(position).getP_order_product_count() + " product )");
             } else {
-                holder.txt_products_price.setText("\u20B9 " + orderResponseListAll.get(position).getP_order_price() + " (" + orderResponseListAll.get(position).getP_order_product_count() + " products )");
+                holder.txt_products_price.setText("INR " + orderResponseListAll.get(position).getP_order_price() + " (" + orderResponseListAll.get(position).getP_order_product_count() + " products )");
 
             }
         }
         else { if (orderResponseListAll.get(position).getP_order_product_count() == 1) {
-                holder.txt_products_price.setText("\u20B9 " + 0 + " (" + orderResponseListAll.get(position).getP_order_product_count() + " item )");
-            } else { holder.txt_products_price.setText("\u20B9 " + 0 + " (" + orderResponseListAll.get(position).getP_order_product_count() + " items )"); } }
+                holder.txt_products_price.setText("INR " + 0 + " (" + orderResponseListAll.get(position).getP_order_product_count() + " item )");
+            } else { holder.txt_products_price.setText("INR " + 0 + " (" + orderResponseListAll.get(position).getP_order_product_count() + " items )"); } }
 
 
 

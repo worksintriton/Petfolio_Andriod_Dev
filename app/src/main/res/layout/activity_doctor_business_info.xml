@@ -65,7 +65,6 @@
                 android:background="@drawable/rectangle_corner"
                 android:fontFamily="@font/futuramediumbt"
                 android:hint="@string/clinic_number"
-                android:inputType="number"
                 android:maxLength="50"
                 android:maxLines="1"
                 android:padding="15dp"

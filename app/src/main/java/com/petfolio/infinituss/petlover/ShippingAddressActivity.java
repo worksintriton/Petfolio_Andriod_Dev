@@ -165,6 +165,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
     private String Coupon_status = "";
     private int Original_price = 0;
     private int Coupon_discount_price = 0;
+    private String successmsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -230,7 +231,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
             if (grand_total!=0){
 
-                txt_grand_total.setText("\u20B9 "+ grand_total);
+                txt_grand_total.setText("INR "+ grand_total);
             }
 
             prodcut_count = extras.getInt("prodcut_count");
@@ -553,6 +554,10 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
 
                        // Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
                         //callDirections("2");
+                         successmsg = response.body().getMessage();
+
+
+
 
                         showPaymentSuccessalert();
 
@@ -910,6 +915,8 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
             dialog.setCancelable(false);
             dialog.setContentView(R.layout.alert_payment_success_layout);
             Button btn_back_to_shop = dialog.findViewById(R.id.btn_back_to_shop);
+            TextView txt_success_msg = dialog.findViewById(R.id.txt_success_msg);
+            txt_success_msg.setText(successmsg);
 
             btn_back_to_shop.setOnClickListener(new View.OnClickListener() {
                 @Override

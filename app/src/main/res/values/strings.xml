@@ -233,7 +233,7 @@
     <string name="medical_history">Medical History</string>
     <string name="appointmentdateandtime">Appointment Date and Time</string>
     <string name="order_date">Order date</string>
-    <string name="bookingdate">Booked At</string>
+    <string name="bookingdate">Booked Date</string>
     <string name="order">Order #</string>
     <string name="bookingid">Booking ID</string>
     <string name="payment_method">Payment Method</string>
@@ -540,7 +540,7 @@
     <string name="pet_service">Pet Service</string>
     <string name="sos">SOS</string>
     <string name="add_products">Add Products</string>
-    <string name="pet_s_genus_breed">Types &amp; Breed</string>
+    <string name="pet_s_genus_breed">Types &amp; Breeds</string>
     <string name="date_of_birth">Date of Birth</string>
     <string name="pet_bio">Bio</string>
     <string name="save_continue"><![CDATA[Save & Continue]]></string>

@@ -118,12 +118,12 @@ public class SelectedServiceProviderAdapter extends  RecyclerView.Adapter<Recycl
 
             holder.txt_serv_price.setVisibility(View.VISIBLE);
 
-            holder.txt_serv_price.setText("\u20B9 " + serviceProviderList.get(position).getService_price());
+            holder.txt_serv_price.setText("INR " + serviceProviderList.get(position).getService_price());
 
         }
         else
         {
-            holder.txt_serv_price.setText("\u20B9 " + 0);
+            holder.txt_serv_price.setText("INR " + 0);
         }
 
         if(serviceProviderList.get(position).getBus_service_list()!=null&&serviceProviderList.get(position).getBus_service_list().size()>0) {

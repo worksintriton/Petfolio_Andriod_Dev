@@ -65,15 +65,15 @@ public class PetShopCategorySeeMoreAdapter extends  RecyclerView.Adapter<Recycle
             holder.txt_products_title.setText(data.get(position).getProduct_title());
         }
         if(data.get(position).getProduct_price() != 0){
-            holder.txt_products_price.setText("\u20B9 "+data.get(position).getProduct_price());
+            holder.txt_products_price.setText("INR "+data.get(position).getProduct_price());
             }
 
         if(currentItem.getProduct_discount_price() != 0){
             holder.txt_product_discount_price.setVisibility(View.VISIBLE);
-            holder.txt_product_discount_price.setText("\u20B9 "+currentItem.getProduct_discount_price());
+            holder.txt_product_discount_price.setText("INR "+currentItem.getProduct_discount_price());
             holder.txt_product_discount_price.setPaintFlags(holder.txt_product_discount_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }else{
-            holder.txt_product_discount_price.setText("\u20B9 "+0);
+            holder.txt_product_discount_price.setText("INR "+0);
             holder.txt_product_discount_price.setVisibility(View.GONE);
         }
 

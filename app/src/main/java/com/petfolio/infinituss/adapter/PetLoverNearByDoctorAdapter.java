@@ -138,10 +138,10 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
               holder.txt_star_rating.setText("0");
           }
         if(doctorDetailsResponseList.get(position).getAmount() != 0) {
-            holder.txt_price.setText("\u20B9 " +doctorDetailsResponseList.get(position).getAmount() + "");
+            holder.txt_price.setText("INR " +doctorDetailsResponseList.get(position).getAmount() + "");
         }else {
 
-            holder.txt_price.setText("\u20B9 " +"0");
+            holder.txt_price.setText("INR " +"0");
         }
 
         Log.w(TAG,"Clinic name : "+doctorDetailsResponseList.get(position).getClinic_name());
@@ -152,7 +152,7 @@ public class PetLoverNearByDoctorAdapter extends  RecyclerView.Adapter<RecyclerV
               holder.txt_doctors_clinicname.setVisibility(View.GONE);
           }
           /*if(doctorDetailsResponseList.get(position).getAmount() != 0) {
-              holder.txt_review_count.setText("\u20B9"+doctorDetailsResponseList.get(position).getAmount());
+              holder.txt_review_count.setText("INR"+doctorDetailsResponseList.get(position).getAmount());
           }else{
               holder.txt_review_count.setText("0");
           }*/

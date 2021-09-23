@@ -65,9 +65,9 @@ public class DoctorProductsFavAdapter extends  RecyclerView.Adapter<RecyclerView
         currentItem = productsList.get(position);
         holder.txt_products_title.setText(productsList.get(position).getProduct_title());
         if(productsList.get(position).getProduct_price() != 0){
-            holder.txt_products_price.setText("\u20B9 "+productsList.get(position).getProduct_price());
+            holder.txt_products_price.setText("INR "+productsList.get(position).getProduct_price());
         }else{
-            holder.txt_products_price.setText("\u20B9 "+0);
+            holder.txt_products_price.setText("INR "+0);
         }
 
         if(productsList.get(position).isProduct_fav()){
