@@ -313,21 +313,26 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
 
+        try{
+            if (intent.getExtras().keySet() != null) {
+                for (String key : intent.getExtras().keySet()) {
+                    Log.w(TAG, "key : " + key);
 
-        if (intent.getExtras().keySet() != null) {
-            for (String key : intent.getExtras().keySet()) {
-                Log.w(TAG, "key : " + key);
+                }
+                String appintments = intent.getExtras().getString("appintments");
+                Log.w(TAG, "key appintments : " + appintments);
+
+                orders = intent.getExtras().getString("orders");
+                Log.w(TAG, "key orders : " + orders);
 
             }
-            String appintments = intent.getExtras().getString("appintments");
-            Log.w(TAG, "key appintments : " + appintments);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-            orders = intent.getExtras().getString("orders");
-            Log.w(TAG, "key orders : " + orders);
 
-        }
+        }catch (Exception e){}
 
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 

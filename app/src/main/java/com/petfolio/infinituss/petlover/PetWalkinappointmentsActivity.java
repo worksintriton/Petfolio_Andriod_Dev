@@ -202,8 +202,8 @@ public class PetWalkinappointmentsActivity extends AppCompatActivity implements 
         img_serv.setImageResource(R.drawable.grey_servc);
         title_community.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
         img_community.setImageResource(R.drawable.grey_community);
-        title_shop.setTextColor(getResources().getColor(R.color.new_gree_color,getTheme()));
-        img_shop.setImageResource(R.drawable.green_shop);
+        title_shop.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
+        img_shop.setImageResource(R.drawable.grey_shop  );
 
 
         rl_home.setOnClickListener(this);

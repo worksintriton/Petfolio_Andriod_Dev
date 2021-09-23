@@ -153,7 +153,7 @@ public class PetAppointment_Doctor_Date_Time_Activity extends AppCompatActivity 
             fromto = extras.getString("fromto");
             doctorname = extras.getString("doctorname");
             clinicname = extras.getString("clinicname");
-            Log.w(TAG,"doctorid : "+doctorid+"fromactivity : "+fromactivity+ " fromto : "+fromto+" clinicname : "+clinicname);
+            Log.w(TAG,"doctorid : "+doctorid+"fromactivity : "+fromactivity+ " fromto : "+fromto+" clinicname : "+clinicname+" doctorname : "+doctorname);
 
 
             String petid = extras.getString("petid");

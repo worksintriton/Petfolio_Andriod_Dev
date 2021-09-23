@@ -329,16 +329,16 @@
                     android:fontFamily="@font/futuramediumbt"
                     android:gravity="start"
                     android:hint="@string/add_comment_here"
+                    android:inputType="textMultiLine"
+                    android:maxLength="150"
                     android:padding="15dp"
+                    android:scrollbars="vertical"
                     android:textAlignment="viewStart"
                     android:textColor="@color/green"
                     android:textColorHint="@color/dark_gray"
                     android:textCursorDrawable="@null"
                     android:textSize="14sp"
-                    tools:ignore="Autofill,LabelFor"
-                    android:inputType="textMultiLine"
-                    android:scrollbars="vertical"
-                    android:maxLength="150"/>
+                    tools:ignore="Autofill,LabelFor" />
 
             </RelativeLayout>
 
