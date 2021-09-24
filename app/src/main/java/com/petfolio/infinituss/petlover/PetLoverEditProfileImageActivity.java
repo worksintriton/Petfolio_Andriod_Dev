@@ -130,8 +130,6 @@ public class PetLoverEditProfileImageActivity extends AppCompatActivity implemen
         txt_uploadpetimage.setOnClickListener(this);
         img_pet_imge.setOnClickListener(this);
 
-
-
         SessionManager session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
         firstname = user.get(SessionManager.KEY_FIRST_NAME);
@@ -150,7 +148,8 @@ public class PetLoverEditProfileImageActivity extends AppCompatActivity implemen
                     .load(profileimage)
                     .into(img_pet_imge);
             txt_uploadpetimage.setText("Change Image");
-        }else{
+        }
+        else{
             Glide.with(PetLoverEditProfileImageActivity.this)
                     .load(R.drawable.image_thumbnail)
                     .into(img_pet_imge);
