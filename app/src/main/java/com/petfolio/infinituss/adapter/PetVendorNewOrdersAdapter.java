@@ -80,7 +80,7 @@ public class PetVendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerVie
 
         }
         if (newOrderResponseList.get(position).getDate_of_booking() != null) {
-            holder.txt_bookedon.setText("Booked on:" + " " + newOrderResponseList.get(position).getDate_of_booking());
+            holder.txt_bookedon.setText("Booked for:" + " " + newOrderResponseList.get(position).getDate_of_booking());
 
         }
         if (newOrderResponseList.get(position).getProdcut_image() != null && !newOrderResponseList.get(position).getProdcut_image().isEmpty()) {

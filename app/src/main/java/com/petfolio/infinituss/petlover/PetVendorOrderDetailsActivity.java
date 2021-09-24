@@ -365,7 +365,7 @@ public class PetVendorOrderDetailsActivity extends AppCompatActivity implements 
                             }
 
                             if (fromactivity != null && fromactivity.equalsIgnoreCase("PetVendorNewOrdersAdapter")) {
-                                txt_order_status.setText("Booked on");
+                                txt_order_status.setText("Booked for");
                                 img_order_status.setImageResource(R.drawable.completed);
                                 if (response.body().getData().getDate_of_booking() != null) {
                                     txt_delivered_date.setText(response.body().getData().getDate_of_booking());

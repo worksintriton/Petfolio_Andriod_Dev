@@ -115,7 +115,7 @@ public class DoctorWalkinNewAppointmentAdapter extends  RecyclerView.Adapter<Rec
         }
 
         if(newAppointmentResponseList.get(position).getBooking_date_time() != null){
-            holder.txt_bookedon.setText("Booked on :"+" "+newAppointmentResponseList.get(position).getBooking_date_time());
+            holder.txt_bookedon.setText("Booked for :"+" "+newAppointmentResponseList.get(position).getBooking_date_time());
 
         }
 

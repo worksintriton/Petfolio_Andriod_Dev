@@ -822,4 +822,9 @@ public interface RestApiInterface {
     Call<PrescriptionFetchResponse> prescriptionwalkinDetailsResponseCall(@Header("Content-Type") String type, @Body PrescriptionDetailsRequest prescriptionDetailsRequest);
 
 
+    /*Get userid based default locations*/
+    @POST("locationdetails/mobile/getlist_id1")
+    Call<DefaultLocationResponse> defaultLocationResponseCall(@Header("Content-Type") String type, @Body DefaultLocationRequest defaultLocationRequest);
+
+
 }

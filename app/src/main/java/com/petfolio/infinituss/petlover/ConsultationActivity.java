@@ -74,6 +74,7 @@ public class ConsultationActivity extends AppCompatActivity implements View.OnCl
     private String selectedVisitType = "";
     private String petId;
     private String petname;
+    private String petimage;
     private String doctorid;
     private String fromactivity;
     private String fromto;
@@ -185,6 +186,7 @@ public class ConsultationActivity extends AppCompatActivity implements View.OnCl
                     intent.putExtra("doctorname", doctorname);
                     intent.putExtra("clinicname", clinicname);
                     intent.putExtra("petname", petname);
+                    intent.putExtra("petimage", petimage);
                     startActivity(intent);
                     Log.w(TAG, "petId : " + petId);
                 }
@@ -345,14 +347,27 @@ public class ConsultationActivity extends AppCompatActivity implements View.OnCl
 
     @SuppressLint("LogNotTimber")
     @Override
-    public void myPetsSelectListener(String petid,String pet_name) {
-        Log.w(TAG,"myPetsSelectListener : petid "+petid);
+    public void myPetsSelectListener(String petid,String pet_name,String  pet_image) {
+        Log.w(TAG,"myPetsSelectListener : petid "+petid+" petimage : "+pet_image);
         if(petid != null){
             petId = petid;
             petname = pet_name;
+            petimage = pet_image;
             ll_save_continue.setVisibility(View.VISIBLE);
         }else{
             ll_save_continue.setVisibility(View.GONE);
+        }
+
+        Log.w(TAG,"myPetsSelectListener : "+ "petList" +new Gson().toJson(petList));
+
+        if(petList != null && petList.size()>0){
+            for(int i=0;i<petList.size();i++){
+                if(petId.equalsIgnoreCase(petList.get(i).get_id())){
+                    petimage = petList.get(i).getPet_img().get(0).getPet_img();
+                }
+                Log.w(TAG,"myPetsSelectListener : "+ "petimage" +pet_image);
+
+            }
         }
 
     }

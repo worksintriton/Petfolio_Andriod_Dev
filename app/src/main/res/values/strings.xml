@@ -178,7 +178,7 @@
     <string name="add_review">Add Review</string>
     <string name="all_categories">All categories</string>
     <string name="cancel_appointment_date">Cancelled on 01-Sep 2020</string>
-    <string name="pickup_location">PickUp Location</string>
+    <string name="pickup_location">Pickup Location</string>
     <string name="current_location">Current Location</string>
     <string name="my_appointment">My appointment</string>
     <string name="pet_care">Pet Care</string>
@@ -336,6 +336,7 @@
     <string name="type">Appointment Type</string>
 
     <string name="business">Business</string>
+    <string name="vendor_business">Vendor Business</string>
 
     <string name="recent_search">Recent search</string>
     <string name="today_deal">Deals of the day</string>

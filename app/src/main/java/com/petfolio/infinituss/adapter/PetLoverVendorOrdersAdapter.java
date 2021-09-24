@@ -89,7 +89,7 @@ public class PetLoverVendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerV
         if(fromactivity != null){
             if(fromactivity.equalsIgnoreCase("FragmentSPNewOrders") || fromactivity.equalsIgnoreCase("FragmentDoctorNewOrders") || fromactivity.equalsIgnoreCase("FragmentPetLoverNewOrders")){
                 if (orderResponseListAll.get(position).getP_order_booked_on() != null) {
-                    holder.txt_bookedon.setText("Booked on:" + " " + orderResponseListAll.get(position).getP_order_booked_on());
+                    holder.txt_bookedon.setText("Booked for:" + " " + orderResponseListAll.get(position).getP_order_booked_on());
 
                 }
             }

@@ -127,7 +127,7 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
             }
 
         if(newAppointmentResponseList.get(position).getBooked_at() != null){
-            holder.txt_bookedon.setText("Booked on :"+" "+newAppointmentResponseList.get(position).getBooked_at());
+            holder.txt_bookedon.setText("Booked for :"+" "+newAppointmentResponseList.get(position).getBooked_at());
 
         }
 

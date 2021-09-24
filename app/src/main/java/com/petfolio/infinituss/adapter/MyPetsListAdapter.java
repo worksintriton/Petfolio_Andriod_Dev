@@ -42,6 +42,7 @@ public class MyPetsListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHo
     private String TAG = "MyPetsListAdapter";
 
 
+
     public MyPetsListAdapter(Context context, List<PetListResponse.DataBean> petListResponseList,  MyPetsSelectListener myPetsSelectListener) {
         this.petListResponseList = petListResponseList;
         this.context = context;
@@ -104,6 +105,11 @@ public class MyPetsListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHo
             @Override
             public void onClick(View v) {
 
+                Log.w(TAG,"ll_pet_profile onclick : "+petListResponseList.get(position).getPet_img().get(0).getPet_img());
+
+
+                String petImagePath = null;
+
                 for (int i=0;i<petListResponseList.size();i++){
                     petListResponseList.get(i).setSelected(false);
 
@@ -111,7 +117,29 @@ public class MyPetsListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHo
                 petListResponseList.get(position).setSelected(true);
                 notifyDataSetChanged();
                 if(petListResponseList.get(position).get_id() != null ){
-                    myPetsSelectListener.myPetsSelectListener(petListResponseList.get(position).get_id(),petListResponseList.get(position).getPet_name());
+                    if(petListResponseList.size() > 0) {
+                        Log.w(TAG,"petListResponseList : "+new Gson().toJson(petListResponseList));
+                        petImgBeanList =   petListResponseList.get(position).getPet_img();
+
+                        Log.w(TAG,"petImgBeanList : "+new Gson().toJson(petImgBeanList));
+                        if (petImgBeanList != null && petImgBeanList.size() > 0) {
+                            for(int j=0;j<petImgBeanList.size();j++) {
+                                petImagePath = petImgBeanList.get(j).getPet_img();
+                                Log.w(TAG,"petImagePath lop : "+petImagePath);
+
+
+
+                            }
+
+                        }
+
+
+
+
+
+                    }
+                    myPetsSelectListener.myPetsSelectListener(petListResponseList.get(position).get_id(),petListResponseList.get(position).getPet_name(),petImagePath);
+
 
                 }
             }

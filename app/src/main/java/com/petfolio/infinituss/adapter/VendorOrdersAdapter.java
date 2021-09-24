@@ -102,7 +102,7 @@ public class VendorOrdersAdapter extends  RecyclerView.Adapter<RecyclerView.View
 
         if(fromactivity != null && fromactivity.equalsIgnoreCase("FragementNewOrders")){
             if (orderResponseListAll.get(position).getV_order_booked_on() != null) {
-                holder.txt_bookedon.setText("Booked on:" + " " + orderResponseListAll.get(position).getV_order_booked_on());
+                holder.txt_bookedon.setText("Booked for:" + " " + orderResponseListAll.get(position).getV_order_booked_on());
 
             }
         }

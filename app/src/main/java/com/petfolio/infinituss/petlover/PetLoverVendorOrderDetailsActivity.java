@@ -541,7 +541,7 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
                             }
 
                             if(fromactivity != null && fromactivity.equalsIgnoreCase("FragmentPetLoverNewOrders")){
-                                txt_order_status.setText("Booked on");
+                                txt_order_status.setText("Booked for");
                                 img_order_status.setImageResource(R.drawable.completed);
                                 if(response.body().getData().getOrder_details().getOrder_booked() != null){
                                     txt_delivered_date.setText(response.body().getData().getOrder_details().getOrder_booked());

@@ -116,7 +116,7 @@ public class ProductDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
 
         }
         if (product_details.get(position).getProduct_booked() != null) {
-            holder.txt_bookedon.setText("Booked on:" + " " + product_details.get(position).getProduct_booked());
+            holder.txt_bookedon.setText("Booked for:" + " " + product_details.get(position).getProduct_booked());
 
         }
         if (product_details.get(position).getProduct_image() != null && !product_details.get(position).getProduct_image().isEmpty()) {

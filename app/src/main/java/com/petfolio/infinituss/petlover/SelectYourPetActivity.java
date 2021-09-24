@@ -30,7 +30,6 @@ import com.petfolio.infinituss.adapter.MyPetsListAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.interfaces.MyPetsSelectListener;
-import com.petfolio.infinituss.requestpojo.PetAppointmentCreateRequest;
 import com.petfolio.infinituss.requestpojo.PetListRequest;
 import com.petfolio.infinituss.requestpojo.SPCreateAppointmentRequest;
 import com.petfolio.infinituss.requestpojo.SPNotificationSendRequest;
@@ -127,6 +126,7 @@ public class SelectYourPetActivity extends AppCompatActivity implements View.OnC
     private Dialog alertDialog;
     private Dialog dialog;
     private String petname;
+    private String petimage;
 
 
 
@@ -392,11 +392,12 @@ public class SelectYourPetActivity extends AppCompatActivity implements View.OnC
 
     @SuppressLint("LogNotTimber")
     @Override
-    public void myPetsSelectListener(String petid, String pet_name) {
-        Log.w(TAG,"myPetsSelectListener : petid "+petid);
+    public void myPetsSelectListener(String petid, String pet_name,String pet_image) {
+        Log.w(TAG,"myPetsSelectListener : petid "+petid+" petimage : "+petimage);
         if(petid != null){
             petId = petid;
             petname = pet_name;
+            petimage = pet_image;
             ll_save_continue.setVisibility(View.VISIBLE);
         }else{
             ll_save_continue.setVisibility(View.GONE);

@@ -13,8 +13,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
-
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -288,6 +286,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     private String doctorname;
     private String clinicname;
     private String petname;
+    private String strpetimage;
     private String Problem_info = "";
     private String Allergies = "";
 
@@ -317,6 +316,16 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
             doctorname = extras.getString("doctorname");
             clinicname = extras.getString("clinicname");
             petname = extras.getString("petname");
+            strpetimage = extras.getString("petimage");
+
+            Log.w(TAG, "strpetimage : " + strpetimage);
+
+
+            if(strpetimage != null) {
+                DocBusInfoUploadRequest.ClinicPicBean clinicPicBean = new DocBusInfoUploadRequest.ClinicPicBean(strpetimage);
+                clinicPicBeans.add(clinicPicBean);
+                setView();
+            }
 
         }
 
@@ -1303,6 +1312,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         intent.putExtra("doctorname", doctorname);
         intent.putExtra("clinicname", clinicname);
         intent.putExtra("petname", petname);
+        intent.putExtra("petimage", strpetimage);
         startActivity(intent);
 
 

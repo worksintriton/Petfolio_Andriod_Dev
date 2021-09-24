@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/futuramediumbt"
-            android:text="@string/business"
+            android:text="@string/vendor_business"
             android:textColor="@color/black"
             android:textSize="@dimen/big_txt_size"
             android:textStyle="bold"
