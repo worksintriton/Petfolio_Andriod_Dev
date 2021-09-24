@@ -113,6 +113,10 @@ public class VendorProfileScreenActivity extends AppCompatActivity implements Vi
     TextView txt_business_name;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_business)
+    TextView txt_business;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_business_email)
     TextView txt_business_email;
 
@@ -476,6 +480,8 @@ public class VendorProfileScreenActivity extends AppCompatActivity implements Vi
 
                                 if(response.body().getData().getBussiness_name() != null){
                                     txt_business_name.setText(response.body().getData().getBussiness_name());
+                                }if(response.body().getData().getBussiness() != null){
+                                    txt_business.setText(response.body().getData().getBussiness());
                                 }
                                 if(response.body().getData().getBussiness_email() != null){
                                     txt_business_email.setText(response.body().getData().getBussiness_email());

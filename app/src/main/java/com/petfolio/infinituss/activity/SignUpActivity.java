@@ -497,7 +497,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             can_proceed = false;
         }
         else if (Objects.requireNonNull(edt_phone.getText()).toString().trim().equals("")) {
-            edt_phone.setError("Please enter phone number");
+            edt_phone.setError("Please enter your phone number");
             edt_phone.requestFocus();
             can_proceed = false;
         } else if (moblength <= 9) {

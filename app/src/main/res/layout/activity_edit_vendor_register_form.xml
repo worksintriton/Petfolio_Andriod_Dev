@@ -109,7 +109,8 @@
                     android:textColorHint="@color/dark_gray"
                     android:textCursorDrawable="@null"
                     android:textSize="14sp"
-                    tools:ignore="Autofill,LabelFor,TextFields" />
+                    tools:ignore="Autofill,LabelFor,TextFields"
+                    android:visibility="gone"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
