@@ -97,20 +97,22 @@ public class SPNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.
 
         Log.w(TAG,"Pet_img : "+newAppointmentResponseList.get(position).getPet_id().getPet_img());
 
-           if (newAppointmentResponseList.get(position).getPet_id().getPet_img().get(0).getPet_img() != null && !newAppointmentResponseList.get(position).getPet_id().getPet_img().get(0).getPet_img().isEmpty()) {
+         try{
+             if (newAppointmentResponseList.get(position).getPet_id().getPet_img().get(0).getPet_img() != null && !newAppointmentResponseList.get(position).getPet_id().getPet_img().get(0).getPet_img().isEmpty()) {
 
-                Glide.with(context)
-                        .load(newAppointmentResponseList.get(position).getPet_id().getPet_img().get(0).getPet_img())
-                        .into(holder.img_pet_imge);
+                 Glide.with(context)
+                         .load(newAppointmentResponseList.get(position).getPet_id().getPet_img().get(0).getPet_img())
+                         .into(holder.img_pet_imge);
 
-            }
-           else{
-                Glide.with(context)
-                        .load(APIClient.PROFILE_IMAGE_URL)
-                        .into(holder.img_pet_imge);
+             }
+             else{
+                 Glide.with(context)
+                         .load(APIClient.PROFILE_IMAGE_URL)
+                         .into(holder.img_pet_imge);
 
-            }
+             }
 
+         }catch (Exception e){}
         if(newAppointmentResponseList.get(position).getAppointment_types() != null && newAppointmentResponseList.get(position).getAppointment_types().equalsIgnoreCase("Emergency")){
             holder.img_emergency_appointment.setVisibility(View.VISIBLE);
         }else{

@@ -1901,7 +1901,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
          */
 
 
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyyhhmmss");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMhhmmss");
         String currentDateandTime = simpleDateFormat.format(new Date());
 
 

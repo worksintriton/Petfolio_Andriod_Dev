@@ -22,8 +22,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -44,9 +46,13 @@ import com.petfolio.infinituss.activity.NotificationActivity;
 import com.petfolio.infinituss.activity.SoSActivity;
 import com.petfolio.infinituss.adapter.PetLoverSOSAdapter;
 import com.petfolio.infinituss.api.APIClient;
+import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.interfaces.SoSCallListener;
+import com.petfolio.infinituss.requestpojo.DefaultLocationRequest;
 import com.petfolio.infinituss.responsepojo.PetLoverDashboardResponse;
+import com.petfolio.infinituss.responsepojo.SuccessResponse;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
+import com.petfolio.infinituss.utils.RestUtils;
 
 
 import java.util.HashMap;
@@ -54,6 +60,9 @@ import java.util.List;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class PetLoverNavigationDrawer extends AppCompatActivity implements View.OnClickListener{
@@ -433,6 +442,9 @@ public class PetLoverNavigationDrawer extends AppCompatActivity implements View.
 
 
     }
+
+
+
    /* @Override
     public void soSCallListener(long phonenumber) {
         if(phonenumber != 0){

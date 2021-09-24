@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,9 +31,11 @@ import com.petfolio.infinituss.adapter.ViewPagerSPGalleryDetailsAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 
+import com.petfolio.infinituss.requestpojo.DefaultLocationRequest;
 import com.petfolio.infinituss.requestpojo.SPDetailsByUserIdRequest;
 import com.petfolio.infinituss.responsepojo.PetListResponse;
 import com.petfolio.infinituss.responsepojo.ServiceProviderRegisterFormCreateResponse;
+import com.petfolio.infinituss.responsepojo.SuccessResponse;
 import com.petfolio.infinituss.serviceprovider.shop.SPMyOrdrersActivity;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
 import com.petfolio.infinituss.utils.ConnectionDetector;
@@ -182,6 +185,10 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
     TextView title_community;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_business_name)
+    TextView txt_business_name;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_community)
     ImageView img_community;
 
@@ -240,7 +247,8 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
 
         img_sos.setVisibility(View.GONE);
         img_cart.setVisibility(View.GONE);
-        img_profile.setVisibility(View.INVISIBLE);
+        img_profile.setVisibility(View.GONE);
+        img_notification.setVisibility(View.GONE);
 
         img_notification.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), NotificationActivity.class)));
 
@@ -425,13 +433,55 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
 
     }
     private void gotoLogout() {
-        session.logoutUser();
+       /* session.logoutUser();
         session.setIsLogin(false);
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-        finish();
+        finish();*/
+        logoutResponseCall();
 
 
 
+    }
+
+    @SuppressLint("LogNotTimber")
+    private void logoutResponseCall() {
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<SuccessResponse> call = apiInterface.logoutResponseCall(RestUtils.getContentType(), defaultLocationRequest());
+        Log.w(TAG,"SignupResponse url  :%s"+" "+ call.request().url().toString());
+        call.enqueue(new Callback<SuccessResponse>() {
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
+                Log.w(TAG,"SuccessResponse" + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+                    if (200 == response.body().getCode()) {
+                        session.logoutUser();
+                        session.setIsLogin(false);
+                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                        finish();
+
+
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SuccessResponse> call,@NonNull Throwable t) {
+
+                Log.e("SuccessResponse flr", "--->" + t.getMessage());
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+    private DefaultLocationRequest defaultLocationRequest() {
+        DefaultLocationRequest defaultLocationRequest = new DefaultLocationRequest();
+        defaultLocationRequest.setUser_id(userid);
+
+        Log.w(TAG,"defaultLocationRequest "+ new Gson().toJson(defaultLocationRequest));
+        return defaultLocationRequest;
     }
 
 
@@ -461,6 +511,7 @@ public class SPProfileScreenActivity extends AppCompatActivity implements View.O
                         }
                         if(response.body().getData().getBussiness_name() != null) {
                             clinicname = response.body().getData().getBussiness_name();
+                            txt_business_name.setText(clinicname);
                         }
 
 

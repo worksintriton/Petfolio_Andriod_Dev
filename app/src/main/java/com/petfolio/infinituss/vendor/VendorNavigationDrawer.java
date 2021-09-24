@@ -19,6 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,16 +29,24 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.activity.LoginActivity;
 import com.petfolio.infinituss.activity.NotificationActivity;
 import com.petfolio.infinituss.api.APIClient;
+import com.petfolio.infinituss.api.RestApiInterface;
+import com.petfolio.infinituss.requestpojo.DefaultLocationRequest;
+import com.petfolio.infinituss.responsepojo.SuccessResponse;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
+import com.petfolio.infinituss.utils.RestUtils;
 
 import java.util.HashMap;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class VendorNavigationDrawer extends AppCompatActivity implements View.OnClickListener {
@@ -80,6 +89,7 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
     private SessionManager session;
     private Dialog dialog;
     private String refcode;
+    private String userid;
 
 
     @SuppressLint("LogNotTimber")
@@ -101,6 +111,8 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
         phoneNo = user.get(SessionManager.KEY_MOBILE);
         refcode = user.get(SessionManager.KEY_REF_CODE);
         image_url = user.get(SessionManager.KEY_PROFILE_IMAGE);
+        userid = user.get(SessionManager.KEY_ID);
+
 
 
 
@@ -409,12 +421,55 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
     }
 
     private void gotoLogout() {
-        session.logoutUser();
+        logoutResponseCall();
+        /*session.logoutUser();
         session.setIsLogin(false);
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-        finish();
+        finish();*/
 
     }
+
+    @SuppressLint("LogNotTimber")
+    private void logoutResponseCall() {
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<SuccessResponse> call = apiInterface.logoutResponseCall(RestUtils.getContentType(), defaultLocationRequest());
+        Log.w(TAG,"SignupResponse url  :%s"+" "+ call.request().url().toString());
+        call.enqueue(new Callback<SuccessResponse>() {
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
+                Log.w(TAG,"SuccessResponse" + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+                    if (200 == response.body().getCode()) {
+                        session.logoutUser();
+                        session.setIsLogin(false);
+                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                        finish();
+
+
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SuccessResponse> call,@NonNull Throwable t) {
+
+                Log.e("SuccessResponse flr", "--->" + t.getMessage());
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+    private DefaultLocationRequest defaultLocationRequest() {
+        DefaultLocationRequest defaultLocationRequest = new DefaultLocationRequest();
+        defaultLocationRequest.setUser_id(userid);
+
+        Log.w(TAG,"defaultLocationRequest "+ new Gson().toJson(defaultLocationRequest));
+        return defaultLocationRequest;
+    }
+
 
     @Override
     protected void onResume() {

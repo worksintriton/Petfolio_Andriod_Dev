@@ -19,6 +19,7 @@ import android.widget.ImageView;
 
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,8 +39,10 @@ import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.doctor.DoctorDashboardActivity;
 import com.petfolio.infinituss.doctor.shop.DoctorCartActivity;
+import com.petfolio.infinituss.requestpojo.DefaultLocationRequest;
 import com.petfolio.infinituss.requestpojo.NotificationCartCountRequest;
 import com.petfolio.infinituss.responsepojo.NotificationCartCountResponse;
+import com.petfolio.infinituss.responsepojo.SuccessResponse;
 import com.petfolio.infinituss.serviceprovider.shop.SPCartActivity;
 import com.petfolio.infinituss.serviceprovider.shop.SPMyOrdrersActivity;
 import com.petfolio.infinituss.serviceprovider.shop.SPProductsFavActivity;
@@ -450,12 +453,56 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
 
 
     private void gotoLogout() {
-        session.logoutUser();
+      /*  session.logoutUser();
         session.setIsLogin(false);
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-        finish();
+        finish();*/
+
+        logoutResponseCall();
 
 
+    }
+
+
+    @SuppressLint("LogNotTimber")
+    private void logoutResponseCall() {
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<SuccessResponse> call = apiInterface.logoutResponseCall(RestUtils.getContentType(), defaultLocationRequest());
+        Log.w(TAG,"SignupResponse url  :%s"+" "+ call.request().url().toString());
+        call.enqueue(new Callback<SuccessResponse>() {
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
+                Log.w(TAG,"SuccessResponse" + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+                    if (200 == response.body().getCode()) {
+                        session.logoutUser();
+                        session.setIsLogin(false);
+                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                        finish();
+
+
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SuccessResponse> call,@NonNull Throwable t) {
+
+                Log.e("SuccessResponse flr", "--->" + t.getMessage());
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+    private DefaultLocationRequest defaultLocationRequest() {
+        DefaultLocationRequest defaultLocationRequest = new DefaultLocationRequest();
+        defaultLocationRequest.setUser_id(userid);
+
+        Log.w(TAG,"defaultLocationRequest "+ new Gson().toJson(defaultLocationRequest));
+        return defaultLocationRequest;
     }
 
     private void showLogOutAppAlert() {

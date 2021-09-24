@@ -33,8 +33,6 @@ import com.petfolio.infinituss.R;
 
 
 import com.petfolio.infinituss.activity.NotificationActivity;
-import com.petfolio.infinituss.adapter.PetLoverSOSAdapter;
-import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.fragmentpetlover.myappointments.FragmentPetMissedAppointment;
 import com.petfolio.infinituss.fragmentpetlover.myappointments.FragmentPetCompletedAppointment;
 import com.petfolio.infinituss.fragmentpetlover.myappointments.FragmentPetNewAppointment;

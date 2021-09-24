@@ -21,6 +21,7 @@ import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.doctor.shop.DoctorProductDetailsActivity;
 import com.petfolio.infinituss.petlover.ProductDetailsActivity;
 import com.petfolio.infinituss.responsepojo.ProductSearchResponse;
+import com.petfolio.infinituss.serviceprovider.shop.SPProductDetailsActivity;
 
 import java.util.List;
 
@@ -132,6 +133,12 @@ public class ProductsSearchAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
             public void onClick(View v) {
                 if(activityname != null && activityname.equalsIgnoreCase("SearchDoctorActivity")){
                     Intent intent = new Intent(context, DoctorProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("productid",productSearchResponseCall.get(position).get_id());
+                    intent.putExtra("cat_id",cat_id);
+                    intent.putExtra("fromactivity",activityname);
+                    context.startActivity(intent);
+                }else if(activityname != null && activityname.equalsIgnoreCase("SearchSPActivity")){
+                    Intent intent = new Intent(context, SPProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("productid",productSearchResponseCall.get(position).get_id());
                     intent.putExtra("cat_id",cat_id);
                     intent.putExtra("fromactivity",activityname);

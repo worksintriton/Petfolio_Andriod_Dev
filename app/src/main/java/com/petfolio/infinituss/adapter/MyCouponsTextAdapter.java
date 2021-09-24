@@ -74,7 +74,7 @@ public class MyCouponsTextAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
 
         }
 
-      @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyyhhmmss");
+      @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMhhmmss");
       String currentDateandTime = simpleDateFormat.format(new Date());
 
         if(currentItem.getRefund() != null && !currentItem.getRefund().isEmpty()) {

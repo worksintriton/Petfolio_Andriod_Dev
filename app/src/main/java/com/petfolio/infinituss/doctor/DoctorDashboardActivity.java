@@ -43,10 +43,13 @@ import com.petfolio.infinituss.fragmentdoctor.DoctorCommunityFragment;
 import com.petfolio.infinituss.fragmentdoctor.DoctorShopFragment;
 import com.petfolio.infinituss.fragmentdoctor.FragmentDoctorDashboard;
 
+import com.petfolio.infinituss.requestpojo.DefaultLocationRequest;
 import com.petfolio.infinituss.requestpojo.ShippingAddressFetchByUserIDRequest;
+import com.petfolio.infinituss.responsepojo.DefaultLocationResponse;
 import com.petfolio.infinituss.responsepojo.ShippingAddressFetchByUserIDResponse;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
 
+import com.petfolio.infinituss.utils.ConnectionDetector;
 import com.petfolio.infinituss.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -231,6 +234,13 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
         SessionManager session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
+
+        if(userid !=  null){
+            if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                defaultLocationResponseCall();
+            }
+        }
+
 
      /*   if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
             shippingAddressresponseCall();
@@ -643,7 +653,7 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
 
                                     }
 
-                                    if(currentplacename != null){
+                                   /* if(currentplacename != null){
                                         txt_location.setText(currentplacename);
                                     }else if(CityName != null){
                                         txt_location.setText(CityName);
@@ -652,7 +662,7 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
                                     }else{
                                         txt_location.setText("");
                                     }
-
+*/
                                     if (typesList.contains("administrative_area_level_2")) {
                                         cityName = addressComponentsBeanList.get(i).getShort_name();
                                         //  CityName = cityName;
@@ -867,6 +877,55 @@ public class DoctorDashboardActivity  extends DoctorNavigationDrawer implements 
                 break;
         }
 
+    }
+
+
+
+    @SuppressLint("LogNotTimber")
+    private void defaultLocationResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<DefaultLocationResponse> call = apiInterface.defaultLocationResponseCall(RestUtils.getContentType(), defaultLocationRequest());
+        Log.w(TAG,"SignupResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<DefaultLocationResponse>() {
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onResponse(@NonNull Call<DefaultLocationResponse> call, @NonNull Response<DefaultLocationResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"DefaultLocationResponse" + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+                    if (200 == response.body().getCode()) {
+                        if(response.body().getData() != null) {
+                            if (response.body().getData().getLocation_city() != null) {
+                                txt_location.setText(response.body().getData().getLocation_city());
+                            }
+                        }
+
+
+
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<DefaultLocationResponse> call,@NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.e("DefaultLocationResponse flr", "--->" + t.getMessage());
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+    private DefaultLocationRequest defaultLocationRequest() {
+        DefaultLocationRequest defaultLocationRequest = new DefaultLocationRequest();
+        defaultLocationRequest.setUser_id(userid);
+
+        Log.w(TAG,"defaultLocationRequest "+ new Gson().toJson(defaultLocationRequest));
+        return defaultLocationRequest;
     }
 
 

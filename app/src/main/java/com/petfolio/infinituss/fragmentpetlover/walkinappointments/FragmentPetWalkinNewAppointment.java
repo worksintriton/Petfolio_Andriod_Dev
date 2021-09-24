@@ -740,7 +740,7 @@ public class FragmentPetWalkinNewAppointment extends Fragment implements OnAppoi
          * user_details : 123123
          * used_status : Not Used
          */
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyyhhmmss");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMhhmmss");
         String currentDateandTime = simpleDateFormat.format(new Date());
 
 

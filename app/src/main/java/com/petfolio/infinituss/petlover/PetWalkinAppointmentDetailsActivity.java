@@ -1898,7 +1898,7 @@ public class PetWalkinAppointmentDetailsActivity extends AppCompatActivity imple
          */
 
 
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyyhhmmss");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMhhmmss");
         String currentDateandTime = simpleDateFormat.format(new Date());
 
 

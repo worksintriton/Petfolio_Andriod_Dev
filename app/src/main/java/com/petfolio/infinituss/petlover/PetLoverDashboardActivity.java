@@ -46,27 +46,37 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.api.API;
 
+import com.petfolio.infinituss.api.APIClient;
+import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.fragmentpetlover.bottommenu.PetCareFragment;
 import com.petfolio.infinituss.fragmentpetlover.bottommenu.PetCommunityFragment;
 import com.petfolio.infinituss.fragmentpetlover.bottommenu.PetHomeNewFragment;
 import com.petfolio.infinituss.fragmentpetlover.bottommenu.PetServicesFragment;
 import com.petfolio.infinituss.fragmentpetlover.bottommenu.VendorShopFragment;
 
+import com.petfolio.infinituss.requestpojo.DefaultLocationRequest;
+import com.petfolio.infinituss.responsepojo.DefaultLocationResponse;
 import com.petfolio.infinituss.responsepojo.GetAddressResultResponse;
 
 import com.petfolio.infinituss.service.GPSTracker;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
 
+import com.petfolio.infinituss.utils.ConnectionDetector;
+import com.petfolio.infinituss.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -309,6 +319,12 @@ public class PetLoverDashboardActivity extends PetLoverNavigationDrawerNew imple
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_schedule, active, active_tag);
             transaction.commitNowAllowingStateLoss();
+        }
+
+        if(userid !=  null){
+            if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                defaultLocationResponseCall();
+            }
         }
 
 
@@ -901,5 +917,54 @@ public class PetLoverDashboardActivity extends PetLoverNavigationDrawerNew imple
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)rl_layout.getLayoutParams();
         params.setMargins(i, i1, i2, i3);
         rl_layout.setLayoutParams(params);
+    }
+
+
+    @SuppressLint("LogNotTimber")
+    private void defaultLocationResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<DefaultLocationResponse> call = apiInterface.defaultLocationResponseCall(RestUtils.getContentType(), defaultLocationRequest());
+        Log.w(TAG,"SignupResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<DefaultLocationResponse>() {
+            @SuppressLint("LogNotTimber")
+            @Override
+            public void onResponse(@NonNull Call<DefaultLocationResponse> call, @NonNull Response<DefaultLocationResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"DefaultLocationResponse" + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+
+                    if (200 == response.body().getCode()) {
+                        if(response.body().getData() != null) {
+                            if (response.body().getData().getLocation_city() != null) {
+                                txt_location.setText(response.body().getData().getLocation_city());
+                            }
+                        }
+
+
+
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<DefaultLocationResponse> call,@NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+                Log.e("DefaultLocationResponse flr", "--->" + t.getMessage());
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+    private DefaultLocationRequest defaultLocationRequest() {
+        DefaultLocationRequest defaultLocationRequest = new DefaultLocationRequest();
+        defaultLocationRequest.setUser_id(userid);
+
+        Log.w(TAG,"defaultLocationRequest "+ new Gson().toJson(defaultLocationRequest));
+        return defaultLocationRequest;
     }
 }

@@ -32,10 +32,14 @@
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_petappointment_details.xml" value="0.16077898550724637" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_petlover_doctor_choose_payment_method.xml" value="0.18568840579710144" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_petlover_service_choose_payment_method.xml" value="0.18568840579710144" />
+        <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_petlover_vendor_order_details.xml" value="0.12360688956433637" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_prescription.xml" value="0.18568840579710144" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_product_details.xml" value="0.152" />
+        <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_search_doctor.xml" value="0.12360688956433637" />
+        <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_service_provider_dashboard.xml" value="0.12360688956433637" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_service_provider_edit_form.xml" value="0.15217391304347827" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_service_provider_register_form.xml" value="0.13360507246376813" />
+        <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_sp_profile_screen.xml" value="0.12360688956433637" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_vendor_add_products.xml" value="0.13360507246376813" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_vendor_register_form.xml" value="0.17753623188405798" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/adapter_doctor_missed_appointment.xml" value="0.23505434782608695" />
@@ -73,6 +77,7 @@
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/fragment_doctor_dashboard.xml" value="0.19293478260869565" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/fragment_home_pet_new.xml" value="0.13541666666666666" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/fragment_pet_care.xml" value="0.18297101449275363" />
+        <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/fragment_shop_vendor.xml" value="0.12360688956433637" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/navigation_drawer_layout_new.xml" value="0.17119565217391305" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/petcare_bottom_sheet.xml" value="0.13722826086956522" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/product_details_bottom_sheet.xml" value="0.25416666666666665" />

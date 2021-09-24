@@ -32,6 +32,7 @@ import com.petfolio.infinituss.adapter.MyCouponsTextAdapter;
 import com.petfolio.infinituss.adapter.PetNewAppointmentAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
+import com.petfolio.infinituss.doctor.ManageAddressDoctorActivity;
 import com.petfolio.infinituss.interfaces.OnAppointmentCancel;
 import com.petfolio.infinituss.interfaces.OnAppointmentSuccessfullyCancel;
 import com.petfolio.infinituss.petlover.PetMyappointmentsActivity;
@@ -707,7 +708,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         dialog.dismiss();
-                        startActivity(new Intent(mContext, PetMyappointmentsActivity.class));
+                        showRefundSuccessfully("Coupon code generated successfully. Generated coupon will also be available in My Coupons.");
 
                     }
 
@@ -735,7 +736,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
          * user_details : 123123
          * used_status : Not Used
          */
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyyhhmmss");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMhhmmss");
         String currentDateandTime = simpleDateFormat.format(new Date());
 
 
@@ -776,8 +777,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         dialog.dismiss();
-                        startActivity(new Intent(mContext, PetMyappointmentsActivity.class));
-
+                        showRefundSuccessfully("Your refund will be processed in 4-5 working days.");
                     }
 
                 }
@@ -821,5 +821,48 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
         Log.w(TAG,"refundCouponCreateRequest"+ "--->" + new Gson().toJson(refundCouponCreateRequest));
         return refundCouponCreateRequest;
     }
+
+    private void showRefundSuccessfully(String Message) {
+
+        try {
+
+            dialog = new Dialog(mContext);
+            dialog.setContentView(R.layout.alert_approve_reject_layout);
+            TextView tvheader = dialog.findViewById(R.id.tvInternetNotConnected);
+            tvheader.setText(Message);
+            Button dialogButtonApprove = dialog.findViewById(R.id.btnApprove);
+            dialogButtonApprove.setText("Ok");
+            Button dialogButtonRejected = dialog.findViewById(R.id.btnReject);
+            dialogButtonRejected.setText("No");
+            dialogButtonRejected.setVisibility(View.GONE);
+
+            dialogButtonApprove.setOnClickListener(view -> {
+                startActivity(new Intent(mContext, PetMyappointmentsActivity.class));
+                dialog.dismiss();
+
+
+
+
+            });
+            dialogButtonRejected.setOnClickListener(view -> {
+                // Toasty.info(context, "Rejected Successfully", Toast.LENGTH_SHORT, true).show();
+                dialog.dismiss();
+
+
+
+
+            });
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
 
 }

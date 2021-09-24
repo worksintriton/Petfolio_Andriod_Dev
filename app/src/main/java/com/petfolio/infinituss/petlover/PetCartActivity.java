@@ -1207,7 +1207,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
             Button btn_yes = dialog.findViewById(R.id.btn_yes);
             Button btn_no = dialog.findViewById(R.id.btn_no);
             TextView txt_msg = dialog.findViewById(R.id.txt_content_message);
-            txt_msg.setText("Are you sure that you need to Empty the Cart?");
+            txt_msg.setText("Are you sure that you want to Empty the Cart?");
             btn_yes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -1241,7 +1241,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
             Button btn_yes = dialog.findViewById(R.id.btn_yes);
             Button btn_no = dialog.findViewById(R.id.btn_no);
             TextView txt_msg = dialog.findViewById(R.id.txt_content_message);
-            txt_msg.setText("Are you sure that you need to delete the products?");
+            txt_msg.setText("Are you sure that you want to delete the products?");
             btn_yes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
