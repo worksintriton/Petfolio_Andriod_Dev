@@ -177,6 +177,11 @@ public class PickUpLocationDenyActivity extends FragmentActivity implements OnMa
         TextView toolbar_title = include_petlover_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.pickup_location));
 
+        img_sos.setVisibility(View.GONE);
+        img_cart.setVisibility(View.GONE);
+        img_notification.setVisibility(View.GONE);
+        img_profile.setVisibility(View.GONE);
+
 
         /*home*/
         title_care.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));

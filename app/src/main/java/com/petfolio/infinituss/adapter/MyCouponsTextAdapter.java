@@ -1,6 +1,7 @@
 package com.petfolio.infinituss.adapter;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,8 @@ import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.interfaces.OnAppointmentSuccessfullyCancel;
 import com.petfolio.infinituss.responsepojo.CouponCodeTextResponse;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -58,6 +61,7 @@ public class MyCouponsTextAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
 
     }
 
+  @SuppressLint("SetTextI18n")
   private void initLayoutOne(ViewHolderOne holder, final int position) {
 
         Log.w(TAG,"ServiceCost : "+ServiceCost);
@@ -70,9 +74,12 @@ public class MyCouponsTextAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
 
         }
 
+      @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyyhhmmss");
+      String currentDateandTime = simpleDateFormat.format(new Date());
+
         if(currentItem.getRefund() != null && !currentItem.getRefund().isEmpty()) {
             holder.ll_referralcode.setVisibility(View.VISIBLE);
-            holder.txt_refund.setText("REF"+ServiceCost);
+            holder.txt_refund.setText("REF"+currentDateandTime);
         }else{
             holder.ll_referralcode.setVisibility(View.GONE);
         }

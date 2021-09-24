@@ -39,6 +39,7 @@
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_vendor_register_form.xml" value="0.17753623188405798" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/adapter_doctor_missed_appointment.xml" value="0.23505434782608695" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/adapter_doctor_new_appointment.xml" value="0.23505434782608695" />
+        <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/adapter_mycoupons_cardview.xml" value="0.19293478260869565" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/adapter_nearby_doctors.xml" value="0.18297101449275363" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/adapter_pet_new_appointment.xml" value="0.17119565217391305" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/adapter_petlist.xml" value="0.17119565217391305" />
@@ -68,6 +69,7 @@
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/doctor_bottom_sheet.xml" value="0.25416666666666665" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/doctor_navigation_drawer_layout.xml" value="0.17119565217391305" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/doctor_toolbar_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/fragment_doctor_dashboard.xml" value="0.19293478260869565" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/fragment_home_pet_new.xml" value="0.13541666666666666" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/fragment_pet_care.xml" value="0.18297101449275363" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/navigation_drawer_layout_new.xml" value="0.17119565217391305" />

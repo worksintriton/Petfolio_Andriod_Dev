@@ -2,6 +2,8 @@ package com.petfolio.infinituss.adapter;
 
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,6 +29,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+
+import es.dmoral.toasty.Toasty;
 
 
 public class MyCouponsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -62,6 +67,18 @@ public class MyCouponsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHol
   @SuppressLint({"LogNotTimber", "SetTextI18n"})
   private void initLayoutOne(ViewHolderOne holder, final int position) {
         currentItem = couponcoderesponseList.get(position);
+        holder.img_copy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String textToCopy = holder.txt_coupon_code.getText().toString();
+                ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText(null, textToCopy);
+                if (clipboard == null) return;
+                clipboard.setPrimaryClip(clip);
+                Toasty.success(context, "Copied", Toast.LENGTH_SHORT, true).show();
+
+            }
+        });
 
 
         if(currentItem.getTitle() != null && !currentItem.getTitle().isEmpty() ) {
@@ -162,7 +179,7 @@ public class MyCouponsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHol
     class ViewHolderOne extends RecyclerView.ViewHolder {
         public TextView txt_title,txt_desc,txt_coupon_code,txt_expired;
         public LinearLayout ll_root;
-        public ImageView img_notify_imge;
+        public ImageView img_notify_imge,img_copy;
 
 
 
@@ -175,6 +192,7 @@ public class MyCouponsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHol
             txt_expired = itemView.findViewById(R.id.txt_expired);
             img_notify_imge = itemView.findViewById(R.id.img_notify_imge);
             ll_root = itemView.findViewById(R.id.ll_root);
+            img_copy = itemView.findViewById(R.id.img_copy);
 
         }
 

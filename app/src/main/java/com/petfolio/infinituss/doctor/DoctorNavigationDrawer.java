@@ -159,6 +159,7 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
                         if(response.body().getData()!=null){
                             int Notification_count = response.body().getData().getNotification_count();
                             int Product_count = response.body().getData().getProduct_count();
+
                             if(Notification_count != 0){
                                 txt_notification_count_badge.setVisibility(View.VISIBLE);
                                 txt_notification_count_badge.setText(""+Notification_count);
