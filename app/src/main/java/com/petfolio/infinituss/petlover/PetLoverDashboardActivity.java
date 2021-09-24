@@ -94,7 +94,7 @@ public class PetLoverDashboardActivity extends PetLoverNavigationDrawerNew imple
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.txt_location)
-    TextView txt_location;
+   public TextView txt_location;
 
     /* Petlover Bottom Navigation */
 
@@ -697,7 +697,7 @@ public class PetLoverDashboardActivity extends PetLoverNavigationDrawerNew imple
 
                                     }
 
-                                    if(currentplacename != null){
+                                   /* if(currentplacename != null){
                                         txt_location.setText(currentplacename);
                                     }else if(CityName != null){
                                         txt_location.setText(CityName);
@@ -706,7 +706,7 @@ public class PetLoverDashboardActivity extends PetLoverNavigationDrawerNew imple
                                     }else{
                                         txt_location.setText("");
                                     }
-
+*/
                                     if (typesList.contains("administrative_area_level_2")) {
                                         cityName = addressComponentsBeanList.get(i).getShort_name();
                                         //  CityName = cityName;

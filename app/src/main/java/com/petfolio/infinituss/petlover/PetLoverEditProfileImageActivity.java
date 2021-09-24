@@ -116,6 +116,7 @@ public class PetLoverEditProfileImageActivity extends AppCompatActivity implemen
     private String refcode;
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,10 +149,13 @@ public class PetLoverEditProfileImageActivity extends AppCompatActivity implemen
             Glide.with(PetLoverEditProfileImageActivity.this)
                     .load(profileimage)
                     .into(img_pet_imge);
+            txt_uploadpetimage.setText("Change Image");
         }else{
             Glide.with(PetLoverEditProfileImageActivity.this)
                     .load(R.drawable.image_thumbnail)
                     .into(img_pet_imge);
+            txt_uploadpetimage.setText("Upload Image");
+
 
         }
 
@@ -161,7 +165,7 @@ public class PetLoverEditProfileImageActivity extends AppCompatActivity implemen
 
     }
 
-    @SuppressLint("NonConstantResourceId")
+    @SuppressLint({"NonConstantResourceId", "ObsoleteSdkInt"})
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -462,10 +466,12 @@ public class PetLoverEditProfileImageActivity extends AppCompatActivity implemen
                             Glide.with(PetLoverEditProfileImageActivity.this)
                                     .load(profileimage)
                                     .into(img_pet_imge);
+                            txt_uploadpetimage.setText("Change Image");
                         }else{
                             Glide.with(PetLoverEditProfileImageActivity.this)
                                     .load(R.drawable.image_thumbnail)
                                     .into(img_pet_imge);
+                            txt_uploadpetimage.setText("Upload Image");
 
                         }
 

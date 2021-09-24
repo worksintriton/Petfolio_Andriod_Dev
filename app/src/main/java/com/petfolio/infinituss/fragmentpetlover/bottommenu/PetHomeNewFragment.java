@@ -213,6 +213,7 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
     private Activity mActivity;
 
 
+
     public PetHomeNewFragment() {
         // Required empty public constructor
     }
@@ -374,6 +375,13 @@ public class PetHomeNewFragment extends Fragment implements Serializable,
                     if (200 == response.body().getCode()) {
                         headerView.setVisibility(View.VISIBLE);
                         ll_content_shop.setVisibility(View.VISIBLE);
+                        if(response.body().getData().getLocationDetails() != null && response.body().getData().getLocationDetails().size()>0) {
+                         String locationcity =  response.body().getData().getLocationDetails().get(0).getLocation_city();
+                         Log.w(TAG,"locationcity : "+locationcity);
+
+
+                        }
+
 
                         if (response.body().getData().getDashboarddata().getBanner_details() != null && response.body().getData().getDashboarddata().getBanner_details().size()>0) {
                             listHomeBannerResponse = response.body().getData().getDashboarddata().getBanner_details();

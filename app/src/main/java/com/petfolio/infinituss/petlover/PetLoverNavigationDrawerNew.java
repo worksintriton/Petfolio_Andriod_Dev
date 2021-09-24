@@ -105,7 +105,7 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
     private String sosPhonenumber;
 
     public View toolbar_layout;
-    TextView txt_location;
+   public TextView txt_location;
     private String refcode;
 
     TextView txt_notification_count_badge;
