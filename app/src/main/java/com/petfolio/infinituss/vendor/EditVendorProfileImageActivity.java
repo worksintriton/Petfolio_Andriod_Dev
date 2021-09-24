@@ -36,8 +36,10 @@ import com.petfolio.infinituss.appUtils.FileUtil;
 import com.petfolio.infinituss.requestpojo.DoctorUpdateProfileImageRequest;
 import com.petfolio.infinituss.responsepojo.DoctorUpdateProfileImageResponse;
 import com.petfolio.infinituss.responsepojo.FileUploadResponse;
+import com.petfolio.infinituss.serviceprovider.SPEditProfileImageActivity;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
 import com.petfolio.infinituss.utils.RestUtils;
+import com.theartofdev.edmodo.cropper.CropImage;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.File;
@@ -52,6 +54,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import es.dmoral.toasty.Toasty;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -214,7 +217,7 @@ public class EditVendorProfileImageActivity extends AppCompatActivity implements
 
     private void choosePetImage() {
 
-
+/*
             final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
             //AlertDialog.Builder alert=new AlertDialog.Builder(this);
             AlertDialog.Builder builder = new AlertDialog.Builder(EditVendorProfileImageActivity.this);
@@ -260,7 +263,29 @@ public class EditVendorProfileImageActivity extends AppCompatActivity implements
                     dialog.dismiss();
                 }
             });
-            builder.show();
+            builder.show();*/
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(EditVendorProfileImageActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+        {
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CLINIC_CAMERA_PERMISSION_CODE);
+        }
+
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(EditVendorProfileImageActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+        {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_CLINIC_PIC_PERMISSION);
+        }
+
+        else
+        {
+
+
+            CropImage.activity().start(EditVendorProfileImageActivity.this);
+
+            /*CropImage.activity().start(AddYourPetImageOlduserActivity.this);*/
+        }
+
+
+
 
 
 
@@ -272,90 +297,150 @@ public class EditVendorProfileImageActivity extends AppCompatActivity implements
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        try {
 
-        //	Toast.makeText(getActivity(),"kk",Toast.LENGTH_SHORT).show();
-        if(requestCode== SELECT_CLINIC_PICTURE || requestCode == SELECT_CLINIC_CAMERA)
-        {
+            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                if (resultCode == RESULT_OK) {
+                    Uri resultUri = result.getUri();
 
-            if(requestCode == SELECT_CLINIC_CAMERA)
-            {
-                if(data != null) {
-                    Bitmap photo = (Bitmap) data.getExtras().get("data");
+                    if (resultUri != null) {
 
-                    File file = new File(getFilesDir(), "Petfolio1" + ".jpg");
+                        Log.w("selectedImageUri", " " + resultUri);
 
-                    OutputStream os;
-                    try {
-                        os = new FileOutputStream(file);
-                        if (photo != null) {
-                            photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
-                        }
-                        os.flush();
-                        os.close();
-                    } catch (Exception e) {
-                        Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
-                    }
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
-                    String currentDateandTime = sdf.format(new Date());
+                        String filename = getFileName(resultUri);
 
-                    RequestBody requestFile = RequestBody.create(MediaType.parse("image*/"), file);
+                        Log.w("filename", " " + filename);
 
-                    filePart = MultipartBody.Part.createFormData("sampleFile", userid + currentDateandTime + file.getName(), requestFile);
+                        String filePath = FileUtil.getPath(EditVendorProfileImageActivity.this, resultUri);
 
-                    uploadPetImage();
-                }
+                        assert filePath != null;
 
-            }
+                        File file = new File(filePath); // initialize file here
 
-            else{
+                        long length = file.length() / 1024; // Size in KB
 
-                try {
-                    if (resultCode == Activity.RESULT_OK)
-                    {
-                        if(data != null){
-                            Log.w("VALUEEEEEEE1111", " " + data);
+                        Log.w("filesize", " " + length);
 
-                            Uri selectedImageUri = data.getData();
+                        if (length > 2000) {
 
-                            Log.w("selectedImageUri", " " + selectedImageUri);
+                            new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                                    .setTitleText("File Size")
+                                    .setContentText("Please choose file size less than 2 MB ")
+                                    .setConfirmText("Ok")
+                                    .show();
+                        } else {
 
-                            String filename = null;
-                            if (selectedImageUri != null) {
-                                filename = getFileName(selectedImageUri);
-                            }
-
-                            Log.w("filename", " " + filename);
-
-                            String filePath = FileUtil.getPath(EditVendorProfileImageActivity.this,selectedImageUri);
-
-                            assert filePath != null;
-
-                            File file = new File(filePath); // initialize file here
-
-                            long length = file.length() / 1024; // Size in KB
-
-                            Log.w("filesize", " " + length);
 
                             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
                             String currentDateandTime = sdf.format(new Date());
 
-                            filePart = MultipartBody.Part.createFormData("sampleFile", userid+currentDateandTime+file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                            filePart = MultipartBody.Part.createFormData("sampleFile", userid + currentDateandTime + file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
 
                             uploadPetImage();
+
                         }
 
 
+                    } else {
 
-
+                        Toasty.warning(EditVendorProfileImageActivity.this, "Image Error!!Please upload Some other image", Toasty.LENGTH_LONG).show();
                     }
-                } catch (Exception e) {
 
-                    Log.w("Exception", " " + e);
+
+                }
+            }
+
+
+            //	Toast.makeText(getActivity(),"kk",Toast.LENGTH_SHORT).show();
+            if(requestCode== SELECT_CLINIC_PICTURE || requestCode == SELECT_CLINIC_CAMERA)
+            {
+
+                if(requestCode == SELECT_CLINIC_CAMERA)
+                {
+                    if(data != null) {
+                        Bitmap photo = (Bitmap) data.getExtras().get("data");
+
+                        File file = new File(getFilesDir(), "Petfolio1" + ".jpg");
+
+                        OutputStream os;
+                        try {
+                            os = new FileOutputStream(file);
+                            if (photo != null) {
+                                photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
+                            }
+                            os.flush();
+                            os.close();
+                        } catch (Exception e) {
+                            Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
+                        }
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+                        String currentDateandTime = sdf.format(new Date());
+
+                        RequestBody requestFile = RequestBody.create(MediaType.parse("image*/"), file);
+
+                        filePart = MultipartBody.Part.createFormData("sampleFile", userid + currentDateandTime + file.getName(), requestFile);
+
+                        uploadPetImage();
+                    }
+
+                }
+
+                else{
+
+                    try {
+                        if (resultCode == Activity.RESULT_OK)
+                        {
+                            if(data != null){
+                                Log.w("VALUEEEEEEE1111", " " + data);
+
+                                Uri selectedImageUri = data.getData();
+
+                                Log.w("selectedImageUri", " " + selectedImageUri);
+
+                                String filename = null;
+                                if (selectedImageUri != null) {
+                                    filename = getFileName(selectedImageUri);
+                                }
+
+                                Log.w("filename", " " + filename);
+
+                                String filePath = FileUtil.getPath(EditVendorProfileImageActivity.this,selectedImageUri);
+
+                                assert filePath != null;
+
+                                File file = new File(filePath); // initialize file here
+
+                                long length = file.length() / 1024; // Size in KB
+
+                                Log.w("filesize", " " + length);
+
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+                                String currentDateandTime = sdf.format(new Date());
+
+                                filePart = MultipartBody.Part.createFormData("sampleFile", userid+currentDateandTime+file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+
+                                uploadPetImage();
+                            }
+
+
+
+
+                        }
+                    } catch (Exception e) {
+
+                        Log.w("Exception", " " + e);
+                    }
+
                 }
 
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+
 
 
 
