@@ -297,6 +297,8 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     private String Problem_info = "";
     private String Allergies = "";
 
+    String outputTimeStr = "";
+
     @SuppressLint("LogNotTimber")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -328,11 +330,11 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
             Log.w(TAG, "strpetimage : " + strpetimage);
 
 
-            if(strpetimage != null) {
+           /* if(strpetimage != null) {
                 DocBusInfoUploadRequest.ClinicPicBean clinicPicBean = new DocBusInfoUploadRequest.ClinicPicBean(strpetimage);
                 clinicPicBeans.add(clinicPicBean);
                 setView();
-            }
+            }*/
 
         }
 
@@ -369,7 +371,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         txt_petbreed.setVisibility(View.GONE);
         cv_pet_img.setVisibility(View.GONE);
         rv_upload_pet_images.setVisibility(View.GONE);
-        img_pet_imge.setVisibility(View.VISIBLE);
+        img_pet_imge.setVisibility(View.GONE);
         rl_petbreed.setVisibility(View.GONE);
 
         ll_visit_group.setVisibility(View.GONE);
@@ -440,7 +442,6 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                                 petId = petDetailsResponseByUserIdList.get(i).get_id();
                                 petimage = petDetailsResponseByUserIdList.get(i).getPet_img();
                                 if(petimage!=null&&petimage.size()>0){
-
                                     img_pet_imge.setVisibility(View.GONE);
 
                                     viewpageData(petimage);
@@ -448,7 +449,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
                                 else {
 
-                                    img_pet_imge.setVisibility(View.VISIBLE);
+                                    img_pet_imge.setVisibility(View.GONE);
 
                                 }
 
@@ -480,7 +481,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                     txt_pettype.setVisibility(View.GONE);
                     txt_petbreed.setVisibility(View.GONE);
                     cv_pet_img.setVisibility(View.GONE);
-                    img_pet_imge.setVisibility(View.VISIBLE);
+                    img_pet_imge.setVisibility(View.GONE);
                     edt_petname.setText("");
                     edt_petname.setEnabled(true);
                     edt_petname.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
@@ -899,7 +900,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
     private void choosePetImage() {
 
-        if (clinicPicBeans!=null&&clinicPicBeans.size() >= 1) {
+        if (clinicPicBeans!=null && clinicPicBeans.size() >= 3) {
 
             Toasty.warning(getApplicationContext(), "Sorry you can't Add more than 1", Toast.LENGTH_SHORT).show();
 
@@ -1347,7 +1348,19 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         intent.putExtra("clinicname", clinicname);
         intent.putExtra("petname", petname);
         intent.putExtra("petimage", strpetimage);
+        intent.putExtra("Doctor_ava_Date", Doctor_ava_Date);
+        intent.putExtra("selectedTimeSlot", selectedTimeSlot);
+        intent.putExtra("amount", amount);
+        intent.putExtra("communicationtype", communicationtype);
+        intent.putExtra("petId", petId);
+        intent.putExtra("health_issue_title", health_issue_title);
+        intent.putExtra("doctorname", doctorname);
+        intent.putExtra("clinicname", clinicname);
+        intent.putExtra("petname", petname);
+        intent.putExtra("petimage", strpetimage);
         startActivity(intent);
+
+
 
 
     }
@@ -1508,16 +1521,17 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         @SuppressLint("SimpleDateFormat") DateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         Date date = null;
+
+        String outputDateStr = "";
         if(Doctor_ava_Date != null && !Doctor_ava_Date.isEmpty()){
             try {
             date = inputFormat.parse(Doctor_ava_Date);
-        } catch (ParseException e) {
+                 outputDateStr = outputFormat.format(date);
+            } catch (ParseException e) {
             e.printStackTrace();
         }
         }
 
-        String outputDateStr = outputFormat.format(date);
-        String outputTimeStr = null;
 
         @SuppressLint("SimpleDateFormat") SimpleDateFormat h_mm_a   = new SimpleDateFormat("hh:mm aa");
         @SuppressLint("SimpleDateFormat") SimpleDateFormat hh_mm_ss = new SimpleDateFormat("HH:mm:ss");

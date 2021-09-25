@@ -97,6 +97,7 @@ public class ConsultationIssuesActivity extends AppCompatActivity implements Vie
     private String clinicname;
     private String petname;
     private String petimage;
+    private String strpetimage;
 
 
     @SuppressLint({"LogNotTimber", "SetTextI18n", "LongLogTag"})
@@ -147,6 +148,8 @@ public class ConsultationIssuesActivity extends AppCompatActivity implements Vie
             Log.w(TAG,"spid : "+spid +" catid : "+catid+" from : "+from+" serviceamount : "+serviceamount+" servicetime : "+servicetime+" SP_ava_Date : "+SP_ava_Date+" selectedTimeSlot : "+selectedTimeSlot);
 
             Log.w(TAG, "petId : " + petId);
+
+            strpetimage = extras.getString("petimage");
 
         }
         img_back.setOnClickListener(this);

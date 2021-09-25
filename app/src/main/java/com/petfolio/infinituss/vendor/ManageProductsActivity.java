@@ -316,7 +316,7 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
                             txt_discard_deal.setVisibility(View.VISIBLE);
                             isAllFabsVisible = true;
                             add_deal_text.setText("Close");
-                            add_deal_fab.setImageResource(R.drawable.ic_baseline_minimize_24);
+                            add_deal_fab.setImageResource(R.drawable.ic_baseline_close_white24);
 
                         } else {
                             fab_add_deal.hide();
