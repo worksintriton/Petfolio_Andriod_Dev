@@ -125,6 +125,7 @@ public class SPEditProfileImageActivity extends AppCompatActivity implements Vie
     private String refcode;
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -158,10 +159,12 @@ public class SPEditProfileImageActivity extends AppCompatActivity implements Vie
             Glide.with(SPEditProfileImageActivity.this)
                     .load(profileimage)
                     .into(img_pet_imge);
+            txt_uploadpetimage.setText("Change Image");
         }else{
             Glide.with(SPEditProfileImageActivity.this)
                     .load(R.drawable.image_thumbnail)
                     .into(img_pet_imge);
+            txt_uploadpetimage.setText("Upload Image");
 
         }
 
@@ -450,6 +453,7 @@ public class SPEditProfileImageActivity extends AppCompatActivity implements Vie
         Call<FileUploadResponse> call = apiInterface.getImageStroeResponse(filePart);
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
         call.enqueue(new Callback<FileUploadResponse>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(@NonNull Call<FileUploadResponse> call, @NonNull Response<FileUploadResponse> response) {
                 avi_indicator.smoothToHide();
@@ -467,10 +471,12 @@ public class SPEditProfileImageActivity extends AppCompatActivity implements Vie
                             Glide.with(SPEditProfileImageActivity.this)
                                     .load(profileimage)
                                     .into(img_pet_imge);
+                            txt_uploadpetimage.setText("Change Image");
                         }else{
                             Glide.with(SPEditProfileImageActivity.this)
                                     .load(R.drawable.image_thumbnail)
                                     .into(img_pet_imge);
+                            txt_uploadpetimage.setText("Upload Image");
 
                         }
 

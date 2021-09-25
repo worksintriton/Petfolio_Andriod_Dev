@@ -106,6 +106,10 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
     FloatingActionButton add_deal_fab;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.add_deal_text)
+    TextView add_deal_text;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.fab_add_deal)
     FloatingActionButton fab_add_deal;
 
@@ -302,7 +306,7 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
         isAllFabsVisible = false;
         isAddDealFabsVisible = false;
         add_deal_fab.setOnClickListener(new View.OnClickListener() {
-                    @SuppressLint({"UseCompatLoadingForDrawables", "ObsoleteSdkInt"})
+                    @SuppressLint({"UseCompatLoadingForDrawables", "ObsoleteSdkInt", "SetTextI18n"})
                     @Override
                     public void onClick(View view) {
                         if (!isAllFabsVisible) {
@@ -311,13 +315,15 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
                             txt_add_deal.setVisibility(View.VISIBLE);
                             txt_discard_deal.setVisibility(View.VISIBLE);
                             isAllFabsVisible = true;
-                            add_deal_fab.setImageResource(R.drawable.ic_baseline_close_white24);
+                            add_deal_text.setText("Close");
+                            add_deal_fab.setImageResource(R.drawable.ic_baseline_minimize_24);
 
                         } else {
                             fab_add_deal.hide();
                             fab_discard_deal.hide();
                             txt_add_deal.setVisibility(View.GONE);
                             txt_discard_deal.setVisibility(View.GONE);
+                            add_deal_text.setText("Add Deal");
                             isAllFabsVisible = false;
                             add_deal_fab.setImageResource(R.drawable.ic_baseline_add_24);
                             showCheckbox = false;

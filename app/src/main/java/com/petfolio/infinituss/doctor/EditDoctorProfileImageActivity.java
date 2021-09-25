@@ -123,6 +123,7 @@ public class EditDoctorProfileImageActivity extends AppCompatActivity implements
     private String refcode;
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -155,10 +156,12 @@ public class EditDoctorProfileImageActivity extends AppCompatActivity implements
             Glide.with(EditDoctorProfileImageActivity.this)
                     .load(profileimage)
                     .into(img_pet_imge);
+            txt_uploadpetimage.setText("Change Image");
         }else{
             Glide.with(EditDoctorProfileImageActivity.this)
                     .load(R.drawable.image_thumbnail)
                     .into(img_pet_imge);
+            txt_uploadpetimage.setText("Upload Image");
 
         }
 
@@ -468,10 +471,12 @@ public class EditDoctorProfileImageActivity extends AppCompatActivity implements
                             Glide.with(EditDoctorProfileImageActivity.this)
                                     .load(profileimage)
                                     .into(img_pet_imge);
+                            txt_uploadpetimage.setText("Change Image");
                         }else{
                             Glide.with(EditDoctorProfileImageActivity.this)
                                     .load(R.drawable.image_thumbnail)
                                     .into(img_pet_imge);
+                            txt_uploadpetimage.setText("Upload Image");
 
                         }
 

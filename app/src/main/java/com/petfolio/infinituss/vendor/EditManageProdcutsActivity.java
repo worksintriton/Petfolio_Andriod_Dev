@@ -221,9 +221,18 @@ public class EditManageProdcutsActivity extends AppCompatActivity {
          */
 
 
+        int myCost = 0;
+
+        try {
+            myCost = Integer.parseInt(edt_product_price.getText().toString());
+        } catch(NumberFormatException nfe) {
+            System.out.println("Could not parse " + nfe);
+        }
+
+
         ProductEditRequest productEditRequest = new ProductEditRequest();
         productEditRequest.set_id(productid);
-        productEditRequest.setCost(Integer.parseInt(edt_product_price.getText().toString()));
+        productEditRequest.setCost(myCost);
         productEditRequest.setThreshould(edt_product_thresould.getText().toString());
         productEditRequest.setProduct_name(edt_product_title.getText().toString());
         productEditRequest.setProduct_discription(edt_product_descriptions.getText().toString());

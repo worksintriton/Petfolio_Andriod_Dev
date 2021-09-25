@@ -160,10 +160,12 @@ public class EditVendorProfileImageActivity extends AppCompatActivity implements
             Glide.with(EditVendorProfileImageActivity.this)
                     .load(profileimage)
                     .into(img_pet_imge);
+            txt_uploadpetimage.setText("Change Image");
         }else{
             Glide.with(EditVendorProfileImageActivity.this)
                     .load(R.drawable.image_thumbnail)
                     .into(img_pet_imge);
+            txt_uploadpetimage.setText("Upload Image");
 
         }
 
@@ -469,7 +471,7 @@ public class EditVendorProfileImageActivity extends AppCompatActivity implements
         Log.w(TAG,"url  :%s"+ call.request().url().toString());
 
         call.enqueue(new Callback<FileUploadResponse>() {
-            @SuppressLint("LongLogTag")
+            @SuppressLint({"LongLogTag", "SetTextI18n"})
             @Override
             public void onResponse(@NonNull Call<FileUploadResponse> call, @NonNull Response<FileUploadResponse> response) {
                 avi_indicator.smoothToHide();
@@ -487,10 +489,12 @@ public class EditVendorProfileImageActivity extends AppCompatActivity implements
                             Glide.with(EditVendorProfileImageActivity.this)
                                     .load(profileimage)
                                     .into(img_pet_imge);
+                            txt_uploadpetimage.setText("Change Image");
                         }else{
                             Glide.with(EditVendorProfileImageActivity.this)
                                     .load(R.drawable.image_thumbnail)
                                     .into(img_pet_imge);
+                            txt_uploadpetimage.setText("Upload Image");
 
                         }
 
