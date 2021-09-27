@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -58,6 +59,10 @@ public class EditVendorGalleryImageListAdapter extends RecyclerView.Adapter<Edit
                     .into(holder.certificate_pics_1);
 
         }
+        else {
+
+            holder.fl_root.setVisibility(View.GONE);
+        }
 
         holder.removeImg.setOnClickListener(view -> {
             bus_service_gall_list_edit.remove(position);
@@ -74,9 +79,11 @@ public class EditVendorGalleryImageListAdapter extends RecyclerView.Adapter<Edit
 
     public static class AddImageListHolder extends RecyclerView.ViewHolder {
         ImageView removeImg,certificate_pics_1;
+        FrameLayout fl_root;
         public AddImageListHolder(View itemView) {
             super(itemView);
             certificate_pics_1 = itemView.findViewById(R.id.certificate_pics_1);
+            fl_root = itemView.findViewById(R.id.fl_root);
             removeImg = itemView.findViewById(R.id.close);
         }
     }

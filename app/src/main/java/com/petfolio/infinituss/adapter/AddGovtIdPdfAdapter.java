@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -39,27 +40,45 @@ public class AddGovtIdPdfAdapter extends RecyclerView.Adapter<AddGovtIdPdfAdapte
     @Override
     public void onBindViewHolder(@NonNull AddImageListHolder holder, final int position) {
         final   DocBusInfoUploadRequest.GovtIdPicBean govtIdPicBeanse = govtIdPicBeans.get(position);
+
         if (govtIdPicBeanse.getGovt_id_pic()!= null) {
 
             String uri = govtIdPicBeanse.getGovt_id_pic();
+
             if(uri.contains(".")) {
+
                 extension = uri.substring(uri.lastIndexOf("."));
 
                 Log.w("extension",extension);
             }
+            if(extension != null && !extension.isEmpty()) {
 
-        }
-        if(extension != null && !extension.isEmpty()) {
-            if (extension.equals(".png") || extension.equals(".jpg") || (extension.equals(".jpeg"))) {
-                Glide.with(context)
-                        .load(govtIdPicBeanse.getGovt_id_pic())
-                        .into(holder.certificate_pics_1);
+                if (extension.equals(".png") || extension.equals(".jpg") || (extension.equals(".jpeg"))) {
+
+
+                    Glide.with(context)
+                            .load(govtIdPicBeanse.getGovt_id_pic())
+                            .into(holder.certificate_pics_1);
+
+                } else {
+
+                    holder.certificate_pics_1.setImageResource(R.drawable.pdf_icon);
+                }
 
             }
-        } else {
 
-            holder.certificate_pics_1.setImageResource(R.drawable.pdf_icon);
+            else {
+
+                holder.material_cardview_education_details.setVisibility(View.VISIBLE);
+            }
+
         }
+
+        else {
+
+            holder.material_cardview_education_details.setVisibility(View.VISIBLE);
+        }
+
 
         holder.removeImg.setOnClickListener(view -> {
             govtIdPicBeans.remove(position);
@@ -75,10 +94,12 @@ public class AddGovtIdPdfAdapter extends RecyclerView.Adapter<AddGovtIdPdfAdapte
 
     public static class AddImageListHolder extends RecyclerView.ViewHolder {
         ImageView removeImg,certificate_pics_1;
+        CardView material_cardview_education_details;
         public AddImageListHolder(View itemView) {
             super(itemView);
             certificate_pics_1 = itemView.findViewById(R.id.pdf_file);
             removeImg = itemView.findViewById(R.id.close);
+            material_cardview_education_details = itemView.findViewById(R.id.material_cardview_education_details);
         }
     }
 

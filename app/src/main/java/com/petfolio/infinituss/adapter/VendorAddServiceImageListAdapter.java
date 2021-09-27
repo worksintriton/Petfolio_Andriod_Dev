@@ -6,12 +6,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.crashlytics.internal.model.CrashlyticsReport;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.requestpojo.VendorRegisterFormCreateRequest;
 
@@ -53,6 +55,11 @@ public class VendorAddServiceImageListAdapter extends RecyclerView.Adapter<Vendo
 
         }
 
+        else {
+
+            holder.fl_root.setVisibility(View.GONE);
+        }
+
         holder.removeImg.setOnClickListener(view -> {
             bus_service_gall_list.remove(position);
             notifyDataSetChanged();
@@ -67,10 +74,12 @@ public class VendorAddServiceImageListAdapter extends RecyclerView.Adapter<Vendo
 
     public static class AddImageListHolder extends RecyclerView.ViewHolder {
         ImageView removeImg,certificate_pics_1;
+        FrameLayout fl_root;
         public AddImageListHolder(View itemView) {
             super(itemView);
             certificate_pics_1 = itemView.findViewById(R.id.certificate_pics_1);
             removeImg = itemView.findViewById(R.id.close);
+            fl_root = itemView.findViewById(R.id.fl_root);
         }
     }
 
