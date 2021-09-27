@@ -122,7 +122,10 @@ public class SPFiltersActivity extends AppCompatActivity implements View.OnClick
                     rb_three_star.setChecked(true);
                 }else if (reviewcount == 4) {
                     rb_four_star.setChecked(true);
+                }else if (reviewcount == 5) {
+                    rb_five_star.setChecked(true);
                 }
+
 
             }
 

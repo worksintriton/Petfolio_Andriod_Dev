@@ -551,6 +551,7 @@ public class PetLoverServiceChoosePaymentMethodActivity extends AppCompatActivit
                             txt_total_amount.setText("INR "+response.body().getData().getTotal_price());
 
                         }else{
+                            Total_price = 0;
                             txt_total_amount.setText("INR "+0);
                         }
 

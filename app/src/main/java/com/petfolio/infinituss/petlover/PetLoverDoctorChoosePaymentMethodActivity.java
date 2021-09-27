@@ -408,7 +408,7 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
 
         btn_bookappointment.setOnClickListener(v -> {
 
-            Log.w(TAG,"btn_bookappointment amount : "+amount+"selectedPaymentMethod : "+selectedPaymentMethod);
+            Log.w(TAG,"btn_bookappointment amount : "+amount+"selectedPaymentMethod : "+selectedPaymentMethod+" Total_price : "+Total_price);
 
             if(selectedPaymentMethod != null && selectedPaymentMethod.equalsIgnoreCase("Online")){
                 if(Total_price != 0){
@@ -509,6 +509,7 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
                             txt_total_amount.setText("INR "+response.body().getData().getTotal_price());
 
                         }else{
+                            Total_price = 0;
                             txt_total_amount.setText("INR "+0);
                         }
 

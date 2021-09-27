@@ -27,6 +27,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -112,6 +113,10 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rl_filters)
     RelativeLayout rl_filters;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.edt_filter)
+    EditText edt_filter;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.scrollview)
@@ -315,6 +320,7 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
         img_cart.setOnClickListener(this);
         img_profile.setOnClickListener(this);
         rl_filters.setOnClickListener(this);
+        edt_filter.setOnClickListener(this);
     }
 
     /**
@@ -578,6 +584,9 @@ public class SelectedServiceActivity extends AppCompatActivity implements View.O
                 goto_Profile();
                 break;
                 case R.id.rl_filters:
+                goto_SPFilter();
+                break;
+                case R.id.edt_filter:
                 goto_SPFilter();
                 break;
 

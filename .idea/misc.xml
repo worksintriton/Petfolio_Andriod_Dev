@@ -42,6 +42,7 @@
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_product_details.xml" value="0.152" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_product_filters.xml" value="0.14990942028985507" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_search_doctor.xml" value="0.12360688956433637" />
+        <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_selected_service.xml" value="0.18885869565217392" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_service_provider_dashboard.xml" value="0.12360688956433637" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_service_provider_edit_form.xml" value="0.15217391304347827" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_service_provider_register_form.xml" value="0.13360507246376813" />
@@ -88,6 +89,7 @@
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/fragment_shop_vendor.xml" value="0.12360688956433637" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/navigation_drawer_layout_new.xml" value="0.17119565217391305" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/petcare_bottom_sheet.xml" value="0.13722826086956522" />
+        <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/petservice_bottom_sheet.xml" value="0.25416666666666665" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/product_details_bottom_sheet.xml" value="0.25416666666666665" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/row.xml" value="0.18568840579710144" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/spverify_popup_layout.xml" value="0.25416666666666665" />
