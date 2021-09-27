@@ -161,7 +161,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
     private int productqty;
     private String tag;
 
-        // BottomSheetBehavior variable
+    // BottomSheetBehavior variable
     private BottomSheetBehavior bottomSheetBehavior;
 
     @SuppressLint("NonConstantResourceId")
@@ -314,7 +314,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                     if(product_cart_counts == 1){
                         txt_cart_label.setText("Add to cart");
                     }else{
-                       // txt_cart_label.setText("Go to cart");
+                        // txt_cart_label.setText("Go to cart");
                     }
 
                 }else{
@@ -434,11 +434,11 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
         rl_discount.setVisibility(View.GONE);
 
-       txt_products_quantity.setVisibility(View.GONE);
+        txt_products_quantity.setVisibility(View.GONE);
 
         txt_prod_desc_label.setVisibility(View.GONE);
 
-  //      txt_view_details.setVisibility(View.GONE);
+        //      txt_view_details.setVisibility(View.GONE);
 
         txt_product_desc.setVisibility(View.GONE);
 
@@ -720,15 +720,15 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                                     prod_type = response.body().getProduct_details().getCat_id().getProduct_cate();
                                 }
 
-                               if(response.body().getVendor_details().getBussiness_name() != null) {
-                                   business_name = response.body().getVendor_details().getBussiness_name();
-                               }
-                               if(response.body().getVendor_details().getUser_name() != null){
-                                   vendor_name = response.body().getVendor_details().getUser_name();
-                               }
-                               if( response.body().getVendor_details().getBusiness_reg() != null){
-                                   bussiness_reg = response.body().getVendor_details().getBusiness_reg();
-                               }
+                                if(response.body().getVendor_details().getBussiness_name() != null) {
+                                    business_name = response.body().getVendor_details().getBussiness_name();
+                                }
+                                if(response.body().getVendor_details().getUser_name() != null){
+                                    vendor_name = response.body().getVendor_details().getUser_name();
+                                }
+                                if( response.body().getVendor_details().getBusiness_reg() != null){
+                                    bussiness_reg = response.body().getVendor_details().getBusiness_reg();
+                                }
                                 if(response.body().getVendor_details().getBussiness_loc() != null) {
                                     business_location = response.body().getVendor_details().getBussiness_loc();
                                 }
@@ -763,7 +763,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
                             txt_prod_desc_label.setVisibility(View.VISIBLE);
 
-                       //     txt_view_details.setVisibility(View.VISIBLE);
+                            //     txt_view_details.setVisibility(View.VISIBLE);
 
                             txt_product_desc.setVisibility(View.VISIBLE);
 
@@ -909,7 +909,14 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
             rl_discount.setVisibility(View.GONE);
         }
         if(threshould != null && !threshould.isEmpty() ){
-            if(threshould.equalsIgnoreCase("0")){
+            int mythreshould = 0;
+            try {
+                mythreshould = Integer.parseInt(threshould);
+            } catch(NumberFormatException nfe) {
+                System.out.println("Could not parse " + nfe);
+            }
+
+            if(mythreshould <= 0){
                 txt_products_quantity.setVisibility(View.VISIBLE);
                 txt_products_quantity.setText("Out Of Stock");
                 ll_increment_add_to_cart.setVisibility(View.GONE);
@@ -925,8 +932,8 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                 img_remove_product.setVisibility(View.VISIBLE);
                 ll_add_to_cart.setVisibility(View.VISIBLE);
                 txt_products_quantity.setVisibility(View.GONE);
-             //   txt_products_quantity.setText("Prodcut Quantity : "+threshould);
-               // txt_products_quantity.setTextColor(ContextCompat.getColor(ProductDetailsActivity.this, R.color.black));
+                //   txt_products_quantity.setText("Prodcut Quantity : "+threshould);
+                // txt_products_quantity.setTextColor(ContextCompat.getColor(ProductDetailsActivity.this, R.color.black));
 
             }
 
@@ -1165,7 +1172,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
                 Log.w(TAG,"NotificationCartCountResponse"+ "--->" + new Gson().toJson(response.body()));
 
-                  avi_indicator.smoothToHide();
+                avi_indicator.smoothToHide();
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200) {

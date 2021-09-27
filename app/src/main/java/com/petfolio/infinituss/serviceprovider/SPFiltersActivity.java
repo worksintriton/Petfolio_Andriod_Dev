@@ -67,6 +67,10 @@ public class SPFiltersActivity extends AppCompatActivity implements View.OnClick
     RadioGroup rg_review;
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rb_five_star)
+    RadioButton rb_five_star;
+
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rb_four_star)
     RadioButton rb_four_star;
 
@@ -128,6 +132,7 @@ public class SPFiltersActivity extends AppCompatActivity implements View.OnClick
         btn_apply.setOnClickListener(this);
         btn_clear.setOnClickListener(this);
 
+        rb_five_star.setOnClickListener(this);
         rb_four_star.setOnClickListener(this);
         rb_three_star.setOnClickListener(this);
         rb_two_star.setOnClickListener(this);
@@ -277,6 +282,11 @@ public class SPFiltersActivity extends AppCompatActivity implements View.OnClick
                 Count_value_start = 0;
                 Count_value_end = 0;
 
+                break;
+            case R.id.rb_five_star:
+                reviewcount = 5;
+                clearRadioChecked();
+                rb_five_star.setChecked(true);
                 break;
 
             case R.id.rb_four_star:

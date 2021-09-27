@@ -332,7 +332,7 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
 
                         product_cart_counts++;
                         if(threshould != null){
-                             productqty = Integer.parseInt(threshould);
+                            productqty = Integer.parseInt(threshould);
                             if(product_cart_counts > productqty){
                                 Toasty.warning(getApplicationContext(), "You can buy only up to "+productqty+" quantity of this product", Toast.LENGTH_SHORT, true).show();
                             }else{
@@ -402,7 +402,7 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
 
         txt_prod_desc_label.setVisibility(View.GONE);
 
-      //  txt_view_details.setVisibility(View.GONE);
+        //  txt_view_details.setVisibility(View.GONE);
 
         txt_product_desc.setVisibility(View.GONE);
 
@@ -667,7 +667,7 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
 
                             txt_prod_desc_label.setVisibility(View.VISIBLE);
 
-                   //         txt_view_details.setVisibility(View.VISIBLE);
+                            //         txt_view_details.setVisibility(View.VISIBLE);
 
                             txt_product_desc.setVisibility(View.VISIBLE);
 
@@ -693,17 +693,17 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
                             if(response.body().getProduct_details().getProduct_img() != null && response.body().getProduct_details().getProduct_img().size()>0){
                                 viewpageData(response.body().getProduct_details().getProduct_img());
                             }
-                             if(response.body().getProduct_details().getProduct_related() != null && response.body().getProduct_details().getProduct_related().size()>0){
-                                 setView(response.body().getProduct_details().getProduct_related());
+                            if(response.body().getProduct_details().getProduct_related() != null && response.body().getProduct_details().getProduct_related().size()>0){
+                                setView(response.body().getProduct_details().getProduct_related());
 
                             }
 
-                             if(response.body().getProduct_details().isProduct_fav()){
-                                 img_fav.setBackgroundResource(R.drawable.ic_fav);
-                             }else{
-                                 img_fav.setBackgroundResource(R.drawable.heart_gray);
-                             }
-                             setUIData(product_title,prod_type,product_review,product_rating,product_price,product_discount,product_discription,product_cart_count,threshould);
+                            if(response.body().getProduct_details().isProduct_fav()){
+                                img_fav.setBackgroundResource(R.drawable.ic_fav);
+                            }else{
+                                img_fav.setBackgroundResource(R.drawable.heart_gray);
+                            }
+                            setUIData(product_title,prod_type,product_review,product_rating,product_price,product_discount,product_discription,product_cart_count,threshould);
 
 
 
@@ -823,7 +823,7 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
             txt_products_title.setText(product_title);
         }
 
-          if(prod_type != null && !prod_type.isEmpty()){
+        if(prod_type != null && !prod_type.isEmpty()){
             txt_prod_type.setText(prod_type);
         }
 
@@ -884,7 +884,14 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
             rl_discount.setVisibility(View.GONE);
         }
         if(threshould != null && !threshould.isEmpty() ){
-            if(threshould.equalsIgnoreCase("0")){
+            int mythreshould = 0;
+            try {
+                mythreshould = Integer.parseInt(threshould);
+            } catch(NumberFormatException nfe) {
+                System.out.println("Could not parse " + nfe);
+            }
+
+            if(mythreshould <= 0){
                 txt_products_quantity.setVisibility(View.VISIBLE);
                 txt_products_quantity.setText("Out Of Stock");
                 ll_increment_add_to_cart.setVisibility(View.GONE);
@@ -1089,21 +1096,21 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-                case R.id.img_cart:
-                    Intent i = new Intent(getApplicationContext(), SPCartActivity.class);
-                    i.putExtra("productid",productid);
-                    i.putExtra("cat_id",cat_id);
-                    i.putExtra("fromactivity",TAG);
-                    startActivity(i);
-                    break;
-                case R.id.img_profile:
-                    Intent intent = new Intent(getApplicationContext(), SPProfileScreenActivity.class);
-                    intent.putExtra("fromactivity",TAG);
-                    if(ServiceProviderDashboardActivity.active_tag != null){
-                        intent.putExtra("active_tag",ServiceProviderDashboardActivity.active_tag);
+            case R.id.img_cart:
+                Intent i = new Intent(getApplicationContext(), SPCartActivity.class);
+                i.putExtra("productid",productid);
+                i.putExtra("cat_id",cat_id);
+                i.putExtra("fromactivity",TAG);
+                startActivity(i);
+                break;
+            case R.id.img_profile:
+                Intent intent = new Intent(getApplicationContext(), SPProfileScreenActivity.class);
+                intent.putExtra("fromactivity",TAG);
+                if(ServiceProviderDashboardActivity.active_tag != null){
+                    intent.putExtra("active_tag",ServiceProviderDashboardActivity.active_tag);
 
-                    }
-                    startActivity(intent);
+                }
+                startActivity(intent);
                 break;
 
             case R.id.img_fav:
