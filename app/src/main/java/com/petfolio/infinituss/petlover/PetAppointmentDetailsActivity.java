@@ -1870,7 +1870,8 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         dialog.dismiss();
-                        startActivity(new Intent(getApplicationContext(), PetMyappointmentsActivity.class));
+                        showRefundSuccessfully("Coupon code generated successfully. Generated coupon will also be available in My Coupons.");
+
 
                     }
 
@@ -1909,7 +1910,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
         RefundCouponCreateRequest refundCouponCreateRequest = new RefundCouponCreateRequest();
         refundCouponCreateRequest.setCreated_by("User");
         refundCouponCreateRequest.setCoupon_type(Appointmenttype);
-        refundCouponCreateRequest.setCode("REF"+cost+currentDateandTime);
+        refundCouponCreateRequest.setCode("REF"+currentDateandTime);
         if(cost != null && !cost.isEmpty()){
             refundCouponCreateRequest.setAmount(Integer.parseInt(cost));
         }else{
@@ -1918,6 +1919,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
 
         refundCouponCreateRequest.setUser_details(userid);
         refundCouponCreateRequest.setUsed_status("Not Used");
+        refundCouponCreateRequest.setMobile_type("Android");
 
 
         Log.w(TAG,"refundCouponCreateRequest"+ "--->" + new Gson().toJson(refundCouponCreateRequest));
@@ -1943,8 +1945,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         dialog.dismiss();
-                        startActivity(new Intent(getApplicationContext(), PetMyappointmentsActivity.class));
-
+                        showRefundSuccessfully("Your refund will be processed in 4-5 working days.");
                     }
 
                 }
@@ -1983,6 +1984,7 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
         refundCouponCreateRequest.setAmount(0);
         refundCouponCreateRequest.setUser_details(appointment_id);
         refundCouponCreateRequest.setUsed_status("");
+        refundCouponCreateRequest.setMobile_type("Android");
 
 
         Log.w(TAG,"refundCouponCreateRequest"+ "--->" + new Gson().toJson(refundCouponCreateRequest));
@@ -2000,4 +2002,46 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
         }
 
     }
+    private void showRefundSuccessfully(String Message) {
+
+        try {
+
+            dialog = new Dialog(PetAppointmentDetailsActivity.this);
+            dialog.setContentView(R.layout.alert_approve_reject_layout);
+            TextView tvheader = dialog.findViewById(R.id.tvInternetNotConnected);
+            tvheader.setText(Message);
+            Button dialogButtonApprove = dialog.findViewById(R.id.btnApprove);
+            dialogButtonApprove.setText("Ok");
+            Button dialogButtonRejected = dialog.findViewById(R.id.btnReject);
+            dialogButtonRejected.setText("No");
+            dialogButtonRejected.setVisibility(View.GONE);
+
+            dialogButtonApprove.setOnClickListener(view -> {
+                startActivity(new Intent(PetAppointmentDetailsActivity.this, MyCouponsActivity.class));
+                dialog.dismiss();
+
+
+
+
+            });
+            dialogButtonRejected.setOnClickListener(view -> {
+                // Toasty.info(context, "Rejected Successfully", Toast.LENGTH_SHORT, true).show();
+                dialog.dismiss();
+
+
+
+
+            });
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
 }

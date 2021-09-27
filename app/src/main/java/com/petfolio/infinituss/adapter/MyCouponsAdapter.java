@@ -6,6 +6,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -125,8 +126,12 @@ public class MyCouponsAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHol
             holder.txt_expired.setVisibility(View.VISIBLE);
             holder.txt_expired.setText(currentItem.getUsed_status());
             holder.txt_expired.setTextColor(Color.parseColor("#2896c2"));
+            holder.txt_coupon_code.setPaintFlags(holder.txt_coupon_code.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.img_copy.setVisibility(View.INVISIBLE);
+
         }else{
             holder.txt_expired.setVisibility(View.INVISIBLE);
+            holder.img_copy.setVisibility(View.VISIBLE);
         }
 
 

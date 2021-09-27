@@ -28,6 +28,7 @@ import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.requestpojo.CouponCodeCheckRequest;
+import com.petfolio.infinituss.requestpojo.DocBusInfoUploadRequest;
 import com.petfolio.infinituss.requestpojo.NotificationSendRequest;
 import com.petfolio.infinituss.requestpojo.PetAppointmentCreateRequest;
 import com.petfolio.infinituss.responsepojo.CouponCodeCheckResponse;
@@ -205,6 +206,8 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
     private int Total_price = 0;
     private String selectedCommunicationtype;
 
+   // private ArrayList<DocBusInfoUploadRequest.ClinicPicBean> clinicPicBeans = new ArrayList<>();
+
     @SuppressLint({"LogNotTimber", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -269,6 +272,7 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
             doctorname = extras.getString("doctorname");
             clinicname = extras.getString("clinicname");
             petname = extras.getString("petname");
+           // clinicPicBeans  = (ArrayList<DocBusInfoUploadRequest.ClinicPicBean>) getIntent().getSerializableExtra("clinicPicBeans");
 
 
             Log.w(TAG,"Bundle "+" doctorname : "+doctorname+" clinicname : "+clinicname+"petname : "+petname);
@@ -459,6 +463,7 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
         intent.putExtra("doctorname", doctorname);
         intent.putExtra("clinicname", clinicname);
         intent.putExtra("petname", petname);
+        //intent.putExtra("clinicPicBeans", clinicPicBeans);
         startActivity(intent);
     }
 

@@ -35,6 +35,7 @@ import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.doctor.ManageAddressDoctorActivity;
 import com.petfolio.infinituss.interfaces.OnAppointmentCancel;
 import com.petfolio.infinituss.interfaces.OnAppointmentSuccessfullyCancel;
+import com.petfolio.infinituss.petlover.MyCouponsActivity;
 import com.petfolio.infinituss.petlover.PetMyappointmentsActivity;
 import com.petfolio.infinituss.requestpojo.AppoinmentCancelledRequest;
 import com.petfolio.infinituss.requestpojo.NotificationSendRequest;
@@ -744,7 +745,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
         RefundCouponCreateRequest refundCouponCreateRequest = new RefundCouponCreateRequest();
         refundCouponCreateRequest.setCreated_by("User");
         refundCouponCreateRequest.setCoupon_type(Appointmenttype);
-        refundCouponCreateRequest.setCode("REF"+cost+currentDateandTime);
+        refundCouponCreateRequest.setCode("REF"+currentDateandTime);
         if(cost != null && !cost.isEmpty()){
             refundCouponCreateRequest.setAmount(Integer.parseInt(cost));
         }else{
@@ -753,8 +754,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
 
         refundCouponCreateRequest.setUser_details(userid);
         refundCouponCreateRequest.setUsed_status("Not Used");
-
-
+        refundCouponCreateRequest.setMobile_type("Android");
         Log.w(TAG,"refundCouponCreateRequest"+ "--->" + new Gson().toJson(refundCouponCreateRequest));
         return refundCouponCreateRequest;
     }
@@ -816,6 +816,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
         refundCouponCreateRequest.setAmount(0);
         refundCouponCreateRequest.setUser_details(Appointmetnt_id);
         refundCouponCreateRequest.setUsed_status("");
+        refundCouponCreateRequest.setMobile_type("Android");
 
 
         Log.w(TAG,"refundCouponCreateRequest"+ "--->" + new Gson().toJson(refundCouponCreateRequest));
@@ -837,7 +838,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
             dialogButtonRejected.setVisibility(View.GONE);
 
             dialogButtonApprove.setOnClickListener(view -> {
-                startActivity(new Intent(mContext, PetMyappointmentsActivity.class));
+                startActivity(new Intent(mContext, MyCouponsActivity.class));
                 dialog.dismiss();
 
 

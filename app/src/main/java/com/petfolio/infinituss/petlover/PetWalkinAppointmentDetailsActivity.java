@@ -1906,7 +1906,7 @@ public class PetWalkinAppointmentDetailsActivity extends AppCompatActivity imple
         RefundCouponCreateRequest refundCouponCreateRequest = new RefundCouponCreateRequest();
         refundCouponCreateRequest.setCreated_by("User");
         refundCouponCreateRequest.setCoupon_type(Appointmenttype);
-        refundCouponCreateRequest.setCode("REF"+cost+currentDateandTime);
+        refundCouponCreateRequest.setCode("REF"+currentDateandTime);
         if(cost != null && !cost.isEmpty()){
             refundCouponCreateRequest.setAmount(Integer.parseInt(cost));
         }else{
@@ -1915,6 +1915,7 @@ public class PetWalkinAppointmentDetailsActivity extends AppCompatActivity imple
 
         refundCouponCreateRequest.setUser_details(userid);
         refundCouponCreateRequest.setUsed_status("Not Used");
+        refundCouponCreateRequest.setMobile_type("Android");
 
 
         Log.w(TAG,"refundCouponCreateRequest"+ "--->" + new Gson().toJson(refundCouponCreateRequest));
@@ -1980,6 +1981,7 @@ public class PetWalkinAppointmentDetailsActivity extends AppCompatActivity imple
         refundCouponCreateRequest.setAmount(0);
         refundCouponCreateRequest.setUser_details(appointment_id);
         refundCouponCreateRequest.setUsed_status("");
+        refundCouponCreateRequest.setMobile_type("Android");
 
 
         Log.w(TAG,"refundCouponCreateRequest"+ "--->" + new Gson().toJson(refundCouponCreateRequest));

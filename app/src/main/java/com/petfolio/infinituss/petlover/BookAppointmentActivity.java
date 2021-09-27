@@ -245,7 +245,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     private String petType;
     private String petBreed;
 
-    private final List<DocBusInfoUploadRequest.ClinicPicBean> clinicPicBeans = new ArrayList<>();
+    private final ArrayList<DocBusInfoUploadRequest.ClinicPicBean> clinicPicBeans = new ArrayList<>();
 
     private static final int REQUEST_CLINIC_CAMERA_PERMISSION_CODE = 785;
     private static final int SELECT_CLINIC_CAMERA = 1000;
@@ -1156,7 +1156,8 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
     private void setView() {
         rv_upload_pet_images.setVisibility(View.VISIBLE);
-        rv_upload_pet_images.setLayoutManager(new LinearLayoutManager(this));
+        rv_upload_pet_images.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        //rv_upload_pet_images.setLayoutManager(new LinearLayoutManager(this));
         rv_upload_pet_images.setItemAnimator(new DefaultItemAnimator());
         AddImageListAdapter addImageListAdapter = new AddImageListAdapter(getApplicationContext(), clinicPicBeans);
         rv_upload_pet_images.setAdapter(addImageListAdapter);
@@ -1166,8 +1167,9 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         //copy file and send new file path
         String fileName = getFileName(contentUri);
         if (!TextUtils.isEmpty(fileName)) {
+            String path = context.getFilesDir() + "/" + "MyFirstApp/";
 
-            String path = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS).getPath() + "/" + "MyFirstApp/";
+            //String path = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS).getPath() + "/" + "MyFirstApp/";
             // Create the parent path
             File dir = new File(path);
             if (!dir.exists()) {

@@ -9,6 +9,7 @@ public class RefundCouponCreateRequest {
      * amount : 100
      * user_details : 123123
      * used_status : Not Used
+     * mobile_type : "Android"
      */
 
     private String created_by;
@@ -17,6 +18,15 @@ public class RefundCouponCreateRequest {
     private int amount;
     private String user_details;
     private String used_status;
+    private String mobile_type;
+
+    public String getMobile_type() {
+        return mobile_type;
+    }
+
+    public void setMobile_type(String mobile_type) {
+        this.mobile_type = mobile_type;
+    }
 
     public String getCreated_by() {
         return created_by;

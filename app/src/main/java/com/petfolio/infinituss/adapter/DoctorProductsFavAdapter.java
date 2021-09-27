@@ -2,6 +2,7 @@ package com.petfolio.infinituss.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,8 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.api.APIClient;
+import com.petfolio.infinituss.doctor.shop.DoctorProductDetailsActivity;
 import com.petfolio.infinituss.interfaces.ProductsFavListener;
+import com.petfolio.infinituss.petlover.ProductDetailsActivity;
 import com.petfolio.infinituss.responsepojo.DoctorProductFavListResponse;
+import com.petfolio.infinituss.serviceprovider.shop.SPProductDetailsActivity;
 
 import java.util.List;
 
@@ -61,6 +65,7 @@ public class DoctorProductsFavAdapter extends  RecyclerView.Adapter<RecyclerView
 
     @SuppressLint({"SetTextI18n", "LogNotTimber"})
     private void initLayoutOne(ViewHolderOne holder, final int position) {
+
 
         currentItem = productsList.get(position);
         holder.txt_products_title.setText(productsList.get(position).getProduct_title());
@@ -162,6 +167,25 @@ public class DoctorProductsFavAdapter extends  RecyclerView.Adapter<RecyclerView
                 });
 
                 popup.show();//showing popup menu
+            }
+        });
+
+        holder.ll_root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.w(TAG,"fromactivity : "+fromactivity);
+                if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorProductsFavActivity")){
+                    Intent intent = new Intent(context, DoctorProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("productid",productsList.get(position).get_id());
+                    intent.putExtra("fromactivity",TAG);
+                    context.startActivity(intent);
+                } else if(fromactivity != null && fromactivity.equalsIgnoreCase("SPProductsFavActivity")){
+                    Intent intent = new Intent(context, SPProductDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("productid",productsList.get(position).get_id());
+                    intent.putExtra("fromactivity",TAG);
+                    context.startActivity(intent);
+                }
+
             }
         });
 

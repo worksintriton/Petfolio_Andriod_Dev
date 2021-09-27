@@ -237,12 +237,8 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
                 break;
 
                 case R.id.img_pet_imge:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    checkMultiplePermissions(REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS, AddYourPetImageOlduserActivity.this);
-                }else{
                     choosePetImage();
 
-                }
                 break;
 
                 case R.id.btn_continue:
@@ -252,12 +248,7 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
     }
 
     private void gotoUplodPetImage() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkMultiplePermissions(REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS, AddYourPetImageOlduserActivity.this);
-        }else{
             choosePetImage();
-
-        }
     }
 
     private void gotoPetLoverProfileScreenActivity() {
@@ -349,13 +340,15 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
 
                     if(resultUri!=null){
 
-                        Log.w("selectedImageUri", " " + resultUri);
+                        Log.w(TAG,"selectedImageUri" + " " + resultUri);
 
                         String filename = getFileName(resultUri);
 
-                        Log.w("filename", " " + filename);
+                        Log.w(TAG,"filename"+ " " + filename);
 
-                        String filePath = FileUtil.getPath(AddYourPetImageOlduserActivity.this, resultUri);
+                        String filePath = getFilePathFromURI(AddYourPetImageOlduserActivity.this, resultUri);
+
+                        Log.w(TAG ,"filePath" + " " + filePath);
 
                         assert filePath != null;
 
@@ -393,92 +386,6 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
                     }
 
                 }
-            }
-
-            //	Toast.makeText(getActivity(),"kk",Toast.LENGTH_SHORT).show();
-            if(requestCode== SELECT_CLINIC_PICTURE || requestCode == SELECT_CLINIC_CAMERA) {
-
-                if(requestCode == SELECT_CLINIC_CAMERA)
-                {
-                    Bitmap photo = (Bitmap) data.getExtras().get("data");
-
-                    File file = new File(getFilesDir(), "Petfolio1" + ".jpg");
-
-                    OutputStream os;
-                    try {
-                        os = new FileOutputStream(file);
-                        photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
-                        os.flush();
-                        os.close();
-                    } catch (Exception e) {
-                        Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
-                    }
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
-                    String currentDateandTime = sdf.format(new Date());
-
-                    RequestBody requestFile = RequestBody.create(MediaType.parse("image*/"), file);
-
-                    filePart = MultipartBody.Part.createFormData("sampleFile",  userid+currentDateandTime+file.getName(), requestFile);
-
-                    uploadPetImage();
-
-                }
-
-                else{
-
-                    try {
-                        if (resultCode == Activity.RESULT_OK)
-                        {
-
-                            Log.w("VALUEEEEEEE1111", " " + data);
-
-                            Uri selectedImageUri = data.getData();
-
-                            Log.w("selectedImageUri", " " + selectedImageUri);
-
-                            String filename = getFileName(selectedImageUri);
-
-                            Log.w("filename", " " + filename);
-
-                            String filePath = getFilePathFromURI(AddYourPetImageOlduserActivity.this,selectedImageUri);
-
-                            assert filePath != null;
-
-                            File file = new File(filePath); // initialize file here
-
-                            long length = file.length() / 1024; // Size in KB
-
-                            Log.w("filesize", " " + length);
-
-                            if(length>2000){
-
-                                new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                                        .setTitleText("File Size")
-                                        .setContentText("Plz choose file size less than 2 MB ")
-                                        .setConfirmText("Ok")
-                                        .show();
-                            }
-
-                            else{
-
-
-                                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
-                                String currentDateandTime = sdf.format(new Date());
-
-                                filePart = MultipartBody.Part.createFormData("sampleFile", userid+currentDateandTime+file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-
-                                uploadPetImage();
-
-                            }
-
-                        }
-                    } catch (Exception e) {
-
-                        Log.w("Exception", " " + e);
-                    }
-
-                }
-
             }
 
         }catch (Exception e){
@@ -625,51 +532,10 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
 
             }
 
-        } else if (requestCode == REQUEST_CLINIC_CAMERA_PERMISSION_CODE) {
-
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                CropImage.activity().start(AddYourPetImageOlduserActivity.this);
-
-            } else {
-                new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("Permisson Required")
-                        .setContentText("Plz Allow Camera for taking picture")
-                        .setConfirmText("Ok")
-                        .setConfirmClickListener(sDialog -> {
-
-                            sDialog.dismissWithAnimation();
-
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                requestPermissions(new String[]{CAMERA}, REQUEST_CLINIC_CAMERA_PERMISSION_CODE);
-                            }
-
-
-                        })
-                        .setCancelButton("Cancel", sDialog -> {
-                            sDialog.dismissWithAnimation();
-
-                            showWarning(REQUEST_CLINIC_CAMERA_PERMISSION_CODE);
-                        })
-                        .show();
-
-            }
-
         }
     }
 
-    //check for camera and storage access permissions
-    @TargetApi(Build.VERSION_CODES.M)
-    private void checkMultiplePermissions(int permissionCode, Context context) {
 
-        String[] PERMISSIONS = {CAMERA_PERMISSION, READ_EXTERNAL_STORAGE_PERMISSION, WRITE_EXTERNAL_STORAGE_PERMISSION};
-        if (!hasPermissions(context, PERMISSIONS)) {
-            ActivityCompat.requestPermissions((Activity) context, PERMISSIONS, permissionCode);
-        } else {
-            choosePetImage();
-            // Open your camera here.
-        }
-    }
     private boolean hasPermissions(Context context, String... permissions) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
             for (String permission : permissions) {
@@ -691,9 +557,8 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
 
                     sDialog.dismissWithAnimation();
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                    {
-                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION_CODE);
+                    if (!hasPermissions(this, PERMISSIONS)) {
+                        ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_PERMISSION_CODE);
                     }
 
 
@@ -707,7 +572,7 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
         String fileName = getFileName(contentUri);
         if (!TextUtils.isEmpty(fileName)) {
 
-            String path = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS).getPath() + "/" + "MyFirstApp/";
+            String path = context.getFilesDir() + "/" + "MyFirstApp/";
             // Create the parent path
             File dir = new File(path);
             if (!dir.exists()) {

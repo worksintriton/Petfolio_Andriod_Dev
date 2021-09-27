@@ -76,7 +76,7 @@
 
                         <TextView
                             android:id="@+id/txt_coupon_code"
-                            android:layout_width="150dp"
+                            android:layout_width="200dp"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/futuramediumbt"
                             android:text="refund"
@@ -89,10 +89,6 @@
                             android:padding="10dp"
                             android:gravity="center"
                             android:textStyle="bold"
-                            android:enabled="true"
-                            android:textIsSelectable="true"
-                            android:focusable="true"
-                            android:longClickable="true"
                             />
                         <ImageView
                             android:id="@+id/img_copy"

@@ -56,7 +56,7 @@ import retrofit2.Response;
 
 public class DoctorProductsFavActivity extends AppCompatActivity implements View.OnClickListener, ProductsFavListener {
 
-    private String TAG = "DoctorShopFavActivity";
+    private String TAG = "DoctorProductsFavActivity";
 
 
 
