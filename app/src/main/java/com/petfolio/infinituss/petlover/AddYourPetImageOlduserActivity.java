@@ -44,6 +44,7 @@ import com.petfolio.infinituss.responsepojo.PetAddImageResponse;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
 import com.petfolio.infinituss.utils.RestUtils;
 import com.canhub.cropper.CropImage;
+import com.petfolio.infinituss.vendor.EditVendorRegisterFormActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.File;
@@ -153,6 +154,17 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
     private String petage;
     private int distance;
     private String SP_ava_Date;
+
+    int PERMISSION_CLINIC = 1;
+    int PERMISSION_CERT = 2;
+    int PERMISSION_GOVT = 3;
+    int PERMISSION_PHOTO = 4;
+
+    String[] PERMISSIONS = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+    };
 
 
     @SuppressLint("LogNotTimber")
@@ -308,18 +320,12 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
 
     private void choosePetImage() {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(AddYourPetImageOlduserActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-        {
-            requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CLINIC_CAMERA_PERMISSION_CODE);
+
+        if (!hasPermissions(this, PERMISSIONS)) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_CLINIC);
         }
 
-        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(AddYourPetImageOlduserActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-        {
-            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_CLINIC_PIC_PERMISSION);
-        }
-
-        else
-        {
+        else {
 
 
             CropImage.activity().start(AddYourPetImageOlduserActivity.this);
@@ -372,7 +378,7 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
                             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
                             String currentDateandTime = sdf.format(new Date());
 
-                            filePart = MultipartBody.Part.createFormData("sampleFile", userid + currentDateandTime + file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                            filePart = MultipartBody.Part.createFormData("sampleFile", userid + currentDateandTime + filename, RequestBody.create(MediaType.parse("image/*"), file));
 
                             uploadPetImage();
 
@@ -588,7 +594,7 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_READ_CLINIC_PIC_PERMISSION) {
+        if (requestCode == PERMISSION_CLINIC) {
 
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
@@ -603,8 +609,9 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
 
                             sDialog.dismissWithAnimation();
 
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                requestPermissions(new String[]{READ_EXTERNAL_STORAGE}, REQUEST_READ_CLINIC_PIC_PERMISSION);
+
+                            if (!hasPermissions(this, PERMISSIONS)) {
+                                ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_CLINIC);
                             }
 
 
@@ -612,7 +619,7 @@ public class AddYourPetImageOlduserActivity extends AppCompatActivity implements
                         .setCancelButton("Cancel", sDialog -> {
                             sDialog.dismissWithAnimation();
 
-                            showWarning(REQUEST_READ_CLINIC_PIC_PERMISSION);
+                            showWarning(PERMISSION_CLINIC);
                         })
                         .show();
 
