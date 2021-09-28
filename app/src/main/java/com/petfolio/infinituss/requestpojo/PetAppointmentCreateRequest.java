@@ -75,6 +75,43 @@ public class PetAppointmentCreateRequest implements Serializable {
     private String coupon_status;
     private String coupon_code;
 
+    private List<PetImgBean> current_img ;
+    public List<PetImgBean> getPet_img() {
+        return current_img;
+    }
+    public void setPet_img(List<PetImgBean> pet_img) {
+        this.current_img = pet_img;
+
+    }
+
+    public static class PetImgBean implements Serializable {
+        /**
+         * pet_img : http://54.212.108.156:3000/api/uploads/Pic_empty.jpg
+         */
+
+        private String pet_img;
+
+        public PetImgBean(String pet_img) {
+
+            this.pet_img = pet_img;
+        }
+
+        public PetImgBean() {
+
+        }
+
+
+        public String getPet_img() {
+            return pet_img;
+        }
+
+        public void setPet_img(String pet_img) {
+            this.pet_img = pet_img;
+
+        }
+    }
+
+
     public int getOriginal_price() {
         return original_price;
     }

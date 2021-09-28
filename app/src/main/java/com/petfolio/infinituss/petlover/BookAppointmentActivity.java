@@ -1,8 +1,6 @@
 package com.petfolio.infinituss.petlover;
 
-import static android.Manifest.permission.CAMERA;
-import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
-import static android.os.Environment.DIRECTORY_DOCUMENTS;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -10,7 +8,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,12 +52,11 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.activity.NotificationActivity;
-import com.petfolio.infinituss.adapter.AddImageListAdapter;
 import com.petfolio.infinituss.adapter.ManageAddressListVisitAdapter;
+import com.petfolio.infinituss.adapter.PetCurrentImageListAdapter;
 import com.petfolio.infinituss.adapter.ViewPagerPetlistAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
-import com.petfolio.infinituss.appUtils.FileUtil;
 import com.petfolio.infinituss.interfaces.LocationDefaultListener;
 import com.petfolio.infinituss.requestpojo.AddYourPetRequest;
 import com.petfolio.infinituss.requestpojo.BreedTypeRequest;
@@ -245,7 +241,6 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     private String petType;
     private String petBreed;
 
-    private final ArrayList<DocBusInfoUploadRequest.ClinicPicBean> clinicPicBeans = new ArrayList<>();
 
     private static final int REQUEST_CLINIC_CAMERA_PERMISSION_CODE = 785;
     private static final int SELECT_CLINIC_CAMERA = 1000;
@@ -311,6 +306,25 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
             Manifest.permission.CAMERA
     };
 
+    List<PetAppointmentCreateRequest.PetImgBean> pet_imgList = new ArrayList();
+
+    ArrayList<PetAppointmentCreateRequest> PetAppointmentCreateRequestList = new ArrayList<>();
+
+    private String Doctor_id;
+    private String Booking_date;
+    private List<PetAppointmentCreateRequest.DocAttchedBean> Doc_attched;
+    private String Booking_time;
+    private String Booking_date_time;
+    private String Communication_type;
+    private String User_id;
+    private String Pet_id;
+    private String Display_date;
+    private String Appointment_types;
+    private int Amount;
+    private String Date_and_time;
+    private String Visit_type;
+    private String Location_id;
+    private String Health_issue_title;
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -340,14 +354,51 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
             petname = extras.getString("petname");
             strpetimage = extras.getString("petimage");
 
-            Log.w(TAG, "strpetimage : " + strpetimage);
 
 
-           /* if(strpetimage != null) {
-                DocBusInfoUploadRequest.ClinicPicBean clinicPicBean = new DocBusInfoUploadRequest.ClinicPicBean(strpetimage);
-                clinicPicBeans.add(clinicPicBean);
-                setView();
-            }*/
+
+
+            PetAppointmentCreateRequestList = (ArrayList<PetAppointmentCreateRequest>) getIntent().getSerializableExtra("PetAppointmentCreateRequestList");
+            Log.w(TAG,"PetAppointmentCreateRequestList : "+new Gson().toJson(PetAppointmentCreateRequestList));
+
+            if(PetAppointmentCreateRequestList != null && PetAppointmentCreateRequestList.size()>0) {
+                for (int i = 0; i < PetAppointmentCreateRequestList.size(); i++) {
+                    Doctor_id =  PetAppointmentCreateRequestList.get(i).getDoctor_id();
+                    Booking_date =  PetAppointmentCreateRequestList.get(i).getBooking_date();
+                    Booking_time =  PetAppointmentCreateRequestList.get(i).getBooking_time();
+                    Booking_date_time =  PetAppointmentCreateRequestList.get(i).getBooking_date_time();
+                    Communication_type =  PetAppointmentCreateRequestList.get(i).getCommunication_type();
+                    User_id =  PetAppointmentCreateRequestList.get(i).getUser_id();
+                    Pet_id =  PetAppointmentCreateRequestList.get(i).getPet_id();
+                    Problem_info =  PetAppointmentCreateRequestList.get(i).getProblem_info();
+                    Doc_attched =  PetAppointmentCreateRequestList.get(i).getDoc_attched();
+                    Display_date =  PetAppointmentCreateRequestList.get(i).getDisplay_date();
+                    Appointment_types =  PetAppointmentCreateRequestList.get(i).getAppointment_types();
+                    Allergies =  PetAppointmentCreateRequestList.get(i).getAllergies();
+                    Amount =  PetAppointmentCreateRequestList.get(i).getAmount();
+                    Date_and_time =  PetAppointmentCreateRequestList.get(i).getDate_and_time();
+                    Visit_type =  PetAppointmentCreateRequestList.get(i).getVisit_type();
+                    Location_id =  PetAppointmentCreateRequestList.get(i).getLocation_id();
+                    Health_issue_title =  PetAppointmentCreateRequestList.get(i).getHealth_issue_title();
+                    pet_imgList =  PetAppointmentCreateRequestList.get(i).getPet_img();
+
+                }
+                Log.w(TAG,"doctorid : "+Doctor_id);
+                Log.w(TAG,"pet_imgList : "+new Gson().toJson(pet_imgList));
+
+                if(Allergies != null && !Allergies.isEmpty()){
+                    edt_allergies.setText(Allergies);
+                }if(Problem_info != null && !Problem_info.isEmpty()){
+                    edt_comment.setText(Problem_info);
+                }
+
+                if(pet_imgList != null && pet_imgList.size()>0) {
+                    setView();
+            }
+
+
+            }
+
 
         }
 
@@ -420,13 +471,13 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
         currentDateandTime = sdf.format(new Date());
 
-        if (userid != null) {
+       /* if (userid != null) {
             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
                 petDetailsResponseByUserIdCall();
             }
 
         }
-
+*/
         img_back.setOnClickListener(v -> onBackPressed());
 
         spr_selectyourpettype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -561,8 +612,6 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
         btn_continue.setOnClickListener(v -> {
             Log.w(TAG,"btn_continue selectedCommunicationtype : "+selectedCommunicationtype+" selectedVisitType : "+selectedVisitType);
-
-
 
             if (isVisit && selectedVisitType != null && selectedVisitType.isEmpty()) {
                 showErrorLoading("Please select visit type");
@@ -913,7 +962,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
     private void choosePetImage() {
 
-        if (clinicPicBeans!=null && clinicPicBeans.size() >= 3) {
+        if (pet_imgList!=null && pet_imgList.size() >= 3) {
 
             Toasty.warning(getApplicationContext(), "Sorry you can't Add more than 1", Toast.LENGTH_SHORT).show();
 
@@ -1079,9 +1128,12 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                     if (200 == response.body().getCode()) {
                         Log.w(TAG, "Profpic" + "--->" + new Gson().toJson(response.body()));
 
-                        DocBusInfoUploadRequest.ClinicPicBean clinicPicBean = new DocBusInfoUploadRequest.ClinicPicBean(response.body().getData().trim());
-                        clinicPicBeans.add(clinicPicBean);
+                   /*     DocBusInfoUploadRequest.ClinicPicBean clinicPicBean = new DocBusInfoUploadRequest.ClinicPicBean(response.body().getData().trim());
+                        clinicPicBeans.add(clinicPicBean);*/
                         uploadimagepath = response.body().getData();
+                        PetAppointmentCreateRequest.PetImgBean petImgBean = new PetAppointmentCreateRequest.PetImgBean();
+                        petImgBean.setPet_img(uploadimagepath);
+                        pet_imgList.add(petImgBean);
                         if (uploadimagepath != null) {
                             img_pet_imge.setVisibility(View.GONE);
                             setView();
@@ -1112,8 +1164,8 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         rv_upload_pet_images.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         //rv_upload_pet_images.setLayoutManager(new LinearLayoutManager(this));
         rv_upload_pet_images.setItemAnimator(new DefaultItemAnimator());
-        AddImageListAdapter addImageListAdapter = new AddImageListAdapter(getApplicationContext(), clinicPicBeans);
-        rv_upload_pet_images.setAdapter(addImageListAdapter);
+        PetCurrentImageListAdapter petCurrentImageListAdapter = new PetCurrentImageListAdapter(getApplicationContext(), pet_imgList);
+        rv_upload_pet_images.setAdapter(petCurrentImageListAdapter);
     }
 
     public static String getFilePathFromURI(Context context, Uri contentUri) {
@@ -1534,7 +1586,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
         petAppointmentCreateRequest.setVisit_type(selectedVisitType);
         petAppointmentCreateRequest.setLocation_id(locationid);
         petAppointmentCreateRequest.setHealth_issue_title(health_issue_title);
-
+        petAppointmentCreateRequest.setPet_img(pet_imgList);
         ArrayList<PetAppointmentCreateRequest> PetAppointmentCreateRequestList = new ArrayList<>();
         PetAppointmentCreateRequestList.add(petAppointmentCreateRequest);
         Log.w(TAG,"petAppointmentCreateRequest"+ "--->" + new Gson().toJson(petAppointmentCreateRequest));

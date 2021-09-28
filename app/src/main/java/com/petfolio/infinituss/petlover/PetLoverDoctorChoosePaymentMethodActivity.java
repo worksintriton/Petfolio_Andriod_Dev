@@ -205,8 +205,10 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
     private int Discount_price = 0;
     private int Total_price = 0;
     private String selectedCommunicationtype;
+    List<PetAppointmentCreateRequest.PetImgBean> pet_imgList = new ArrayList();
 
-   // private ArrayList<DocBusInfoUploadRequest.ClinicPicBean> clinicPicBeans = new ArrayList<>();
+
+    // private ArrayList<DocBusInfoUploadRequest.ClinicPicBean> clinicPicBeans = new ArrayList<>();
 
     @SuppressLint({"LogNotTimber", "SetTextI18n"})
     @Override
@@ -348,8 +350,11 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
                 Visit_type =  PetAppointmentCreateRequestList.get(i).getVisit_type();
                 Location_id =  PetAppointmentCreateRequestList.get(i).getLocation_id();
                 Health_issue_title =  PetAppointmentCreateRequestList.get(i).getHealth_issue_title();
+                pet_imgList =  PetAppointmentCreateRequestList.get(i).getPet_img();
+
             }
             Log.w(TAG,"doctorid : "+Doctor_id);
+            Log.w(TAG,"pet_imgList : "+new Gson().toJson(pet_imgList));
 
 
         }
@@ -449,7 +454,8 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(getApplicationContext(),BookAppointmentActivity.class);
+        finish();
+        /*Intent intent = new Intent(getApplicationContext(),BookAppointmentActivity.class);
         intent.putExtra("doctorid",doctorid);
         intent.putExtra("fromactivity",fromactivity);
         intent.putExtra("fromto",fromto);
@@ -463,8 +469,9 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
         intent.putExtra("doctorname", doctorname);
         intent.putExtra("clinicname", clinicname);
         intent.putExtra("petname", petname);
+        intent.putExtra("PetAppointmentCreateRequestList",PetAppointmentCreateRequestList);
         //intent.putExtra("clinicPicBeans", clinicPicBeans);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
 
@@ -782,6 +789,7 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
         petAppointmentCreateRequest.setTotal_price(Total_price);
         petAppointmentCreateRequest.setCoupon_status(Coupon_status);
         petAppointmentCreateRequest.setCoupon_code(Coupon_code);
+        petAppointmentCreateRequest.setPet_img(pet_imgList);
         Log.w(TAG,"petAppointmentCreateRequest : "+new Gson().toJson(petAppointmentCreateRequest));
 
         return petAppointmentCreateRequest;

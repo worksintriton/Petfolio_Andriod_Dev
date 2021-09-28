@@ -220,8 +220,7 @@
                 android:maxLength="25"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:inputType="text"
-                android:digits="@string/characters"/>
+                android:inputType="text" />
 
             <TextView
                 android:id="@+id/txt_lbl_uploadpet"

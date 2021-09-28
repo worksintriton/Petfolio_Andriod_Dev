@@ -176,7 +176,7 @@
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
-                android:layout_height="12dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/futuramediumbt"
                 android:padding="2dp"

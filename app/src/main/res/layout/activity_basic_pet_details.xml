@@ -366,7 +366,7 @@
                 android:background="@drawable/textview_bg"
                 android:fontFamily="@font/futuramediumbt"
                 android:hint="@string/pet_weight"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:maxLength="6"
                 android:maxLines="1"
                 android:padding="15dp"

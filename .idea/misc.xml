@@ -45,6 +45,7 @@
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_product_filters.xml" value="0.14990942028985507" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_search_doctor.xml" value="0.12360688956433637" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_selected_service.xml" value="0.18885869565217392" />
+        <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_service_book_appointment.xml" value="0.15443840579710144" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_service_provider_dashboard.xml" value="0.12360688956433637" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_service_provider_edit_form.xml" value="0.15217391304347827" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_service_provider_register_form.xml" value="0.13360507246376813" />
@@ -82,6 +83,7 @@
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/alert_success_register.xml" value="0.25416666666666665" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/alert_successfulley_cancelled_layout.xml" value="0.18297101449275363" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/alert_yes_no.xml" value="0.17753623188405798" />
+        <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/content_petcare_details.xml" value="0.16983695652173914" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/content_sp_details.xml" value="0.25416666666666665" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/doctor_bottom_sheet.xml" value="0.25416666666666665" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/doctor_navigation_drawer_layout.xml" value="0.17119565217391305" />
