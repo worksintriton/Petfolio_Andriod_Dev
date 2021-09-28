@@ -9,11 +9,14 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
+
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -21,17 +24,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
+
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
-import android.provider.MediaStore;
-import android.provider.OpenableColumns;
+
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
@@ -298,6 +298,19 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     private String Allergies = "";
 
     String outputTimeStr = "";
+
+
+    int PERMISSION_CLINIC = 1;
+    int PERMISSION_CERT = 2;
+    int PERMISSION_GOVT = 3;
+    int PERMISSION_PHOTO = 4;
+
+    String[] PERMISSIONS = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+    };
+
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -940,15 +953,10 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
             });
             builder.show();*/
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(BookAppointmentActivity.this, CAMERA) != PackageManager.PERMISSION_GRANTED)
-            {
-                requestPermissions(new String[]{CAMERA}, REQUEST_CLINIC_CAMERA_PERMISSION_CODE);
+            if (!hasPermissions(this, PERMISSIONS)) {
+                ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_CLINIC);
             }
 
-            else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(BookAppointmentActivity.this, READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-            {
-                requestPermissions(new String[]{READ_EXTERNAL_STORAGE}, REQUEST_READ_CLINIC_PIC_PERMISSION);
-            }
 
             else
             {
@@ -962,6 +970,18 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
         }
 
+    }
+
+
+    private boolean hasPermissions(Context context, String... permissions) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @SuppressLint("LogNotTimber")
@@ -1007,7 +1027,7 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                              SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
                              String currentDateandTime = sdf.format(new Date());
 
-                             filePart = MultipartBody.Part.createFormData("sampleFile", userid + currentDateandTime + file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                             filePart = MultipartBody.Part.createFormData("sampleFile", userid + currentDateandTime + filename, RequestBody.create(MediaType.parse("image/*"), file));
 
                              uploadPetImage();
 
@@ -1023,73 +1043,6 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
                  }
              }
 
-             if (requestCode == SELECT_CLINIC_PICTURE || requestCode == SELECT_CLINIC_CAMERA) {
-
-                 if (requestCode == SELECT_CLINIC_CAMERA) {
-                     Bitmap photo = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
-
-                     File file = new File(getFilesDir(), "Petfolio1" + ".jpg");
-
-                     OutputStream os;
-                     try {
-                         os = new FileOutputStream(file);
-                         if (photo != null) {
-                             photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
-                         }
-                         os.flush();
-                         os.close();
-                     } catch (Exception e) {
-                         Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
-                     }
-
-                     RequestBody requestFile = RequestBody.create(MediaType.parse("image*/"), file);
-
-                     filePart = MultipartBody.Part.createFormData("sampleFile", userid+file.getName().trim(), requestFile);
-
-                     uploadPetImage();
-
-                 } else {
-
-                     try {
-                         if (resultCode == Activity.RESULT_OK) {
-
-                             Log.w("VALUEEEEEEE1111", " " + data);
-
-                             Uri selectedImageUri = data.getData();
-
-                             Log.w("selectedImageUri", " " + selectedImageUri);
-
-                             String filename = null;
-                             if (selectedImageUri != null) {
-                                 filename = getFileName(selectedImageUri);
-                             }
-
-                             Log.w("filename", " " + filename);
-
-                             String filePath = FileUtil.getPath(BookAppointmentActivity.this, selectedImageUri);
-
-                             assert filePath != null;
-
-                             File file = new File(filePath); // initialize file here
-                             if(file != null) {
-                                 long length = file.length() / 1024; // Size in KB
-                                 Log.w("filesize", " " + length);
-                             }
-
-
-                             filePart = MultipartBody.Part.createFormData("sampleFile", userid+currentDateandTime+file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-                             uploadPetImage();
-
-
-                         }
-                     } catch (Exception e) {
-
-                         Log.w("Exception", " " + e);
-                     }
-
-                 }
-
-             }
 
          }
 
@@ -1850,75 +1803,38 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_READ_CLINIC_PIC_PERMISSION) {
+
+        if (requestCode == PERMISSION_CLINIC) {
 
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                Intent intent = new Intent();
-//                intent.setType("image/*");
-//                intent.setAction(Intent.ACTION_GET_CONTENT);
-//                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_CLINIC_PICTURE);
 
-                choosePetImage();
+                CropImage.activity().start(BookAppointmentActivity.this);
 
             } else {
                 new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("Permission Required")
+                        .setTitleText("Permisson Required")
                         .setContentText("Please Allow Permissions for choosing Images from Gallery ")
                         .setConfirmText("Ok")
                         .setConfirmClickListener(sDialog -> {
 
                             sDialog.dismissWithAnimation();
 
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                requestPermissions(new String[]{READ_EXTERNAL_STORAGE}, REQUEST_READ_CLINIC_PIC_PERMISSION);
+                            if (!hasPermissions(this, PERMISSIONS)) {
+                                ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_CLINIC);
                             }
-
 
                         })
                         .setCancelButton("Cancel", sDialog -> {
                             sDialog.dismissWithAnimation();
 
-                            showWarning(REQUEST_READ_CLINIC_PIC_PERMISSION);
-                        })
-                        .show();
-
-            }
-
-        } else if (requestCode == REQUEST_CLINIC_CAMERA_PERMISSION_CODE) {
-
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-              /*  Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-                startActivityForResult(intent, SELECT_CLINIC_CAMERA);*/
-
-                choosePetImage();
-
-            } else {
-                new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("Permission Required")
-                        .setContentText("Please Allow Camera for taking picture")
-                        .setConfirmText("Ok")
-                        .setConfirmClickListener(sDialog -> {
-
-                            sDialog.dismissWithAnimation();
-
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                requestPermissions(new String[]{CAMERA}, REQUEST_CLINIC_CAMERA_PERMISSION_CODE);
-                            }
-
-
-                        })
-                        .setCancelButton("Cancel", sDialog -> {
-                            sDialog.dismissWithAnimation();
-
-                            showWarning(REQUEST_CLINIC_CAMERA_PERMISSION_CODE);
+                            showWarning(PERMISSION_CLINIC);
                         })
                         .show();
 
             }
 
         }
+
     }
 
     private void showWarning(int REQUEST_PERMISSION_CODE) {
@@ -1931,11 +1847,10 @@ public class BookAppointmentActivity extends AppCompatActivity implements Paymen
 
                     sDialog.dismissWithAnimation();
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                    {
-                        requestPermissions(new String[]{READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION_CODE);
-                    }
 
+                    if (!hasPermissions(this, PERMISSIONS)) {
+                        ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_CLINIC);
+                    }
 
                 })
                 .setCancelButton("Cancel", SweetAlertDialog::dismissWithAnimation)

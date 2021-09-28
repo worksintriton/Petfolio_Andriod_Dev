@@ -35,7 +35,10 @@ import org.jitsi.meet.sdk.log.JitsiMeetLogger;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -370,15 +373,19 @@ public class VideoCallDoctorActivity extends AppCompatActivity implements JitsiM
 
     }
     private PetNoShowRequest petNoShowRequest() {
-        /**
+        /*
          * _id : 5fc639ea72fc42044bfa1683
          * appoint_patient_st :no show
          * appoinment_status : Missed
+         * missed_at
          */
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
         PetNoShowRequest petNoShowRequest = new PetNoShowRequest();
         petNoShowRequest.set_id(appointmentid);
         petNoShowRequest.setAppoint_patient_st("Petowner Not Available");
         petNoShowRequest.setAppoinment_status("Missed");
+        petNoShowRequest.setMissed_at(currentDateandTime);
         Log.w(TAG,"petNoShowRequest"+ "--->" + new Gson().toJson(petNoShowRequest));
         return petNoShowRequest;
     }

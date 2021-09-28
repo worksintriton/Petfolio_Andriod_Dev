@@ -66,6 +66,8 @@ public class PetMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerV
         if(missedAppointmentResponseList.get(position).getPet_name() != null) {
             holder.txt_pettype.setText(missedAppointmentResponseList.get(position).getPet_name());
         }
+        Log.w(TAG,"Missed At : "+missedAppointmentResponseList.get(position).getMissed_at());
+
         if(missedAppointmentResponseList.get(position).getMissed_at() != null) {
             holder.txt_missed_date.setText("Missed on:" + " " + missedAppointmentResponseList.get(position).getMissed_at());
 

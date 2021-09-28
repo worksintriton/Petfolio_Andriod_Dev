@@ -416,10 +416,28 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
 
                     if (200 == response.body().getCode()) {
                         scrollablContent.setVisibility(View.VISIBLE);
-
-
                         String vaccinated, addr = null, usrname = null;
                         if (response.body().getData() != null) {
+
+                            if( response.body().getData().getUser_id() != null){
+                                String name = "";
+                                if(response.body().getData().getUser_id().getFirst_name() != null) {
+                                    if(response.body().getData().getUser_id().getLast_name() != null) {
+                                        name = response.body().getData().getUser_id().getFirst_name()+" "+response.body().getData().getUser_id().getLast_name();
+                                    }
+                                }
+                                txt_usrname.setText(name);
+                                }
+                            if(response.body().getData().getUser_id().getProfile_img() != null && !response.body().getData().getUser_id().getProfile_img().isEmpty()){
+                                Glide.with(DoctorAppointmentDetailsActivity.this)
+                                        .load(response.body().getData().getUser_id().getProfile_img())
+                                        .into(img_user);
+
+                            }else{
+                                Glide.with(DoctorAppointmentDetailsActivity.this)
+                                        .load(APIClient.PROFILE_IMAGE_URL)
+                                        .into(img_user);
+                            }
 
                             if(response.body().getData().getAppointment_types() != null && response.body().getData().getAppointment_types().equalsIgnoreCase("Emergency")){
                                 img_emergency_appointment.setVisibility(View.VISIBLE);
@@ -472,7 +490,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
                           //  String usr_image = response.body().getData().getDoctor_id().getProfile_img();
                             if(response.body().getData().getPet_id() != null){
                                  pet_name = response.body().getData().getPet_id().getPet_name();
-                                pet_image = response.body().getData().getPet_id().getPet_img();
+                                 pet_image = response.body().getData().getPet_id().getPet_img();
                                  pet_type = response.body().getData().getPet_id().getPet_type();
 
                                  breed = response.body().getData().getPet_id().getPet_breed();
@@ -629,7 +647,7 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
 
     @SuppressLint({"SetTextI18n", "LongLogTag", "LogNotTimber"})
     private void setView(String usrname, String usr_image, String pet_name, String pet_type, String breed, String gender, String colour, String weight, String order_date, String orderid, String payment_method, String order_cost, String vaccinated, String addr) {
-        if(usr_image != null && !usr_image.isEmpty()){
+        /*if(usr_image != null && !usr_image.isEmpty()){
             Glide.with(DoctorAppointmentDetailsActivity.this)
                     .load(usr_image)
                     .into(img_user);
@@ -638,12 +656,12 @@ public class DoctorAppointmentDetailsActivity extends AppCompatActivity implemen
             Glide.with(DoctorAppointmentDetailsActivity.this)
                     .load(APIClient.PROFILE_IMAGE_URL)
                     .into(img_user);
-        }
+        }*/
 
 
-        if(usrname!= null && !usrname.isEmpty()){
+        /*if(usrname!= null && !usrname.isEmpty()){
             txt_usrname.setText(usrname);
-        }
+        }*/
 
 
 

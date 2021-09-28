@@ -11,6 +11,15 @@ public class PetNoShowRequest {
     private String _id;
     private String appoint_patient_st;
     private String appoinment_status;
+    private String missed_at;
+
+    public String getMissed_at() {
+        return missed_at;
+    }
+
+    public void setMissed_at(String missed_at) {
+        this.missed_at = missed_at;
+    }
 
     public String get_id() {
         return _id;
