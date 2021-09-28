@@ -173,7 +173,8 @@
                     android:orientation="vertical"
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
-                    tools:ignore="RtlHardcoded,UseCompoundDrawables">
+                    tools:ignore="RtlHardcoded,UseCompoundDrawables"
+                    android:visibility="invisible">
 
                     <TextView
                         android:gravity="center"

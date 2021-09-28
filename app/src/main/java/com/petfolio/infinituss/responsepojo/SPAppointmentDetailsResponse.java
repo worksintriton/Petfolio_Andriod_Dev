@@ -130,6 +130,52 @@ public class SPAppointmentDetailsResponse {
         private String missed_at;
         private String mobile_type;
         private boolean delete_status;
+        private String coupon_status;
+        private String coupon_code;
+        private int original_price;
+        private int discount_price;
+        private int total_price;
+
+        public String getCoupon_status() {
+            return coupon_status;
+        }
+
+        public void setCoupon_status(String coupon_status) {
+            this.coupon_status = coupon_status;
+        }
+
+        public String getCoupon_code() {
+            return coupon_code;
+        }
+
+        public void setCoupon_code(String coupon_code) {
+            this.coupon_code = coupon_code;
+        }
+
+        public int getOriginal_price() {
+            return original_price;
+        }
+
+        public void setOriginal_price(int original_price) {
+            this.original_price = original_price;
+        }
+
+        public int getDiscount_price() {
+            return discount_price;
+        }
+
+        public void setDiscount_price(int discount_price) {
+            this.discount_price = discount_price;
+        }
+
+        public int getTotal_price() {
+            return total_price;
+        }
+
+        public void setTotal_price(int total_price) {
+            this.total_price = total_price;
+        }
+
         private String updatedAt;
         private String createdAt;
         private int __v;

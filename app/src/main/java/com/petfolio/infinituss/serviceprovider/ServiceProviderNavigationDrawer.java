@@ -39,6 +39,7 @@ import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.doctor.DoctorDashboardActivity;
 import com.petfolio.infinituss.doctor.shop.DoctorCartActivity;
+import com.petfolio.infinituss.petlover.MyCouponsActivity;
 import com.petfolio.infinituss.requestpojo.DefaultLocationRequest;
 import com.petfolio.infinituss.requestpojo.NotificationCartCountRequest;
 import com.petfolio.infinituss.responsepojo.NotificationCartCountResponse;
@@ -222,6 +223,7 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
                     return true;
 
                 case R.id.nav_item_six:
+                    gotoMyCoupons();
                     return true;
                case R.id.nav_item_seven:
                    gotoNotifications();
@@ -238,6 +240,11 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
             }
         });
 
+
+    }
+
+    private void gotoMyCoupons() {
+        startActivity(new Intent(getApplicationContext(), MyCouponsSPActivity.class));
 
     }
 

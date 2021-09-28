@@ -21,20 +21,28 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.activity.NotificationActivity;
+import com.petfolio.infinituss.adapter.MyCouponsTextAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
+import com.petfolio.infinituss.interfaces.OnAppointmentSuccessfullyCancel;
 import com.petfolio.infinituss.requestpojo.PetLoverCancelOrderRequest;
 import com.petfolio.infinituss.requestpojo.PetLoverCancelSingleOrderRequest;
+import com.petfolio.infinituss.requestpojo.RefundCouponCreateRequest;
 import com.petfolio.infinituss.requestpojo.UpdateStatusCancelRequest;
+import com.petfolio.infinituss.responsepojo.CouponCodeTextResponse;
 import com.petfolio.infinituss.responsepojo.DropDownListResponse;
 import com.petfolio.infinituss.responsepojo.SuccessResponse;
 import com.petfolio.infinituss.responsepojo.VendorOrderUpdateResponse;
 import com.petfolio.infinituss.responsepojo.VendorReasonListResponse;
+import com.petfolio.infinituss.sessionmanager.SessionManager;
 import com.petfolio.infinituss.utils.ConnectionDetector;
 import com.petfolio.infinituss.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -53,7 +61,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PetVendorCancelOrderActivity extends AppCompatActivity implements View.OnClickListener{
+public class PetVendorCancelOrderActivity extends AppCompatActivity implements View.OnClickListener, OnAppointmentSuccessfullyCancel {
 
     private static final String TAG = "PetVendorCancelOrderActivity" ;
 
@@ -158,7 +166,10 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
     @BindView(R.id.rl_homes)
     RelativeLayout rl_homes;
 
-
+    TextView txt_no_records_coupon;
+    RecyclerView rv_successfully_cancelled;
+    private List<CouponCodeTextResponse.DataBean> myCouponsTextList;
+    private String userid;
 
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
@@ -167,6 +178,11 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_vendor_cancel_order);
         ButterKnife.bind(this);
+
+
+        SessionManager  session = new SessionManager(getApplicationContext());
+        HashMap<String, String> user = session.getProfileDetails();
+        userid = user.get(SessionManager.KEY_ID);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -499,10 +515,11 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         dialog.dismiss();
-                        Intent intent = new Intent(PetVendorCancelOrderActivity.this,PetLoverVendorOrderDetailsActivity.class);
+                        showSuccessfullyCancelled();
+                        /*Intent intent = new Intent(PetVendorCancelOrderActivity.this,PetLoverVendorOrderDetailsActivity.class);
                         intent.putExtra("_id",orderid);
                         startActivity(intent);
-                        finish();
+                        finish();*/
 
 
                     }
@@ -565,10 +582,11 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         dialog.dismiss();
-                        Intent intent = new Intent(PetVendorCancelOrderActivity.this,PetLoverVendorOrderDetailsActivity.class);
+                        showSuccessfullyCancelled();
+                      /*  Intent intent = new Intent(PetVendorCancelOrderActivity.this,PetLoverVendorOrderDetailsActivity.class);
                         intent.putExtra("_id",orderid);
                         startActivity(intent);
-                        finish();
+                        finish();*/
 
 
                     }
@@ -615,32 +633,7 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
     }
 
 
-//    @SuppressLint("NonConstantResourceId")
-//    @Override
-//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//
-//        switch (item.getItemId()) {
-//            case R.id.home:
-//                callDirections("1");
-//                break;
-//            case R.id.shop:
-//                callDirections("2");
-//                break;
-//            case R.id.services:
-//                callDirections("3");
-//                break;
-//            case R.id.care:
-//                callDirections("4");
-//                break;
-//            case R.id.community:
-//                callDirections("5");
-//                break;
-//
-//            default:
-//                return  false;
-//        }
-//        return true;
-//    }
+
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -690,5 +683,282 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
         intent.putExtra("tag",tag);
         startActivity(intent);
         finish();
+    }
+
+    private void showSuccessfullyCancelled() {
+        try {
+            dialog = new Dialog(PetVendorCancelOrderActivity.this);
+            dialog.setContentView(R.layout.alert_successfulley_cancelled_layout);
+            dialog.setCancelable(false);
+            txt_no_records_coupon = dialog.findViewById(R.id.txt_no_records);
+            rv_successfully_cancelled = dialog.findViewById(R.id.rv_successfully_cancelled);
+            txt_no_records_coupon.setVisibility(View.GONE);
+            rv_successfully_cancelled.setVisibility(View.GONE);
+
+            if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                CouponCodeTextResponseCall();
+            }
+
+
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
+    @SuppressLint("LogNotTimber")
+    private void CouponCodeTextResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<CouponCodeTextResponse> call = apiInterface.CouponCodeTextResponseCall(RestUtils.getContentType());
+        Log.w(TAG,"CouponCodeTextResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<CouponCodeTextResponse>() {
+            @SuppressLint({"SetTextI18n", "LogNotTimber"})
+            @Override
+            public void onResponse(@NonNull Call<CouponCodeTextResponse> call, @NonNull Response<CouponCodeTextResponse> response) {
+
+                Log.w(TAG,"CouponCodeTextResponse"+ "--->" + new Gson().toJson(response.body()));
+
+                avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        if(response.body().getData() != null && response.body().getData().size()>0){
+                            txt_no_records_coupon.setVisibility(View.GONE);
+                            rv_successfully_cancelled.setVisibility(View.VISIBLE);
+                            myCouponsTextList = response.body().getData();
+                            setViewCouponText();
+
+                        }
+                        else{
+                            rv_successfully_cancelled.setVisibility(View.GONE);
+                            txt_no_records_coupon.setVisibility(View.VISIBLE);
+                            txt_no_records_coupon.setText("No data found");
+
+                        }
+
+
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<CouponCodeTextResponse> call, @NonNull Throwable t) {
+
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"CouponCodeTextResponse flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    private void setViewCouponText() {
+        rv_successfully_cancelled.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        rv_successfully_cancelled.setItemAnimator(new DefaultItemAnimator());
+        MyCouponsTextAdapter myCouponsTextAdapter = new MyCouponsTextAdapter(getApplicationContext(), myCouponsTextList,"40",this);
+        rv_successfully_cancelled.setAdapter(myCouponsTextAdapter);
+
+    }
+
+    @Override
+    public void onAppointmentSuccessfullyCancel(String refund, String cost) {
+        Log.w(TAG,"onAppointmentSuccessfullyCancel : "+"refund : "+refund+"cost : "+cost);
+        if(refund != null && !refund.isEmpty()){
+            RefundCouponCreateRequestCall(refund,cost);
+        }else{
+            RefundCouponBankCreateRequestCall(refund,cost);
+
+        }
+
+    }
+
+    private void RefundCouponCreateRequestCall(String refund, String cost) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<SuccessResponse> call = ApiService.RefundCouponCreateRequestCall(RestUtils.getContentType(),refundCouponCreateRequest(refund,cost));
+
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<SuccessResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"RefundCouponCreateRequestCall"+ "--->" + new Gson().toJson(response.body()));
+
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        dialog.dismiss();
+                        showRefundSuccessfully("Coupon code generated successfully. Generated coupon will also be available in My Coupons.");
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+
+                Log.w(TAG,"RefundCouponCreateRequestCall flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    private RefundCouponCreateRequest refundCouponCreateRequest(String refund, String cost) {
+
+        /*
+         * created_by : User
+         * coupon_type : 1
+         * code : REF100
+         * amount : 100
+         * user_details : 123123
+         * used_status : Not Used
+         */
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMhhmmss");
+        String currentDateandTime = simpleDateFormat.format(new Date());
+
+
+
+        RefundCouponCreateRequest refundCouponCreateRequest = new RefundCouponCreateRequest();
+        refundCouponCreateRequest.setCreated_by("User");
+        refundCouponCreateRequest.setCoupon_type("3");
+        refundCouponCreateRequest.setCode("REF"+currentDateandTime);
+        if(cost != null && !cost.isEmpty()){
+            refundCouponCreateRequest.setAmount(Integer.parseInt(cost));
+        }else{
+            refundCouponCreateRequest.setAmount(0);
+        }
+
+        refundCouponCreateRequest.setUser_details(userid);
+        refundCouponCreateRequest.setUsed_status("Not Used");
+        refundCouponCreateRequest.setMobile_type("Android");
+        Log.w(TAG,"refundCouponCreateRequest"+ "--->" + new Gson().toJson(refundCouponCreateRequest));
+        return refundCouponCreateRequest;
+    }
+
+    private void RefundCouponBankCreateRequestCall(String refund, String cost) {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<SuccessResponse> call = ApiService.RefundCouponCreateRequestCall(RestUtils.getContentType(),refundCouponCreateRequest1(refund,cost));
+
+        Log.w(TAG,"url  :%s"+ call.request().url().toString());
+
+        call.enqueue(new Callback<SuccessResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<SuccessResponse> call, @NonNull Response<SuccessResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG,"RefundCouponCreateRequestCall"+ "--->" + new Gson().toJson(response.body()));
+
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        dialog.dismiss();
+                        showRefundSuccessfully("Your refund will be processed in 4-5 working days.");
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SuccessResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+
+                Log.w(TAG,"RefundCouponCreateRequestCall flr"+"--->" + t.getMessage());
+            }
+        });
+
+    }
+    private RefundCouponCreateRequest refundCouponCreateRequest1(String refund, String cost) {
+
+        /*
+         * created_by : User
+         * coupon_type : 1
+         * code : REF100
+         * amount : 100
+         * user_details : 123123
+         * used_status : Not Used
+         */
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+        String currentDateandTime = simpleDateFormat.format(new Date());
+
+
+
+        RefundCouponCreateRequest refundCouponCreateRequest = new RefundCouponCreateRequest();
+        refundCouponCreateRequest.setCreated_by("");
+        refundCouponCreateRequest.setCoupon_type("3");
+        refundCouponCreateRequest.setCode("Bank");
+        refundCouponCreateRequest.setAmount(0);
+        refundCouponCreateRequest.setUser_details(orderid);
+        refundCouponCreateRequest.setUsed_status("");
+        refundCouponCreateRequest.setMobile_type("Android");
+
+
+        Log.w(TAG,"refundCouponCreateRequest"+ "--->" + new Gson().toJson(refundCouponCreateRequest));
+        return refundCouponCreateRequest;
+    }
+
+    private void showRefundSuccessfully(String Message) {
+
+        try {
+
+            dialog = new Dialog(PetVendorCancelOrderActivity.this);
+            dialog.setContentView(R.layout.alert_approve_reject_layout);
+            TextView tvheader = dialog.findViewById(R.id.tvInternetNotConnected);
+            tvheader.setText(Message);
+            Button dialogButtonApprove = dialog.findViewById(R.id.btnApprove);
+            dialogButtonApprove.setText("Ok");
+            Button dialogButtonRejected = dialog.findViewById(R.id.btnReject);
+            dialogButtonRejected.setText("No");
+            dialogButtonRejected.setVisibility(View.GONE);
+
+            dialogButtonApprove.setOnClickListener(view -> {
+                Intent intent = new Intent(PetVendorCancelOrderActivity.this,PetLoverVendorOrderDetailsActivity.class);
+                intent.putExtra("_id",orderid);
+                startActivity(intent);
+                finish();
+                //startActivity(new Intent(getApplicationContext(), MyCouponsActivity.class));
+                dialog.dismiss();
+
+
+
+
+            });
+            dialogButtonRejected.setOnClickListener(view -> {
+                // Toasty.info(context, "Rejected Successfully", Toast.LENGTH_SHORT, true).show();
+                dialog.dismiss();
+
+
+
+
+            });
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
+        }
+
+
+
+
     }
 }

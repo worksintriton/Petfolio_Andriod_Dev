@@ -334,6 +334,7 @@ public class SPFiltersActivity extends AppCompatActivity implements View.OnClick
     }
 
     public void clearRadioChecked() {
+        rb_five_star.setChecked(false);
         rb_four_star.setChecked(false);
         rb_three_star.setChecked(false);
         rb_two_star.setChecked(false);

@@ -38,6 +38,7 @@ import com.petfolio.infinituss.activity.NotificationActivity;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.doctor.shop.DoctorCartActivity;
+import com.petfolio.infinituss.petlover.MyCouponsActivity;
 import com.petfolio.infinituss.petlover.PetCartActivity;
 import com.petfolio.infinituss.petlover.PetLoverDashboardActivity;
 import com.petfolio.infinituss.requestpojo.DefaultLocationRequest;
@@ -328,6 +329,7 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
                         return true;
 
                     case R.id.nav_item_six:
+                        gotoMyCoupons();
                         return true;
 
                     case R.id.nav_item_seven:
@@ -351,6 +353,11 @@ public class DoctorNavigationDrawer extends AppCompatActivity implements View.On
                 }
             }
         });
+
+    }
+
+    private void gotoMyCoupons() {
+        startActivity(new Intent(getApplicationContext(), MyCouponsDoctorActivity.class));
 
     }
 

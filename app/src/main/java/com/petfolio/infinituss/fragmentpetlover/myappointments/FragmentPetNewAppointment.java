@@ -36,16 +36,22 @@ import com.petfolio.infinituss.doctor.ManageAddressDoctorActivity;
 import com.petfolio.infinituss.interfaces.OnAppointmentCancel;
 import com.petfolio.infinituss.interfaces.OnAppointmentSuccessfullyCancel;
 import com.petfolio.infinituss.petlover.MyCouponsActivity;
+import com.petfolio.infinituss.petlover.PetAppointmentDetailsActivity;
+import com.petfolio.infinituss.petlover.PetAppointment_Doctor_Date_Time_Activity;
 import com.petfolio.infinituss.petlover.PetMyappointmentsActivity;
 import com.petfolio.infinituss.requestpojo.AppoinmentCancelledRequest;
+import com.petfolio.infinituss.requestpojo.AppointmentDetailsRequest;
 import com.petfolio.infinituss.requestpojo.NotificationSendRequest;
 import com.petfolio.infinituss.requestpojo.PetLoverAppointmentRequest;
+import com.petfolio.infinituss.requestpojo.PetNewAppointmentDetailsRequest;
 import com.petfolio.infinituss.requestpojo.RefundCouponCreateRequest;
 import com.petfolio.infinituss.requestpojo.SPNotificationSendRequest;
 import com.petfolio.infinituss.responsepojo.AppoinmentCancelledResponse;
 import com.petfolio.infinituss.responsepojo.CouponCodeTextResponse;
 import com.petfolio.infinituss.responsepojo.NotificationSendResponse;
 import com.petfolio.infinituss.responsepojo.PetAppointmentResponse;
+import com.petfolio.infinituss.responsepojo.PetNewAppointmentDetailsResponse;
+import com.petfolio.infinituss.responsepojo.SPAppointmentDetailsResponse;
 import com.petfolio.infinituss.responsepojo.SuccessResponse;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
 import com.petfolio.infinituss.utils.ConnectionDetector;
@@ -114,6 +120,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
     private String Paymentmethod;
     private String Appointmetnt_id;
     private boolean isrefund;
+    private String appointment_id;
 
 
     public FragmentPetNewAppointment() {
@@ -293,6 +300,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
 
     private void showStatusAlert(String id,String appointmenttype,String userid, String doctorid,String appointmentid, String spid) {
         try {
+            appointment_id =id;
             dialog = new Dialog(mContext);
             dialog.setContentView(R.layout.alert_approve_reject_layout);
             TextView tvheader = (TextView)dialog.findViewById(R.id.tvInternetNotConnected);
@@ -822,7 +830,6 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
         Log.w(TAG,"refundCouponCreateRequest"+ "--->" + new Gson().toJson(refundCouponCreateRequest));
         return refundCouponCreateRequest;
     }
-
     private void showRefundSuccessfully(String Message) {
 
         try {
@@ -863,6 +870,91 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
 
 
 
+    }
+
+
+
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    private void spAppointmentDetailsResponse() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<SPAppointmentDetailsResponse> call = ApiService.spAppointmentDetailsResponse(RestUtils.getContentType(), appointmentDetailsRequest());
+        Log.w(TAG, "url  :%s" + call.request().url().toString());
+
+        call.enqueue(new Callback<SPAppointmentDetailsResponse>() {
+            @SuppressLint({"LongLogTag", "LogNotTimber"})
+            @Override
+            public void onResponse(@NonNull Call<SPAppointmentDetailsResponse> call, @NonNull Response<SPAppointmentDetailsResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG, "SPAppointmentDetailsResponse" + "--->" + new Gson().toJson(response.body()));
+                if (response.body() != null) {
+                    if (200 == response.body().getCode()) {
+
+
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SPAppointmentDetailsResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+
+                Log.w(TAG, "PetNewAppointmentDetailsResponse" + "--->" + t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    private AppointmentDetailsRequest appointmentDetailsRequest() {
+
+        AppointmentDetailsRequest appointmentDetailsRequest = new AppointmentDetailsRequest();
+        appointmentDetailsRequest.setApppointment_id(appointment_id);
+        Log.w(TAG, "appointmentDetailsRequest" + "--->" + new Gson().toJson(appointmentDetailsRequest));
+        return appointmentDetailsRequest;
+    }
+
+
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    private void petAppointmentResponseCall() {
+        avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<PetNewAppointmentDetailsResponse> call = ApiService.petNewAppointDetailResponseCall(RestUtils.getContentType(), petNewAppointmentDetailsRequest());
+        Log.w(TAG, "url  :%s" + call.request().url().toString());
+        call.enqueue(new Callback<PetNewAppointmentDetailsResponse>() {
+            @SuppressLint({"LongLogTag", "LogNotTimber", "SetTextI18n"})
+            @Override
+            public void onResponse(@NonNull Call<PetNewAppointmentDetailsResponse> call, @NonNull Response<PetNewAppointmentDetailsResponse> response) {
+                avi_indicator.smoothToHide();
+                Log.w(TAG, "PetNewAppointmentDetailsResponse" + "--->" + new Gson().toJson(response.body()));
+
+
+                if (response.body() != null) {
+
+                    if (200 == response.body().getCode()) {}
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<PetNewAppointmentDetailsResponse> call, @NonNull Throwable t) {
+                avi_indicator.smoothToHide();
+
+                Log.w(TAG, "PetNewAppointmentDetailsResponse" + "--->" + t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    private PetNewAppointmentDetailsRequest petNewAppointmentDetailsRequest() {
+        PetNewAppointmentDetailsRequest petNewAppointmentDetailsRequest = new PetNewAppointmentDetailsRequest();
+        petNewAppointmentDetailsRequest.setApppointment_id(appointment_id);
+        Log.w(TAG, "petNewAppointmentDetailsRequest" + "--->" + new Gson().toJson(petNewAppointmentDetailsRequest));
+        return petNewAppointmentDetailsRequest;
     }
 
 
