@@ -36,6 +36,7 @@ import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.appUtils.FileUtil;
+import com.petfolio.infinituss.doctor.EditDoctorProfileImageActivity;
 import com.petfolio.infinituss.serviceprovider.SPEditProfileImageActivity;
 import com.petfolio.infinituss.serviceprovider.SPEditProfileImageActivity;
 import com.petfolio.infinituss.requestpojo.DoctorUpdateProfileImageRequest;
@@ -125,6 +126,19 @@ public class SPEditProfileImageActivity extends AppCompatActivity implements Vie
     private String refcode;
 
 
+    int PERMISSION_CLINIC = 1;
+    int PERMISSION_CERT = 2;
+    int PERMISSION_GOVT = 3;
+    int PERMISSION_PHOTO = 4;
+
+    String[] PERMISSIONS = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+    };
+
+
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,12 +201,9 @@ public class SPEditProfileImageActivity extends AppCompatActivity implements Vie
                 break;
 
             case R.id.img_pet_imge:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    checkMultiplePermissions(REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS, SPEditProfileImageActivity.this);
-                }else{
+
                     choosePetLoverImage();
 
-                }
                 break;
 
             case R.id.btn_continue:
@@ -202,12 +213,9 @@ public class SPEditProfileImageActivity extends AppCompatActivity implements Vie
     }
 
     private void gotoUplodPetLoverImage() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkMultiplePermissions(REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS, SPEditProfileImageActivity.this);
-        }else{
+  
             choosePetLoverImage();
 
-        }
     }
 
 
@@ -272,14 +280,8 @@ public class SPEditProfileImageActivity extends AppCompatActivity implements Vie
         });
         builder.show();*/
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(SPEditProfileImageActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-        {
-            requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CLINIC_CAMERA_PERMISSION_CODE);
-        }
-
-        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(SPEditProfileImageActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-        {
-            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_CLINIC_PIC_PERMISSION);
+        if (!hasPermissions(this, PERMISSIONS)) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_CLINIC);
         }
 
         else
@@ -338,7 +340,7 @@ public class SPEditProfileImageActivity extends AppCompatActivity implements Vie
                             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
                             String currentDateandTime = sdf.format(new Date());
 
-                            filePart = MultipartBody.Part.createFormData("sampleFile", userid + currentDateandTime + file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                            filePart = MultipartBody.Part.createFormData("sampleFile", userid + currentDateandTime + filename, RequestBody.create(MediaType.parse("image/*"), file));
 
                             uploadProfileImage();
 
@@ -354,84 +356,8 @@ public class SPEditProfileImageActivity extends AppCompatActivity implements Vie
                 }
             }
 
-            else if(requestCode== SELECT_CLINIC_PICTURE || requestCode == SELECT_CLINIC_CAMERA)
-            {
-
-                if(requestCode == SELECT_CLINIC_CAMERA)
-                {
-                    if(data.getExtras() != null){
-                        Bitmap photo = (Bitmap) data.getExtras().get("data");
-                        Log.w(TAG,"photo width : "+photo.getWidth()+" height : "+photo.getHeight());
-
-                        File file = new File(getFilesDir(), "Petfolio1" + ".jpg");
-
-                        OutputStream os;
-                        try {
-                            os = new FileOutputStream(file);
-                            photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
-                            os.flush();
-                            os.close();
-                        } catch (Exception e) {
-                            Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
-                        }
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
-                        String currentDateandTime = sdf.format(new Date());
-
-                        RequestBody requestFile = RequestBody.create(MediaType.parse("image*/"), file);
-
-                        filePart = MultipartBody.Part.createFormData("sampleFile",  userid+currentDateandTime+file.getName(), requestFile);
-
-                        uploadProfileImage();
-                    }
 
 
-
-
-                }
-
-                else{
-
-                    try {
-                        if (resultCode == Activity.RESULT_OK)
-                        {
-
-                            Log.w("VALUEEEEEEE1111", " " + data);
-
-                            Uri selectedImageUri = data.getData();
-
-                            Log.w("selectedImageUri", " " + selectedImageUri);
-
-                            String filename = getFileName(selectedImageUri);
-
-                            Log.w("filename", " " + filename);
-
-                            String filePath = FileUtil.getPath(SPEditProfileImageActivity.this,selectedImageUri);
-
-                            assert filePath != null;
-
-                            File file = new File(filePath); // initialize file here
-
-                            long length = file.length() / 1024; // Size in KB
-
-                            Log.w("filesize", " " + length);
-
-                            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
-                            String currentDateandTime = sdf.format(new Date());
-
-                            filePart = MultipartBody.Part.createFormData("sampleFile", userid+currentDateandTime+file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-
-                            uploadProfileImage();
-
-
-                        }
-                    } catch (Exception e) {
-
-                        Log.w("Exception", " " + e);
-                    }
-
-                }
-
-            }
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -508,15 +434,12 @@ public class SPEditProfileImageActivity extends AppCompatActivity implements Vie
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == REQUEST_READ_CLINIC_PIC_PERMISSION) {
+        if (requestCode == PERMISSION_CLINIC) {
 
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-               /* Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_CLINIC_PICTURE);
-*/
-                choosePetLoverImage();
+
+                CropImage.activity().start(SPEditProfileImageActivity.this);
+
             } else {
                 new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Permisson Required")
@@ -526,8 +449,9 @@ public class SPEditProfileImageActivity extends AppCompatActivity implements Vie
 
                             sDialog.dismissWithAnimation();
 
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                requestPermissions(new String[]{READ_EXTERNAL_STORAGE}, REQUEST_READ_CLINIC_PIC_PERMISSION);
+
+                            if (!hasPermissions(this, PERMISSIONS)) {
+                                ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_CLINIC);
                             }
 
 
@@ -535,43 +459,7 @@ public class SPEditProfileImageActivity extends AppCompatActivity implements Vie
                         .setCancelButton("Cancel", sDialog -> {
                             sDialog.dismissWithAnimation();
 
-                            showWarning(REQUEST_READ_CLINIC_PIC_PERMISSION);
-                        })
-                        .show();
-
-            }
-
-        }
-
-        else if (requestCode == REQUEST_CLINIC_CAMERA_PERMISSION_CODE) {
-
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-               /* Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-                startActivityForResult(intent, SELECT_CLINIC_CAMERA);*/
-
-                choosePetLoverImage();
-
-            } else {
-                new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("Permisson Required")
-                        .setContentText("Please Allow Camera for taking picture")
-                        .setConfirmText("Ok")
-                        .setConfirmClickListener(sDialog -> {
-
-                            sDialog.dismissWithAnimation();
-
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                requestPermissions(new String[]{CAMERA}, REQUEST_CLINIC_CAMERA_PERMISSION_CODE);
-                            }
-
-
-                        })
-                        .setCancelButton("Cancel", sDialog -> {
-                            sDialog.dismissWithAnimation();
-
-                            showWarning(REQUEST_CLINIC_CAMERA_PERMISSION_CODE);
+                            showWarning(PERMISSION_CLINIC);
                         })
                         .show();
 
@@ -613,9 +501,8 @@ public class SPEditProfileImageActivity extends AppCompatActivity implements Vie
 
                     sDialog.dismissWithAnimation();
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                    {
-                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION_CODE);
+                    if (!hasPermissions(this, PERMISSIONS)) {
+                        ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_PERMISSION_CODE);
                     }
 
 
@@ -629,7 +516,11 @@ public class SPEditProfileImageActivity extends AppCompatActivity implements Vie
         String fileName = getFileName(contentUri);
         if (!TextUtils.isEmpty(fileName)) {
 
-            String path = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS).getPath() + "/" + "MyFirstApp/";
+           /* String path = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS).getPath() + "/" + "MyFirstApp/";*/
+
+
+            String path = context.getFilesDir() + "/" + "MyFirstApp/";
+
             // Create the parent path
             File dir = new File(path);
             if (!dir.exists()) {

@@ -356,15 +356,11 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
 
         bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.bottomSheetLayout));
 
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
         bottomSheetBehavior.setHideable(false);
 
         bottomSheetBehavior.setFitToContents(false);
-
-        bottomSheetBehavior.setHalfExpandedRatio(0.9f);
-
-        bottomSheetBehavior.setPeekHeight(0);
 
         // Capturing the callbacks for bottom sheet
         bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
@@ -374,23 +370,28 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
                 switch (newState) {
                     case BottomSheetBehavior.STATE_COLLAPSED:
                         Log.w("Bottom Sheet Behaviour", "STATE_COLLAPSED");
-                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                         break;
                     case BottomSheetBehavior.STATE_DRAGGING:
                         Log.w("Bottom Sheet Behaviour", "STATE_DRAGGING");
+                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                         break;
                     case BottomSheetBehavior.STATE_EXPANDED:
                         Log.w("Bottom Sheet Behaviour", "STATE_EXPANDED");
                         //  bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+
                         break;
                     case BottomSheetBehavior.STATE_HIDDEN:
                         Log.w("Bottom Sheet Behaviour", "STATE_HIDDEN");
                         break;
                     case BottomSheetBehavior.STATE_SETTLING:
                         Log.w("Bottom Sheet Behaviour", "STATE_SETTLING");
+                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
                         break;
                     case BottomSheetBehavior.STATE_HALF_EXPANDED:
                         Log.w("Bottom Sheet Behaviour", "STATE_HALF_EXPANDED");
+
                         break;
                 }
 
@@ -513,7 +514,6 @@ public class PetCareFragment extends Fragment implements Serializable, View.OnCl
                     if (200 == response.body().getCode()) {
 
                         setBottomSheet();
-                        bottomSheetBehavior.setHalfExpandedRatio(0.9f);
 
                         if (response.body().getData() != null) {
                             doctorDetailsResponseList = response.body().getData();
