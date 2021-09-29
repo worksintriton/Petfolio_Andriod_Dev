@@ -52,6 +52,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="err_msg_type_of_pettype">Select the pet type</string>
+    <string name="err_msg_type_of_reason_for_cancellation">Please select the reason for cancellation</string>
     <string name="err_msg_type_of_petbreedtype">Select the pet breed type</string>
     <string name="err_msg_type_of_communicationtype">Select the communication type</string>
     <string name="err_msg_type_of_petgendertype">Select the pet gender type</string>

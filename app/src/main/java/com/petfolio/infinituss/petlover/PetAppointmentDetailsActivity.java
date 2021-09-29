@@ -365,6 +365,24 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
     @BindView(R.id.txt_discount_price)
     TextView txt_discount_price;
 
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_gender)
+    LinearLayout ll_gender;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_color)
+    LinearLayout ll_color;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_weight)
+    LinearLayout ll_weight;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_age)
+    LinearLayout ll_age;
+
+
     TextView txt_no_records_coupon;
     RecyclerView rv_successfully_cancelled;
     private List<CouponCodeTextResponse.DataBean> myCouponsTextList;
@@ -655,9 +673,35 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                             String breed = response.body().getData().getPet_id().getPet_breed();
                             String gender = response.body().getData().getPet_id().getPet_gender();
                             String colour = response.body().getData().getPet_id().getPet_color();
-                            double weight = response.body().getData().getPet_id().getPet_weight();
+                            int weight = response.body().getData().getPet_id().getPet_weight();
                             String pet_dob = response.body().getData().getPet_id().getPet_dob();
                             String pet_age = response.body().getData().getPet_id().getPet_age();
+
+                            if(gender != null && !gender.isEmpty()){
+                                ll_gender.setVisibility(View.VISIBLE);
+                            }else{
+                                ll_gender.setVisibility(View.GONE);
+                            }
+
+                             if(colour != null && !colour.isEmpty()){
+                                ll_color.setVisibility(View.VISIBLE);
+                            }else{
+                                 ll_color.setVisibility(View.GONE);
+                            }
+
+                              if(weight != 0 ){
+                                ll_weight.setVisibility(View.VISIBLE);
+                            }else{
+                                  ll_weight.setVisibility(View.GONE);
+                            }
+
+                            if(pet_age != null && !pet_age.isEmpty()){
+                                ll_age.setVisibility(View.VISIBLE);
+                            }else{
+                                ll_age.setVisibility(View.GONE);
+                            }
+
+
                             if(pet_age != null && !pet_age.isEmpty()){
                                 txt_age.setText(pet_age);
                             }else {

@@ -20,6 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -299,7 +300,11 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
         btn_cancel_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showCancelAlert();
+
+                if(validdSelectedReason()){
+                    showCancelAlert();
+                }
+
             }
         });
 
@@ -362,7 +367,7 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
     @SuppressLint("LongLogTag")
     private void setReasonList(List<VendorReasonListResponse.DataBean.CancelStatusBean> cancel_status) {
         ArrayList<String> pettypeArrayList = new ArrayList<>();
-       // pettypeArrayList.add("Select Pet Type");
+        pettypeArrayList.add("Select an issue");
         for (int i = 0; i < cancel_status.size(); i++) {
             String petType = cancel_status.get(i).getTitle();
             Log.w(TAG,"petType-->"+petType);
@@ -377,8 +382,7 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
     private void showCancelAlert() {
 
         try {
-
-             dialog = new Dialog(PetVendorCancelOrderActivity.this);
+            dialog = new Dialog(PetVendorCancelOrderActivity.this);
             dialog.setContentView(R.layout.alert_cancel_layout);
             dialog.setCanceledOnTouchOutside(false);
             Button btn_ok = dialog.findViewById(R.id.btn_ok);
@@ -956,5 +960,19 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
 
 
 
+    }
+
+    public boolean validdSelectedReason() {
+        if (strSelectedReason.equalsIgnoreCase("Select an issue")) {
+            final AlertDialog alertDialog = new AlertDialog.Builder(PetVendorCancelOrderActivity.this).create();
+            alertDialog.setMessage(getString(R.string.err_msg_type_of_reason_for_cancellation));
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
+                    (dialog, which) -> alertDialog.cancel());
+            alertDialog.show();
+
+            return false;
+        }
+
+        return true;
     }
 }
