@@ -365,6 +365,7 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
         fab_discard_deal.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        add_deal_text.setText("Add Deal");
                         showCheckbox = false;
                         setView();
                         fab_add_deal.hide();
