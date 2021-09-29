@@ -604,13 +604,16 @@ public class ShippingAddressSPActivity extends AppCompatActivity implements View
         vendorOrderBookingCreateRequest.setProdcut_item_count(prodcut_item_count);
         vendorOrderBookingCreateRequest.setDate_of_booking_display(currentDateandTime);
         vendorOrderBookingCreateRequest.setDate_of_booking(currentDateandTime);
-        vendorOrderBookingCreateRequest.setCoupon_code("");
         vendorOrderBookingCreateRequest.setShipping_address_id("");
         vendorOrderBookingCreateRequest.setBillling_address_id("");
         vendorOrderBookingCreateRequest.setShipping_address("");
         vendorOrderBookingCreateRequest.setBilling_address("");
         vendorOrderBookingCreateRequest.setPayment_id(Payment_id);
         vendorOrderBookingCreateRequest.setShipping_details_id(shipid);
+        vendorOrderBookingCreateRequest.setOriginal_price(Original_price);
+        vendorOrderBookingCreateRequest.setCoupon_discount_price(Coupon_discount_price);
+        vendorOrderBookingCreateRequest.setCoupon_code(Coupon_code);
+        vendorOrderBookingCreateRequest.setCoupon_status(Coupon_status);
         Log.w(TAG,"vendorOrderBookingCreateRequest"+ "--->" + new Gson().toJson(vendorOrderBookingCreateRequest));
         return vendorOrderBookingCreateRequest;
     }

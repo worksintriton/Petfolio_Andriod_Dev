@@ -614,7 +614,6 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
         vendorOrderBookingCreateRequest.setProdcut_item_count(prodcut_item_count);
         vendorOrderBookingCreateRequest.setDate_of_booking_display(currentDateandTime);
         vendorOrderBookingCreateRequest.setDate_of_booking(currentDateandTime);
-        vendorOrderBookingCreateRequest.setCoupon_code("");
         vendorOrderBookingCreateRequest.setShipping_address_id("");
         vendorOrderBookingCreateRequest.setBillling_address_id("");
         vendorOrderBookingCreateRequest.setShipping_address("");

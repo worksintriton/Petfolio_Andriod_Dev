@@ -79,19 +79,24 @@ public class SPMissedAppointmentAdapter extends  RecyclerView.Adapter<RecyclerVi
         if(missedAppointmentResponseList.get(position).getService_amount() != null){
             holder.txt_service_cost.setText("INR "+missedAppointmentResponseList.get(position).getService_amount());
         }
-        if (missedAppointmentResponseList.get(position).getPet_id().getPet_img().get(0).getPet_img() != null && !missedAppointmentResponseList.get(position).getPet_id().getPet_img().get(0).getPet_img().isEmpty()) {
+        try{
+            if (missedAppointmentResponseList.get(position).getPet_id().getPet_img().get(0).getPet_img() != null && !missedAppointmentResponseList.get(position).getPet_id().getPet_img().get(0).getPet_img().isEmpty()) {
 
-            Glide.with(context)
-                    .load(missedAppointmentResponseList.get(position).getPet_id().getPet_img().get(0).getPet_img())
-                    .into(holder.img_pet_imge);
+                Glide.with(context)
+                        .load(missedAppointmentResponseList.get(position).getPet_id().getPet_img().get(0).getPet_img())
+                        .into(holder.img_pet_imge);
+
+            }
+            else{
+                Glide.with(context)
+                        .load(APIClient.PROFILE_IMAGE_URL)
+                        .into(holder.img_pet_imge);
+
+            }
+        }catch (Exception e){
 
         }
-        else{
-            Glide.with(context)
-                    .load(APIClient.PROFILE_IMAGE_URL)
-                    .into(holder.img_pet_imge);
 
-        }
         holder.ll_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
