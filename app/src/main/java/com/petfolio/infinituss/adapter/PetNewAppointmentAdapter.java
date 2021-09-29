@@ -18,12 +18,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.api.APIClient;
+import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.interfaces.OnAppointmentCancel;
 import com.petfolio.infinituss.petlover.PetAppointmentDetailsActivity;
 import com.petfolio.infinituss.petlover.VideoCallPetLoverActivity;
+import com.petfolio.infinituss.requestpojo.PetNewAppointmentDetailsRequest;
 import com.petfolio.infinituss.responsepojo.PetAppointmentResponse;
+import com.petfolio.infinituss.responsepojo.PetNewAppointmentDetailsResponse;
+import com.petfolio.infinituss.utils.RestUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,6 +37,9 @@ import java.util.List;
 import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -47,6 +55,7 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
     private int size;
     private String communicationtype;
     private boolean isVaildDate;
+    private String appointment_id;
 
     public PetNewAppointmentAdapter(Context context, List<PetAppointmentResponse.DataBean> newAppointmentResponseList, RecyclerView inbox_list,int size,OnAppointmentCancel onAppointmentCancel) {
         this.newAppointmentResponseList = newAppointmentResponseList;
@@ -77,6 +86,7 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
         Log.w(TAG,"Pet name-->"+newAppointmentResponseList.get(position).getPet_name());
 
         currentItem = newAppointmentResponseList.get(position);
+        appointment_id = newAppointmentResponseList.get(position).get_id();
         communicationtype = newAppointmentResponseList.get(position).getCommunication_type();
        Log.w(TAG,"Communicationtype : "+ newAppointmentResponseList.get(position).getCommunication_type());
        if(newAppointmentResponseList.get(position).getPet_name() != null) {
@@ -182,8 +192,9 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
 
 
             holder.img_videocall.setOnClickListener(v -> {
-                Log.w(TAG,"Start_appointment_status : "+newAppointmentResponseList.get(position).getStart_appointment_status());
-                if(newAppointmentResponseList.get(position).getStart_appointment_status() != null && newAppointmentResponseList.get(position).getStart_appointment_status().equalsIgnoreCase("Not Started")){
+                petAppointmentResponseCall();
+                //Log.w(TAG,"Start_appointment_status : "+newAppointmentResponseList.get(position).getStart_appointment_status());
+               /* if(newAppointmentResponseList.get(position).getStart_appointment_status() != null && newAppointmentResponseList.get(position).getStart_appointment_status().equalsIgnoreCase("Not Started")){
                     Toasty.warning(context,"Doctor is yet to start the Appointment. Please wait for the doctor to initiate the Appointment", Toast.LENGTH_SHORT, true).show();
                 }else {
                     Intent i = new Intent(context, VideoCallPetLoverActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -191,7 +202,7 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
                     Log.w(TAG, "ID-->" + newAppointmentResponseList.get(position).get_id());
                     context.startActivity(i);
                 }
-
+*/
 
             });
 
@@ -294,6 +305,60 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
         }catch (ParseException e1){
             e1.printStackTrace();
         }
+    }
+
+
+
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    private void petAppointmentResponseCall() {
+        RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
+        Call<PetNewAppointmentDetailsResponse> call = ApiService.petNewAppointDetailResponseCall(RestUtils.getContentType(), petNewAppointmentDetailsRequest());
+        Log.w(TAG, "url  :%s" + call.request().url().toString());
+
+        call.enqueue(new Callback<PetNewAppointmentDetailsResponse>() {
+            @SuppressLint({"LongLogTag", "LogNotTimber", "SetTextI18n"})
+            @Override
+            public void onResponse(@NonNull Call<PetNewAppointmentDetailsResponse> call, @NonNull Response<PetNewAppointmentDetailsResponse> response) {
+                Log.w(TAG, "petAppointmentResponseCall" + "--->" + new Gson().toJson(response.body()));
+
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200){
+                        if(response.body().getData() != null){
+                        Log.w(TAG,"Start_appointment_status : "+response.body().getData().getStart_appointment_status());
+                        if(response.body().getData().getStart_appointment_status() != null && response.body().getData().getStart_appointment_status().equalsIgnoreCase("Not Started")){
+                                Toasty.warning(context,"Doctor is yet to start the Appointment. Please wait for the doctor to initiate the Appointment", Toast.LENGTH_SHORT, true).show();
+                            }else {
+                                Intent i = new Intent(context, VideoCallPetLoverActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                i.putExtra("id", response.body().getData().get_id());
+                                Log.w(TAG, "ID-->" + response.body().getData().get_id());
+                                context.startActivity(i);
+                            }
+
+
+                        }
+                    }
+
+
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<PetNewAppointmentDetailsResponse> call, @NonNull Throwable t) {
+                Log.w(TAG, "PetNewAppointmentDetailsResponse" + "--->" + t.getMessage());
+            }
+        });
+
+    }
+    @SuppressLint({"LongLogTag", "LogNotTimber"})
+    private PetNewAppointmentDetailsRequest petNewAppointmentDetailsRequest() {
+
+        PetNewAppointmentDetailsRequest petNewAppointmentDetailsRequest = new PetNewAppointmentDetailsRequest();
+        petNewAppointmentDetailsRequest.setApppointment_id(appointment_id);
+        Log.w(TAG, "petNewAppointmentDetailsRequest" + "--->" + new Gson().toJson(petNewAppointmentDetailsRequest));
+        return petNewAppointmentDetailsRequest;
     }
 
 
