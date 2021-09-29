@@ -282,6 +282,8 @@
                     android:src="@drawable/ic_baseline_add_24"
                     app:backgroundTint="@color/new_green_btn"
                     app:fabSize="normal"
+                    android:elevation="0dp"
+                    app:elevation="0dp"
                     tools:ignore="ContentDescription" />
 
 

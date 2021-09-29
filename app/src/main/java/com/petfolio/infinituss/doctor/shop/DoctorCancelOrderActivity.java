@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,11 +27,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
+import com.petfolio.infinituss.activity.NotificationActivity;
 import com.petfolio.infinituss.adapter.MyCouponsTextAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.doctor.DoctorDashboardActivity;
 import com.petfolio.infinituss.doctor.DoctorOrderDetailsActivity;
+import com.petfolio.infinituss.doctor.DoctorProfileScreenActivity;
 import com.petfolio.infinituss.doctor.MyCouponsDoctorActivity;
 import com.petfolio.infinituss.interfaces.OnAppointmentSuccessfullyCancel;
 import com.petfolio.infinituss.petlover.PetLoverVendorOrderDetailsActivity;
@@ -173,6 +176,21 @@ public class DoctorCancelOrderActivity extends AppCompatActivity implements View
         TextView toolbar_title = include_doctor_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.cancel_order));
 
+        img_cart.setVisibility(View.GONE);
+
+        img_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+            }
+        });
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), DoctorProfileScreenActivity.class));
+            }
+        });
+
         img_back.setOnClickListener(this);
 
         edt_comment.setVisibility(View.GONE);
@@ -239,7 +257,10 @@ public class DoctorCancelOrderActivity extends AppCompatActivity implements View
         btn_cancel_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showCancelAlert();
+
+                if(validdSelectedReason()){
+                    showCancelAlert();
+                }
             }
         });
 
@@ -335,7 +356,7 @@ public class DoctorCancelOrderActivity extends AppCompatActivity implements View
     @SuppressLint("LongLogTag")
     private void setReasonList(List<VendorReasonListResponse.DataBean.CancelStatusBean> cancel_status) {
         ArrayList<String> pettypeArrayList = new ArrayList<>();
-       // pettypeArrayList.add("Select Pet Type");
+        pettypeArrayList.add("Select the reason");
         for (int i = 0; i < cancel_status.size(); i++) {
             String petType = cancel_status.get(i).getTitle();
             Log.w(TAG,"petType-->"+petType);
@@ -895,4 +916,19 @@ public class DoctorCancelOrderActivity extends AppCompatActivity implements View
 
 
     }
+
+    public boolean validdSelectedReason() {
+        if (strSelectedReason.equalsIgnoreCase("Select the reason")) {
+            final AlertDialog alertDialog = new AlertDialog.Builder(DoctorCancelOrderActivity.this).create();
+            alertDialog.setMessage(getString(R.string.err_msg_type_of_reason_for_cancellation));
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
+                    (dialog, which) -> alertDialog.cancel());
+            alertDialog.show();
+
+            return false;
+        }
+
+        return true;
+    }
+
 }

@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,9 +27,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
+import com.petfolio.infinituss.activity.NotificationActivity;
 import com.petfolio.infinituss.adapter.MyCouponsTextAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
+import com.petfolio.infinituss.doctor.DoctorProfileScreenActivity;
+import com.petfolio.infinituss.doctor.shop.DoctorCancelOrderActivity;
 import com.petfolio.infinituss.interfaces.OnAppointmentSuccessfullyCancel;
 import com.petfolio.infinituss.petlover.PetMyOrdrersActivity;
 import com.petfolio.infinituss.requestpojo.PetLoverCancelOrderRequest;
@@ -41,6 +45,7 @@ import com.petfolio.infinituss.responsepojo.SuccessResponse;
 import com.petfolio.infinituss.responsepojo.VendorOrderUpdateResponse;
 import com.petfolio.infinituss.responsepojo.VendorReasonListResponse;
 import com.petfolio.infinituss.serviceprovider.MyCouponsSPActivity;
+import com.petfolio.infinituss.serviceprovider.SPProfileScreenActivity;
 import com.petfolio.infinituss.serviceprovider.ServiceProviderDashboardActivity;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
 import com.petfolio.infinituss.utils.ConnectionDetector;
@@ -169,6 +174,23 @@ public class SPCancelOrderActivity extends AppCompatActivity implements View.OnC
         TextView toolbar_title = include_doctor_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.cancel_order));
 
+
+        img_cart.setVisibility(View.GONE);
+
+        img_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+            }
+        });
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), SPProfileScreenActivity.class));
+            }
+        });
+
+
         img_back.setOnClickListener(this);
 
         edt_comment.setVisibility(View.GONE);
@@ -235,7 +257,9 @@ public class SPCancelOrderActivity extends AppCompatActivity implements View.OnC
         btn_cancel_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showCancelAlert();
+                if(validdSelectedReason()){
+                    showCancelAlert();
+                }
             }
         });
 
@@ -890,4 +914,19 @@ public class SPCancelOrderActivity extends AppCompatActivity implements View.OnC
 
 
     }
+
+    public boolean validdSelectedReason() {
+        if (strSelectedReason.equalsIgnoreCase("Select the reason")) {
+            final AlertDialog alertDialog = new AlertDialog.Builder(SPCancelOrderActivity.this).create();
+            alertDialog.setMessage(getString(R.string.err_msg_type_of_reason_for_cancellation));
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
+                    (dialog, which) -> alertDialog.cancel());
+            alertDialog.show();
+
+            return false;
+        }
+
+        return true;
+    }
+
 }
