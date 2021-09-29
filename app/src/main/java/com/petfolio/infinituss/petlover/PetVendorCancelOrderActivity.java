@@ -170,6 +170,7 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
     RecyclerView rv_successfully_cancelled;
     private List<CouponCodeTextResponse.DataBean> myCouponsTextList;
     private String userid;
+    private int Order_price = 0;
 
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
@@ -190,7 +191,9 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
             orderid = extras.getString("orderid");
             product_id = extras.getInt("product_id");
             cancelorder = extras.getString("cancelorder");
-            Log.w(TAG,"_id : "+_id);
+            Order_price = extras.getInt("Order_price");
+            Log.w(TAG,"_id : "+_id+"  Order_price : "+Order_price);
+            Log.w(TAG,"orderid : "+orderid+"  product_id : "+product_id);
             product_idList = getIntent().getIntegerArrayListExtra("product_idList");
             Log.w(TAG,"product_idList : "+ new Gson().toJson(product_idList)+" cancelorder :"+cancelorder);
 
@@ -839,12 +842,7 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
         refundCouponCreateRequest.setCreated_by("User");
         refundCouponCreateRequest.setCoupon_type("3");
         refundCouponCreateRequest.setCode("REF"+currentDateandTime);
-        if(cost != null && !cost.isEmpty()){
-            refundCouponCreateRequest.setAmount(Integer.parseInt(cost));
-        }else{
-            refundCouponCreateRequest.setAmount(0);
-        }
-
+        refundCouponCreateRequest.setAmount(Order_price);
         refundCouponCreateRequest.setUser_details(userid);
         refundCouponCreateRequest.setUsed_status("Not Used");
         refundCouponCreateRequest.setMobile_type("Android");
@@ -910,8 +908,6 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
         refundCouponCreateRequest.setUser_details(orderid);
         refundCouponCreateRequest.setUsed_status("");
         refundCouponCreateRequest.setMobile_type("Android");
-
-
         Log.w(TAG,"refundCouponCreateRequest"+ "--->" + new Gson().toJson(refundCouponCreateRequest));
         return refundCouponCreateRequest;
     }
@@ -931,7 +927,7 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
             dialogButtonRejected.setVisibility(View.GONE);
 
             dialogButtonApprove.setOnClickListener(view -> {
-                Intent intent = new Intent(PetVendorCancelOrderActivity.this,PetLoverVendorOrderDetailsActivity.class);
+                Intent intent = new Intent(PetVendorCancelOrderActivity.this,MyCouponsActivity.class);
                 intent.putExtra("_id",orderid);
                 startActivity(intent);
                 finish();

@@ -207,7 +207,7 @@ public class ProductDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
             Log.w(TAG,"Product_stauts : "+product_details.get(position).getProduct_stauts());
 
             if( product_details.get(position).getProduct_stauts().equalsIgnoreCase("Order Booked")){
-                holder.txt_cancell_order.setVisibility(View.VISIBLE);
+                holder.txt_cancell_order.setVisibility(View.GONE);
                 holder.txt_product_status.setVisibility(View.GONE);
             } else if(product_details.get(position).getProduct_stauts().equalsIgnoreCase("Order Accept")){
                 holder.txt_cancell_order.setVisibility(View.GONE);
@@ -262,6 +262,7 @@ public class ProductDetailsAdapter extends  RecyclerView.Adapter<RecyclerView.Vi
             txt_cancell_order = itemView.findViewById(R.id.txt_cancell_order);
             txt_product_status = itemView.findViewById(R.id.txt_product_status);
             txt_product_status.setVisibility(View.GONE);
+            txt_cancell_order.setVisibility(View.GONE);
 
 
         }

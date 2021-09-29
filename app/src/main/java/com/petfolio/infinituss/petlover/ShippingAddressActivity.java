@@ -165,6 +165,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
     private String Coupon_status = "";
     private int Original_price = 0;
     private int Coupon_discount_price = 0;
+    private int Total_price = 0;
     private String successmsg;
 
     @Override
@@ -219,6 +220,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
             grand_total = extras.getInt("grand_total");
 
             Original_price = extras.getInt("Original_price");
+            Total_price = extras.getInt("Total_price");
             Coupon_discount_price = extras.getInt("Coupon_discount_price");
             Coupon_code = extras.getString("Coupon_code");
             Coupon_status = extras.getString("Coupon_status");
@@ -609,6 +611,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
         vendorOrderBookingCreateRequest.setProdouct_total(prodouct_total);
         vendorOrderBookingCreateRequest.setShipping_charge(shipping_charge);
         vendorOrderBookingCreateRequest.setDiscount_price(discount_price);
+        vendorOrderBookingCreateRequest.setTotal_price(grand_total);
         vendorOrderBookingCreateRequest.setGrand_total(grand_total);
         vendorOrderBookingCreateRequest.setProdcut_count(prodcut_count);
         vendorOrderBookingCreateRequest.setProdcut_item_count(prodcut_item_count);

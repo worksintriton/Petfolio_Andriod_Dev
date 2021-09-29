@@ -296,6 +296,7 @@ public class ProductDetailsVendorAdapter extends  RecyclerView.Adapter<RecyclerV
             txt_product_status = itemView.findViewById(R.id.txt_product_status);
             ll_confirm_reject = itemView.findViewById(R.id.ll_confirm_reject);
             ll_dispatch = itemView.findViewById(R.id.ll_dispatch);
+            txt_cancell_order.setVisibility(View.GONE);
 
 
         }

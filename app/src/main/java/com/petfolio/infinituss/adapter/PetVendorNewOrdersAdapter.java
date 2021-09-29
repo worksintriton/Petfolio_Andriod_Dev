@@ -154,6 +154,7 @@ public class PetVendorNewOrdersAdapter extends  RecyclerView.Adapter<RecyclerVie
             txt_order_details = itemView.findViewById(R.id.txt_order_details);
             txt_track_order = itemView.findViewById(R.id.txt_track_order);
             txt_cancell_order = itemView.findViewById(R.id.txt_cancell_order);
+            txt_cancell_order.setVisibility(View.GONE);
 
 
         }

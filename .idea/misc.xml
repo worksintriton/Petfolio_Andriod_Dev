@@ -34,6 +34,7 @@
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_manage_products.xml" value="0.13360507246376813" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_my_coupons.xml" value="0.14719202898550723" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_notificaton.xml" value="0.12360688956433637" />
+        <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_pet_cart.xml" value="0.25416666666666665" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_pet_lover_edit_profile.xml" value="0.20516304347826086" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_pet_lover_edit_profile_image.xml" value="0.20380434782608695" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_pet_lover_profile_screen.xml" value="0.17119565217391305" />
@@ -61,6 +62,7 @@
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/adapter_mycoupons_cardview.xml" value="0.19293478260869565" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/adapter_nearby_doctors.xml" value="0.18297101449275363" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/adapter_pet_new_appointment.xml" value="0.17119565217391305" />
+        <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/adapter_pet_new_orders.xml" value="0.4" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/adapter_petlist.xml" value="0.17119565217391305" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/adapter_prescription_row.xml" value="0.25416666666666665" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/adapter_sp_missed_appointment.xml" value="0.25416666666666665" />

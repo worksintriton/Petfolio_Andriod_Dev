@@ -309,6 +309,7 @@ public class SPCartActivity extends AppCompatActivity implements AddandRemovePro
                 i.putExtra("Coupon_discount_price",Coupon_discount_price);
                 i.putExtra("Coupon_code",Coupon_code);
                 i.putExtra("Coupon_status",Coupon_status);
+                i.putExtra("Total_price",Total_price);
                 startActivity(i);
 
             }
@@ -463,8 +464,10 @@ public class SPCartActivity extends AppCompatActivity implements AddandRemovePro
                                 txt_lbl_subtotal.setText("Subtotal ( "+response.body().getProdcut_item_count()+" items)" );
                             }
                             if(response.body().getProdouct_total() != 0){
+                                Total_price = response.body().getProdouct_total();
                                 txt_sub_total.setText(" INR "+response.body().getProdouct_total());
                             }else{
+                                Total_price = 0;
                                 txt_sub_total.setText("INR "+0);
 
                             }
@@ -563,6 +566,15 @@ public class SPCartActivity extends AppCompatActivity implements AddandRemovePro
                         }
                     }
                 }
+                edt_coupon.setText("");
+                btn_apply_coupon.setText("Apply");
+                ll_coupon_discount_amount.setVisibility(View.GONE);
+                txt_total_amount.setText("INR "+Grand_total);
+                Coupon_status = "Not Applied";
+                Coupon_code = "";
+                Original_price = 0;
+                Discount_price = 0;
+                grand_total = Grand_total;
 
             }
             else if(name.equalsIgnoreCase("remove")){
@@ -574,10 +586,28 @@ public class SPCartActivity extends AppCompatActivity implements AddandRemovePro
                         }
                     }
                 }
+                edt_coupon.setText("");
+                btn_apply_coupon.setText("Apply");
+                ll_coupon_discount_amount.setVisibility(View.GONE);
+                txt_total_amount.setText("INR "+Grand_total);
+                Coupon_status = "Not Applied";
+                Coupon_code = "";
+                Original_price = 0;
+                Discount_price = 0;
+                grand_total = Grand_total;
             }
             else if(name.equalsIgnoreCase("singleproductremove")){
                 productid = id;
                 if(productid != null){
+                    edt_coupon.setText("");
+                    btn_apply_coupon.setText("Apply");
+                    ll_coupon_discount_amount.setVisibility(View.GONE);
+                    txt_total_amount.setText("INR "+Grand_total);
+                    Coupon_status = "Not Applied";
+                    Coupon_code = "";
+                    Original_price = 0;
+                    Discount_price = 0;
+                    grand_total = Grand_total;
                     if(prodcutcount != 0) {
                         showremove_single_products_ResponseCall();
                        /* if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
@@ -1036,8 +1066,7 @@ public class SPCartActivity extends AppCompatActivity implements AddandRemovePro
                         }
 
                         if(response.body().getData().getTotal_price() != 0){
-                            Total_price = response.body().getData().getTotal_price();
-                            grand_total = Total_price;
+                            grand_total = response.body().getData().getTotal_price();
                             txt_total_amount.setText("INR "+response.body().getData().getTotal_price());
 
                         }else{
