@@ -4,20 +4,19 @@ import java.util.List;
 
 public class PetLoverVendorOrderDetailsResponse {
 
-
     /**
      * Status : Success
-     * Message : Vendor Product Grouped
-     * Data : {"order_details":{"order_id":"ORDER-1619068388640","order_product":4,"order_status":"Cancelled","order_text":"Food Products","order_payment_id":"pay_H1qa3DlDt40yjQ","order_price":571,"order_booked":"22-04-2021 10:43 AM","order_image":"http://54.212.108.156:3000/api/uploads/1617098535464.jpeg","order_cancelled":"","order_completed":""},"shipping_address":{"_id":"60797c16a20ca32d2668a30c","user_id":"603e27792c2b43125f8cb802","user_first_name":"DINESHKUMAR","user_last_name":"Deva","user_flat_no":"4/3","user_stree":"Marriyamman Kovil street","user_landmark":"","user_picocode":"621006","user_state":"TAMILNADU","user_city":"TRICHY","user_mobile":"9842670813","user_alter_mobile":"","user_address_stauts":"Last Used","user_address_type":"Home","user_display_date":"16-04-2021","updatedAt":"2021-04-16T11:59:18.437Z","createdAt":"2021-04-16T11:59:18.437Z","__v":0},"product_details":[{"product_id":0,"product_image":"http://54.212.108.156:3000/api/uploads/1617098535464.jpeg","product_name":"Pedigree","product_count":1,"product_price":100,"product_discount":0,"product_total_price":100,"product_total_discount":0,"product_stauts":"Order Cancelled","product_booked":"22-04-2021 10:43 AM"},{"product_id":1,"product_image":"http://54.212.108.156:3000/api/uploads/1616648074881.jpeg","product_name":"Cow","product_count":1,"product_price":72,"product_discount":20,"product_total_price":72,"product_total_discount":20,"product_stauts":"Order Cancelled","product_booked":"22-04-2021 10:43 AM"},{"product_id":2,"product_image":"http://54.212.108.156:3000/api/uploads/1615541442124.jpeg","product_name":"CAT FOOD 2","product_count":1,"product_price":319,"product_discount":2,"product_total_price":319,"product_total_discount":2,"product_stauts":"Order Cancelled","product_booked":"22-04-2021 10:43 AM"},{"product_id":3,"product_image":"http://54.212.108.156:3000/api/uploads/1615541391131.jpeg","product_name":"DOG FOOD 2","product_count":1,"product_price":80,"product_discount":20,"product_total_price":80,"product_total_discount":20,"product_stauts":"Order Cancelled","product_booked":"22-04-2021 10:43 AM"}]}
+     * Message : Petlover Product Grouped
+     * Data : {"order_details":{"order_id":"ORDER-1632906292453","order_product":1,"order_status":"New","order_text":"Food Products","order_payment_id":"pay_I3E00OVESP8sCJ","order_price":616,"order_booked":"29-09-2021 02:34 pm","order_image":"","order_cancelled":"","order_completed":"","coupon_status":"Applied","coupon_code":"REF2909011059","original_price":1032,"coupon_discount_price":416,"total_price":616},"shipping_address":{"_id":"60797c16a20ca32d2668a30c","user_id":"603e27792c2b43125f8cb802","user_first_name":"DINESHKUMAR","user_last_name":"Deva","user_flat_no":"4/3","user_stree":"Marriyamman Kovil street","user_landmark":"","user_picocode":"621006","user_state":"TAMILNADU","user_city":"TRICHY","user_mobile":"9842670813","user_alter_mobile":"","user_address_stauts":"","user_address_type":"Home","user_display_date":"16-04-2021","updatedAt":"2021-05-04T04:59:18.010Z","createdAt":"2021-04-16T11:59:18.437Z","__v":0},"product_details":[{"product_id":0,"product_image":"","product_name":"Shopiee Food","product_count":4,"product_price":258,"product_discount":30,"product_total_price":1032,"product_total_discount":120,"product_stauts":"Order Booked","product_booked":"29-09-2021 02:34 pm"}]}
      * Code : 200
      */
 
     private String Status;
     private String Message;
     /**
-     * order_details : {"order_id":"ORDER-1619068388640","order_product":4,"order_status":"Cancelled","order_text":"Food Products","order_payment_id":"pay_H1qa3DlDt40yjQ","order_price":571,"order_booked":"22-04-2021 10:43 AM","order_image":"http://54.212.108.156:3000/api/uploads/1617098535464.jpeg","order_cancelled":"","order_completed":""}
-     * shipping_address : {"_id":"60797c16a20ca32d2668a30c","user_id":"603e27792c2b43125f8cb802","user_first_name":"DINESHKUMAR","user_last_name":"Deva","user_flat_no":"4/3","user_stree":"Marriyamman Kovil street","user_landmark":"","user_picocode":"621006","user_state":"TAMILNADU","user_city":"TRICHY","user_mobile":"9842670813","user_alter_mobile":"","user_address_stauts":"Last Used","user_address_type":"Home","user_display_date":"16-04-2021","updatedAt":"2021-04-16T11:59:18.437Z","createdAt":"2021-04-16T11:59:18.437Z","__v":0}
-     * product_details : [{"product_id":0,"product_image":"http://54.212.108.156:3000/api/uploads/1617098535464.jpeg","product_name":"Pedigree","product_count":1,"product_price":100,"product_discount":0,"product_total_price":100,"product_total_discount":0,"product_stauts":"Order Cancelled","product_booked":"22-04-2021 10:43 AM"},{"product_id":1,"product_image":"http://54.212.108.156:3000/api/uploads/1616648074881.jpeg","product_name":"Cow","product_count":1,"product_price":72,"product_discount":20,"product_total_price":72,"product_total_discount":20,"product_stauts":"Order Cancelled","product_booked":"22-04-2021 10:43 AM"},{"product_id":2,"product_image":"http://54.212.108.156:3000/api/uploads/1615541442124.jpeg","product_name":"CAT FOOD 2","product_count":1,"product_price":319,"product_discount":2,"product_total_price":319,"product_total_discount":2,"product_stauts":"Order Cancelled","product_booked":"22-04-2021 10:43 AM"},{"product_id":3,"product_image":"http://54.212.108.156:3000/api/uploads/1615541391131.jpeg","product_name":"DOG FOOD 2","product_count":1,"product_price":80,"product_discount":20,"product_total_price":80,"product_total_discount":20,"product_stauts":"Order Cancelled","product_booked":"22-04-2021 10:43 AM"}]
+     * order_details : {"order_id":"ORDER-1632906292453","order_product":1,"order_status":"New","order_text":"Food Products","order_payment_id":"pay_I3E00OVESP8sCJ","order_price":616,"order_booked":"29-09-2021 02:34 pm","order_image":"","order_cancelled":"","order_completed":"","coupon_status":"Applied","coupon_code":"REF2909011059","original_price":1032,"coupon_discount_price":416,"total_price":616}
+     * shipping_address : {"_id":"60797c16a20ca32d2668a30c","user_id":"603e27792c2b43125f8cb802","user_first_name":"DINESHKUMAR","user_last_name":"Deva","user_flat_no":"4/3","user_stree":"Marriyamman Kovil street","user_landmark":"","user_picocode":"621006","user_state":"TAMILNADU","user_city":"TRICHY","user_mobile":"9842670813","user_alter_mobile":"","user_address_stauts":"","user_address_type":"Home","user_display_date":"16-04-2021","updatedAt":"2021-05-04T04:59:18.010Z","createdAt":"2021-04-16T11:59:18.437Z","__v":0}
+     * product_details : [{"product_id":0,"product_image":"","product_name":"Shopiee Food","product_count":4,"product_price":258,"product_discount":30,"product_total_price":1032,"product_total_discount":120,"product_stauts":"Order Booked","product_booked":"29-09-2021 02:34 pm"}]
      */
 
     private DataBean Data;
@@ -57,16 +56,21 @@ public class PetLoverVendorOrderDetailsResponse {
 
     public static class DataBean {
         /**
-         * order_id : ORDER-1619068388640
-         * order_product : 4
-         * order_status : Cancelled
+         * order_id : ORDER-1632906292453
+         * order_product : 1
+         * order_status : New
          * order_text : Food Products
-         * order_payment_id : pay_H1qa3DlDt40yjQ
-         * order_price : 571
-         * order_booked : 22-04-2021 10:43 AM
-         * order_image : http://54.212.108.156:3000/api/uploads/1617098535464.jpeg
+         * order_payment_id : pay_I3E00OVESP8sCJ
+         * order_price : 616
+         * order_booked : 29-09-2021 02:34 pm
+         * order_image :
          * order_cancelled :
          * order_completed :
+         * coupon_status : Applied
+         * coupon_code : REF2909011059
+         * original_price : 1032
+         * coupon_discount_price : 416
+         * total_price : 616
          */
 
         private OrderDetailsBean order_details;
@@ -83,10 +87,10 @@ public class PetLoverVendorOrderDetailsResponse {
          * user_city : TRICHY
          * user_mobile : 9842670813
          * user_alter_mobile :
-         * user_address_stauts : Last Used
+         * user_address_stauts :
          * user_address_type : Home
          * user_display_date : 16-04-2021
-         * updatedAt : 2021-04-16T11:59:18.437Z
+         * updatedAt : 2021-05-04T04:59:18.010Z
          * createdAt : 2021-04-16T11:59:18.437Z
          * __v : 0
          */
@@ -94,15 +98,15 @@ public class PetLoverVendorOrderDetailsResponse {
         private ShippingAddressBean shipping_address;
         /**
          * product_id : 0
-         * product_image : http://54.212.108.156:3000/api/uploads/1617098535464.jpeg
-         * product_name : Pedigree
-         * product_count : 1
-         * product_price : 100
-         * product_discount : 0
-         * product_total_price : 100
-         * product_total_discount : 0
-         * product_stauts : Order Cancelled
-         * product_booked : 22-04-2021 10:43 AM
+         * product_image :
+         * product_name : Shopiee Food
+         * product_count : 4
+         * product_price : 258
+         * product_discount : 30
+         * product_total_price : 1032
+         * product_total_discount : 120
+         * product_stauts : Order Booked
+         * product_booked : 29-09-2021 02:34 pm
          */
 
         private List<ProductDetailsBean> product_details;
@@ -142,6 +146,11 @@ public class PetLoverVendorOrderDetailsResponse {
             private String order_image;
             private String order_cancelled;
             private String order_completed;
+            private String coupon_status;
+            private String coupon_code;
+            private int original_price;
+            private int coupon_discount_price;
+            private int total_price;
 
             public String getOrder_id() {
                 return order_id;
@@ -221,6 +230,46 @@ public class PetLoverVendorOrderDetailsResponse {
 
             public void setOrder_completed(String order_completed) {
                 this.order_completed = order_completed;
+            }
+
+            public String getCoupon_status() {
+                return coupon_status;
+            }
+
+            public void setCoupon_status(String coupon_status) {
+                this.coupon_status = coupon_status;
+            }
+
+            public String getCoupon_code() {
+                return coupon_code;
+            }
+
+            public void setCoupon_code(String coupon_code) {
+                this.coupon_code = coupon_code;
+            }
+
+            public int getOriginal_price() {
+                return original_price;
+            }
+
+            public void setOriginal_price(int original_price) {
+                this.original_price = original_price;
+            }
+
+            public int getCoupon_discount_price() {
+                return coupon_discount_price;
+            }
+
+            public void setCoupon_discount_price(int coupon_discount_price) {
+                this.coupon_discount_price = coupon_discount_price;
+            }
+
+            public int getTotal_price() {
+                return total_price;
+            }
+
+            public void setTotal_price(int total_price) {
+                this.total_price = total_price;
             }
         }
 

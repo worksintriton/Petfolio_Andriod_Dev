@@ -239,7 +239,7 @@
     <string name="payment_method">Payment Method</string>
     <string name="order_cost">Order cost</string>
     <string name="address">Address</string>
-    <string name="order_details">Order details </string>
+    <string name="order_details">Order Details </string>
     <string name="allergies_pet_details">Allergies :</string>
     <string name="prescription">Prescription</string>
     <string name="before_given_prescription_details">Before given Prescription Details</string>
@@ -591,7 +591,7 @@
     <string name="shop_name">Shop Name</string>
     <string name="successfullycancelled">Successfully Cancelled</string>
     <string name="turn_off">Turn off</string>
-    <string name="version">Version V.24.9</string>
+    <string name="version">Version V.29.9</string>
     <string name="tablet_name">Tablet Name</string>
     <string name="consumption">Consumption</string>
     <string name="seems_there_is_a_connectivity_issue_please_check_your_internet_connection_and_try_again">Seems there is a connectivity issue. Please check your internet connection and try again</string>

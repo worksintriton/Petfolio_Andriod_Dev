@@ -209,7 +209,6 @@ public class PetNewAppointmentAdapter extends  RecyclerView.Adapter<RecyclerView
 
 
         holder.ll_new.setOnClickListener(v -> {
-
             Intent i = new Intent(context, PetAppointmentDetailsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.putExtra("appointment_id",newAppointmentResponseList.get(position).get_id());
             i.putExtra("bookedat",newAppointmentResponseList.get(position).getBooked_at());

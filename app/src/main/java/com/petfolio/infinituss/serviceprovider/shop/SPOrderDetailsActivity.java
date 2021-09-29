@@ -223,6 +223,22 @@ public class SPOrderDetailsActivity extends AppCompatActivity implements View.On
     @BindView(R.id.rl_homes)
     RelativeLayout rl_homes;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_original_price)
+    LinearLayout ll_original_price;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_discount_price)
+    LinearLayout ll_discount_price;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_original_price)
+    TextView txt_original_price;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_discount_price)
+    TextView txt_discount_price;
+
     private int Order_price;
 
 
@@ -415,6 +431,25 @@ public class SPOrderDetailsActivity extends AppCompatActivity implements View.On
                         scrollablContent.setVisibility(View.VISIBLE);
 
                         if(response.body().getData()!=null){
+
+
+                            if(response.body().getData().getOrder_details() != null){
+                                if(response.body().getData().getOrder_details().getCoupon_status() != null && response.body().getData().getOrder_details().getCoupon_status().equalsIgnoreCase("Applied")){
+                                    ll_original_price.setVisibility(View.VISIBLE);
+                                    ll_discount_price.setVisibility(View.VISIBLE);
+                                    if(response.body().getData().getOrder_details().getOriginal_price() != 0){
+                                        txt_original_price.setText("INR "+response.body().getData().getOrder_details().getOriginal_price());
+                                    }
+                                    if(response.body().getData().getOrder_details().getCoupon_discount_price() != 0){
+                                        txt_discount_price.setText("INR "+response.body().getData().getOrder_details().getCoupon_discount_price());
+                                    }
+
+                                }
+                                else{
+                                    ll_original_price.setVisibility(View.GONE);
+                                    ll_discount_price.setVisibility(View.GONE);
+                                }
+                            }
 
                             if(response.body().getData().getOrder_details().getOrder_text() !=null && !response.body().getData().getOrder_details().getOrder_text().isEmpty()){
                                 txt_product_title.setText(response.body().getData().getOrder_details().getOrder_text());

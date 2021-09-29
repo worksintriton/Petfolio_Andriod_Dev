@@ -212,7 +212,6 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
     @BindView(R.id.include_petlover_footer)
     View include_petlover_footer;
 
-    BottomNavigationView bottom_navigation_view;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.include_petlover_header)
@@ -349,6 +348,22 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rl_homes)
     RelativeLayout rl_homes;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_original_price)
+    LinearLayout ll_original_price;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_discount_price)
+    LinearLayout ll_discount_price;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_original_price)
+    TextView txt_original_price;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_discount_price)
+    TextView txt_discount_price;
 
     TextView txt_no_records_coupon;
     RecyclerView rv_successfully_cancelled;
@@ -597,6 +612,24 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                         scrollablContent.setVisibility(View.VISIBLE);
 
                         String vaccinated, addr = null, usrname = null;
+
+
+                        if(response.body().getData() != null){
+                            if(response.body().getData().getCoupon_status() != null && response.body().getData().getCoupon_status().equalsIgnoreCase("Applied")){
+                                ll_original_price.setVisibility(View.VISIBLE);
+                                ll_discount_price.setVisibility(View.VISIBLE);
+                                if(response.body().getData().getOriginal_price() != 0){
+                                    txt_original_price.setText("INR "+response.body().getData().getOriginal_price());
+                                }
+                                if(response.body().getData().getDiscount_price() != 0){
+                                    txt_discount_price.setText("INR "+response.body().getData().getDiscount_price());
+                                }
+
+                            }else{
+                                ll_original_price.setVisibility(View.GONE);
+                                ll_discount_price.setVisibility(View.GONE);
+                            }
+                        }
 
 
                         if (response.body().getData() != null) {
@@ -1217,6 +1250,23 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                         scrollablContent.setVisibility(View.VISIBLE);
                         String vaccinated, addr, usrname;
                         String usr_image = "";
+
+                        if(response.body().getData() != null){
+                            if(response.body().getData().getCoupon_status() != null && response.body().getData().getCoupon_status().equalsIgnoreCase("Applied")){
+                                ll_original_price.setVisibility(View.VISIBLE);
+                                ll_discount_price.setVisibility(View.VISIBLE);
+                                if(response.body().getData().getOriginal_price() != 0){
+                                    txt_original_price.setText("INR "+response.body().getData().getOriginal_price());
+                                }
+                                if(response.body().getData().getDiscount_price() != 0){
+                                    txt_discount_price.setText("INR "+response.body().getData().getDiscount_price());
+                                }
+
+                            }else{
+                                ll_original_price.setVisibility(View.GONE);
+                                ll_discount_price.setVisibility(View.GONE);
+                            }
+                        }
                         if (response.body().getData() != null) {
 
                             spid = response.body().getData().getSp_id().get_id();

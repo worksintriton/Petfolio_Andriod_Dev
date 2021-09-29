@@ -230,7 +230,7 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
         title_community.setTextColor(getResources().getColor(R.color.darker_grey_new,getTheme()));
         img_community.setImageResource(R.drawable.grey_community);
         title_shop.setTextColor(getResources().getColor(R.color.new_gree_color,getTheme()));
-        img_shop.setImageResource(R.drawable.green_shop_selector);
+        img_shop.setImageResource(R.drawable.shop_blue);
 
         rl_home.setOnClickListener(this);
 
