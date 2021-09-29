@@ -244,6 +244,7 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rl_homes)
     RelativeLayout rl_homes;
+
     private int Order_price;
 
 

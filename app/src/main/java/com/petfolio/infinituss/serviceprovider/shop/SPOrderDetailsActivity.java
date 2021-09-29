@@ -223,6 +223,8 @@ public class SPOrderDetailsActivity extends AppCompatActivity implements View.On
     @BindView(R.id.rl_homes)
     RelativeLayout rl_homes;
 
+    private int Order_price;
+
 
     @SuppressLint({"LogNotTimber", "LongLogTag", "SetTextI18n"})
     @Override
@@ -347,6 +349,7 @@ public class SPOrderDetailsActivity extends AppCompatActivity implements View.On
                 i.putIntegerArrayListExtra("product_idList", (ArrayList<Integer>) product_id );
                 i.putExtra("fromactivity", fromactivity);
                 i.putExtra("cancelorder", "bulk");
+                i.putExtra("Order_price", Order_price);
                 startActivity(i);
 
             }
@@ -417,21 +420,26 @@ public class SPOrderDetailsActivity extends AppCompatActivity implements View.On
                                 txt_product_title.setText(response.body().getData().getOrder_details().getOrder_text());
                             }
                             if(response.body().getData().getOrder_details().getOrder_price()!=0){
+                                Order_price = response.body().getData().getOrder_details().getOrder_price();
                                 txt_products_price.setText("INR "+response.body().getData().getOrder_details().getOrder_price());
                             }
 
                             if (response.body().getData().getOrder_details().getOrder_price() != 0 && response.body().getData().getOrder_details().getOrder_product() != 0) {
                                 if (response.body().getData().getOrder_details().getOrder_product() == 1) {
+                                    Order_price = response.body().getData().getOrder_details().getOrder_price();
                                     txt_products_price.setText("INR " + response.body().getData().getOrder_details().getOrder_price() + " (" + response.body().getData().getOrder_details().getOrder_product() + " product )");
                                 } else {
+                                    Order_price = response.body().getData().getOrder_details().getOrder_price();
                                     txt_products_price.setText("INR " + response.body().getData().getOrder_details().getOrder_price() + " (" + response.body().getData().getOrder_details().getOrder_product() + " products )");
 
                                 }
                             }
                             else {
                                 if (response.body().getData().getOrder_details().getOrder_product() == 1) {
+                                    Order_price = 0;
                                 txt_products_price.setText("INR " + 0 + " (" + response.body().getData().getOrder_details().getOrder_product() + " product )");
                             } else {
+                                    Order_price = 0;
                                 txt_products_price.setText("INR " + 0 + " (" + response.body().getData().getOrder_details().getOrder_product() + " products )"); } }
 
 

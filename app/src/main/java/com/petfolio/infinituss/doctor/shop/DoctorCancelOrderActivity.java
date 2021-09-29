@@ -31,6 +31,7 @@ import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.doctor.DoctorDashboardActivity;
 import com.petfolio.infinituss.doctor.DoctorOrderDetailsActivity;
+import com.petfolio.infinituss.doctor.MyCouponsDoctorActivity;
 import com.petfolio.infinituss.interfaces.OnAppointmentSuccessfullyCancel;
 import com.petfolio.infinituss.petlover.PetLoverVendorOrderDetailsActivity;
 import com.petfolio.infinituss.petlover.PetMyOrdrersActivity;
@@ -151,6 +152,7 @@ public class DoctorCancelOrderActivity extends AppCompatActivity implements View
     RecyclerView rv_successfully_cancelled;
     private List<CouponCodeTextResponse.DataBean> myCouponsTextList;
     private String userid;
+    private int Order_price = 0;
 
 
     @SuppressLint({"LogNotTimber", "LongLogTag"})
@@ -196,6 +198,7 @@ public class DoctorCancelOrderActivity extends AppCompatActivity implements View
             orderid = extras.getString("orderid");
             product_id = extras.getInt("product_id");
             cancelorder = extras.getString("cancelorder");
+            Order_price = extras.getInt("Order_price");
             fromactivity = extras.getString("fromactivity");
             Log.w(TAG,"_id : "+_id+" fromactivity : "+fromactivity);
            product_idList = getIntent().getIntegerArrayListExtra("product_idList");
@@ -488,11 +491,12 @@ public class DoctorCancelOrderActivity extends AppCompatActivity implements View
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         dialog.dismiss();
-                        Intent intent = new Intent(DoctorCancelOrderActivity.this, DoctorOrderDetailsActivity.class);
+                        showSuccessfullyCancelled();
+                       /* Intent intent = new Intent(DoctorCancelOrderActivity.this, DoctorOrderDetailsActivity.class);
                         intent.putExtra("_id",orderid);
                         intent.putExtra("fromactivity",fromactivity);
                         startActivity(intent);
-                        finish();
+                        finish();*/
 
 
                     }
@@ -555,11 +559,13 @@ public class DoctorCancelOrderActivity extends AppCompatActivity implements View
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         dialog.dismiss();
-                        Intent intent = new Intent(DoctorCancelOrderActivity.this,DoctorOrderDetailsActivity.class);
+                        showSuccessfullyCancelled();
+                       /* Intent intent = new Intent(DoctorCancelOrderActivity.this,DoctorOrderDetailsActivity.class);
                         intent.putExtra("_id",orderid);
                         intent.putExtra("fromactivity",fromactivity);
                         startActivity(intent);
-                        finish();
+                        finish();*/
+
 
 
                     }
@@ -772,12 +778,7 @@ public class DoctorCancelOrderActivity extends AppCompatActivity implements View
         refundCouponCreateRequest.setCreated_by("User");
         refundCouponCreateRequest.setCoupon_type("3");
         refundCouponCreateRequest.setCode("REF"+currentDateandTime);
-        if(cost != null && !cost.isEmpty()){
-            refundCouponCreateRequest.setAmount(Integer.parseInt(cost));
-        }else{
-            refundCouponCreateRequest.setAmount(0);
-        }
-
+        refundCouponCreateRequest.setAmount(Order_price);
         refundCouponCreateRequest.setUser_details(userid);
         refundCouponCreateRequest.setUsed_status("Not Used");
         refundCouponCreateRequest.setMobile_type("Android");
@@ -864,7 +865,7 @@ public class DoctorCancelOrderActivity extends AppCompatActivity implements View
             dialogButtonRejected.setVisibility(View.GONE);
 
             dialogButtonApprove.setOnClickListener(view -> {
-                Intent intent = new Intent(getApplicationContext(), DoctorOrderDetailsActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MyCouponsDoctorActivity.class);
                 intent.putExtra("_id",orderid);
                 startActivity(intent);
                 finish();
