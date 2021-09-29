@@ -42,6 +42,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -295,6 +296,19 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
     private final List<DocBusInfoUploadRequest.GovtIdPicBean> govtIdPicBeans = new ArrayList<>();
 
     int i =0;
+
+
+    int PERMISSION_CLINIC = 1;
+    int PERMISSION_CERT = 2;
+    int PERMISSION_GOVT = 3;
+    int PERMISSION_PHOTO = 4;
+
+    String[] PERMISSIONS = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+    };
+
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -1372,6 +1386,18 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
 
     }
 
+
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     @SuppressLint("ObsoleteSdkInt")
     private void chooseGovIDPdf() {
 
@@ -1385,15 +1411,11 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
 
 
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(PrescriptionActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-            {
-                requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_GOVTID_CAMERA_PERMISSION_CODE);
+            if (!hasPermissions(this, PERMISSIONS)) {
+                ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_CLINIC);
             }
 
-            else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(PrescriptionActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-            {
-                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_GOVTID_PIC_PERMISSION);
-            }
+
 
             else
             {
@@ -1410,45 +1432,7 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-     if (requestCode == REQUEST_READ_GOVT_ID_PDF_PERMISSION) {
-
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                Intent intent = new Intent();
-                intent.setType("application/pdf");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select PDF"), SELECT_GOVTID_PDF);
-
-            } else {
-                new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("Permisson Required")
-                        .setContentText("Please Allow Permissions for choosing Pdf Files ")
-                        .setConfirmText("Ok")
-                        .setConfirmClickListener(sDialog -> {
-
-                            sDialog.dismissWithAnimation();
-
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_GOVT_ID_PDF_PERMISSION);
-                            }
-
-
-                        })
-                        .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sDialog) {
-                                sDialog.dismissWithAnimation();
-
-                            }
-                        })
-                        .show();
-
-            }
-
-        }
-
-
-        else if (requestCode == REQUEST_READ_GOVTID_PIC_PERMISSION) {
+       if (requestCode == PERMISSION_CLINIC) {
 
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                /* Intent intent = new Intent();
@@ -1456,7 +1440,7 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_GOVTID_PICTURE);*/
 
-                chooseGovIDPdf();
+                CropImage.activity().start(PrescriptionActivity.this);
 
             } else {
                 new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
@@ -1467,42 +1451,8 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
 
                             sDialog.dismissWithAnimation();
 
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_GOVTID_PIC_PERMISSION);
-                            }
-
-
-                        })
-                        .setCancelButton("Cancel", SweetAlertDialog::dismissWithAnimation)
-                        .show();
-
-            }
-
-        }
-
-        else if (requestCode == REQUEST_GOVTID_CAMERA_PERMISSION_CODE) {
-
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-              /*  Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-                //    intent.putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
-                startActivityForResult(intent, SELECT_GOVTID_CAMERA);*/
-
-                chooseGovIDPdf();
-
-            } else {
-                new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("Permisson Required")
-                        .setContentText("Please Allow Camera for taking picture")
-                        .setConfirmText("Ok")
-                        .setConfirmClickListener(sDialog -> {
-
-                            sDialog.dismissWithAnimation();
-
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_GOVTID_CAMERA_PERMISSION_CODE);
+                            if (!hasPermissions(this, PERMISSIONS)) {
+                                ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_CLINIC);
                             }
 
 
@@ -1557,7 +1507,7 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
                             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
                             String currentDateandTime = sdf.format(new Date());
 
-                            govIdPart = MultipartBody.Part.createFormData("sampleFile", userid + currentDateandTime + file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                            govIdPart = MultipartBody.Part.createFormData("sampleFile", userid + currentDateandTime + filename, RequestBody.create(MediaType.parse("image/*"), file));
 
                             uploadGovtIDPdf();
 
@@ -1574,115 +1524,6 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
             }
 
 
-            else if (requestCode == SELECT_GOVTID_CAMERA) {
-                Bitmap photo;
-                File file = null;
-                OutputStream os;
-                try {
-                    photo = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
-                    file = new File(getFilesDir(), "Petfolio1" + ".jpg");
-                    os = new FileOutputStream(file);
-                    if (photo != null) {
-                        photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
-                    }
-                    os.flush();
-                    os.close();
-                } catch (Exception e) {
-                    Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
-                }
-                if (file != null) {
-                    RequestBody requestFile = RequestBody.create(MediaType.parse("image*/"), file);
-                    govIdPart = MultipartBody.Part.createFormData("sampleFile", Doctor_ID + currentDateandTime + file.getName(), requestFile);
-                    uploadGovtIDPdf();
-                }
-
-
-            } else if (requestCode == SELECT_GOVTID_PICTURE) {
-
-                try {
-                    if (resultCode == Activity.RESULT_OK) {
-
-                        Log.w("VALUEEEEEEE1111", " " + data);
-
-                        Uri selectedImageUri = data.getData();
-
-                        Log.w("selectedImageUri", " " + selectedImageUri);
-
-                        String filename = null;
-                        if (selectedImageUri != null) {
-                            filename = getFileName(selectedImageUri);
-                        }
-
-                        Log.w("filename", " " + filename);
-
-                        String filePath = FileUtil.getPath(PrescriptionActivity.this, selectedImageUri);
-
-                        assert filePath != null;
-
-                        File file = new File(filePath); // initialize file here
-
-                        long length = file.length() / 1024; // Size in KB
-
-                        Log.w("filesize", " " + length);
-
-                        govIdPart = MultipartBody.Part.createFormData("sampleFile", Doctor_ID + currentDateandTime + file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-
-                        uploadGovtIDPdf();
-
-
-                    }
-                } catch (Exception e) {
-
-                    Log.w("Exception", " " + e);
-                }
-
-            } else if (requestCode == SELECT_GOVTID_PDF) {
-
-                try {
-                    if (resultCode == Activity.RESULT_OK) {
-
-                        Log.w("URI", " " + data);
-
-                        Uri selectedFileUri = data.getData();
-
-                        Log.w("selectedFileUri", " " + selectedFileUri);
-
-                        String filename = getFileName(selectedFileUri);
-
-                        Log.w("filename", " " + filename);
-
-                        String filePath = FileUtil.getPath(PrescriptionActivity.this, selectedFileUri);
-
-                        assert filePath != null;
-
-                        File file = new File(filePath); // initialize file here
-
-                        long length = file.length() / 1024; // Size in KB
-
-                        Log.w("filesize", " " + length);
-
-//                    if(length>200){
-//
-//                        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-//                                .setTitleText("File Size")
-//                                .setContentText("Please choose file size less than 200 kb ")
-//                                .setConfirmText("Ok")
-//                                .show();
-//                    }
-//
-//                    else{
-
-                        govIdPart = MultipartBody.Part.createFormData("sampleFile", Doctor_ID + currentDateandTime + file.getName(), RequestBody.create(MediaType.parse("pdf/*"), file));
-
-                        uploadGovtIDPdf();
-                        //}
-
-                    }
-                } catch (Exception e) {
-
-                    Log.w("Exception", " " + e);
-                }
-            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -1755,7 +1596,7 @@ public class PrescriptionActivity extends AppCompatActivity implements Diagnosis
         String fileName = getFileName(contentUri);
         if (!TextUtils.isEmpty(fileName)) {
 
-            String path = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS).getPath() + "/" + "MyFirstApp/";
+            String path = context.getFilesDir() + "/" + "MyFirstApp/";
             // Create the parent path
             File dir = new File(path);
             if (!dir.exists()) {

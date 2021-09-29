@@ -776,7 +776,7 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
         petAppointmentCreateRequest.setPayment_method(selectedPaymentMethod);
         petAppointmentCreateRequest.setAppointment_types(selectedAppointmentType);
         petAppointmentCreateRequest.setAllergies(Allergies);
-        petAppointmentCreateRequest.setAmount(amount);
+        petAppointmentCreateRequest.setAmount(Total_price);
         petAppointmentCreateRequest.setMobile_type("Android");
         petAppointmentCreateRequest.setService_name("");
         petAppointmentCreateRequest.setService_amount("");

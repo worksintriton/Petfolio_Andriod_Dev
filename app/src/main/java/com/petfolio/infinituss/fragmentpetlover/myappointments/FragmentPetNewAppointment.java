@@ -316,12 +316,14 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
                     dialog.dismiss();
                     if(appointmenttype != null && appointmenttype.equalsIgnoreCase("Doctor")){
                         Appointmenttype = "1";
-                       appoinmentCancelledResponseCall(id,appointmenttype,userid,doctorid,appointmentid,"1");
-                       // showSuccessfullyCancelled(Appointmenttype);
+                       // petAppointmentResponseCall(id,appointmenttype,userid,doctorid,appointmentid,"1");
+                      appoinmentCancelledResponseCall(id,appointmenttype,userid,doctorid,appointmentid,"1");
+
                     } else if(appointmenttype != null && appointmenttype.equalsIgnoreCase("SP")){
                         Appointmenttype = "2";
+                       // spAppointmentDetailsResponse(id,appointmenttype,userid,doctorid,appointmentid,spid,"2");
                         spappoinmentCancelledResponseCall(id,appointmenttype,userid,doctorid,appointmentid,spid,"2");
-                        //showSuccessfullyCancelled(Appointmenttype);
+
                     }
 
 
@@ -875,7 +877,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
 
 
     @SuppressLint({"LongLogTag", "LogNotTimber"})
-    private void spAppointmentDetailsResponse() {
+    private void spAppointmentDetailsResponse(String id, String appointmenttype, String userid, String doctorid, String appointmentid, String spid, String s) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
@@ -890,6 +892,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
                 Log.w(TAG, "SPAppointmentDetailsResponse" + "--->" + new Gson().toJson(response.body()));
                 if (response.body() != null) {
                     if (200 == response.body().getCode()) {
+                        spappoinmentCancelledResponseCall(id,appointmenttype,userid,doctorid,appointmentid,spid,"2");
 
 
                     }
@@ -918,7 +921,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
 
 
     @SuppressLint({"LongLogTag", "LogNotTimber"})
-    private void petAppointmentResponseCall() {
+    private void petAppointmentResponseCall(String id, String appointmenttype, String userid, String doctorid, String appointmentid, String s) {
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
         RestApiInterface ApiService = APIClient.getClient().create(RestApiInterface.class);
@@ -929,12 +932,15 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
             @Override
             public void onResponse(@NonNull Call<PetNewAppointmentDetailsResponse> call, @NonNull Response<PetNewAppointmentDetailsResponse> response) {
                 avi_indicator.smoothToHide();
-                Log.w(TAG, "PetNewAppointmentDetailsResponse" + "--->" + new Gson().toJson(response.body()));
+                Log.w(TAG, "petAppointmentResponseCall" + "--->" + new Gson().toJson(response.body()));
 
 
                 if (response.body() != null) {
 
-                    if (200 == response.body().getCode()) {}
+                    if (200 == response.body().getCode()) {
+                        appoinmentCancelledResponseCall(id,appointmenttype,userid,doctorid,appointmentid,"1");
+
+                    }
 
 
                 }
@@ -944,7 +950,7 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
             public void onFailure(@NonNull Call<PetNewAppointmentDetailsResponse> call, @NonNull Throwable t) {
                 avi_indicator.smoothToHide();
 
-                Log.w(TAG, "PetNewAppointmentDetailsResponse" + "--->" + t.getMessage());
+                Log.w(TAG, "petAppointmentResponseCall flr" + "--->" + t.getMessage());
             }
         });
 

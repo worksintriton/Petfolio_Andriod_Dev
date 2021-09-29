@@ -800,7 +800,7 @@ public class PetLoverServiceChoosePaymentMethodActivity extends AppCompatActivit
         spCreateAppointmentRequest.setPayment_id(Payment_id);
         spCreateAppointmentRequest.setPayment_method("Online");
         spCreateAppointmentRequest.setService_name(selectedServiceTitle);
-        spCreateAppointmentRequest.setService_amount(String.valueOf(serviceamount));
+        spCreateAppointmentRequest.setService_amount(String.valueOf(Total_price));
         spCreateAppointmentRequest.setService_time(servicetime);
         spCreateAppointmentRequest.setCompleted_at("");
         spCreateAppointmentRequest.setMissed_at("");

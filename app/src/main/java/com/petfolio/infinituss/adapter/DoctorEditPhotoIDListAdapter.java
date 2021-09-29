@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -57,20 +58,39 @@ public class DoctorEditPhotoIDListAdapter extends RecyclerView.Adapter<DoctorEdi
                 extension = uri.substring(uri.lastIndexOf("."));
 
                 Log.w("extension",extension);
+
+                if(extension != null && !extension.isEmpty()) {
+                    if (extension.equals(".png") || extension.equals(".jpg") || (extension.equals(".jpeg"))) {
+                        Glide.with(context)
+                                .load(photoIdPicBean.getPhoto_id_pic())
+                                .into(holder.pdf_file);
+
+                    }else {
+                        holder.pdf_file.setImageResource(R.drawable.pdf_icon);
+                    }
+                }
+
+                else {
+
+                    holder.material_cardview_education_details.setVisibility(View.GONE);
+                }
+
+
             }
+
+            else {
+
+                holder.material_cardview_education_details.setVisibility(View.GONE);
+            }
+
 
         }
 
-        if(extension != null && !extension.isEmpty()) {
-            if (extension.equals(".png") || extension.equals(".jpg") || (extension.equals(".jpeg"))) {
-                Glide.with(context)
-                        .load(photoIdPicBean.getPhoto_id_pic())
-                        .into(holder.pdf_file);
+        else {
 
-            }
-        } else {
-            holder.pdf_file.setImageResource(R.drawable.pdf_icon);
+            holder.material_cardview_education_details.setVisibility(View.GONE);
         }
+
 
 
         holder.removeImg.setOnClickListener(view -> {
@@ -88,10 +108,12 @@ public class DoctorEditPhotoIDListAdapter extends RecyclerView.Adapter<DoctorEdi
 
     public static class AddImageListHolder extends RecyclerView.ViewHolder {
         ImageView removeImg,pdf_file;
+        CardView material_cardview_education_details;
         public AddImageListHolder(View itemView) {
             super(itemView);
             pdf_file = itemView.findViewById(R.id.pdf_file);
             removeImg = itemView.findViewById(R.id.close);
+            material_cardview_education_details = itemView.findViewById(R.id.material_cardview_education_details);
         }
     }
 
