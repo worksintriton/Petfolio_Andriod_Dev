@@ -55,6 +55,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -981,10 +982,47 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
     }
     @SuppressLint("LogNotTimber")
     public void CheckDates(String d1, String d2){
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat dfDate  = new SimpleDateFormat("yyyy-MM-dd");
+
+        Log.w(TAG,"start_date "+ d1);
+
+        Log.w(TAG,"end_date "+ d2);
+
+        try
+        {
+            String myFormatString = "yyyy-M-dd"; // for example
+            SimpleDateFormat df = new SimpleDateFormat(myFormatString);
+            Date date1 = df.parse(d1);
+            Date startingDate = df.parse(d2);
+
+            Log.w(TAG,"start_date_parse "+ date1);
+
+            Log.w(TAG,"end_date_parse"+ startingDate);
+
+            if (date1.after(startingDate))
+                isvaliddate = true;
+            else
+                isvaliddate = false;
+        }
+        catch (Exception e)
+        {
+
+            isvaliddate = false;
+        }
+
+     /*   @SuppressLint("SimpleDateFormat") SimpleDateFormat dfDate  = new SimpleDateFormat("yyyy-MM-dd");
+
+        Log.w(TAG,"start_date "+ d1);
+
+        Log.w(TAG,"end_date "+ d2);
+
 
         try {
             if(d1 != null && d2 != null){
+
+                Log.w(TAG,"start_date_parse "+ dfDate.parse(d1));
+
+                Log.w(TAG,"end_date_parse"+ dfDate.parse(d2));
+
                 if(Objects.requireNonNull(dfDate.parse(d1)).before(dfDate.parse(d2)))
                 {
                     isvaliddate = true;//If start date is before end date
@@ -999,7 +1037,7 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
         } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
+        }*/
     }
     public void showErrorLoading(String errormesage){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
