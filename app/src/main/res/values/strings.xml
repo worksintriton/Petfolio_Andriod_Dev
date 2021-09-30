@@ -233,7 +233,7 @@
 
     <string name="medical_history">Medical History</string>
     <string name="appointmentdateandtime">Appointment Date and Time</string>
-    <string name="order_date">Order date</string>
+    <string name="order_date">Order Date</string>
     <string name="bookingdate">Booked Date</string>
     <string name="order">Order #</string>
     <string name="bookingid">Booking ID</string>
@@ -384,7 +384,7 @@
     <string name="discountamount">Discount Amount</string>
     <string name="shippingamount">Shipping Amount</string>
     <string name="totalamount">Total Amount</string>
-    <string name="proceedtobuy">Proceed to Buy</string>
+    <string name="proceedtobuy">Proceed to buy</string>
     <string name="coupon_applied">coupon applied</string>
     <string name="coupon">Coupon </string>
     <string name="percentage_discount">0 % discount </string>

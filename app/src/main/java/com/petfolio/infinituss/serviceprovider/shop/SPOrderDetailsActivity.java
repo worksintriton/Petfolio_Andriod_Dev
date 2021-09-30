@@ -20,12 +20,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
+import com.petfolio.infinituss.activity.NotificationActivity;
 import com.petfolio.infinituss.adapter.ProductDetailsAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 
 import com.petfolio.infinituss.requestpojo.PetLoverVendorOrderDetailsRequest;
 import com.petfolio.infinituss.responsepojo.PetLoverVendorOrderDetailsResponse;
+import com.petfolio.infinituss.serviceprovider.SPProfileScreenActivity;
 import com.petfolio.infinituss.serviceprovider.ServiceProviderDashboardActivity;
 import com.petfolio.infinituss.utils.ConnectionDetector;
 import com.petfolio.infinituss.utils.RestUtils;
@@ -255,6 +257,20 @@ public class SPOrderDetailsActivity extends AppCompatActivity implements View.On
         ImageView img_profile = include_doctor_header.findViewById(R.id.img_profile);
         TextView toolbar_title = include_doctor_header.findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.order_details));
+
+        img_cart.setVisibility(View.GONE);
+        img_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+            }
+        });
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), SPProfileScreenActivity.class));
+            }
+        });
 
 
         img_back.setOnClickListener(this);

@@ -1086,7 +1086,7 @@ public class PetLoverDashboardResponse{
              * pet_img : http://54.212.108.156:3000/api/uploads/1614864579584.603e388f2c2b43125f8cb8080403185939
              */
 
-            private List<PetImgBean> pet_img;
+          //  private List<PetImgBean> pet_img;
 
             public String get_id() {
                 return _id;
@@ -1304,13 +1304,13 @@ public class PetLoverDashboardResponse{
                 this.__v = __v;
             }
 
-            public List<PetImgBean> getPet_img() {
+            /*public List<PetImgBean> getPet_img() {
                 return pet_img;
             }
 
             public void setPet_img(List<PetImgBean> pet_img) {
                 this.pet_img = pet_img;
-            }
+            }*/
 
             public static class PetImgBean {
                 private String pet_img;
@@ -1323,6 +1323,7 @@ public class PetLoverDashboardResponse{
                     this.pet_img = pet_img;
                 }
             }
+
         }
 
         public static class MessagesBean {

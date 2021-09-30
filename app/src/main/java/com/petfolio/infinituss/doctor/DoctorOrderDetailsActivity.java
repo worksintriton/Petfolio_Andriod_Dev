@@ -20,12 +20,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
+import com.petfolio.infinituss.activity.NotificationActivity;
 import com.petfolio.infinituss.adapter.ProductDetailsAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.doctor.shop.DoctorCancelOrderActivity;
 import com.petfolio.infinituss.requestpojo.PetLoverVendorOrderDetailsRequest;
 import com.petfolio.infinituss.responsepojo.PetLoverVendorOrderDetailsResponse;
+import com.petfolio.infinituss.serviceprovider.SPProfileScreenActivity;
 import com.petfolio.infinituss.utils.ConnectionDetector;
 import com.petfolio.infinituss.utils.RestUtils;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -256,6 +258,20 @@ public class DoctorOrderDetailsActivity extends AppCompatActivity implements Vie
         toolbar_title.setText(getResources().getString(R.string.order_details));
 
         img_cart.setVisibility(View.GONE);
+
+        img_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), NotificationActivity.class));
+            }
+        });
+        img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), DoctorProfileScreenActivity.class));
+            }
+        });
+
 
 
         img_back.setOnClickListener(this);

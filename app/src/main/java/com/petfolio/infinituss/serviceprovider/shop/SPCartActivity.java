@@ -460,8 +460,12 @@ public class SPCartActivity extends AppCompatActivity implements AddandRemovePro
                             }
                             setView(response.body().getData());
 
-                            if(response.body().getProdcut_item_count() != 0){
-                                txt_lbl_subtotal.setText("Subtotal ( "+response.body().getProdcut_item_count()+" items)" );
+                            if (response.body().getProdcut_item_count() != 0) {
+                                if (response.body().getProdcut_item_count() == 1) {
+                                    txt_lbl_subtotal.setText("Subtotal ( " + response.body().getProdcut_item_count() + " item)");
+                                } else {
+                                    txt_lbl_subtotal.setText("Subtotal ( " + response.body().getProdcut_item_count() + " items)");
+                                }
                             }
                             if(response.body().getProdouct_total() != 0){
                                 Total_price = response.body().getProdouct_total();

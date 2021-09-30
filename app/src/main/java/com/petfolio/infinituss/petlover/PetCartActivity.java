@@ -483,7 +483,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                         Log.w(TAG,"CartDetailsResponse" + new Gson().toJson(response.body()));
                         footerView.setVisibility(View.VISIBLE);
 
-                        if(response.body().getData() != null && response.body().getData().size()>0){
+                        if(response.body().getData() != null && response.body().getData().size()>0) {
                             scrollablContent.setVisibility(View.VISIBLE);
                             ll_content.setVisibility(View.VISIBLE);
                             ll_cart_is_empty.setVisibility(View.GONE);
@@ -491,15 +491,20 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                             ll_content_amount.setVisibility(View.VISIBLE);
 
                             Data = response.body().getData();
-                            for(int i=0;i<Data.size();i++){
+                            for (int i = 0; i < Data.size(); i++) {
                                 threshould = Data.get(i).getProduct_id().getThreshould();
 
                             }
                             setView(response.body().getData());
 
-                            if(response.body().getProdcut_item_count() != 0){
-                                txt_lbl_subtotal.setText("Subtotal ( "+response.body().getProdcut_item_count()+" items)" );
+                            if (response.body().getProdcut_item_count() != 0) {
+                                if (response.body().getProdcut_item_count() == 1) {
+                                    txt_lbl_subtotal.setText("Subtotal ( " + response.body().getProdcut_item_count() + " item)");
+                                } else {
+                                    txt_lbl_subtotal.setText("Subtotal ( " + response.body().getProdcut_item_count() + " items)");
+                                }
                             }
+
                             if(response.body().getProdouct_total() != 0){
                                 Total_price = response.body().getProdouct_total();
                                 txt_sub_total.setText(" INR "+response.body().getProdouct_total());
