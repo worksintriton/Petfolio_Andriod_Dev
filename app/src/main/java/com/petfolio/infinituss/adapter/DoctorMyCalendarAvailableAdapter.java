@@ -40,12 +40,14 @@ public class DoctorMyCalendarAvailableAdapter extends  RecyclerView.Adapter<Recy
     Dialog dialog;
     private OnItemClickSpecialization mCallback;
     private String chspecialization;
+    private String fromactivity;
 
 
-    public DoctorMyCalendarAvailableAdapter(Context context, List<DoctorMyCalendarAvlDaysResponse.DataBean> dataBeanList, RecyclerView inbox_list, DoctorMyCalendarActivity doctorMyCalendarActivity) {
+    public DoctorMyCalendarAvailableAdapter(Context context, List<DoctorMyCalendarAvlDaysResponse.DataBean> dataBeanList, RecyclerView inbox_list, DoctorMyCalendarActivity doctorMyCalendarActivity,String fromactivity) {
         this.dataBeanList = dataBeanList;
         this.context = context;
         this.mCallback = (OnItemClickSpecialization)doctorMyCalendarActivity;
+        this.fromactivity = fromactivity;
 
 
 
@@ -111,6 +113,7 @@ public class DoctorMyCalendarAvailableAdapter extends  RecyclerView.Adapter<Recy
                  ArrayList<String> dateList = new ArrayList<>();
                 dateList.add(dataBeanList.get(position).getTitle());
                 i.putExtra("dateList",dateList);
+                i.putExtra("fromactivity",fromactivity);
                 context.startActivity(i);
 
             }

@@ -57,7 +57,7 @@ public class DoctorMyCalendarTimeActivity extends AppCompatActivity implements O
 
     String date;
     AVLoadingIndicatorView avi_indicator;
-
+    private String fromactivity;
 
 
     @SuppressLint("LongLogTag")
@@ -81,6 +81,9 @@ public class DoctorMyCalendarTimeActivity extends AppCompatActivity implements O
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
+
+            fromactivity = extras.getString("fromactivity");
+            Log.w(TAG,"fromactivity : "+fromactivity);
             dateList = (ArrayList<String>) getIntent().getSerializableExtra("dateList");
             Log.w(TAG,"dateList : "+new Gson().toJson(dateList));
 
@@ -254,7 +257,14 @@ public class DoctorMyCalendarTimeActivity extends AppCompatActivity implements O
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
-                        startActivity(new Intent(DoctorMyCalendarTimeActivity.this, DoctorMyCalendarActivity.class));
+                        if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorMyCalendarActivity")){
+                            startActivity(new Intent(DoctorMyCalendarTimeActivity.this, DoctorMyCalendarActivity.class));
+                            finish();
+                        }else{
+                            startActivity(new Intent(DoctorMyCalendarTimeActivity.this, DoctorDashboardActivity.class));
+                            finish();
+
+                        }
 
                     }else{
                         Toasty.error(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();

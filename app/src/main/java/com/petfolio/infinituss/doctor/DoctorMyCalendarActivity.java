@@ -89,7 +89,9 @@ public class DoctorMyCalendarActivity extends AppCompatActivity implements OnIte
                 if(dateList != null && dateList.size()>0){
                     Intent intent = new Intent(DoctorMyCalendarActivity.this,DoctorMyCalendarTimeActivity.class);
                     intent.putExtra("dateList",dateList);
+                    intent.putExtra("fromactivity",TAG);
                     startActivity(intent);
+                    Log.w(TAG,"fromactivity : "+TAG);
                 }else{
                     Toasty.warning(getApplicationContext(), "Please select any one day", Toast.LENGTH_SHORT, true).show();
 
@@ -188,7 +190,7 @@ public class DoctorMyCalendarActivity extends AppCompatActivity implements OnIte
     private void setViewAvlDays() {
         rv_doctor_mycalendar_avldays.setLayoutManager(new LinearLayoutManager(this));
         rv_doctor_mycalendar_avldays.setItemAnimator(new DefaultItemAnimator());
-        DoctorMyCalendarAvailableAdapter doctorMyCalendarAvailableAdapter = new DoctorMyCalendarAvailableAdapter(getApplicationContext(), dataBeanList, rv_doctor_mycalendar_avldays, DoctorMyCalendarActivity.this);
+        DoctorMyCalendarAvailableAdapter doctorMyCalendarAvailableAdapter = new DoctorMyCalendarAvailableAdapter(getApplicationContext(), dataBeanList, rv_doctor_mycalendar_avldays, DoctorMyCalendarActivity.this,TAG);
         rv_doctor_mycalendar_avldays.setAdapter(doctorMyCalendarAvailableAdapter);
 
    }
