@@ -47,12 +47,15 @@ import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.api.API;
 import com.petfolio.infinituss.doctor.DoctorBusinessInfoActivity;
+import com.petfolio.infinituss.requestpojo.DocBusInfoUploadRequest;
+import com.petfolio.infinituss.requestpojo.PetAppointmentCreateRequest;
 import com.petfolio.infinituss.responsepojo.GetAddressResultResponse;
 import com.petfolio.infinituss.service.GPSTracker;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -123,6 +126,9 @@ public class SetLocationDoctorNewActivity extends FragmentActivity implements On
     private String fromactivity;
     private String placesearchactivity;
 
+    ArrayList<DocBusInfoUploadRequest> docBusInfoUploadRequestList = new ArrayList<>();
+
+
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -137,7 +143,11 @@ public class SetLocationDoctorNewActivity extends FragmentActivity implements On
         if (extras != null) {
             fromactivity = extras.getString("fromactivity");
             placesearchactivity = extras.getString("placesearchactivity");
-            Log.w(TAG,"fromactivity if : "+fromactivity+"placesearchactivity : "+placesearchactivity);
+            Log.w(TAG,"fromactivity if : "+fromactivity+" placesearchactivity : "+placesearchactivity);
+
+            docBusInfoUploadRequestList = (ArrayList<DocBusInfoUploadRequest>) getIntent().getSerializableExtra("docBusInfoUploadRequestList");
+            Log.w(TAG,"docBusInfoUploadRequestList : "+new Gson().toJson(docBusInfoUploadRequestList));
+
 
         }else{
             fromactivity  = TAG;
@@ -149,9 +159,16 @@ public class SetLocationDoctorNewActivity extends FragmentActivity implements On
 
 
         rl_placessearch.setOnClickListener(v -> {
-            Intent intent = new Intent(SetLocationDoctorNewActivity.this, PlacesSearchActivity.class);
-            intent.putExtra("fromactivity",TAG);
-            startActivity(intent);
+            if(fromactivity != null && fromactivity.equalsIgnoreCase("DoctorBusinessInfoActivity")){
+                Intent intent = new Intent(SetLocationDoctorNewActivity.this, PlacesSearchActivity.class);
+                intent.putExtra("docBusInfoUploadRequestList", docBusInfoUploadRequestList);
+                intent.putExtra("fromactivity", TAG);
+                startActivity(intent);
+            }else {
+                Intent intent = new Intent(SetLocationDoctorNewActivity.this, PlacesSearchActivity.class);
+                intent.putExtra("fromactivity", TAG);
+                startActivity(intent);
+            }
         });
 
         avi_indicator.setVisibility(View.GONE);
@@ -189,6 +206,7 @@ public class SetLocationDoctorNewActivity extends FragmentActivity implements On
                     intent.putExtra("address",AddressLine);
                     intent.putExtra("PostalCode",PostalCode);
                     intent.putExtra("fromactivity",fromactivity);
+                    intent.putExtra("docBusInfoUploadRequestList",docBusInfoUploadRequestList);
                     startActivity(intent);
             }else{
                 Toasty.warning(SetLocationDoctorNewActivity.this,"Please select citynmae",Toasty.LENGTH_SHORT).show();
@@ -501,6 +519,7 @@ public class SetLocationDoctorNewActivity extends FragmentActivity implements On
             }
         }
     }
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NotNull String @NotNull [] permissions, @NotNull int @NotNull [] grantResults) {
         if (requestCode == MY_PERMISSIONS_REQUEST_LOCATION) {

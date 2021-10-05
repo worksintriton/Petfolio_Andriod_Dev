@@ -25,6 +25,7 @@ import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.adapter.PlacesResultsAdapter;
 import com.petfolio.infinituss.api.API;
 import com.petfolio.infinituss.interfaces.PlacesNameListener;
+import com.petfolio.infinituss.requestpojo.DocBusInfoUploadRequest;
 import com.petfolio.infinituss.responsepojo.AddressResultsResponse;
 import com.petfolio.infinituss.responsepojo.CartDetailsResponse;
 import com.petfolio.infinituss.responsepojo.PlacesResultsResponse;
@@ -99,6 +100,9 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
     private int Original_price = 0;
     private int Coupon_discount_price = 0;
 
+    ArrayList<DocBusInfoUploadRequest> docBusInfoUploadRequestList = new ArrayList<>();
+
+
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -136,6 +140,10 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
             Coupon_discount_price = extras.getInt("Coupon_discount_price");
             Coupon_code = extras.getString("Coupon_code");
             Coupon_status = extras.getString("Coupon_status");
+
+            docBusInfoUploadRequestList = (ArrayList<DocBusInfoUploadRequest>) getIntent().getSerializableExtra("docBusInfoUploadRequestList");
+            Log.w(TAG,"docBusInfoUploadRequestList : "+new Gson().toJson(docBusInfoUploadRequestList));
+
 
         }
 
@@ -441,6 +449,7 @@ public class PlacesSearchActivity extends AppCompatActivity implements PlacesNam
                         Intent i = new Intent(PlacesSearchActivity.this, SetLocationDoctorNewActivity.class);
                         i.putExtra("cityname",selectedPlaceName);
                         i.putExtra("placesearchactivity","placesearchactivity");
+                        i.putExtra("docBusInfoUploadRequestList",docBusInfoUploadRequestList);
                         Bundle b = new Bundle();
                         b.putDouble("lat", lat);
                         b.putDouble("lon", lon);

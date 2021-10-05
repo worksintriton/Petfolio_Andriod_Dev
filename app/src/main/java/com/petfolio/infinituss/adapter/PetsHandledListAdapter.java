@@ -1,17 +1,21 @@
 package com.petfolio.infinituss.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.interfaces.PetHandledTypeCheckedListener;
+import com.petfolio.infinituss.requestpojo.DocBusInfoUploadRequest;
 import com.petfolio.infinituss.responsepojo.DropDownListResponse;
 
 import java.util.List;
@@ -19,16 +23,17 @@ import java.util.List;
 
 public class PetsHandledListAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final String TAG = "SpecTypesListAdapter";
+    private final String TAG = "PetsHandledListAdapter";
     private Context context;
     private List<DropDownListResponse.DataBean.PetHandleBean> petHandleBeanList;
     DropDownListResponse.DataBean.PetHandleBean currentItem;
     private PetHandledTypeCheckedListener petHandledTypeCheckedListener;
+    List<DocBusInfoUploadRequest.PetHandledBean> pethandleListEdit;
 
 
-    public PetsHandledListAdapter(Context context, List<DropDownListResponse.DataBean.PetHandleBean> pettypedataBeanList, PetHandledTypeCheckedListener petHandledTypeCheckedListener) {
-
+    public PetsHandledListAdapter(Context context, List<DropDownListResponse.DataBean.PetHandleBean> pettypedataBeanList,List<DocBusInfoUploadRequest.PetHandledBean> pethandleListEdit, PetHandledTypeCheckedListener petHandledTypeCheckedListener) {
         this.petHandleBeanList = pettypedataBeanList;
+        this.pethandleListEdit = pethandleListEdit;
         this.context = context;
         this.petHandledTypeCheckedListener = petHandledTypeCheckedListener;
 
@@ -51,14 +56,13 @@ public class PetsHandledListAdapter extends  RecyclerView.Adapter<RecyclerView.V
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
         currentItem = petHandleBeanList.get(position);
-
         holder.txt_spectypes.setText(currentItem.getPet_handle());
-
         holder.chx_spectypes.setChecked(currentItem.isSelected());
-
         holder.chx_spectypes.setTag(position);
 
-        holder.chx_spectypes.setOnClickListener(v -> {
+
+
+       /* holder.chx_spectypes.setOnClickListener(v -> {
 
             Integer pos = (Integer) holder.chx_spectypes.getTag();
 
@@ -77,7 +81,41 @@ public class PetsHandledListAdapter extends  RecyclerView.Adapter<RecyclerView.V
 
             }
 
+        });*/
+
+        for(int i=0;i<pethandleListEdit.size();i++){
+            if(null!=pethandleListEdit && null!=currentItem.getPet_handle() && pethandleListEdit.get(i).getPet_handled().equalsIgnoreCase(currentItem.getPet_handle().trim())){
+                holder.chx_spectypes.setChecked(true);
+                Log.w(TAG,"pethandleListEdit"+new Gson().toJson(pethandleListEdit));
+
+            }
+
+        }
+
+
+
+
+
+        holder.chx_spectypes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                String chpetshandled = petHandleBeanList.get(position).getPet_handle().trim();
+
+                if(isChecked){
+                    if (holder.chx_spectypes.isChecked()) {
+                        petHandledTypeCheckedListener.onItemPetCheck(position,chpetshandled,petHandleBeanList);
+                    }
+
+                }else{
+
+                    petHandledTypeCheckedListener.onItemPetUnCheck(position,chpetshandled);
+
+                }
+
+            }
         });
+
+
 
     }
     @Override

@@ -1,5 +1,6 @@
 package com.petfolio.infinituss.responsepojo;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class DropDownListResponse {
@@ -188,7 +189,7 @@ public class DropDownListResponse {
             }
         }
 
-        public static class SpecialzationBean {
+        public static class SpecialzationBean implements Serializable {
             /**
              * specialzation : specialzation - 1
              */
@@ -214,7 +215,7 @@ public class DropDownListResponse {
             }
         }
 
-        public static class PetHandleBean {
+        public static class PetHandleBean implements Serializable {
             /**
              * pet_handle : pet_handle - 1
              */

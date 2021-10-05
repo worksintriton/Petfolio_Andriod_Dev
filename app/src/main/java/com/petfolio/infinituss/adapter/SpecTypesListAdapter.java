@@ -1,17 +1,23 @@
 package com.petfolio.infinituss.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.petfolio.infinituss.R;
 import com.petfolio.infinituss.interfaces.SpecTypeChckedListener;
+import com.petfolio.infinituss.requestpojo.DocBusInfoUploadRequest;
+import com.petfolio.infinituss.responsepojo.DoctorDetailsByUserIdResponse;
 import com.petfolio.infinituss.responsepojo.DropDownListResponse;
 
 import java.util.List;
@@ -25,10 +31,13 @@ public class SpecTypesListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
     DropDownListResponse.DataBean.SpecialzationBean currentItem;
     private SpecTypeChckedListener specTypeChckedListener;
 
+    List<DocBusInfoUploadRequest.SpecializationBean> specialzationListEdit;
 
-    public SpecTypesListAdapter(Context context, List<DropDownListResponse.DataBean.SpecialzationBean> spectypedataBeanList, SpecTypeChckedListener specTypeChckedListener) {
-        this.spectypedataBeanList = spectypedataBeanList;
+
+    public SpecTypesListAdapter(Context context, List<DropDownListResponse.DataBean.SpecialzationBean> spectypedataBeanList,List<DocBusInfoUploadRequest.SpecializationBean> specialzationListEdit, SpecTypeChckedListener specTypeChckedListener) {
         this.mcontext = context;
+        this.spectypedataBeanList = spectypedataBeanList;
+        this.specialzationListEdit = specialzationListEdit;
         this.specTypeChckedListener = specTypeChckedListener;
     }
 
@@ -46,6 +55,7 @@ public class SpecTypesListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
 
     }
 
+    @SuppressLint("LogNotTimber")
     private void initLayoutOne(ViewHolderOne holder, final int position) {
 
         currentItem = spectypedataBeanList.get(position);
@@ -56,7 +66,18 @@ public class SpecTypesListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
 
         holder.chx_spectypes.setTag(position);
 
-        holder.chx_spectypes.setOnClickListener(v -> {
+
+        for(int i=0;i<specialzationListEdit.size();i++){
+            if(null!=specialzationListEdit && null!=currentItem.getSpecialzation() && specialzationListEdit.get(i).getSpecialization().equalsIgnoreCase(currentItem.getSpecialzation().trim())){
+                holder.chx_spectypes.setChecked(true);
+                Log.w(TAG,"specialzationListEdit"+new Gson().toJson(specialzationListEdit));
+
+            }
+
+        }
+
+
+      /*  holder.chx_spectypes.setOnClickListener(v -> {
 
             Integer pos = (Integer) holder.chx_spectypes.getTag();
 
@@ -66,15 +87,33 @@ public class SpecTypesListAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
 
                 specTypeChckedListener.onItemSpecUnCheck(pos,spectypedataBeanList.get(pos).getSpecialzation());
 
-            }
-
-            else
-            {
+            } else {
                 specTypeChckedListener.onItemSpecCheck(pos,spectypedataBeanList.get(pos).getSpecialzation(),spectypedataBeanList);
 
             }
 
+        });*/
+
+
+        holder.chx_spectypes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                String chspecialization = spectypedataBeanList.get(position).getSpecialzation();
+
+                if(isChecked){
+                    if (holder.chx_spectypes.isChecked()) {
+                        specTypeChckedListener.onItemSpecCheck(position,chspecialization,spectypedataBeanList);
+                    }
+
+                }else{
+
+                    specTypeChckedListener.onItemSpecUnCheck(position,chspecialization);
+
+                }
+
+            }
         });
+
 
     }
     @Override

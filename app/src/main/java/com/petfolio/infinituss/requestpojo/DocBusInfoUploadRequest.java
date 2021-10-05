@@ -1,8 +1,9 @@
 package com.petfolio.infinituss.requestpojo;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class DocBusInfoUploadRequest {
+public class DocBusInfoUploadRequest implements Serializable {
 
 
     /**
@@ -345,7 +346,7 @@ public class DocBusInfoUploadRequest {
         this.photo_id_pic = photo_id_pic;
     }
 
-    public static class EducationDetailsBean {
+    public static class EducationDetailsBean implements Serializable {
         private String education;
         private String year;
 
@@ -371,7 +372,7 @@ public class DocBusInfoUploadRequest {
         }
     }
 
-    public static class ExperienceDetailsBean {
+    public static class ExperienceDetailsBean implements Serializable {
         private String company;
         private String from;
         private String to;
@@ -417,11 +418,15 @@ public class DocBusInfoUploadRequest {
         }
     }
 
-    public static class SpecializationBean {
+    public static class SpecializationBean implements Serializable {
         private String specialization;
 
         public SpecializationBean(String specialization) {
             this.specialization = specialization;
+        }
+
+        public SpecializationBean() {
+
         }
 
         public String getSpecialization() {
@@ -440,11 +445,15 @@ public class DocBusInfoUploadRequest {
         }
     }
 
-    public static class PetHandledBean {
+    public static class PetHandledBean implements Serializable {
         private String pet_handled;
 
         public PetHandledBean(String pet_handled) {
             this.pet_handled = pet_handled;
+        }
+
+        public PetHandledBean() {
+
         }
 
         public String getPet_handled() {
