@@ -128,6 +128,8 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
     RadioGroup rg_categorytype;
 
 
+
+
     private String strPetType = "";
     private String petTypeId = "";
     private String strPetBreedType = "";
@@ -172,10 +174,57 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            fromactivity = extras.getString("fromactivity");
             cat_id = extras.getString("cat_id");
-            Log.w(TAG,"fromactivity : "+fromactivity);
+            discount_value = extras.getString("discount_value");
+            petTypeId = extras.getString("petTypeId");
+            petBreedTypeId = extras.getString("petBreedTypeId");
+            fromactivity = extras.getString("fromactivity");
+            strCategoryTypeId = extras.getString("strCategoryTypeId");
+            strPetType = extras.getString("strPetType");
+            Log.w(TAG,"fromactivity : "+fromactivity+" strPetType :"+ strPetType+" cat_id : "+cat_id+" discount_value : "+discount_value+" petTypeId : "+petTypeId+" petBreedTypeId : "+petBreedTypeId+" strCategoryTypeId : "+strCategoryTypeId);
 
+            if(strPetType != null){
+
+            }else {
+                strPetType = "";
+            }
+
+            if(petTypeId != null){
+
+            }else {
+                petTypeId = "";
+            }
+            if(petBreedTypeId != null){
+
+            }else{
+                petBreedTypeId = "";
+            }
+            if(discount_value != null){
+
+            }else{
+                discount_value = "";
+            }
+            if(strCategoryTypeId != null){
+
+            }else{
+                strCategoryTypeId = "";
+            }
+            Log.w(TAG,"fromactivity1 : "+fromactivity+" cat_id : "+cat_id+" discount_value : "+discount_value+" petTypeId : "+petTypeId+" petBreedTypeId : "+petBreedTypeId+" strCategoryTypeId : "+strCategoryTypeId);
+
+
+
+            if(discount_value != null && !discount_value.isEmpty()){
+                if(discount_value.equalsIgnoreCase("3")){
+                    rb_discount30.setChecked(true);
+                }else if(discount_value.equalsIgnoreCase("2")){
+                    rb_discount20.setChecked(true);
+                }else if(discount_value.equalsIgnoreCase("1")){
+                    rb_discount10.setChecked(true);
+                }else if(discount_value.equalsIgnoreCase("0")){
+                    rb_discount10below.setChecked(true);
+                }
+
+            }
         }
 
         if (new ConnectionDetector(ProductFiltersActivity.this).isNetworkAvailable(ProductFiltersActivity.this)) {
@@ -188,11 +237,8 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
                 RadioButton radioButton = rg_pettype.findViewById(radioButtonID);
                 if (radioButton != null) {
                     strPetType = (String) radioButton.getText();
-
                     petTypeId = hashMap_PetTypeid.get(strPetType);
-
                     Log.w(TAG, "selected pettype : " + strPetType+" petTypeId : "+petTypeId);
-
                     if(petTypeId != null && !petTypeId.isEmpty()) {
                         rg_petbreedtype.setVisibility(View.VISIBLE);
                         breedTypeResponseByPetIdCall(petTypeId);
@@ -353,14 +399,28 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
             rb.setText(product_categories.get(i).getProduct_cate());
             rg_categorytype.addView(rb);
             hashMap_CategoryTypeid.put(product_categories.get(i).getProduct_cate(), product_categories.get(i).get_id());
+
+            Log.w(TAG,"setCategoryTypeList strCategoryType: "+strCategoryType);
+            if(strCategoryType != null && !strCategoryType.isEmpty()){
+                if(strCategoryType.equalsIgnoreCase(product_categories.get(i).getProduct_cate())) {
+                    ((RadioButton) rg_categorytype.getChildAt(i)).setChecked(true);
+                }
+            }
         }
     }
     private void setPetTypeList(List<PetTypeListResponse.DataBean.UsertypedataBean> petTypeList) {
         for(int i = 0; i<petTypeList.size(); i++){
             RadioButton rb = new RadioButton(getApplicationContext());
-            rb.setText(this.petTypeList.get(i).getPet_type_title());
+            rb.setText(petTypeList.get(i).getPet_type_title());
             rg_pettype.addView(rb);
             hashMap_PetTypeid.put(petTypeList.get(i).getPet_type_title(), petTypeList.get(i).get_id());
+
+            Log.w(TAG,"setPetTypeList  strPetType : "+strPetType);
+            if(strPetType != null && !strPetType.isEmpty()){
+                if(strPetType.equalsIgnoreCase(petTypeList.get(i).getPet_type_title())) {
+                    ((RadioButton) rg_pettype.getChildAt(i)).setChecked(true);
+                }
+            }
         }
     }
 
@@ -398,6 +458,7 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
 
             case R.id.btn_clear:
                 clearRadioChecked();
+                clearRadioCheckedDiscount();
                 rg_pettype.clearCheck();
                 rg_categorytype.clearCheck();
                 rg_petbreedtype.clearCheck();
@@ -412,39 +473,44 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
 
             case R.id.rb_discount30:
                 discount_value = "3";
+                clearRadioCheckedDiscount();
                 rb_discount30.setChecked(true);
-                rb_discount30.setBackgroundResource(R.drawable.checked);
+                /*rb_discount30.setBackgroundResource(R.drawable.checked);
                 rb_discount20.setBackgroundResource(R.drawable.uncheck);
                 rb_discount10.setBackgroundResource(R.drawable.uncheck);
-                rb_discount10below.setBackgroundResource(R.drawable.uncheck);
+                rb_discount10below.setBackgroundResource(R.drawable.uncheck);*/
                 break;
 
                 case R.id.rb_discount20:
                     discount_value = "2";
+                    clearRadioCheckedDiscount();
                     rb_discount20.setChecked(true);
-                    rb_discount30.setBackgroundResource(R.drawable.uncheck);
+                    /*rb_discount30.setBackgroundResource(R.drawable.uncheck);
                     rb_discount20.setBackgroundResource(R.drawable.checked);
                     rb_discount10.setBackgroundResource(R.drawable.uncheck);
-                    rb_discount10below.setBackgroundResource(R.drawable.uncheck);
+                    rb_discount10below.setBackgroundResource(R.drawable.uncheck);*/
 
                     break;
 
                 case R.id.rb_discount10:
                     discount_value = "1";
+                    clearRadioCheckedDiscount();
                     rb_discount10.setChecked(true);
-                    rb_discount30.setBackgroundResource(R.drawable.uncheck);
+
+                   /* rb_discount30.setBackgroundResource(R.drawable.uncheck);
                     rb_discount20.setBackgroundResource(R.drawable.uncheck);
                     rb_discount10.setBackgroundResource(R.drawable.checked);
-                    rb_discount10below.setBackgroundResource(R.drawable.uncheck);
+                    rb_discount10below.setBackgroundResource(R.drawable.uncheck);*/
                 break;
 
                 case R.id.rb_discount10below:
                     discount_value = "0";
+                    clearRadioCheckedDiscount();
                     rb_discount10below.setChecked(true);
-                    rb_discount30.setBackgroundResource(R.drawable.uncheck);
+                    /*rb_discount30.setBackgroundResource(R.drawable.uncheck);
                     rb_discount20.setBackgroundResource(R.drawable.uncheck);
                     rb_discount10.setBackgroundResource(R.drawable.uncheck);
-                    rb_discount10below.setBackgroundResource(R.drawable.checked);
+                    rb_discount10below.setBackgroundResource(R.drawable.checked);*/
                 break;
 
 
@@ -462,8 +528,12 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
         intent.putExtra("petTypeId",petTypeId);
         intent.putExtra("petBreedTypeId",petBreedTypeId);
         intent.putExtra("discount_value",discount_value);
-        intent.putExtra("strCategoryTypeId",strCategoryTypeId);
         intent.putExtra("fromactivity",TAG);
+        intent.putExtra("cat_id",cat_id);
+        intent.putExtra("strCategoryTypeId",strCategoryTypeId);
+        intent.putExtra("strPetType",strPetType);
+        intent.putExtra("strPetBreedType",strPetBreedType);
+        intent.putExtra("strCategoryType",strCategoryType);
         startActivity(intent);
     }
     private void gotoSPShopTodayDealsSeeMoreActivity() {
@@ -473,8 +543,12 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
         intent.putExtra("petTypeId",petTypeId);
         intent.putExtra("petBreedTypeId",petBreedTypeId);
         intent.putExtra("discount_value",discount_value);
-        intent.putExtra("strCategoryTypeId",strCategoryTypeId);
         intent.putExtra("fromactivity",TAG);
+        intent.putExtra("cat_id",cat_id);
+        intent.putExtra("strCategoryTypeId",strCategoryTypeId);
+        intent.putExtra("strPetType",strPetType);
+        intent.putExtra("strPetBreedType",strPetBreedType);
+        intent.putExtra("strCategoryType",strCategoryType);
         startActivity(intent);
     }
     private void gotoDoctorShopTodayDealsSeeMoreActivity() {
@@ -484,13 +558,17 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
         intent.putExtra("petTypeId",petTypeId);
         intent.putExtra("petBreedTypeId",petBreedTypeId);
         intent.putExtra("discount_value",discount_value);
-        intent.putExtra("strCategoryTypeId",strCategoryTypeId);
         intent.putExtra("fromactivity",TAG);
+        intent.putExtra("cat_id",cat_id);
+        intent.putExtra("strCategoryTypeId",strCategoryTypeId);
+        intent.putExtra("strPetType",strPetType);
+        intent.putExtra("strPetBreedType",strPetBreedType);
+        intent.putExtra("strCategoryType",strCategoryType);
         startActivity(intent);
     }
     @SuppressLint("LogNotTimber")
     private void gotoListOfProductsSeeMoreActivity() {
-        Log.w(TAG,"petTypeId : "+petTypeId+" petBreedTypeId : "+petBreedTypeId+" discount_value : "+discount_value);
+        Log.w(TAG,"strPetType : "+strPetType+" petTypeId : "+petTypeId+" petBreedTypeId : "+petBreedTypeId+" discount_value : "+discount_value);
         Intent intent = new Intent(getApplicationContext(), ListOfProductsSeeMoreActivity.class);
         intent.putExtra("tag","2");
         intent.putExtra("petTypeId",petTypeId);
@@ -499,6 +577,9 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
         intent.putExtra("fromactivity",TAG);
         intent.putExtra("cat_id",cat_id);
         intent.putExtra("strCategoryTypeId",strCategoryTypeId);
+        intent.putExtra("strPetType",strPetType);
+        intent.putExtra("strPetBreedType",strPetBreedType);
+        intent.putExtra("strCategoryType",strCategoryType);
         startActivity(intent);
     }
     private void gotoDoctorListOfProductsSeeMoreActivity() {
@@ -511,6 +592,9 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
         intent.putExtra("fromactivity",TAG);
         intent.putExtra("cat_id",cat_id);
         intent.putExtra("strCategoryTypeId",strCategoryTypeId);
+        intent.putExtra("strPetType",strPetType);
+        intent.putExtra("strPetBreedType",strPetBreedType);
+        intent.putExtra("strCategoryType",strCategoryType);
         startActivity(intent);
     }
     private void gotoSPListOfProductsSeeMoreActivity() {
@@ -523,6 +607,9 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
         intent.putExtra("fromactivity",TAG);
         intent.putExtra("cat_id",cat_id);
         intent.putExtra("strCategoryTypeId",strCategoryTypeId);
+        intent.putExtra("strPetType",strPetType);
+        intent.putExtra("strPetBreedType",strPetBreedType);
+        intent.putExtra("strCategoryType",strCategoryType);
         startActivity(intent);
     }
 
@@ -532,10 +619,10 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
         rb_discount10.setChecked(false);
         rb_discount10below.setChecked(false);
 
-        rb_discount30.setBackgroundResource(R.drawable.uncheck);
+     /*   rb_discount30.setBackgroundResource(R.drawable.uncheck);
         rb_discount20.setBackgroundResource(R.drawable.uncheck);
         rb_discount10.setBackgroundResource(R.drawable.uncheck);
-        rb_discount10below.setBackgroundResource(R.drawable.uncheck);
+        rb_discount10below.setBackgroundResource(R.drawable.uncheck);*/
 
     }
 
@@ -587,6 +674,12 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
             rg_petbreedtype.addView(rb);
             hashMap_PetBreedTypeid.put(breedTypedataBeanList.get(i).getPet_breed(), breedTypedataBeanList.get(i).getPet_type_id());
 
+            Log.w(TAG,"setBreedType strPetBreedType: "+strPetBreedType);
+            if(strPetBreedType != null && !strPetBreedType.isEmpty()){
+                if(strPetBreedType.equalsIgnoreCase(breedTypedataBeanList.get(i).getPet_breed())) {
+                    ((RadioButton) rg_petbreedtype.getChildAt(i)).setChecked(true);
+                }
+            }
         }
 
     }
@@ -596,6 +689,14 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
         breedTypeRequest.setPet_type_id(petTypeId);
         Log.w(TAG,"breedTypeRequest"+ "--->" + new Gson().toJson(breedTypeRequest));
         return breedTypeRequest;
+    }
+
+
+    public void clearRadioCheckedDiscount() {
+        rb_discount30.setChecked(false);
+        rb_discount20.setChecked(false);
+        rb_discount10.setChecked(false);
+        rb_discount10below.setChecked(false);
     }
 
 

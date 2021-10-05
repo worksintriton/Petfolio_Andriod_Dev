@@ -138,6 +138,10 @@ public class SPShopTodayDealsSeeMoreActivity extends AppCompatActivity implement
     private String fromactivity;
     private String tag;
 
+    private String strPetType = "";
+    private String strPetBreedType = "";
+    private String strCategoryType = "";
+
     /* Bottom Navigation */
 
     @SuppressLint("NonConstantResourceId")
@@ -252,6 +256,9 @@ public class SPShopTodayDealsSeeMoreActivity extends AppCompatActivity implement
           petBreedTypeId = extras.getString("petBreedTypeId");
           strCategoryTypeId = extras.getString("strCategoryTypeId");
           fromactivity = extras.getString("fromactivity");
+            strPetType = extras.getString("strPetType");
+            strPetBreedType = extras.getString("strPetBreedType");
+            strCategoryType = extras.getString("strCategoryType");
             Log.w(TAG,"petTypeId : "+petTypeId+" petBreedTypeId : "+petBreedTypeId+" discount_value : "+discount_value+" tag : "+tag);
 
         }
@@ -654,6 +661,10 @@ public class SPShopTodayDealsSeeMoreActivity extends AppCompatActivity implement
     private void gotoFilters() {
         Intent intent = new Intent(getApplicationContext(), ProductFiltersActivity.class);
         intent.putExtra("fromactivity",TAG);
+        intent.putExtra("discount_value",discount_value);
+        intent.putExtra("strPetType",strPetType);
+        intent.putExtra("strPetBreedType",strPetBreedType);
+        intent.putExtra("strCategoryType",strCategoryType);
         startActivity(intent);
     }
 

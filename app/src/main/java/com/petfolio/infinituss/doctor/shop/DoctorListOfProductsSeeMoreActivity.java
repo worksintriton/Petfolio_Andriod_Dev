@@ -205,6 +205,10 @@ public class DoctorListOfProductsSeeMoreActivity extends AppCompatActivity imple
 
     private String userid;
 
+    private String strPetType = "";
+    private String strPetBreedType = "";
+    private String strCategoryType = "";
+
 
     @SuppressLint("LogNotTimber")
     @Override
@@ -235,6 +239,9 @@ public class DoctorListOfProductsSeeMoreActivity extends AppCompatActivity imple
             petBreedTypeId = extras.getString("petBreedTypeId");
             fromactivity = extras.getString("fromactivity");
             strCategoryTypeId = extras.getString("strCategoryTypeId");
+            strPetType = extras.getString("strPetType");
+            strPetBreedType = extras.getString("strPetBreedType");
+            strCategoryType = extras.getString("strCategoryType");
 
 
         }
@@ -819,7 +826,14 @@ public class DoctorListOfProductsSeeMoreActivity extends AppCompatActivity imple
     private void gotoFilters() {
         Intent intent = new Intent(getApplicationContext(), ProductFiltersActivity.class);
         intent.putExtra("fromactivity",TAG);
+        intent.putExtra("petTypeId",petTypeId);
+        intent.putExtra("petBreedTypeId",petBreedTypeId);
+        intent.putExtra("discount_value",discount_value);
         intent.putExtra("cat_id",cat_id);
+        intent.putExtra("strCategoryTypeId",strCategoryTypeId);
+        intent.putExtra("strPetType",strPetType);
+        intent.putExtra("strPetBreedType",strPetBreedType);
+        intent.putExtra("strCategoryType",strCategoryType);
         startActivity(intent);
     }
 

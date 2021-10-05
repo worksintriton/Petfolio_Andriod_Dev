@@ -193,6 +193,9 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
     private String petBreedTypeId = "";
     private String strCategoryTypeId = "";
     private String fromactivity;
+    private String strPetType = "";
+    private String strPetBreedType = "";
+    private String strCategoryType = "";
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
@@ -252,6 +255,41 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
             petBreedTypeId = extras.getString("petBreedTypeId");
             fromactivity = extras.getString("fromactivity");
             strCategoryTypeId = extras.getString("strCategoryTypeId");
+            strPetType = extras.getString("strPetType");
+            strPetBreedType = extras.getString("strPetBreedType");
+            strCategoryType = extras.getString("strCategoryType");
+
+            Log.w(TAG,"fromactivity : "+fromactivity+" strPetType :"+ strPetType+" cat_id : "+cat_id+" discount_value : "+discount_value+" petTypeId : "+petTypeId+" petBreedTypeId : "+petBreedTypeId+" strCategoryTypeId : "+strCategoryTypeId);
+
+
+            if(strPetType != null){
+
+            }else {
+                strPetType = "";
+            }
+            if(petTypeId != null){
+
+            }else {
+                petTypeId = "";
+            }
+            if(petBreedTypeId != null){
+
+            }else{
+                petBreedTypeId = "";
+            }
+            if(discount_value != null){
+
+            }else{
+                discount_value = "";
+            }
+            if(strCategoryTypeId != null){
+
+            }else{
+                strCategoryTypeId = "";
+            }
+            Log.w(TAG,"fromactivity1 : "+fromactivity+" cat_id : "+cat_id+" discount_value : "+discount_value+" petTypeId : "+petTypeId+" petBreedTypeId : "+petBreedTypeId+" strCategoryTypeId : "+strCategoryTypeId);
+
+
 
 
         }
@@ -868,6 +906,13 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
         Intent intent = new Intent(getApplicationContext(),ProductFiltersActivity.class);
         intent.putExtra("fromactivity",TAG);
         intent.putExtra("cat_id",cat_id);
+        intent.putExtra("petTypeId",petTypeId);
+        intent.putExtra("petBreedTypeId",petBreedTypeId);
+        intent.putExtra("discount_value",discount_value);
+        intent.putExtra("strCategoryTypeId",strCategoryTypeId);
+        intent.putExtra("strPetType",strPetType);
+        intent.putExtra("strPetBreedType",strPetBreedType);
+        intent.putExtra("strCategoryType",strCategoryType);
         startActivity(intent);
     }
 
@@ -929,6 +974,7 @@ public class ListOfProductsSeeMoreActivity extends AppCompatActivity implements 
              * discount_value :
              * cat_id :
              */
+
 
             ProductFiltersRequest productFiltersRequest = new ProductFiltersRequest();
             productFiltersRequest.setPet_type(petTypeId);

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -86,6 +87,23 @@ public class FiltersActivity extends AppCompatActivity implements View.OnClickLi
     @BindView(R.id.rb_one_star)
     RadioButton rb_one_star;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_specialization)
+    LinearLayout ll_specialization;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.ll_review)
+    LinearLayout ll_review;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_specialization)
+    ImageView img_specialization;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.img_review)
+    ImageView img_review;
+
+    private boolean flag;
 
 
     private String specialization;
@@ -154,6 +172,36 @@ public class FiltersActivity extends AppCompatActivity implements View.OnClickLi
 
 
 
+        });
+
+
+        ll_specialization.setOnClickListener(v -> {
+            Log.w(TAG,"flag : "+flag);
+
+            if (!flag) {
+                rg_specialization.setVisibility(View.VISIBLE);
+                img_specialization.setImageResource(R.drawable.ic_down);
+                flag=true;
+            }
+            else {
+                rg_specialization.setVisibility(View.GONE);
+                img_specialization.setImageResource(R.drawable.ic_up);
+                flag=false;
+            }
+        });
+        ll_review.setOnClickListener(v -> {
+            Log.w(TAG,"flag : "+flag);
+
+            if (!flag) {
+                rg_review.setVisibility(View.VISIBLE);
+                img_review.setImageResource(R.drawable.ic_down);
+                flag=true;
+            }
+            else {
+                rg_review.setVisibility(View.GONE);
+                img_review.setImageResource(R.drawable.ic_up);
+                flag=false;
+            }
         });
 
 

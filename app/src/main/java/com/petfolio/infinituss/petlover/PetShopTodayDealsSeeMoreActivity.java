@@ -222,6 +222,9 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
     ImageView img_profile;
 
     private String userid;
+    private String strPetType = "";
+    private String strPetBreedType = "";
+    private String strCategoryType = "";
 
 
     @SuppressLint("LogNotTimber")
@@ -279,6 +282,9 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
           petBreedTypeId = extras.getString("petBreedTypeId");
           strCategoryTypeId = extras.getString("strCategoryTypeId");
           fromactivity = extras.getString("fromactivity");
+            strPetType = extras.getString("strPetType");
+            strPetBreedType = extras.getString("strPetBreedType");
+            strCategoryType = extras.getString("strCategoryType");
             Log.w(TAG,"petTypeId : "+petTypeId+" petBreedTypeId : "+petBreedTypeId+" discount_value : "+discount_value+" tag : "+tag);
 
         }
@@ -671,6 +677,10 @@ public class PetShopTodayDealsSeeMoreActivity extends AppCompatActivity implemen
     private void gotoFilters() {
         Intent intent = new Intent(getApplicationContext(),ProductFiltersActivity.class);
         intent.putExtra("fromactivity",TAG);
+        intent.putExtra("discount_value",discount_value);
+        intent.putExtra("strPetType",strPetType);
+        intent.putExtra("strPetBreedType",strPetBreedType);
+        intent.putExtra("strCategoryType",strCategoryType);
         startActivity(intent);
     }
 
