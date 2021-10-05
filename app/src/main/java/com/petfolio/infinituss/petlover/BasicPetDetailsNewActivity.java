@@ -140,6 +140,10 @@ public class BasicPetDetailsNewActivity extends AppCompatActivity implements Pet
     @BindView(R.id.llpetlastvaccinatedagedate)
     LinearLayout llpetlastvaccinatedagedate;
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.txt_skip)
+    TextView txt_skip;
+
     RecyclerView rv_usertype;
     TextView tv_norecords;
     EditText edt_search_breedtype;
@@ -180,7 +184,7 @@ public class BasicPetDetailsNewActivity extends AppCompatActivity implements Pet
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_basic_pet_details);
+        setContentView(R.layout.activity_basic_pet_details_new);
         ButterKnife.bind(this);
         avi_indicator.setVisibility(View.GONE);
 
@@ -204,6 +208,7 @@ public class BasicPetDetailsNewActivity extends AppCompatActivity implements Pet
         ivfemale.setOnClickListener(this);
         ivothers.setOnClickListener(this);
         ll_save_continue.setOnClickListener(this);
+        txt_skip.setOnClickListener(this);
         rlpetlastvaccinatedagedate.setVisibility(View.GONE);
 
 
@@ -567,14 +572,17 @@ public class BasicPetDetailsNewActivity extends AppCompatActivity implements Pet
                 addPetDetailsValidator();
                 break;
 
+                case R.id.txt_skip:
+                    gotoPetloverdashboard();
+                break;
+
         }
     }
 
-    private void gotoSignup() {
-        Intent intent = new Intent(BasicPetDetailsNewActivity.this, BasicPetDetailsNewActivity.class);
+    private void gotoPetloverdashboard() {
+        Intent intent = new Intent(BasicPetDetailsNewActivity.this, PetLoverDashboardActivity.class);
         intent.putExtra("UserType",petType);
         intent.putExtra("petTypeId",petTypeId);
-
         startActivity(intent);
         finish();
     }

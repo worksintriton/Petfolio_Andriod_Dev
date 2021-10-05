@@ -160,6 +160,11 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
         }
 
 
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("LoginActivity")){
+            img_back.setVisibility(View.VISIBLE);
+        }else{
+            img_back.setVisibility(View.INVISIBLE);
+        }
 
         img_back.setOnClickListener(this);
         btn_verify.setOnClickListener(this);
@@ -284,10 +289,12 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
             timer = null;
 
         }
-        Intent intent = new Intent(VerifyOtpActivity.this,LoginActivity.class);
-        intent.putExtra("phonemumber", phonenumber);
-        startActivity(intent);
-        finish();
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("LoginActivity")) {
+            Intent intent = new Intent(VerifyOtpActivity.this, LoginActivity.class);
+            intent.putExtra("phonemumber", phonenumber);
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void resendOtpResponseCall() {

@@ -48,6 +48,10 @@ public class DocBusInfoUploadRequest {
     private String clinic_no ;
     private String doctor_id;
 
+    public DocBusInfoUploadRequest() {
+
+    }
+
     public String getDoctor_info() {
 
         return doctor_info;

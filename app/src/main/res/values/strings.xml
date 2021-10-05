@@ -76,7 +76,7 @@
     <string name="search_location_address">Search Location Address</string>
     <string name="search_for_breed">Search for breed...</string>
     <string name="noplacesfound">No Places Found</string>
-    <string name="save_this_location_and_procced">Save this location &amp; Proceed</string>
+    <string name="save_this_location_and_procced">Save this location &amp; proceed</string>
 
 
     <string name="doctor_business_info_title">Doctor Business Info</string>
@@ -592,7 +592,7 @@
     <string name="shop_name">Shop Name</string>
     <string name="successfullycancelled">Successfully Cancelled</string>
     <string name="turn_off">Turn off</string>
-    <string name="version">Version V.29.9</string>
+    <string name="version">Version V.04.10</string>
     <string name="tablet_name">Tablet Name</string>
     <string name="consumption">Consumption</string>
     <string name="seems_there_is_a_connectivity_issue_please_check_your_internet_connection_and_try_again">Seems there is a connectivity issue. Please check your internet connection and try again</string>

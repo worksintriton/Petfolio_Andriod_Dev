@@ -304,7 +304,7 @@ public class PetLoverEditProfileActivity extends AppCompatActivity implements Vi
             Toasty.warning(getApplicationContext(), "Please enter the fields", Toast.LENGTH_SHORT, true).show();
             can_proceed = false;
         } else if (edt_firstname.getText().toString().trim().equals("")) {
-            edt_firstname.setError("Please enter first name");
+            edt_firstname.setError("Please enter the first name");
             edt_firstname.requestFocus();
             can_proceed = false;
         }else if (firstnamelength > 25) {
@@ -313,7 +313,7 @@ public class PetLoverEditProfileActivity extends AppCompatActivity implements Vi
             can_proceed = false;
         }
         else if (edt_lastname.getText().toString().trim().equals("")) {
-            edt_lastname.setError("Please enter last name");
+            edt_lastname.setError("Please enter the last name");
             edt_lastname.requestFocus();
             can_proceed = false;
         }

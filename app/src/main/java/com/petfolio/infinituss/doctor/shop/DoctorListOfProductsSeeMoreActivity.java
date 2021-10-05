@@ -428,8 +428,6 @@ public class DoctorListOfProductsSeeMoreActivity extends AppCompatActivity imple
 
                         if(response.body().getData()!= null && response.body().getData().size()>0){
                             catListSeeMore = response.body().getData();
-
-
                             for(int i=0;i<catListSeeMore.size();i++) {
                                 /*
                                  * _id : 60e5aabd5af36c5c3605bab4
@@ -460,8 +458,6 @@ public class DoctorListOfProductsSeeMoreActivity extends AppCompatActivity imple
                             }
                             Log.w(TAG,"catListSeeMoreAll : "+new Gson().toJson(catListSeeMoreAll));
                             Log.w(TAG,"catListSeeMoreAll size : "+catListSeeMoreAll.size());
-
-
 
                             setView(catListSeeMoreAll);
 

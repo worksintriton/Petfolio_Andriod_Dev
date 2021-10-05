@@ -399,6 +399,7 @@ public class ProductFiltersActivity extends AppCompatActivity implements View.On
             case R.id.btn_clear:
                 clearRadioChecked();
                 rg_pettype.clearCheck();
+                rg_categorytype.clearCheck();
                 rg_petbreedtype.clearCheck();
                 rg_petbreedtype.removeAllViews();
                 rg_petbreedtype.setVisibility(View.GONE);

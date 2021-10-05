@@ -299,7 +299,7 @@ public class PetLoverProfileScreenActivity extends AppCompatActivity implements 
                     .into(img_profile1);
         }else{
             Glide.with(PetLoverProfileScreenActivity.this)
-                    .load(R.drawable.upload)
+                    .load(APIClient.PROFILE_IMAGE_URL)
                     .into(img_profile1);
 
         }

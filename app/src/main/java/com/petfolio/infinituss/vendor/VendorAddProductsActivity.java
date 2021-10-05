@@ -17,6 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -29,6 +30,7 @@ import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.requestpojo.FetctProductByCatRequest;
 import com.petfolio.infinituss.responsepojo.CatgoryGetListResponse;
 import com.petfolio.infinituss.responsepojo.FetctProductByCatDetailsResponse;
+import com.petfolio.infinituss.responsepojo.FetctProductByCatResponse;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
 import com.petfolio.infinituss.utils.ConnectionDetector;
 import com.petfolio.infinituss.utils.RestUtils;
@@ -124,6 +126,11 @@ public class VendorAddProductsActivity extends AppCompatActivity implements View
     @BindView(R.id.rl_homes)
     RelativeLayout rl_homes;
 
+    public static final int PAGE_START = 1;
+    private int CURRENT_PAGE = PAGE_START;
+    private boolean isLoading = false;
+    private List<FetctProductByCatDetailsResponse.DataBean> catListSeeMore;
+    private List<FetctProductByCatDetailsResponse.DataBean>  catListSeeMoreAll = new ArrayList<>();
 
 
 
@@ -216,9 +223,12 @@ public class VendorAddProductsActivity extends AppCompatActivity implements View
 
 
 
+
         if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
             getlistCatResponseCall();
         }
+
+        initResultRecylerView();
 
 
 
@@ -312,17 +322,55 @@ public class VendorAddProductsActivity extends AppCompatActivity implements View
                     if(200 == response.body().getCode()){
                         Log.w(TAG,"FetctProductByCatDetailsResponse" + new Gson().toJson(response.body()));
 
-                        if(response.body().getData()!= null && response.body().getData().size()>0){
+                     /*   if(response.body().getData()!= null && response.body().getData().size()>0){
                             fetctProductByCatDetailsList = response.body().getData();
                             txt_no_records.setVisibility(View.GONE);
                             rv_manage_productlist.setVisibility(View.VISIBLE);
                             setViewProducts ();
 
-                        }else{
+                        }
+                        else{
+                            rv_manage_productlist.setVisibility(View.GONE);
+                            txt_no_records.setVisibility(View.VISIBLE);
+                            txt_no_records.setText("No products found");
+                        }*/
+
+                        if(response.body().getData()!= null && response.body().getData().size()>0){
+                            catListSeeMore = response.body().getData();
+                            for(int i=0;i<catListSeeMore.size();i++) {
+                                /*
+                                 * _id : 60e5aabd5af36c5c3605bab4
+                                 * product_img : http://54.212.108.156:3000/api/uploads/1625748054901.png
+                                 * product_title : HUL Natural Shampoo for Puppy
+                                 * product_price : 180
+                                 * thumbnail_image : http://54.212.108.156:3000/api/uploads/1625748027413.png
+                                 * product_discount : 10
+                                 * product_discount_price : 0
+                                 * product_fav : false
+                                 * product_rating : 5
+                                 * product_review : 0
+                                 */
+                                FetctProductByCatDetailsResponse.DataBean  dataBean = new FetctProductByCatDetailsResponse.DataBean();
+                                dataBean.set_id(catListSeeMore.get(i).get_id());
+                                dataBean.setProduct_img(catListSeeMore.get(i).getProduct_img());
+                                dataBean.setProduct_title(catListSeeMore.get(i).getProduct_title());
+                                dataBean.setProduct_discription(catListSeeMore.get(i).getProduct_discription());
+                                dataBean.setStatus(catListSeeMore.get(i).isStatus());
+                                catListSeeMoreAll.add(dataBean);
+
+
+                            }
+                            Log.w(TAG,"catListSeeMoreAll : "+new Gson().toJson(catListSeeMoreAll));
+                            Log.w(TAG,"catListSeeMoreAll size : "+catListSeeMoreAll.size());
+                            setViewProducts(catListSeeMoreAll);
+
+                        }
+                        if(catListSeeMore != null && catListSeeMore.size()<0){
                             rv_manage_productlist.setVisibility(View.GONE);
                             txt_no_records.setVisibility(View.VISIBLE);
                             txt_no_records.setText("No products found");
                         }
+
 
                     }
                 }
@@ -348,7 +396,7 @@ public class VendorAddProductsActivity extends AppCompatActivity implements View
         FetctProductByCatRequest fetctProductByCatRequest = new FetctProductByCatRequest();
         fetctProductByCatRequest.setVendor_id(APIClient.VENDOR_ID);
         fetctProductByCatRequest.setCat_id(strCatTypeId);
-        fetctProductByCatRequest.setSkip_count(1);
+        fetctProductByCatRequest.setSkip_count(CURRENT_PAGE);
         Log.w(TAG,"fetctProductByCatRequest"+ "--->" + new Gson().toJson(fetctProductByCatRequest));
         return fetctProductByCatRequest;
     }
@@ -368,11 +416,14 @@ public class VendorAddProductsActivity extends AppCompatActivity implements View
         return true;
     }
 
-    private void setViewProducts() {
+    private void setViewProducts(List<FetctProductByCatDetailsResponse.DataBean> catListSeeMoreAll) {
+        Log.w(TAG,"setViewProducts catListSeeMoreAll : "+new Gson().toJson(catListSeeMoreAll));
+        Log.w(TAG,"setViewProducts catListSeeMoreAll size : "+catListSeeMoreAll.size());
         rv_manage_productlist.setLayoutManager(new GridLayoutManager(this, 2));
         rv_manage_productlist.setItemAnimator(new DefaultItemAnimator());
-        VendorAddProductsAdapter vendorAddProductsAdapter = new VendorAddProductsAdapter(getApplicationContext(), fetctProductByCatDetailsList,TAG,"");
+        VendorAddProductsAdapter vendorAddProductsAdapter = new VendorAddProductsAdapter(getApplicationContext(), catListSeeMoreAll,TAG,"");
         rv_manage_productlist.setAdapter(vendorAddProductsAdapter);
+        isLoading = false;
     }
 
     @SuppressLint({"NonConstantResourceId", "SetTextI18n", "LogNotTimber"})
@@ -432,4 +483,42 @@ public class VendorAddProductsActivity extends AppCompatActivity implements View
         startActivity(intent);
         finish();
     }
+
+    private void initResultRecylerView() {
+        rv_manage_productlist.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+
+
+                if (!isLoading) {
+                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == catListSeeMoreAll.size() - 1) {
+                        CURRENT_PAGE += 1;
+                        Log.w(TAG, "isLoading? " + isLoading + " currentPage " + CURRENT_PAGE);
+                        isLoading = true;
+                        if(strCatTypeId != null) {
+                            if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                                fetctProductByCatDetailsResponse(strCatTypeId);
+                            }
+                        }else{
+                            if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                                fetctProductByCatDetailsResponse("");
+                            }
+                        }
+
+                    }
+                }
+            }
+        });
+    }
+
 }

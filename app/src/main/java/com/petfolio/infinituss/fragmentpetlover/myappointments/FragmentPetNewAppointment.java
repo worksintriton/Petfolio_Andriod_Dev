@@ -1,5 +1,6 @@
 package com.petfolio.infinituss.fragmentpetlover.myappointments;
 
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,12 +34,10 @@ import com.petfolio.infinituss.adapter.MyCouponsTextAdapter;
 import com.petfolio.infinituss.adapter.PetNewAppointmentAdapter;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
-import com.petfolio.infinituss.doctor.ManageAddressDoctorActivity;
 import com.petfolio.infinituss.interfaces.OnAppointmentCancel;
 import com.petfolio.infinituss.interfaces.OnAppointmentSuccessfullyCancel;
 import com.petfolio.infinituss.petlover.MyCouponsActivity;
-import com.petfolio.infinituss.petlover.PetAppointmentDetailsActivity;
-import com.petfolio.infinituss.petlover.PetAppointment_Doctor_Date_Time_Activity;
+
 import com.petfolio.infinituss.petlover.PetMyappointmentsActivity;
 import com.petfolio.infinituss.requestpojo.AppoinmentCancelledRequest;
 import com.petfolio.infinituss.requestpojo.AppointmentDetailsRequest;
@@ -66,6 +66,9 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -174,6 +177,16 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
             }
         };
         timer.schedule(doAsynchronousTask, 0, 30000);//you can put 30000(30 secs)
+
+
+       /* ScheduledExecutorService scheduleTaskExecutor = Executors.newScheduledThreadPool(5);
+
+        // This schedule a runnable task every 2 minutes
+        scheduleTaskExecutor.scheduleAtFixedRate(new Runnable() {
+            public void run() {
+                petNewAppointmentResponseCall();
+            }
+        }, 0, 5, TimeUnit.SECONDS);*/
 
 
         refresh_layout.setOnRefreshListener(
@@ -962,6 +975,10 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
         Log.w(TAG, "petNewAppointmentDetailsRequest" + "--->" + new Gson().toJson(petNewAppointmentDetailsRequest));
         return petNewAppointmentDetailsRequest;
     }
+
+
+
+
 
 
 }
