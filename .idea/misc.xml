@@ -16,6 +16,7 @@
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_basic_pet_details.xml" value="0.17753623188405798" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_basic_pet_details_new.xml" value="0.25416666666666665" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_book_appointment.xml" value="0.18568840579710144" />
+        <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_consultation.xml" value="0.1634963768115942" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_doctor_appointment_details.xml" value="0.17481884057971014" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_doctor_business_info.xml" value="0.13360507246376813" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_doctor_cart.xml" value="0.13722826086956522" />
@@ -47,6 +48,7 @@
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_pet_vendor_order_details.xml" value="0.1634963768115942" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_pet_vendor_track_order_status.xml" value="0.1634963768115942" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_petappointment_details.xml" value="0.16077898550724637" />
+        <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_petappointment_doctor_date_time.xml" value="0.18614130434782608" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_petlover_doctor_choose_payment_method.xml" value="0.18568840579710144" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_petlover_service_choose_payment_method.xml" value="0.18568840579710144" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/activity_petlover_vendor_order_details.xml" value="0.12360688956433637" />
@@ -91,6 +93,7 @@
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/alert_diagnosis_layout.xml" value="0.25416666666666665" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/alert_exit_layout.xml" value="0.18297101449275363" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/alert_location_allow_deny_layout.xml" value="0.18297101449275363" />
+        <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/alert_logout_layout.xml" value="0.19202898550724637" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/alert_manage_addresses_layout.xml" value="0.18297101449275363" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/alert_no_internet_layout.xml" value="0.18297101449275363" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/alert_payment_success_layout.xml" value="0.18297101449275363" />
@@ -99,6 +102,7 @@
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/alert_register_update.xml" value="0.25416666666666665" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/alert_reschedule_appointment_layout.xml" value="0.18297101449275363" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/alert_return_layout.xml" value="0.18297101449275363" />
+        <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/alert_slotnotavailable_reschedule_appointment_layout.xml" value="0.25416666666666665" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/alert_sortby_layout.xml" value="0.18297101449275363" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/alert_success_register.xml" value="0.25416666666666665" />
         <entry key="..\:/TritonAppsGIt/Petfolio_Andriod_Dev/app/src/main/res/layout/alert_successfulley_cancelled_layout.xml" value="0.18297101449275363" />

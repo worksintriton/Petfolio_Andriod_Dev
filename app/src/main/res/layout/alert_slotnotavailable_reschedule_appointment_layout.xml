@@ -71,13 +71,11 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/new_rounded_corner_btn"
                     android:fontFamily="@font/futuramediumbt"
-                    android:text="View"
+                    android:text="Reschedule Appointment"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="18sp"
-                    android:textStyle="normal"
-                    android:layout_marginEnd="50dp"
-                    android:layout_marginStart="50dp"/>
+                    android:textStyle="normal" />
 
             </LinearLayout>
 

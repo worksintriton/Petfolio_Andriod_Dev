@@ -668,8 +668,8 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
 
                     }
                     else{
-                        if(response.body().getMessage() != null){
-                            showErrorLoading(response.body().getMessage());
+                        if(response.body().getMessage() != null && response.body().getMessage().equalsIgnoreCase("Slot Not Available") ){
+                            showAppointmentBookErrorLoading(response.body().getMessage());
 
                         }
 
@@ -902,6 +902,52 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
+    @SuppressLint("SetTextI18n")
+    public void showAppointmentBookErrorLoading(String errormesage) {
+        dialog = new Dialog(PetLoverDoctorChoosePaymentMethodActivity.this);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.alert_slotnotavailable_reschedule_appointment_layout);
+        Button btn_view = dialog.findViewById(R.id.btn_view);
+        ImageView img_success = dialog.findViewById(R.id.img_success);
+        img_success.setVisibility(View.GONE);
+        TextView txt_header = dialog.findViewById(R.id.txt_header);
+        txt_header.setText(errormesage);
+        btn_view.setText("Reschedule Appointment");
+        btn_view.setOnClickListener(view -> {
+            hideAppointmentBookLoading();
+
+        });
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+    }
+    public void hideAppointmentBookLoading() {
+        try {
+            Log.w(TAG,"hideAppointmentBookLoading");
+            Intent intent = new Intent(PetLoverDoctorChoosePaymentMethodActivity.this,PetAppointment_SlotNotAvailable_Doctor_Date_Time_Activity.class);
+            intent.putExtra("PetAppointmentCreateRequestList",PetAppointmentCreateRequestList);
+            intent.putExtra("doctorname", doctorname);
+            intent.putExtra("clinicname", clinicname);
+            intent.putExtra("petname", petname);
+            intent.putExtra("doctorid", doctorid);
+            intent.putExtra("fromactivity", TAG);
+            intent.putExtra("fromto", fromto);
+            intent.putExtra("Doctor_ava_Date", Doctor_ava_Date);
+            intent.putExtra("selectedTimeSlot", selectedTimeSlot);
+            intent.putExtra("amount", amount);
+            intent.putExtra("communicationtype", communicationtype);
+            intent.putExtra("selectedVisitType", selectedVisitType);
+            intent.putExtra("petId", petId);
+            intent.putExtra("health_issue_title", health_issue_title);
+            intent.putExtra("selectedCommunicationtype", selectedCommunicationtype);
+            startActivity(intent);
+            dialog.dismiss();
+
+
+
+        } catch (Exception ignored) {
+
+        }
+    }
 
     public void hideLoading() {
         try {
@@ -910,6 +956,7 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
 
         }
     }
+
 
 
 }

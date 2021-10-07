@@ -241,6 +241,11 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".petlover.PetAppointment_SlotNotAvailable_Doctor_Date_Time_Activity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".petlover.PetMyappointmentsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
