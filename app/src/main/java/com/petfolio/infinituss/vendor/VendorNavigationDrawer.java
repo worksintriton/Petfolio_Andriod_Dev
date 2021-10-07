@@ -36,8 +36,11 @@ import com.petfolio.infinituss.activity.NotificationActivity;
 import com.petfolio.infinituss.api.APIClient;
 import com.petfolio.infinituss.api.RestApiInterface;
 import com.petfolio.infinituss.requestpojo.DefaultLocationRequest;
+import com.petfolio.infinituss.requestpojo.NotificationCartCountRequest;
+import com.petfolio.infinituss.responsepojo.NotificationCartCountResponse;
 import com.petfolio.infinituss.responsepojo.SuccessResponse;
 import com.petfolio.infinituss.sessionmanager.SessionManager;
+import com.petfolio.infinituss.utils.ConnectionDetector;
 import com.petfolio.infinituss.utils.RestUtils;
 
 import java.util.HashMap;
@@ -90,6 +93,8 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
     private Dialog dialog;
     private String refcode;
     private String userid;
+
+    TextView txt_notification_count_badge;
 
 
     @SuppressLint("LogNotTimber")
@@ -193,7 +198,6 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
 
 
 
-
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
@@ -272,6 +276,8 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
 
         ImageView img_notification = toolbar.findViewById(R.id.img_notification);
         ImageView img_profile = toolbar.findViewById(R.id.img_profile);
+        txt_notification_count_badge = toolbar.findViewById(R.id.txt_notification_count_badge);
+
         img_notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -287,6 +293,11 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
 
             }
         });
+
+        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+            notificationandCartCountResponseCall();
+        }
+
 
 
 
@@ -499,6 +510,75 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
         }
 
 
+    }
+
+    @SuppressLint("LogNotTimber")
+    private void notificationandCartCountResponseCall() {
+       /* avi_indicator.setVisibility(View.VISIBLE);
+        avi_indicator.smoothToShow();*/
+
+        RestApiInterface apiInterface = APIClient.getClient().create(RestApiInterface.class);
+        Call<NotificationCartCountResponse> call = apiInterface.notificationandCartCountResponseCall(RestUtils.getContentType(), notificationCartCountRequest());
+        Log.w(TAG,"NotificationCartCountResponse url  :%s"+" "+ call.request().url().toString());
+
+        call.enqueue(new Callback<NotificationCartCountResponse>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(@NonNull Call<NotificationCartCountResponse> call, @NonNull Response<NotificationCartCountResponse> response) {
+
+                Log.w(TAG,"NotificationCartCountResponse"+ "--->" + new Gson().toJson(response.body()));
+
+                // avi_indicator.smoothToHide();
+
+                if (response.body() != null) {
+                    if(response.body().getCode() == 200) {
+                        if(response.body().getData()!=null){
+                            int Notification_count = response.body().getData().getNotification_count();
+                            int Product_count = response.body().getData().getProduct_count();
+                            if(Notification_count != 0){
+                                txt_notification_count_badge.setVisibility(View.VISIBLE);
+                                txt_notification_count_badge.setText(""+Notification_count);
+                            }else{
+                                txt_notification_count_badge.setVisibility(View.GONE);
+                            }
+                            if(Product_count != 0){
+
+                            }else{
+                            }
+
+
+                        }
+                    }
+
+
+
+                }
+
+
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NotificationCartCountResponse> call, @NonNull Throwable t) {
+
+                // avi_indicator.smoothToHide();
+                Log.w(TAG,"NotificationCartCountResponse flr"+"--->" + t.getMessage());
+            }
+        });
+
+
+    }
+    @SuppressLint("LogNotTimber")
+    private NotificationCartCountRequest notificationCartCountRequest() {
+        /*
+         * user_id : 6048589d0b3a487571a1c567
+         */
+
+        NotificationCartCountRequest notificationCartCountRequest = new NotificationCartCountRequest();
+        notificationCartCountRequest.setUser_id(userid);
+        Log.w(TAG,"notificationCartCountRequest"+ "--->" + new Gson().toJson(notificationCartCountRequest));
+        return notificationCartCountRequest;
     }
 
 
