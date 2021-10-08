@@ -7,6 +7,42 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:415750074843:android:bcadbc28d0f9195105f7fe",
+        "android_client_info": {
+          "package_name": "com.petfolio.infinitus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "415750074843-f66mbfd77r6dmkbo5qlrjof7iq6sfmf0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgrezgtS7ny_umOvQkBKsf_yVzKn2pIG0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "415750074843-f66mbfd77r6dmkbo5qlrjof7iq6sfmf0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "415750074843-bp221bo4d6fdpf1evqecs99gocqskvve.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dci.petfolio"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:415750074843:android:12fbf00d7f0184b005f7fe",
         "android_client_info": {
           "package_name": "com.petfolio.infinituss"
@@ -37,6 +73,13 @@
             {
               "client_id": "415750074843-f66mbfd77r6dmkbo5qlrjof7iq6sfmf0.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "415750074843-bp221bo4d6fdpf1evqecs99gocqskvve.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dci.petfolio"
+              }
             }
           ]
         }
