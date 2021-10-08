@@ -75,10 +75,12 @@ public class ManageProductsListAdapter extends  RecyclerView.Adapter<RecyclerVie
         if(manageProductsListResponseList.get(position).getProduct_price() != 0) {
             holder.txt_prod_price.setText("INR " + manageProductsListResponseList.get(position).getProduct_price());
         }
-        if (manageProductsListResponseList.get(position).getProducts_image().get(0) != null && !manageProductsListResponseList.get(position).getProducts_image().get(0).isEmpty()) {
-            Glide.with(context)
-                    .load(manageProductsListResponseList.get(position).getProducts_image().get(0))
-                    .into(holder.img_products_image);
+        if(manageProductsListResponseList.get(position).getProducts_image() != null && manageProductsListResponseList.get(position).getProducts_image().size()>0) {
+            if (manageProductsListResponseList.get(position).getProducts_image().get(0) != null && !manageProductsListResponseList.get(position).getProducts_image().get(0).isEmpty()) {
+                Glide.with(context)
+                        .load(manageProductsListResponseList.get(position).getProducts_image().get(0))
+                        .into(holder.img_products_image);
+            }
         }
         else{
             Glide.with(context)
@@ -102,17 +104,24 @@ public class ManageProductsListAdapter extends  RecyclerView.Adapter<RecyclerVie
             holder.img_expand_arrow.setImageResource(R.drawable.ic_down);
         }
 
-        if(manageProductsListResponseList.get(position).getPet_type().get(0).getPet_type_title() != null){
-            holder.txt_pet_type.setText(" : "+manageProductsListResponseList.get(position).getPet_type().get(0).getPet_type_title());
+        if(manageProductsListResponseList.get(position).getPet_type() != null && manageProductsListResponseList.get(position).getPet_type().size()>0){
+            if(manageProductsListResponseList.get(position).getPet_type().get(0).getPet_type_title() != null){
+                holder.txt_pet_type.setText(" : "+manageProductsListResponseList.get(position).getPet_type().get(0).getPet_type_title());
 
+            }
         }
-        if(manageProductsListResponseList.get(position).getPet_breed().get(0).getPet_breed() != null){
-            holder.txt_pet_breed.setText(" : "+manageProductsListResponseList.get(position).getPet_breed().get(0).getPet_breed());
 
+        if(manageProductsListResponseList.get(position).getPet_breed() != null && manageProductsListResponseList.get(position).getPet_breed().size()>0) {
+            if (manageProductsListResponseList.get(position).getPet_breed().get(0).getPet_breed() != null) {
+                holder.txt_pet_breed.setText(" : " + manageProductsListResponseList.get(position).getPet_breed().get(0).getPet_breed());
+
+            }
         }
-        if(manageProductsListResponseList.get(position).getPet_age().get(0) != null){
-            holder.txt_age.setText(" : "+manageProductsListResponseList.get(position).getPet_age().get(0)+"");
+        if(manageProductsListResponseList.get(position).getPet_age() != null && manageProductsListResponseList.get(position).getPet_age().size()>0) {
+            if (manageProductsListResponseList.get(position).getPet_age().get(0) != null) {
+                holder.txt_age.setText(" : " + manageProductsListResponseList.get(position).getPet_age().get(0) + "");
 
+            }
         }
         if(manageProductsListResponseList.get(position).getPet_threshold()!= null){
             holder.txt_threshold.setText(" : "+manageProductsListResponseList.get(position).getPet_threshold());
@@ -174,7 +183,7 @@ public class ManageProductsListAdapter extends  RecyclerView.Adapter<RecyclerVie
 
                         } else if(titleName.equalsIgnoreCase("Clear Deals")){
                             if(manageProductsListResponseList.get(position).isToday_deal()){
-                              manageProductsDealsListener.manageProductsDealsListener(manageProductsListResponseList.get(position).isToday_deal(),manageProductsListResponseList.get(position).getProduct_id());
+                                manageProductsDealsListener.manageProductsDealsListener(manageProductsListResponseList.get(position).isToday_deal(),manageProductsListResponseList.get(position).getProduct_id());
                             }
                             else{
                                 final Menu menu = popup.getMenu();
