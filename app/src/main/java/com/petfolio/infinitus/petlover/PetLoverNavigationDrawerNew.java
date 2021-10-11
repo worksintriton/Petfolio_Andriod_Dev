@@ -596,6 +596,13 @@ public class PetLoverNavigationDrawerNew extends AppCompatActivity implements Vi
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.w(TAG,"onResume-->");
+        notificationandCartCountResponseCall();
+    }
+
     @SuppressLint("LogNotTimber")
     private void notificationandCartCountResponseCall() {
        /* avi_indicator.setVisibility(View.VISIBLE);

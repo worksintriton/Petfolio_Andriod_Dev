@@ -91,7 +91,6 @@ public class NotificationActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-
             fromactivity = extras.getString("fromactivity");
             Log.w(TAG,"Bundle "+" fromactivity : "+fromactivity);
 

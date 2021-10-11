@@ -964,4 +964,16 @@ public class PetLoverDashboardActivity extends PetLoverNavigationDrawerNew imple
         Log.w(TAG,"defaultLocationRequest "+ new Gson().toJson(defaultLocationRequest));
         return defaultLocationRequest;
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.w(TAG,"onRestart-->");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.w(TAG,"onResume-->");
+    }
 }

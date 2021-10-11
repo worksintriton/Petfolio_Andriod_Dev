@@ -485,6 +485,7 @@ public class VendorNavigationDrawer extends AppCompatActivity implements View.On
     @Override
     protected void onResume() {
         super.onResume();
+        notificationandCartCountResponseCall();
         try{
             Log.w(TAG,"onResume--->");
 

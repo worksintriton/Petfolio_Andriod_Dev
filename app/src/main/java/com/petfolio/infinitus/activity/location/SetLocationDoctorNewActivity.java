@@ -638,7 +638,6 @@ public class SetLocationDoctorNewActivity extends FragmentActivity implements On
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(SetLocationDoctorNewActivity.this, DoctorBusinessInfoActivity.class));
         finish();
     }
 

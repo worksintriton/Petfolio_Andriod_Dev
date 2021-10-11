@@ -317,6 +317,12 @@ public class ServiceProviderNavigationDrawer extends AppCompatActivity implement
         toggleView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        notificationandCartCountResponseCall();
+    }
+
     @SuppressLint("LogNotTimber")
     private void notificationandCartCountResponseCall() {
        /* avi_indicator.setVisibility(View.VISIBLE);
