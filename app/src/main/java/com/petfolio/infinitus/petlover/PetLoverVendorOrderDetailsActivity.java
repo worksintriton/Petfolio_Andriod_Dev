@@ -558,15 +558,15 @@ public class PetLoverVendorOrderDetailsActivity extends AppCompatActivity implem
                             }
 
                             if(response.body().getData().getShipping_address() !=null){
-                                txt_shipping_address_name.setText(response.body().getData().getShipping_address().getUser_first_name()+" "+response.body().getData().getShipping_address().getUser_last_name());
-                                txt_shipping_address_street.setText(response.body().getData().getShipping_address().getUser_flat_no()+" ,"+response.body().getData().getShipping_address().getUser_stree()+", ");
-                                txt_shipping_address_city.setText(response.body().getData().getShipping_address().getUser_city());
-                                txt_shipping_address_state_pincode.setText(response.body().getData().getShipping_address().getUser_state()+" - "+response.body().getData().getShipping_address().getUser_picocode());
-                               if(response.body().getData().getShipping_address().getUser_mobile() != null && !response.body().getData().getShipping_address().getUser_mobile().isEmpty()) {
-                                   txt_shipping_address_phone.setText("Phone : " + response.body().getData().getShipping_address().getUser_mobile());
+                                txt_shipping_address_name.setText(response.body().getData().getShipping_address().getUser_name());
+                                txt_shipping_address_city.setText(response.body().getData().getShipping_address().getShipping_location());
+                                txt_shipping_address_street.setText(response.body().getData().getShipping_address().getLocation_title());
+                                txt_shipping_address_state_pincode.setVisibility(View.GONE);
+                               if(response.body().getData().getShipping_address().getUser_phone() != null && !response.body().getData().getShipping_address().getUser_phone().isEmpty()) {
+                                   txt_shipping_address_landmark.setText("Phone : " + response.body().getData().getShipping_address().getUser_phone());
                                }
-                                if(response.body().getData().getShipping_address().getUser_landmark() != null && !response.body().getData().getShipping_address().getUser_landmark().isEmpty()) {
-                                    txt_shipping_address_landmark.setText("Landmark : " + response.body().getData().getShipping_address().getUser_landmark());
+                                if(response.body().getData().getShipping_address().getLand_mark() != null && !response.body().getData().getShipping_address().getLand_mark().isEmpty()) {
+                                    txt_shipping_address_phone.setText("Landmark : " + response.body().getData().getShipping_address().getLand_mark());
                                 }
 
                             }

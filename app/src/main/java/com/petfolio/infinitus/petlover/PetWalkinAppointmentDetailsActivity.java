@@ -1413,7 +1413,13 @@ public class PetWalkinAppointmentDetailsActivity extends AppCompatActivity imple
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         if(Paymentmethod != null && Paymentmethod.equalsIgnoreCase("Online")){
-                            showSuccessfullyCancelled();
+                            if(ServiceCost != null && !ServiceCost.equalsIgnoreCase("0")){
+                                showSuccessfullyCancelled();
+                            }else{
+                                startActivity(new Intent(PetWalkinAppointmentDetailsActivity.this, PetMyappointmentsActivity.class));
+
+                            }
+
                         }else{
                             startActivity(new Intent(PetWalkinAppointmentDetailsActivity.this, PetMyappointmentsActivity.class));
                         }
@@ -2041,12 +2047,18 @@ public class PetWalkinAppointmentDetailsActivity extends AppCompatActivity imple
     @Override
     public void onAppointmentSuccessfullyCancel(String refund, String cost) {
         Log.w(TAG,"onAppointmentSuccessfullyCancel : "+"refund : "+refund+"cost : "+cost);
-        if(refund != null && !refund.isEmpty()){
-            RefundCouponCreateRequestCall(refund,cost);
-        }else{
-            RefundCouponBankCreateRequestCall(refund,cost);
 
-        }
+       if(cost != null && cost.equalsIgnoreCase("0")){
+           startActivity(new Intent(getApplicationContext(),PetWalkinappointmentsActivity.class));
+       }else{
+           if(refund != null && !refund.isEmpty()){
+               RefundCouponCreateRequestCall(refund,cost);
+           }else{
+               RefundCouponBankCreateRequestCall(refund,cost);
+
+           }
+       }
+
 
     }
 }

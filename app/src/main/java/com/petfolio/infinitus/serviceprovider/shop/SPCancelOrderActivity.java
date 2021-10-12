@@ -511,12 +511,14 @@ public class SPCancelOrderActivity extends AppCompatActivity implements View.OnC
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         dialog.dismiss();
-                        showSuccessfullyCancelled();
-                        /*Intent intent = new Intent(SPCancelOrderActivity.this, SPOrderDetailsActivity.class);
+                        if(Order_price != 0) {
+                            showSuccessfullyCancelled();
+                        }else{
+                        Intent intent = new Intent(SPCancelOrderActivity.this, SPOrderDetailsActivity.class);
                         intent.putExtra("_id",orderid);
                         intent.putExtra("fromactivity",fromactivity);
                         startActivity(intent);
-                        finish();*/
+                        finish();}
 
 
                     }
@@ -579,12 +581,15 @@ public class SPCancelOrderActivity extends AppCompatActivity implements View.OnC
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         dialog.dismiss();
-                        showSuccessfullyCancelled();
-                        /*Intent intent = new Intent(SPCancelOrderActivity.this,SPOrderDetailsActivity.class);
+                        if(Order_price != 0) {
+                            showSuccessfullyCancelled();
+                        }else {
+                        Intent intent = new Intent(SPCancelOrderActivity.this,SPOrderDetailsActivity.class);
                         intent.putExtra("_id",orderid);
                         intent.putExtra("fromactivity",fromactivity);
                         startActivity(intent);
-                        finish();*/
+                        finish();
+                        }
 
 
                     }
@@ -721,9 +726,16 @@ public class SPCancelOrderActivity extends AppCompatActivity implements View.OnC
 
     }
     private void setViewCouponText() {
+        String ServiceCost = "0";
+
+        try {
+            ServiceCost = String.valueOf(Order_price);
+        } catch(NumberFormatException nfe) {
+            System.out.println("Could not parse " + nfe);
+        }
         rv_successfully_cancelled.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rv_successfully_cancelled.setItemAnimator(new DefaultItemAnimator());
-        MyCouponsTextAdapter myCouponsTextAdapter = new MyCouponsTextAdapter(getApplicationContext(), myCouponsTextList,"40",this);
+        MyCouponsTextAdapter myCouponsTextAdapter = new MyCouponsTextAdapter(getApplicationContext(), myCouponsTextList,ServiceCost,this);
         rv_successfully_cancelled.setAdapter(myCouponsTextAdapter);
 
     }

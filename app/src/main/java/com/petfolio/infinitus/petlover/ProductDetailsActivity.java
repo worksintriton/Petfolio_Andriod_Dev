@@ -296,12 +296,11 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
 
         ll_increment_add_to_cart.setVisibility(View.GONE);
-
-
         if(userid != null && productid != null){
             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                fetch_product_by_id_ResponseCall();
+                notificationandCartCountResponseCall();
             }
+
         }
         txt_cart_count.setText("1");
         img_remove_product.setOnClickListener(v -> {
@@ -359,10 +358,6 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
                             }
                         }
-
-
-
-
 
 
                     }
@@ -464,6 +459,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                 if (response.body() != null) {
 
                     if (200 == response.body().getCode()) {
+                        ll_increment_add_to_cart.setClickable(false);
                         Toasty.success(getApplicationContext(),""+response.body().getMessage(),Toasty.LENGTH_SHORT).show();
 
                         if(userid != null && productid != null){
@@ -680,9 +676,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                 avi_indicator.smoothToHide();
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
-                        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                            notificationandCartCountResponseCall();
-                        }
+                        ll_increment_add_to_cart.setClickable(true);
 
                         Log.w(TAG,"FetchProductByIdResponse" + new Gson().toJson(response.body()));
                         if(response.body().getProduct_details() != null){
@@ -1042,8 +1036,11 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
                         Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
-                        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                            fetch_product_by_id_ResponseCall();
+                        if(userid != null && productid != null){
+                            if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                                notificationandCartCountResponseCall();
+                            }
+
                         }
                         /* Intent intent = new Intent(getApplicationContext(),PetCartActivity.class);
                         intent.putExtra("productid",productid);
@@ -1176,6 +1173,10 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200) {
+                        ll_increment_add_to_cart.setClickable(false);
+                        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                            fetch_product_by_id_ResponseCall();
+                        }
                         if(response.body().getData()!=null){
                             int Product_count = response.body().getData().getProduct_count();
                             if(Product_count != 0){

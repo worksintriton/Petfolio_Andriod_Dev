@@ -100,8 +100,8 @@ public class MyCouponsTextAdapter extends  RecyclerView.Adapter<RecyclerView.Vie
         holder.ll_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                holder.ll_root.setClickable(false);
                 holder.ll_root.setBackgroundResource(R.drawable.user_type_bgm);
-
                 onAppointmentSuccessfullyCancel.onAppointmentSuccessfullyCancel(myCouponsTextList.get(position).getRefund(),ServiceCost);
 
             }

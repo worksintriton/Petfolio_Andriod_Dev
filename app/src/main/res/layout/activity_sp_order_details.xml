@@ -464,7 +464,7 @@
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/futuramediumbt"
-                    android:maxLines="1"
+                    android:maxLines="2"
                     android:textColor="@color/new_sec_txt_color"
                     android:textSize="14sp" />
                 <TextView

@@ -441,7 +441,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         if(fromactivity != null && fromactivity.equalsIgnoreCase("AddMyAddressShippingSPActivity")){
-                            Toasty.success(getApplicationContext(), "Default Location Changed Successfully", Toast.LENGTH_SHORT, true).show();
+                            //Toasty.success(getApplicationContext(), "Default Location Changed Successfully", Toast.LENGTH_SHORT, true).show();
                             Intent intent = new Intent(ShippingAddressAddActivity.this, ShippingAddressSPActivity.class);
                             intent.putExtra("fromactivity",TAG);
                             intent.putExtra("data", (Serializable) Data);
@@ -455,7 +455,7 @@ public class ShippingAddressAddActivity extends AppCompatActivity implements Vie
                             finish();
 
                         }else{
-                            Toasty.success(getApplicationContext(), "Default Location Changed Successfully", Toast.LENGTH_SHORT, true).show();
+                           // Toasty.success(getApplicationContext(), "Default Location Changed Successfully", Toast.LENGTH_SHORT, true).show();
                             Intent intent = new Intent(ShippingAddressAddActivity.this, ShippingAddressActivity.class);
                             intent.putExtra("fromactivity",fromactivity);
                             intent.putExtra("data", (Serializable) Data);

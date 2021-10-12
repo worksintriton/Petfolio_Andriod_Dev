@@ -1459,7 +1459,12 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         if(Paymentmethod != null && Paymentmethod.equalsIgnoreCase("Online")){
-                            showSuccessfullyCancelled();
+                            if(ServiceCost != null && !ServiceCost.equalsIgnoreCase("0")) {
+                                showSuccessfullyCancelled();
+                            }else{
+                                startActivity(new Intent(PetAppointmentDetailsActivity.this, PetMyappointmentsActivity.class));
+
+                            }
                         }else{
                             startActivity(new Intent(PetAppointmentDetailsActivity.this, PetMyappointmentsActivity.class));
                         }
@@ -1529,7 +1534,12 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         if(Paymentmethod != null && Paymentmethod.equalsIgnoreCase("Online")){
-                            showSuccessfullyCancelled();
+                            if(ServiceCost != null && !ServiceCost.equalsIgnoreCase("0")) {
+                                showSuccessfullyCancelled();
+                            }else{
+                                startActivity(new Intent(PetAppointmentDetailsActivity.this, PetMyappointmentsActivity.class));
+
+                            }
                         }else{
                             startActivity(new Intent(PetAppointmentDetailsActivity.this, PetMyappointmentsActivity.class));
                         }
@@ -2087,12 +2097,18 @@ public class PetAppointmentDetailsActivity extends AppCompatActivity implements 
     @Override
     public void onAppointmentSuccessfullyCancel(String refund, String cost) {
         Log.w(TAG,"onAppointmentSuccessfullyCancel : "+"refund : "+refund+"cost : "+cost);
-        if(refund != null && !refund.isEmpty()){
-            RefundCouponCreateRequestCall(refund,cost);
-        }else{
-            RefundCouponBankCreateRequestCall(refund,cost);
 
+        if(cost != null && cost.equalsIgnoreCase("0")){
+            startActivity(new Intent(getApplicationContext(),PetMyappointmentsActivity.class));
+        }else{
+            if(refund != null && !refund.isEmpty()){
+                RefundCouponCreateRequestCall(refund,cost);
+            }else{
+                RefundCouponBankCreateRequestCall(refund,cost);
+
+            }
         }
+
 
     }
     private void showRefundSuccessfully(String Message) {

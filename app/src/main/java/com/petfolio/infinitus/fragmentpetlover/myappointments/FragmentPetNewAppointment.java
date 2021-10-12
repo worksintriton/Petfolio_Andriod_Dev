@@ -523,7 +523,11 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         if(Paymentmethod != null && Paymentmethod.equalsIgnoreCase("Online")){
-                            showSuccessfullyCancelled(type);
+                            if(ServiceCost != null && !ServiceCost.equalsIgnoreCase("0")) {
+                                showSuccessfullyCancelled(type);
+                            }else{
+                                startActivity(new Intent(mContext, PetMyappointmentsActivity.class));
+                            }
                         }else{
                             startActivity(new Intent(mContext, PetMyappointmentsActivity.class));
                         }
@@ -591,7 +595,12 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         if(Paymentmethod != null && Paymentmethod.equalsIgnoreCase("Online")){
-                            showSuccessfullyCancelled(type);
+                            if(ServiceCost != null && !ServiceCost.equalsIgnoreCase("0")) {
+                                showSuccessfullyCancelled(type);
+                            }else{
+                                startActivity(new Intent(mContext, PetMyappointmentsActivity.class));
+
+                            }
                         }else{
                             startActivity(new Intent(mContext, PetMyappointmentsActivity.class));
                         }
@@ -702,10 +711,16 @@ public class FragmentPetNewAppointment extends Fragment implements OnAppointment
     @Override
     public void onAppointmentSuccessfullyCancel(String refund, String cost) {
         Log.w(TAG,"onAppointmentSuccessfullyCancel : "+"refund : "+refund+"cost : "+cost);
-        if(refund != null && !refund.isEmpty()){
-            RefundCouponCreateRequestCall(refund,cost);
+
+        if(cost != null && cost.equalsIgnoreCase("0")){
+            startActivity(new Intent(mContext, PetMyappointmentsActivity.class));
         }else{
-            RefundCouponBankCreateRequestCall(refund,cost);
+            if(refund != null && !refund.isEmpty()){
+                RefundCouponCreateRequestCall(refund,cost);
+            }else{
+                RefundCouponBankCreateRequestCall(refund,cost);
+
+            }
 
         }
 

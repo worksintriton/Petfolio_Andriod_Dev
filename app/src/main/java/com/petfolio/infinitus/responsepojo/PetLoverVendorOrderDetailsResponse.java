@@ -4,19 +4,20 @@ import java.util.List;
 
 public class PetLoverVendorOrderDetailsResponse {
 
+
     /**
      * Status : Success
      * Message : Petlover Product Grouped
-     * Data : {"order_details":{"order_id":"ORDER-1632906292453","order_product":1,"order_status":"New","order_text":"Food Products","order_payment_id":"pay_I3E00OVESP8sCJ","order_price":616,"order_booked":"29-09-2021 02:34 pm","order_image":"","order_cancelled":"","order_completed":"","coupon_status":"Applied","coupon_code":"REF2909011059","original_price":1032,"coupon_discount_price":416,"total_price":616},"shipping_address":{"_id":"60797c16a20ca32d2668a30c","user_id":"603e27792c2b43125f8cb802","user_first_name":"DINESHKUMAR","user_last_name":"Deva","user_flat_no":"4/3","user_stree":"Marriyamman Kovil street","user_landmark":"","user_picocode":"621006","user_state":"TAMILNADU","user_city":"TRICHY","user_mobile":"9842670813","user_alter_mobile":"","user_address_stauts":"","user_address_type":"Home","user_display_date":"16-04-2021","updatedAt":"2021-05-04T04:59:18.010Z","createdAt":"2021-04-16T11:59:18.437Z","__v":0},"product_details":[{"product_id":0,"product_image":"","product_name":"Shopiee Food","product_count":4,"product_price":258,"product_discount":30,"product_total_price":1032,"product_total_discount":120,"product_stauts":"Order Booked","product_booked":"29-09-2021 02:34 pm"}]}
+     * Data : {"order_details":{"order_id":"ORDER-1633602094600","order_product":1,"order_status":"New","order_text":"Food Products","order_payment_id":"pay_I6Pa8NaEkeDkda","order_price":500,"order_booked":"07-10-2021 03:51 PM","order_image":"http://54.212.108.156:3000/api/uploads/1625747987678.png","order_cancelled":"","order_completed":"","coupon_status":"","coupon_code":"","original_price":0,"coupon_discount_price":0,"total_price":500},"shipping_address":{"location_title":"Home","shipping_location":"Karatampatti Iluppaiyur road, Iluppaiyur, Tamil Nadu 621006, India","user_name":"Priyanka Nandikolmat","user_phone":"9879879877","user_lat":11.064702232611461,"user_long":78.63427575677635},"product_details":[{"product_id":0,"product_image":"http://54.212.108.156:3000/api/uploads/1625747987678.png","product_name":"Organic Anti-Tick and Flea Spray for Dogs","product_count":1,"product_price":500,"product_discount":0,"product_total_price":500,"product_total_discount":0,"product_stauts":"Order Booked","product_booked":"07-10-2021 03:51 PM"}]}
      * Code : 200
      */
 
     private String Status;
     private String Message;
     /**
-     * order_details : {"order_id":"ORDER-1632906292453","order_product":1,"order_status":"New","order_text":"Food Products","order_payment_id":"pay_I3E00OVESP8sCJ","order_price":616,"order_booked":"29-09-2021 02:34 pm","order_image":"","order_cancelled":"","order_completed":"","coupon_status":"Applied","coupon_code":"REF2909011059","original_price":1032,"coupon_discount_price":416,"total_price":616}
-     * shipping_address : {"_id":"60797c16a20ca32d2668a30c","user_id":"603e27792c2b43125f8cb802","user_first_name":"DINESHKUMAR","user_last_name":"Deva","user_flat_no":"4/3","user_stree":"Marriyamman Kovil street","user_landmark":"","user_picocode":"621006","user_state":"TAMILNADU","user_city":"TRICHY","user_mobile":"9842670813","user_alter_mobile":"","user_address_stauts":"","user_address_type":"Home","user_display_date":"16-04-2021","updatedAt":"2021-05-04T04:59:18.010Z","createdAt":"2021-04-16T11:59:18.437Z","__v":0}
-     * product_details : [{"product_id":0,"product_image":"","product_name":"Shopiee Food","product_count":4,"product_price":258,"product_discount":30,"product_total_price":1032,"product_total_discount":120,"product_stauts":"Order Booked","product_booked":"29-09-2021 02:34 pm"}]
+     * order_details : {"order_id":"ORDER-1633602094600","order_product":1,"order_status":"New","order_text":"Food Products","order_payment_id":"pay_I6Pa8NaEkeDkda","order_price":500,"order_booked":"07-10-2021 03:51 PM","order_image":"http://54.212.108.156:3000/api/uploads/1625747987678.png","order_cancelled":"","order_completed":"","coupon_status":"","coupon_code":"","original_price":0,"coupon_discount_price":0,"total_price":500}
+     * shipping_address : {"location_title":"Home","shipping_location":"Karatampatti Iluppaiyur road, Iluppaiyur, Tamil Nadu 621006, India","user_name":"Priyanka Nandikolmat","user_phone":"9879879877","user_lat":11.064702232611461,"user_long":78.63427575677635}
+     * product_details : [{"product_id":0,"product_image":"http://54.212.108.156:3000/api/uploads/1625747987678.png","product_name":"Organic Anti-Tick and Flea Spray for Dogs","product_count":1,"product_price":500,"product_discount":0,"product_total_price":500,"product_total_discount":0,"product_stauts":"Order Booked","product_booked":"07-10-2021 03:51 PM"}]
      */
 
     private DataBean Data;
@@ -56,57 +57,45 @@ public class PetLoverVendorOrderDetailsResponse {
 
     public static class DataBean {
         /**
-         * order_id : ORDER-1632906292453
+         * order_id : ORDER-1633602094600
          * order_product : 1
          * order_status : New
          * order_text : Food Products
-         * order_payment_id : pay_I3E00OVESP8sCJ
-         * order_price : 616
-         * order_booked : 29-09-2021 02:34 pm
-         * order_image :
+         * order_payment_id : pay_I6Pa8NaEkeDkda
+         * order_price : 500
+         * order_booked : 07-10-2021 03:51 PM
+         * order_image : http://54.212.108.156:3000/api/uploads/1625747987678.png
          * order_cancelled :
          * order_completed :
-         * coupon_status : Applied
-         * coupon_code : REF2909011059
-         * original_price : 1032
-         * coupon_discount_price : 416
-         * total_price : 616
+         * coupon_status :
+         * coupon_code :
+         * original_price : 0
+         * coupon_discount_price : 0
+         * total_price : 500
          */
 
         private OrderDetailsBean order_details;
         /**
-         * _id : 60797c16a20ca32d2668a30c
-         * user_id : 603e27792c2b43125f8cb802
-         * user_first_name : DINESHKUMAR
-         * user_last_name : Deva
-         * user_flat_no : 4/3
-         * user_stree : Marriyamman Kovil street
-         * user_landmark :
-         * user_picocode : 621006
-         * user_state : TAMILNADU
-         * user_city : TRICHY
-         * user_mobile : 9842670813
-         * user_alter_mobile :
-         * user_address_stauts :
-         * user_address_type : Home
-         * user_display_date : 16-04-2021
-         * updatedAt : 2021-05-04T04:59:18.010Z
-         * createdAt : 2021-04-16T11:59:18.437Z
-         * __v : 0
+         * location_title : Home
+         * shipping_location : Karatampatti Iluppaiyur road, Iluppaiyur, Tamil Nadu 621006, India
+         * user_name : Priyanka Nandikolmat
+         * user_phone : 9879879877
+         * user_lat : 11.064702232611461
+         * user_long : 78.63427575677635
          */
 
         private ShippingAddressBean shipping_address;
         /**
          * product_id : 0
-         * product_image :
-         * product_name : Shopiee Food
-         * product_count : 4
-         * product_price : 258
-         * product_discount : 30
-         * product_total_price : 1032
-         * product_total_discount : 120
+         * product_image : http://54.212.108.156:3000/api/uploads/1625747987678.png
+         * product_name : Organic Anti-Tick and Flea Spray for Dogs
+         * product_count : 1
+         * product_price : 500
+         * product_discount : 0
+         * product_total_price : 500
+         * product_total_discount : 0
          * product_stauts : Order Booked
-         * product_booked : 29-09-2021 02:34 pm
+         * product_booked : 07-10-2021 03:51 PM
          */
 
         private List<ProductDetailsBean> product_details;
@@ -274,167 +263,69 @@ public class PetLoverVendorOrderDetailsResponse {
         }
 
         public static class ShippingAddressBean {
-            private String _id;
-            private String user_id;
-            private String user_first_name;
-            private String user_last_name;
-            private String user_flat_no;
-            private String user_stree;
-            private String user_landmark;
-            private String user_picocode;
-            private String user_state;
-            private String user_city;
-            private String user_mobile;
-            private String user_alter_mobile;
-            private String user_address_stauts;
-            private String user_address_type;
-            private String user_display_date;
-            private String updatedAt;
-            private String createdAt;
-            private int __v;
+            private String location_title;
+            private String shipping_location;
+            private String user_name;
+            private String user_phone;
+            private String land_mark;
 
-            public String get_id() {
-                return _id;
+            public String getLand_mark() {
+                return land_mark;
             }
 
-            public void set_id(String _id) {
-                this._id = _id;
+            public void setLand_mark(String land_mark) {
+                this.land_mark = land_mark;
             }
 
-            public String getUser_id() {
-                return user_id;
+            private double user_lat;
+            private double user_long;
+
+            public String getLocation_title() {
+                return location_title;
             }
 
-            public void setUser_id(String user_id) {
-                this.user_id = user_id;
+            public void setLocation_title(String location_title) {
+                this.location_title = location_title;
             }
 
-            public String getUser_first_name() {
-                return user_first_name;
+            public String getShipping_location() {
+                return shipping_location;
             }
 
-            public void setUser_first_name(String user_first_name) {
-                this.user_first_name = user_first_name;
+            public void setShipping_location(String shipping_location) {
+                this.shipping_location = shipping_location;
             }
 
-            public String getUser_last_name() {
-                return user_last_name;
+            public String getUser_name() {
+                return user_name;
             }
 
-            public void setUser_last_name(String user_last_name) {
-                this.user_last_name = user_last_name;
+            public void setUser_name(String user_name) {
+                this.user_name = user_name;
             }
 
-            public String getUser_flat_no() {
-                return user_flat_no;
+            public String getUser_phone() {
+                return user_phone;
             }
 
-            public void setUser_flat_no(String user_flat_no) {
-                this.user_flat_no = user_flat_no;
+            public void setUser_phone(String user_phone) {
+                this.user_phone = user_phone;
             }
 
-            public String getUser_stree() {
-                return user_stree;
+            public double getUser_lat() {
+                return user_lat;
             }
 
-            public void setUser_stree(String user_stree) {
-                this.user_stree = user_stree;
+            public void setUser_lat(double user_lat) {
+                this.user_lat = user_lat;
             }
 
-            public String getUser_landmark() {
-                return user_landmark;
+            public double getUser_long() {
+                return user_long;
             }
 
-            public void setUser_landmark(String user_landmark) {
-                this.user_landmark = user_landmark;
-            }
-
-            public String getUser_picocode() {
-                return user_picocode;
-            }
-
-            public void setUser_picocode(String user_picocode) {
-                this.user_picocode = user_picocode;
-            }
-
-            public String getUser_state() {
-                return user_state;
-            }
-
-            public void setUser_state(String user_state) {
-                this.user_state = user_state;
-            }
-
-            public String getUser_city() {
-                return user_city;
-            }
-
-            public void setUser_city(String user_city) {
-                this.user_city = user_city;
-            }
-
-            public String getUser_mobile() {
-                return user_mobile;
-            }
-
-            public void setUser_mobile(String user_mobile) {
-                this.user_mobile = user_mobile;
-            }
-
-            public String getUser_alter_mobile() {
-                return user_alter_mobile;
-            }
-
-            public void setUser_alter_mobile(String user_alter_mobile) {
-                this.user_alter_mobile = user_alter_mobile;
-            }
-
-            public String getUser_address_stauts() {
-                return user_address_stauts;
-            }
-
-            public void setUser_address_stauts(String user_address_stauts) {
-                this.user_address_stauts = user_address_stauts;
-            }
-
-            public String getUser_address_type() {
-                return user_address_type;
-            }
-
-            public void setUser_address_type(String user_address_type) {
-                this.user_address_type = user_address_type;
-            }
-
-            public String getUser_display_date() {
-                return user_display_date;
-            }
-
-            public void setUser_display_date(String user_display_date) {
-                this.user_display_date = user_display_date;
-            }
-
-            public String getUpdatedAt() {
-                return updatedAt;
-            }
-
-            public void setUpdatedAt(String updatedAt) {
-                this.updatedAt = updatedAt;
-            }
-
-            public String getCreatedAt() {
-                return createdAt;
-            }
-
-            public void setCreatedAt(String createdAt) {
-                this.createdAt = createdAt;
-            }
-
-            public int get__v() {
-                return __v;
-            }
-
-            public void set__v(int __v) {
-                this.__v = __v;
+            public void setUser_long(double user_long) {
+                this.user_long = user_long;
             }
         }
 

@@ -536,11 +536,15 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         dialog.dismiss();
-                        showSuccessfullyCancelled();
-                        /*Intent intent = new Intent(PetVendorCancelOrderActivity.this,PetLoverVendorOrderDetailsActivity.class);
-                        intent.putExtra("_id",orderid);
-                        startActivity(intent);
-                        finish();*/
+                        if(Order_price != 0){
+                            showSuccessfullyCancelled();
+                        }else{
+                            Intent intent = new Intent(PetVendorCancelOrderActivity.this,PetLoverVendorOrderDetailsActivity.class);
+                            intent.putExtra("_id",orderid);
+                            startActivity(intent);
+                            finish();
+                        }
+
 
 
                     }
@@ -603,7 +607,15 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         dialog.dismiss();
-                        showSuccessfullyCancelled();
+                        if(Order_price != 0){
+                            showSuccessfullyCancelled();
+                        }else{
+                            Intent intent = new Intent(PetVendorCancelOrderActivity.this,PetLoverVendorOrderDetailsActivity.class);
+                            intent.putExtra("_id",orderid);
+                            startActivity(intent);
+                            finish();
+                        }
+
                       /*  Intent intent = new Intent(PetVendorCancelOrderActivity.this,PetLoverVendorOrderDetailsActivity.class);
                         intent.putExtra("_id",orderid);
                         startActivity(intent);
@@ -786,9 +798,16 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
 
     }
     private void setViewCouponText() {
+        String ServiceCost = "0";
+
+        try {
+            ServiceCost = String.valueOf(Order_price);
+        } catch(NumberFormatException nfe) {
+            System.out.println("Could not parse " + nfe);
+        }
         rv_successfully_cancelled.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         rv_successfully_cancelled.setItemAnimator(new DefaultItemAnimator());
-        MyCouponsTextAdapter myCouponsTextAdapter = new MyCouponsTextAdapter(getApplicationContext(), myCouponsTextList,"40",this);
+        MyCouponsTextAdapter myCouponsTextAdapter = new MyCouponsTextAdapter(getApplicationContext(), myCouponsTextList,ServiceCost,this);
         rv_successfully_cancelled.setAdapter(myCouponsTextAdapter);
 
     }
@@ -796,12 +815,17 @@ public class PetVendorCancelOrderActivity extends AppCompatActivity implements V
     @Override
     public void onAppointmentSuccessfullyCancel(String refund, String cost) {
         Log.w(TAG,"onAppointmentSuccessfullyCancel : "+"refund : "+refund+"cost : "+cost);
-        if(refund != null && !refund.isEmpty()){
-            RefundCouponCreateRequestCall(refund,cost);
+        if(cost != null && cost.equalsIgnoreCase("0")){
+            startActivity(new Intent(getApplicationContext(),PetLoverVendorOrderDetailsActivity.class));
         }else{
-            RefundCouponBankCreateRequestCall(refund,cost);
+            if(refund != null && !refund.isEmpty()){
+                RefundCouponCreateRequestCall(refund,cost);
+            }else{
+                RefundCouponBankCreateRequestCall(refund,cost);
 
+            }
         }
+
 
     }
 

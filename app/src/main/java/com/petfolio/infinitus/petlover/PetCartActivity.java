@@ -313,9 +313,13 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
 
         img_back.setOnClickListener(v -> onBackPressed());
 
+        if(userid != null && !userid.isEmpty()) {
             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                fetch_cart_details_by_userid_Call();
+                notificationandCartCountResponseCall();
             }
+        }
+
+
 
         btn_shopnow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -350,8 +354,23 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                 i.putExtra("Total_price",Total_price);
                 startActivity(i);
 
-
-
+            }else{
+                grand_total = 0;
+                Intent i = new Intent(getApplicationContext(), ShippingAddressActivity.class);
+                i.putExtra("fromactivity",TAG);
+                i.putExtra("data", (Serializable) Data);
+                i.putExtra("product_total",prodouct_total);
+                i.putExtra("shipping_charge",shipping_charge);
+                i.putExtra("discount_price",discount_price);
+                i.putExtra("grand_total",grand_total);
+                i.putExtra("prodcut_count",prodcut_count);
+                i.putExtra("prodcut_item_count",prodcut_item_count);
+                i.putExtra("Original_price",Original_price);
+                i.putExtra("Coupon_discount_price",Coupon_discount_price);
+                i.putExtra("Coupon_code",Coupon_code);
+                i.putExtra("Coupon_status",Coupon_status);
+                i.putExtra("Total_price",Total_price);
+                startActivity(i);
             }
         });
         txt_removeall_products.setOnClickListener(new View.OnClickListener() {
@@ -475,9 +494,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                 avi_indicator.smoothToHide();
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
-                        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                            notificationandCartCountResponseCall();
-                        }
+                        btn_procced_to_buy.setClickable(true);
 
                         Log.w(TAG,"CartDetailsResponse" + new Gson().toJson(response.body()));
                         footerView.setVisibility(View.VISIBLE);
@@ -595,6 +612,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
 
     @SuppressLint("LogNotTimber")
     private void notificationandCartCountResponseCall() {
+        btn_procced_to_buy.setClickable(false);
         avi_indicator.setVisibility(View.VISIBLE);
         avi_indicator.smoothToShow();
 
@@ -613,6 +631,9 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200) {
+                        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                            fetch_cart_details_by_userid_Call();
+                        }
                         if(response.body().getData()!=null){
                             int Notification_count = response.body().getData().getNotification_count();
                             int Product_count = response.body().getData().getProduct_count();
@@ -664,6 +685,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                         Toasty.warning(getApplicationContext(), "You can buy only up to "+productqty+" quantity of this product", Toast.LENGTH_SHORT, true).show();
                     }else{
                         if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                           btn_procced_to_buy.setClickable(false);
                             add_product_ResponseCall();
                         }
                     }
@@ -684,7 +706,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                 productid = id;
                 if(productid != null){
                     if(prodcutcount != 0) {
-                       // showremove_product_ResponseCall();
+                        btn_procced_to_buy.setClickable(false);
                         if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
                             remove_product_ResponseCall();
                         }
@@ -747,7 +769,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                     if(200 == response.body().getCode()){
                         Log.w(TAG,"Remove SuccessResponse" + new Gson().toJson(response.body()));
                         Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
-                        fetch_cart_details_by_userid_Call();
+                        notificationandCartCountResponseCall();
                     }
                 }
             }
@@ -780,7 +802,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                     if(200 == response.body().getCode()){
                         Log.w(TAG,"Remove SuccessResponse" + new Gson().toJson(response.body()));
                         Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
-                        fetch_cart_details_by_userid_Call();
+                       notificationandCartCountResponseCall();
                     }
                 }
             }
@@ -813,7 +835,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                     if(200 == response.body().getCode()){
                         Log.w(TAG,"Remove SuccessResponse" + new Gson().toJson(response.body()));
                         Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
-                        fetch_cart_details_by_userid_Call();
+                       notificationandCartCountResponseCall();
                     }
                 }
             }
@@ -849,7 +871,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
                     if(200 == response.body().getCode()){
                         Log.w(TAG,"Add SuccessResponse" + new Gson().toJson(response.body()));
                         Toasty.success(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT, true).show();
-                        fetch_cart_details_by_userid_Call();
+                        notificationandCartCountResponseCall();
 
 
                     }
@@ -1283,6 +1305,7 @@ public class PetCartActivity extends AppCompatActivity implements AddandRemovePr
             btn_yes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    btn_procced_to_buy.setClickable(false);
 
                     if (new ConnectionDetector(PetCartActivity.this).isNetworkAvailable(PetCartActivity.this)) {
                         remove_single_products_ResponseCall();

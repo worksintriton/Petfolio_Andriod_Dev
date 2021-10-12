@@ -295,9 +295,11 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
 
         Log.w(TAG,"fromactivity : "+fromactivity);
         if(userid != null && productid != null){
+            ll_increment_add_to_cart.setClickable(false);
             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                fetch_product_by_id_ResponseCall();
+                notificationandCartCountResponseCall();
             }
+
         }
 
 
@@ -590,9 +592,7 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
 
-                        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                            notificationandCartCountResponseCall();
-                        }
+                       ll_increment_add_to_cart.setClickable(true);
 
                         Log.w(TAG,"FetchProductByIdResponse" + new Gson().toJson(response.body()));
                         if(response.body().getProduct_details() != null){
@@ -956,7 +956,7 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
 
                         if(userid != null && productid != null){
                             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                                fetch_product_by_id_ResponseCall();
+                                notificationandCartCountResponseCall();
                             }
                         }
                      /*   Intent intent = new Intent(getApplicationContext(),DoctorCartActivity.class);
@@ -1100,6 +1100,9 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200) {
+                        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                            fetch_product_by_id_ResponseCall();
+                        }
                         if(response.body().getData()!=null){
                             int Notification_count = response.body().getData().getNotification_count();
                             int Product_count = response.body().getData().getProduct_count();
@@ -1160,7 +1163,7 @@ public class DoctorProductDetailsActivity extends AppCompatActivity implements V
                         Toasty.success(getApplicationContext(),""+response.body().getMessage(),Toasty.LENGTH_SHORT).show();
 
                         if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                            fetch_product_by_id_ResponseCall();
+                            notificationandCartCountResponseCall();
                         }
 
 

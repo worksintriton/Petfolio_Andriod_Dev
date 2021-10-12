@@ -655,6 +655,12 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
             case R.id.ll_create_addreess:
                 if(grand_total!=0){
                     startPayment();
+                }else{
+                    if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                        vendor_order_booking_create_ResponseCall();
+
+                    }
+
                 }
                 break;
         }
@@ -854,8 +860,8 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
     @Override
     public void onPaymentSuccess(String razorpayPaymentID) {
         try {
+            ll_create_addreess.setClickable(false);
             Payment_id = razorpayPaymentID;
-
             Log.w(TAG, "Payment Successful: " + razorpayPaymentID);
             Toasty.success(getApplicationContext(), "Payment Successful. View your booking details in upcoming appointments.", Toast.LENGTH_SHORT, true).show();
 
@@ -876,9 +882,7 @@ public class ShippingAddressActivity extends AppCompatActivity implements View.O
     @Override
     public void onPaymentError(int code, String response) {
         try {
-            if(new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-
-            }
+            ll_create_addreess.setClickable(true);
             Log.w(TAG,  "Payment failed: " + code + " " + response);
             Toasty.error(getApplicationContext(), "Payment failed. Please try again with another payment method..", Toast.LENGTH_SHORT, true).show();
 

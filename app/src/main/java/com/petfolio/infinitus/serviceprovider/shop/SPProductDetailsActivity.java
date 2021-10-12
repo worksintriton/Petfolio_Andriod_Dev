@@ -289,8 +289,10 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
 
         if(userid != null && productid != null){
             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                fetch_product_by_id_ResponseCall();
+                ll_increment_add_to_cart.setClickable(false);
+                notificationandCartCountResponseCall();
             }
+
         }
         txt_cart_count.setText("1");
         img_remove_product.setOnClickListener(v -> {
@@ -588,10 +590,7 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
                 avi_indicator.smoothToHide();
                 if (response.body() != null) {
                     if(200 == response.body().getCode()){
-
-                        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                            notificationandCartCountResponseCall();
-                        }
+                        ll_increment_add_to_cart.setClickable(true);
                         Log.w(TAG,"FetchProductByIdResponse" + new Gson().toJson(response.body()));
                         if(response.body().getProduct_details() != null){
                             String product_title = response.body().getProduct_details().getProduct_title();
@@ -741,6 +740,9 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
 
                 if (response.body() != null) {
                     if(response.body().getCode() == 200) {
+                        if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
+                            fetch_product_by_id_ResponseCall();
+                        }
                         if(response.body().getData()!=null){
                             int Notification_count = response.body().getData().getNotification_count();
                             int Product_count = response.body().getData().getProduct_count();
@@ -1012,7 +1014,7 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
 
                         if(userid != null && productid != null){
                             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                                fetch_product_by_id_ResponseCall();
+                                notificationandCartCountResponseCall();
                             }
                         }
                        /* Intent intent = new Intent(getApplicationContext(), DoctorCartActivity.class);
@@ -1156,7 +1158,7 @@ public class SPProductDetailsActivity extends AppCompatActivity implements View.
                         Toasty.success(getApplicationContext(),""+response.body().getMessage(),Toasty.LENGTH_SHORT).show();
 
                         if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
-                            fetch_product_by_id_ResponseCall();
+                           notificationandCartCountResponseCall();
                         }
 
 
