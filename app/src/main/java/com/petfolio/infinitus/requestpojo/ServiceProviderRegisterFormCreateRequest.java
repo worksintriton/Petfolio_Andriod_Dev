@@ -1,8 +1,9 @@
 package com.petfolio.infinitus.requestpojo;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ServiceProviderRegisterFormCreateRequest {
+public class ServiceProviderRegisterFormCreateRequest implements Serializable {
 
 
     /**
@@ -231,7 +232,7 @@ public class ServiceProviderRegisterFormCreateRequest {
         this.bus_certif = bus_certif;
     }
 
-    public static class BusServiceListBean  {
+    public static class BusServiceListBean  implements Serializable {
         /**
          * bus_service_list : Service - 1
          * time_slots : 15 mins
@@ -271,7 +272,7 @@ public class ServiceProviderRegisterFormCreateRequest {
         }
     }
 
-    public static class BusSpecListBean  {
+    public static class BusSpecListBean implements Serializable  {
         /**
          * bus_spec_list : Spec -1
          */
@@ -287,7 +288,7 @@ public class ServiceProviderRegisterFormCreateRequest {
         }
     }
 
-    public static class BusServiceGallBean  {
+    public static class BusServiceGallBean implements Serializable {
         /**
          * bus_service_gall :
          */
@@ -303,7 +304,7 @@ public class ServiceProviderRegisterFormCreateRequest {
         }
     }
 
-    public static class BusCertifBean  {
+    public static class BusCertifBean implements Serializable {
         /**
          * bus_certif :
          */

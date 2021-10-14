@@ -46,6 +46,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.API;
+import com.petfolio.infinitus.requestpojo.DocBusInfoUploadRequest;
+import com.petfolio.infinitus.requestpojo.ServiceProviderRegisterFormCreateRequest;
 import com.petfolio.infinitus.responsepojo.GetAddressResultResponse;
 import com.petfolio.infinitus.service.GPSTracker;
 import com.petfolio.infinitus.serviceprovider.ServiceProviderRegisterFormActivity;
@@ -53,6 +55,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -122,6 +125,7 @@ public class SetLocationSPNewActivity extends FragmentActivity implements OnMapR
 
     private String fromactivity;
     private String placesearchactivity;
+    private ArrayList<ServiceProviderRegisterFormCreateRequest> serviceProviderRegisterFormCreateRequestArrayList;
 
 
     @SuppressLint("LogNotTimber")
@@ -137,6 +141,9 @@ public class SetLocationSPNewActivity extends FragmentActivity implements OnMapR
         if (extras != null) {
             fromactivity = extras.getString("fromactivity");
             placesearchactivity = extras.getString("placesearchactivity");
+            serviceProviderRegisterFormCreateRequestArrayList = (ArrayList<ServiceProviderRegisterFormCreateRequest>) getIntent().getSerializableExtra("serviceProviderRegisterFormCreateRequestArrayList");
+            Log.w(TAG,"serviceProviderRegisterFormCreateRequestArrayList : "+new Gson().toJson(serviceProviderRegisterFormCreateRequestArrayList));
+
             Log.w(TAG,"fromactivity if : "+fromactivity+"placesearchactivity : "+placesearchactivity);
 
         }else{
@@ -189,6 +196,7 @@ public class SetLocationSPNewActivity extends FragmentActivity implements OnMapR
                     intent.putExtra("address",AddressLine);
                     intent.putExtra("PostalCode",PostalCode);
                     intent.putExtra("fromactivity",fromactivity);
+                    intent.putExtra("serviceProviderRegisterFormCreateRequestArrayList",serviceProviderRegisterFormCreateRequestArrayList);
                     startActivity(intent);
             }else{
                 Toasty.warning(SetLocationSPNewActivity.this,"Please select citynmae",Toasty.LENGTH_SHORT).show();
@@ -501,6 +509,7 @@ public class SetLocationSPNewActivity extends FragmentActivity implements OnMapR
             }
         }
     }
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NotNull String @NotNull [] permissions, @NotNull int @NotNull [] grantResults) {
         if (requestCode == MY_PERMISSIONS_REQUEST_LOCATION) {
@@ -620,7 +629,6 @@ public class SetLocationSPNewActivity extends FragmentActivity implements OnMapR
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(SetLocationSPNewActivity.this, ServiceProviderRegisterFormActivity.class));
         finish();
     }
 

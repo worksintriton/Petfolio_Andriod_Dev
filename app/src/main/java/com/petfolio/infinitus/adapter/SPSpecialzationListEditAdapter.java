@@ -72,8 +72,6 @@ public class SPSpecialzationListEditAdapter extends  RecyclerView.Adapter<Recycl
 
             }
         }
-
-
         holder.chx_spectypes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

@@ -67,7 +67,7 @@ import retrofit2.Response;
 
 public class ManageProductsActivity extends AppCompatActivity implements View.OnClickListener, OnItemCheckProduct, ManageProductsDealsListener{
 
-    private String TAG = "ManageProductsActivity";
+    private final String TAG = "ManageProductsActivity";
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.img_back)
@@ -174,8 +174,8 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
 
 
     // to check whether sub FAB buttons are visible or not.
-    Boolean isAllFabsVisible;
-    Boolean isAddDealFabsVisible;
+    Boolean isAllFabsVisible = false;
+    Boolean isAddDealFabsVisible = false;
 
     private List<ManageProductsListResponse.DataBean> manageProductsListResponseList;
 
@@ -191,7 +191,7 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
     TextView txt_deal_start_date,txt_deal_expriy_date;
     private int discountamount =0;
     private boolean discountstatus = false;
-    private String searchString = "";
+    private final String searchString = "";
     private String getfromdate = "";
     private String gettodate = "";
 
@@ -344,7 +344,6 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
                             txt_add_deal.setVisibility(View.VISIBLE);
                             txt_discard_deal.setVisibility(View.VISIBLE);*/
                             isAddDealFabsVisible = true;
-                          //  add_deal_fab.setImageResource(R.drawable.ic_baseline_close_white24);
 
                         } else {
                           /*  fab_add_deal.hide();
@@ -398,6 +397,8 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
                 if (response.body() != null) {
                     if(response.body().getCode() == 200){
                         refresh_layout.setRefreshing(false);
+                        add_deal_text.setText("Add Deal");
+                        add_deal_fab.setImageResource(R.drawable.ic_baseline_add_24);
 
                         if(response.body().getData() != null && response.body().getData().size()>0){
                             manageProductsListResponseList = response.body().getData();
@@ -562,6 +563,7 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
 
     }
 
+    @SuppressLint("LogNotTimber")
     private void showProductDealAlert() {
         try {
             dialog = new Dialog(ManageProductsActivity.this);
@@ -670,12 +672,19 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
             });
 
             btn_apply_discount.setOnClickListener(v -> {
-
-                if(getfromdate.isEmpty()){
+                getfromdate = txt_deal_start_date.getText().toString();
+                gettodate = txt_deal_expriy_date.getText().toString();
+                Log.w(TAG," btn_apply_discount.setOnClickListener edt_discount_per_unit :"+edt_discount_per_unit.getText().toString());
+                Log.w(TAG," btn_apply_discount.setOnClickListener edt_deal_price :"+edt_deal_price.getText().toString());
+                if(edt_discount_per_unit.getText().toString().isEmpty() && edt_deal_price.getText().toString().isEmpty()){
+                    showErrorLoading("Please enter the discount per unit or deal price");
+                }else if(getfromdate.isEmpty()){
                     showErrorLoading("Please select deal start date");
-                }else if(gettodate.isEmpty()){
+                }
+                else if(gettodate.isEmpty()){
                     showErrorLoading("Please select deal end date");
-                }else {
+                }
+                else {
                     CheckDates(getfromdate,gettodate);
                     if(isvaliddate){
                         if(productcount != 0){
@@ -689,7 +698,8 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
                             apply_multi_dis_ResponseCall();
                         }
                         }
-                    }else{
+                    }
+                    else{
                         showErrorLoading("Please select valid deal date");
                     }
                 }
@@ -734,13 +744,13 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
                     if (200 == response.body().getCode()) {
                         dialog.dismiss();
                         ll_discard.setVisibility(View.INVISIBLE);
-                        txt_applydeal.setText("Apply Deal");
                         showCheckbox = false;
                         fab_add_deal.hide();
                         fab_discard_deal.hide();
                         txt_add_deal.setVisibility(View.GONE);
                         txt_discard_deal.setVisibility(View.GONE);
                         isAllFabsVisible = false;
+                        txt_applydeal.setText("Apply Deal");
                         add_deal_fab.setImageResource(R.drawable.ic_baseline_add_24);
                         getlist_from_vendor_id_ResponseCall();
 
@@ -988,19 +998,24 @@ public class ManageProductsActivity extends AppCompatActivity implements View.On
 
         try
         {
-            String myFormatString = "yyyy-M-dd"; // for example
-            SimpleDateFormat df = new SimpleDateFormat(myFormatString);
-            Date date1 = df.parse(d1);
-            Date startingDate = df.parse(d2);
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            Date start_date = sdf.parse(d1);
+            Date end_date = sdf.parse(d2);
 
-            Log.w(TAG,"start_date_parse "+ date1);
+            Log.w(TAG,"start_date_parse "+ start_date);
+            Log.w(TAG,"end_date_parse "+ end_date);
 
-            Log.w(TAG,"end_date_parse"+ startingDate);
-
-            if (date1.after(startingDate))
-                isvaliddate = true;
-            else
+            if (start_date.compareTo(end_date) > 0) {
+                Log.w(TAG,"APP Date1 is after Date2");
                 isvaliddate = false;
+            } else if (start_date.compareTo(end_date) < 0) {
+                Log.w(TAG,"APP Date1 is before Date2");
+                isvaliddate = true;
+            } else {
+                isvaliddate = true;
+                Log.w(TAG,"App Date1 is equal to Date2");
+            }
+
         }
         catch (Exception e)
         {
