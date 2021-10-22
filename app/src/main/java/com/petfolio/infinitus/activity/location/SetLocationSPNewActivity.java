@@ -46,7 +46,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.petfolio.infinitus.R;
 import com.petfolio.infinitus.api.API;
-import com.petfolio.infinitus.requestpojo.DocBusInfoUploadRequest;
 import com.petfolio.infinitus.requestpojo.ServiceProviderRegisterFormCreateRequest;
 import com.petfolio.infinitus.responsepojo.GetAddressResultResponse;
 import com.petfolio.infinitus.service.GPSTracker;
