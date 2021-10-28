@@ -167,6 +167,9 @@ public class ShippingAddressSPActivity extends AppCompatActivity implements View
     private int Original_price = 0;
     private int Coupon_discount_price = 0;
 
+    private String rzpkey;
+    private boolean isproduction;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -199,6 +202,19 @@ public class ShippingAddressSPActivity extends AppCompatActivity implements View
         userid = user.get(SessionManager.KEY_ID);
 
         Log.w(TAG,"User ID:  "+userid);
+
+        HashMap<String, String> razorpayDetails = session.getRazorpayDetails();
+        rzpkey =  razorpayDetails.get(SessionManager.KEY_RZP_KEY);
+        String production =  razorpayDetails.get(SessionManager.KEY_RZP_PRODUCTION);
+        if(production != null){
+            if(production.equalsIgnoreCase("true")){
+                isproduction = true;
+            }else{
+                isproduction = false;
+            }
+        }
+
+        Log.w(TAG, "rzpkey : " + rzpkey+ " isproduction : "+isproduction);
 
         Bundle extras = getIntent().getExtras();
 
@@ -817,15 +833,17 @@ public class ShippingAddressSPActivity extends AppCompatActivity implements View
          */
         final Activity activity = this;
 
-        final Checkout co = new Checkout();
-
-        //totalamount = amount;
-
-      /*  Double d = new Double(amount);
-        int amout = d.intValue();*/
+        final Checkout checkout = new Checkout();
+        if(rzpkey != null) {
+            // set your id as below
+            checkout.setKeyID(rzpkey);
+        }
 
 
         Integer totalamout = grand_total*100;
+
+        // rounding off the amount.
+        int amount = Math.round(totalamout);
 
         try {
             JSONObject options = new JSONObject();
@@ -837,7 +855,7 @@ public class ShippingAddressSPActivity extends AppCompatActivity implements View
             options.put("amount", totalamout);
 
 
-            co.open(activity, options);
+            checkout.open(activity, options);
         } catch (Exception e) {
             Log.w(TAG,"Error in payment: " + e.getMessage());
 

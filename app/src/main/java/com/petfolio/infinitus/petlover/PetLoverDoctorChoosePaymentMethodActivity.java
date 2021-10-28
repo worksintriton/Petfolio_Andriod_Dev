@@ -205,6 +205,8 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
     private int Total_price = 0;
     private String selectedCommunicationtype;
     List<PetAppointmentCreateRequest.PetImgBean> pet_imgList = new ArrayList();
+    private String rzpkey;
+    private boolean isproduction;
 
 
     // private ArrayList<DocBusInfoUploadRequest.ClinicPicBean> clinicPicBeans = new ArrayList<>();
@@ -220,6 +222,20 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
         SessionManager sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getProfileDetails();
         userid = user.get(SessionManager.KEY_ID);
+
+
+        HashMap<String, String> razorpayDetails = sessionManager.getRazorpayDetails();
+        rzpkey =  razorpayDetails.get(SessionManager.KEY_RZP_KEY);
+        String production =  razorpayDetails.get(SessionManager.KEY_RZP_PRODUCTION);
+        if(production != null){
+            if(production.equalsIgnoreCase("true")){
+                isproduction = true;
+            }else{
+                isproduction = false;
+            }
+        }
+
+        Log.w(TAG, "rzpkey : " + rzpkey+ " isproduction : "+isproduction);
 
         ImageView img_back = include_petlover_header.findViewById(R.id.img_back);
         ImageView img_sos = include_petlover_header.findViewById(R.id.img_sos);
@@ -573,15 +589,19 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
          */
         final Activity activity = this;
 
-        final Checkout co = new Checkout();
+        final Checkout checkout = new Checkout();
 
-        //totalamount = amount;
+        if(rzpkey != null) {
+            // set your id as below
+            checkout.setKeyID(rzpkey);
+        }
 
-      /*  Double d = new Double(amount);
-        int amout = d.intValue();*/
 
 
         Integer totalamout = Total_price*100;
+
+        // rounding off the amount.
+        int amount = Math.round(totalamout);
 
         try {
             JSONObject options = new JSONObject();
@@ -590,10 +610,10 @@ public class PetLoverDoctorChoosePaymentMethodActivity extends AppCompatActivity
             //You can omit the image option to fetch the image from dashboard
             options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
             options.put("currency", "INR");
-            options.put("amount", totalamout);
+            options.put("amount", amount);
 
 
-            co.open(activity, options);
+            checkout.open(activity, options);
         } catch (Exception e) {
             Log.w(TAG,"Error in payment: " + e.getMessage());
 

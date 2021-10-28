@@ -35,8 +35,8 @@ public class SessionManager {
     public static final String KEEPLOGIN = "keeplogin";
     public static final String KEEPPROFILEUPDATE = "keepprofileupdate";
 
-
-
+    public static final String KEY_RZP_KEY = "rzpkey";
+    public static final String KEY_RZP_PRODUCTION = "production";
 
 
     @SuppressLint("CommitPrefEdits")
@@ -111,6 +111,24 @@ public class SessionManager {
     public void setIsProfileUpdate(boolean isProfileUpdate){
         editor.putBoolean(KEEPPROFILEUPDATE,isProfileUpdate);
         editor.apply();
+    }
+
+
+    public void createRazorpayDetails(String rzpkey,String production) {
+        editor.putBoolean(IS_LOGIN, true);
+        editor.putString(KEY_RZP_KEY, rzpkey);
+        editor.putString(KEY_RZP_PRODUCTION, production);
+
+        Log.e(TAG, "................................>> session createRazorpayDetails " + "rzpkey : " + rzpkey+" production : " + production);
+
+        editor.commit();
+
+    }
+    public HashMap<String, String> getRazorpayDetails() {
+        HashMap<String, String> user = new HashMap<>();
+        user.put(KEY_RZP_KEY, pref.getString(KEY_RZP_KEY, ""));
+        user.put(KEY_RZP_PRODUCTION, pref.getString(KEY_RZP_PRODUCTION, ""));
+        return user;
     }
 
 

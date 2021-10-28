@@ -266,6 +266,9 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
     private String health_issue_title;
     private Dialog dialog;
 
+    private String rzpkey;
+    private boolean isproduction;
+
     @SuppressLint("LongLogTag")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -349,6 +352,19 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
         userid = user.get(SessionManager.KEY_ID);
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm aa", Locale.getDefault());
         currentDateandTime = sdf.format(new Date());
+
+        HashMap<String, String> razorpayDetails = sessionManager.getRazorpayDetails();
+        rzpkey =  razorpayDetails.get(SessionManager.KEY_RZP_KEY);
+        String production =  razorpayDetails.get(SessionManager.KEY_RZP_PRODUCTION);
+        if(production != null){
+            if(production.equalsIgnoreCase("true")){
+                isproduction = true;
+            }else{
+                isproduction = false;
+            }
+        }
+
+        Log.w(TAG, "rzpkey : " + rzpkey+ " isproduction : "+isproduction);
 
         if (userid != null) {
             if (new ConnectionDetector(getApplicationContext()).isNetworkAvailable(getApplicationContext())) {
@@ -1230,15 +1246,11 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
          */
         final Activity activity = this;
 
-        final Checkout co = new Checkout();
-
-        //totalamount = amount;
-
-      /*  Double d = new Double(amount);
-        int amout = d.intValue();*/
-
+        final Checkout checkout = new Checkout();
 
         Integer totalamout = serviceamount*100;
+        // rounding off the amount.
+        int amount = Math.round(totalamout);
 
         try {
             JSONObject options = new JSONObject();
@@ -1247,10 +1259,10 @@ public class ServiceBookAppointmentActivity extends AppCompatActivity implements
             //You can omit the image option to fetch the image from dashboard
             options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
             options.put("currency", "INR");
-            options.put("amount", totalamout);
+            options.put("amount", amount);
 
 
-            co.open(activity, options);
+            checkout.open(activity, options);
         } catch (Exception e) {
             Log.w(TAG,"Error in payment: " + e.getMessage());
 
