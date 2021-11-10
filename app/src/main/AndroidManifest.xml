@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.petfolio.infinitus">
+    package="com.carpeinfinitus.petfolio">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -35,7 +35,7 @@
         android:xlargeScreens="true" />
 
     <application
-        android:name="com.petfolio.infinitus.appUtils.ApplicationData"
+        android:name="com.carpeinfinitus.petfolio.appUtils.ApplicationData"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:largeHeap="true"
@@ -58,7 +58,7 @@
             android:theme="@style/Base.Theme.AppCompat"/>
 
         <activity
-            android:name="com.petfolio.infinitus.activity.SplashActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme"
             android:windowSoftInputMode="adjustPan">
@@ -69,61 +69,61 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.petfolio.infinitus.activity.SliderAfterSplashActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.SliderAfterSplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.ShippingAddressEditActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.ShippingAddressEditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.MedicalHistoryActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.MedicalHistoryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.ShippingAddressCreateActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.ShippingAddressCreateActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.ShippingAddressAddActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.ShippingAddressAddActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.ShippingAddressActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.ShippingAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.myaddresses.MyAddressesListActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.myaddresses.MyAddressesListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.myaddresses.AddNewShippingAddressActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.myaddresses.AddNewShippingAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.myaddresses.MyAddressEditActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.myaddresses.MyAddressEditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.ProductDetailActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.ProductDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
 
-        <activity android:name="com.petfolio.infinitus.petlover.PetLoverDoctorChoosePaymentMethodActivity"
+        <activity android:name="com.carpeinfinitus.petfolio.petlover.PetLoverDoctorChoosePaymentMethodActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan"/>
-        <activity android:name="com.petfolio.infinitus.petlover.PetLoverServiceChoosePaymentMethodActivity"
+        <activity android:name="com.carpeinfinitus.petfolio.petlover.PetLoverServiceChoosePaymentMethodActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan"/>
@@ -131,604 +131,604 @@
 
 
         <activity
-            android:name="com.petfolio.infinitus.petlover.DoctorClinicDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.DoctorClinicDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.vendor.VendorUpdateOrderStatusActivity"
+            android:name="com.carpeinfinitus.petfolio.vendor.VendorUpdateOrderStatusActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.vendor.EditManageProdcutsActivity"
+            android:name="com.carpeinfinitus.petfolio.vendor.EditManageProdcutsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetOtherInformationsActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetOtherInformationsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetEditOtherInformationsActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetEditOtherInformationsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.ChoosePetTypeActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.ChoosePetTypeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.ChooseBreedTypeActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.ChooseBreedTypeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.BasicPetDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.BasicPetDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.BasicPetDetailsNewActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.BasicPetDetailsNewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.AddNewPetActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.AddNewPetActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.ConsultationActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.ConsultationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.ConsultationIssuesActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.ConsultationIssuesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.VerifyOtpActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.VerifyOtpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.SignUpActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.SignUpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.LoginActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.ChooseUserTypeActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.ChooseUserTypeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.VerifyEmailOtpActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.VerifyEmailOtpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" /> <!-- Pet Lover -->
         <activity
-            android:name="com.petfolio.infinitus.petlover.AddYourPetActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.AddYourPetActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.RegisterYourPetActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.RegisterYourPetActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetLoverDashboardActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetLoverDashboardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NewAppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.BookAppointmentActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.BookAppointmentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetAppointment_Doctor_Date_Time_Activity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetAppointment_Doctor_Date_Time_Activity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetAppointment_SlotNotAvailable_Doctor_Date_Time_Activity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetAppointment_SlotNotAvailable_Doctor_Date_Time_Activity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetMyappointmentsActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetMyappointmentsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetWalkinappointmentsActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetWalkinappointmentsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetLoverEditProfileActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetLoverEditProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetLoverProfileScreenActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetLoverProfileScreenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetLoverEditProfileImageActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetLoverEditProfileImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.EditYourPetProfileInfoActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.EditYourPetProfileInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.AddYourPetOldUserActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.AddYourPetOldUserActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.AddYourPetImageOlduserActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.AddYourPetImageOlduserActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.EditYourPetImageActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.EditYourPetImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.FiltersActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.FiltersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetMyOrdrersActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetMyOrdrersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetMyOrdrersNewActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetMyOrdrersNewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetCartActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetCartActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.ProductDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.ProductDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.ListOfProductsSeeMoreActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.ListOfProductsSeeMoreActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.Service_Details_Activity"
+            android:name="com.carpeinfinitus.petfolio.petlover.Service_Details_Activity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.ServiceBookAppointmentActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.ServiceBookAppointmentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.SelectedServiceActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.SelectedServiceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetServiceAppointment_Doctor_Date_Time_Activity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetServiceAppointment_Doctor_Date_Time_Activity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.SelectYourPetActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.SelectYourPetActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetVerifyEmailOtpActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetVerifyEmailOtpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.VideoCallPetLoverActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.VideoCallPetLoverActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.location.ManageAddressActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.location.ManageAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.location.PickUpLocationAddNewAddressActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.location.PickUpLocationAddNewAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.location.EditShippingAddresssActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.location.EditShippingAddresssActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.location.PickUpLocationShippingAddressEditActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.location.PickUpLocationShippingAddressEditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.location.PickUpLocationAllowActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.location.PickUpLocationAllowActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.location.AddMyAddressShippingActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.location.AddMyAddressShippingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.location.PickUpLocationDenyActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.location.PickUpLocationDenyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.location.AddMyAddressActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.location.AddMyAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.location.PlacesSearchActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.location.PlacesSearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.location.PickUpLocationActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.location.PickUpLocationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.location.AddMyAddressOldUserActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.location.AddMyAddressOldUserActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.location.EditMyAddressActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.location.EditMyAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.location.PickUpLocationEditActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.location.PickUpLocationEditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.location.SetLocationDoctorNewActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.location.SetLocationDoctorNewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.location.SetLocationDoctorOldActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.location.SetLocationDoctorOldActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.location.SetLocationSPNewActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.location.SetLocationSPNewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.location.SetLocationSPOldActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.location.SetLocationSPOldActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetAppointmentDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetWalkinAppointmentDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetWalkinAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name="com.petfolio.infinitus.activity.SliderActivity" />
+        <activity android:name="com.carpeinfinitus.petfolio.activity.SliderActivity" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetCompletedAppointmentDetailsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="com.petfolio.infinitus.petlover.PetMissedAppointmentDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetCompletedAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetNewAppointmentDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetMissedAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetSPNewAppointmentDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetNewAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.ProductFiltersActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetSPNewAppointmentDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.carpeinfinitus.petfolio.petlover.ProductFiltersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name="com.petfolio.infinitus.petlover.MyCouponsActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.MyCouponsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
 
         <!-- Doctor -->
         <activity
-            android:name="com.petfolio.infinitus.doctor.DoctorBusinessInfoActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.DoctorBusinessInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.EditDoctorBusinessInfoActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.EditDoctorBusinessInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.DoctorMyCalendarNewUserActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.DoctorMyCalendarNewUserActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.DoctorMyCalendarTimeActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.DoctorMyCalendarTimeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.Doctor_Holiday_Activity"
+            android:name="com.carpeinfinitus.petfolio.doctor.Doctor_Holiday_Activity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.DoctorMyCalendarActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.DoctorMyCalendarActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.DoctorDashboardActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.DoctorDashboardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.DoctorVerifyEmailOtpActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.DoctorVerifyEmailOtpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.PrescriptionActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.PrescriptionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.WalkinPrescriptionActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.WalkinPrescriptionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.WalkinPrescriptionDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.WalkinPrescriptionDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.DoctorWalkinPrescriptionDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.DoctorWalkinPrescriptionDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.DoctorEditProfileActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.DoctorEditProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.DoctorProfileScreenActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.DoctorProfileScreenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.EditDoctorProfileImageActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.EditDoctorProfileImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.DoctorPrescriptionDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.DoctorPrescriptionDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.PrescriptionDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.PrescriptionDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.VideoCallDoctorActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.VideoCallDoctorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.DoctorAppointmentDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.DoctorAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.DoctorWalkinAppointmentDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.DoctorWalkinAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.DoctorOrderDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.DoctorOrderDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.ManageAddressDoctorActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.ManageAddressDoctorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
 
         <!-- Service Provider -->
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.ServiceProviderRegisterFormActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.ServiceProviderRegisterFormActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.SPVerifyEmailOtpActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.SPVerifyEmailOtpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.SPMyCalendarNewUserActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.SPMyCalendarNewUserActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.SPEditProfileActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.SPEditProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.SPProfileScreenActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.SPProfileScreenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.ServiceProviderEditFormActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.ServiceProviderEditFormActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.ServiceProviderDashboardActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.ServiceProviderDashboardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.SPMyCalendarActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.SPMyCalendarActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.SP_Holiday_Activity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.SP_Holiday_Activity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.SPMyCalendarTimeActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.SPMyCalendarTimeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.SPManageServiceActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.SPManageServiceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.SPSettingsActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.SPSettingsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.SPFiltersActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.SPFiltersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.SPAppointmentDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.SPAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.SPEditProfileImageActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.SPEditProfileImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.ShippingAddressSPActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.ShippingAddressSPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.shop.SearchSPActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.shop.SearchSPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.shop.SPCancelOrderActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.shop.SPCancelOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.shop.SPCartActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.shop.SPCartActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.shop.SPListOfProductsSeeMoreActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.shop.SPListOfProductsSeeMoreActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.shop.SPProductDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.shop.SPProductDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.shop.SPShopTodayDealsSeeMoreActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.shop.SPShopTodayDealsSeeMoreActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.shop.SPTrackOrderActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.shop.SPTrackOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.shop.SPOrderDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.shop.SPOrderDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.shop.SPMyOrdrersActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.shop.SPMyOrdrersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.shop.SPProductsFavActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.shop.SPProductsFavActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.ServiceAppointment_Doctor_Date_Time_Activity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.ServiceAppointment_Doctor_Date_Time_Activity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
@@ -736,279 +736,279 @@
 
         <!-- Vendor -->
         <activity
-            android:name="com.petfolio.infinitus.vendor.VendorRegisterFormActivity"
+            android:name="com.carpeinfinitus.petfolio.vendor.VendorRegisterFormActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.vendor.VendorDashboardActivity"
+            android:name="com.carpeinfinitus.petfolio.vendor.VendorDashboardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.vendor.VendorAddProductsActivity"
+            android:name="com.carpeinfinitus.petfolio.vendor.VendorAddProductsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.vendor.VendorCreateProductsActivity"
+            android:name="com.carpeinfinitus.petfolio.vendor.VendorCreateProductsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.NotificationActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.NotificationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.SoSActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.SoSActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.EditSoSActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.EditSoSActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetShopTodayDealsSeeMoreActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetShopTodayDealsSeeMoreActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.DoctorMissedAppointmentDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.DoctorMissedAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.DoctorCompletedAppointmentDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.DoctorCompletedAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.DoctorNewAppointmentDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.DoctorNewAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.vendor.VendorEditProfileActivity"
+            android:name="com.carpeinfinitus.petfolio.vendor.VendorEditProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.vendor.VendorProfileScreenActivity"
+            android:name="com.carpeinfinitus.petfolio.vendor.VendorProfileScreenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.vendor.EditVendorProfileImageActivity"
+            android:name="com.carpeinfinitus.petfolio.vendor.EditVendorProfileImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.vendor.EditVendorRegisterFormActivity"
+            android:name="com.carpeinfinitus.petfolio.vendor.EditVendorRegisterFormActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.vendor.VendorVerifyEmailOtpActivity"
+            android:name="com.carpeinfinitus.petfolio.vendor.VendorVerifyEmailOtpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetVendorOrderDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetVendorOrderDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetLoverVendorOrderDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetLoverVendorOrderDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetVendorTrackOrderActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetVendorTrackOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.TrackOrderActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.TrackOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetVendorCancelOrderActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetVendorCancelOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetReturnOrderActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetReturnOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.vendor.VendorOrderDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.vendor.VendorOrderDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.vendor.VendorTrackOrderActivity"
+            android:name="com.carpeinfinitus.petfolio.vendor.VendorTrackOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.vendor.VendorOrderDetailsNewActivity"
+            android:name="com.carpeinfinitus.petfolio.vendor.VendorOrderDetailsNewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.vendor.ManageProductsActivity"
+            android:name="com.carpeinfinitus.petfolio.vendor.ManageProductsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.SearchActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.SearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.shop.DoctorShopTodayDealsSeeMoreActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.shop.DoctorShopTodayDealsSeeMoreActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.shop.DoctorListOfProductsSeeMoreActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.shop.DoctorListOfProductsSeeMoreActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.shop.DoctorProductDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.shop.DoctorProductDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.shop.SearchDoctorActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.shop.SearchDoctorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.shop.DoctorCartActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.shop.DoctorCartActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.shop.DoctorTrackOrderActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.shop.DoctorTrackOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.shop.DoctorCancelOrderActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.shop.DoctorCancelOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.DoctorMyOrdrersActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.DoctorMyOrdrersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.DoctorWalkinAppointmentsActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.DoctorWalkinAppointmentsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetloverFavListActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetloverFavListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.location.PickUpLocationAddNewAddressSPActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.location.PickUpLocationAddNewAddressSPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.location.AddMyAddressShippingSPActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.location.AddMyAddressShippingSPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.location.PickUpLocationDoctorActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.location.PickUpLocationDoctorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.location.AddMyAddressDoctorActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.location.AddMyAddressDoctorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.location.EditMyAddressDoctorActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.location.EditMyAddressDoctorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.location.PickUpLocationEditDoctorActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.location.PickUpLocationEditDoctorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.activity.location.ShippingAddressAddSPActivity"
+            android:name="com.carpeinfinitus.petfolio.activity.location.ShippingAddressAddSPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.DoctorProductsFavActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.DoctorProductsFavActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.doctor.DoctorPaymentDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.DoctorPaymentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetloverPaymentDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetloverPaymentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.PickUpLocationEditSPActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.PickUpLocationEditSPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.EditMyAddressSPActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.EditMyAddressSPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.AddMyAddressSPActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.AddMyAddressSPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.PickUpLocationSPActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.PickUpLocationSPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.ManageAddressSPActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.ManageAddressSPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.petfolio.infinitus.petlover.PetloverPetDetailsActivity"
+            android:name="com.carpeinfinitus.petfolio.petlover.PetloverPetDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name="com.petfolio.infinitus.doctor.MyCouponsDoctorActivity"
+            android:name="com.carpeinfinitus.petfolio.doctor.MyCouponsDoctorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name="com.petfolio.infinitus.serviceprovider.MyCouponsSPActivity"
+            android:name="com.carpeinfinitus.petfolio.serviceprovider.MyCouponsSPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
@@ -1022,7 +1022,7 @@
         </receiver>-->
 
         <service
-            android:name="com.petfolio.infinitus.fcm.MyFirebaseMessagingService"
+            android:name="com.carpeinfinitus.petfolio.fcm.MyFirebaseMessagingService"
             android:directBootAware="true"
             android:exported="false">
             <intent-filter>

@@ -157,10 +157,10 @@
                     android:gravity="end">
 
                     <Button
-                        android:layout_marginTop="10dp"
                         android:id="@+id/btn_verify_email"
                         android:layout_width="wrap_content"
                         android:layout_height="35dp"
+                        android:layout_marginTop="10dp"
                         android:background="@drawable/rounded_color_red"
                         android:fontFamily="@font/futuramediumbt"
                         android:paddingStart="5dp"

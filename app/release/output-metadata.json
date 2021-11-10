@@ -4,14 +4,14 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.petfolio.infinituss",
+  "applicationId": "com.carpeinfinitus.petfolio",
   "variantName": "processReleaseResources",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
-      "versionCode": 10,
-      "versionName": "10.0",
+      "versionCode": 12,
+      "versionName": "12.0",
       "outputFile": "app-release.apk"
     }
   ]

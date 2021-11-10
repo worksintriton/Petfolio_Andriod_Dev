@@ -45,7 +45,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:415750074843:android:12fbf00d7f0184b005f7fe",
         "android_client_info": {
-          "package_name": "com.petfolio.infinituss"
+          "package_name": "com.carpeinfinitus.petfolio"
         }
       },
       "oauth_client": [
@@ -53,7 +53,7 @@
           "client_id": "415750074843-lmdofq8rn2tke3dhu8k02n779fihf495.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.petfolio.infinituss",
+            "package_name": "com.carpeinfinitus.petfolio",
             "certificate_hash": "cc19f740ae75afc52818e2930398e24f52ccbcc1"
           }
         },
