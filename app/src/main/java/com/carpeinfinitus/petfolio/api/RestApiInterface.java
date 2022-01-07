@@ -30,6 +30,10 @@ public interface RestApiInterface {
     @POST("userdetails/send/emailotp")
     Call<EmailOTPResponse> emailOTPResponseCall(@Header("Content-Type") String type, @Body EmailOTPRequest emailOTPRequest);
 
+    /*Verify  OTP */
+    @POST("userdetails/verify_otp")
+    Call<SuccessResponse> verifyOTPResponseCall(@Header("Content-Type") String type, @Body VerifyOTPRequest verifyOTPRequest);
+
 
     /*Profile update*/
     @POST("userdetails/mobile/update/profile")

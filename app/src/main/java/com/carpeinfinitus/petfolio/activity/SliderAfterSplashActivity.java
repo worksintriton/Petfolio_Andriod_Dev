@@ -166,7 +166,7 @@ public class SliderAfterSplashActivity extends AppCompatActivity implements View
             @Override
             public void onFailure(@NonNull Call<SplashScreenResponse> call,@NonNull  Throwable t) {
                 avi_indicator.smoothToHide();
-                Log.w(TAG,"SplashScreenResponse flr"+t.getMessage());
+                Log.w(TAG,"SplashScreenResponse flr : "+t.getMessage());
             }
         });
 
