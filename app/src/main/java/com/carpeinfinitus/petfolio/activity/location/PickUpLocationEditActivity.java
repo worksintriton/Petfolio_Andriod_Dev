@@ -251,6 +251,7 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
 
 
 
+    @SuppressLint("LogNotTimber")
     @Override
     public void onMapReady(GoogleMap googleMap) {
         LatLng CHENNAI_LATLNG = new LatLng(13.067439, 80.237617);
@@ -280,14 +281,9 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
         mMap.getUiSettings().setCompassEnabled(true);
 
         //Initialize Google Play Services
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {
-                buildGoogleApiClient();
-                mMap.setMyLocationEnabled(true);
-            }
-        } else {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
@@ -556,6 +552,7 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
             }
         }
     }
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NotNull String @NotNull [] permissions, @NotNull int @NotNull [] grantResults) {
         if (requestCode == MY_PERMISSIONS_REQUEST_LOCATION) {
@@ -671,8 +668,22 @@ public class PickUpLocationEditActivity extends FragmentActivity implements OnMa
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(),ManageAddressActivity.class));
-        finish();
+        if(fromactivity != null && fromactivity.equalsIgnoreCase("EditMyAddressActivity")){
+            Intent intent = new Intent(getApplicationContext(),EditMyAddressActivity.class);
+            intent.putExtra("id",id);
+            intent.putExtra("userid",userid);
+            intent.putExtra("nickname",nickname);
+            intent.putExtra("locationtype",locationtype);
+            intent.putExtra("defaultstatus",defaultstatus);
+            intent.putExtra("lat",latitude);
+            intent.putExtra("lon",longitude);
+            intent.putExtra("fromactivity",TAG);
+            startActivity(intent);
+            finish();
+        }else {
+            startActivity(new Intent(getApplicationContext(), ManageAddressActivity.class));
+            finish();
+        }
 
     }
 

@@ -14,6 +14,7 @@ import retrofit2.http.Part;
 
 public interface RestApiInterface {
 
+
     /*splash screen list*/
     @GET("splashscreen/getlist")
     Call<SplashScreenResponse> splashScreenResponseCall(@Header("Content-Type") String type);

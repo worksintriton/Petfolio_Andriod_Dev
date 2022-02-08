@@ -323,7 +323,8 @@ public class PetLoverServiceChoosePaymentMethodActivity extends AppCompatActivit
                 Discount_price = 0;
 
                 // ll_totalamount.setVisibility(View.GONE);
-            }else{
+            }
+            else{
                 ll_content_amount.setVisibility(View.VISIBLE);
                 viewapply.setVisibility(View.GONE);
                 // viewTotalamout.setVisibility(View.GONE);
