@@ -74,7 +74,9 @@
             android:name="com.carpeinfinitus.petfolio.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -85,61 +87,85 @@
             android:name="com.carpeinfinitus.petfolio.activity.SliderAfterSplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.ShippingAddressEditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.MedicalHistoryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.ShippingAddressCreateActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.ShippingAddressAddActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.ShippingAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.myaddresses.MyAddressesListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.myaddresses.AddNewShippingAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.myaddresses.MyAddressEditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.ProductDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity android:name="com.carpeinfinitus.petfolio.petlover.PetLoverDoctorChoosePaymentMethodActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan"/>
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity"/>
         <activity android:name="com.carpeinfinitus.petfolio.petlover.PetLoverServiceChoosePaymentMethodActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan"/>
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity"/>
 
 
 
@@ -147,604 +173,842 @@
             android:name="com.carpeinfinitus.petfolio.petlover.DoctorClinicDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.vendor.VendorUpdateOrderStatusActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.vendor.EditManageProdcutsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetOtherInformationsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetEditOtherInformationsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.ChoosePetTypeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.ChooseBreedTypeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.BasicPetDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.BasicPetDetailsNewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.AddNewPetActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.ConsultationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.ConsultationIssuesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.VerifyOtpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.SignUpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.ChooseUserTypeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.VerifyEmailOtpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" /> <!-- Pet Lover -->
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" /> <!-- Pet Lover -->
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.AddYourPetActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.RegisterYourPetActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetLoverDashboardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NewAppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.BookAppointmentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetAppointment_Doctor_Date_Time_Activity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetAppointment_SlotNotAvailable_Doctor_Date_Time_Activity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetMyappointmentsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetWalkinappointmentsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetLoverEditProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetLoverProfileScreenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetLoverEditProfileImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.EditYourPetProfileInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.AddYourPetOldUserActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.AddYourPetImageOlduserActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.EditYourPetImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.FiltersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetMyOrdrersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetMyOrdrersNewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetCartActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.ProductDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.ListOfProductsSeeMoreActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.Service_Details_Activity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.ServiceBookAppointmentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.SelectedServiceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetServiceAppointment_Doctor_Date_Time_Activity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.SelectYourPetActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetVerifyEmailOtpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.VideoCallPetLoverActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.location.ManageAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.location.PickUpLocationAddNewAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.location.EditShippingAddresssActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.location.PickUpLocationShippingAddressEditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.location.PickUpLocationAllowActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.location.AddMyAddressShippingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.location.PickUpLocationDenyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.location.AddMyAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.location.PlacesSearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.location.PickUpLocationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.location.AddMyAddressOldUserActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.location.EditMyAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.location.PickUpLocationEditActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.location.SetLocationDoctorNewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.location.SetLocationDoctorOldActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.location.SetLocationSPNewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.location.SetLocationSPOldActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetWalkinAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity android:name="com.carpeinfinitus.petfolio.activity.SliderActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetCompletedAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetMissedAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetNewAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetSPNewAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.ProductFiltersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.MyCouponsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
 
         <!-- Doctor -->
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.DoctorBusinessInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.EditDoctorBusinessInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.DoctorMyCalendarNewUserActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.DoctorMyCalendarTimeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.Doctor_Holiday_Activity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.DoctorMyCalendarActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.DoctorDashboardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.DoctorVerifyEmailOtpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.PrescriptionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.WalkinPrescriptionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.WalkinPrescriptionDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.DoctorWalkinPrescriptionDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.DoctorEditProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.DoctorProfileScreenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.EditDoctorProfileImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.DoctorPrescriptionDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.PrescriptionDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.VideoCallDoctorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.DoctorAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.DoctorWalkinAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.DoctorOrderDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.ManageAddressDoctorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
 
         <!-- Service Provider -->
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.ServiceProviderRegisterFormActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.SPVerifyEmailOtpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.SPMyCalendarNewUserActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.SPEditProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.SPProfileScreenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.ServiceProviderEditFormActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.ServiceProviderDashboardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.SPMyCalendarActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.SP_Holiday_Activity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.SPMyCalendarTimeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.SPManageServiceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.SPSettingsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.SPFiltersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.SPAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.SPEditProfileImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.ShippingAddressSPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.shop.SearchSPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.shop.SPCancelOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.shop.SPCartActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.shop.SPListOfProductsSeeMoreActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.shop.SPProductDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.shop.SPShopTodayDealsSeeMoreActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.shop.SPTrackOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.shop.SPOrderDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.shop.SPMyOrdrersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.shop.SPProductsFavActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.ServiceAppointment_Doctor_Date_Time_Activity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
 
 
         <!-- Vendor -->
@@ -752,279 +1016,389 @@
             android:name="com.carpeinfinitus.petfolio.vendor.VendorRegisterFormActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.vendor.VendorDashboardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.vendor.VendorAddProductsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.vendor.VendorCreateProductsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.NotificationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.SoSActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.EditSoSActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetShopTodayDealsSeeMoreActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.DoctorMissedAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.DoctorCompletedAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.DoctorNewAppointmentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.vendor.VendorEditProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.vendor.VendorProfileScreenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.vendor.EditVendorProfileImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.vendor.EditVendorRegisterFormActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.vendor.VendorVerifyEmailOtpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetVendorOrderDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetLoverVendorOrderDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetVendorTrackOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.TrackOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetVendorCancelOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetReturnOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.vendor.VendorOrderDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.vendor.VendorTrackOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.vendor.VendorOrderDetailsNewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.vendor.ManageProductsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.SearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.shop.DoctorShopTodayDealsSeeMoreActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.shop.DoctorListOfProductsSeeMoreActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.shop.DoctorProductDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.shop.SearchDoctorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.shop.DoctorCartActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.shop.DoctorTrackOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.shop.DoctorCancelOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.DoctorMyOrdrersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.DoctorWalkinAppointmentsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetloverFavListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.location.PickUpLocationAddNewAddressSPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.location.AddMyAddressShippingSPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.location.PickUpLocationDoctorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.location.AddMyAddressDoctorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.location.EditMyAddressDoctorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.location.PickUpLocationEditDoctorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.activity.location.ShippingAddressAddSPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.DoctorProductsFavActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.DoctorPaymentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetloverPaymentDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.PickUpLocationEditSPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.EditMyAddressSPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.AddMyAddressSPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.PickUpLocationSPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.ManageAddressSPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.carpeinfinitus.petfolio.petlover.PetloverPetDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name="com.carpeinfinitus.petfolio.doctor.MyCouponsDoctorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name="com.carpeinfinitus.petfolio.serviceprovider.MyCouponsSPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+           android:windowSoftInputMode="adjustPan"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
 
        <!-- <receiver
             android:name=".receiver.SmsBroadcastListener"
