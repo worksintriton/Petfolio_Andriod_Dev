@@ -35,9 +35,13 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+
 <!--
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
 -->
+
+
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
@@ -46,7 +50,6 @@
         android:largeScreens="true"
         android:smallScreens="true"
         android:xlargeScreens="true" />
-
     <application
         android:name="com.carpeinfinitus.petfolio.appUtils.ApplicationData"
         android:allowBackup="true"
